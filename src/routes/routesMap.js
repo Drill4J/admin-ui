@@ -1,5 +1,5 @@
 import { redirect } from 'redux-first-router';
-import { LOGIN_PAGE, FORGOT_PASSWORD_PAGE } from 'common/constants';
+import { LOGIN_PAGE, FORGOT_PASSWORD_PAGE, PLUGIN_PAGE } from 'common/constants';
 
 export default {
   empty: {
@@ -14,4 +14,5 @@ export default {
   },
   [LOGIN_PAGE]: '/login',
   [FORGOT_PASSWORD_PAGE]: '/forgotPassword',
+  [PLUGIN_PAGE]: '/plugin/:id',
 };

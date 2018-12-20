@@ -27,6 +27,7 @@
     "Utils": true
   },
   "rules": {
+    "no-shadow": 0,
     "prettier/prettier": 1,
     "jsx-a11y/no-static-element-interactions": 0,
     "no-unused-expressions": ["error", { "allowTernary": true, "allowShortCircuit": true }],

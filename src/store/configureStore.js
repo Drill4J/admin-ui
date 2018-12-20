@@ -1,11 +1,10 @@
-import { createStore, applyMiddleware, compose, combineReducers } from 'redux';
+import { applyMiddleware, combineReducers, compose, createStore } from 'redux';
 import { composeWithDevTools } from 'redux-devtools-extension/logOnlyInProduction';
 import { connectRoutes } from 'redux-first-router';
 import createSagaMiddleware from 'redux-saga';
-import queryString from 'qs';
 import reduxThunk from 'redux-thunk';
 
-import routesMap, { onBeforeRouteChange } from 'routes/routesMap';
+import routesMap from 'routes/routesMap';
 import reducers from './reducers';
 import { rootSagas } from './rootSaga';
 
@@ -13,9 +12,7 @@ const composeEnhancers = (...args) =>
   typeof window !== 'undefined' ? composeWithDevTools({})(...args) : compose(...args);
 
 export const configureStore = (history, preloadedState) => {
-  const { reducer, middleware, enhancer, initialDispatch } = connectRoutes(history, routesMap, {
-    querySerializer: queryString,
-    onBeforeChange: onBeforeRouteChange,
+  const { reducer, middleware, enhancer, initialDispatch } = connectRoutes(routesMap, {
     initialDispatch: false,
   });
 
