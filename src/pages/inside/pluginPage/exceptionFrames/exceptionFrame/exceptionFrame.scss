@@ -1,0 +1,56 @@
+.exception-frame {
+  padding-left: 15%;
+}
+
+.name-row {
+  display: flex;
+  border-bottom: 1px solid;
+  cursor: pointer;
+  padding: 0.3em 0;
+}
+
+.expand-icon {
+  display: inline-block;
+  height: 20px;
+  width: 20px;
+  margin: 0;
+  transform: rotate(-90deg);
+  transition: transform 200ms linear;
+
+  &.expanded {
+    transform: rotate(0deg);
+  }
+
+  &.hide {
+    visibility: hidden;
+  }
+}
+
+.name {
+}
+
+.variables {
+  padding: 3em 50px;
+  position: relative;
+  border-bottom: 1px solid;
+  font: 14px/18px monospace;
+
+  &:before,
+  &:after {
+    position: absolute;
+    left: 30px;
+  }
+
+  &:before {
+    content: '{';
+    top: 1em;
+  }
+
+  &:after {
+    content: '}';
+    bottom: 1em;
+  }
+}
+
+.variable {
+}
