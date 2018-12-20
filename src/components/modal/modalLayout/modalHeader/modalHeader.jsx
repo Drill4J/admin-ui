@@ -19,6 +19,7 @@ ModalHeader.propTypes = {
   title: PropTypes.string,
   onClose: PropTypes.func,
 };
+
 ModalHeader.defaultProps = {
   title: '',
   onClose: () => {},

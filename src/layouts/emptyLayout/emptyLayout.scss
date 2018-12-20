@@ -10,8 +10,6 @@
   width: 780px;
   height: auto;
   margin: 110px auto auto;
-  box-shadow: 0 1px 3px 0 $COLOR--silver;
-  background-color: $COLOR--white-two;
 }
 .header {
   display: flex;
@@ -19,13 +17,11 @@
   height: 60px;
   box-sizing: border-box;
   padding: 0 30px;
-  border-bottom: 1px solid $COLOR--silver-opacity;
 }
 .logo {
   width: 110px;
   height: 30px;
   margin: auto 0;
-  background-color: $COLOR--silver;
 }
 .body {
   position: relative;

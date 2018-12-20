@@ -46,7 +46,7 @@
   display: block;
   width: 100%;
   height: 100%;
-  background-color: #000000;
+  background-color: $COLOR--black;
   opacity: 0.3;
   transition: opacity 300ms ease-in;
   z-index: 1;
@@ -70,7 +70,7 @@
   width: 745px;
   margin: 200px auto 10px;
   box-sizing: border-box;
-  background-color: $COLOR--white-two;
+  background-color: $COLOR--white;
   text-align: left;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
   opacity: 1;

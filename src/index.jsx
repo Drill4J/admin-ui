@@ -3,10 +3,11 @@ import { render } from 'react-dom';
 import { Provider } from 'react-redux';
 import 'common/polyfills';
 import 'common/css/fonts/fonts.scss';
+import 'common/css/variables/colors.scss';
+import 'common/css/variables/fonts.scss';
 import 'common/css/common.scss';
 import App from './app';
 import { configureStore } from './store';
-import './index.scss';
 
 export const { store } = configureStore(window.REDUX_STATE);
 

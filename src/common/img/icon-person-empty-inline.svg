@@ -1,7 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="18" height="14" viewBox="0 0 18 14">
-    <g fill="none" fill-rule="evenodd">
-        <g transform="translate(-12 -13)">
-            <path fill="#BDC7CC" fill-rule="nonzero" d="M21 14a2 2 0 1 1 0 4 2 2 0 0 1 0-4zm0 9c2.926 0 6 1.364 6 1.969V26H15v-1.031C15 24.364 18.074 23 21 23zm0-11a4 4 0 1 0 0 8 4 4 0 0 0 0-8zm0 9c-2.665 0-8 1.335-8 4v3h16v-3c0-2.665-5.335-4-8-4z"/>
-        </g>
-    </g>
-</svg>
