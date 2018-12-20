@@ -8,7 +8,7 @@ import { ScreenLock } from 'components/screenLock';
 import { Notifications } from 'components/notification';
 
 import { EmptyLayout } from 'layouts/emptyLayout';
-import { AppLayout } from 'layouts/appLayout';
+import { PluginsLayout } from 'layouts/pluginsLayout';
 
 import { NotFoundPage } from 'pages/outside/notFoundPage';
 import { LoginPage } from 'pages/outside/loginPage';
@@ -20,7 +20,7 @@ const pageRendering = {
   [NOT_FOUND]: { component: NotFoundPage, layout: EmptyLayout },
   [LOGIN_PAGE]: { component: LoginPage, layout: EmptyLayout },
 
-  [PLUGIN_PAGE]: { component: PluginPage, layout: AppLayout },
+  [PLUGIN_PAGE]: { component: PluginPage, layout: PluginsLayout },
 };
 
 const PageSwitcher = ({ page }) => {

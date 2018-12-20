@@ -1,0 +1,20 @@
+.plugins-layout {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 80%;
+  height: 100%;
+  min-width: 320px;
+  overflow: hidden;
+  margin: auto;
+  border-right: 1px solid;
+  border-left: 1px solid;
+}
+
+.content {
+  position: relative;
+  box-sizing: border-box;
+  width: calc(100% - 80px);
+  padding: 25px;
+  margin: 0 40px 15px 80px;
+}
