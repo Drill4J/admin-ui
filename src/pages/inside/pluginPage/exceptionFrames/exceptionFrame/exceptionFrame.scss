@@ -1,12 +1,11 @@
 .exception-frame {
-  padding-left: 15%;
+
 }
 
 .name-row {
   display: flex;
-  border-bottom: 1px solid;
   cursor: pointer;
-  padding: 0.3em 0;
+  padding: 0.3em 0 0.3em calc(3% + 60px);
 }
 
 .expand-icon {
@@ -27,10 +26,13 @@
 }
 
 .name {
+  word-break: break-all;
+  border-bottom: 1px solid;
 }
 
 .variables {
   padding: 3em 50px;
+  margin-left: calc(3% + 60px);
   position: relative;
   border-bottom: 1px solid;
 

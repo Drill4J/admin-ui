@@ -10,12 +10,15 @@ export class ExceptionsGrid extends PureComponent {
   static propTypes = {
     intl: intlShape.isRequired,
     data: PropTypes.arrayOf(PropTypes.object).isRequired,
+    actions: PropTypes.shape({
+      onDeleteStackTrace: PropTypes.func.isRequired,
+    }).isRequired,
   };
 
   columns = getColumns(this.props.intl.formatMessage);
 
   render() {
-    const { data } = this.props;
+    const { data, actions } = this.props;
     const gridData = {
       items: data.map((item, index) => ({ ...item, id: index })),
     };
@@ -23,6 +26,7 @@ export class ExceptionsGrid extends PureComponent {
     return (
       <Grid
         data={gridData}
+        actions={actions}
         columns={this.columns}
         withSubInfo
         subInfoComponent={ExceptionsGridSubInfo}

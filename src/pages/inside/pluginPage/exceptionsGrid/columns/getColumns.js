@@ -31,13 +31,13 @@ const messages = defineMessages({
 export const getColumns = (formatMessage) => [
   {
     id: 'time',
-    width: '13%',
+    width: '80px',
     title: formatMessage(messages.timeColumnTitle),
     component: TimeColumn,
   },
   {
     id: 'event',
-    width: '28%',
+    width: '42%',
     title: formatMessage(messages.eventColumnTitle),
     component: EventColumn,
   },

@@ -16,7 +16,7 @@ export class ExceptionFrames extends PureComponent {
 
     return (
       <div className={cx('exception-frames')}>
-        {data.exception.map((frame, index) => ({ ...frame, id: index })).map((frame) => (
+        {data.stackTrace.map((frame, index) => ({ ...frame, id: index })).map((frame) => (
           <ExceptionFrame frame={frame} key={frame.id} />
         ))}
       </div>
