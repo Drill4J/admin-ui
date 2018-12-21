@@ -20,7 +20,7 @@ export class ExceptionsGrid extends PureComponent {
   render() {
     const { data, actions } = this.props;
     const gridData = {
-      items: data.map((item, index) => ({ ...item, id: index })),
+      items: data,
     };
 
     return (

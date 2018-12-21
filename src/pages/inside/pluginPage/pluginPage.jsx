@@ -19,9 +19,14 @@ export class PluginPage extends PureComponent {
   componentDidMount() {
     this.connection = new WsConnection()
       .onOpen(() => this.connection.register())
-      .onMessage((event) => {
+      .onMessage('MESSAGE', (message) => {
         this.setState({
-          exceptions: [JSON.parse(JSON.parse(event.data).message), ...this.state.exceptions],
+          exceptions: [JSON.parse(message), ...this.state.exceptions],
+        });
+      })
+      .onMessage('DELETE', (message) => {
+        this.setState({
+          exceptions: this.state.exceptions.filter((exception) => exception.id !== message),
         });
       });
   }

@@ -1,10 +1,18 @@
 const WS_CONNECTION_HOST = 'ws://localhost:8090/drill-socket';
-const DRILL_SESSION_ID = '339034885B359EC6B23F973028D2C2FE';
+const DRILL_SESSION_ID = '7AC70FA0197299C382877FBDAE520EB4';
 
 export class WsConnection {
   constructor(destination = `except-ions${DRILL_SESSION_ID}`) {
     this.connection = new WebSocket(WS_CONNECTION_HOST);
     this.destination = destination;
+    this.onMessageListeners = {};
+
+    this.connection.onmessage = (event) => {
+      const data = JSON.parse(event.data);
+      const callback = this.onMessageListeners[data.type];
+
+      callback && callback(data.message);
+    };
   }
 
   onOpen(callback) {
@@ -13,8 +21,8 @@ export class WsConnection {
     return this;
   }
 
-  onMessage(callback) {
-    this.connection.onmessage = callback;
+  onMessage(type, callback) {
+    this.onMessageListeners[type] = callback;
 
     return this;
   }
