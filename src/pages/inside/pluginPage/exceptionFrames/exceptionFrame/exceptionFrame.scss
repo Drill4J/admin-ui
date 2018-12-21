@@ -33,7 +33,6 @@
   padding: 3em 50px;
   position: relative;
   border-bottom: 1px solid;
-  font: 14px/18px monospace;
 
   &:before,
   &:after {
@@ -53,4 +52,6 @@
 }
 
 .variable {
+  font: 13px/18px monospace;
+  word-break: break-word;
 }
