@@ -2,16 +2,12 @@
   position: relative;
   display: inline-flex;
   box-sizing: border-box;
-  height: 40px;
-  padding: 0 15px;
+  height: 47px;
   vertical-align: top;
+  padding-right: 8px;
 
   &.expand-cell {
     padding: 0;
-  }
-
-  &:last-child {
-    border-right: none;
   }
 }
 
@@ -20,7 +16,7 @@
   overflow: hidden;
   margin: auto 0;
   font-family: $FONT-SEMIBOLD;
-  font-size: 13px;
+  font-size: 14px;
   text-overflow: ellipsis;
 }
 
@@ -34,14 +30,10 @@
   transition: transform 200ms linear;
 
   svg {
-    fill: $COLOR--tealish;
+    fill: #1A9CB0;
   }
 
   &.expanded {
     transform: rotate(0deg);
-
-    svg {
-      fill: $COLOR--topaz;
-    }
   }
 }

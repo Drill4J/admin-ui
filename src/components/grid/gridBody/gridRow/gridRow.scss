@@ -1,21 +1,15 @@
 .grid-row {
-  position: relative;
+  min-height: 32px;
   box-sizing: border-box;
-  display: block;
-  width: 100%;
-  min-height: 40px;
-  border: 1px solid transparent;
-  border-bottom: 1px solid $COLOR--black;
-  transition: background-color 200ms linear;
+  border-bottom: 1px solid #e5e9eb;
 
   &.expanded {
-    height: auto;
-
     .grid-row-main {
-      border-bottom: 1px solid;
+      background-color: #d9ecff;
     }
+
     .grid-row-additional {
-      background-color: $COLOR--white;
+
     }
   }
 
@@ -28,12 +22,12 @@
     border: 1px solid;
     background-color: $COLOR--tealish;
   }
-}
-.grid-row-main {
-  position: relative;
-}
-.grid-row-additional {
-  position: relative;
-  box-sizing: border-box;
-  padding: 15px;
+
+  .grid-row-main {
+    padding: 8px 0;
+  }
+
+  .grid-row-additional {
+
+  }
 }

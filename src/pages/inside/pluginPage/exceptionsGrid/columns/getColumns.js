@@ -31,25 +31,25 @@ const messages = defineMessages({
 export const getColumns = (formatMessage) => [
   {
     id: 'time',
-    width: '80px',
+    width: '7%',
     title: formatMessage(messages.timeColumnTitle),
     component: TimeColumn,
   },
   {
     id: 'event',
-    width: '42%',
+    width: '50%',
     title: formatMessage(messages.eventColumnTitle),
     component: EventColumn,
   },
   {
     id: 'url',
-    width: '15%',
+    width: '10%',
     title: formatMessage(messages.urlColumnTitle),
     component: UrlColumn,
   },
   {
     id: 'type',
-    width: '11%',
+    width: '10%',
     title: formatMessage(messages.typeColumnTitle),
     component: TypeColumn,
   },

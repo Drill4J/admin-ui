@@ -1,8 +1,17 @@
 import PropTypes from 'prop-types';
+import classNames from 'classnames/bind';
+import styles from '../exceptionsGrid.scss';
+
+const cx = classNames.bind(styles);
 
 export const ActionsColumn = ({ data, actions }) => (
   <div>
-    <button onClick={() => actions.onDeleteStackTrace(data.id)}>delete</button>
+    <span
+      className={cx('action-link')}
+      onClick={() => actions.onDeleteStackTrace(data.destination, data.id)}
+    >
+      delete
+    </span>
   </div>
 );
 

@@ -30,7 +30,7 @@ export class ExceptionFrame extends PureComponent {
       <div className={cx('exception-frame')}>
         <div className={cx('name-row')} onClick={this.toggleExpand}>
           <i className={expandIconClassNames}>{Parse(ExpandIcon)}</i>
-          <div className={cx('name')}>at {frame.name}</div>
+          <div className={cx('name', { expanded })}>at {frame.name}</div>
         </div>
         {expanded && (
           <div className={cx('variables')}>
