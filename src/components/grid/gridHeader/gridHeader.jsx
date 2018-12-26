@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import classNames from 'classnames/bind';
 import { HeaderCell } from './headerCell';
-import styles from './gridHeader.scss';
+import styles from './gridHeader.css';
 
 const cx = classNames.bind(styles);
 

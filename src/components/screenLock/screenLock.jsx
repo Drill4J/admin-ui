@@ -5,7 +5,7 @@ import classNames from 'classnames/bind';
 import { connect } from 'react-redux';
 import { screenLockVisibilitySelector } from 'controllers/screenLock';
 import { SpinningPreloader } from 'components/preloaders/spinningPreloader';
-import styles from './screenLock.scss';
+import styles from './screenLock.css';
 
 const ScreenLockRoot = document.getElementById('screen-lock-root');
 const cx = classNames.bind(styles);

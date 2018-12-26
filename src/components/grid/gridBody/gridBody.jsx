@@ -6,7 +6,7 @@ import { SpinningPreloader } from 'components/preloaders/spinningPreloader';
 import { NoItemsView } from './noItemsView'; // Deprecated component. Remove after refactoring of noItemsView for
 // pipeline wizard.
 import { GridRow } from './gridRow';
-import styles from './gridBody.scss';
+import styles from './gridBody.css';
 
 const cx = classNames.bind(styles);
 

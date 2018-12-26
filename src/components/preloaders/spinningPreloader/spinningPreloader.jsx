@@ -1,5 +1,5 @@
 import classNames from 'classnames/bind';
-import styles from './spinningPreloader.scss';
+import styles from './spinningPreloader.css';
 
 const cx = classNames.bind(styles);
 

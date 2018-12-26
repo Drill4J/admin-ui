@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames/bind';
 import { GridHeader } from './gridHeader';
 import { GridBody } from './gridBody';
-import styles from './grid.scss';
+import styles from './grid.css';
 
 const cx = classNames.bind(styles);
 

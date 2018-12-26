@@ -1,0 +1,35 @@
+.empty-layout {
+  position: relative;
+  display: flex;
+  width: 100%;
+  height: 100%;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  width: 780px;
+  height: auto;
+  margin: 110px auto auto;
+}
+
+.header {
+  display: flex;
+  width: 100%;
+  height: 60px;
+  box-sizing: border-box;
+  padding: 0 30px;
+}
+
+.logo {
+  width: 110px;
+  height: 30px;
+  margin: auto 0;
+}
+
+.body {
+  position: relative;
+  display: flex;
+  width: 100%;
+  height: 515px;
+}

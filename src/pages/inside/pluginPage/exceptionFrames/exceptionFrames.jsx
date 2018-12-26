@@ -2,7 +2,7 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames/bind';
 import { ExceptionFrame } from './exceptionFrame';
-import styles from './exceptionFrames.scss';
+import styles from './exceptionFrames.css';
 
 const cx = classNames.bind(styles);
 

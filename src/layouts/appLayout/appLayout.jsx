@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import classNames from 'classnames/bind';
 import { ScrollWrapper } from 'components/scrollWrapper';
-import styles from './appLayout.scss';
+import styles from './appLayout.css';
 
 const cx = classNames.bind(styles);
 
@@ -12,6 +12,7 @@ export const AppLayout = ({ children }) => (
     </ScrollWrapper>
   </div>
 );
+
 AppLayout.propTypes = {
   children: PropTypes.node,
 };

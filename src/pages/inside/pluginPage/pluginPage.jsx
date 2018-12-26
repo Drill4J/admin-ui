@@ -5,7 +5,7 @@ import { WsConnection } from 'common/connection';
 import { GLOBAL, LOCAL } from 'common/constants';
 import { ExceptionsGrid } from './exceptionsGrid';
 
-const DRILL_SESSION_ID = '0A3523744FA09F6C21A9E116CA005161';
+const DRILL_SESSION_ID = '819600B581247CAEBED1C415B068DAC5';
 
 @connect((state) => ({
   pluginId: state.location.payload.pluginId,

@@ -1,6 +1,6 @@
 import classNames from 'classnames/bind';
 import { ExceptionFrames } from '../../exceptionFrames';
-import styles from './exceptionsGridSubInfo.scss';
+import styles from './exceptionsGridSubInfo.css';
 
 const cx = classNames.bind(styles);
 

@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import classNames from 'classnames/bind';
-import styles from './gridCell.scss';
+import styles from './gridCell.css';
 
 const cx = classNames.bind(styles);
 
@@ -9,9 +9,11 @@ const TextCell = ({ value }) => (
     <span>{value}</span>
   </div>
 );
+
 TextCell.propTypes = {
   value: PropTypes.any,
 };
+
 TextCell.defaultProps = {
   value: '',
 };
@@ -21,6 +23,7 @@ export const GridCell = ({ component: CellComponent, data, meta, actions, width 
     <CellComponent data={data} actions={actions} meta={meta} className={cx('grid-cell')} />
   </div>
 );
+
 GridCell.propTypes = {
   component: PropTypes.oneOfType([PropTypes.node, PropTypes.func]),
   data: PropTypes.object,
@@ -28,6 +31,7 @@ GridCell.propTypes = {
   actions: PropTypes.object,
   width: PropTypes.string,
 };
+
 GridCell.defaultProps = {
   component: TextCell,
   data: {},

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import classNames from 'classnames/bind';
 import PropTypes from 'prop-types';
 import { Scrollbars } from 'react-custom-scrollbars';
-import styles from './scrollWrapper.scss';
+import styles from './scrollWrapper.css';
 
 const cx = classNames.bind(styles);
 

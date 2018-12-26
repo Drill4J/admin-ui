@@ -3,9 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { NOT_FOUND, redirect } from 'redux-first-router';
 import { LOGIN_PAGE, PLUGIN_PAGE } from 'common/constants';
-import { ModalContainer } from 'components/modal';
 import { ScreenLock } from 'components/screenLock';
-import { Notifications } from 'components/notification';
 
 import { EmptyLayout } from 'layouts/emptyLayout';
 import { PluginsLayout } from 'layouts/pluginsLayout';
@@ -14,7 +12,7 @@ import { NotFoundPage } from 'pages/outside/notFoundPage';
 import { LoginPage } from 'pages/outside/loginPage';
 import { PluginPage } from 'pages/inside/pluginPage';
 
-import styles from './pageSwitcher.scss';
+import styles from './pageSwitcher.css';
 
 const pageRendering = {
   [NOT_FOUND]: { component: NotFoundPage, layout: EmptyLayout },
@@ -36,8 +34,6 @@ const PageSwitcher = ({ page }) => {
       <Layout>
         <PageComponent />
       </Layout>
-      <ModalContainer />
-      <Notifications />
       <ScreenLock />
     </div>
   );

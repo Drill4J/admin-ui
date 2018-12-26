@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import Parser from 'html-react-parser';
 import classNames from 'classnames/bind';
 import ArrowIcon from 'common/img/icon-arrow-down-inline.svg';
-import styles from './headerCell.scss';
+import styles from './headerCell.css';
 
 const cx = classNames.bind(styles);
 

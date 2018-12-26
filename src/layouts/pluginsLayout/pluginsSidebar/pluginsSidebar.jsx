@@ -1,7 +1,7 @@
 import classNames from 'classnames/bind';
 import { NavLink } from 'redux-first-router-link';
 import { PLUGIN_PAGE } from 'common/constants';
-import styles from './pluginsSidebar.scss';
+import styles from './pluginsSidebar.css';
 
 const cx = classNames.bind(styles);
 

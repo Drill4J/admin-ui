@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames/bind';
 import { GridCell } from './gridCell';
 import { ExpanderCell } from './expanderCell';
-import styles from './gridRow.scss';
+import styles from './gridRow.css';
 
 const cx = classNames.bind(styles);
 

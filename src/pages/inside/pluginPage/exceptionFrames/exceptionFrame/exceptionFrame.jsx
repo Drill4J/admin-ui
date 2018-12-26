@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames/bind';
 import Parse from 'html-react-parser';
 import ExpandIcon from 'common/img/icon-arrow-down-inline.svg';
-import styles from './exceptionFrame.scss';
+import styles from './exceptionFrame.css';
 
 const cx = classNames.bind(styles);
 

@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames/bind';
 import { ScrollWrapper } from 'components/scrollWrapper';
 import { PluginsSidebar } from './pluginsSidebar';
-import styles from './pluginsLayout.scss';
+import styles from './pluginsLayout.css';
 
 const cx = classNames.bind(styles);
 

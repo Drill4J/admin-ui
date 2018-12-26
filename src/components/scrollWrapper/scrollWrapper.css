@@ -1,0 +1,35 @@
+.scroll-component:hover .thumb-horizontal,
+.scroll-component:hover .thumb-vertical {
+  opacity: .5;
+}
+
+.track-horizontal {
+  right: 2px;
+  bottom: 0;
+  left: 2px;
+  height: 8px !important;
+  border-radius: 3px;
+}
+
+.track-vertical {
+  right: 0;
+  bottom: 2px;
+  top: 2px;
+  width: 8px !important;
+  border-radius: 3px;
+  z-index: 1;
+}
+
+.thumb-horizontal {
+  cursor: pointer;
+  border-radius: inherit;
+  opacity: 0;
+  transition: opacity 200ms;
+}
+
+.thumb-vertical {
+  cursor: pointer;
+  border-radius: inherit;
+  opacity: 0;
+  transition: opacity 400ms;
+}

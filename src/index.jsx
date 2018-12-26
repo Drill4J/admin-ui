@@ -3,9 +3,9 @@ import { render } from 'react-dom';
 import { Provider } from 'react-redux';
 import 'common/polyfills';
 import 'common/css/fonts/fonts.scss';
-import 'common/css/variables/colors.scss';
-import 'common/css/variables/fonts.scss';
-import 'common/css/common.scss';
+import 'common/css/variables/colors.css';
+import 'common/css/variables/fonts.css';
+import 'common/css/common.css';
 import App from './app';
 import { configureStore } from './store';
 
