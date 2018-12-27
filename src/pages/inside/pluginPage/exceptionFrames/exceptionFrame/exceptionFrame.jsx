@@ -35,8 +35,8 @@ export class ExceptionFrame extends PureComponent {
         {expanded && (
           <div className={cx('variables')}>
             {frame.localVariables.map((variable) => (
-              <div className={cx('variable')} key={variable}>
-                {variable}
+              <div className={cx('variable')} key={variable.typeName + variable.variableName}>
+                {variable.typeName} {variable.variableName} = {variable.variableValue}
               </div>
             ))}
           </div>
