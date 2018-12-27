@@ -5,14 +5,14 @@ import { WsConnection } from 'common/connection';
 import { GLOBAL, LOCAL } from 'common/constants';
 import { ExceptionsGrid } from './exceptionsGrid';
 
-const DRILL_SESSION_ID = '819600B581247CAEBED1C415B068DAC5';
-
 @connect((state) => ({
   pluginId: state.location.payload.pluginId,
+  drillSessionId: state.location.payload.drillSessionId,
 }))
 export class PluginPage extends PureComponent {
   static propTypes = {
     pluginId: PropTypes.string.isRequired,
+    drillSessionId: PropTypes.string.isRequired,
   };
 
   state = {
@@ -22,7 +22,7 @@ export class PluginPage extends PureComponent {
   componentDidMount() {
     this.connection = new WsConnection().onOpen(() => {
       this.connection
-        .subscribe(`except-ions${DRILL_SESSION_ID}`, (data) => this.onMessage(data, LOCAL))
+        .subscribe(`except-ions${this.props.drillSessionId}`, (data) => this.onMessage(data, LOCAL))
         .subscribe('except-ions', (data) => this.onMessage(data, GLOBAL));
     });
   }
