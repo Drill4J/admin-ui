@@ -1,0 +1,68 @@
+@import '../../common/style-guide/index';
+
+.login-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  box-sizing: border-box;
+
+  &__title {
+    color: $dark-blue;
+    font-size: 32px;
+    line-height: $common-element-height;
+    text-align: center;
+  }
+
+  &__sub-title {
+    margin-top: 8px;
+    padding: 0 40px;
+    color: $slate-gray;
+    font-size: 16px;
+    line-height: 28px;
+    text-align: center;
+  }
+
+  &__sign-in-form {
+    margin-top: 32px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    & > * {
+      margin-bottom: 16px;
+      height: $common-element-height;
+      width: 320px;
+    }
+  }
+
+  &__sign-in-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    & > * {
+      margin-left: 16px;
+    }
+  }
+
+  &__forgot-password {
+    margin-top: 8px;
+    margin-bottom: 42px;
+    color: $azure-radiance;
+    font-family: $semibold-font;
+    font-size: 14px;
+    line-height: 22px;
+    cursor: pointer;
+  }
+
+  &__copyright {
+    margin-top: 130px;
+    color: $slate-gray;
+    font-family: $regular-font;
+    font-size: 12px;
+    line-height: 24px;
+    text-align: center;
+  }
+}

@@ -1,1 +1,0 @@
-export { PluginsLayout } from './pluginsLayout';
