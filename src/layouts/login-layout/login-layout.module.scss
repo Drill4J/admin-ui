@@ -1,0 +1,21 @@
+@import '../../common/style-guide/index';
+
+.login-layout {
+  display: flex;
+  height: 100%;
+  width: 100%;
+
+  &__sidebar {
+    height: 100%;
+    width: 480px;
+    background-color: $white-color;
+    box-shadow: 0 0 40px 0 rgba(15, 36, 52, 0.15);
+  }
+
+  &__logo-wrapper {
+    display: flex;
+    flex-grow: 1;
+    align-items: center;
+    justify-content: center;
+  }
+}

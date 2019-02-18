@@ -1,0 +1,35 @@
+@import '../../common/style-guide/index';
+
+.input-wrapper {
+  position: relative;
+
+  &__input-element {
+    width: 100%;
+    height: $common-element-height;
+    font-size: 16px;
+    line-height: 22px;
+    border: 1px solid $slate-gray;
+    background-color: $white-color;
+    padding: 0 48px;
+    outline: none;
+
+    &::placeholder {
+      opacity: 0.5;
+    }
+
+    &--rounded {
+      border-radius: 20px;
+    }
+  }
+
+  &__icon-wrapper {
+    display: flex;
+    justify-content: center;
+    height: 20px;
+    width: 20px;
+    position: absolute;
+    color: $slate-gray;
+    left: 12px;
+    top: 10px;
+  }
+}

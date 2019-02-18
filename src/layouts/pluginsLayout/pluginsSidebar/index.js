@@ -1,1 +1,0 @@
-export { PluginsSidebar } from './pluginsSidebar';

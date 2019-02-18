@@ -1,1 +1,0 @@
-export { PluginPage } from './pluginPage';

@@ -1,0 +1,31 @@
+@import '../../common/style-guide/index';
+
+.button {
+  border-radius: 20px;
+  height: $common-element-height;
+  width: 320px;
+  outline: 0;
+
+  &:hover {
+    cursor: pointer;
+  }
+
+  &--type {
+    &--primary {
+      font-family: $regular-font;
+      border: 1px solid $azure-radiance;
+      background-color: $azure-radiance;
+      color: $white-color;
+      font-size: 16px;
+      line-height: 22px;
+    }
+    &--secondary {
+      font-family: $semibold-font;
+      border: 1px solid $azure-radiance;
+      background-color: $white-color;
+      color: $azure-radiance;
+      font-size: 14px;
+      line-height: 19px;
+    }
+  }
+}
