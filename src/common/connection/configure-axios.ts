@@ -4,7 +4,7 @@ import { TOKEN_HEADER, TOKEN_KEY } from '../constants';
 
 const hosts: { [env: string]: string } = {
   local: 'http://localhost:8090',
-  dev: '',
+  development: '/api',
   qa: '',
   prod: '',
 };
