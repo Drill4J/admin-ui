@@ -23,7 +23,7 @@ export const Sidebar = withRouter(
 
     return (
       <div className={className}>
-        <Logo>
+        <Logo onClick={() => push('/')}>
           <LogoSvg />
         </Logo>
         {links.length > 0 &&
