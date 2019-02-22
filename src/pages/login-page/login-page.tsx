@@ -39,9 +39,7 @@ export const LoginPage = withRouter(
         <div className={className}>
           <Logo />
           <Title>Welcome to Drill4J</Title>
-          <SubTitle>
-            Login is temporarily unavailable. Click "Сontinue as guest" to continue
-          </SubTitle>
+          <SubTitle>Click "Continue as a guest" to entry Admin Panel with admin privilege</SubTitle>
           {error && <Error>{`${error.message}`}</Error>}
           <SignInForm>
             <Input placeholder="User ID" disabled rounded icon={<Icons.Account />} />
@@ -52,7 +50,7 @@ export const LoginPage = withRouter(
           </SignInForm>
           <ForgotPasswordLink>Forgot your password?</ForgotPasswordLink>
           <Button type="secondary" onClick={handleLogin}>
-            Continue as guest (read only)
+            Continue as a guest (read only)
           </Button>
           <Copyright>{`© ${new Date().getFullYear()} Drill4J. All rights reserved.`}</Copyright>
         </div>
