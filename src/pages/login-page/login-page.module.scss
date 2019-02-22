@@ -8,6 +8,12 @@
   height: 100%;
   box-sizing: border-box;
 
+  &__logo {
+    height: 158px;
+    width: 349px;
+    margin-bottom: 33px;
+  }
+
   &__title {
     color: $dark-blue;
     font-size: 32px;
