@@ -1,0 +1,32 @@
+@import '../../../common/style-guide/index';
+
+.agents-header {
+  display: flex;
+  align-items: center;
+  height: 78px;
+  width: 100%;
+  border-bottom: 1px solid $athens-gray-dark;
+
+  &__content {
+    margin: 0 24px;
+  }
+
+  &__title {
+    color: $thunder-color;
+    font-size: 24px;
+    line-height: 32px;
+  }
+
+  &__agents-count {
+    color: $regent-gray;
+    font-size: 18px;
+    font-family: $light-font;
+    line-height: 24px;
+    margin-left: 8px;
+  }
+
+  &__search-button {
+    margin-left: 34px;
+    color: $azure-radiance;
+  }
+}

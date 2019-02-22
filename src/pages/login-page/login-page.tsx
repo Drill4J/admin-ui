@@ -37,7 +37,8 @@ export const LoginPage = withRouter(
     return (
       <LoginLayout>
         <div className={className}>
-          <Title>Welcome to Drill4J Portal</Title>
+          <Logo />
+          <Title>Welcome to Drill4J</Title>
           <SubTitle>
             Login is temporarily unavailable. Click "Сontinue as guest" to continue
           </SubTitle>
@@ -60,6 +61,7 @@ export const LoginPage = withRouter(
   }),
 );
 
+const Logo = loginPage.logo('div');
 const Title = loginPage.title('div');
 const SubTitle = loginPage.subTitle('div');
 const Error = loginPage.error(ErrorPanel);

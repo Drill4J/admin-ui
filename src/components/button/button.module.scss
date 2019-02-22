@@ -2,7 +2,7 @@
 
 .button {
   border-radius: 20px;
-  height: $common-element-height;
+  min-height: $common-element-height;
   width: 320px;
   outline: 0;
 
