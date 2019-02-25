@@ -1,6 +1,6 @@
-@import '../../../common/style-guide/index';
+@import '../../common/style-guide/index';
 
-.agents-header {
+.page-header {
   display: flex;
   align-items: center;
   height: 78px;
@@ -17,7 +17,7 @@
     line-height: 32px;
   }
 
-  &__agents-count {
+  &__items-count {
     color: $regent-gray;
     font-size: 18px;
     font-family: $light-font;
