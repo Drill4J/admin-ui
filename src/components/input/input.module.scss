@@ -20,6 +20,11 @@
     &--rounded {
       border-radius: 20px;
     }
+
+    &--disabled {
+      border: 1px solid $athens-gray-dark;
+      background-color: $athens-gray;
+    }
   }
 
   &__icon-wrapper {

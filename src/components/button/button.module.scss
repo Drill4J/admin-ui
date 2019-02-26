@@ -7,7 +7,16 @@
   outline: 0;
 
   &:hover {
-    cursor: pointer;
+    &:not(.button--disabled) {
+      cursor: pointer;
+      opacity: 0.75;
+      background-color: $azure-radiance;
+      color: $white-color;
+    }
+  }
+
+  &--disabled {
+    opacity: 0.25;
   }
 
   &--type {

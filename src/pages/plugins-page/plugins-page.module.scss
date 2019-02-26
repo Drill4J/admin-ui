@@ -1,19 +1,20 @@
 @import '../../common/style-guide/index';
 
-.agents-page {
+.plugins-page {
   display: flex;
   flex-direction: column;
   flex-grow: 1;
 
   &__content {
     display: flex;
-    flex-flow: row wrap;
-    margin: 24px;
+    flex-direction: column;
+    flex-grow: 1;
+    align-items: center;
+    justify-content: center;
+  }
 
-    & > * {
-      margin-right: 8px;
-      margin-bottom: 16px;
-    }
+  &__icon {
+    color: $porcelain-color;
   }
 
   &__title {
@@ -21,7 +22,7 @@
     font-size: 24px;
     line-height: 32px;
     text-align: center;
-    margin: 40px 0 8px 0;
+    margin-top: 38px;
   }
 
   &__sub-title {
@@ -29,5 +30,6 @@
     font-size: 14px;
     line-height: 24px;
     text-align: center;
+    margin-top: 8px;
   }
 }
