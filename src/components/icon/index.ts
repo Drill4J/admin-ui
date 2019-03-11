@@ -10,6 +10,7 @@ import { path as settingsPath } from './path/settings.path';
 import { path as searchPath } from './path/search.path';
 import { path as filtersPath } from './path/fitlers.path';
 import { path as newWindowPath } from './path/new-window.path';
+import { path as checkboxPath } from './path/checkbox.path';
 import { declareIcon } from './declare-icon';
 
 export const Icons = {
@@ -25,4 +26,5 @@ export const Icons = {
   Search: declareIcon(searchPath, { defaultWidth: 16, defaultHeight: 16 }),
   Filters: declareIcon(filtersPath, { defaultWidth: 18, defaultHeight: 19 }),
   NewWindow: declareIcon(newWindowPath),
+  Checkbox: declareIcon(checkboxPath, { defaultWidth: 20, defaultHeight: 20 }),
 };
