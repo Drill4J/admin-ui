@@ -1,0 +1,12 @@
+@import '../../../common/style-guide/index';
+
+.table-checkbox {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  color: $athens-gray-dark;
+
+  &--selected {
+    color: $azure-radiance;
+  }
+}
