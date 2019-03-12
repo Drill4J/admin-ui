@@ -20,7 +20,7 @@
 
   &__title {
     margin-bottom: 26px;
-    color: $dark-blue;
+    color: map-get($color-palette, dark-blue);
     font-size: 64px;
     line-height: 87px;
   }
@@ -32,7 +32,7 @@
   }
 
   &__error-code {
-    color: $dark-blue;
+    color: map-get($color-palette, dark-blue);
     font-size: 14px;
     line-height: 40px;
     font-family: $semibold-font;

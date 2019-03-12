@@ -3,14 +3,14 @@
 .agent-card {
   height: 200px;
   width: 286px;
-  border: 1px solid $azure-radiance;
-  background-color: $white-color;
+  border: 1px solid map-get($color-palette, blue100);
+  background-color: map-get($color-palette, white);
 
   &__header {
     display: flex;
     justify-content: space-between;
     margin: 14px 16px 16px 16px;
-    color: $azure-radiance;
+    color: map-get($color-palette, blue100);
     font-size: 14px;
     font-weight: 600;
   }
@@ -28,7 +28,7 @@
   }
 
   &__desctiption {
-    color: $regent-gray;
+    color: map-get($color-palette, middle-blue);
     margin: 14px 16px 16px 16px;
     font-size: 13px;
     line-height: 22px;

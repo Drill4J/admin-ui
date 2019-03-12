@@ -17,7 +17,7 @@
   }
 
   &__title {
-    color: $regent-gray;
+    color: map-get($color-palette, middle-blue);
     font-size: 24px;
     line-height: 32px;
     text-align: center;
@@ -33,7 +33,7 @@
 
   // stub for demo should be removed
   &__name-column {
-    color: $azure-radiance;
+    color: map-get($color-palette, blue100);
     font-size: 14px;
     font-weight: 600;
     line-height: 48px;

@@ -4,9 +4,9 @@
   display: flex;
   align-items: center;
   cursor: pointer;
-  color: $athens-gray-dark;
+  color: map-get($color-palette, light-blue);
 
   &--selected {
-    color: $azure-radiance;
+    color: map-get($color-palette, blue100);
   }
 }

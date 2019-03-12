@@ -5,20 +5,20 @@
   align-items: center;
   height: 78px;
   width: 100%;
-  border-bottom: 1px solid $athens-gray-dark;
+  border-bottom: 1px solid map-get($color-palette, light-blue);
 
   &__content {
     margin: 0 24px;
   }
 
   &__title {
-    color: $thunder-color;
+    color: map-get($color-palette, black100);
     font-size: 24px;
     line-height: 32px;
   }
 
   &__items-count {
-    color: $regent-gray;
+    color: map-get($color-palette, middle-blue);
     font-size: 18px;
     font-family: $light-font;
     line-height: 24px;
@@ -27,6 +27,6 @@
 
   &__search-button {
     margin-left: 34px;
-    color: $azure-radiance;
+    color: map-get($color-palette, blue100);
   }
 }

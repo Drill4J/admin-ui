@@ -8,7 +8,7 @@ $checkbox-toggler-height: 10px;
   font-size: 12px;
   font-weight: 600;
   line-height: 16px;
-  color: $green-color;
+  color: map-get($color-palette, green100);
   display: flex;
   align-items: center;
 
@@ -27,7 +27,7 @@ $checkbox-toggler-height: 10px;
     cursor: pointer;
     box-shadow: inset 0 0 2px 1px rgba(0, 0, 0, 0.1);
     margin-right: 12px;
-    background-color: $green-color;
+    background-color: map-get($color-palette, green100);
 
     &:before {
       content: '';
@@ -36,7 +36,7 @@ $checkbox-toggler-height: 10px;
       left: 9px;
       height: $checkbox-toggler-height;
       width: $checkbox-toggler-height;
-      background-color: $white-color;
+      background-color: map-get($color-palette, white);
       border-radius: $checkbox-toggler-height;
       box-shadow: 0 2px 4px 0 rgba(3, 3, 3, 0.44);
     }

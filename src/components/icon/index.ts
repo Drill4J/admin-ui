@@ -11,6 +11,8 @@ import { path as searchPath } from './path/search.path';
 import { path as filtersPath } from './path/fitlers.path';
 import { path as newWindowPath } from './path/new-window.path';
 import { path as checkboxPath } from './path/checkbox.path';
+import { path as gridLayoutPath } from './path/grid-layout.path';
+import { path as listLayoutPath } from './path/list-layout.path';
 import { declareIcon } from './declare-icon';
 
 export const Icons = {
@@ -27,4 +29,6 @@ export const Icons = {
   Filters: declareIcon(filtersPath, { defaultWidth: 18, defaultHeight: 19 }),
   NewWindow: declareIcon(newWindowPath),
   Checkbox: declareIcon(checkboxPath, { defaultWidth: 20, defaultHeight: 20 }),
+  GridLayout: declareIcon(gridLayoutPath, { defaultWidth: 16, defaultHeight: 16 }),
+  ListLayout: declareIcon(listLayoutPath, { defaultWidth: 16, defaultHeight: 14 }),
 };

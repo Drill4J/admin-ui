@@ -21,7 +21,7 @@
   &__header {
     height: 50px;
     width: 100%;
-    border-bottom: 1px solid $athens-gray-dark;
+    border-bottom: 1px solid map-get($color-palette, light-blue);
   }
 
   &__content {

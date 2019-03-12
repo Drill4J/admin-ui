@@ -1,5 +1,11 @@
 import { WS_CONNECTION_HOST } from '../constants';
 
+interface StompResponse {
+  message: string;
+  destination: string;
+  type: string;
+}
+
 export class WsConnection {
   public connection: WebSocket;
   public onMessageListeners: { [key: string]: (arg: any) => void };
@@ -8,10 +14,10 @@ export class WsConnection {
     this.onMessageListeners = {};
 
     this.connection.onmessage = (event) => {
-      const data: { destination: string } = JSON.parse(event.data);
-      const callback = this.onMessageListeners[data.destination];
+      const { destination, message }: StompResponse = JSON.parse(event.data);
+      const callback = this.onMessageListeners[destination];
 
-      callback && callback(data);
+      callback && callback(JSON.parse(message));
     };
   }
 
@@ -22,14 +28,14 @@ export class WsConnection {
   }
 
   public subscribe(destination: string, callback: () => void) {
-    this.onMessageListeners[destination] = callback;
+    this.onMessageListeners[`/api/${destination}`] = callback;
     this.register(destination);
 
     return this;
   }
 
   public register(destination: string) {
-    return this.send(destination, 'REGISTER');
+    return this.send(`/api/${destination}`, 'REGISTER');
   }
 
   public send(destination: string, type: string, message = '') {
