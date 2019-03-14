@@ -7,6 +7,7 @@ import { Agent } from './agent-types';
 import { LayoutSwitch } from './layout-switch';
 import { TableView } from './table-view';
 import { CardView } from './card-view';
+import { NoAgentsStub } from './no-agents-stub';
 
 import styles from './agents-page.module.scss';
 
@@ -44,7 +45,15 @@ export const AgentsPage = agentsPage(({ className }: Props) => {
         }
       />
       <Content>
-        {isTableView ? <TableView agents={agents} /> : <CardView agents={agents} />}
+        {agents.length > 0 ? (
+          isTableView ? (
+            <TableView agents={agents} />
+          ) : (
+            <CardView agents={agents} />
+          )
+        ) : (
+          <NoAgentsStub />
+        )}
       </Content>
     </div>
   );
