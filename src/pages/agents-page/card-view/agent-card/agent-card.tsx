@@ -16,7 +16,7 @@ const agentCard = BEM(styles);
 export const AgentCard = agentCard(
   ({
     className,
-    agent: { name, description, isEnable, activePluginsCount, pluginsCount },
+    agent: { name, description, status, activePluginsCount, pluginsCount },
   }: Props) => (
     <div className={className}>
       <Header>
@@ -27,8 +27,8 @@ export const AgentCard = agentCard(
         </HeaderIconsWrapper>
       </Header>
       <DrillStatus>
-        <Toggler value={isEnable} label={`DRILL4J ${isEnable ? 'ON' : 'OFF'}`} />
-        {isEnable && (
+        <Toggler value={status} label={`DRILL4J ${status ? 'ON' : 'OFF'}`} />
+        {status && (
           <ActivePlugins>{`(${activePluginsCount} of ${pluginsCount} plugins on)`}</ActivePlugins>
         )}
       </DrillStatus>

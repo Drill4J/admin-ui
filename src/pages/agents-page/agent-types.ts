@@ -2,7 +2,7 @@ export interface Agent {
   name?: string;
   group?: string;
   description?: string;
-  isEnable?: boolean;
+  status?: boolean;
   drillAdminUrl?: string;
   address?: string;
   rawPluginNames?: string[];

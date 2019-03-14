@@ -33,6 +33,10 @@
     color: map-get($color-palette, blue100);
   }
 
+  &__items-actions {
+    margin-left: 100px;
+  }
+
   &__actions {
     display: flex;
     flex-grow: 1;

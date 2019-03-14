@@ -1,13 +1,14 @@
 import * as React from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 
-import { PageHeader } from '../../components';
+import { PageHeader, ItemsActions } from '../../components';
 import { WsConnection } from '../../common/connection';
 import { Agent } from './agent-types';
 import { LayoutSwitch } from './layout-switch';
 import { TableView } from './table-view';
 import { CardView } from './card-view';
 import { NoAgentsStub } from './no-agents-stub';
+import { getSelectedAgentsActions } from './get-selected-agents-actions';
 
 import styles from './agents-page.module.scss';
 
@@ -44,11 +45,21 @@ export const AgentsPage = agentsPage(({ className }: Props) => {
             onRightClick={() => setIsTableView(false)}
           />
         }
+        itemsActions={
+          <ItemsActions
+            itemsCount={selectedAgents.length}
+            actions={getSelectedAgentsActions(agents, selectedAgents, setSelectedAgents)}
+          />
+        }
       />
       <Content>
         {agents.length > 0 ? (
           isTableView ? (
-            <TableView agents={agents} handleSelectAgents={setSelectedAgents} />
+            <TableView
+              agents={agents}
+              selectedAgents={selectedAgents}
+              handleSelectAgents={setSelectedAgents}
+            />
           ) : (
             <CardView agents={agents} />
           )

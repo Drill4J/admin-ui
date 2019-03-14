@@ -1,0 +1,16 @@
+@import '../../common/style-guide/index';
+
+.items-actions {
+  &__count {
+    color: $gravel-color;
+    font-size: 16px;
+    font-weight: 300;
+    line-height: 20px;
+  }
+
+  &__action {
+    margin-left: 24px;
+    color: map-get($color-palette, blue100);
+    cursor: pointer;
+  }
+}

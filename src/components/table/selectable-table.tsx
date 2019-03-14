@@ -9,34 +9,33 @@ interface Props {
   children: React.ReactNode;
   idKey: string;
   footer?: React.ReactNode;
-  onSelect?: (selectedItems: string[]) => any;
+  selectedRows: string[];
+  onSelect: (selectedItems: string[]) => any;
 }
 
-export const SelectableTable = ({ children, data, onSelect, idKey, ...props }: Props) => {
-  const [selected, setSelected] = React.useState<string[]>([]);
-  const [isAllSelected, setIsAllSelected] = React.useState(false);
+export const SelectableTable = ({ children, data, onSelect, idKey, selectedRows }: Props) => {
+  const isAllSelected = selectedRows.length === data.length;
 
   return (
-    <Table data={data} {...props}>
+    <Table data={data}>
       <Column
         name="selector"
         Cell={({ item }) => {
           return (
             <TableCheckbox
               onClick={() => {
-                selected.includes(item[idKey])
-                  ? handleSelect(selected.filter((selectedItem) => selectedItem !== item[idKey]))
-                  : handleSelect([...selected, item[idKey]]);
+                selectedRows.includes(item[idKey])
+                  ? onSelect(selectedRows.filter((selectedItem) => selectedItem !== item[idKey]))
+                  : onSelect([...selectedRows, item[idKey]]);
               }}
-              selected={isAllSelected || selected.includes(item[idKey])}
+              selected={isAllSelected || selectedRows.includes(item[idKey])}
             />
           );
         }}
         HeaderCell={() => (
           <TableCheckbox
             onClick={() => {
-              handleSelect(!isAllSelected ? data.map((item: any) => String(item[idKey])) : []);
-              setIsAllSelected(!isAllSelected);
+              onSelect(!isAllSelected ? data.map((item: any) => String(item[idKey])) : []);
             }}
             selected={isAllSelected}
           />
@@ -45,11 +44,4 @@ export const SelectableTable = ({ children, data, onSelect, idKey, ...props }: P
       {children}
     </Table>
   );
-
-  function handleSelect(selectedItems: string[]) {
-    setSelected(selectedItems);
-    if (onSelect) {
-      onSelect(selectedItems);
-    }
-  }
 };

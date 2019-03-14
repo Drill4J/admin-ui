@@ -10,10 +10,5 @@
     flex-flow: row wrap;
     margin: 24px;
     flex-grow: 1;
-
-    & > * {
-      margin-right: 8px;
-      margin-bottom: 16px;
-    }
   }
 }
