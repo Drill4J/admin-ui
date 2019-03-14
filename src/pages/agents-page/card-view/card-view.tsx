@@ -15,8 +15,8 @@ const cardView = BEM(styles);
 
 export const CardView = cardView(({ className, agents }: Props) => (
   <div className={className}>
-    {agents.map(({ name, isEnable, description }) => (
-      <AgentCard name={name} isActive={isEnable} description={description} />
+    {agents.map((agent) => (
+      <AgentCard agent={agent} />
     ))}
   </div>
 ));

@@ -6,6 +6,9 @@ import { Icons } from '../../../components';
 
 interface Props {
   className?: string;
+  onLeftClick: () => any;
+  onRightClick: () => any;
+  isLeftActive: boolean;
 }
 
 interface ItemProps {
@@ -14,18 +17,20 @@ interface ItemProps {
 
 const layoutSwitch = BEM(styles);
 
-export const LayoutSwitch = layoutSwitch(({ className }: Props) => {
-  return (
-    <div className={className}>
-      <LeftItem active>
-        <Icons.GridLayout />
-      </LeftItem>
-      <RightItem>
-        <Icons.ListLayout />
-      </RightItem>
-    </div>
-  );
-});
+export const LayoutSwitch = layoutSwitch(
+  ({ className, isLeftActive, onLeftClick, onRightClick }: Props) => {
+    return (
+      <div className={className}>
+        <LeftItem active={isLeftActive} onClick={onLeftClick}>
+          <Icons.GridLayout />
+        </LeftItem>
+        <RightItem active={!isLeftActive} onClick={onRightClick}>
+          <Icons.ListLayout />
+        </RightItem>
+      </div>
+    );
+  },
+);
 
-const LeftItem = layoutSwitch.leftItem(div({ active: false } as ItemProps));
-const RightItem = layoutSwitch.rightItem(div({ active: false } as ItemProps));
+const LeftItem = layoutSwitch.leftItem(div({ active: false, onClick: () => {} } as ItemProps));
+const RightItem = layoutSwitch.rightItem(div({ active: false, onClick: () => {} } as ItemProps));

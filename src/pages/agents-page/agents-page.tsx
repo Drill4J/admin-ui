@@ -17,6 +17,7 @@ interface Props {
 const agentsPage = BEM(styles);
 
 export const AgentsPage = agentsPage(({ className }: Props) => {
+  const [isTableView, setIsTableView] = React.useState(true);
   const [agents, setAgents] = React.useState<Agent[]>([]);
 
   React.useEffect(() => {
@@ -31,11 +32,19 @@ export const AgentsPage = agentsPage(({ className }: Props) => {
 
   return (
     <div className={className}>
-      <PageHeader title="Agents" itemsCount={agents.length} />
-      <LayoutSwitch />
+      <PageHeader
+        title="Agents"
+        itemsCount={agents.length}
+        actions={
+          <LayoutSwitch
+            isLeftActive={isTableView}
+            onLeftClick={() => setIsTableView(true)}
+            onRightClick={() => setIsTableView(false)}
+          />
+        }
+      />
       <Content>
-        {/* <TableView agents={agents} /> */}
-        <CardView agents={agents} />
+        {isTableView ? <TableView agents={agents} /> : <CardView agents={agents} />}
       </Content>
     </div>
   );
