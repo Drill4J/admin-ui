@@ -1,9 +1,12 @@
 export interface Agent {
-  agentName?: string;
-  agentGroupName?: string;
-  agentDescription?: string;
+  name?: string;
+  group?: string;
+  description?: string;
   isEnable?: boolean;
   drillAdminUrl?: string;
-  agentAddress?: string;
+  address?: string;
   rawPluginNames?: string[];
+  ipAddress?: string;
+  activePluginsCount?: number;
+  pluginsCount?: number;
 }

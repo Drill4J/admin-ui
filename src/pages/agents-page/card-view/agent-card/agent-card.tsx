@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 
-import { Icons, Toggler } from '../../../components';
+import { Icons, Toggler } from '../../../../components';
 
 import styles from './agent-card.module.scss';
 

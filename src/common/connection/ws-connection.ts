@@ -8,7 +8,7 @@ interface StompResponse {
 
 export class WsConnection {
   public connection: WebSocket;
-  public onMessageListeners: { [key: string]: (arg: any) => void };
+  public onMessageListeners: { [key: string]: (arg: unknown) => void };
   constructor() {
     this.connection = new WebSocket(WS_CONNECTION_HOST);
     this.onMessageListeners = {};
@@ -27,15 +27,17 @@ export class WsConnection {
     return this;
   }
 
-  public subscribe(destination: string, callback: () => void) {
-    this.onMessageListeners[`/api/${destination}`] = callback;
-    this.register(destination);
+  public subscribe(destination: string, callback: (arg: any) => void) {
+    this.onMessageListeners[destination] = callback;
+    this.send(destination, 'SUBSCRIBE');
 
     return this;
   }
 
-  public register(destination: string) {
-    return this.send(`/api/${destination}`, 'REGISTER');
+  public unsubscribe(destination: string) {
+    this.send(destination, 'UNSUBSCRIBE');
+
+    return this;
   }
 
   public send(destination: string, type: string, message = '') {
