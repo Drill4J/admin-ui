@@ -8,32 +8,22 @@ interface Attrs {
   label?: string;
   value?: string | boolean;
   disabled?: boolean;
-  withoutControl?: boolean;
   size?: 'small';
   onChange?: () => void;
 }
 
 const checkbox = BEM(styles);
 
-export const Toggler = checkbox(
-  ({ className, label, value, withoutControl = false, onChange }: Attrs) => (
-    <label className={className}>
-      {!withoutControl && (
-        <React.Fragment>
-          <CheckboxInput
-            type="checkbox"
-            checked={Boolean(value)}
-            value={value}
-            onChange={onChange}
-          />
-
-          <CheckboxTogglerLabel />
-        </React.Fragment>
-      )}
-      {label && <span>{label}</span>}
-    </label>
-  ),
-);
+export const Toggler = checkbox(({ className, label, value, onChange = () => {} }: Attrs) => (
+  <label className={className}>
+    <React.Fragment>
+      <CheckboxInput type="checkbox" checked={Boolean(value)} value={value} onChange={onChange} />
+      <CheckboxTogglerLabel />
+    </React.Fragment>
+    {label && <Label checked={Boolean(value)}>{label}</Label>}
+  </label>
+));
 
 const CheckboxInput = checkbox.input(Input);
-const CheckboxTogglerLabel = checkbox.togglerLabel('span');
+const CheckboxTogglerLabel = checkbox.slider('span');
+const Label = checkbox.label('div');

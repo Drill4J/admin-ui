@@ -24,7 +24,16 @@
   }
 
   &__drill-status {
+    display: flex;
+    align-items: center;
     margin: 14px 16px 16px 16px;
+  }
+
+  &__active-plugins {
+    margin-left: 100px;
+    font-size: 13px;
+    line-height: 20px;
+    color: map-get($color-palette, middle-blue);
   }
 
   &__desctiption {

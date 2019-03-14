@@ -24,7 +24,15 @@ export const TableView = tableView(({ className, agents }: Props) => (
       />
       <Column name="ipAddress" label="IP Address" />
       <Column name="group" label="Group" />
-      <Column name="status" label="Drill4J" Cell={Toggler} />
+      <Column
+        name="isEnable"
+        label="Drill4J"
+        Cell={({ value }) => (
+          <StatusColumn>
+            <Toggler value={value} label={value ? 'On' : 'Off'} />
+          </StatusColumn>
+        )}
+      />
       <Column
         name="pluginsCount"
         HeaderCell={() => (
@@ -41,3 +49,4 @@ export const TableView = tableView(({ className, agents }: Props) => (
 ));
 
 const NameColumn = tableView.nameColumn('span');
+const StatusColumn = tableView.statusColumn('div');
