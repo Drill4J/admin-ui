@@ -20,6 +20,7 @@ const agentsPage = BEM(styles);
 export const AgentsPage = agentsPage(({ className }: Props) => {
   const [isTableView, setIsTableView] = React.useState(true);
   const [agents, setAgents] = React.useState<Agent[]>([]);
+  const [selectedAgents, setSelectedAgents] = React.useState<string[]>([]);
 
   React.useEffect(() => {
     const connection = new WsConnection().onOpen(() => {
@@ -47,7 +48,7 @@ export const AgentsPage = agentsPage(({ className }: Props) => {
       <Content>
         {agents.length > 0 ? (
           isTableView ? (
-            <TableView agents={agents} />
+            <TableView agents={agents} handleSelectAgents={setSelectedAgents} />
           ) : (
             <CardView agents={agents} />
           )

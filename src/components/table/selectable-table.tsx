@@ -5,36 +5,37 @@ import { Column } from './column';
 import { TableCheckbox } from './table-checkbox';
 
 interface Props {
-  data?: object[];
+  data: object[];
   children: React.ReactNode;
-  idKey?: string;
+  idKey: string;
   footer?: React.ReactNode;
+  onSelect?: (selectedItems: string[]) => any;
 }
 
-export const SelectableTable = ({ children, ...props }: Props) => {
-  const [selected, setSelected] = React.useState<number[]>([]);
+export const SelectableTable = ({ children, data, onSelect, idKey, ...props }: Props) => {
+  const [selected, setSelected] = React.useState<string[]>([]);
   const [isAllSelected, setIsAllSelected] = React.useState(false);
 
   return (
-    <Table {...props}>
+    <Table data={data} {...props}>
       <Column
         name="selector"
-        Cell={({ rowIndex }) => {
+        Cell={({ item }) => {
           return (
             <TableCheckbox
-              onClick={() =>
-                selected.includes(rowIndex)
-                  ? setSelected(selected.filter((item) => item !== rowIndex))
-                  : setSelected([...selected, rowIndex])
-              }
-              selected={isAllSelected || selected.includes(rowIndex)}
+              onClick={() => {
+                selected.includes(item[idKey])
+                  ? handleSelect(selected.filter((selectedItem) => selectedItem !== item[idKey]))
+                  : handleSelect([...selected, item[idKey]]);
+              }}
+              selected={isAllSelected || selected.includes(item[idKey])}
             />
           );
         }}
         HeaderCell={() => (
           <TableCheckbox
             onClick={() => {
-              setSelected([]);
+              handleSelect(!isAllSelected ? data.map((item: any) => String(item[idKey])) : []);
               setIsAllSelected(!isAllSelected);
             }}
             selected={isAllSelected}
@@ -44,4 +45,11 @@ export const SelectableTable = ({ children, ...props }: Props) => {
       {children}
     </Table>
   );
+
+  function handleSelect(selectedItems: string[]) {
+    setSelected(selectedItems);
+    if (onSelect) {
+      onSelect(selectedItems);
+    }
+  }
 };
