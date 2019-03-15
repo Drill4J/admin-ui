@@ -10,7 +10,11 @@ export class WsConnection {
   public connection: WebSocket;
   public onMessageListeners: { [key: string]: (arg: unknown) => void };
   constructor() {
-    this.connection = new WebSocket(WS_CONNECTION_HOST);
+    this.connection = new WebSocket(
+      process.env.REACT_APP_ENV
+        ? `ws://${window.location.host}/api/drill-admin-socket`
+        : WS_CONNECTION_HOST,
+    );
     this.onMessageListeners = {};
 
     this.connection.onmessage = (event) => {
