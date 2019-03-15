@@ -5,6 +5,7 @@
   width: 286px;
   border: 1px solid map-get($color-palette, blue100);
   background-color: map-get($color-palette, white);
+  cursor: pointer;
 
   &__header {
     display: flex;
@@ -41,5 +42,10 @@
     margin: 14px 16px 16px 16px;
     font-size: 13px;
     line-height: 22px;
+  }
+
+  &--selected {
+    border: 1px solid map-get($color-palette, yellow100);
+    background-color: rgba(248, 231, 28, 0.1);
   }
 }

@@ -10,6 +10,8 @@ import styles from './agent-card.module.scss';
 interface Props {
   className?: string;
   agent: Agent;
+  selected?: boolean;
+  onSelect: () => void;
 }
 
 const agentCard = BEM(styles);
@@ -18,8 +20,9 @@ export const AgentCard = agentCard(
   ({
     className,
     agent: { name, description, status, activePluginsCount, pluginsCount, ipAddress },
+    onSelect,
   }: Props) => (
-    <div className={className}>
+    <div className={className} onClick={onSelect}>
       <Header>
         {name}
         <HeaderIconsWrapper>

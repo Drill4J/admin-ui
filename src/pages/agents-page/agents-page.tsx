@@ -61,7 +61,12 @@ export const AgentsPage = agentsPage(({ className }: Props) => {
               handleSelectAgents={setSelectedAgents}
             />
           ) : (
-            <CardView agents={agents} />
+            <CardView
+              idKey="ipAddress"
+              agents={agents}
+              selectedAgents={selectedAgents}
+              handleSelectAgents={setSelectedAgents}
+            />
           )
         ) : (
           <NoAgentsStub />
