@@ -9,7 +9,7 @@
   tbody {
     tr {
       td {
-        border-bottom: 1px solid $porcelain-color;
+        border-bottom: 1px solid map-get($color-palette, light-blue);
         height: 48px;
         white-space: nowrap;
       }
@@ -19,11 +19,11 @@
   &__header {
     th {
       line-height: 20px;
-      color: $dark-blue;
+      color: map-get($color-palette, dark-blue);
       text-align: left;
       font-weight: normal;
       font-weight: 600;
-      border-bottom: 1px solid $dark-blue;
+      border-bottom: 1px solid map-get($color-palette, dark-blue);
       height: 48px;
     }
   }

@@ -1,17 +1,27 @@
 import { WS_CONNECTION_HOST } from '../constants';
 
+interface StompResponse {
+  message: string;
+  destination: string;
+  type: string;
+}
+
 export class WsConnection {
   public connection: WebSocket;
-  public onMessageListeners: { [key: string]: (arg: any) => void };
+  public onMessageListeners: { [key: string]: (arg: unknown) => void };
   constructor() {
-    this.connection = new WebSocket(WS_CONNECTION_HOST);
+    this.connection = new WebSocket(
+      process.env.REACT_APP_ENV
+        ? `ws://${window.location.host}/api/drill-admin-socket`
+        : WS_CONNECTION_HOST,
+    );
     this.onMessageListeners = {};
 
     this.connection.onmessage = (event) => {
-      const data: { destination: string } = JSON.parse(event.data);
-      const callback = this.onMessageListeners[data.destination];
+      const { destination, message }: StompResponse = JSON.parse(event.data);
+      const callback = this.onMessageListeners[destination];
 
-      callback && callback(data);
+      callback && callback(JSON.parse(message));
     };
   }
 
@@ -21,15 +31,17 @@ export class WsConnection {
     return this;
   }
 
-  public subscribe(destination: string, callback: () => void) {
+  public subscribe(destination: string, callback: (arg: any) => void) {
     this.onMessageListeners[destination] = callback;
-    this.register(destination);
+    this.send(destination, 'SUBSCRIBE');
 
     return this;
   }
 
-  public register(destination: string) {
-    return this.send(destination, 'REGISTER');
+  public unsubscribe(destination: string) {
+    this.send(destination, 'UNSUBSCRIBE');
+
+    return this;
   }
 
   public send(destination: string, type: string, message = '') {

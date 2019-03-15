@@ -1,0 +1,24 @@
+@import '../../../common/style-guide/index';
+
+.no-agents-stub {
+  display: flex;
+  flex-grow: 1;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+
+  &__title {
+    color: map-get($color-palette, middle-blue);
+    font-size: 24px;
+    line-height: 32px;
+    text-align: center;
+    margin: 40px 0 8px 0;
+  }
+
+  &__sub-title {
+    color: $slate-gray;
+    font-size: 14px;
+    line-height: 24px;
+    text-align: center;
+  }
+}

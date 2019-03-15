@@ -1,0 +1,51 @@
+@import '../../../../common/style-guide/index';
+
+.agent-card {
+  height: 200px;
+  width: 286px;
+  border: 1px solid map-get($color-palette, blue100);
+  background-color: map-get($color-palette, white);
+  cursor: pointer;
+
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    margin: 14px 16px 16px 16px;
+    color: map-get($color-palette, blue100);
+    font-size: 14px;
+    font-weight: 600;
+  }
+
+  &__header-icons-wrapper {
+    & > * {
+      &:first-child {
+        margin-right: 16px;
+      }
+    }
+  }
+
+  &__drill-status {
+    display: flex;
+    align-items: center;
+    margin: 14px 16px 16px 16px;
+  }
+
+  &__active-plugins {
+    margin-left: 100px;
+    font-size: 13px;
+    line-height: 20px;
+    color: map-get($color-palette, middle-blue);
+  }
+
+  &__desctiption {
+    color: map-get($color-palette, middle-blue);
+    margin: 14px 16px 16px 16px;
+    font-size: 13px;
+    line-height: 22px;
+  }
+
+  &--selected {
+    border: 1px solid map-get($color-palette, yellow100);
+    background-color: rgba(248, 231, 28, 0.1);
+  }
+}

@@ -20,15 +20,15 @@
     justify-content: center;
     height: 66px;
     width: 65px;
-    border-bottom: 1px solid $athens-gray-dark;
-    border-top: 1px solid $athens-gray-dark;
+    border-bottom: 1px solid map-get($color-palette, light-blue);
+    border-top: 1px solid map-get($color-palette, light-blue);
     cursor: pointer;
-    color: $regent-gray;
+    color: map-get($color-palette, middle-blue);
 
     &--type {
       &--active {
-        color: $white-color;
-        background-color: $azure-radiance;
+        color: map-get($color-palette, white);
+        background-color: map-get($color-palette, blue100);
       }
     }
   }

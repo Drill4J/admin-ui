@@ -20,7 +20,7 @@
   &__panel {
     display: flex;
     flex-direction: row;
-    color: $azure-radiance;
+    color: map-get($color-palette, blue100);
 
     & > * {
       margin-right: 8px;
@@ -28,7 +28,7 @@
   }
 
   &__divider {
-    background-color: $athens-gray-dark;
+    background-color: map-get($color-palette, light-blue);
     height: 20px;
     width: 1px;
   }

@@ -8,7 +8,7 @@
   &__sidebar {
     height: 100%;
     width: 480px;
-    background-color: $white-color;
+    background-color: map-get($color-palette, white);
     box-shadow: 0 0 40px 0 rgba(15, 36, 52, 0.15);
   }
 

@@ -5,37 +5,37 @@ import { Column } from './column';
 import { TableCheckbox } from './table-checkbox';
 
 interface Props {
-  data?: object[];
+  data: object[];
   children: React.ReactNode;
-  idKey?: string;
+  idKey: string;
   footer?: React.ReactNode;
+  selectedRows: string[];
+  onSelect: (selectedItems: string[]) => any;
 }
 
-export const SelectableTable = ({ children, ...props }: Props) => {
-  const [selected, setSelected] = React.useState<number[]>([]);
-  const [isAllSelected, setIsAllSelected] = React.useState(false);
+export const SelectableTable = ({ children, data, onSelect, idKey, selectedRows }: Props) => {
+  const isAllSelected = selectedRows.length === data.length;
 
   return (
-    <Table {...props}>
+    <Table data={data}>
       <Column
         name="selector"
-        Cell={({ rowIndex }) => {
+        Cell={({ item }) => {
           return (
             <TableCheckbox
-              onClick={() =>
-                selected.includes(rowIndex)
-                  ? setSelected(selected.filter((item) => item !== rowIndex))
-                  : setSelected([...selected, rowIndex])
-              }
-              selected={isAllSelected || selected.includes(rowIndex)}
+              onClick={() => {
+                selectedRows.includes(item[idKey])
+                  ? onSelect(selectedRows.filter((selectedItem) => selectedItem !== item[idKey]))
+                  : onSelect([...selectedRows, item[idKey]]);
+              }}
+              selected={isAllSelected || selectedRows.includes(item[idKey])}
             />
           );
         }}
         HeaderCell={() => (
           <TableCheckbox
             onClick={() => {
-              setSelected([]);
-              setIsAllSelected(!isAllSelected);
+              onSelect(!isAllSelected ? data.map((item: any) => String(item[idKey])) : []);
             }}
             selected={isAllSelected}
           />

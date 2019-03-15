@@ -14,6 +14,10 @@
     top: 0;
     width: 20px;
     height: 100%;
-    background: linear-gradient(to right, rgba($white-color, 0.2), $white-color 100%);
+    background: linear-gradient(
+      to right,
+      rgba(map-get($color-palette, white), 0.2),
+      map-get($color-palette, white) 100%
+    );
   }
 }
