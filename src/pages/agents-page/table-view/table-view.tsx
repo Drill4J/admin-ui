@@ -2,7 +2,7 @@ import * as React from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 import axios from 'axios';
 
-import { SelectableTable, Column, Toggler, OverflowText } from '../../../components';
+import { SelectableTable, Column, Toggler, OverflowText, Icons } from '../../../components';
 import { Agent } from '../agent-types';
 
 import styles from './table-view.module.scss';
@@ -29,7 +29,7 @@ export const TableView = tableView(
         <Column
           name="description"
           label="Description"
-          Cell={({ value }) => <OverflowText style={{ width: '382px' }}>{value}</OverflowText>}
+          Cell={({ value }) => <OverflowText style={{ width: '100%' }}>{value}</OverflowText>}
         />
         <Column name="ipAddress" label="IP Address" />
         <Column name="group" label="Group" />
@@ -57,6 +57,18 @@ export const TableView = tableView(
             return <span>{`${item.activePluginsCount}/${item.pluginsCount}`}</span>;
           }}
         />
+        <Column
+          name="actions"
+          label="Actions"
+          Cell={({ item }: { item: Agent }) => {
+            return (
+              <ActionsColumn>
+                <Icons.NewWindow />
+                <Icons.Settings height={16} width={16} />
+              </ActionsColumn>
+            );
+          }}
+        />
       </SelectableTable>
     </div>
   ),
@@ -64,6 +76,7 @@ export const TableView = tableView(
 
 const NameColumn = tableView.nameColumn('span');
 const StatusColumn = tableView.statusColumn('div');
+const ActionsColumn = tableView.actionsColumn('div');
 
 const toggleStandby = (agentId: string) => {
   axios.post(`/agents/${agentId}/toggle-standby`);

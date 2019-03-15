@@ -40,9 +40,9 @@ export const AgentsPage = agentsPage(({ className }: Props) => {
         itemsCount={agents.length}
         actions={
           <LayoutSwitch
-            isLeftActive={isTableView}
-            onLeftClick={() => setIsTableView(true)}
-            onRightClick={() => setIsTableView(false)}
+            isLeftActive={!isTableView}
+            onLeftClick={() => setIsTableView(false)}
+            onRightClick={() => setIsTableView(true)}
           />
         }
         itemsActions={
