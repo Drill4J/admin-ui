@@ -12,7 +12,7 @@ export class WsConnection {
   constructor() {
     this.connection = new WebSocket(
       process.env.REACT_APP_ENV
-        ? `ws://${window.location.host}/api/drill-admin-socket`
+        ? `ws://${window.location.host}/ws/drill-admin-socket`
         : WS_CONNECTION_HOST,
     );
     this.onMessageListeners = {};
