@@ -67,6 +67,17 @@ export const AgentInfoPage = withRouter(
           }
         />
         <Content>
+          <PageHeader
+            title={<PluginsTableTitle>Plugins</PluginsTableTitle>}
+            itemsCount={(agent.rawPluginNames || []).length}
+            actions={
+              <AddPluginButton type="secondary">
+                <Icons.Add />
+                <span>Add plugin</span>
+              </AddPluginButton>
+            }
+            borderColor="black"
+          />
           <AgentPluginsTable
             plugins={(agent as any).rawPluginsName}
             selectedPlugins={selectedPlugins}
@@ -85,5 +96,7 @@ const ToggleAgent = agentInfoPage.toggleAgent('div');
 const HeaderActions = agentInfoPage.headerActions('div');
 const ToAgentButton = agentInfoPage.toAgent(Button);
 const Settings = agentInfoPage.settings('div');
+const PluginsTableTitle = agentInfoPage.pluginsTableTitle('div');
+const AddPluginButton = agentInfoPage.addPlugin(Button);
 
 const toggleAgent = (agentId: string) => axios.post(`agents/${agentId}/toggle-standby`);

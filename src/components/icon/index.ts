@@ -13,6 +13,8 @@ import { path as newWindowPath } from './path/new-window.path';
 import { path as checkboxPath } from './path/checkbox.path';
 import { path as gridLayoutPath } from './path/grid-layout.path';
 import { path as listLayoutPath } from './path/list-layout.path';
+import { path as deletePath } from './path/delete.path';
+import { path as addPath } from './path/add.path';
 import { declareIcon } from './declare-icon';
 
 export const Icons = {
@@ -31,4 +33,6 @@ export const Icons = {
   Checkbox: declareIcon(checkboxPath, { defaultWidth: 20, defaultHeight: 20 }),
   GridLayout: declareIcon(gridLayoutPath, { defaultWidth: 16, defaultHeight: 16 }),
   ListLayout: declareIcon(listLayoutPath, { defaultWidth: 16, defaultHeight: 14 }),
+  Delete: declareIcon(deletePath, { defaultWidth: 16, defaultHeight: 18 }),
+  Add: declareIcon(addPath),
 };

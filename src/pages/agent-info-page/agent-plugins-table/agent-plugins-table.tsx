@@ -2,7 +2,7 @@ import * as React from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 import axios from 'axios';
 
-import { SelectableTable, Column, Toggler, Badge } from '../../../components';
+import { SelectableTable, Column, Toggler, Badge, Icons } from '../../../components';
 
 import styles from './agent-plugins-table.module.scss';
 
@@ -44,13 +44,29 @@ export const AgentPluginsTable = agentPluginsTable(
         <Column name="name" label="Plugin" />
         <Column name="description" label="Description" />
         <Column name="type" label="Type" Cell={({ value }) => <Badge text={value} />} />
+        <Column
+          name="actions"
+          label="Actions"
+          Cell={({ item }) => {
+            return (
+              <ActionsColumn>
+                <Icons.Delete onClick={() => unloadPlugin(agentId, item.id)} />
+              </ActionsColumn>
+            );
+          }}
+        />
       </SelectableTable>
     </div>
   ),
 );
 
 const StatusColumn = agentPluginsTable.statusColumn('div');
+const ActionsColumn = agentPluginsTable.actionsColumn('div');
 
 const togglePlugin = (agentId: string, pluginId: string) => {
   axios.post(`/agents/${agentId}/${pluginId}/toggle-plugin`);
+};
+
+const unloadPlugin = (agentId: string, pluginId: string) => {
+  axios.post(`/agents/${agentId}/unload-plugin`, { pluginId });
 };
