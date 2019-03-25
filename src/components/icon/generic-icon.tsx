@@ -12,6 +12,7 @@ interface GenericIconProps {
   transform?: string;
   rotate?: number;
   fillRule?: 'inherit' | 'nonzero' | 'evenodd';
+  onClick?: () => void;
 }
 
 export const GenericIcon = BEM(styles)(({ path, rotate = 0, ...rest }: GenericIconProps) => (

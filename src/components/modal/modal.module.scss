@@ -1,0 +1,44 @@
+@import '../../common/style-guide/index';
+
+.modal {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  &__modal-card {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 400px;
+    height: 100%;
+    z-index: 100;
+    box-shadow: -4px 0 0 0 map-get($color-palette, blue100), -20px 0 40px 0 rgba(15, 36, 52, 0.15);
+    background-color: map-get($color-palette, ultra-light-blue);
+  }
+
+  &__close-button {
+    position: absolute;
+    left: -48px;
+    height: 48px;
+    width: 48px;
+    border-radius: 24px 0 0 24px;
+    background-color: map-get($color-palette, blue100);
+    color: map-get($color-palette, white);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+  }
+
+  &__fade {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    opacity: 0.75;
+    background-color: map-get($color-palette, white);
+  }
+}

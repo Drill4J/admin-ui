@@ -42,4 +42,14 @@
     display: inline-block;
     padding-right: 12px;
   }
+
+  &--wide-columns {
+    tbody {
+      tr {
+        td {
+          height: 79px;
+        }
+      }
+    }
+  }
 }

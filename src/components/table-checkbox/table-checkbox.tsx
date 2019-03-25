@@ -2,7 +2,7 @@ import * as React from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 
 import styles from './table-checkbox.module.scss';
-import { Icons } from '../../icon';
+import { Icons } from '../icon';
 
 interface Props {
   className?: string;

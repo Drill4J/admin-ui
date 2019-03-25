@@ -5,7 +5,7 @@ import styles from './toggler.module.scss';
 
 interface Attrs {
   className?: string;
-  label?: string;
+  label?: React.ReactNode;
   value?: string | boolean;
   disabled?: boolean;
   size?: 'small';

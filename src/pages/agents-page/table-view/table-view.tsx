@@ -4,6 +4,7 @@ import axios from 'axios';
 
 import { SelectableTable, Column, Toggler, OverflowText, Icons } from '../../../components';
 import { Agent } from '../agent-types';
+import { NameColumn } from './name-column';
 
 import styles from './table-view.module.scss';
 
@@ -25,7 +26,13 @@ export const TableView = tableView(
         selectedRows={selectedAgents}
         onSelect={handleSelectAgents}
       >
-        <Column name="name" label="Name" Cell={({ value }) => <NameColumn>{value}</NameColumn>} />
+        <Column
+          name="name"
+          label="Name"
+          Cell={({ value, item: { ipAddress } }) => (
+            <NameColumn agentId={ipAddress} agentName={value} />
+          )}
+        />
         <Column
           name="description"
           label="Description"
@@ -74,7 +81,6 @@ export const TableView = tableView(
   ),
 );
 
-const NameColumn = tableView.nameColumn('span');
 const StatusColumn = tableView.statusColumn('div');
 const ActionsColumn = tableView.actionsColumn('div');
 

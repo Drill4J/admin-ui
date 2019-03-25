@@ -2,7 +2,7 @@ import * as React from 'react';
 
 import { Table } from './table';
 import { Column } from './column';
-import { TableCheckbox } from './table-checkbox';
+import { TableCheckbox } from '../table-checkbox';
 
 interface Props {
   data: object[];
@@ -11,13 +11,22 @@ interface Props {
   footer?: React.ReactNode;
   selectedRows: string[];
   onSelect: (selectedItems: string[]) => any;
+  wideColumns?: boolean;
 }
 
-export const SelectableTable = ({ children, data, onSelect, idKey, selectedRows }: Props) => {
+export const SelectableTable = ({
+  children,
+  data,
+  onSelect,
+  idKey,
+  selectedRows,
+  // tslint:disable-next-line
+  ...restProps
+}: Props) => {
   const isAllSelected = selectedRows.length === data.length;
 
   return (
-    <Table data={data}>
+    <Table data={data} {...restProps}>
       <Column
         name="selector"
         Cell={({ item }) => {

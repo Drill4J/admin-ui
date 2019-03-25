@@ -14,6 +14,7 @@ interface Props {
   footer?: React.ReactNode;
   sort?: object;
   onSort?: (sortField: string) => void;
+  wideColumns?: boolean;
 }
 
 const table = BEM(styles);

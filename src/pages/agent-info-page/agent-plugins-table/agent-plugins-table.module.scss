@@ -1,8 +1,8 @@
 @import '../../../common/style-guide/index';
 
-.table-view {
-  height: 100%;
-  width: 100%;
+.agent-plugins-table {
+  display: flex;
+  flex-grow: 1;
 
   &__status-column {
     display: flex;

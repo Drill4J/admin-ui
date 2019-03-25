@@ -11,6 +11,7 @@ interface Settings {
 interface Props {
   width?: number;
   height?: number;
+  onClick?: () => void;
 }
 
 export function declareIcon(path: string, settings: Settings = {}) {
