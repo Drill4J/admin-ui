@@ -4,14 +4,6 @@
   height: 100%;
   width: 100%;
 
-  &__name-column {
-    color: map-get($color-palette, blue100);
-    font-size: 14px;
-    font-weight: 600;
-    line-height: 48px;
-    cursor: pointer;
-  }
-
   &__status-column {
     display: flex;
   }

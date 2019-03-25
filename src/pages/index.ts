@@ -4,3 +4,4 @@ export { PluginsPage } from './plugins-page';
 export { LogsPage } from './logs-page';
 export { SettingsPage } from './settings-page';
 export { NotFoundPage } from './not-found-page';
+export { AgentInfoPage } from './agent-info-page';

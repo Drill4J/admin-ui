@@ -1,0 +1,8 @@
+.agent-plugins-table {
+  display: flex;
+  flex-grow: 1;
+
+  &__status-column {
+    display: flex;
+  }
+}

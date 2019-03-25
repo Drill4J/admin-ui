@@ -8,7 +8,7 @@ import styles from './page-header.module.scss';
 interface Props {
   className?: string;
   itemsCount?: number;
-  title?: string;
+  title?: React.ReactNode;
   actions?: React.ReactNode;
   itemsActions?: React.ReactNode;
 }
@@ -21,7 +21,7 @@ export const PageHeader = pageHeader(
       <Content>
         <Title>{title}</Title>
         <AgentsCount>{itemsCount}</AgentsCount>
-        <SearchButton />
+        {/* <SearchButton /> */}
         <ItemsActions>{itemsActions}</ItemsActions>
         <Actions>{actions}</Actions>
       </Content>
