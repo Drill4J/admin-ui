@@ -4,10 +4,11 @@ import { withRouter, RouteComponentProps } from 'react-router-dom';
 import axios from 'axios';
 
 import { WsConnection } from '../../common/connection';
-import { PageHeader, Button, Icons, Toggler, ItemsActions } from '../../components';
+import { PageHeader, Button, Icons, Toggler, ItemsActions, Modal } from '../../components';
 import { AgentPluginsTable } from './agent-plugins-table';
 import { Agent } from '../agents-page/agent-types';
 import { getSelectedPLuginsActions } from './get-selected-plugins-actions';
+import { AddPluginsModal } from './add-plugins-modal';
 
 import styles from './agent-info-page.module.scss';
 
@@ -21,6 +22,7 @@ export const AgentInfoPage = withRouter(
   agentInfoPage(({ className, match: { params: { agentId } } }: Props) => {
     const [agent, setAgent] = React.useState<Agent>({});
     const [selectedPlugins, setSelectedPlugins] = React.useState<string[]>([]);
+    const [isAddPluginOpen, setIsAddPluginOpen] = React.useState(false);
 
     React.useEffect(() => {
       const connection = new WsConnection().onOpen(() => {
@@ -28,7 +30,7 @@ export const AgentInfoPage = withRouter(
       });
 
       return () => {
-        connection.unsubscribe('/get-all-agents');
+        connection.unsubscribe(`/get-agent/${agentId}`);
       };
     }, []);
 
@@ -69,9 +71,12 @@ export const AgentInfoPage = withRouter(
         <Content>
           <PageHeader
             title={<PluginsTableTitle>Plugins</PluginsTableTitle>}
-            itemsCount={(agent.rawPluginNames || []).length}
+            itemsCount={((agent as any).rawPluginsName || []).length}
             actions={
-              <AddPluginButton type="secondary">
+              <AddPluginButton
+                type="secondary"
+                onClick={() => setIsAddPluginOpen(!isAddPluginOpen)}
+              >
                 <Icons.Add />
                 <span>Add plugin</span>
               </AddPluginButton>
@@ -85,6 +90,7 @@ export const AgentInfoPage = withRouter(
             agentId={agent.ipAddress || ''}
           />
         </Content>
+        <AddPluginsModal isOpen={isAddPluginOpen} onToggle={setIsAddPluginOpen} agentId={agentId} />
       </div>
     );
   }),

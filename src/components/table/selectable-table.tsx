@@ -2,7 +2,7 @@ import * as React from 'react';
 
 import { Table } from './table';
 import { Column } from './column';
-import { TableCheckbox } from './table-checkbox';
+import { TableCheckbox } from '../table-checkbox';
 
 interface Props {
   data: object[];

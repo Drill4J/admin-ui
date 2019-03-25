@@ -10,3 +10,5 @@ export { Table, Column, SelectableTable } from './table';
 export { OverflowText } from './overflow-text';
 export { ItemsActions } from './items-actions';
 export { Badge } from './badge';
+export { Modal } from './modal';
+export { TableCheckbox } from './table-checkbox';
