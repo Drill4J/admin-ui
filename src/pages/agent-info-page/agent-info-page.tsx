@@ -9,6 +9,7 @@ import { AgentPluginsTable } from './agent-plugins-table';
 import { Agent } from '../agents-page/agent-types';
 import { getSelectedPLuginsActions } from './get-selected-plugins-actions';
 import { AddPluginsModal } from './add-plugins-modal';
+import { NoPluginsStub } from './no-plugins-stub';
 
 import styles from './agent-info-page.module.scss';
 
@@ -44,7 +45,11 @@ export const AgentInfoPage = withRouter(
               <ToggleAgent>
                 <Toggler
                   value={agent.status}
-                  label={`Drill4J ${agent.status ? 'on' : 'off'}`}
+                  label={
+                    <ToggleAgentHeader>{`Drill4J ${
+                      agent.status ? 'on' : 'off'
+                    }`}</ToggleAgentHeader>
+                  }
                   onChange={() => toggleAgent(agent.ipAddress || '')}
                 />
               </ToggleAgent>
@@ -83,12 +88,16 @@ export const AgentInfoPage = withRouter(
             }
             borderColor="black"
           />
-          <AgentPluginsTable
-            plugins={(agent as any).rawPluginsName}
-            selectedPlugins={selectedPlugins}
-            handleSelectPlugin={setSelectedPlugins}
-            agentId={agent.ipAddress || ''}
-          />
+          {((agent as any).rawPluginsName || []).length > 0 ? (
+            <AgentPluginsTable
+              plugins={(agent as any).rawPluginsName}
+              selectedPlugins={selectedPlugins}
+              handleSelectPlugin={setSelectedPlugins}
+              agentId={agent.ipAddress || ''}
+            />
+          ) : (
+            <NoPluginsStub />
+          )}
         </Content>
         <AddPluginsModal isOpen={isAddPluginOpen} onToggle={setIsAddPluginOpen} agentId={agentId} />
       </div>
@@ -99,6 +108,7 @@ export const AgentInfoPage = withRouter(
 const Content = agentInfoPage.content('div');
 const HeaderTitle = agentInfoPage.headerTitle('div');
 const ToggleAgent = agentInfoPage.toggleAgent('div');
+const ToggleAgentHeader = agentInfoPage.toggleAgentHeader('div');
 const HeaderActions = agentInfoPage.headerActions('div');
 const ToAgentButton = agentInfoPage.toAgent(Button);
 const Settings = agentInfoPage.settings('div');

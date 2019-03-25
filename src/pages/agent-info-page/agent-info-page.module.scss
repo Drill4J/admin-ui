@@ -24,6 +24,13 @@
     align-items: center;
   }
 
+  &__toggle-agent-header {
+    font-size: 16px;
+    font-weight: 300;
+    line-height: 20px;
+    top: -9px;
+  }
+
   &__header-actions {
     display: flex;
     align-items: center;
