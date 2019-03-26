@@ -1,5 +1,3 @@
-import { WS_CONNECTION_HOST } from '../constants';
-
 interface StompResponse {
   message: string;
   destination: string;
@@ -9,11 +7,11 @@ interface StompResponse {
 export class WsConnection {
   public connection: WebSocket;
   public onMessageListeners: { [key: string]: (arg: unknown) => void };
-  constructor() {
+  constructor(socket: string = 'drill-admin-socket') {
     this.connection = new WebSocket(
       process.env.REACT_APP_ENV
-        ? `ws://${window.location.host}/ws/drill-admin-socket`
-        : WS_CONNECTION_HOST,
+        ? `ws://${window.location.host}/ws/${socket}`
+        : `ws://localhost:8090/ws/${socket}`,
     );
     this.onMessageListeners = {};
 

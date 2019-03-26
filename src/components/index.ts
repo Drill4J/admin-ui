@@ -12,3 +12,4 @@ export { ItemsActions } from './items-actions';
 export { Badge } from './badge';
 export { Modal } from './modal';
 export { TableCheckbox } from './table-checkbox';
+export { Divider } from './divider';

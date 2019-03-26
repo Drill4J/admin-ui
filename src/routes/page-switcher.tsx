@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
 
-import { AppLayout } from '../layouts';
+import { AppLayout, PluginsLayout } from '../layouts';
 import {
   LoginPage,
   AgentsPage,
@@ -10,8 +10,9 @@ import {
   SettingsPage,
   NotFoundPage,
   AgentInfoPage,
+  AgentFullPage,
 } from '../pages';
-import { PrivateRoute, Icons, Sidebar, Toolbar } from '../components';
+import { PrivateRoute, Icons, Sidebar, Toolbar, Divider } from '../components';
 
 const sidebarLinks = [
   { link: 'agents', icon: Icons.Agents },
@@ -25,7 +26,18 @@ export const PageSwitcher = () => {
     <Switch>
       <Route exact path="/login" component={LoginPage} />
       <Route exact path="/" render={() => <Redirect to="/agents" />} />
-      <AppLayout sidebar={<Sidebar links={sidebarLinks} />} toolbar={<Toolbar />}>
+      <Route exact path="/full-page/:agentId/:pluginId" component={AgentFullPage} />
+      <AppLayout
+        sidebar={<Sidebar links={sidebarLinks} />}
+        toolbar={
+          <Toolbar>
+            <Icons.Notification />
+            <Divider />
+            <Icons.Account />
+            <span>Guest</span>
+          </Toolbar>
+        }
+      >
         <Switch>
           <PrivateRoute exact path="/agents" component={AgentsPage} />
           <PrivateRoute exact path="/agents/:agentId" component={AgentInfoPage} />

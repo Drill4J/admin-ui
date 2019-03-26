@@ -1,0 +1,45 @@
+@import '../../../../common/style-guide/index';
+
+.card {
+  height: 160px;
+  width: 100%;
+  border: 1px solid map-get($color-palette, light-blue);
+  background-color: map-get($color-palette, white);
+
+  &__title {
+    margin: 14px 16px;
+    font-size: 14px;
+    font-weight: 600;
+    color: map-get($color-palette, black50);
+  }
+
+  &__main-text {
+    margin: 14px 16px;
+    font-size: 32px;
+    font-weight: 300;
+    line-height: 32px;
+
+    &--color {
+      &--green {
+        color: map-get($color-palette, green100);
+      }
+
+      &--red {
+        color: map-get($color-palette, red100);
+      }
+    }
+  }
+
+  &__secondary-text {
+    margin: 14px 16px;
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+    line-height: 20px;
+    color: map-get($color-palette, black50);
+
+    & > * {
+      margin-right: 8px;
+    }
+  }
+}

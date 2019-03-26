@@ -4,7 +4,7 @@ import { withRouter, RouteComponentProps } from 'react-router-dom';
 import axios from 'axios';
 
 import { WsConnection } from '../../common/connection';
-import { PageHeader, Button, Icons, Toggler, ItemsActions, Modal } from '../../components';
+import { PageHeader, Button, Icons, Toggler, ItemsActions } from '../../components';
 import { AgentPluginsTable } from './agent-plugins-table';
 import { Agent } from '../../types/agent';
 import { getSelectedPLuginsActions } from './get-selected-plugins-actions';
@@ -20,7 +20,7 @@ interface Props extends RouteComponentProps<{ agentId: string }> {
 const agentInfoPage = BEM(styles);
 
 export const AgentInfoPage = withRouter(
-  agentInfoPage(({ className, match: { params: { agentId } } }: Props) => {
+  agentInfoPage(({ className, history: { push }, match: { params: { agentId } } }: Props) => {
     const [agent, setAgent] = React.useState<Agent>({});
     const [selectedPlugins, setSelectedPlugins] = React.useState<string[]>([]);
     const [isAddPluginOpen, setIsAddPluginOpen] = React.useState(false);
@@ -57,7 +57,10 @@ export const AgentInfoPage = withRouter(
           }
           actions={
             <HeaderActions>
-              <ToAgentButton type="primary">
+              <ToAgentButton
+                type="primary"
+                onClick={() => push(`/full-page/${agent.ipAddress}/coverage`)}
+              >
                 <Icons.NewWindow />
                 <span>Go to agent</span>
               </ToAgentButton>

@@ -1,7 +1,7 @@
 @import '../../common/style-guide/index';
 
 .sidebar {
-  width: 65px;
+  width: 100%;
   height: 100%;
   background-color: $athens-gray;
 
@@ -19,7 +19,7 @@
     align-items: center;
     justify-content: center;
     height: 66px;
-    width: 65px;
+    width: 100%;
     border-bottom: 1px solid map-get($color-palette, light-blue);
     border-top: 1px solid map-get($color-palette, light-blue);
     cursor: pointer;
@@ -30,6 +30,10 @@
         color: map-get($color-palette, white);
         background-color: map-get($color-palette, blue100);
       }
+    }
+
+    &--long {
+      height: 80px;
     }
   }
 }

@@ -12,16 +12,11 @@ interface Props {
 
 const toolbar = BEM(styles);
 
-export const Toolbar = toolbar(({ className }: Props) => (
+export const Toolbar = toolbar(({ className, children }: Props) => (
   <div className={className}>
     <Content>
       <BreadcrumbsWrapper />
-      <Panel>
-        <Icons.Notification />
-        <Divider />
-        <Icons.Account />
-        <Username>Guest</Username>
-      </Panel>
+      <Panel>{children}</Panel>
     </Content>
   </div>
 ));
