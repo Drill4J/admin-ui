@@ -38,18 +38,7 @@ export const AddPluginsModal = addPluginModal(({ className, isOpen, onToggle, ag
         <Content>
           <PluginsList>
             <SelectableList
-              data={[
-                {
-                  name: 'Custom plugin',
-                  id: 'custom',
-                  description: 'This is the awesome custom plugin',
-                },
-                {
-                  name: 'Exceptions pligun',
-                  id: 'except-ions',
-                  description: 'Plugin for catching exceptions',
-                },
-              ]}
+              data={plugins}
               idKey="id"
               selectedRows={selectedPlugins}
               onSelect={setSelectedPlugins}
