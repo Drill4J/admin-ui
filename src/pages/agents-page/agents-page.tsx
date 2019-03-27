@@ -3,7 +3,7 @@ import { BEM } from '@redneckz/react-bem-helper';
 
 import { PageHeader, ItemsActions } from '../../components';
 import { WsConnection } from '../../common/connection';
-import { Agent } from './agent-types';
+import { Agent } from '../../types/agent';
 import { LayoutSwitch } from './layout-switch';
 import { TableView } from './table-view';
 import { CardView } from './card-view';

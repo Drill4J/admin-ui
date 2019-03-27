@@ -4,7 +4,7 @@ import { withRouter, RouteComponentProps } from 'react-router-dom';
 import axios from 'axios';
 
 import { Icons, Toggler } from '../../../../components';
-import { Agent } from '../../agent-types';
+import { Agent } from '../../../../types/agent';
 
 import styles from './agent-card.module.scss';
 

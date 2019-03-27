@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-import { Agent } from './agent-types';
+import { Agent } from '../../types/agent';
 
 // TODO: write unit test
 export const getSelectedAgentsActions = (

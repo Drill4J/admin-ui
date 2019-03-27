@@ -6,7 +6,7 @@ import axios from 'axios';
 import { WsConnection } from '../../common/connection';
 import { PageHeader, Button, Icons, Toggler, ItemsActions, Modal } from '../../components';
 import { AgentPluginsTable } from './agent-plugins-table';
-import { Agent } from '../agents-page/agent-types';
+import { Agent } from '../../types/agent';
 import { getSelectedPLuginsActions } from './get-selected-plugins-actions';
 import { AddPluginsModal } from './add-plugins-modal';
 import { NoPluginsStub } from './no-plugins-stub';
@@ -88,9 +88,9 @@ export const AgentInfoPage = withRouter(
             }
             borderColor="black"
           />
-          {((agent as any).rawPluginsName || []).length > 0 ? (
+          {(agent.rawPluginsName || []).length > 0 ? (
             <AgentPluginsTable
-              plugins={(agent as any).rawPluginsName}
+              plugins={agent.rawPluginsName}
               selectedPlugins={selectedPlugins}
               handleSelectPlugin={setSelectedPlugins}
               agentId={agent.ipAddress || ''}

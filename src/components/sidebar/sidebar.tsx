@@ -9,7 +9,7 @@ import styles from './sidebar.module.scss';
 interface Props extends RouteComponentProps {
   className?: string;
   active?: 'active';
-  links: Array<{ icon: (props: any) => JSX.Element; link: string }>;
+  links: Array<{ icon: React.ComponentType<any>; link: string }>;
 }
 
 const sidebar = BEM(styles);
