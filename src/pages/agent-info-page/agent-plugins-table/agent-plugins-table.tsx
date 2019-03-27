@@ -3,19 +3,13 @@ import { BEM } from '@redneckz/react-bem-helper';
 import axios from 'axios';
 
 import { SelectableTable, Column, Toggler, Badge, Icons } from '../../../components';
+import { Plugin } from '../../../types/plugin';
 
 import styles from './agent-plugins-table.module.scss';
 
-interface Plugin {
-  id: string;
-  name: string;
-  description: string;
-  type: string;
-}
-
 interface Props {
   className?: string;
-  plugins: Plugin[];
+  plugins?: Plugin[];
   selectedPlugins: string[];
   handleSelectPlugin: (selectedId: string[]) => any;
   agentId: string;

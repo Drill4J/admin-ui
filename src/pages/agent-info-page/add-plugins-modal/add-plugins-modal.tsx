@@ -11,7 +11,7 @@ import styles from './add-plugins-modal.module.scss';
 interface Props {
   className?: string;
   isOpen: boolean;
-  onToggle: (arg: any) => any;
+  onToggle: (arg: boolean) => void;
   agentId: string;
 }
 

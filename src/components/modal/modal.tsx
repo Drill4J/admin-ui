@@ -1,41 +1,19 @@
 import * as React from 'react';
-import { createPortal } from 'react-dom';
 import { BEM } from '@redneckz/react-bem-helper';
 
 import { Icons } from '../icon';
+import { Portal } from './portal';
 
 import styles from './modal.module.scss';
 
 interface Props {
   className?: string;
   children: React.ReactChild;
-  onToggle: (isOpen: any) => any;
+  onToggle: (isOpen: boolean) => void;
   isOpen: boolean;
 }
 
 const modal = BEM(styles);
-
-class Portal extends React.Component {
-  public el: any;
-  public modalRoot: any;
-  constructor(props: any) {
-    super(props);
-    this.el = document.createElement('div');
-    this.modalRoot = document.getElementById('modal');
-  }
-
-  public componentDidMount() {
-    this.modalRoot.appendChild(this.el);
-  }
-
-  public componentWillUnmount() {
-    this.modalRoot.removeChild(this.el);
-  }
-
-  public render() {
-    return createPortal(this.props.children, this.el);
-  }
-}
 
 export const Modal = modal(({ className, children, onToggle, isOpen }: Props) => {
   return (

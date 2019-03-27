@@ -3,7 +3,7 @@ import { BEM } from '@redneckz/react-bem-helper';
 import axios from 'axios';
 
 import { SelectableTable, Column, Toggler, OverflowText, Icons } from '../../../components';
-import { Agent } from '../agent-types';
+import { Agent } from '../../../types/agent';
 import { NameColumn } from './name-column';
 
 import styles from './table-view.module.scss';

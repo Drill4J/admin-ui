@@ -1,3 +1,5 @@
+import { Plugin } from './plugin';
+
 export interface Agent {
   name?: string;
   group?: string;
@@ -5,7 +7,7 @@ export interface Agent {
   status?: boolean;
   drillAdminUrl?: string;
   address?: string;
-  rawPluginNames?: string[];
+  rawPluginsName?: Plugin[];
   ipAddress?: string;
   activePluginsCount?: number;
   pluginsCount?: number;
