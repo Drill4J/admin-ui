@@ -6,6 +6,7 @@ import { Modal, Button } from '../../../components';
 import { SelectableList } from './selectable-list';
 import { useWsConnection } from '../../../hooks';
 import { Plugin } from '../../../types/plugin';
+import { defaultAdminSocket } from '../../../common/connection';
 
 import styles from './add-plugins-modal.module.scss';
 
@@ -20,7 +21,7 @@ const addPluginModal = BEM(styles);
 
 export const AddPluginsModal = addPluginModal(({ className, isOpen, onToggle, agentId }: Props) => {
   const [selectedPlugins, setSelectedPlugins] = React.useState<string[]>([]);
-  const plugins = useWsConnection<Plugin[]>('/get-all-plugins');
+  const plugins = useWsConnection<Plugin[]>(defaultAdminSocket, '/get-all-plugins');
 
   return (
     <Modal isOpen={isOpen} onToggle={onToggle}>

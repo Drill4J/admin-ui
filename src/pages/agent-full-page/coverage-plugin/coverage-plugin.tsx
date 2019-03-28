@@ -4,6 +4,7 @@ import { BEM } from '@redneckz/react-bem-helper';
 import { Icons } from '../../../components';
 import { Card } from './card';
 import { useWsConnection } from '../../../hooks';
+import { defaultPluginSocket } from '../../../common/connection';
 
 import styles from './coverage-plugin.module.scss';
 
@@ -19,7 +20,7 @@ interface Coverage {
 const coveragePlugin = BEM(styles);
 
 export const CoveragePlugin = coveragePlugin(({ className }: Props) => {
-  const coverage = useWsConnection<Coverage>('/coverage', 'drill-plugin-socket');
+  const coverage = useWsConnection<Coverage>(defaultPluginSocket, '/coverage');
 
   return (
     <div className={className}>

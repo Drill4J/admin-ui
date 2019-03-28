@@ -38,6 +38,7 @@ export class WsConnection {
 
   public unsubscribe(destination: string) {
     this.send(destination, 'UNSUBSCRIBE');
+    delete this.onMessageListeners[destination];
 
     return this;
   }

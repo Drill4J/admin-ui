@@ -9,6 +9,7 @@ import { CardView } from './card-view';
 import { NoAgentsStub } from './no-agents-stub';
 import { getSelectedAgentsActions } from './get-selected-agents-actions';
 import { useWsConnection } from '../../hooks';
+import { defaultAdminSocket } from '../../common/connection';
 
 import styles from './agents-page.module.scss';
 
@@ -20,7 +21,7 @@ const agentsPage = BEM(styles);
 
 export const AgentsPage = agentsPage(({ className }: Props) => {
   const [isTableView, setIsTableView] = React.useState(true);
-  const agents = useWsConnection<Agent[]>('/get-all-agents') || [];
+  const agents = useWsConnection<Agent[]>(defaultAdminSocket, '/get-all-agents') || [];
   const [selectedAgents, setSelectedAgents] = React.useState<string[]>([]);
 
   return (
