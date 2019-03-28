@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
 
-import { AppLayout, PluginsLayout } from '../layouts';
+import { AppLayout } from '../layouts';
 import {
   LoginPage,
   AgentsPage,
@@ -28,7 +28,7 @@ export const PageSwitcher = () => {
       <Route exact path="/" render={() => <Redirect to="/agents" />} />
       <Route exact path="/full-page/:agentId/:pluginId" component={AgentFullPage} />
       <AppLayout
-        sidebar={<Sidebar links={sidebarLinks} />}
+        sidebar={<Sidebar links={sidebarLinks} matchParams={{ path: '/:activeLink' }} />}
         toolbar={
           <Toolbar>
             <Icons.Notification />

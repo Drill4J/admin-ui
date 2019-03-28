@@ -17,7 +17,9 @@ interface Props extends RouteComponentProps<{ agentId: string }> {
 
 const agentFullPage = BEM(styles);
 
-const pluginsLinks = [{ link: 'coverage', icon: Icons.Coverage }];
+const getPluginsLinks = (agentId: string) => [
+  { link: 'coverage', icon: Icons.Coverage, computedLink: `full-page/${agentId}/coverage` },
+];
 
 export const AgentFullPage = withRouter(
   agentFullPage(({ className, match: { params: { agentId } } }: Props) => {
@@ -25,7 +27,13 @@ export const AgentFullPage = withRouter(
 
     return (
       <PluginsLayout
-        sidebar={<Sidebar links={pluginsLinks} />}
+        sidebar={
+          <Sidebar
+            links={getPluginsLinks(agentId)}
+            matchParams={{ path: '/full-page/:agentId/:activeLink' }}
+            longLinks
+          />
+        }
         toolbar={
           <Toolbar>
             <Panel>
