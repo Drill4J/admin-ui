@@ -7,6 +7,7 @@ import { Icons, Sidebar, Toolbar } from '../../components';
 import { PluginsLayout } from '../../layouts';
 import { Agent } from '../../types/agent';
 import { CoveragePlugin } from './coverage-plugin';
+import { useWsConnection } from '../../hooks';
 
 import styles from './agent-full-page.module.scss';
 
@@ -20,17 +21,7 @@ const pluginsLinks = [{ link: 'coverage', icon: Icons.Coverage }];
 
 export const AgentFullPage = withRouter(
   agentFullPage(({ className, match: { params: { agentId } } }: Props) => {
-    const [agent, setAgent] = React.useState<Agent>({});
-
-    React.useEffect(() => {
-      const connection = new WsConnection().onOpen(() => {
-        connection.subscribe(`/get-agent/${agentId}`, setAgent);
-      });
-
-      return () => {
-        connection.unsubscribe(`/get-agent/${agentId}`);
-      };
-    }, []);
+    const agent = useWsConnection<Agent>(`/get-agent/${agentId}`) || {};
 
     return (
       <PluginsLayout

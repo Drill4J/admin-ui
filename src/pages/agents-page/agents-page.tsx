@@ -2,13 +2,13 @@ import * as React from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 
 import { PageHeader, ItemsActions } from '../../components';
-import { WsConnection } from '../../common/connection';
 import { Agent } from '../../types/agent';
 import { LayoutSwitch } from './layout-switch';
 import { TableView } from './table-view';
 import { CardView } from './card-view';
 import { NoAgentsStub } from './no-agents-stub';
 import { getSelectedAgentsActions } from './get-selected-agents-actions';
+import { useWsConnection } from '../../hooks';
 
 import styles from './agents-page.module.scss';
 
@@ -20,18 +20,8 @@ const agentsPage = BEM(styles);
 
 export const AgentsPage = agentsPage(({ className }: Props) => {
   const [isTableView, setIsTableView] = React.useState(true);
-  const [agents, setAgents] = React.useState<Agent[]>([]);
+  const agents = useWsConnection<Agent[]>('/get-all-agents') || [];
   const [selectedAgents, setSelectedAgents] = React.useState<string[]>([]);
-
-  React.useEffect(() => {
-    const connection = new WsConnection().onOpen(() => {
-      connection.subscribe('/get-all-agents', setAgents);
-    });
-
-    return () => {
-      connection.unsubscribe('/get-all-agents');
-    };
-  }, []);
 
   return (
     <div className={className}>

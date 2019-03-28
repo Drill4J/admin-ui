@@ -2,8 +2,8 @@ import * as React from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 
 import { Icons } from '../../../components';
-import { WsConnection } from '../../../common/connection';
 import { Card } from './card';
+import { useWsConnection } from '../../../hooks';
 
 import styles from './coverage-plugin.module.scss';
 
@@ -19,17 +19,7 @@ interface Coverage {
 const coveragePlugin = BEM(styles);
 
 export const CoveragePlugin = coveragePlugin(({ className }: Props) => {
-  const [coverage, setCoverage] = React.useState<Coverage>({});
-
-  React.useEffect(() => {
-    const connection = new WsConnection('drill-plugin-socket').onOpen(() => {
-      connection.subscribe('/coverage', setCoverage);
-    });
-
-    return () => {
-      connection.unsubscribe('/coverage');
-    };
-  }, []);
+  const coverage = useWsConnection<Coverage>('/coverage', 'drill-plugin-socket');
 
   return (
     <div className={className}>
@@ -37,9 +27,9 @@ export const CoveragePlugin = coveragePlugin(({ className }: Props) => {
       <SummaryWrapper>
         <Card
           title="Code Coverage"
-          text={coverage.coverage ? coverage.coverage.toFixed(1) : 'n/a'}
+          text={coverage && coverage.coverage ? coverage.coverage.toFixed(1) : 'n/a'}
           secondaryText={
-            coverage.uncoveredMethodsCount ? (
+            coverage && coverage.uncoveredMethodsCount ? (
               <>
                 <Icons.Warning />
                 {`${coverage.uncoveredMethodsCount} methods not covered`}

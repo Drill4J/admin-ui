@@ -10,6 +10,7 @@ import { Agent } from '../../types/agent';
 import { getSelectedPLuginsActions } from './get-selected-plugins-actions';
 import { AddPluginsModal } from './add-plugins-modal';
 import { NoPluginsStub } from './no-plugins-stub';
+import { useWsConnection } from '../../hooks';
 
 import styles from './agent-info-page.module.scss';
 
@@ -21,19 +22,9 @@ const agentInfoPage = BEM(styles);
 
 export const AgentInfoPage = withRouter(
   agentInfoPage(({ className, history: { push }, match: { params: { agentId } } }: Props) => {
-    const [agent, setAgent] = React.useState<Agent>({});
+    const agent = useWsConnection<Agent>(`/get-agent/${agentId}`) || {};
     const [selectedPlugins, setSelectedPlugins] = React.useState<string[]>([]);
     const [isAddPluginOpen, setIsAddPluginOpen] = React.useState(false);
-
-    React.useEffect(() => {
-      const connection = new WsConnection().onOpen(() => {
-        connection.subscribe(`/get-agent/${agentId}`, setAgent);
-      });
-
-      return () => {
-        connection.unsubscribe(`/get-agent/${agentId}`);
-      };
-    }, []);
 
     return (
       <div className={className}>
