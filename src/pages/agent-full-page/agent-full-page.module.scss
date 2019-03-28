@@ -9,6 +9,8 @@
     width: 12px;
     border-radius: 6px;
     background-color: map-get($color-palette, red100);
+    margin-right: 8px;
+
     &--status {
       background-color: map-get($color-palette, green100);
     }

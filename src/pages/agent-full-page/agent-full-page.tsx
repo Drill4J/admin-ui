@@ -2,9 +2,8 @@ import * as React from 'react';
 import { BEM, div } from '@redneckz/react-bem-helper';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
 
-import { WsConnection } from '../../common/connection';
 import { Icons, Sidebar, Toolbar } from '../../components';
-import { PluginsLayout } from '../../layouts';
+import { PluginsLayout, Panel } from '../../layouts';
 import { Agent } from '../../types/agent';
 import { CoveragePlugin } from './coverage-plugin';
 import { useWsConnection } from '../../hooks';
@@ -29,8 +28,10 @@ export const AgentFullPage = withRouter(
         sidebar={<Sidebar links={pluginsLinks} />}
         toolbar={
           <Toolbar>
-            <AgentStatus status={agent.status} />
-            {agent.name} {agent.ipAddress}
+            <Panel>
+              <AgentStatus status={agent.status} />
+              {agent.name} {agent.ipAddress}
+            </Panel>
           </Toolbar>
         }
       >
