@@ -20,7 +20,7 @@ interface Coverage {
 const coveragePlugin = BEM(styles);
 
 export const CoveragePlugin = coveragePlugin(({ className }: Props) => {
-  const coverage = useWsConnection<Coverage>(defaultPluginSocket, '/coverage');
+  const coverage = useWsConnection<Coverage>(defaultPluginSocket, '/coverage') || {};
 
   return (
     <div className={className}>
@@ -28,9 +28,9 @@ export const CoveragePlugin = coveragePlugin(({ className }: Props) => {
       <SummaryWrapper>
         <Card
           title="Code Coverage"
-          text={coverage && coverage.coverage ? coverage.coverage.toFixed(1) : 'n/a'}
+          text={coverage.coverage !== undefined ? coverage.coverage.toFixed(1) : 'n/a'}
           secondaryText={
-            coverage && coverage.uncoveredMethodsCount ? (
+            coverage.uncoveredMethodsCount !== undefined ? (
               <>
                 <Icons.Warning />
                 {`${coverage.uncoveredMethodsCount} methods not covered`}

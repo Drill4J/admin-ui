@@ -3,7 +3,6 @@ import { BEM } from '@redneckz/react-bem-helper';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
 import axios from 'axios';
 
-import { WsConnection } from '../../common/connection';
 import { PageHeader, Button, Icons, Toggler, ItemsActions } from '../../components';
 import { AgentPluginsTable } from './agent-plugins-table';
 import { Agent } from '../../types/agent';
@@ -71,7 +70,7 @@ export const AgentInfoPage = withRouter(
         <Content>
           <PageHeader
             title={<PluginsTableTitle>Plugins</PluginsTableTitle>}
-            itemsCount={((agent as any).rawPluginsName || []).length}
+            itemsCount={(agent.rawPluginsName || []).length}
             actions={
               <AddPluginButton
                 type="secondary"
