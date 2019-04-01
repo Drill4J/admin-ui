@@ -7,16 +7,4 @@
   &__status-column {
     display: flex;
   }
-
-  &__actions-column {
-    color: map-get($color-palette, blue100);
-
-    :not(:first-child) {
-      margin-left: 24px;
-    }
-
-    & > * {
-      cursor: pointer;
-    }
-  }
 }

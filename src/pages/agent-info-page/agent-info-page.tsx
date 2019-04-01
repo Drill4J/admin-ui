@@ -3,13 +3,14 @@ import { BEM } from '@redneckz/react-bem-helper';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
 import axios from 'axios';
 
-import { WsConnection } from '../../common/connection';
-import { PageHeader, Button, Icons, Toggler, ItemsActions, Modal } from '../../components';
+import { PageHeader, Button, Icons, Toggler, ItemsActions } from '../../components';
 import { AgentPluginsTable } from './agent-plugins-table';
 import { Agent } from '../../types/agent';
 import { getSelectedPLuginsActions } from './get-selected-plugins-actions';
 import { AddPluginsModal } from './add-plugins-modal';
 import { NoPluginsStub } from './no-plugins-stub';
+import { useWsConnection } from '../../hooks';
+import { defaultAdminSocket } from '../../common/connection';
 
 import styles from './agent-info-page.module.scss';
 
@@ -20,20 +21,10 @@ interface Props extends RouteComponentProps<{ agentId: string }> {
 const agentInfoPage = BEM(styles);
 
 export const AgentInfoPage = withRouter(
-  agentInfoPage(({ className, match: { params: { agentId } } }: Props) => {
-    const [agent, setAgent] = React.useState<Agent>({});
+  agentInfoPage(({ className, history: { push }, match: { params: { agentId } } }: Props) => {
+    const agent = useWsConnection<Agent>(defaultAdminSocket, `/get-agent/${agentId}`) || {};
     const [selectedPlugins, setSelectedPlugins] = React.useState<string[]>([]);
     const [isAddPluginOpen, setIsAddPluginOpen] = React.useState(false);
-
-    React.useEffect(() => {
-      const connection = new WsConnection().onOpen(() => {
-        connection.subscribe(`/get-agent/${agentId}`, setAgent);
-      });
-
-      return () => {
-        connection.unsubscribe(`/get-agent/${agentId}`);
-      };
-    }, []);
 
     return (
       <div className={className}>
@@ -57,7 +48,10 @@ export const AgentInfoPage = withRouter(
           }
           actions={
             <HeaderActions>
-              <ToAgentButton type="primary">
+              <ToAgentButton
+                type="primary"
+                onClick={() => push(`/full-page/${agent.ipAddress}/coverage`)}
+              >
                 <Icons.NewWindow />
                 <span>Go to agent</span>
               </ToAgentButton>
@@ -76,7 +70,7 @@ export const AgentInfoPage = withRouter(
         <Content>
           <PageHeader
             title={<PluginsTableTitle>Plugins</PluginsTableTitle>}
-            itemsCount={((agent as any).rawPluginsName || []).length}
+            itemsCount={(agent.rawPluginsName || []).length}
             actions={
               <AddPluginButton
                 type="secondary"

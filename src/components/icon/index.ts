@@ -16,6 +16,7 @@ import { path as listLayoutPath } from './path/list-layout.path';
 import { path as deletePath } from './path/delete.path';
 import { path as addPath } from './path/add.path';
 import { path as closePath } from './path/close.path';
+import { path as coveragePath } from './path/coverage.path';
 import { declareIcon } from './declare-icon';
 
 export const Icons = {
@@ -37,4 +38,5 @@ export const Icons = {
   Delete: declareIcon(deletePath, { defaultWidth: 16, defaultHeight: 18 }),
   Add: declareIcon(addPath),
   Close: declareIcon(closePath),
+  Coverage: declareIcon(coveragePath, { defaultWidth: 32, defaultHeight: 34 }),
 };

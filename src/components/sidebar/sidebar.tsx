@@ -9,39 +9,53 @@ import styles from './sidebar.module.scss';
 interface Props extends RouteComponentProps {
   className?: string;
   active?: 'active';
-  links: Array<{ icon: React.ComponentType<any>; link: string }>;
+  links: Array<{ icon: React.ComponentType<any>; link: string; computedLink?: string }>;
+  matchParams: { path: string };
+  longLinks?: boolean;
 }
 
 const sidebar = BEM(styles);
 
 export const Sidebar = withRouter(
-  sidebar(({ className, links, history: { push }, location: { pathname } }: Props) => {
-    const { params: { activeLink = '' } = {} } =
-      matchPath<{ activeLink: string }>(pathname, {
-        path: '/:activeLink',
-      }) || {};
+  sidebar(
+    ({
+      className,
+      links,
+      history: { push },
+      location: { pathname },
+      matchParams,
+      longLinks,
+    }: Props) => {
+      const { params: { activeLink = '' } = {} } =
+        matchPath<{ activeLink: string }>(pathname, matchParams) || {};
 
-    return (
-      <div className={className}>
-        <Logo onClick={() => push('/')}>
-          <LogoSvg />
-        </Logo>
-        {links.length > 0 &&
-          links.map(({ icon: Icon, link }) => (
-            <SidebarLink
-              key={link}
-              type={link === activeLink ? 'active' : ''}
-              onClick={() => push(`/${link}`)}
-            >
-              <Icon />
-            </SidebarLink>
-          ))}
-      </div>
-    );
-  }),
+      return (
+        <div className={className}>
+          <Logo onClick={() => push('/')}>
+            <LogoSvg />
+          </Logo>
+          {links.length > 0 &&
+            links.map(({ icon: Icon, link, computedLink }) => (
+              <SidebarLink
+                key={link}
+                type={link === activeLink ? 'active' : ''}
+                onClick={() => push(`/${computedLink ? computedLink : link}`)}
+                long={longLinks}
+              >
+                <Icon />
+              </SidebarLink>
+            ))}
+        </div>
+      );
+    },
+  ),
 );
 
 const Logo = sidebar.logo('div');
 export const SidebarLink = sidebar.link(
-  div({ active: undefined, onClick: () => {} } as { active?: boolean; onClick: () => void }),
+  div({ active: undefined, onClick: () => {}, long: undefined } as {
+    active?: boolean;
+    onClick: () => void;
+    long?: boolean;
+  }),
 );

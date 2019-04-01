@@ -2,9 +2,11 @@ import * as React from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 import axios from 'axios';
 
-import { WsConnection } from '../../../common/connection';
 import { Modal, Button } from '../../../components';
 import { SelectableList } from './selectable-list';
+import { useWsConnection } from '../../../hooks';
+import { Plugin } from '../../../types/plugin';
+import { defaultAdminSocket } from '../../../common/connection';
 
 import styles from './add-plugins-modal.module.scss';
 
@@ -18,18 +20,8 @@ interface Props {
 const addPluginModal = BEM(styles);
 
 export const AddPluginsModal = addPluginModal(({ className, isOpen, onToggle, agentId }: Props) => {
-  const [plugins, setPlugins] = React.useState([]);
   const [selectedPlugins, setSelectedPlugins] = React.useState<string[]>([]);
-
-  React.useEffect(() => {
-    const connection = new WsConnection().onOpen(() => {
-      connection.subscribe('/get-all-plugins', setPlugins);
-    });
-
-    return () => {
-      connection.unsubscribe('/get-all-plugins');
-    };
-  }, []);
+  const plugins = useWsConnection<Plugin[]>(defaultAdminSocket, '/get-all-plugins');
 
   return (
     <Modal isOpen={isOpen} onToggle={onToggle}>
@@ -38,7 +30,7 @@ export const AddPluginsModal = addPluginModal(({ className, isOpen, onToggle, ag
         <Content>
           <PluginsList>
             <SelectableList
-              data={plugins}
+              data={plugins || []}
               idKey="id"
               selectedRows={selectedPlugins}
               onSelect={setSelectedPlugins}
