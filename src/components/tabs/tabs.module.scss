@@ -1,0 +1,23 @@
+@import '../../common/style-guide/index';
+
+.tabs-container {
+  display: flex;
+
+  &__tabs-panel {
+    &:not(:last-child) {
+      margin-left: 28px;
+    }
+  }
+
+  &__tab {
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 20px;
+    color: map-get($color-palette, blue100);
+
+    &--active {
+      pointer-events: none;
+      color: map-get($color-palette, black100);
+    }
+  }
+}

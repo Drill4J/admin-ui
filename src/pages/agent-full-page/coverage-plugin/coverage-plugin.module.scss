@@ -13,8 +13,9 @@
   &__summary-wrapper {
     display: flex;
     flex-direction: row;
+    margin-bottom: 24px;
 
-    :first-child {
+    & > div:first-child {
       margin-right: 16px;
     }
   }

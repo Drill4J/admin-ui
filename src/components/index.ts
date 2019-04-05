@@ -6,7 +6,7 @@ export { Sidebar, SidebarLink } from './sidebar';
 export { Toolbar } from './toolbar';
 export { Toggler } from './toggler';
 export { PageHeader } from './page-header';
-export { Table, Column, SelectableTable } from './table';
+export { Table, Column, SelectableTable, ExpandableTable } from './table';
 export { OverflowText } from './overflow-text';
 export { ItemsActions } from './items-actions';
 export { Badge } from './badge';
