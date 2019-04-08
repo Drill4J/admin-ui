@@ -1,7 +1,8 @@
 import * as React from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 
-import { Icons } from '../../../components';
+import { Panel } from '../../../layouts';
+import { Icons, PageHeader } from '../../../components';
 import { Card } from './card';
 import { useWsConnection } from '../../../hooks';
 import { defaultPluginSocket } from '../../../common/connection';
@@ -25,41 +26,59 @@ export const CoveragePlugin = coveragePlugin(({ className }: Props) => {
 
   return (
     <div className={className}>
-      <Title>Summary</Title>
-      <SummaryWrapper>
-        <Card
-          title="Code Coverage"
-          text={coverage.coverage !== undefined ? percentFormatter(coverage.coverage) : 'n/a'}
-          secondaryText={
-            coverage.uncoveredMethodsCount !== undefined ? (
-              <>
-                <Icons.Warning />
-                {` ${coverage.uncoveredMethodsCount} methods not covered`}
-              </>
-            ) : null
-          }
-        />
-        <Card
-          title="Methods, Total"
-          text={
-            newMethodsCoverage.methodsCount !== undefined ? newMethodsCoverage.methodsCount : 'n/a'
-          }
-          secondaryText={
-            newMethodsCoverage.methodsCount !== undefined ? (
-              <>
-                <Icons.Warning />
-                {` ${newMethodsCoverage.methodsCount} new methods (${
-                  newMethodsCoverage.methodsCovered
-                } covered)`}
-              </>
-            ) : null
-          }
-        />
-      </SummaryWrapper>
-      <CoverageDetails />
+      <PageHeader
+        title={<span>Code Coverage Tracker</span>}
+        actions={
+          <Panel align="end">
+            <SettingsButton>
+              <Icons.Settings />
+            </SettingsButton>
+          </Panel>
+        }
+      />
+      <Content>
+        <Title>Summary</Title>
+        <SummaryWrapper>
+          <Card
+            title="Code Coverage"
+            text={
+              coverage.coverage !== undefined ? `${percentFormatter(coverage.coverage)}%` : 'n/a'
+            }
+            secondaryText={
+              coverage.uncoveredMethodsCount !== undefined ? (
+                <>
+                  {coverage.uncoveredMethodsCount === 0 ? <SuccessIcon /> : <WarningIcon />}
+                  {` ${coverage.uncoveredMethodsCount} methods not covered`}
+                </>
+              ) : null
+            }
+          />
+          <Card
+            title="Methods, Total"
+            text={coverage.methodsCount !== undefined ? coverage.methodsCount : 'n/a'}
+            secondaryText={
+              newMethodsCoverage.methodsCount !== undefined ? (
+                <>
+                  {newMethodsCoverage.methodsCount === 0 ? <SuccessIcon /> : <WarningIcon />}
+                  {` ${newMethodsCoverage.methodsCount} new methods ${
+                    newMethodsCoverage.methodsCovered
+                      ? `(${newMethodsCoverage.methodsCovered} covered)`
+                      : ''
+                  }`}
+                </>
+              ) : null
+            }
+          />
+        </SummaryWrapper>
+        <CoverageDetails />
+      </Content>
     </div>
   );
 });
 
+const SettingsButton = coveragePlugin.settingsButton('div');
+const Content = coveragePlugin.content('div');
 const Title = coveragePlugin.title('div');
 const SummaryWrapper = coveragePlugin.summaryWrapper('div');
+const WarningIcon = coveragePlugin.warningIcon(Icons.Warning);
+const SuccessIcon = coveragePlugin.successIcon(Icons.Checkbox);

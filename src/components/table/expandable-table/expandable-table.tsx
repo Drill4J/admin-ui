@@ -6,7 +6,6 @@ import { RowExpander } from './row-expander';
 
 interface Props {
   data: object[];
-  onExpand: (expandedRows: string[]) => any;
   idKey: string;
   children: React.ReactNode;
   columnsSize?: 'wide' | 'medium';
@@ -14,15 +13,7 @@ interface Props {
   expandedContentKey: string;
 }
 
-export const ExpandableTable = ({
-  children,
-  data,
-  idKey,
-  // expandedRows,
-  onExpand,
-  // tslint:disable-next-line
-  ...restProps
-}: Props) => {
+export const ExpandableTable = ({ children, data, idKey, ...restProps }: Props) => {
   const [expandedRows, setExpandedRows] = React.useState<string[]>([]);
 
   return (

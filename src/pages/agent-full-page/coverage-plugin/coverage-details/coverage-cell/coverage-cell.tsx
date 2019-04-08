@@ -16,7 +16,7 @@ const coverageCell = BEM(styles);
 export const CoverageCell = coverageCell(({ className, value }: Props) => (
   <div className={className}>
     {getCoverageIcon(value)}
-    {percentFormatter(value)}
+    {percentFormatter(value)}%
   </div>
 ));
 

@@ -15,7 +15,7 @@ const card = BEM(styles);
 export const Card = card(({ className, title, text, secondaryText }: Props) => (
   <div className={className}>
     <Title>{title}</Title>
-    <MainText color="green">{text}</MainText>
+    <MainText>{text}</MainText>
     <SecondaryText>{secondaryText}</SecondaryText>
   </div>
 ));

@@ -28,6 +28,12 @@
     }
   }
 
+  &__row {
+    &--expanded {
+      background-color: rgba(0, 127, 255, 0.15);
+    }
+  }
+
   &__toggle {
     position: absolute;
     right: 0;

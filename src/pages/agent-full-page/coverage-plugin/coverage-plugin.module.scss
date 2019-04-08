@@ -2,7 +2,23 @@
 
 .coverage-plugin {
   height: 100%;
-  margin: 33px 29px;
+
+  &__content {
+    margin: 33px 29px;
+  }
+
+  &__settings-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 32px;
+    width: 32px;
+    border: 1px solid map-get($color-palette, blue100);
+    border-radius: 16px;
+    color: map-get($color-palette, blue100);
+    margin-left: 16px;
+    cursor: pointer;
+  }
 
   &__title {
     width: 100%;
@@ -18,5 +34,13 @@
     & > div:first-child {
       margin-right: 16px;
     }
+  }
+
+  &__warning-icon {
+    color: map-get($color-palette, red100);
+  }
+
+  &__success-icon {
+    color: map-get($color-palette, green100);
   }
 }
