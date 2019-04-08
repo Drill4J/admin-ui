@@ -22,10 +22,12 @@
     height: 50px;
     width: 100%;
     border-bottom: 1px solid map-get($color-palette, light-blue);
+    flex-shrink: 0;
   }
 
   &__content {
     display: flex;
     flex-grow: 1;
+    overflow-y: auto;
   }
 }

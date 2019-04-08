@@ -25,7 +25,7 @@ export const AgentPluginsTable = agentPluginsTable(
         data={plugins}
         selectedRows={selectedPlugins}
         onSelect={handleSelectPlugin}
-        wideColumns
+        columnsSize="wide"
       >
         <Column
           name="status"

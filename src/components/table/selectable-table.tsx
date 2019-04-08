@@ -11,7 +11,7 @@ interface Props {
   footer?: React.ReactNode;
   selectedRows: string[];
   onSelect: (selectedItems: string[]) => any;
-  wideColumns?: boolean;
+  columnsSize?: 'wide' | 'medium';
 }
 
 export const SelectableTable = ({

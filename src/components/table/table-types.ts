@@ -33,4 +33,7 @@ export interface ColumnProps {
 
   /** Width of column */
   width?: string;
+
+  /** colSpan of column */
+  colSpan?: number;
 }
