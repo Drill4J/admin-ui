@@ -43,14 +43,28 @@ export class WsConnection {
     return this;
   }
 
-  public send(destination: string, type: string, message = '') {
-    this.connection.send(
-      JSON.stringify({
-        destination,
-        type,
-        message,
-      }),
-    );
+  public send(destination: string, type: string, message?: object) {
+    if (this.connection.readyState === this.connection.OPEN) {
+      this.connection.send(
+        JSON.stringify({
+          destination,
+          type,
+          message,
+        }),
+      );
+    } else {
+      setTimeout(
+        () =>
+          this.connection.send(
+            JSON.stringify({
+              destination,
+              type,
+              message,
+            }),
+          ),
+        200,
+      );
+    }
 
     return this;
   }
