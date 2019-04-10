@@ -13,17 +13,17 @@ export const getSelectedPLuginsActions = (
   return [
     {
       label: 'Enable',
-      onClick: getOnClickFunction(agent.ipAddress, enableIds, setSelectedPLugins),
+      onClick: getOnClickFunction(agent.id, enableIds, setSelectedPLugins),
       count: enableIds.length,
     },
     {
       label: 'Disable',
-      onClick: getOnClickFunction(agent.ipAddress, disableIds, setSelectedPLugins),
+      onClick: getOnClickFunction(agent.id, disableIds, setSelectedPLugins),
       count: disableIds.length,
     },
     {
       label: 'Unload',
-      onClick: getUnloadFunction(agent.ipAddress, selectedPluginsIds, setSelectedPLugins),
+      onClick: getUnloadFunction(agent.id, selectedPluginsIds, setSelectedPLugins),
       count: selectedPluginsIds.length,
     },
   ];

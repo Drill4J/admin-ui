@@ -21,7 +21,7 @@ export const AgentCard = withRouter(
   agentCard(
     ({
       className,
-      agent: { name, description, status, activePluginsCount, pluginsCount, ipAddress },
+      agent: { name, description, status, activePluginsCount, pluginsCount, id },
       onSelect,
       history: { push },
     }: Props) => (
@@ -29,14 +29,14 @@ export const AgentCard = withRouter(
         <Header>
           <HeaderName
             onClick={() => {
-              push(`/agents/${ipAddress}`);
+              push(`/agents/${id}`);
             }}
           >
             {name}
           </HeaderName>
           <HeaderIconsWrapper>
             <Icons.Settings height={16} width={16} />
-            <Icons.NewWindow onClick={() => push(`/full-page/${ipAddress}/coverage`)} />
+            <Icons.NewWindow onClick={() => push(`/full-page/${id}/coverage`)} />
           </HeaderIconsWrapper>
         </Header>
         <DrillStatus>
@@ -44,8 +44,8 @@ export const AgentCard = withRouter(
             value={status}
             label={`DRILL4J ${status ? 'ON' : 'OFF'}`}
             onChange={() => {
-              if (ipAddress) {
-                toggleStandby(ipAddress);
+              if (id) {
+                toggleStandby(id);
               }
             }}
           />

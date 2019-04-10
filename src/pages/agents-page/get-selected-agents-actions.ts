@@ -38,7 +38,7 @@ const getOnClickFunction = (
 // TODO: write unit test
 export const getSelectedAgentsMap = (agents: Agent[], selectedAgentsIds: string[]) =>
   agents.reduce<{ [key: string]: boolean }>(
-    (acc, { ipAddress = '', status }) =>
-      selectedAgentsIds.includes(ipAddress) ? { ...acc, [ipAddress]: Boolean(status) } : acc,
+    (acc, { id = '', status }) =>
+      selectedAgentsIds.includes(id) ? { ...acc, [id]: Boolean(status) } : acc,
     {},
   );

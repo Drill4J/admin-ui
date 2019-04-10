@@ -19,6 +19,8 @@ import { path as closePath } from './path/close.path';
 import { path as coveragePath } from './path/coverage.path';
 import { path as expanderPath } from './path/expander.path';
 import { path as classPath } from './path/class.path';
+import { path as functionPath } from './path/function.path';
+import { path as packagePath } from './path/package.path';
 import { declareIcon } from './declare-icon';
 
 export const Icons = {
@@ -43,4 +45,6 @@ export const Icons = {
   Coverage: declareIcon(coveragePath, { defaultWidth: 32, defaultHeight: 34 }),
   Expander: declareIcon(expanderPath, { defaultWidth: 8, defaultHeight: 13 }),
   Class: declareIcon(classPath, { defaultWidth: 12, defaultHeight: 16 }),
+  Function: declareIcon(functionPath),
+  Package: declareIcon(packagePath, { defaultWidth: 14, defaultHeight: 16 }),
 };

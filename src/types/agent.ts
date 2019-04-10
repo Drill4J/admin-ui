@@ -1,6 +1,7 @@
 import { Plugin } from './plugin';
 
 export interface Agent {
+  id?: string;
   name?: string;
   group?: string;
   description?: string;

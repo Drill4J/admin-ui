@@ -17,6 +17,7 @@ interface Props {
   expandedRows?: string[];
   expandedColumns?: any[];
   expandedContentKey?: string;
+  withoutHeader?: boolean;
 }
 
 const table = BEM(styles);
@@ -31,6 +32,7 @@ export const Table = table(
     expandedRows = [],
     expandedColumns,
     expandedContentKey,
+    withoutHeader,
   }: Props) => {
     const columns = React.Children.map(children, (column) => column && column.props);
     const expandedColumnsComponents = React.Children.map(
@@ -40,7 +42,7 @@ export const Table = table(
 
     return (
       <table className={className}>
-        <TableHeader columns={columns} />
+        {!withoutHeader && <TableHeader columns={columns} />}
         <tbody>
           {data.map((item, index) => (
             <TableRow
@@ -49,8 +51,9 @@ export const Table = table(
               columns={columns}
               index={index}
               expandedColumns={expandedColumnsComponents}
-              expanded={expandedRows.includes(String(item[idKey]))}
+              color={expandedRows.includes(String(item[idKey])) ? 'blue' : undefined}
               expandedContentKey={expandedContentKey}
+              expandedRows={expandedRows}
             />
           ))}
         </tbody>

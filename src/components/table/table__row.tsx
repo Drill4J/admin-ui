@@ -12,9 +12,10 @@ interface Props {
   item: { [key: string]: unknown };
   columns: any[];
   index: number;
-  expanded?: boolean;
+  color?: 'blue' | 'gray';
   expandedColumns?: any[];
   expandedContentKey?: string;
+  expandedRows?: string[];
 }
 
 export const TableRow = BEM(styles).row(
@@ -24,22 +25,27 @@ export const TableRow = BEM(styles).row(
     columns,
     index,
     expandedContentKey = '',
-    expanded,
+    color,
     expandedColumns = [],
+    expandedRows,
   }: Props) => (
     <>
       <tr className={className}>
         {columns.map((column) => {
           const Cell = column.Cell || DefaultCell;
           return (
-            <td key={column.name}>
+            <td key={column.name} colSpan={column.colSpan}>
               <Cell value={get(item, column.name)} item={item} rowIndex={index} />
             </td>
           );
         })}
       </tr>
-      {expanded && (
-        <ExpandedRowContent data={item[expandedContentKey]} expandedColumns={expandedColumns} />
+      {color && (
+        <ExpandedRowContent
+          data={item[expandedContentKey]}
+          expandedColumns={expandedColumns}
+          expandedRows={expandedRows}
+        />
       )}
     </>
   ),
