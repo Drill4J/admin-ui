@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
+import { withRouter, RouteComponentProps } from 'react-router-dom';
 
 import { useWsConnection } from '../../../../hooks';
 import { defaultPluginSocket } from '../../../../common/connection';
@@ -12,57 +13,61 @@ import { NameCell } from './name-cell';
 
 import styles from './coverage-details.module.scss';
 
-interface Props {
+interface Props extends RouteComponentProps<{ agentId: string }> {
   className?: string;
 }
 
 const coverageDetails = BEM(styles);
 
-export const CoverageDetails = coverageDetails(({ className }: Props) => {
-  const coverageByPackages =
-    useWsConnection<ClassCoverage[]>(defaultPluginSocket, '/coverage-by-packages', {
-      agentId: 'MySuperAgent',
-    }) || [];
+export const CoverageDetails = withRouter(
+  coverageDetails(({ className, match: { params: { agentId } } }: Props) => {
+    const coverageByPackages =
+      useWsConnection<ClassCoverage[]>(defaultPluginSocket, '/coverage-by-packages', {
+        agentId,
+      }) || [];
 
-  return (
-    <div className={className}>
-      <Header align="space-between">Details</Header>
+    return (
+      <div className={className}>
+        <Header align="space-between">Details</Header>
 
-      {coverageByPackages.length > 0 && (
-        <>
-          <Title>
-            <span>Packages</span>
-            <h2>{coverageByPackages.length}</h2>
-          </Title>
-          <ExpandableTable
-            data={coverageByPackages}
-            idKey="name"
-            columnsSize="medium"
-            expandedColumns={[
+        {coverageByPackages.length > 0 && (
+          <>
+            <Title>
+              <span>Packages</span>
+              <h2>{coverageByPackages.length}</h2>
+            </Title>
+            <ExpandableTable
+              data={coverageByPackages}
+              idKey="name"
+              columnsSize="medium"
+              expandedColumns={[
+                <Column
+                  name="name"
+                  Cell={(props) => (
+                    <CompoundCell pathKey="path" icon={<Icons.Class />} {...props} />
+                  )}
+                />,
+                <Column name="coverage" Cell={CoverageCell} />,
+                <Column name="totalMethodsCount" />,
+                <Column name="coveredMethodsCount" />,
+              ]}
+              expandedContentKey="classes"
+            >
               <Column
                 name="name"
-                Cell={(props) => <CompoundCell pathKey="path" icon={<Icons.Class />} {...props} />}
-              />,
-              <Column name="coverage" Cell={CoverageCell} />,
-              <Column name="totalMethodsCount" />,
-              <Column name="coveredMethodsCount" />,
-            ]}
-            expandedContentKey="classes"
-          >
-            <Column
-              name="name"
-              label="Name"
-              Cell={({ value }) => <NameCell icon={<Icons.Package />} value={value} />}
-            />
-            <Column name="coverage" label="Coverage" Cell={CoverageCell} />
-            <Column name="totalMethodsCount" label="Methods total" />
-            <Column name="coveredMethodsCount" label="Methods covered" />
-          </ExpandableTable>
-        </>
-      )}
-    </div>
-  );
-});
+                label="Name"
+                Cell={({ value }) => <NameCell icon={<Icons.Package />} value={value} />}
+              />
+              <Column name="coverage" label="Coverage" Cell={CoverageCell} />
+              <Column name="totalMethodsCount" label="Methods total" />
+              <Column name="coveredMethodsCount" label="Methods covered" />
+            </ExpandableTable>
+          </>
+        )}
+      </div>
+    );
+  }),
+);
 
 const Header = coverageDetails.header(Panel);
 const Title = coverageDetails.title(Panel);
