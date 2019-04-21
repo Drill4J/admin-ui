@@ -10,6 +10,7 @@ import { ClassCoverage } from '../../../../types/class-coverage';
 import { CompoundCell } from './compound-cell';
 import { CoverageCell } from './coverage-cell';
 import { NameCell } from './name-cell';
+import { AssociatedTestModal } from './associated-test-modal';
 
 import styles from './coverage-details.module.scss';
 
@@ -25,11 +26,11 @@ export const CoverageDetails = withRouter(
       useWsConnection<ClassCoverage[]>(defaultPluginSocket, '/coverage-by-packages', {
         agentId,
       }) || [];
+    const [selectedId, setSelectedId] = React.useState('');
 
     return (
       <div className={className}>
         <Header align="space-between">Details</Header>
-
         {coverageByPackages.length > 0 && (
           <>
             <Title>
@@ -44,12 +45,41 @@ export const CoverageDetails = withRouter(
                 <Column
                   name="name"
                   Cell={(props) => (
-                    <CompoundCell pathKey="path" icon={<Icons.Class />} {...props} />
+                    <CompoundCell type="primary" pathKey="path" icon={<Icons.Class />} {...props} />
                   )}
                 />,
                 <Column name="coverage" Cell={CoverageCell} />,
                 <Column name="totalMethodsCount" />,
                 <Column name="coveredMethodsCount" />,
+                <Column
+                  name="assocTestsCount"
+                  label="Associated tests"
+                  Cell={({ value, item: { id } }) => (
+                    <span onClick={() => setSelectedId(id)}>{value ? value : 'n/a'}</span>
+                  )}
+                />,
+              ]}
+              secondLevelExpand={[
+                <Column
+                  name="name"
+                  Cell={(props) => (
+                    <CompoundCell
+                      type="secondary"
+                      pathKey="desc"
+                      icon={<Icons.Function />}
+                      {...props}
+                    />
+                  )}
+                  colSpan={2}
+                />,
+                <Column name="coverage" Cell={CoverageCell} colSpan={3} />,
+                <Column
+                  name="assocTestsCount"
+                  label="Associated tests"
+                  Cell={({ value, item: { id } }) => (
+                    <span onClick={() => setSelectedId(id)}>{value ? value : 'n/a'}</span>
+                  )}
+                />,
               ]}
               expandedContentKey="classes"
             >
@@ -61,8 +91,22 @@ export const CoverageDetails = withRouter(
               <Column name="coverage" label="Coverage" Cell={CoverageCell} />
               <Column name="totalMethodsCount" label="Methods total" />
               <Column name="coveredMethodsCount" label="Methods covered" />
+              <Column
+                name="assocTestsCount"
+                label="Associated tests"
+                Cell={({ value, item: { id } }) => (
+                  <span onClick={() => setSelectedId(id)}>{value ? value : 'n/a'}</span>
+                )}
+              />
             </ExpandableTable>
           </>
+        )}
+        {selectedId && (
+          <AssociatedTestModal
+            id={selectedId}
+            isOpen={Boolean(selectedId)}
+            onToggle={() => setSelectedId('')}
+          />
         )}
       </div>
     );

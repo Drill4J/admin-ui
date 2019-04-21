@@ -21,6 +21,7 @@ import { path as expanderPath } from './path/expander.path';
 import { path as classPath } from './path/class.path';
 import { path as functionPath } from './path/function.path';
 import { path as packagePath } from './path/package.path';
+import { path as testPath } from './path/test.path';
 import { declareIcon } from './declare-icon';
 
 export const Icons = {
@@ -47,4 +48,5 @@ export const Icons = {
   Class: declareIcon(classPath, { defaultWidth: 12, defaultHeight: 16 }),
   Function: declareIcon(functionPath),
   Package: declareIcon(packagePath, { defaultWidth: 14, defaultHeight: 16 }),
+  Test: declareIcon(testPath, { defaultWidth: 12, defaultHeight: 16, viewBox: '0 0 16 20' }),
 };

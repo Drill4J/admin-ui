@@ -14,6 +14,7 @@ interface Props {
   index: number;
   color?: 'blue' | 'gray';
   expandedColumns?: any[];
+  secondLevelExpand?: any[];
   expandedContentKey?: string;
   expandedRows?: string[];
 }
@@ -27,6 +28,7 @@ export const TableRow = BEM(styles).row(
     expandedContentKey = '',
     color,
     expandedColumns = [],
+    secondLevelExpand = [],
     expandedRows,
   }: Props) => (
     <>
@@ -44,6 +46,7 @@ export const TableRow = BEM(styles).row(
         <ExpandedRowContent
           data={item[expandedContentKey]}
           expandedColumns={expandedColumns}
+          secondLevelExpand={secondLevelExpand}
           expandedRows={expandedRows}
         />
       )}

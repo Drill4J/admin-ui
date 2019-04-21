@@ -8,6 +8,7 @@ interface Props {
   item?: { [key: string]: string | number };
   pathKey: string;
   icon?: React.ReactNode;
+  type?: 'primary' | 'secondary';
 }
 
 const compoundCell = BEM(styles);

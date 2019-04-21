@@ -3,7 +3,6 @@ import * as React from 'react';
 import { Table } from '../table';
 import { Column } from '../column';
 import { RowExpander } from './row-expander';
-import { ExpandSchema } from '../table-types';
 
 interface Props {
   data: object[];
@@ -12,7 +11,7 @@ interface Props {
   columnsSize?: 'wide' | 'medium';
   expandedColumns?: any[];
   expandedContentKey: string;
-  expandSchema?: ExpandSchema;
+  secondLevelExpand: any[];
 }
 
 export const ExpandableTable = ({
@@ -20,7 +19,6 @@ export const ExpandableTable = ({
   data,
   idKey,
   expandedColumns,
-  expandSchema,
   // @ts-ignore
   ...restProps,
 }: Props) => {
@@ -36,6 +34,7 @@ export const ExpandableTable = ({
           ? [getExpanderColumn({ idKey, expandedRows, setExpandedRows }), ...expandedColumns]
           : undefined
       }
+      secondLevelExpand={expandedColumns}
       {...restProps}
     >
       {[
@@ -54,10 +53,10 @@ const getExpanderColumn = ({
   idKey: string;
   expandedRows: string[];
   setExpandedRows: (arg: string[]) => void;
-  withMargin?: boolean;
 }) => (
   <Column
     name="selector"
+    key={idKey}
     Cell={({ item }) => {
       return (
         <RowExpander
@@ -67,6 +66,7 @@ const getExpanderColumn = ({
               : setExpandedRows([...expandedRows, item[idKey]]);
           }}
           expanded={expandedRows.includes(item[idKey])}
+          key={item[idKey]}
         />
       );
     }}
