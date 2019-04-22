@@ -2,8 +2,6 @@ import * as React from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
 
-import { useWsConnection } from '../../../../hooks';
-import { defaultPluginSocket } from '../../../../common/connection';
 import { ExpandableTable, Column, Icons } from '../../../../components';
 import { Panel } from '../../../../layouts';
 import { ClassCoverage } from '../../../../types/class-coverage';
@@ -55,9 +53,7 @@ export const CoverageDetails = withRouter(
                 <Column
                   name="assocTestsCount"
                   label="Associated tests"
-                  Cell={({ value, item: { id } }) => (
-                    <span onClick={() => setSelectedId(id)}>{value ? value : 'n/a'}</span>
-                  )}
+                  Cell={(props) => <AssociatedTestColumn onClick={setSelectedId} {...props} />}
                 />,
               ]}
               secondLevelExpand={[
@@ -77,7 +73,7 @@ export const CoverageDetails = withRouter(
                 <Column
                   name="assocTestsCount"
                   label="Associated tests"
-                  Cell={AssociatedTestColumn}
+                  Cell={(props) => <AssociatedTestColumn onClick={setSelectedId} {...props} />}
                 />,
               ]}
               expandedContentKey="classes"
