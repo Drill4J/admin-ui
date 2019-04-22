@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 
-import { Modal, Icons, ItemsActions } from '../../../../../components';
+import { Modal, Icons } from '../../../../../components';
 import { useWsConnection } from '../../../../../hooks';
 import { defaultPluginSocket } from '../../../../../common/connection';
 import { AssociatedTests } from '../../../../../types/associated-tests';
@@ -27,7 +27,7 @@ export const AssociatedTestModal = associatedTestModal(
         buildVersion,
       }) || [];
 
-    const filtredAssosiatedTests = associatedTests.filter((test) => test.id === id);
+    const { tests = [] } = associatedTests.find((test) => test.id === id) || {};
 
     return (
       <Modal isOpen={isOpen} onToggle={onToggle}>
@@ -35,11 +35,11 @@ export const AssociatedTestModal = associatedTestModal(
           <Header>
             <Icons.Test height={20} width={18} viewBox="0 0 18 20" />
             <span>Associated tests</span>
-            <h2>{filtredAssosiatedTests.length}</h2>
+            <h2>{tests.length}</h2>
           </Header>
           <Content>
             <TestList>
-              {filtredAssosiatedTests.map((test) => (
+              {tests.map((test) => (
                 <TestListItem>
                   <Icons.Test />
                   {test}
