@@ -15,7 +15,7 @@ export function useWsConnection<Data>(socket: WsConnection, topic: string, messa
     return () => {
       connection.unsubscribe(topic);
     };
-  }, [message]);
+  }, []);
 
   return data;
 }

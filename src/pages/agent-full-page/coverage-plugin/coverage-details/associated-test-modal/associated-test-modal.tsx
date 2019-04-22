@@ -20,9 +20,7 @@ const associatedTestModal = BEM(styles);
 export const AssociatedTestModal = associatedTestModal(
   ({ className, isOpen, onToggle, id }: Props) => {
     const { tests = [] } =
-      useWsConnection<AssociatedTests>(defaultPluginSocket, '/associated-tests', {
-        id,
-      }) || {};
+      useWsConnection<AssociatedTests>(defaultPluginSocket, '/associated-tests') || {};
 
     return (
       <Modal isOpen={isOpen} onToggle={onToggle}>

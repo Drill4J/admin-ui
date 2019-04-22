@@ -6,12 +6,13 @@ import { Panel } from '../../../layouts';
 import { Icons, PageHeader, Dropdown } from '../../../components';
 import { Card } from './card';
 import { useWsConnection } from '../../../hooks';
-import { defaultPluginSocket, defaultAdminSocket } from '../../../common/connection';
+import { defaultAdminSocket } from '../../../common/connection';
 import { CoverageDetails } from './coverage-details';
 import { Coverage } from '../../../types/coverage';
 import { NewMethodsCoverage } from '../../../types/new-methods-coverage';
 import { AgentBuildVersion } from '../../../types/agent-build-version';
 import { percentFormatter } from '../../../utils';
+import { useBuildVersion } from './use-build-version';
 
 import styles from './coverage-plugin.module.scss';
 
@@ -28,16 +29,9 @@ export const CoveragePlugin = withRouter(
       value: agentBuildVersion,
       label: `Build ${agentBuildVersion}`,
     });
-    const coverage =
-      useWsConnection<Coverage>(defaultPluginSocket, '/coverage', {
-        agentId,
-        buildVersion: selectedBuildVersion.value ? selectedBuildVersion.value : undefined,
-      }) || {};
-    const newMethodsCoverage =
-      useWsConnection<NewMethodsCoverage>(defaultPluginSocket, '/coverage-new', {
-        agentId,
-        buildVersion: selectedBuildVersion.value ? selectedBuildVersion.value : undefined,
-      }) || {};
+    const coverage: any = useBuildVersion('/coverage', agentId, selectedBuildVersion.value) || {};
+    const newMethodsCoverage: any =
+      useBuildVersion('/coverage-new', agentId, selectedBuildVersion.value) || {};
     const agentBuildVersions =
       useWsConnection<AgentBuildVersion[]>(defaultAdminSocket, `/agent/${agentId}/get-builds`) ||
       [];

@@ -12,6 +12,7 @@ import { CoverageCell } from './coverage-cell';
 import { NameCell } from './name-cell';
 import { AssociatedTestModal } from './associated-test-modal';
 import { AssociatedTestColumn } from './associated-test-column';
+import { useBuildVersion } from '../use-build-version';
 
 import styles from './coverage-details.module.scss';
 
@@ -25,10 +26,7 @@ const coverageDetails = BEM(styles);
 export const CoverageDetails = withRouter(
   coverageDetails(({ className, match: { params: { agentId } }, buildVersion }: Props) => {
     const coverageByPackages =
-      useWsConnection<ClassCoverage[]>(defaultPluginSocket, '/coverage-by-packages', {
-        agentId,
-        buildVersion: buildVersion ? buildVersion : undefined,
-      }) || [];
+      useBuildVersion<ClassCoverage[]>('/coverage-by-packages', agentId, buildVersion) || [];
     const [selectedId, setSelectedId] = React.useState('');
 
     return (
@@ -92,7 +90,11 @@ export const CoverageDetails = withRouter(
               <Column name="coverage" label="Coverage" Cell={CoverageCell} />
               <Column name="totalMethodsCount" label="Methods total" />
               <Column name="coveredMethodsCount" label="Methods covered" />
-              <Column name="assocTestsCount" label="Associated tests" Cell={AssociatedTestColumn} />
+              <Column
+                name="assocTestsCount"
+                label="Associated tests"
+                Cell={(props) => <AssociatedTestColumn onClick={setSelectedId} {...props} />}
+              />
             </ExpandableTable>
           </>
         )}
