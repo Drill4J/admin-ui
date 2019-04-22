@@ -25,13 +25,11 @@ export const CardView = cardView(
           agent={agent}
           selected={selectedAgents.includes(String(agent.id))}
           onSelect={() => {
-            selectedAgents.includes(
-              String(agent[idKey])
-                ? handleSelectAgents(
-                    selectedAgents.filter((selectedItem) => selectedItem !== agent[idKey]),
-                  )
-                : handleSelectAgents([...selectedAgents, String(agent[idKey])]),
-            );
+            selectedAgents.includes(String(agent[idKey]))
+              ? handleSelectAgents(
+                  selectedAgents.filter((selectedItem) => selectedItem !== agent[idKey]),
+                )
+              : handleSelectAgents([...selectedAgents, String(agent[idKey])]);
           }}
         />
       ))}
