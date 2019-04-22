@@ -1,6 +1,7 @@
 import { MethodCoverage } from './method-coverage';
 
 export interface ClassCoverage {
+  id?: string;
   name?: string;
   path?: string;
   coverage?: number;

@@ -11,6 +11,7 @@ import { CompoundCell } from './compound-cell';
 import { CoverageCell } from './coverage-cell';
 import { NameCell } from './name-cell';
 import { AssociatedTestModal } from './associated-test-modal';
+import { AssociatedTestColumn } from './associated-test-column';
 
 import styles from './coverage-details.module.scss';
 
@@ -76,9 +77,7 @@ export const CoverageDetails = withRouter(
                 <Column
                   name="assocTestsCount"
                   label="Associated tests"
-                  Cell={({ value, item: { id } }) => (
-                    <span onClick={() => setSelectedId(id)}>{value ? value : 'n/a'}</span>
-                  )}
+                  Cell={AssociatedTestColumn}
                 />,
               ]}
               expandedContentKey="classes"
@@ -91,13 +90,7 @@ export const CoverageDetails = withRouter(
               <Column name="coverage" label="Coverage" Cell={CoverageCell} />
               <Column name="totalMethodsCount" label="Methods total" />
               <Column name="coveredMethodsCount" label="Methods covered" />
-              <Column
-                name="assocTestsCount"
-                label="Associated tests"
-                Cell={({ value, item: { id } }) => (
-                  <span onClick={() => setSelectedId(id)}>{value ? value : 'n/a'}</span>
-                )}
-              />
+              <Column name="assocTestsCount" label="Associated tests" Cell={AssociatedTestColumn} />
             </ExpandableTable>
           </>
         )}

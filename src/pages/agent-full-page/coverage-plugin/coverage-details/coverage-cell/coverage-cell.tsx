@@ -25,7 +25,7 @@ const IconWrapper = coverageCell.icon(
 );
 
 function getCoverageIcon(coverage: number) {
-  if (coverage === 0) {
+  if (!coverage) {
     return (
       <IconWrapper type="error">
         <Icons.Warning height={16} width={16} />
