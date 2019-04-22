@@ -41,17 +41,14 @@ export const AgentInfoPage = withRouter(
                       agent.status ? 'on' : 'off'
                     }`}</ToggleAgentHeader>
                   }
-                  onChange={() => toggleAgent(agent.ipAddress || '')}
+                  onChange={() => toggleAgent(agent.id || '')}
                 />
               </ToggleAgent>
             </HeaderTitle>
           }
           actions={
             <HeaderActions>
-              <ToAgentButton
-                type="primary"
-                onClick={() => push(`/full-page/${agent.ipAddress}/coverage`)}
-              >
+              <ToAgentButton type="primary" onClick={() => push(`/full-page/${agent.id}/coverage`)}>
                 <Icons.NewWindow />
                 <span>Go to agent</span>
               </ToAgentButton>
@@ -87,7 +84,7 @@ export const AgentInfoPage = withRouter(
               plugins={agent.rawPluginsName}
               selectedPlugins={selectedPlugins}
               handleSelectPlugin={setSelectedPlugins}
-              agentId={agent.ipAddress || ''}
+              agentId={agent.id || ''}
             />
           ) : (
             <NoPluginsStub />

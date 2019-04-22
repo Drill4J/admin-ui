@@ -23,16 +23,14 @@ export const TableView = tableView(
     <div className={className}>
       <SelectableTable
         data={agents}
-        idKey="ipAddress"
+        idKey="id"
         selectedRows={selectedAgents}
         onSelect={handleSelectAgents}
       >
         <Column
           name="name"
           label="Name"
-          Cell={({ value, item: { ipAddress } }) => (
-            <NameColumn agentId={ipAddress} agentName={value} />
-          )}
+          Cell={({ value, item: { id } }) => <NameColumn agentId={id} agentName={value} />}
         />
         <Column
           name="description"
@@ -49,7 +47,7 @@ export const TableView = tableView(
               <Toggler
                 value={value}
                 label={value ? 'On' : 'Off'}
-                onChange={() => toggleStandby(item.ipAddress)}
+                onChange={() => toggleStandby(item.id)}
               />
             </StatusColumn>
           )}
@@ -68,7 +66,7 @@ export const TableView = tableView(
         <Column
           name="actions"
           label="Actions"
-          Cell={({ item }: { item: Agent }) => <ActionsColumn agentId={item.ipAddress || ''} />}
+          Cell={({ item }: { item: Agent }) => <ActionsColumn agentId={item.id || ''} />}
         />
       </SelectableTable>
     </div>

@@ -19,7 +19,7 @@ export class WsConnection {
       const { destination, message }: StompResponse = JSON.parse(event.data);
       const callback = this.onMessageListeners[destination];
 
-      callback && callback(JSON.parse(message));
+      callback && message && callback(JSON.parse(message));
     };
   }
 
@@ -29,9 +29,9 @@ export class WsConnection {
     return this;
   }
 
-  public subscribe(destination: string, callback: (arg: any) => void) {
+  public subscribe(destination: string, callback: (arg: any) => void, message?: object) {
     this.onMessageListeners[destination] = callback;
-    this.send(destination, 'SUBSCRIBE');
+    this.send(destination, 'SUBSCRIBE', message);
 
     return this;
   }
@@ -49,21 +49,11 @@ export class WsConnection {
         JSON.stringify({
           destination,
           type,
-          message,
+          message: JSON.stringify(message),
         }),
       );
     } else {
-      setTimeout(
-        () =>
-          this.connection.send(
-            JSON.stringify({
-              destination,
-              type,
-              message,
-            }),
-          ),
-        200,
-      );
+      setTimeout(() => this.send(destination, type, message), 200);
     }
 
     return this;

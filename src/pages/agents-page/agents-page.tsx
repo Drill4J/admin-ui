@@ -53,7 +53,7 @@ export const AgentsPage = agentsPage(({ className }: Props) => {
             />
           ) : (
             <CardView
-              idKey="ipAddress"
+              idKey="id"
               agents={agents}
               selectedAgents={selectedAgents}
               handleSelectAgents={setSelectedAgents}

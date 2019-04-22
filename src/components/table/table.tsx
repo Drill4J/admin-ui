@@ -16,7 +16,9 @@ interface Props {
   columnsSize?: 'wide' | 'medium';
   expandedRows?: string[];
   expandedColumns?: any[];
+  secondLevelExpand?: any[];
   expandedContentKey?: string;
+  withoutHeader?: boolean;
 }
 
 const table = BEM(styles);
@@ -31,16 +33,22 @@ export const Table = table(
     expandedRows = [],
     expandedColumns,
     expandedContentKey,
+    secondLevelExpand,
+    withoutHeader,
   }: Props) => {
     const columns = React.Children.map(children, (column) => column && column.props);
     const expandedColumnsComponents = React.Children.map(
       expandedColumns,
       (column) => column && column.props,
     );
+    const expandedColumnsSecondLevel = React.Children.map(
+      secondLevelExpand,
+      (column) => column && column.props,
+    );
 
     return (
       <table className={className}>
-        <TableHeader columns={columns} />
+        {!withoutHeader && <TableHeader columns={columns} />}
         <tbody>
           {data.map((item, index) => (
             <TableRow
@@ -49,8 +57,10 @@ export const Table = table(
               columns={columns}
               index={index}
               expandedColumns={expandedColumnsComponents}
-              expanded={expandedRows.includes(String(item[idKey]))}
+              color={expandedRows.includes(String(item[idKey])) ? 'blue' : undefined}
               expandedContentKey={expandedContentKey}
+              expandedRows={expandedRows}
+              secondLevelExpand={expandedColumnsSecondLevel}
             />
           ))}
         </tbody>

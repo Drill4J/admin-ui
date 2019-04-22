@@ -1,24 +1,31 @@
 import * as React from 'react';
 
-import { DefaultCell } from './default-cell';
-import { get } from '../../utils';
+import { TableRow } from './table__row';
 
 interface Props {
   data: any;
   expandedColumns?: any[];
+  idKey?: string;
+  expandedRows?: string[];
+  secondLevelExpand?: any[];
 }
 
-export const ExpandedRowContent = ({ data, expandedColumns = [] }: Props) =>
-  data.map((item: any) => (
-    <tr tabIndex={0}>
-      {expandedColumns.map((expandedColumn, index) => {
-        const Cell = expandedColumn.Cell || DefaultCell;
-
-        return (
-          <td key={expandedColumn.name} colSpan={expandedColumn.colSpan}>
-            <Cell value={get(item, expandedColumn.name)} item={item} rowIndex={index} />
-          </td>
-        );
-      })}
-    </tr>
+export const ExpandedRowContent = ({
+  data,
+  expandedColumns = [],
+  idKey = 'name',
+  expandedRows = [],
+  secondLevelExpand = [],
+}: Props) => {
+  return data.map((item: any, index: number) => (
+    <TableRow
+      key={idKey ? String(item[idKey]) : index}
+      item={item}
+      columns={expandedColumns}
+      index={index}
+      expandedColumns={secondLevelExpand}
+      color={expandedRows.includes(String(item[idKey])) ? 'gray' : undefined}
+      expandedContentKey="methods"
+    />
   ));
+};

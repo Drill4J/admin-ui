@@ -37,3 +37,9 @@ export interface ColumnProps {
   /** colSpan of column */
   colSpan?: number;
 }
+
+export interface ExpandSchema {
+  key: string;
+  columns: React.ReactNode | React.ReactNode[];
+  children: ExpandSchema;
+}
