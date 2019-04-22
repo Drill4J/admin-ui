@@ -103,6 +103,8 @@ export const CoverageDetails = withRouter(
             id={selectedId}
             isOpen={Boolean(selectedId)}
             onToggle={() => setSelectedId('')}
+            agentId={agentId}
+            buildVersion={buildVersion}
           />
         )}
       </div>

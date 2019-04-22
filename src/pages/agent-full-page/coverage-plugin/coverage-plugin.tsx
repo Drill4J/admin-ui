@@ -29,9 +29,11 @@ export const CoveragePlugin = withRouter(
       value: agentBuildVersion,
       label: `Build ${agentBuildVersion}`,
     });
-    const coverage: any = useBuildVersion('/coverage', agentId, selectedBuildVersion.value) || {};
-    const newMethodsCoverage: any =
-      useBuildVersion('/coverage-new', agentId, selectedBuildVersion.value) || {};
+    const coverage =
+      useBuildVersion<Coverage>('/coverage', agentId, selectedBuildVersion.value) || {};
+    const newMethodsCoverage =
+      useBuildVersion<NewMethodsCoverage>('/coverage-new', agentId, selectedBuildVersion.value) ||
+      {};
     const agentBuildVersions =
       useWsConnection<AgentBuildVersion[]>(defaultAdminSocket, `/agent/${agentId}/get-builds`) ||
       [];

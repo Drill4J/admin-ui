@@ -13,14 +13,19 @@ interface Props {
   id?: string;
   isOpen: boolean;
   onToggle: (arg: boolean) => void;
+  agentId?: string;
+  buildVersion?: string;
 }
 
 const associatedTestModal = BEM(styles);
 
 export const AssociatedTestModal = associatedTestModal(
-  ({ className, isOpen, onToggle, id }: Props) => {
+  ({ className, isOpen, onToggle, id, agentId, buildVersion }: Props) => {
     const { tests = [] } =
-      useWsConnection<AssociatedTests>(defaultPluginSocket, '/associated-tests') || {};
+      useWsConnection<AssociatedTests>(defaultPluginSocket, '/associated-tests', {
+        agentId,
+        buildVersion,
+      }) || {};
 
     return (
       <Modal isOpen={isOpen} onToggle={onToggle}>
