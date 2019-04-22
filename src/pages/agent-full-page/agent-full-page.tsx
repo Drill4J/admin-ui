@@ -31,7 +31,6 @@ export const AgentFullPage = withRouter(
           <Sidebar
             links={getPluginsLinks(agent)}
             matchParams={{ path: '/full-page/:agentId/:activeLink' }}
-            longLinks
           />
         }
         toolbar={

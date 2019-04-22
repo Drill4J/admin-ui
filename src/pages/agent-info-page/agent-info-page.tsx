@@ -49,8 +49,8 @@ export const AgentInfoPage = withRouter(
           actions={
             <HeaderActions>
               <ToAgentButton type="primary" onClick={() => push(`/full-page/${agent.id}/coverage`)}>
-                <Icons.NewWindow />
-                <span>Go to agent</span>
+                <Icons.OpenLive />
+                <span>Open live</span>
               </ToAgentButton>
               <Settings>
                 <Icons.Settings />

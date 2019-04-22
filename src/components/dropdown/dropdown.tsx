@@ -21,8 +21,22 @@ const dropdown = BEM(styles);
 
 export const Dropdown = dropdown(({ className, items, value, onChange }: Props) => {
   const [isExpanded, setIsExpanded] = React.useState(false);
+  const node = React.useRef<HTMLDivElement>(null);
+  React.useEffect(() => {
+    function handleClick(event: any) {
+      if (node && node.current && node.current.contains(event.target)) {
+        return;
+      }
+      setIsExpanded(false);
+    }
+    document.addEventListener('mousedown', handleClick);
+    return () => {
+      document.removeEventListener('mousedown', handleClick);
+    };
+  }, []);
+
   return (
-    <div className={className}>
+    <div className={className} ref={node}>
       <Container onClick={() => setIsExpanded(!isExpanded)}>
         <Value>{value.label}</Value>
         <Icon>

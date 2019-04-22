@@ -31,12 +31,12 @@ export const CoveragePlugin = withRouter(
     const coverage =
       useWsConnection<Coverage>(defaultPluginSocket, '/coverage', {
         agentId,
-        buildVersion: selectedBuildVersion.value ? selectedBuildVersion : undefined,
+        buildVersion: selectedBuildVersion.value ? selectedBuildVersion.value : undefined,
       }) || {};
     const newMethodsCoverage =
       useWsConnection<NewMethodsCoverage>(defaultPluginSocket, '/coverage-new', {
         agentId,
-        buildVersion: selectedBuildVersion.value ? selectedBuildVersion : undefined,
+        buildVersion: selectedBuildVersion.value ? selectedBuildVersion.value : undefined,
       }) || {};
     const agentBuildVersions =
       useWsConnection<AgentBuildVersion[]>(defaultAdminSocket, `/agent/${agentId}/get-builds`) ||
