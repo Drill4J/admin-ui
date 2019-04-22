@@ -44,7 +44,7 @@ export const AgentFullPage = withRouter(
         }
       >
         <div className={className}>
-          <CoveragePlugin />
+          <CoveragePlugin agentBuildVersion={agent.buildVersion} />
         </div>
       </PluginsLayout>
     );

@@ -13,3 +13,4 @@ export { Badge } from './badge';
 export { Modal } from './modal';
 export { TableCheckbox } from './table-checkbox';
 export { Divider } from './divider';
+export { Dropdown } from './dropdown';

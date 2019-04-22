@@ -12,4 +12,5 @@ export interface Agent {
   ipAddress?: string;
   activePluginsCount?: number;
   pluginsCount?: number;
+  buildVersion?: string;
 }

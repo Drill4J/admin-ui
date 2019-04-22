@@ -17,15 +17,17 @@ import styles from './coverage-details.module.scss';
 
 interface Props extends RouteComponentProps<{ agentId: string }> {
   className?: string;
+  buildVersion?: string;
 }
 
 const coverageDetails = BEM(styles);
 
 export const CoverageDetails = withRouter(
-  coverageDetails(({ className, match: { params: { agentId } } }: Props) => {
+  coverageDetails(({ className, match: { params: { agentId } }, buildVersion }: Props) => {
     const coverageByPackages =
       useWsConnection<ClassCoverage[]>(defaultPluginSocket, '/coverage-by-packages', {
         agentId,
+        buildVersion: buildVersion ? buildVersion : undefined,
       }) || [];
     const [selectedId, setSelectedId] = React.useState('');
 
