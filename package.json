@@ -21,7 +21,9 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "typecheck": "tsc --project tsconfig.json --noEmit --skipLibCheck",
+    "lint": "tslint --project ."
   },
   "eslintConfig": {
     "extends": "react-app"
