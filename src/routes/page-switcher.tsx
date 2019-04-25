@@ -18,7 +18,7 @@ const sidebarLinks = [
   { link: 'agents', icon: Icons.Agents },
   { link: 'plugins', icon: Icons.Plugins },
   { link: 'logs', icon: Icons.Logs },
-  { link: 'settings', icon: Icons.Settings },
+  { link: 'settings', icon: Icons.NewSettings },
 ];
 
 export const PageSwitcher = () => {

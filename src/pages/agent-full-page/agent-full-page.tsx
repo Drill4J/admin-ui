@@ -31,7 +31,6 @@ export const AgentFullPage = withRouter(
           <Sidebar
             links={getPluginsLinks(agent)}
             matchParams={{ path: '/full-page/:agentId/:activeLink' }}
-            longLinks
           />
         }
         toolbar={
@@ -44,7 +43,7 @@ export const AgentFullPage = withRouter(
         }
       >
         <div className={className}>
-          <CoveragePlugin />
+          <CoveragePlugin agentBuildVersion={agent.buildVersion} />
         </div>
       </PluginsLayout>
     );

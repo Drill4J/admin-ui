@@ -19,7 +19,7 @@ export class WsConnection {
       const { destination, message }: StompResponse = JSON.parse(event.data);
       const callback = this.onMessageListeners[destination];
 
-      callback && message && callback(JSON.parse(message));
+      callback && callback(message ? JSON.parse(message) : null);
     };
   }
 

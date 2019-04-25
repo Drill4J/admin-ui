@@ -21,9 +21,15 @@
   }
 
   &__title {
+    display: flex;
+    align-items: center;
     width: 100%;
     color: map-get($color-palette, black100);
     margin-bottom: 16px;
+  }
+
+  &__build-version {
+    margin-left: 16px;
   }
 
   &__summary-wrapper {

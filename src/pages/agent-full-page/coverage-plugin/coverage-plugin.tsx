@@ -3,30 +3,47 @@ import { BEM } from '@redneckz/react-bem-helper';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
 
 import { Panel } from '../../../layouts';
-import { Icons, PageHeader } from '../../../components';
+import { Icons, PageHeader, Dropdown } from '../../../components';
 import { Card } from './card';
 import { useWsConnection } from '../../../hooks';
-import { defaultPluginSocket } from '../../../common/connection';
+import { defaultAdminSocket } from '../../../common/connection';
 import { CoverageDetails } from './coverage-details';
 import { Coverage } from '../../../types/coverage';
 import { NewMethodsCoverage } from '../../../types/new-methods-coverage';
+import { AgentBuildVersion } from '../../../types/agent-build-version';
 import { percentFormatter } from '../../../utils';
+import { useBuildVersion } from './use-build-version';
 
 import styles from './coverage-plugin.module.scss';
 
 interface Props extends RouteComponentProps<{ agentId: string }> {
   className?: string;
+  agentBuildVersion?: string;
 }
 
 const coveragePlugin = BEM(styles);
 
 export const CoveragePlugin = withRouter(
-  coveragePlugin(({ className, match: { params: { agentId } } }: Props) => {
-    const coverage = useWsConnection<Coverage>(defaultPluginSocket, '/coverage', { agentId }) || {};
+  coveragePlugin(({ className, match: { params: { agentId } }, agentBuildVersion = '' }: Props) => {
+    const [selectedBuildVersion, setSelectedBuildVersion] = React.useState({
+      value: agentBuildVersion,
+      label: `Build ${agentBuildVersion}`,
+    });
+    const coverage =
+      useBuildVersion<Coverage>('/coverage', agentId, selectedBuildVersion.value) || {};
     const newMethodsCoverage =
-      useWsConnection<NewMethodsCoverage>(defaultPluginSocket, '/coverage-new', {
-        agentId,
-      }) || {};
+      useBuildVersion<NewMethodsCoverage>('/coverage-new', agentId, selectedBuildVersion.value) ||
+      {};
+    const agentBuildVersions =
+      useWsConnection<AgentBuildVersion[]>(defaultAdminSocket, `/agent/${agentId}/get-builds`) ||
+      [];
+
+    React.useEffect(() => {
+      setSelectedBuildVersion({
+        value: agentBuildVersion,
+        label: `Build ${agentBuildVersion}`,
+      });
+    }, [agentBuildVersion]);
 
     return (
       <div className={className}>
@@ -41,7 +58,17 @@ export const CoveragePlugin = withRouter(
           }
         />
         <Content>
-          <Title>Summary</Title>
+          <Title>
+            Summary
+            <BuildVersion
+              value={selectedBuildVersion}
+              items={agentBuildVersions.map(({ version = '' }) => ({
+                value: version,
+                label: `Build ${version}`,
+              }))}
+              onChange={setSelectedBuildVersion}
+            />
+          </Title>
           <SummaryWrapper>
             <Card
               title="Code Coverage"
@@ -74,7 +101,7 @@ export const CoveragePlugin = withRouter(
               }
             />
           </SummaryWrapper>
-          <CoverageDetails />
+          <CoverageDetails buildVersion={selectedBuildVersion.value} />
         </Content>
       </div>
     );
@@ -84,6 +111,7 @@ export const CoveragePlugin = withRouter(
 const SettingsButton = coveragePlugin.settingsButton('div');
 const Content = coveragePlugin.content('div');
 const Title = coveragePlugin.title('div');
+const BuildVersion = coveragePlugin.buildVersion(Dropdown);
 const SummaryWrapper = coveragePlugin.summaryWrapper('div');
 const WarningIcon = coveragePlugin.warningIcon(Icons.Warning);
 const SuccessIcon = coveragePlugin.successIcon(Icons.Checkbox);

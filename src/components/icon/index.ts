@@ -23,17 +23,19 @@ import { path as functionPath } from './path/function.path';
 import { path as packagePath } from './path/package.path';
 import { path as testPath } from './path/test.path';
 import { declareIcon } from './declare-icon';
+import { ReactComponent as SettingsSvg } from './settings.svg';
+import { ReactComponent as OpenLiveSvg } from './open-live.svg';
 
 export const Icons = {
   Arrow: declareIcon(arrowPath),
   Account: declareIcon(accountPath, { defaultWidth: 20, defaultHeight: 20 }),
   Lock: declareIcon(lockPath, { defaultWidth: 15, defaultHeight: 20 }),
   Warning: declareIcon(warningPath),
-  Agents: declareIcon(agentsPath, { defaultWidth: 24, defaultHeight: 24 }),
+  Agents: declareIcon(agentsPath, { defaultWidth: 32, defaultHeight: 32 }),
   Notification: declareIcon(notificationPath, { defaultWidth: 18, defaultHeight: 20 }),
-  Plugins: declareIcon(pluginsPath, { defaultWidth: 24, defaultHeight: 24 }),
-  Logs: declareIcon(logsPath, { defaultWidth: 26, defaultHeight: 24 }),
   Settings: declareIcon(settingsPath, { defaultWidth: 24, defaultHeight: 24 }),
+  Plugins: declareIcon(pluginsPath, { defaultWidth: 32, defaultHeight: 32 }),
+  Logs: declareIcon(logsPath, { defaultWidth: 28, defaultHeight: 30 }),
   Search: declareIcon(searchPath, { defaultWidth: 16, defaultHeight: 16 }),
   Filters: declareIcon(filtersPath, { defaultWidth: 18, defaultHeight: 19 }),
   NewWindow: declareIcon(newWindowPath),
@@ -49,4 +51,6 @@ export const Icons = {
   Function: declareIcon(functionPath),
   Package: declareIcon(packagePath, { defaultWidth: 14, defaultHeight: 16 }),
   Test: declareIcon(testPath, { defaultWidth: 12, defaultHeight: 16, viewBox: '0 0 16 20' }),
+  NewSettings: SettingsSvg,
+  OpenLive: OpenLiveSvg,
 };

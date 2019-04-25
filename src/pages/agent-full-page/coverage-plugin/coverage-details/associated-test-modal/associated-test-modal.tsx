@@ -5,6 +5,7 @@ import { Modal, Icons } from '../../../../../components';
 import { useWsConnection } from '../../../../../hooks';
 import { defaultPluginSocket } from '../../../../../common/connection';
 import { AssociatedTests } from '../../../../../types/associated-tests';
+import { ItemInfo } from './item-info';
 
 import styles from './associated-test-modal.module.scss';
 
@@ -13,16 +14,22 @@ interface Props {
   id?: string;
   isOpen: boolean;
   onToggle: (arg: boolean) => void;
+  agentId?: string;
+  buildVersion?: string;
 }
 
 const associatedTestModal = BEM(styles);
 
 export const AssociatedTestModal = associatedTestModal(
-  ({ className, isOpen, onToggle, id }: Props) => {
-    const { tests = [] } =
-      useWsConnection<AssociatedTests>(defaultPluginSocket, '/associated-tests', {
-        id,
-      }) || {};
+  ({ className, isOpen, onToggle, id, agentId, buildVersion }: Props) => {
+    const associatedTests =
+      useWsConnection<AssociatedTests[]>(defaultPluginSocket, '/associated-tests', {
+        agentId,
+        buildVersion,
+      }) || [];
+
+    const { tests = [], packageName = '', className: testClassName = '', methodName = '' } =
+      associatedTests.find((test) => test.id === id) || {};
 
     return (
       <Modal isOpen={isOpen} onToggle={onToggle}>
@@ -32,6 +39,11 @@ export const AssociatedTestModal = associatedTestModal(
             <span>Associated tests</span>
             <h2>{tests.length}</h2>
           </Header>
+          <ItemInfo
+            packageName={packageName}
+            testClassName={testClassName}
+            methodName={methodName}
+          />
           <Content>
             <TestList>
               {tests.map((test) => (
