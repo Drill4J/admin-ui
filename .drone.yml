@@ -4,3 +4,5 @@ pipeline:
     commands:
       - yarn
       - yarn test
+      - yarn typecheck
+      - yarn lint
