@@ -16,8 +16,8 @@ const associatedTestColumn = BEM(styles);
 
 export const AssociatedTestColumn = associatedTestColumn(
   ({ className, value, item: { id }, onClick }: Props) => (
-    <span className={className} onClick={() => onClick(id)}>
-      {value ? <Value>{value}</Value> : 'n/a'}
+    <span className={className}>
+      {value ? <Value onClick={() => onClick(id)}>{value}</Value> : 'n/a'}
     </span>
   ),
 );
