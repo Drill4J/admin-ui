@@ -35,8 +35,8 @@ export const AgentCard = withRouter(
             {name}
           </HeaderName>
           <HeaderIconsWrapper>
-            <Icons.Settings height={16} width={16} />
             <Icons.NewWindow onClick={() => push(`/full-page/${id}/coverage`)} />
+            <Icons.Settings height={16} width={16} />
           </HeaderIconsWrapper>
         </Header>
         <DrillStatus>
