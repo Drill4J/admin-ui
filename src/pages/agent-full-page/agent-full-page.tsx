@@ -37,7 +37,8 @@ export const AgentFullPage = withRouter(
           <Toolbar>
             <Panel>
               <AgentStatus status={agent.status} />
-              {agent.name} {agent.ipAddress}
+              <AgentName>{agent.name}</AgentName>
+              <AgentIpAddress>{agent.ipAddress}</AgentIpAddress>
             </Panel>
           </Toolbar>
         }
@@ -51,3 +52,5 @@ export const AgentFullPage = withRouter(
 );
 
 const AgentStatus = agentFullPage.agentStatus(div({ status: false } as { status?: boolean }));
+const AgentName = agentFullPage.agentName('div');
+const AgentIpAddress = agentFullPage.agentIpAddress('div');
