@@ -3,4 +3,5 @@ export interface Coverage {
   uncoveredMethodsCount?: number;
   classesCount?: number;
   methodsCount?: number;
+  arrow?: 'INCREASE' | 'DECREASE';
 }
