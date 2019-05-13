@@ -11,8 +11,8 @@ import { CoverageDetails } from './coverage-details';
 import { Coverage } from '../../../types/coverage';
 import { NewMethodsCoverage } from '../../../types/new-methods-coverage';
 import { AgentBuildVersion } from '../../../types/agent-build-version';
-import { percentFormatter } from '../../../utils';
 import { useBuildVersion } from './use-build-version';
+import { CodeCoverageCard } from './code-coverage-card';
 
 import styles from './coverage-plugin.module.scss';
 
@@ -70,20 +70,7 @@ export const CoveragePlugin = withRouter(
             />
           </Title>
           <SummaryWrapper>
-            <Card
-              title="Code Coverage"
-              text={
-                coverage.coverage !== undefined ? `${percentFormatter(coverage.coverage)}%` : 'n/a'
-              }
-              secondaryText={
-                coverage.uncoveredMethodsCount !== undefined ? (
-                  <>
-                    {coverage.uncoveredMethodsCount === 0 ? <SuccessIcon /> : <WarningIcon />}
-                    {` ${coverage.uncoveredMethodsCount} methods not covered`}
-                  </>
-                ) : null
-              }
-            />
+            <CodeCoverageCard coverage={coverage} />
             <Card
               title="Methods, Total"
               text={coverage.methodsCount !== undefined ? coverage.methodsCount : 'n/a'}
