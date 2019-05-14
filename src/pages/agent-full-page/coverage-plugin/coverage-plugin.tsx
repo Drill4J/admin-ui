@@ -13,6 +13,7 @@ import { NewMethodsCoverage } from '../../../types/new-methods-coverage';
 import { AgentBuildVersion } from '../../../types/agent-build-version';
 import { useBuildVersion } from './use-build-version';
 import { CodeCoverageCard } from './code-coverage-card';
+import { NewMethodsModal } from './new-methods-modal';
 
 import styles from './coverage-plugin.module.scss';
 
@@ -29,6 +30,7 @@ export const CoveragePlugin = withRouter(
       value: agentBuildVersion,
       label: `Build ${agentBuildVersion}`,
     });
+    const [isNewMethodsModalOpen, setIsNewMethodsModalOpen] = React.useState(false);
     const coverage =
       useBuildVersion<Coverage>('/coverage', agentId, selectedBuildVersion.value) || {};
     const newMethodsCoverage =
@@ -76,19 +78,27 @@ export const CoveragePlugin = withRouter(
               text={coverage.methodsCount !== undefined ? coverage.methodsCount : 'n/a'}
               secondaryText={
                 newMethodsCoverage.methodsCount !== undefined ? (
-                  <>
+                  <NewMethods onClick={() => setIsNewMethodsModalOpen(true)}>
                     {newMethodsCoverage.methodsCount === 0 ? <SuccessIcon /> : <WarningIcon />}
                     {` ${newMethodsCoverage.methodsCount} new methods ${
                       newMethodsCoverage.methodsCovered
                         ? `(${newMethodsCoverage.methodsCovered} covered)`
                         : ''
                     }`}
-                  </>
+                  </NewMethods>
                 ) : null
               }
             />
           </SummaryWrapper>
           <CoverageDetails buildVersion={selectedBuildVersion.value} />
+          {isNewMethodsModalOpen && (
+            <NewMethodsModal
+              agentId={agentId}
+              buildVersion={selectedBuildVersion.value}
+              isOpen={isNewMethodsModalOpen}
+              onToggle={setIsNewMethodsModalOpen}
+            />
+          )}
         </Content>
       </div>
     );
@@ -102,3 +112,4 @@ const BuildVersion = coveragePlugin.buildVersion(Dropdown);
 const SummaryWrapper = coveragePlugin.summaryWrapper('div');
 const WarningIcon = coveragePlugin.warningIcon(Icons.Warning);
 const SuccessIcon = coveragePlugin.successIcon(Icons.Checkbox);
+const NewMethods = coveragePlugin.newMethods('div');
