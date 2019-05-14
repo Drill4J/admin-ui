@@ -6,18 +6,7 @@
   overflow: hidden;
   white-space: nowrap;
   position: relative;
-
-  &::after {
-    content: '';
-    position: absolute;
-    right: 0;
-    top: 0;
-    width: 20px;
-    height: 100%;
-    background: linear-gradient(
-      to right,
-      rgba(map-get($color-palette, white), 0.2),
-      map-get($color-palette, white) 100%
-    );
-  }
+  background: linear-gradient(to right, currentColor 80%, transparent 100%);
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
