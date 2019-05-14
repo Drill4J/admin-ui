@@ -10,13 +10,15 @@ export function useBuildVersion<Data>(topic: string, agentId?: string, buildVers
       setData(newData);
     }
 
-    const connection = defaultPluginSocket.subscribe(topic, handleDataChange, {
-      agentId,
-      buildVersion,
-    });
+    const connection = buildVersion
+      ? defaultPluginSocket.subscribe(topic, handleDataChange, {
+          agentId,
+          buildVersion,
+        })
+      : null;
 
     return () => {
-      connection.unsubscribe(topic);
+      connection && connection.unsubscribe(topic);
     };
   }, [agentId, buildVersion]);
 
