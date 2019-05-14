@@ -62,7 +62,7 @@ export const CoverageDetails = withRouter(
                   Cell={(props) => (
                     <CompoundCell
                       type="secondary"
-                      pathKey="desc"
+                      pathKey="decl"
                       icon={<Icons.Function />}
                       {...props}
                     />
