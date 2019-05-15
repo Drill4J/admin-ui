@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { BEM } from '@redneckz/react-bem-helper';
+import { BEM, div } from '@redneckz/react-bem-helper';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
 
 import { Panel } from '../../../layouts';
@@ -78,7 +78,10 @@ export const CoveragePlugin = withRouter(
               text={coverage.methodsCount !== undefined ? coverage.methodsCount : 'n/a'}
               secondaryText={
                 newMethodsCoverage.methodsCount !== undefined ? (
-                  <NewMethods onClick={() => setIsNewMethodsModalOpen(true)}>
+                  <NewMethods
+                    onClick={() => setIsNewMethodsModalOpen(true)}
+                    disabled={!Boolean(newMethodsCoverage.methodsCount)}
+                  >
                     {newMethodsCoverage.methodsCount === 0 ? <SuccessIcon /> : <WarningIcon />}
                     {` ${newMethodsCoverage.methodsCount} new methods ${
                       newMethodsCoverage.methodsCovered
@@ -112,4 +115,6 @@ const BuildVersion = coveragePlugin.buildVersion(Dropdown);
 const SummaryWrapper = coveragePlugin.summaryWrapper('div');
 const WarningIcon = coveragePlugin.warningIcon(Icons.Warning);
 const SuccessIcon = coveragePlugin.successIcon(Icons.Checkbox);
-const NewMethods = coveragePlugin.newMethods('div');
+const NewMethods = coveragePlugin.newMethods(
+  div({ onClick: () => {} } as { onClick: (arg: Event) => void; disabled?: boolean }),
+);

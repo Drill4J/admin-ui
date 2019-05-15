@@ -55,6 +55,12 @@
   &__new-methods {
     display: flex;
     align-items: center;
+    text-decoration: underline;
     cursor: pointer;
+
+    &--disabled {
+      pointer-events: none;
+      text-decoration: none;
+    }
   }
 }
