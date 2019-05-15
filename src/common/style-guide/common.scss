@@ -22,7 +22,7 @@ body {
 
 h2 {
   font-size: 18px;
-  font-weight: 300;
+  font-family: $light-font;
   line-height: 24px;
   color: map-get($color-palette, middle-blue);
 }

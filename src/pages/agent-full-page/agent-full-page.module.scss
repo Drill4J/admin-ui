@@ -19,7 +19,7 @@
   &__agent-name {
     color: map-get($color-palette, dark-blue);
     font-size: 14px;
-    font-weight: 600;
+    font-family: $semibold-font;
     line-height: 20px;
     margin-right: 8px;
   }
@@ -27,7 +27,7 @@
   &__agent-ip-address {
     color: map-get($color-palette, dark-blue);
     font-size: 14px;
-    font-weight: 300;
+    font-family: $light-font;
     line-height: 20px;
   }
 }

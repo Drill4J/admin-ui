@@ -20,7 +20,7 @@
     align-items: center;
     color: map-get($color-palette, dark-blue);
     font-size: 13px;
-    font-weight: 600;
+    font-family: $semibold-font;
     line-height: 20px;
     min-width: 52px;
   }
