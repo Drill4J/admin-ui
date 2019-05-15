@@ -21,8 +21,7 @@
       line-height: 20px;
       color: map-get($color-palette, dark-blue);
       text-align: left;
-      font-weight: normal;
-      font-weight: 600;
+      font-family: $semibold-font;
       border-bottom: 1px solid map-get($color-palette, dark-blue);
       height: 48px;
     }
