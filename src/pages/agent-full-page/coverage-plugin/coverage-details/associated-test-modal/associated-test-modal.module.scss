@@ -43,7 +43,10 @@
     word-wrap: normal;
     overflow-wrap: normal;
   }
+
   &__test-list-item-icon {
+    display: flex;
+    align-items: center;
     margin-right: 18px;
   }
 }
