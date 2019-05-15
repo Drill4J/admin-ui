@@ -43,10 +43,18 @@
   }
 
   &__warning-icon {
+    margin-right: 8px;
     color: map-get($color-palette, red100);
   }
 
   &__success-icon {
+    margin-right: 8px;
     color: map-get($color-palette, green100);
+  }
+
+  &__new-methods {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
   }
 }

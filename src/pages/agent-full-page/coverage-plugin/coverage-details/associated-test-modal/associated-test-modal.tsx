@@ -48,7 +48,9 @@ export const AssociatedTestModal = associatedTestModal(
             <TestList>
               {tests.map((test) => (
                 <TestListItem>
-                  <Icons.Test />
+                  <TestListItemIcon>
+                    <Icons.Test />
+                  </TestListItemIcon>
                   {test}
                 </TestListItem>
               ))}
@@ -64,3 +66,4 @@ const Header = associatedTestModal.header('div');
 const Content = associatedTestModal.content('div');
 const TestList = associatedTestModal.testList('div');
 const TestListItem = associatedTestModal.testListItem('div');
+const TestListItemIcon = associatedTestModal.testListItemIcon('div');
