@@ -16,7 +16,7 @@ const actionsColumn = BEM(styles);
 export const ActionsColumn = withRouter(
   actionsColumn(({ className, history: { push }, agentId }: Props) => (
     <div className={className}>
-      <Icons.NewWindow onClick={() => push(`/full-page/${agentId}/coverage`)} />
+      <Icons.OpenLive onClick={() => push(`/full-page/${agentId}/coverage`)} />
       <Icons.Settings height={16} width={16} />
     </div>
   )),
