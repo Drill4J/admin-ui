@@ -9,7 +9,7 @@
   &__title {
     margin: 14px 16px;
     font-size: 14px;
-    font-weight: 600;
+    font-family: $semibold-font;
     color: map-get($color-palette, black50);
   }
 
