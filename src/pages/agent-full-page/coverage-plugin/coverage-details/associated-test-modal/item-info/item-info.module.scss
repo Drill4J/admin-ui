@@ -1,8 +1,7 @@
 @import '../../../../../../common/style-guide/index';
 
 .item-info {
-  opacity: 0.5;
-  background-color: map-get($color-palette, light-blue);
+  background-color: rgba(map-get($color-palette, light-blue), 0.5);
 
   &__content {
     padding: 16px 24px;
