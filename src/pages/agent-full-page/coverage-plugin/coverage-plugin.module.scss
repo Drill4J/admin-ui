@@ -42,6 +42,17 @@
     }
   }
 
+  &__details-header {
+    height: 42px;
+    font-size: 16px;
+    line-height: 24px;
+    border-bottom: 1px solid map-get($color-palette, light-blue);
+  }
+
+  &__tab-icon-wrapper {
+    margin-right: 8px;
+  }
+
   &__warning-icon {
     margin-right: 8px;
     color: map-get($color-palette, red100);

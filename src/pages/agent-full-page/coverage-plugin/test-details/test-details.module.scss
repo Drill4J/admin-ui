@@ -1,6 +1,6 @@
 @import '../../../../common/style-guide/index';
 
-.coverage-details {
+.test-details {
   display: flex;
   flex-direction: column;
 
@@ -13,5 +13,9 @@
     & > * {
       margin-right: 8px;
     }
+  }
+
+  &__test-cell {
+    color: map-get($color-palette, black100);
   }
 }

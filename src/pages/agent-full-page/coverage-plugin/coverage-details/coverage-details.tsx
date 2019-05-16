@@ -29,7 +29,6 @@ export const CoverageDetails = withRouter(
 
     return (
       <div className={className}>
-        <Header align="space-between">Details</Header>
         {coverageByPackages.length > 0 && (
           <>
             <Title>
@@ -108,5 +107,4 @@ export const CoverageDetails = withRouter(
   }),
 );
 
-const Header = coverageDetails.header(Panel);
 const Title = coverageDetails.title(Panel);

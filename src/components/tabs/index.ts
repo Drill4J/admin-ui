@@ -1,1 +1,1 @@
-export { TabsContainer } from './tabs';
+export { TabsPanel, Tab } from './tabs';
