@@ -13,6 +13,7 @@ interface Props extends RouteComponentProps {
   agent: Agent;
   selected?: boolean;
   onSelect: () => void;
+  disabled?: boolean;
 }
 
 const agentCard = BEM(styles);

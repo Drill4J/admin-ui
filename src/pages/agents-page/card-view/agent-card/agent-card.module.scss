@@ -53,4 +53,9 @@
     border: 1px solid map-get($color-palette, yellow100);
     background-color: rgba(248, 231, 28, 0.1);
   }
+
+  &--disabled {
+    background-color: $athens-gray;
+    border: none;
+  }
 }
