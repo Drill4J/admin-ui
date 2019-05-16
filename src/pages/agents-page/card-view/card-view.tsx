@@ -19,20 +19,24 @@ const cardView = BEM(styles);
 export const CardView = cardView(
   ({ className, idKey, agents, selectedAgents, handleSelectAgents }: Props) => (
     <div className={className}>
-      {agents.map((agent) => (
-        <AgentCard
-          key={String(agent[idKey])}
-          agent={agent}
-          selected={selectedAgents.includes(String(agent.id))}
-          onSelect={() => {
-            selectedAgents.includes(String(agent[idKey]))
-              ? handleSelectAgents(
-                  selectedAgents.filter((selectedItem) => selectedItem !== agent[idKey]),
-                )
-              : handleSelectAgents([...selectedAgents, String(agent[idKey])]);
-          }}
-        />
-      ))}
+      {agents.map((agent) => {
+        const selected = selectedAgents.includes(String(agent.id));
+        return (
+          <AgentCard
+            key={String(agent[idKey])}
+            agent={agent}
+            selected={selected}
+            onSelect={() => {
+              selectedAgents.includes(String(agent[idKey]))
+                ? handleSelectAgents(
+                    selectedAgents.filter((selectedItem) => selectedItem !== agent[idKey]),
+                  )
+                : handleSelectAgents([...selectedAgents, String(agent[idKey])]);
+            }}
+            disabled={!agent.status && !selected}
+          />
+        );
+      })}
     </div>
   ),
 );
