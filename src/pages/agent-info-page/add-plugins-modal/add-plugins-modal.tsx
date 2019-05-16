@@ -48,6 +48,7 @@ export const AddPluginsModal = addPluginModal(({ className, isOpen, onToggle, ag
                 setIsAddPluginOpen: onToggle,
               })
             }
+            disabled={selectedPlugins.length === 0}
           >
             Add plugin
           </AddPluginButton>
