@@ -14,6 +14,10 @@ const tableCheckbox = BEM(styles);
 
 export const TableCheckbox = tableCheckbox(({ className, onClick }: Props) => (
   <div className={className} onClick={onClick}>
-    <Icons.Checkbox />
+    <IconWrapper>
+      <Icons.Checkbox />
+    </IconWrapper>
   </div>
 ));
+
+const IconWrapper = tableCheckbox.iconWrapper('div');
