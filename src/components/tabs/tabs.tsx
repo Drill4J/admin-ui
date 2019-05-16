@@ -1,22 +1,30 @@
 import * as React from 'react';
-import { BEM, div } from '@redneckz/react-bem-helper';
+import { BEM, button } from '@redneckz/react-bem-helper';
 
 import styles from './tabs.module.scss';
 
 interface Props {
   className?: string;
-  children: Array<typeof Tab>;
+  children: React.ReactElement[];
+  activeTab: number | string;
+  onSelect: (tabName: string) => void;
 }
 
-const tabsContainer = BEM(styles);
+const tabsPanel = BEM(styles);
 
-export const TabsContainer = tabsContainer(({ className, children }: Props) => (
-  <div className={className}>
-    <TabPanel>{children}</TabPanel>
-  </div>
-));
+export const TabsPanel = tabsPanel((props: Props) => {
+  const { children, className, activeTab, onSelect } = props;
 
-export const TabPanel = tabsContainer.tabsPanel('div');
-export const Tab = tabsContainer.tab(
-  div({ onClick: () => {}, active: undefined } as { onClick?: () => void; active?: boolean }),
-);
+  return (
+    <div className={className}>
+      {React.Children.map(children, (child: React.ReactElement<any>, index: number) =>
+        React.cloneElement(child, {
+          onClick: () => onSelect && onSelect(child.props.name || index),
+          active: (child.props.name || index) === activeTab,
+        }),
+      )}
+    </div>
+  );
+});
+
+export const Tab = tabsPanel.tabLabel(button({ name: '' }));

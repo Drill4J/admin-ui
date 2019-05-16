@@ -3,11 +3,12 @@ import { BEM, div } from '@redneckz/react-bem-helper';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
 
 import { Panel } from '../../../layouts';
-import { Icons, PageHeader, Dropdown } from '../../../components';
+import { Icons, PageHeader, Dropdown, TabsPanel, Tab } from '../../../components';
 import { Card } from './card';
 import { useWsConnection } from '../../../hooks';
 import { defaultAdminSocket } from '../../../common/connection';
 import { CoverageDetails } from './coverage-details';
+import { TestDetails } from './test-details';
 import { Coverage } from '../../../types/coverage';
 import { NewMethodsCoverage } from '../../../types/new-methods-coverage';
 import { AgentBuildVersion } from '../../../types/agent-build-version';
@@ -31,6 +32,7 @@ export const CoveragePlugin = withRouter(
       label: `Build ${agentBuildVersion}`,
     });
     const [isNewMethodsModalOpen, setIsNewMethodsModalOpen] = React.useState(false);
+    const [selectedTab, setSelectedTab] = React.useState('packages');
     const coverage =
       useBuildVersion<Coverage>('/coverage', agentId, selectedBuildVersion.value) || {};
     const newMethodsCoverage =
@@ -93,7 +95,28 @@ export const CoveragePlugin = withRouter(
               }
             />
           </SummaryWrapper>
-          <CoverageDetails buildVersion={selectedBuildVersion.value} />
+          <DetailsHeader align="space-between">
+            Details
+            <TabsPanel activeTab={selectedTab} onSelect={setSelectedTab}>
+              <Tab name="packages">
+                <TabIconWrapper>
+                  <Icons.ProjectTree />
+                </TabIconWrapper>
+                Project tree
+              </Tab>
+              <Tab name="tests">
+                <TabIconWrapper>
+                  <Icons.Test height={20} width={18} viewBox="0 0 20 18" />
+                </TabIconWrapper>
+                Tests
+              </Tab>
+            </TabsPanel>
+          </DetailsHeader>
+          {selectedTab === 'packages' ? (
+            <CoverageDetails buildVersion={selectedBuildVersion.value} />
+          ) : (
+            <TestDetails agentId={agentId} buildVersion={selectedBuildVersion.value} />
+          )}
           {isNewMethodsModalOpen && (
             <NewMethodsModal
               agentId={agentId}
@@ -113,6 +136,8 @@ const Content = coveragePlugin.content('div');
 const Title = coveragePlugin.title('div');
 const BuildVersion = coveragePlugin.buildVersion(Dropdown);
 const SummaryWrapper = coveragePlugin.summaryWrapper('div');
+const DetailsHeader = coveragePlugin.detailsHeader(Panel);
+const TabIconWrapper = coveragePlugin.tabIconWrapper('div');
 const WarningIcon = coveragePlugin.warningIcon(Icons.Warning);
 const SuccessIcon = coveragePlugin.successIcon(Icons.Checkbox);
 const NewMethods = coveragePlugin.newMethods(

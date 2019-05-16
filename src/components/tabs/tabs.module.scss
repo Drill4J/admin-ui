@@ -1,23 +1,46 @@
 @import '../../common/style-guide/index';
 
-.tabs-container {
+.tabs {
   display: flex;
 
-  &__tabs-panel {
-    &:not(:last-child) {
-      margin-left: 28px;
-    }
-  }
-
-  &__tab {
-    font-size: 14px;
-    font-family: $semibold-font;
-    line-height: 20px;
+  &__tab-label {
+    display: flex;
+    align-items: center;
+    flex-grow: 1;
+    box-sizing: border-box;
+    position: relative;
+    cursor: pointer;
+    min-height: 40px;
+    border: none;
+    padding: 0 0 4px 0;
+    background: none;
+    white-space: nowrap;
+    outline: none;
     color: map-get($color-palette, blue100);
+    font-family: 'OpenSans-Semibold';
+    font-size: 14px;
+    margin-right: 28px;
 
     &--active {
-      pointer-events: none;
       color: map-get($color-palette, black100);
+
+      &:after {
+        content: '';
+        display: block;
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        height: 5px;
+        border-radius: 2px;
+        background-color: map-get($color-palette, blue100);
+        transform: translateY(50%);
+      }
+    }
+
+    &--disabled {
+      pointer-events: none;
+      opacity: 0.65;
     }
   }
 }
