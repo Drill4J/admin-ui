@@ -11,7 +11,7 @@ interface Props {
 }
 
 export const ExpandedRowContent = ({
-  data,
+  data = [],
   expandedColumns = [],
   idKey = 'name',
   expandedRows = [],

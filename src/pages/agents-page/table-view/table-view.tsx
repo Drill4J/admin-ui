@@ -35,7 +35,7 @@ export const TableView = tableView(
         <Column
           name="description"
           label="Description"
-          Cell={({ value }) => <OverflowText style={{ width: '100%' }}>{value}</OverflowText>}
+          Cell={({ value }) => <OverflowText>{value}</OverflowText>}
         />
         <Column name="ipAddress" label="IP Address" />
         <Column name="group" label="Group" />

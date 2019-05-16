@@ -26,7 +26,7 @@ export const SelectableTable = ({
   const isAllSelected = selectedRows.length === data.length;
 
   return (
-    <Table data={data} {...restProps}>
+    <Table data={data} selectedRows={selectedRows} idKey={idKey} {...restProps}>
       <Column
         name="selector"
         Cell={({ item }) => {

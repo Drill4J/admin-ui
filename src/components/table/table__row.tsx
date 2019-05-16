@@ -12,7 +12,7 @@ interface Props {
   item: { [key: string]: unknown };
   columns: any[];
   index: number;
-  color?: 'blue' | 'gray';
+  color?: 'blue' | 'gray' | 'yellow';
   expandedColumns?: any[];
   secondLevelExpand?: any[];
   expandedContentKey?: string;

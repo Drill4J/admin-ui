@@ -19,6 +19,7 @@ interface Props {
   secondLevelExpand?: any[];
   expandedContentKey?: string;
   withoutHeader?: boolean;
+  selectedRows?: string[];
 }
 
 const table = BEM(styles);
@@ -35,6 +36,7 @@ export const Table = table(
     expandedContentKey,
     secondLevelExpand,
     withoutHeader,
+    selectedRows = [],
   }: Props) => {
     const columns = React.Children.map(children, (column) => column && column.props);
     const expandedColumnsComponents = React.Children.map(
@@ -50,22 +52,41 @@ export const Table = table(
       <table className={className}>
         {!withoutHeader && <TableHeader columns={columns} />}
         <tbody>
-          {data.map((item, index) => (
-            <TableRow
-              key={idKey ? String(item[idKey]) : index}
-              item={item}
-              columns={columns}
-              index={index}
-              expandedColumns={expandedColumnsComponents}
-              color={expandedRows.includes(String(item[idKey])) ? 'blue' : undefined}
-              expandedContentKey={expandedContentKey}
-              expandedRows={expandedRows}
-              secondLevelExpand={expandedColumnsSecondLevel}
-            />
-          ))}
+          {data.map((item, index) => {
+            return (
+              <TableRow
+                key={idKey ? String(item[idKey]) : index}
+                item={item}
+                columns={columns}
+                index={index}
+                expandedColumns={expandedColumnsComponents}
+                color={getRowColor({ expandedRows, selectedRows, itemId: String(item[idKey]) })}
+                expandedContentKey={expandedContentKey}
+                expandedRows={expandedRows}
+                secondLevelExpand={expandedColumnsSecondLevel}
+              />
+            );
+          })}
         </tbody>
         {footer}
       </table>
     );
   },
 );
+
+function getRowColor({
+  expandedRows,
+  selectedRows,
+  itemId,
+}: {
+  expandedRows: string[];
+  selectedRows: string[];
+  itemId: string;
+}) {
+  if (expandedRows.includes(itemId)) {
+    return 'blue';
+  }
+  if (selectedRows.includes(itemId)) {
+    return 'yellow';
+  }
+}
