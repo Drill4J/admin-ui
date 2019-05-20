@@ -1,0 +1,34 @@
+@import '../../../../../../common/style-guide/index';
+
+.item-info {
+  background-color: rgba(map-get($color-palette, light-blue), 0.5);
+
+  &__content {
+    padding: 16px 24px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__item-wrapper {
+    display: flex;
+    flex-direction: row;
+  }
+
+  &__label {
+    display: flex;
+    align-items: center;
+    color: map-get($color-palette, dark-blue);
+    font-size: 13px;
+    font-family: $semibold-font;
+    line-height: 20px;
+    min-width: 52px;
+  }
+
+  &__value {
+    color: $slate-gray;
+    font-size: 13px;
+    line-height: 20px;
+    margin-left: 20px;
+    word-break: break-all;
+  }
+}

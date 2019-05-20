@@ -1,0 +1,21 @@
+@import '../../../../common/style-guide/index';
+
+.test-details {
+  display: flex;
+  flex-direction: column;
+
+  &__title {
+    height: 58px;
+    border-bottom: 1px solid map-get($color-palette, black100);
+    font-size: 18px;
+    line-height: 24px;
+
+    & > * {
+      margin-right: 8px;
+    }
+  }
+
+  &__test-cell {
+    color: map-get($color-palette, black100);
+  }
+}

@@ -19,3 +19,10 @@ body {
 *:after {
   box-sizing: inherit;
 }
+
+h2 {
+  font-size: 18px;
+  font-family: $light-font;
+  line-height: 24px;
+  color: map-get($color-palette, middle-blue);
+}

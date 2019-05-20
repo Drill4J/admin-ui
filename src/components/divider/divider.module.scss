@@ -1,0 +1,7 @@
+@import '../../common/style-guide/index';
+
+.divider {
+  background-color: map-get($color-palette, light-blue);
+  height: 20px;
+  width: 1px;
+}

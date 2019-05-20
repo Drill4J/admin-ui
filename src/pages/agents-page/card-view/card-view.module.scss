@@ -1,0 +1,10 @@
+.card-view {
+  display: flex;
+  flex-grow: 1;
+  flex-direction: row;
+
+  & > * {
+    margin-right: 8px;
+    margin-bottom: 16px;
+  }
+}

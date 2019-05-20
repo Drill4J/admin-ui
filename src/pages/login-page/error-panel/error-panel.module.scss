@@ -1,0 +1,18 @@
+@import '../../../common/style-guide/index';
+
+.error-panel {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: $common-element-height;
+  width: 100%;
+  background-color: rgba(255, 2, 2, 0.1);
+  font-size: 14px;
+  line-height: 24px;
+  color: map-get($color-palette, red100);
+
+  &__icon {
+    margin-left: 23px;
+    margin-right: 8px;
+  }
+}

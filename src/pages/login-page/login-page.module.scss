@@ -8,8 +8,14 @@
   height: 100%;
   box-sizing: border-box;
 
+  &__logo {
+    height: 158px;
+    width: 349px;
+    margin-bottom: 33px;
+  }
+
   &__title {
-    color: $dark-blue;
+    color: map-get($color-palette, dark-blue);
     font-size: 32px;
     line-height: $common-element-height;
     text-align: center;
@@ -22,6 +28,10 @@
     font-size: 16px;
     line-height: 28px;
     text-align: center;
+  }
+
+  &__error {
+    margin-top: 16px;
   }
 
   &__sign-in-form {
@@ -50,11 +60,11 @@
   &__forgot-password {
     margin-top: 8px;
     margin-bottom: 42px;
-    color: $azure-radiance;
+    color: map-get($color-palette, blue100);
     font-family: $semibold-font;
     font-size: 14px;
     line-height: 22px;
-    cursor: pointer;
+    opacity: 0.25;
   }
 
   &__copyright {

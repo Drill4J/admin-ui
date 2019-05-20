@@ -1,0 +1,22 @@
+@import '../../../../../common/style-guide/index';
+
+.name-call {
+  display: flex;
+  flex-direction: row;
+  position: relative;
+
+  &__prefix {
+    position: absolute;
+    top: 2px;
+  }
+
+  &__content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-left: 20px;
+    color: map-get($color-palette, black100);
+    font-size: 14px;
+    font-family: $semibold-font;
+  }
+}

@@ -2,28 +2,38 @@
 
 .button {
   border-radius: 20px;
-  height: $common-element-height;
+  min-height: $common-element-height;
   width: 320px;
   outline: 0;
 
   &:hover {
-    cursor: pointer;
+    &:not(.button--disabled) {
+      cursor: pointer;
+      opacity: 0.75;
+      background-color: map-get($color-palette, blue100);
+      color: map-get($color-palette, white);
+    }
+  }
+
+  &--disabled {
+    opacity: 0.25;
+    pointer-events: none;
   }
 
   &--type {
     &--primary {
       font-family: $regular-font;
-      border: 1px solid $azure-radiance;
-      background-color: $azure-radiance;
-      color: $white-color;
+      border: 1px solid map-get($color-palette, blue100);
+      background-color: map-get($color-palette, blue100);
+      color: map-get($color-palette, white);
       font-size: 16px;
       line-height: 22px;
     }
     &--secondary {
       font-family: $semibold-font;
-      border: 1px solid $azure-radiance;
-      background-color: $white-color;
-      color: $azure-radiance;
+      border: 1px solid map-get($color-palette, blue100);
+      background-color: map-get($color-palette, white);
+      color: map-get($color-palette, blue100);
       font-size: 14px;
       line-height: 19px;
     }

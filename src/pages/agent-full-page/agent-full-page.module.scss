@@ -1,0 +1,33 @@
+@import '../../common/style-guide/index';
+
+.agent-full-page {
+  height: 100%;
+  width: 100%;
+
+  &__agent-status {
+    height: 12px;
+    width: 12px;
+    border-radius: 6px;
+    background-color: map-get($color-palette, red100);
+    margin-right: 8px;
+
+    &--status {
+      background-color: map-get($color-palette, green100);
+    }
+  }
+
+  &__agent-name {
+    color: map-get($color-palette, dark-blue);
+    font-size: 14px;
+    font-family: $semibold-font;
+    line-height: 20px;
+    margin-right: 8px;
+  }
+
+  &__agent-ip-address {
+    color: map-get($color-palette, dark-blue);
+    font-size: 14px;
+    font-family: $light-font;
+    line-height: 20px;
+  }
+}

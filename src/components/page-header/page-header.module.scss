@@ -1,0 +1,51 @@
+@import '../../common/style-guide/index';
+
+.page-header {
+  display: flex;
+  align-items: center;
+  height: 78px;
+  width: 100%;
+  border-bottom: 1px solid map-get($color-palette, light-blue);
+
+  &__content {
+    display: flex;
+    flex-grow: 1;
+    align-items: center;
+    margin: 0 24px;
+  }
+
+  &__title {
+    color: map-get($color-palette, black100);
+    font-size: 24px;
+    line-height: 32px;
+  }
+
+  &__items-count {
+    color: map-get($color-palette, middle-blue);
+    font-size: 18px;
+    font-family: $light-font;
+    line-height: 24px;
+    margin-left: 8px;
+  }
+
+  &__search-button {
+    margin-left: 34px;
+    color: map-get($color-palette, blue100);
+  }
+
+  &__items-actions {
+    margin-left: 100px;
+  }
+
+  &__actions {
+    display: flex;
+    flex-grow: 1;
+    justify-content: flex-end;
+  }
+
+  &--border-color {
+    &--black {
+      border-bottom: 1px solid map-get($color-palette, black100);
+    }
+  }
+}

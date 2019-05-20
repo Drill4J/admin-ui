@@ -1,0 +1,47 @@
+.panel {
+  display: flex;
+  width: 100%;
+  align-items: center;
+
+  &__item {
+    display: flex;
+    align-items: center;
+    flex-grow: 0;
+  }
+
+  &__spread {
+    flex-grow: 1;
+  }
+
+  &--vertical-align {
+    &--center {
+      align-items: center;
+    }
+
+    &--stretch {
+      align-items: stretch;
+    }
+
+    &--start {
+      align-items: flex-start;
+    }
+
+    &--end {
+      align-items: flex-end;
+    }
+  }
+
+  &--align {
+    &--space-between {
+      justify-content: space-between;
+    }
+
+    &--end {
+      justify-content: flex-end;
+    }
+
+    &--center {
+      justify-content: center;
+    }
+  }
+}

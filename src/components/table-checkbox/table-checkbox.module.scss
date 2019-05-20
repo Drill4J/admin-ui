@@ -1,0 +1,16 @@
+@import '../../common/style-guide/index';
+
+.table-checkbox {
+  cursor: pointer;
+  color: map-get($color-palette, light-blue);
+
+  &__icon-wrapper {
+    display: flex;
+    align-items: center;
+    margin-left: 14px;
+  }
+
+  &--selected {
+    color: map-get($color-palette, blue100);
+  }
+}

@@ -1,0 +1,9 @@
+@import '../../common/style-guide/index';
+
+.badge {
+  border: 1px solid $slate-gray;
+  border-radius: 14px;
+  font-size: 11px;
+  line-height: 12px;
+  padding: 4px 10px;
+}

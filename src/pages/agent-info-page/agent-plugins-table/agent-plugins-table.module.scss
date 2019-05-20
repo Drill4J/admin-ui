@@ -1,0 +1,22 @@
+@import '../../../common/style-guide/index';
+
+.agent-plugins-table {
+  display: flex;
+  flex-grow: 1;
+
+  &__status-column {
+    display: flex;
+  }
+
+  &__actions-column {
+    color: map-get($color-palette, blue100);
+
+    :not(:first-child) {
+      margin-left: 24px;
+    }
+
+    & > * {
+      cursor: pointer;
+    }
+  }
+}

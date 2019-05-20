@@ -1,0 +1,14 @@
+@import '../../common/style-guide/index';
+
+.agents-page {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+
+  &__content {
+    display: flex;
+    flex-flow: row wrap;
+    margin: 24px;
+    flex-grow: 1;
+  }
+}

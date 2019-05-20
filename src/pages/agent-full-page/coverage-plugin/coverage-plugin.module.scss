@@ -1,0 +1,77 @@
+@import '../../../common/style-guide/index';
+
+.coverage-plugin {
+  height: 100%;
+
+  &__content {
+    margin: 33px 29px;
+  }
+
+  &__settings-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 32px;
+    width: 32px;
+    border: 1px solid map-get($color-palette, blue100);
+    border-radius: 16px;
+    color: map-get($color-palette, blue100);
+    margin-left: 16px;
+    cursor: pointer;
+  }
+
+  &__title {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    color: map-get($color-palette, black100);
+    margin-bottom: 16px;
+  }
+
+  &__build-version {
+    margin-left: 16px;
+  }
+
+  &__summary-wrapper {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 24px;
+
+    & > div:first-child {
+      margin-right: 16px;
+    }
+  }
+
+  &__details-header {
+    height: 42px;
+    font-size: 16px;
+    line-height: 24px;
+    border-bottom: 1px solid map-get($color-palette, light-blue);
+  }
+
+  &__tab-icon-wrapper {
+    margin-right: 8px;
+  }
+
+  &__warning-icon {
+    margin-right: 8px;
+    color: map-get($color-palette, red100);
+  }
+
+  &__success-icon {
+    margin-right: 8px;
+    color: map-get($color-palette, green100);
+  }
+
+  &__new-methods {
+    display: flex;
+    align-items: center;
+    text-decoration: underline;
+    cursor: pointer;
+
+    &--disabled {
+      pointer-events: none;
+      text-decoration: none;
+    }
+  }
+}

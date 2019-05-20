@@ -10,6 +10,11 @@ interface Props {
   icon?: React.ReactNode;
   placeholder?: string;
   rounded?: boolean;
+  disabled?: boolean;
+  type?: string;
+  checked?: boolean;
+  value?: any;
+  onChange?: () => void;
 }
 
 const input = BEM(styles);

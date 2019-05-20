@@ -1,4 +1,20 @@
-# Drill4J Project
+# Drill4J Project · [![Build Status](https://cloud.drone.io/api/badges/Drill4J/admin-ui/status.svg)](https://cloud.drone.io/Drill4J/admin-ui)
+
+<img src="./logo.svg" alt="Logo" width="128" align="right">
+
+Drill4J is a plugin management platform for real-time application profiling and extension that does not affect code base.
+
+Drill4J allows you to:
+
+- automate and organize data
+- choose the right solutions for specific tasks
+- increase the velocity and quality of the team
+- store all plugins in one place
+- flexible configuration of agents and plugins for project needs
+
+## Documentation
+
+Check out our [documentation](https://github.com/Drill4J/admin-ui/tree/master/dev-guide)
 
 ## Development installation
 

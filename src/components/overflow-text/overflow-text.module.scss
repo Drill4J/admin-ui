@@ -1,0 +1,12 @@
+@import '../../common/style-guide/index';
+
+.overflow-text {
+  width: 100%;
+  height: 1.3em;
+  overflow: hidden;
+  white-space: nowrap;
+  position: relative;
+  background: linear-gradient(to right, currentColor 80%, transparent 100%);
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
