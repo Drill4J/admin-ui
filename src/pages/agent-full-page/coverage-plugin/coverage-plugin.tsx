@@ -3,7 +3,7 @@ import { BEM, div } from '@redneckz/react-bem-helper';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
 
 import { Panel } from '../../../layouts';
-import { Icons, PageHeader, Dropdown, TabsPanel, Tab } from '../../../components';
+import { Icons, PageHeader, Dropdown, TabsPanel, Tab, Spinner } from '../../../components';
 import { Card } from './card';
 import { useWsConnection } from '../../../hooks';
 import { defaultAdminSocket } from '../../../common/connection';
@@ -52,7 +52,7 @@ export const CoveragePlugin = withRouter(
     return (
       <div className={className}>
         <PageHeader
-          title={<span>Code Coverage Tracker</span>}
+          title={<span>Code Coverage Tracker </span>}
           actions={
             <Panel align="end">
               <SettingsButton>
@@ -74,7 +74,11 @@ export const CoveragePlugin = withRouter(
             />
           </Title>
           <SummaryWrapper>
-            <CodeCoverageCard coverage={coverage} />
+            <CodeCoverageCard
+              coverage={coverage}
+              agentId={agentId}
+              buildVersion={selectedBuildVersion.value}
+            />
             <Card
               title="Methods, Total"
               text={coverage.methodsCount !== undefined ? coverage.methodsCount : 'n/a'}

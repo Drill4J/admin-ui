@@ -55,4 +55,15 @@
   &__success-icon {
     color: map-get($color-palette, green100);
   }
+
+  &__spinner-wrapper {
+    margin: 14px 16px;
+    color: map-get($color-palette, middle-blue);
+    font-size: 14px;
+    line-height: 20px;
+
+    & > * {
+      margin-right: 8px;
+    }
+  }
 }
