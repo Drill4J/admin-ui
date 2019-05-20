@@ -16,3 +16,4 @@ export { Divider } from './divider';
 export { Dropdown } from './dropdown';
 export { TabsPanel, Tab } from './tabs';
 export { MessagePanel } from './message-panel';
+export { Spinner } from './spinner';
