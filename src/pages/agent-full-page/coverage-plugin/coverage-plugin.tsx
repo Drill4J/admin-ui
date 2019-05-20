@@ -85,11 +85,9 @@ export const CoveragePlugin = withRouter(
                     disabled={!Boolean(newMethodsCoverage.methodsCount)}
                   >
                     {newMethodsCoverage.methodsCount === 0 ? <SuccessIcon /> : <WarningIcon />}
-                    {` ${newMethodsCoverage.methodsCount} new methods ${
+                    {` ${newMethodsCoverage.methodsCount} new methods (${
                       newMethodsCoverage.methodsCovered
-                        ? `(${newMethodsCoverage.methodsCovered} covered)`
-                        : ''
-                    }`}
+                    } covered)`}
                   </NewMethods>
                 ) : null
               }
