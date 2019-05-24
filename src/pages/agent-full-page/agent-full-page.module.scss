@@ -4,15 +4,22 @@
   height: 100%;
   width: 100%;
 
+  &__arrow-back-icon {
+    margin-right: 16px;
+    color: map-get($color-palette, blue100);
+    cursor: pointer;
+  }
+
   &__agent-status {
-    height: 12px;
-    width: 12px;
-    border-radius: 6px;
-    background-color: map-get($color-palette, red100);
-    margin-right: 8px;
+    margin-left: 16px;
 
     &--status {
-      background-color: map-get($color-palette, green100);
+      &--online {
+        color: map-get($color-palette, green100);
+      }
+      &--offline {
+        color: map-get($color-palette, red100);
+      }
     }
   }
 
@@ -21,13 +28,13 @@
     font-size: 14px;
     font-family: $semibold-font;
     line-height: 20px;
+    margin-left: 16px;
     margin-right: 8px;
   }
 
   &__agent-ip-address {
     color: map-get($color-palette, dark-blue);
     font-size: 14px;
-    font-family: $light-font;
     line-height: 20px;
   }
 }

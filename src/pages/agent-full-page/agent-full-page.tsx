@@ -1,9 +1,9 @@
 import * as React from 'react';
-import { BEM, div } from '@redneckz/react-bem-helper';
+import { BEM } from '@redneckz/react-bem-helper';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
 
-import { Icons, Sidebar, Toolbar } from '../../components';
-import { PluginsLayout, Panel } from '../../layouts';
+import { Icons, Sidebar, Toolbar, Badge, Divider } from '../../components';
+import { AppLayout, Panel } from '../../layouts';
 import { Agent } from '../../types/agent';
 import { CoveragePlugin } from './coverage-plugin';
 import { useWsConnection } from '../../hooks';
@@ -22,11 +22,11 @@ const getPluginsLinks = (agent: Agent) => [
 ];
 
 export const AgentFullPage = withRouter(
-  agentFullPage(({ className, match: { params: { agentId } } }: Props) => {
+  agentFullPage(({ className, match: { params: { agentId } }, history: { push } }: Props) => {
     const agent = useWsConnection<Agent>(defaultAdminSocket, `/get-agent/${agentId}`) || {};
 
     return (
-      <PluginsLayout
+      <AppLayout
         sidebar={
           <Sidebar
             links={getPluginsLinks(agent)}
@@ -34,23 +34,38 @@ export const AgentFullPage = withRouter(
           />
         }
         toolbar={
-          <Toolbar>
-            <Panel>
-              <AgentStatus status={agent.status} />
-              <AgentName>{agent.name}</AgentName>
-              <AgentIpAddress>{agent.ipAddress}</AgentIpAddress>
-            </Panel>
+          <Toolbar
+            breadcrumbs={
+              <Panel>
+                <ArrowBackIcon rotate={180} onClick={() => push('/')} />
+                <Divider />
+                <AgentName>{agent.name}</AgentName>
+                <AgentIpAddress>{agent.ipAddress}</AgentIpAddress>
+                <AgentStatus
+                  status={agent.status ? 'online' : 'offline'}
+                  text={agent.status ? 'Online' : 'Offline'}
+                  bold
+                />
+              </Panel>
+            }
+          >
+            <Panel />
           </Toolbar>
         }
       >
         <div className={className}>
           <CoveragePlugin agentBuildVersion={agent.buildVersion} />
         </div>
-      </PluginsLayout>
+      </AppLayout>
     );
   }),
 );
 
-const AgentStatus = agentFullPage.agentStatus(div({ status: false } as { status?: boolean }));
+const ArrowBackIcon = agentFullPage.arrowBackIcon(Icons.Arrow);
+const AgentStatus: React.ComponentType<{
+  text?: string;
+  status?: 'online' | 'offline';
+  bold?: boolean;
+}> = agentFullPage.agentStatus(Badge);
 const AgentName = agentFullPage.agentName('div');
 const AgentIpAddress = agentFullPage.agentIpAddress('div');
