@@ -6,6 +6,7 @@ import styles from './badge.module.scss';
 interface Props {
   className?: string;
   text?: string;
+  bold?: boolean;
 }
 
 const badge = BEM(styles);
