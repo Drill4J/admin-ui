@@ -1,4 +1,5 @@
 import { Plugin } from './plugin';
+import { BuildVersion } from './build-version';
 
 export interface Agent {
   id?: string;
@@ -13,4 +14,5 @@ export interface Agent {
   activePluginsCount?: number;
   pluginsCount?: number;
   buildVersion?: string;
+  buildVersions?: BuildVersion[];
 }

@@ -24,6 +24,7 @@ import { path as packagePath } from './path/package.path';
 import { path as testPath } from './path/test.path';
 import { path as projectTreePath } from './path/project-tree.path';
 import { path as openLivePath } from './path/open-live.path';
+import { path as checkPath } from './path/check.path';
 import { declareIcon } from './declare-icon';
 import { ReactComponent as SettingsSvg } from './settings.svg';
 
@@ -54,5 +55,6 @@ export const Icons = {
   Test: declareIcon(testPath, { defaultWidth: 12, defaultHeight: 16, viewBox: '0 0 16 20' }),
   ProjectTree: declareIcon(projectTreePath, { defaultWidth: 20, defaultHeight: 20 }),
   OpenLive: declareIcon(openLivePath),
+  Check: declareIcon(checkPath, { defaultWidth: 13, defaultHeight: 9 }),
   NewSettings: SettingsSvg,
 };

@@ -15,6 +15,7 @@ interface Props {
   checked?: boolean;
   value?: any;
   onChange?: () => void;
+  error?: boolean;
 }
 
 const input = BEM(styles);

@@ -17,7 +17,7 @@ export const ActionsColumn = withRouter(
   actionsColumn(({ className, history: { push }, agentId }: Props) => (
     <div className={className}>
       <Icons.OpenLive onClick={() => push(`/full-page/${agentId}/coverage`)} />
-      <Icons.Settings height={16} width={16} />
+      <Icons.Settings onClick={() => push(`/agents/${agentId}/settings`)} height={16} width={16} />
     </div>
   )),
 );

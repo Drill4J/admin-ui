@@ -1,0 +1,22 @@
+@import '../../common/style-guide/index';
+
+.agent-settings-page {
+  height: 100%;
+  width: 100%;
+
+  &__header-icon {
+    margin-right: 8px;
+  }
+
+  &__save-changes-button {
+    min-height: 32px;
+    border-radius: 16px;
+    width: 122px;
+    font-size: 14px;
+    font-family: $semibold-font;
+  }
+
+  &__content {
+    margin: 32px 24px;
+  }
+}
