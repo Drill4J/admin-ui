@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
+import VirtualList from 'react-tiny-virtual-list';
 
 import { Modal, Icons, OverflowText } from '../../../../components';
 import { useBuildVersion } from '../use-build-version';
@@ -30,18 +31,23 @@ export const NewMethodsModal = newMethodsModal(
           </Header>
           <Content>
             <MethodsList>
-              {methods.map(({ name, desc, coverage = 0 }, index) => (
-                <MethodsListItem key={index}>
-                  <MethodsListIcon>
-                    <Icons.Function />
-                  </MethodsListIcon>
-                  <MethodSignature>
-                    <OverflowText>{name}</OverflowText>
-                    <MethodDescriptor>{desc}</MethodDescriptor>
-                  </MethodSignature>
-                  {getCoverageIcon(coverage)}
-                </MethodsListItem>
-              ))}
+              <VirtualList
+                itemSize={60}
+                height={840}
+                itemCount={methods.length}
+                renderItem={({ index, style }) => (
+                  <MethodsListItem key={index} style={style as any}>
+                    <MethodsListIcon>
+                      <Icons.Function />
+                    </MethodsListIcon>
+                    <MethodSignature>
+                      <OverflowText>{methods[index].name}</OverflowText>
+                      <MethodDescriptor>{methods[index].desc}</MethodDescriptor>
+                    </MethodSignature>
+                    {getCoverageIcon(methods[index].coverage)}
+                  </MethodsListItem>
+                )}
+              />
             </MethodsList>
           </Content>
         </div>
@@ -59,7 +65,7 @@ const MethodSignature = newMethodsModal.methodSignature('div');
 const MethodDescriptor = newMethodsModal.methodDescriptor(OverflowText);
 const CoverageIconWrapper = newMethodsModal.coverageIconWrapper('div');
 
-function getCoverageIcon(coverage: number) {
+function getCoverageIcon(coverage?: number) {
   if (!coverage) {
     return (
       <CoverageIconWrapper type="error">

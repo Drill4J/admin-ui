@@ -18,6 +18,7 @@
     "react-final-form": "6.0.1",
     "react-router-dom": "5.0.0",
     "react-scripts": "2.1.8",
+    "react-tiny-virtual-list": "2.2.0",
     "typescript": "3.4.1"
   },
   "scripts": {
