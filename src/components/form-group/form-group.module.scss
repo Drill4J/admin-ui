@@ -1,0 +1,34 @@
+@import '../../common/style-guide/index';
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+
+  &__label {
+    height: auto;
+    font-family: $semibold-font;
+    font-size: 14px;
+    line-height: 40px;
+    cursor: pointer;
+  }
+
+  &__optional-label {
+    font-size: 12px;
+    line-height: 24px;
+    text-align: right;
+    color: $slate-gray;
+  }
+
+  &__input {
+    flex-grow: 1;
+    width: 100%;
+    margin-left: 0;
+  }
+
+  &--disabled {
+    .form-group__label {
+      color: rgba(33, 33, 33, 0.65);
+    }
+  }
+}

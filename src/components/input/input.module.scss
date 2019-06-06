@@ -6,24 +6,32 @@
   &__input-element {
     width: 100%;
     height: $common-element-height;
-    font-size: 16px;
     line-height: 22px;
-    border: 1px solid $slate-gray;
+    border: 1px solid $loblolly-color;
+    border-radius: 4px;
     background-color: map-get($color-palette, white);
-    padding: 0 48px;
     outline: none;
+    padding: 0 17px;
+    font-family: $regular-font;
+    font-size: 14px;
+    color: map-get($color-palette, dark-blue);
 
     &::placeholder {
       opacity: 0.5;
     }
 
     &--rounded {
+      padding: 0 48px;
       border-radius: 20px;
     }
 
     &--disabled {
       border: 1px solid map-get($color-palette, light-blue);
       background-color: $athens-gray;
+    }
+
+    &--error {
+      border: 1px solid map-get($color-palette, red100);
     }
   }
 

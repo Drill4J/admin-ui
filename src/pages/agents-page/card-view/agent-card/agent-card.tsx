@@ -37,7 +37,7 @@ export const AgentCard = withRouter(
           </HeaderName>
           <HeaderIconsWrapper>
             <Icons.OpenLive onClick={() => push(`/full-page/${id}/coverage`)} />
-            <Icons.Settings height={16} width={16} />
+            <Icons.Settings height={16} width={16} onClick={() => push(`/agents/${id}/settings`)} />
           </HeaderIconsWrapper>
         </Header>
         <DrillStatus>

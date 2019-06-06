@@ -17,3 +17,6 @@ export { Dropdown } from './dropdown';
 export { TabsPanel, Tab } from './tabs';
 export { MessagePanel } from './message-panel';
 export { Spinner } from './spinner';
+export { FormGroup } from './form-group';
+export { Textarea } from './textarea';
+export { DropdownInput } from './dropdown-input';

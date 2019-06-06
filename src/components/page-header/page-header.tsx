@@ -22,7 +22,6 @@ export const PageHeader = pageHeader(
       <Content>
         <Title>{title}</Title>
         <AgentsCount>{itemsCount}</AgentsCount>
-        {/* <SearchButton /> */}
         <ItemsActions>{itemsActions}</ItemsActions>
         <Actions>{actions}</Actions>
       </Content>
@@ -33,6 +32,5 @@ export const PageHeader = pageHeader(
 const Content = pageHeader.content('div');
 const Title = pageHeader.title('span');
 const AgentsCount = pageHeader.itemsCount('span');
-const SearchButton = pageHeader.searchButton(Icons.Search);
 const ItemsActions = pageHeader.itemsActions('div');
 const Actions = pageHeader.actions('div');

@@ -6,3 +6,4 @@ export { SettingsPage } from './settings-page';
 export { NotFoundPage } from './not-found-page';
 export { AgentInfoPage } from './agent-info-page';
 export { AgentFullPage } from './agent-full-page';
+export { AgentSettingsPage } from './agent-settings-page';

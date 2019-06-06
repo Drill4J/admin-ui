@@ -53,7 +53,7 @@ export const AgentInfoPage = withRouter(
                 <span>Open live</span>
               </ToAgentButton>
               <Settings>
-                <Icons.Settings />
+                <Icons.Settings onClick={() => push(`/agents/${agent.id}/settings`)} />
               </Settings>
             </HeaderActions>
           }
