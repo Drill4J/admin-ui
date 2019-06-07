@@ -1,9 +1,9 @@
 import * as React from 'react';
 import { FieldRenderProps } from 'react-final-form';
 
-import { DropdownInput } from '../../components';
+import { DropdownInput } from '../inputs';
 import { ErrorMessage } from './error-message';
-import { DropdownItem } from '../../components/dropdown-input/dropdown-input';
+import { DropdownItem } from '../inputs/dropdown-input/dropdown-item';
 
 interface Props extends FieldRenderProps<any> {
   options?: DropdownItem[];

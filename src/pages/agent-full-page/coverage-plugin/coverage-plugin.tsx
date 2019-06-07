@@ -3,18 +3,19 @@ import { BEM, div } from '@redneckz/react-bem-helper';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
 
 import { Panel } from '../../../layouts';
-import { Icons, PageHeader, Dropdown, TabsPanel, Tab, Spinner } from '../../../components';
-import { Card } from './card';
+import { Icons, PageHeader, TabsPanel, Tab } from '../../../components';
+import { Inputs } from '../../../forms';
 import { useWsConnection } from '../../../hooks';
 import { defaultAdminSocket } from '../../../common/connection';
+import { Card } from './card';
 import { CoverageDetails } from './coverage-details';
 import { TestDetails } from './test-details';
+import { useBuildVersion } from './use-build-version';
+import { NewMethodsModal } from './new-methods-modal';
+import { CodeCoverageCard } from './code-coverage-card';
 import { Coverage } from '../../../types/coverage';
 import { NewMethodsCoverage } from '../../../types/new-methods-coverage';
 import { AgentBuildVersion } from '../../../types/agent-build-version';
-import { useBuildVersion } from './use-build-version';
-import { CodeCoverageCard } from './code-coverage-card';
-import { NewMethodsModal } from './new-methods-modal';
 
 import styles from './coverage-plugin.module.scss';
 
@@ -136,7 +137,7 @@ export const CoveragePlugin = withRouter(
 const SettingsButton = coveragePlugin.settingsButton('div');
 const Content = coveragePlugin.content('div');
 const Title = coveragePlugin.title('div');
-const BuildVersion = coveragePlugin.buildVersion(Dropdown);
+const BuildVersion = coveragePlugin.buildVersion(Inputs.Dropdown);
 const SummaryWrapper = coveragePlugin.summaryWrapper('div');
 const DetailsHeader = coveragePlugin.detailsHeader(Panel);
 const TabIconWrapper = coveragePlugin.tabIconWrapper('div');

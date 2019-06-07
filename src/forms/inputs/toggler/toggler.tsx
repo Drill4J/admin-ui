@@ -1,6 +1,8 @@
 import * as React from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
+
 import { Input } from '../input';
+
 import styles from './toggler.module.scss';
 
 interface Attrs {

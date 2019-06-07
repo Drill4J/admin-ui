@@ -3,7 +3,8 @@ import { BEM } from '@redneckz/react-bem-helper';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
 import axios from 'axios';
 
-import { Icons, Toggler } from '../../../../components';
+import { Icons } from '../../../../components';
+import { Inputs } from '../../../../forms';
 import { Agent } from '../../../../types/agent';
 
 import styles from './agent-card.module.scss';
@@ -41,7 +42,7 @@ export const AgentCard = withRouter(
           </HeaderIconsWrapper>
         </Header>
         <DrillStatus>
-          <Toggler
+          <Inputs.Toggler
             value={status}
             label={`DRILL4J ${status ? 'ON' : 'OFF'}`}
             onChange={() => {

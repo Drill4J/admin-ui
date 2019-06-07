@@ -2,7 +2,8 @@ import * as React from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 import axios from 'axios';
 
-import { SelectableTable, Column, Toggler, Badge, Icons } from '../../../components';
+import { SelectableTable, Column, Badge, Icons } from '../../../components';
+import { Inputs } from '../../../forms';
 import { Plugin } from '../../../types/plugin';
 
 import styles from './agent-plugins-table.module.scss';
@@ -31,7 +32,7 @@ export const AgentPluginsTable = agentPluginsTable(
           name="status"
           Cell={({ value, item }) => (
             <StatusColumn>
-              <Toggler value={value} onChange={() => togglePlugin(agentId, item.id)} />
+              <Inputs.Toggler value={value} onChange={() => togglePlugin(agentId, item.id)} />
             </StatusColumn>
           )}
         />
