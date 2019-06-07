@@ -1,8 +1,9 @@
 import * as React from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 
-import styles from './table-checkbox.module.scss';
-import { Icons } from '../icon';
+import { Icons } from '../../../components/icon';
+
+import styles from './checkbox.module.scss';
 
 interface Props {
   className?: string;
@@ -10,9 +11,9 @@ interface Props {
   selected?: boolean;
 }
 
-const tableCheckbox = BEM(styles);
+const checkbox = BEM(styles);
 
-export const TableCheckbox = tableCheckbox(({ className, onClick }: Props) => (
+export const Checkbox = checkbox(({ className, onClick }: Props) => (
   <div className={className} onClick={onClick}>
     <IconWrapper>
       <Icons.Checkbox />
@@ -20,4 +21,4 @@ export const TableCheckbox = tableCheckbox(({ className, onClick }: Props) => (
   </div>
 ));
 
-const IconWrapper = tableCheckbox.iconWrapper('div');
+const IconWrapper = checkbox.iconWrapper('div');

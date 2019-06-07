@@ -5,13 +5,13 @@ import { Form } from 'react-final-form';
 import createDecorator from 'final-form-calculate';
 import axios from 'axios';
 
-import { PageHeader, Icons, Button } from '../../components';
+import { PageHeader, Icons } from '../../components';
 import { Panel } from '../../layouts';
-import { composeValidators, sizeLimit } from '../../forms';
+import { Button, composeValidators, sizeLimit } from '../../forms';
 import { useWsConnection } from '../../hooks';
 import { defaultAdminSocket } from '../../common/connection';
-import { AgentSettingsForm } from './agent-settings-form/agent-settings-form';
 import { NotificationManagerContext } from '../../notification-manager';
+import { AgentSettingsForm } from './agent-settings-form/agent-settings-form';
 import { Agent } from '../../types/agent';
 import { Message } from '../../types/message';
 import { BuildVersion } from '../../types/build-version';

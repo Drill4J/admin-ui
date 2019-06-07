@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { BEM, div } from '@redneckz/react-bem-helper';
 
-import { Icons } from '../icon';
+import { Icons } from '../../../components';
 
 import styles from './dropdown.module.scss';
 

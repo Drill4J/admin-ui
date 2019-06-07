@@ -2,7 +2,8 @@ import * as React from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 import axios from 'axios';
 
-import { Modal, Button } from '../../../components';
+import { Modal } from '../../../components';
+import { Button } from '../../../forms';
 import { SelectableList } from './selectable-list';
 import { useWsConnection } from '../../../hooks';
 import { Plugin } from '../../../types/plugin';

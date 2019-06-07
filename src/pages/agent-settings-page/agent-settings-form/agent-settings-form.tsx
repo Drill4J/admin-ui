@@ -2,8 +2,7 @@ import * as React from 'react';
 import { BEM, div } from '@redneckz/react-bem-helper';
 import { Field } from 'react-final-form';
 
-import { FormGroup } from '../../../components';
-import { Fields } from '../../../forms';
+import { Fields, FormGroup } from '../../../forms';
 import { BuildVersion } from '../../../types/build-version';
 
 import styles from './agent-settings-form.module.scss';

@@ -1,14 +1,10 @@
 import * as React from 'react';
 import { BEM, div } from '@redneckz/react-bem-helper';
 
-import { Icons } from '../../components';
+import { Icons } from '../../../components';
+import { DropdownItem } from './dropdown-item';
 
 import styles from './dropdown-input.module.scss';
-
-export interface DropdownItem {
-  value: string;
-  label: string;
-}
 
 interface Props {
   className?: string;

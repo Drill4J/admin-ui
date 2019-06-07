@@ -3,14 +3,15 @@ import { BEM } from '@redneckz/react-bem-helper';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
 import axios from 'axios';
 
-import { PageHeader, Button, Icons, Toggler, ItemsActions } from '../../components';
+import { PageHeader, Icons, ItemsActions } from '../../components';
+import { Button, Inputs } from '../../forms';
+import { useWsConnection } from '../../hooks';
+import { defaultAdminSocket } from '../../common/connection';
 import { AgentPluginsTable } from './agent-plugins-table';
-import { Agent } from '../../types/agent';
 import { getSelectedPLuginsActions } from './get-selected-plugins-actions';
 import { AddPluginsModal } from './add-plugins-modal';
 import { NoPluginsStub } from './no-plugins-stub';
-import { useWsConnection } from '../../hooks';
-import { defaultAdminSocket } from '../../common/connection';
+import { Agent } from '../../types/agent';
 
 import styles from './agent-info-page.module.scss';
 
@@ -34,7 +35,7 @@ export const AgentInfoPage = withRouter(
               <Icons.Agents height={18} width={20} />
               <span>{agentId}</span>
               <ToggleAgent>
-                <Toggler
+                <Inputs.Toggler
                   value={agent.status}
                   label={
                     <ToggleAgentHeader>{`Drill4J ${

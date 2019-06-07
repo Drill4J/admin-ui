@@ -1,9 +1,9 @@
 import { field } from './field';
 import { dropdownField } from './dropdown-field';
-import { Input, Textarea } from '../../components';
+import { Inputs } from '../inputs';
 
 export const Fields = {
-  Input: field(Input),
-  Textarea: field(Textarea),
+  Input: field(Inputs.Text),
+  Textarea: field(Inputs.Textarea),
   Dropdown: dropdownField,
 };

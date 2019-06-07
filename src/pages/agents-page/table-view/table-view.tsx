@@ -2,7 +2,8 @@ import * as React from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 import axios from 'axios';
 
-import { SelectableTable, Column, Toggler, OverflowText } from '../../../components';
+import { SelectableTable, Column, OverflowText } from '../../../components';
+import { Inputs } from '../../../forms';
 import { Agent } from '../../../types/agent';
 import { NameColumn } from './name-column';
 import { ActionsColumn } from './actions-column';
@@ -44,7 +45,7 @@ export const TableView = tableView(
           label="Drill4J"
           Cell={({ value, item }) => (
             <StatusColumn>
-              <Toggler
+              <Inputs.Toggler
                 value={value}
                 label={value ? 'On' : 'Off'}
                 onChange={() => toggleStandby(item.id)}

@@ -5,9 +5,10 @@ import { AxiosError } from 'axios';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
 
 import { LoginLayout } from '../../layouts';
-import { Input, Button, Icons } from '../../components';
-import { ErrorPanel } from './error-panel';
+import { Icons } from '../../components';
+import { Inputs, Button } from '../../forms';
 import { TOKEN_HEADER, TOKEN_KEY } from '../../common/constants';
+import { ErrorPanel } from './error-panel';
 
 import styles from './login-page.module.scss';
 
@@ -42,8 +43,8 @@ export const LoginPage = withRouter(
           <SubTitle>Click "Continue as a guest" to entry Admin Panel with admin privilege</SubTitle>
           {error && <Error>{`${error.message}`}</Error>}
           <SignInForm>
-            <Input placeholder="User ID" disabled rounded icon={<Icons.Account />} />
-            <Input placeholder="Password" disabled rounded icon={<Icons.Lock />} />
+            <Inputs.Text placeholder="User ID" disabled rounded icon={<Icons.Account />} />
+            <Inputs.Text placeholder="Password" disabled rounded icon={<Icons.Lock />} />
             <SignInButton disabled type="primary">
               Sign in <Icons.Arrow />
             </SignInButton>

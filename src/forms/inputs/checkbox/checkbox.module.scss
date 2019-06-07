@@ -1,6 +1,6 @@
-@import '../../common/style-guide/index';
+@import '../../../common/style-guide/index';
 
-.table-checkbox {
+.checkbox {
   cursor: pointer;
   color: map-get($color-palette, light-blue);
 

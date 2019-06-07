@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 
-import { TableCheckbox } from '../../../../components';
+import { Inputs } from '../../../../forms';
 
 import styles from './selectable-list.module.scss';
 
@@ -22,7 +22,7 @@ export const SelectableList = selectableList(
       <div className={className}>
         {data.map((element) => (
           <Element key={element[idKey]}>
-            <TableCheckbox
+            <Inputs.Checkbox
               onClick={() => {
                 selectedRows.includes(element[idKey])
                   ? onSelect(selectedRows.filter((selectedItem) => selectedItem !== element[idKey]))
