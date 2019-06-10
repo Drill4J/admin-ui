@@ -1,0 +1,61 @@
+@import '../../../common/style-guide/index';
+
+.register-agent-modal {
+  width: 704px;
+
+  &__content {
+    display: grid;
+    grid-template-columns: auto auto;
+    grid-column-gap: 16px;
+    grid-row-gap: 8px;
+    margin: 16px 24px;
+  }
+
+  &__error-message {
+    height: 40px;
+    width: 100%;
+    background-color: rgba(255, 2, 2, 0.1);
+    font-size: 14px;
+    line-height: 24px;
+    color: map-get($color-palette, red100);
+  }
+
+  &__error-message-icon {
+    margin-left: 24px;
+    margin-right: 8px;
+  }
+
+  &__description {
+    grid-column-start: 1;
+    grid-column-end: 3;
+  }
+
+  &__actions-panel {
+    margin-top: 24px;
+  }
+
+  &__register-agent-button {
+    min-height: 32px;
+    width: 164px;
+    font-family: $semibold-font;
+    font-size: 14px;
+    line-height: 19px;
+  }
+
+  &__cancel-button {
+    margin-left: 16px;
+    min-height: 32px;
+    width: 78px;
+    border: 1px solid $loblolly-color;
+    color: $slate-gray;
+
+    &:hover {
+      &:not(.button--disabled) {
+        cursor: pointer;
+        opacity: 0.75;
+        background-color: map-get($color-palette, blue100);
+        color: map-get($color-palette, white);
+      }
+    }
+  }
+}

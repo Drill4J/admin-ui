@@ -3,9 +3,12 @@ import { BEM } from '@redneckz/react-bem-helper';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
 import axios from 'axios';
 
+import { Panel } from '../../../../layouts';
 import { Icons } from '../../../../components';
-import { Inputs } from '../../../../forms';
+import { Inputs, Button } from '../../../../forms';
 import { Agent } from '../../../../types/agent';
+import { AGENT_STATUS } from '../../../../common/constants';
+import { RegisterAgentModal } from '../../register-agent-modal';
 
 import styles from './agent-card.module.scss';
 
@@ -23,41 +26,63 @@ export const AgentCard = withRouter(
   agentCard(
     ({
       className,
-      agent: { name, description, status, activePluginsCount, pluginsCount, id },
+      agent: { name, description, status, activePluginsCount, pluginsCount, id = '' },
       onSelect,
       history: { push },
-    }: Props) => (
-      <div className={className} onClick={onSelect}>
-        <Header>
-          <HeaderName
-            onClick={() => {
-              push(`/agents/${id}`);
-            }}
-          >
-            {name}
-          </HeaderName>
-          <HeaderIconsWrapper>
-            <Icons.OpenLive onClick={() => push(`/full-page/${id}/coverage`)} />
-            <Icons.Settings height={16} width={16} onClick={() => push(`/agents/${id}/settings`)} />
-          </HeaderIconsWrapper>
-        </Header>
-        <DrillStatus>
-          <Inputs.Toggler
-            value={status}
-            label={`DRILL4J ${status ? 'ON' : 'OFF'}`}
-            onChange={() => {
-              if (id) {
-                toggleStandby(id);
-              }
-            }}
-          />
-          {status && (
-            <ActivePlugins>{`(${activePluginsCount} of ${pluginsCount} plugins on)`}</ActivePlugins>
+    }: Props) => {
+      const [isModalOpen, setIsModalOpen] = React.useState(false);
+
+      return (
+        <div className={className} onClick={onSelect}>
+          <Header>
+            <HeaderName
+              onClick={() => {
+                push(`/agents/${id}`);
+              }}
+            >
+              {name}
+            </HeaderName>
+            {status !== AGENT_STATUS.NOT_REGISTERED && (
+              <HeaderIconsWrapper>
+                <Icons.OpenLive onClick={() => push(`/full-page/${id}/coverage`)} />
+                <Icons.Settings
+                  height={16}
+                  width={16}
+                  onClick={() => push(`/agents/${id}/settings`)}
+                />
+              </HeaderIconsWrapper>
+            )}
+          </Header>
+          <DrillStatus>
+            <Inputs.Toggler
+              value={status === AGENT_STATUS.READY}
+              label={`DRILL4J ${status === AGENT_STATUS.READY ? 'ON' : 'OFF'}`}
+              onChange={() => {
+                if (id) {
+                  toggleStandby(id);
+                }
+              }}
+            />
+            {status === AGENT_STATUS.READY && (
+              <ActivePlugins>{`(${activePluginsCount} of ${pluginsCount} plugins on)`}</ActivePlugins>
+            )}
+          </DrillStatus>
+          {status === AGENT_STATUS.NOT_REGISTERED ? (
+            <RegisterButton type="primary" onClick={() => setIsModalOpen(true)}>
+              <Panel align="center">
+                <RegisterIcon />
+                Register
+              </Panel>
+            </RegisterButton>
+          ) : (
+            <Description>{description}</Description>
           )}
-        </DrillStatus>
-        <Description>{description}</Description>
-      </div>
-    ),
+          {isModalOpen && (
+            <RegisterAgentModal isOpen={isModalOpen} onToggle={setIsModalOpen} agentId={id} />
+          )}
+        </div>
+      );
+    },
   ),
 );
 
@@ -66,6 +91,8 @@ const HeaderName = agentCard.headerName('div');
 const HeaderIconsWrapper = agentCard.headerIconsWrapper('div');
 const DrillStatus = agentCard.drillStatus('div');
 const ActivePlugins = agentCard.activePlugins('div');
+const RegisterButton = agentCard.registerAgent(Button);
+const RegisterIcon = agentCard.registerIcon(Icons.Register);
 const Description = agentCard.desctiption('div');
 
 const toggleStandby = (agentId: string) => {

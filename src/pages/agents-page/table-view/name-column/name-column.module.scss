@@ -6,4 +6,9 @@
   font-family: $semibold-font;
   line-height: 48px;
   cursor: pointer;
+
+  &--unregistered {
+    pointer-events: none;
+    color: $slate-gray;
+  }
 }

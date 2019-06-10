@@ -67,9 +67,9 @@ export const CoveragePlugin = withRouter(
             Summary
             <BuildVersion
               value={selectedBuildVersion}
-              items={agentBuildVersions.map(({ version = '' }) => ({
-                value: version,
-                label: `Build ${version}`,
+              items={agentBuildVersions.map(({ id = '', name = '' }) => ({
+                value: id,
+                label: name,
               }))}
               onChange={setSelectedBuildVersion}
             />

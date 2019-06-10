@@ -1,0 +1,9 @@
+const NOT_REGISTERED = 'NOT_REGISTERED';
+const READY = 'READY';
+const DISABLED = 'DISABLED';
+
+export const AGENT_STATUS = {
+  NOT_REGISTERED,
+  DISABLED,
+  READY,
+};

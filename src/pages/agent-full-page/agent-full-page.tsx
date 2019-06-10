@@ -8,6 +8,7 @@ import { Agent } from '../../types/agent';
 import { CoveragePlugin } from './coverage-plugin';
 import { useWsConnection } from '../../hooks';
 import { defaultAdminSocket } from '../../common/connection';
+import { AGENT_STATUS } from '../../common/constants';
 
 import styles from './agent-full-page.module.scss';
 
@@ -42,8 +43,8 @@ export const AgentFullPage = withRouter(
                 <AgentName>{agent.name}</AgentName>
                 <AgentIpAddress>{agent.ipAddress}</AgentIpAddress>
                 <AgentStatus
-                  status={agent.status ? 'online' : 'offline'}
-                  text={agent.status ? 'Online' : 'Offline'}
+                  status={agent.status === AGENT_STATUS.READY ? 'online' : 'offline'}
+                  text={agent.status === AGENT_STATUS.READY ? 'Online' : 'Offline'}
                   bold
                 />
               </Panel>

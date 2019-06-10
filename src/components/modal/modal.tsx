@@ -2,7 +2,7 @@ import * as React from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 
 import { Icons } from '../icon';
-import { Portal } from './portal';
+import { Portal } from '../portal';
 
 import styles from './modal.module.scss';
 

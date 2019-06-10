@@ -24,10 +24,7 @@ interface Props extends RouteComponentProps<{ agentId: string }> {
 
 const agentSettingsPage = BEM(styles);
 
-export const validateSettings = composeValidators(
-  sizeLimit('name'),
-  sizeLimit('description', 3, 256),
-);
+const validateSettings = composeValidators(sizeLimit('name'), sizeLimit('description', 3, 256));
 
 const buildVersionAliasDecorator = createDecorator(
   {
