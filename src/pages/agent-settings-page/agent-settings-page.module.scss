@@ -9,9 +9,18 @@
   }
 
   &__save-changes-button {
+    margin-right: 16px;
     min-height: 32px;
     border-radius: 16px;
     width: 122px;
+    font-size: 14px;
+    font-family: $semibold-font;
+  }
+
+  &__unregister-agent-button {
+    min-height: 32px;
+    width: 108px;
+    border-radius: 16px;
     font-size: 14px;
     font-family: $semibold-font;
   }

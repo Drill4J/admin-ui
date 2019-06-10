@@ -10,8 +10,10 @@ import { Panel } from '../../layouts';
 import { Button, composeValidators, sizeLimit } from '../../forms';
 import { useWsConnection } from '../../hooks';
 import { defaultAdminSocket } from '../../common/connection';
+import { AGENT_STATUS } from '../../common/constants';
 import { NotificationManagerContext } from '../../notification-manager';
 import { AgentSettingsForm } from './agent-settings-form/agent-settings-form';
+import { UnregisterAgentModal } from './unregister-agent-modal';
 import { Agent } from '../../types/agent';
 import { Message } from '../../types/message';
 import { BuildVersion } from '../../types/build-version';
@@ -50,6 +52,8 @@ export const AgentSettingsPage = withRouter(
     const agent = useWsConnection<Agent>(defaultAdminSocket, `/get-agent/${agentId}`) || {};
     const { showMessage } = React.useContext(NotificationManagerContext);
     const [errorMessage, setErrorMessage] = React.useState('');
+    const [isUnregisterModalOpen, setIsUnregisterModalOpen] = React.useState(false);
+
     return (
       <div className={className}>
         <Form
@@ -87,6 +91,14 @@ export const AgentSettingsPage = withRouter(
                     >
                       Save changes
                     </SaveChangesButton>
+                    {agent.status !== AGENT_STATUS.NOT_REGISTERED && (
+                      <UnregisterAgentButton
+                        type="secondary"
+                        onClick={() => setIsUnregisterModalOpen(true)}
+                      >
+                        Unregister
+                      </UnregisterAgentButton>
+                    )}
                   </Panel>
                 }
               />
@@ -99,6 +111,13 @@ export const AgentSettingsPage = withRouter(
               <Content>
                 <AgentSettingsForm buildVersions={values.buildVersions} />
               </Content>
+              {isUnregisterModalOpen && (
+                <UnregisterAgentModal
+                  isOpen={isUnregisterModalOpen}
+                  onToggle={setIsUnregisterModalOpen}
+                  agentId={agentId}
+                />
+              )}
             </>
           )}
         />
@@ -109,6 +128,7 @@ export const AgentSettingsPage = withRouter(
 
 const HeaderIcon = agentSettingsPage.headerIcon(Icons.Settings);
 const SaveChangesButton = agentSettingsPage.saveChangesButton(Button);
+const UnregisterAgentButton = agentSettingsPage.unregisterAgentButton(Button);
 const ErrorMessage = agentSettingsPage.errorMessage(Panel);
 const ErrorMessageIcon = agentSettingsPage.errorMessageIcon(Icons.Warning);
 const Content = agentSettingsPage.content('div');
