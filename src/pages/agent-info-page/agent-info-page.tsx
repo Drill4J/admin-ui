@@ -7,6 +7,7 @@ import { PageHeader, Icons, ItemsActions } from '../../components';
 import { Button, Inputs } from '../../forms';
 import { useWsConnection } from '../../hooks';
 import { defaultAdminSocket } from '../../common/connection';
+import { AGENT_STATUS } from '../../common/constants';
 import { AgentPluginsTable } from './agent-plugins-table';
 import { getSelectedPLuginsActions } from './get-selected-plugins-actions';
 import { AddPluginsModal } from './add-plugins-modal';
@@ -36,10 +37,10 @@ export const AgentInfoPage = withRouter(
               <span>{agentId}</span>
               <ToggleAgent>
                 <Inputs.Toggler
-                  value={agent.status}
+                  value={agent.status === AGENT_STATUS.READY}
                   label={
                     <ToggleAgentHeader>{`Drill4J ${
-                      agent.status ? 'on' : 'off'
+                      agent.status === AGENT_STATUS.READY ? 'on' : 'off'
                     }`}</ToggleAgentHeader>
                   }
                   onChange={() => toggleAgent(agent.id || '')}

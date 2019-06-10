@@ -8,6 +8,7 @@ interface Props extends RouteComponentProps {
   className?: string;
   agentName: string;
   agentId: string;
+  unregistered: boolean;
 }
 
 const nameColumn = BEM(styles);

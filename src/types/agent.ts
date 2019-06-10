@@ -6,7 +6,7 @@ export interface Agent {
   name?: string;
   group?: string;
   description?: string;
-  status?: boolean;
+  status?: 'READY' | 'NOT_REGISTERED';
   drillAdminUrl?: string;
   address?: string;
   rawPluginsName?: Plugin[];

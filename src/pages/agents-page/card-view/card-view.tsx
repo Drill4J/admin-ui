@@ -2,6 +2,7 @@ import * as React from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 
 import { AgentCard } from './agent-card';
+import { AGENT_STATUS } from '../../../common/constants';
 import { Agent } from '../../../types/agent';
 
 import styles from './card-view.module.scss';
@@ -33,7 +34,7 @@ export const CardView = cardView(
                   )
                 : handleSelectAgents([...selectedAgents, String(agent[idKey])]);
             }}
-            disabled={!agent.status && !selected}
+            disabled={agent.status !== AGENT_STATUS.READY && !selected}
           />
         );
       })}

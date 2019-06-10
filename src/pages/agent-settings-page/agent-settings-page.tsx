@@ -24,10 +24,7 @@ interface Props extends RouteComponentProps<{ agentId: string }> {
 
 const agentSettingsPage = BEM(styles);
 
-export const validateSettings = composeValidators(
-  sizeLimit('name'),
-  sizeLimit('description', 3, 256),
-);
+const validateSettings = composeValidators(sizeLimit('name'), sizeLimit('description', 3, 256));
 
 const buildVersionAliasDecorator = createDecorator(
   {
@@ -52,10 +49,11 @@ export const AgentSettingsPage = withRouter(
   agentSettingsPage(({ className, match: { params: { agentId } } }: Props) => {
     const agent = useWsConnection<Agent>(defaultAdminSocket, `/get-agent/${agentId}`) || {};
     const { showMessage } = React.useContext(NotificationManagerContext);
+    const [errorMessage, setErrorMessage] = React.useState('');
     return (
       <div className={className}>
         <Form
-          onSubmit={(values) => saveChanges(values, showMessage)}
+          onSubmit={(values) => saveChanges(values, showMessage, setErrorMessage)}
           initialValues={agent}
           validate={validateSettings as any}
           decorators={[buildVersionAliasDecorator]}
@@ -92,6 +90,12 @@ export const AgentSettingsPage = withRouter(
                   </Panel>
                 }
               />
+              {errorMessage && (
+                <ErrorMessage>
+                  <ErrorMessageIcon />
+                  {errorMessage}
+                </ErrorMessage>
+              )}
               <Content>
                 <AgentSettingsForm buildVersions={values.buildVersions} />
               </Content>
@@ -105,13 +109,20 @@ export const AgentSettingsPage = withRouter(
 
 const HeaderIcon = agentSettingsPage.headerIcon(Icons.Settings);
 const SaveChangesButton = agentSettingsPage.saveChangesButton(Button);
+const ErrorMessage = agentSettingsPage.errorMessage(Panel);
+const ErrorMessageIcon = agentSettingsPage.errorMessageIcon(Icons.Warning);
 const Content = agentSettingsPage.content('div');
 
-async function saveChanges(agent: Agent, showMessage: (message: Message) => void) {
+async function saveChanges(
+  agent: Agent,
+  showMessage: (message: Message) => void,
+  setErrorMessage: (message: string) => void,
+) {
   try {
     await axios.post(`/agent/${agent.id}`, agent);
+    setErrorMessage('');
     showMessage({ type: 'SUCCESS', text: 'New settings are saved' });
   } catch (error) {
-    showMessage({ type: 'ERROR', text: error.message });
+    setErrorMessage(error.message);
   }
 }

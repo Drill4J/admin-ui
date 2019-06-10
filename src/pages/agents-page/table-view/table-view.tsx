@@ -4,9 +4,10 @@ import axios from 'axios';
 
 import { SelectableTable, Column, OverflowText } from '../../../components';
 import { Inputs } from '../../../forms';
-import { Agent } from '../../../types/agent';
+import { AGENT_STATUS } from '../../../common/constants';
 import { NameColumn } from './name-column';
 import { ActionsColumn } from './actions-column';
+import { Agent } from '../../../types/agent';
 
 import styles from './table-view.module.scss';
 
@@ -31,7 +32,13 @@ export const TableView = tableView(
         <Column
           name="name"
           label="Name"
-          Cell={({ value, item: { id } }) => <NameColumn agentId={id} agentName={value} />}
+          Cell={({ value, item: { id, status } }) => (
+            <NameColumn
+              agentId={id}
+              agentName={value}
+              unregistered={status === AGENT_STATUS.NOT_REGISTERED}
+            />
+          )}
         />
         <Column
           name="description"
@@ -46,8 +53,8 @@ export const TableView = tableView(
           Cell={({ value, item }) => (
             <StatusColumn>
               <Inputs.Toggler
-                value={value}
-                label={value ? 'On' : 'Off'}
+                value={value === AGENT_STATUS.READY}
+                label={value === AGENT_STATUS.READY ? 'On' : 'Off'}
                 onChange={() => toggleStandby(item.id)}
               />
             </StatusColumn>
@@ -67,7 +74,7 @@ export const TableView = tableView(
         <Column
           name="actions"
           label="Actions"
-          Cell={({ item }: { item: Agent }) => <ActionsColumn agentId={item.id || ''} />}
+          Cell={({ item }: { item: Agent }) => <ActionsColumn agent={item} />}
         />
       </SelectableTable>
     </div>

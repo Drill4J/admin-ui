@@ -31,8 +31,8 @@ It is preferred to have a class name for the root element the same as a componen
 
 All files (except icons) should be named in `kebab-case`.
 
-Files with tests should be named as `<fileName>.test.js`. For example if you have a file `my-super-function.js`, file with tests should be named `mySuperFunction.test.js`.
+Files with tests should be named as `<fileName>.test.js`. For example if you have a file `my-super-function.js`, file with tests should be named `my-super-function.spec.js`.
 
 Files with storybook stories should be named in the following way: `<componentFileName>.stories.jsx`.
 
-SVG icons should be named in dash notation. To use them in JSX, the `-inline` postfix should be added. For example: `arrow-down-inline.svg`.
+SVG icons should be named in dash notation.
