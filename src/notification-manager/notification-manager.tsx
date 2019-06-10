@@ -15,9 +15,20 @@ export const NotificationManagerContext = React.createContext<{
 
 export const NotificationManager = ({ children }: Props) => {
   const [message, setMessage] = React.useState<Message | null>();
+
+  function handleShowMessage(incommingMessage: Message) {
+    if (incommingMessage.type === 'SUCCESS') {
+      setMessage(incommingMessage);
+      setTimeout(() => {
+        setMessage(null);
+      }, 5000);
+    }
+
+    setMessage(incommingMessage);
+  }
   return (
     <NotificationManagerContext.Provider
-      value={{ showMessage: setMessage, closeMessage: () => setMessage(null) }}
+      value={{ showMessage: handleShowMessage, closeMessage: () => setMessage(null) }}
     >
       {message && <MessagePanel message={message} onClose={() => setMessage(null)} />}
       {children}
