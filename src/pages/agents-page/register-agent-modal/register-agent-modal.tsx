@@ -22,6 +22,11 @@ interface Props {
   agentId: string;
 }
 
+interface AgentRegistrationForm extends AgentRegistrationInfo {
+  id: string;
+  buildVersion: string;
+}
+
 const registerAgentModal = BEM(styles);
 
 const validateAgent = composeValidators(
@@ -51,7 +56,7 @@ export const RegisterAgentModal = registerAgentModal(
               initialValues={{ name, description, buildVersion, group, id: agentId }}
               onSubmit={(values) =>
                 registerAgent(
-                  values as AgentRegistrationInfo,
+                  values as AgentRegistrationForm,
                   onToggle,
                   showMessage,
                   setErrorMessage,
@@ -110,13 +115,13 @@ const RegisterAgentButton = registerAgentModal.registerAgentButton(Button);
 const CancelButton = registerAgentModal.cancelButton(Button);
 
 async function registerAgent(
-  agentRegistrationInfo: AgentRegistrationInfo,
+  { buildVersion, id, ...agentRegistrationInfo }: AgentRegistrationForm,
   closeModal: (value: boolean) => void,
   showMessage: (message: Message) => void,
   setErrorMessage: (error: string) => void,
 ) {
   try {
-    await axios.post(`/agents/${agentRegistrationInfo.id}/register`, agentRegistrationInfo);
+    await axios.post(`/agents/${id}/register`, agentRegistrationInfo);
     showMessage({ type: 'SUCCESS', text: 'The agent is registered' });
     closeModal(false);
   } catch (error) {
