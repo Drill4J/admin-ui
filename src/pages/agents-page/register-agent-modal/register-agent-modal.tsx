@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 import { Form, Field } from 'react-final-form';
-import createDecorator from 'final-form-calculate';
 import axios from 'axios';
 
 import { Panel } from '../../../layouts';
@@ -10,8 +9,8 @@ import { FormGroup, Fields, Button, composeValidators, sizeLimit } from '../../.
 import { useWsConnection } from '../../../hooks';
 import { defaultAdminSocket } from '../../../common/connection';
 import { NotificationManagerContext } from '../../../notification-manager';
+import { AgentRegistrationInfo } from '../../../types/agent-registration-info';
 import { Agent } from '../../../types/agent';
-import { BuildVersion } from '../../../types/build-version';
 import { Message } from '../../../types/message';
 
 import styles from './register-agent-modal.module.scss';
@@ -25,26 +24,21 @@ interface Props {
 
 const registerAgentModal = BEM(styles);
 
-const buildVersionAliasDecorator = createDecorator({
-  field: 'buildVersionAlias',
-  updates: {
-    buildVersions: (buildVersionAlias: string, allValues: any) =>
-      allValues.buildVersions.map(({ id, name }: BuildVersion) =>
-        id === allValues.buildVersion ? { id, name: buildVersionAlias } : { id, name },
-      ),
-  },
-});
-
-const validateAgent = composeValidators(sizeLimit('name'), sizeLimit('description', 3, 256));
+const validateAgent = composeValidators(
+  sizeLimit('name'),
+  sizeLimit('description', 3, 256),
+  sizeLimit('buildAlias'),
+);
 
 export const RegisterAgentModal = registerAgentModal(
   ({ className, isOpen, onToggle, agentId }: Props) => {
-    const agent = useWsConnection<Agent>(defaultAdminSocket, `/get-agent/${agentId}`) || {};
+    const { name = '', description = '', group = '', buildVersion = '' } =
+      useWsConnection<Agent>(defaultAdminSocket, `/get-agent/${agentId}`) || {};
     const { showMessage } = React.useContext(NotificationManagerContext);
     const [errorMessage, setErrorMessage] = React.useState('');
 
     return (
-      <Popup isOpen={isOpen} onToggle={onToggle} header={`Agent Registration: ${agent.id}`}>
+      <Popup isOpen={isOpen} onToggle={onToggle} header={`Agent Registration: ${agentId}`}>
         <div className={className}>
           {errorMessage && (
             <ErrorMessage>
@@ -54,9 +48,15 @@ export const RegisterAgentModal = registerAgentModal(
           )}
           <Content>
             <Form
-              initialValues={agent}
-              onSubmit={(values) => registerAgent(values, onToggle, showMessage, setErrorMessage)}
-              decorators={[buildVersionAliasDecorator]}
+              initialValues={{ name, description, buildVersion, group, id: agentId }}
+              onSubmit={(values) =>
+                registerAgent(
+                  values as AgentRegistrationInfo,
+                  onToggle,
+                  showMessage,
+                  setErrorMessage,
+                )
+              }
               validate={validateAgent as any}
               render={({ handleSubmit, submitting, pristine, invalid }) => (
                 <>
@@ -74,7 +74,7 @@ export const RegisterAgentModal = registerAgentModal(
                   </FormGroup>
                   <FormGroup label="Build Alias">
                     <Field
-                      name="buildVersionAlias"
+                      name="buildAlias"
                       component={Fields.Input}
                       placeholder="Give build a meaningful name"
                     />
@@ -110,13 +110,13 @@ const RegisterAgentButton = registerAgentModal.registerAgentButton(Button);
 const CancelButton = registerAgentModal.cancelButton(Button);
 
 async function registerAgent(
-  agent: Agent,
+  agentRegistrationInfo: AgentRegistrationInfo,
   closeModal: (value: boolean) => void,
   showMessage: (message: Message) => void,
   setErrorMessage: (error: string) => void,
 ) {
   try {
-    await axios.post(`/agents/${agent.id}/register`, agent);
+    await axios.post(`/agents/${agentRegistrationInfo.id}/register`, agentRegistrationInfo);
     showMessage({ type: 'SUCCESS', text: 'The agent is registered' });
     closeModal(false);
   } catch (error) {
