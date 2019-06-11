@@ -1,7 +1,6 @@
 export interface AgentRegistrationInfo {
-  id: string;
   name: string;
   description: string;
-  buildAlias?: string;
+  buildAlias: string;
   group: string;
 }
