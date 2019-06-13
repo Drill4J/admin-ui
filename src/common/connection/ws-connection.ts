@@ -1,8 +1,13 @@
+import cbor from 'cbor';
+
 interface StompResponse {
   message: string;
   destination: string;
   type: string;
 }
+
+// @ts-ignore
+window.a = cbor;
 
 export class WsConnection {
   public connection: WebSocket;
@@ -16,10 +21,10 @@ export class WsConnection {
     this.onMessageListeners = {};
 
     this.connection.onmessage = (event) => {
-      const { destination, message }: StompResponse = JSON.parse(event.data);
+      const { destination, message }: StompResponse = cbor.decode(event.data);
       const callback = this.onMessageListeners[destination];
 
-      callback && callback(message ? JSON.parse(message) : null);
+      callback && callback(message ? cbor.decode(message) : null);
     };
   }
 
@@ -46,11 +51,13 @@ export class WsConnection {
   public send(destination: string, type: string, message?: object) {
     if (this.connection.readyState === this.connection.OPEN) {
       this.connection.send(
-        JSON.stringify({
-          destination,
-          type,
-          message: JSON.stringify(message),
-        }),
+        cbor
+          .encode({
+            destination,
+            type,
+            message: cbor.encode(message).toString('hex'),
+          })
+          .toString('hex'),
       );
     } else {
       setTimeout(() => this.send(destination, type, message), 200);
