@@ -14,7 +14,7 @@ export const AgentSettingsForm = agentSettingsForm(({ className, buildVersions =
     <div className={className}>
       <Section>General</Section>
       <FormGroup label="Agent name">
-        <Field name="name" component={Fields.Input} />
+        <Field name="name" component={Fields.Input} placeholder="Give agent a name" />
       </FormGroup>
       <FormGroup label="IP Address">
         <Field name="ipAddress" component={Fields.Input} disabled />
@@ -23,7 +23,7 @@ export const AgentSettingsForm = agentSettingsForm(({ className, buildVersions =
         <Field name="id" component={Fields.Input} disabled />
       </FormGroup>
       <Group label="Group" optional>
-        <Field name="group" component={Fields.Input} />
+        <Field name="group" component={Fields.Input} placeholder="Select a group" />
       </Group>
       <Description label="Description">
         <Field name="description" component={Fields.Textarea} placeholder="Add a description" />
@@ -41,7 +41,11 @@ export const AgentSettingsForm = agentSettingsForm(({ className, buildVersions =
         />
       </BuildVerison>
       <FormGroup label="Build Alias">
-        <Field name="buildVersionAlias" component={Fields.Input} />
+        <Field
+          name="buildVersionAlias"
+          component={Fields.Input}
+          placeholder="Give build a meaningful name"
+        />
       </FormGroup>
     </div>
   );
