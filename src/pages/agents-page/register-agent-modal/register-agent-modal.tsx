@@ -43,7 +43,7 @@ export const RegisterAgentModal = registerAgentModal(
     const [errorMessage, setErrorMessage] = React.useState('');
 
     return (
-      <Popup isOpen={isOpen} onToggle={onToggle} header={`Agent Registration: ${agentId}`}>
+      <Popup isOpen={isOpen} onToggle={onToggle} header={`Agent Registration (ID: ${agentId})`}>
         <div className={className}>
           {errorMessage && (
             <ErrorMessage>
@@ -53,7 +53,7 @@ export const RegisterAgentModal = registerAgentModal(
           )}
           <Content>
             <Form
-              initialValues={{ buildVersion, id: agentId }}
+              initialValues={{ name: agentId, buildVersion, id: agentId }}
               onSubmit={(values) =>
                 registerAgent(
                   values as AgentRegistrationForm,
