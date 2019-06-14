@@ -14,12 +14,21 @@ interface Props {
   onToggle: (isOpen: boolean) => void;
   isOpen: boolean;
   type?: 'info' | 'error';
+  closeOnFadeClick?: boolean;
 }
 
 const popup = BEM(styles);
 
 export const Popup = popup(
-  ({ className, header, children, onToggle, isOpen, type = 'info' }: Props) => (
+  ({
+    className,
+    header,
+    children,
+    onToggle,
+    isOpen,
+    type = 'info',
+    closeOnFadeClick = true,
+  }: Props) => (
     <div className={className}>
       <Portal>
         {isOpen && (
@@ -31,7 +40,7 @@ export const Popup = popup(
               </Header>
               {children}
             </Content>
-            <Fade onClick={() => onToggle(!isOpen)} />
+            <Fade onClick={() => closeOnFadeClick && onToggle(!isOpen)} />
           </div>
         )}
       </Portal>
