@@ -27,7 +27,7 @@ export const Popup = popup(
     onToggle,
     isOpen,
     type = 'info',
-    closeOnFadeClick = true,
+    closeOnFadeClick = false,
   }: Props) => (
     <div className={className}>
       <Portal>
