@@ -41,8 +41,11 @@ const buildVersionAliasDecorator = createDecorator(
   {
     field: 'buildVersion',
     updates: {
-      buildVersionAlias: (buildVersion, allValues: any) =>
-        allValues.buildVersions.find(({ id }: BuildVersion) => id === buildVersion).label,
+      buildVersionAlias: (buildVersion, allValues: any) => {
+        const { name = '' } =
+          allValues.buildVersions.find(({ id }: BuildVersion) => id === buildVersion) || {};
+        return name;
+      },
     },
   },
 );

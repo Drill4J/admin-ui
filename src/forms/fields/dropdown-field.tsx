@@ -24,7 +24,7 @@ export const dropdownField = (props: Props) => {
         {...rest}
         options={options}
         value={options.find(({ value }: { value: string }) => value === input.value)}
-        onChange={({ value }: DropdownItem) => value}
+        onChange={({ value }: DropdownItem) => onChange(value)}
         error={(meta.error || meta.submitError) && meta.touched}
       />
       {meta.error && meta.touched && <ErrorMessage>{meta.error}</ErrorMessage>}

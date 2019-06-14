@@ -37,7 +37,7 @@ const validateAgent = composeValidators(
 
 export const RegisterAgentModal = registerAgentModal(
   ({ className, isOpen, onToggle, agentId }: Props) => {
-    const { name = '', description = '', group = '', buildVersion = '' } =
+    const { buildVersion = '' } =
       useWsConnection<Agent>(defaultAdminSocket, `/get-agent/${agentId}`) || {};
     const { showMessage } = React.useContext(NotificationManagerContext);
     const [errorMessage, setErrorMessage] = React.useState('');
@@ -53,7 +53,7 @@ export const RegisterAgentModal = registerAgentModal(
           )}
           <Content>
             <Form
-              initialValues={{ name, description, buildVersion, group, id: agentId }}
+              initialValues={{ buildVersion, id: agentId }}
               onSubmit={(values) =>
                 registerAgent(
                   values as AgentRegistrationForm,
@@ -66,13 +66,17 @@ export const RegisterAgentModal = registerAgentModal(
               render={({ handleSubmit, submitting, pristine, invalid }) => (
                 <>
                   <FormGroup label="Agent name">
-                    <Field name="name" component={Fields.Input} />
+                    <Field name="name" component={Fields.Input} placeholder="Give agent a name" />
                   </FormGroup>
                   <FormGroup label="Group" optional>
-                    <Field name="group" component={Fields.Input} />
+                    <Field name="group" component={Fields.Input} placeholder="Select a group" />
                   </FormGroup>
                   <Description label="Description">
-                    <Field name="description" component={Fields.Input} />
+                    <Field
+                      name="description"
+                      component={Fields.Input}
+                      placeholder="Add a description"
+                    />
                   </Description>
                   <FormGroup label="Agent Build Version">
                     <Field name="buildVersion" component={Fields.Input} disabled />
