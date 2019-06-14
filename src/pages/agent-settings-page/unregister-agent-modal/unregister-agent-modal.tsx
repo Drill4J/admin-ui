@@ -35,6 +35,7 @@ export const UnregisterAgentModal = unregisterAgentModal(
           </Panel>
         }
         type="error"
+        closeOnFadeClick={true}
       >
         <div className={className}>
           {errorMessage && (
