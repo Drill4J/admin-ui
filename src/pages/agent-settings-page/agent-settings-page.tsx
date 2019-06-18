@@ -24,6 +24,10 @@ interface Props extends RouteComponentProps<{ agentId: string }> {
   className?: string;
 }
 
+interface FormValues extends Agent {
+  buildVersionAlias?: string;
+}
+
 const agentSettingsPage = BEM(styles);
 
 const validateSettings = composeValidators(sizeLimit('name'), sizeLimit('description', 3, 256));
@@ -137,7 +141,7 @@ const ErrorMessageIcon = agentSettingsPage.errorMessageIcon(Icons.Warning);
 const Content = agentSettingsPage.content('div');
 
 async function saveChanges(
-  agent: Agent,
+  { buildVersionAlias, ...agent }: FormValues,
   showMessage: (message: Message) => void,
   setErrorMessage: (message: string) => void,
 ) {
