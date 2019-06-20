@@ -15,4 +15,5 @@ export interface Agent {
   pluginsCount?: number;
   buildVersion?: string;
   buildVersions?: BuildVersion[];
+  buildAlias?: string;
 }

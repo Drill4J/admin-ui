@@ -22,121 +22,131 @@ import styles from './coverage-plugin.module.scss';
 interface Props extends RouteComponentProps<{ agentId: string }> {
   className?: string;
   agentBuildVersion?: string;
+  buildAlias?: string;
 }
 
 const coveragePlugin = BEM(styles);
 
 export const CoveragePlugin = withRouter(
-  coveragePlugin(({ className, match: { params: { agentId } }, agentBuildVersion = '' }: Props) => {
-    const [selectedBuildVersion, setSelectedBuildVersion] = React.useState({
-      value: agentBuildVersion,
-      label: `Build ${agentBuildVersion}`,
-    });
-    const [isNewMethodsModalOpen, setIsNewMethodsModalOpen] = React.useState(false);
-    const [selectedTab, setSelectedTab] = React.useState('packages');
-    const coverage =
-      useBuildVersion<Coverage>('/coverage', agentId, selectedBuildVersion.value) || {};
-    const newMethodsCoverage =
-      useBuildVersion<NewMethodsCoverage>('/coverage-new', agentId, selectedBuildVersion.value) ||
-      {};
-    const agentBuildVersions =
-      useWsConnection<AgentBuildVersion[]>(defaultAdminSocket, `/agent/${agentId}/get-builds`) ||
-      [];
-
-    React.useEffect(() => {
-      setSelectedBuildVersion({
+  coveragePlugin(
+    ({
+      className,
+      match: {
+        params: { agentId },
+      },
+      agentBuildVersion = '',
+      buildAlias = '',
+    }: Props) => {
+      const [selectedBuildVersion, setSelectedBuildVersion] = React.useState({
         value: agentBuildVersion,
-        label: `Build ${agentBuildVersion}`,
+        label: `Build ${buildAlias}`,
       });
-    }, [agentBuildVersion]);
+      const [isNewMethodsModalOpen, setIsNewMethodsModalOpen] = React.useState(false);
+      const [selectedTab, setSelectedTab] = React.useState('packages');
+      const coverage =
+        useBuildVersion<Coverage>('/coverage', agentId, selectedBuildVersion.value) || {};
+      const newMethodsCoverage =
+        useBuildVersion<NewMethodsCoverage>('/coverage-new', agentId, selectedBuildVersion.value) ||
+        {};
+      const agentBuildVersions =
+        useWsConnection<AgentBuildVersion[]>(defaultAdminSocket, `/agent/${agentId}/get-builds`) ||
+        [];
 
-    return (
-      <div className={className}>
-        <PageHeader
-          title={<span>Code Coverage Tracker </span>}
-          actions={
-            <Panel align="end">
-              <SettingsButton>
-                <Icons.Settings />
-              </SettingsButton>
-            </Panel>
-          }
-        />
-        <Content>
-          <Title>
-            Summary
-            <BuildVersion
-              value={selectedBuildVersion}
-              items={agentBuildVersions.map(({ id = '', name = '' }) => ({
-                value: id,
-                label: name || id,
-              }))}
-              onChange={({ value, label }: { value: string; label: string }) => {
-                setSelectedBuildVersion({
-                  value,
-                  label: `Build ${label}`,
-                });
-              }}
-            />
-          </Title>
-          <SummaryWrapper>
-            <CodeCoverageCard
-              coverage={coverage}
-              agentId={agentId}
-              buildVersion={selectedBuildVersion.value}
-            />
-            <Card
-              title="Methods, Total"
-              text={coverage.methodsCount !== undefined ? coverage.methodsCount : 'n/a'}
-              secondaryText={
-                newMethodsCoverage.methodsCount !== undefined ? (
-                  <NewMethods
-                    onClick={() => setIsNewMethodsModalOpen(true)}
-                    disabled={!Boolean(newMethodsCoverage.methodsCount)}
-                  >
-                    {newMethodsCoverage.methodsCount === 0 ? <SuccessIcon /> : <WarningIcon />}
-                    {` ${newMethodsCoverage.methodsCount} new methods (${
-                      newMethodsCoverage.methodsCovered
-                    } covered)`}
-                  </NewMethods>
-                ) : null
-              }
-            />
-          </SummaryWrapper>
-          <DetailsHeader align="space-between">
-            Details
-            <TabsPanel activeTab={selectedTab} onSelect={setSelectedTab}>
-              <Tab name="packages">
-                <TabIconWrapper>
-                  <Icons.ProjectTree />
-                </TabIconWrapper>
-                Project tree
-              </Tab>
-              <Tab name="tests">
-                <TabIconWrapper>
-                  <Icons.Test height={20} width={18} viewBox="0 0 20 18" />
-                </TabIconWrapper>
-                Tests
-              </Tab>
-            </TabsPanel>
-          </DetailsHeader>
-          {selectedTab === 'packages' ? (
-            <CoverageDetails buildVersion={selectedBuildVersion.value} />
-          ) : (
-            <TestDetails agentId={agentId} buildVersion={selectedBuildVersion.value} />
-          )}
-          {isNewMethodsModalOpen && (
-            <NewMethodsModal
-              agentId={agentId}
-              buildVersion={selectedBuildVersion.value}
-              isOpen={isNewMethodsModalOpen}
-              onToggle={setIsNewMethodsModalOpen}
-            />
-          )}
-        </Content>
-      </div>
-    );
-  }),
+      React.useEffect(() => {
+        setSelectedBuildVersion({
+          value: agentBuildVersion,
+          label: `Build ${buildAlias}`,
+        });
+      }, [agentBuildVersion, buildAlias]);
+
+      return (
+        <div className={className}>
+          <PageHeader
+            title={<span>Code Coverage Tracker </span>}
+            actions={
+              <Panel align="end">
+                <SettingsButton>
+                  <Icons.Settings />
+                </SettingsButton>
+              </Panel>
+            }
+          />
+          <Content>
+            <Title>
+              Summary
+              <BuildVersion
+                value={selectedBuildVersion}
+                items={agentBuildVersions.map(({ id = '', name = '' }) => ({
+                  value: id,
+                  label: name || id,
+                }))}
+                onChange={({ value, label }: { value: string; label: string }) => {
+                  setSelectedBuildVersion({
+                    value,
+                    label: `Build ${label}`,
+                  });
+                }}
+              />
+            </Title>
+            <SummaryWrapper>
+              <CodeCoverageCard
+                coverage={coverage}
+                agentId={agentId}
+                buildVersion={selectedBuildVersion.value}
+              />
+              <Card
+                title="Methods, Total"
+                text={coverage.methodsCount !== undefined ? coverage.methodsCount : 'n/a'}
+                secondaryText={
+                  newMethodsCoverage.methodsCount !== undefined ? (
+                    <NewMethods
+                      onClick={() => setIsNewMethodsModalOpen(true)}
+                      disabled={!Boolean(newMethodsCoverage.methodsCount)}
+                    >
+                      {newMethodsCoverage.methodsCount === 0 ? <SuccessIcon /> : <WarningIcon />}
+                      {` ${newMethodsCoverage.methodsCount} new methods (${
+                        newMethodsCoverage.methodsCovered
+                      } covered)`}
+                    </NewMethods>
+                  ) : null
+                }
+              />
+            </SummaryWrapper>
+            <DetailsHeader align="space-between">
+              Details
+              <TabsPanel activeTab={selectedTab} onSelect={setSelectedTab}>
+                <Tab name="packages">
+                  <TabIconWrapper>
+                    <Icons.ProjectTree />
+                  </TabIconWrapper>
+                  Project tree
+                </Tab>
+                <Tab name="tests">
+                  <TabIconWrapper>
+                    <Icons.Test height={20} width={18} viewBox="0 0 20 18" />
+                  </TabIconWrapper>
+                  Tests
+                </Tab>
+              </TabsPanel>
+            </DetailsHeader>
+            {selectedTab === 'packages' ? (
+              <CoverageDetails buildVersion={selectedBuildVersion.value} />
+            ) : (
+              <TestDetails agentId={agentId} buildVersion={selectedBuildVersion.value} />
+            )}
+            {isNewMethodsModalOpen && (
+              <NewMethodsModal
+                agentId={agentId}
+                buildVersion={selectedBuildVersion.value}
+                isOpen={isNewMethodsModalOpen}
+                onToggle={setIsNewMethodsModalOpen}
+              />
+            )}
+          </Content>
+        </div>
+      );
+    },
+  ),
 );
 
 const SettingsButton = coveragePlugin.settingsButton('div');
