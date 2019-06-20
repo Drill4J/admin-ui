@@ -23,21 +23,18 @@ describe('required', () => {
 describe('sizeLimit', () => {
   const validator = sizeLimit('username');
   it('should return errors if property goes beoynd limits', () => {
-    expect(validator({})).toEqual({
-      username: 'Username size should be between 3 and 32 characters.',
-    });
     expect(validator({ username: '      ' })).toEqual({
-      username: 'Username size should be between 3 and 32 characters.',
-    });
-    expect(validator({ username: null })).toEqual({
-      username: 'Username size should be between 3 and 32 characters.',
-    });
-    expect(validator({ username: undefined })).toEqual({
       username: 'Username size should be between 3 and 32 characters.',
     });
   });
 
-  it('should return undefined in no errors found', () => {
+  it('should return undefined if no values provided', () => {
+    expect(validator({})).toEqual(undefined);
+    expect(validator({ username: null })).toEqual(undefined);
+    expect(validator({ username: undefined })).toEqual(undefined);
+  });
+
+  it('should return undefined if no errors found', () => {
     expect(validator({ username: 'username' })).toBeUndefined();
   });
 });
@@ -47,7 +44,7 @@ describe('composeValidators', () => {
   const secondValidator = sizeLimit('password');
   const composedValidators = composeValidators(validator, secondValidator);
   it('should compose all validators and return errors', () => {
-    expect(composedValidators({})).toEqual({
+    expect(composedValidators({ username: null, password: '12' })).toEqual({
       username: 'Username is required.',
       password: 'Password size should be between 3 and 32 characters.',
     });

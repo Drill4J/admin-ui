@@ -5,7 +5,7 @@ import axios from 'axios';
 
 import { Panel } from '../../../layouts';
 import { Popup, Icons } from '../../../components';
-import { FormGroup, Fields, Button, composeValidators, sizeLimit } from '../../../forms';
+import { FormGroup, Fields, Button, composeValidators, sizeLimit, required } from '../../../forms';
 import { useWsConnection } from '../../../hooks';
 import { defaultAdminSocket } from '../../../common/connection';
 import { NotificationManagerContext } from '../../../notification-manager';
@@ -30,7 +30,11 @@ interface AgentRegistrationForm extends AgentRegistrationInfo {
 const registerAgentModal = BEM(styles);
 
 const validateAgent = composeValidators(
+  required('name'),
+  required('description'),
+  required('buildVersionAlias'),
   sizeLimit('name'),
+  sizeLimit('group'),
   sizeLimit('description', 3, 256),
   sizeLimit('buildAlias'),
 );
