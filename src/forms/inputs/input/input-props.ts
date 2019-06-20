@@ -3,6 +3,7 @@ const HTML_INPUT_ATTRS = [
   'selected',
   'defaultValue',
   'defaultChecked',
+  'ref',
 
   // LIMITED HTML PROPS
   'autoComplete',
