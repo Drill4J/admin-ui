@@ -32,7 +32,7 @@ const registerAgentModal = BEM(styles);
 const validateAgent = composeValidators(
   required('name'),
   required('description'),
-  required('buildVersionAlias'),
+  required('buildAlias'),
   sizeLimit('name'),
   sizeLimit('group'),
   sizeLimit('description', 3, 256),
