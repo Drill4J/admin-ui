@@ -20,7 +20,7 @@ export function required(fieldName: string): FormValidator {
 
 export function sizeLimit(fieldName: string, min: number = 3, max: number = 32): FormValidator {
   return ({ [fieldName]: value = '' }) =>
-    !value || value.trim().length < min || value.trim().length > max
+    (value && value.trim().length < min) || (value && value.trim().length > max)
       ? {
           [fieldName]: `${camelToTitle(
             fieldName,

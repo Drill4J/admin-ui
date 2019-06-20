@@ -7,7 +7,7 @@ import axios from 'axios';
 
 import { PageHeader, Icons } from '../../components';
 import { Panel } from '../../layouts';
-import { Button, composeValidators, sizeLimit } from '../../forms';
+import { Button, composeValidators, sizeLimit, required } from '../../forms';
 import { useWsConnection } from '../../hooks';
 import { defaultAdminSocket } from '../../common/connection';
 import { AGENT_STATUS } from '../../common/constants';
@@ -31,7 +31,11 @@ interface FormValues extends Agent {
 const agentSettingsPage = BEM(styles);
 
 const validateSettings = composeValidators(
+  required('name'),
+  required('description'),
+  required('buildVersionAlias'),
   sizeLimit('name'),
+  sizeLimit('group'),
   sizeLimit('description', 3, 256),
   sizeLimit('buildVersionAlias'),
 );
