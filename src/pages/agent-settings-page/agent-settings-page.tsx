@@ -30,7 +30,11 @@ interface FormValues extends Agent {
 
 const agentSettingsPage = BEM(styles);
 
-const validateSettings = composeValidators(sizeLimit('name'), sizeLimit('description', 3, 256));
+const validateSettings = composeValidators(
+  sizeLimit('name'),
+  sizeLimit('description', 3, 256),
+  sizeLimit('buildVersionAlias'),
+);
 
 const buildVersionAliasDecorator = createDecorator(
   {
@@ -50,6 +54,12 @@ const buildVersionAliasDecorator = createDecorator(
           allValues.buildVersions.find(({ id }: BuildVersion) => id === buildVersion) || {};
         return name;
       },
+    },
+  },
+  {
+    field: 'buildAlias',
+    updates: {
+      buildVersionAlias: (buildAlias) => buildAlias,
     },
   },
 );
@@ -116,7 +126,10 @@ export const AgentSettingsPage = withRouter(
                 </ErrorMessage>
               )}
               <Content>
-                <AgentSettingsForm buildVersions={values.buildVersions} />
+                <AgentSettingsForm
+                  buildVersions={values.buildVersions as BuildVersion[]}
+                  agentId={agentId}
+                />
               </Content>
               {isUnregisterModalOpen && (
                 <UnregisterAgentModal

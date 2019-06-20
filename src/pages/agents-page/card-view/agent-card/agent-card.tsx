@@ -40,7 +40,7 @@ export const AgentCard = withRouter(
                 push(`/agents/${id}`);
               }}
             >
-              {name}
+              {name || id}
             </HeaderName>
             {status !== AGENT_STATUS.NOT_REGISTERED && (
               <HeaderIconsWrapper>

@@ -43,10 +43,16 @@ export const TableView = tableView(
         <Column
           name="description"
           label="Description"
-          Cell={({ value }) => <OverflowText>{value}</OverflowText>}
+          Cell={({ value }) => <OverflowText>{value || 'n/a'}</OverflowText>}
         />
         <Column name="ipAddress" label="IP Address" />
-        <Column name="group" label="Group" />
+        <Column
+          name="group"
+          label="Group"
+          Cell={({ value, item }) => (
+            <span>{item.status === AGENT_STATUS.NOT_REGISTERED ? 'n/a' : value}</span>
+          )}
+        />
         <Column
           name="status"
           label="Drill4J"
@@ -68,7 +74,11 @@ export const TableView = tableView(
             </span>
           )}
           Cell={({ item }: { item: Agent }) => {
-            return <span>{`${item.activePluginsCount}/${item.pluginsCount}`}</span>;
+            return item.activePluginsCount ? (
+              <span>{`${item.activePluginsCount}/${item.pluginsCount}`}</span>
+            ) : (
+              <span>n/a</span>
+            );
           }}
         />
         <Column

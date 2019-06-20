@@ -11,15 +11,17 @@ interface Props {
   label?: string;
   disabled?: boolean;
   optional?: boolean;
+  actions?: React.ReactNode;
 }
 
 const formGroup = BEM(styles);
 
-export const FormGroup = formGroup(({ className, children, label, optional }: Props) => (
+export const FormGroup = formGroup(({ className, children, label, optional, actions }: Props) => (
   <div className={className}>
     <Panel align="space-between">
       <Label>{label || null}</Label>
       {optional && <OptionalLabel>Optional</OptionalLabel>}
+      {actions}
     </Panel>
     <Input>{children}</Input>
   </div>
