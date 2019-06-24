@@ -28,6 +28,7 @@ export const TableView = tableView(
         idKey="id"
         selectedRows={selectedAgents}
         onSelect={handleSelectAgents}
+        checkboxDescriptor={({ status }: Agent) => status !== AGENT_STATUS.NOT_REGISTERED}
       >
         <Column
           name="name"
