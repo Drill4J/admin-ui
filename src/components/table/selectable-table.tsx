@@ -12,6 +12,7 @@ interface Props {
   selectedRows: string[];
   onSelect: (selectedItems: string[]) => any;
   columnsSize?: 'wide' | 'medium';
+  checkboxDescriptor?: <O>(item: O) => boolean;
 }
 
 export const SelectableTable = ({
@@ -20,6 +21,7 @@ export const SelectableTable = ({
   onSelect,
   idKey,
   selectedRows,
+  checkboxDescriptor,
   // tslint:disable-next-line
   ...restProps
 }: Props) => {
@@ -30,7 +32,8 @@ export const SelectableTable = ({
       <Column
         name="selector"
         Cell={({ item }) => {
-          return (
+          const isSelectable = checkboxDescriptor ? checkboxDescriptor(item) : true;
+          return isSelectable ? (
             <Inputs.Checkbox
               onClick={() => {
                 selectedRows.includes(item[idKey])
@@ -39,12 +42,21 @@ export const SelectableTable = ({
               }}
               selected={isAllSelected || selectedRows.includes(item[idKey])}
             />
-          );
+          ) : null;
         }}
         HeaderCell={() => (
           <Inputs.Checkbox
             onClick={() => {
-              onSelect(!isAllSelected ? data.map((item: any) => String(item[idKey])) : []);
+              onSelect(
+                !isAllSelected
+                  ? data.reduce((acc, item: any) => {
+                      if (!checkboxDescriptor) {
+                        return [...acc, String(item[idKey])];
+                      }
+                      return checkboxDescriptor(item) ? [...acc, String(item[idKey])] : acc;
+                    }, [])
+                  : [],
+              );
             }}
             selected={isAllSelected}
           />
