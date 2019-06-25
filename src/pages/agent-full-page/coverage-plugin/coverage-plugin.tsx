@@ -13,6 +13,7 @@ import { TestDetails } from './test-details';
 import { useBuildVersion } from './use-build-version';
 import { NewMethodsModal } from './new-methods-modal';
 import { CodeCoverageCard } from './code-coverage-card';
+import { Scopes } from './scopes';
 import { Coverage } from '../../../types/coverage';
 import { NewMethodsCoverage } from '../../../types/new-methods-coverage';
 import { AgentBuildVersion } from '../../../types/agent-build-version';
@@ -112,6 +113,8 @@ export const CoveragePlugin = withRouter(
                 }
               />
             </SummaryWrapper>
+            <ScopesHeader>Latest scopes</ScopesHeader>
+            <Scopes agentId={agentId} buildVersion={selectedBuildVersion.value} />
             <DetailsHeader align="space-between">
               Details
               <TabsPanel activeTab={selectedTab} onSelect={setSelectedTab}>
@@ -154,6 +157,7 @@ const Content = coveragePlugin.content('div');
 const Title = coveragePlugin.title('div');
 const BuildVersion = coveragePlugin.buildVersion(Inputs.Dropdown);
 const SummaryWrapper = coveragePlugin.summaryWrapper('div');
+const ScopesHeader = coveragePlugin.scopesHeader('div');
 const DetailsHeader = coveragePlugin.detailsHeader(Panel);
 const TabIconWrapper = coveragePlugin.tabIconWrapper('div');
 const WarningIcon = coveragePlugin.warningIcon(Icons.Warning);
