@@ -55,7 +55,7 @@ export const CoveragePlugin = withRouter(
       React.useEffect(() => {
         setSelectedBuildVersion({
           value: agentBuildVersion,
-          label: `Build ${buildAlias}`,
+          label: `Build ${buildAlias || agentBuildVersion}`,
         });
       }, [agentBuildVersion, buildAlias]);
 
