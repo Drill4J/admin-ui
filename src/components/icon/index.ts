@@ -27,6 +27,8 @@ import { path as openLivePath } from './path/open-live.path';
 import { path as checkPath } from './path/check.path';
 import { path as registerPath } from './path/register.path';
 import { path as copyPath } from './path/copy.path';
+import { path as dashboardPath } from './path/dashboard.path';
+import { path as scopePath } from './path/scope.path';
 import { declareIcon } from './declare-icon';
 import { ReactComponent as SettingsSvg } from './settings.svg';
 
@@ -60,5 +62,7 @@ export const Icons = {
   Check: declareIcon(checkPath, { defaultWidth: 13, defaultHeight: 9 }),
   Register: declareIcon(registerPath, { defaultWidth: 18, defaultHeight: 16 }),
   Copy: declareIcon(copyPath),
+  Dashboard: declareIcon(dashboardPath, { defaultWidth: 20, defaultHeight: 20 }),
+  Scope: declareIcon(scopePath, { defaultWidth: 20, defaultHeight: 20 }),
   NewSettings: SettingsSvg,
 };

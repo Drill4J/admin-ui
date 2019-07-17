@@ -29,7 +29,7 @@ export const TestDetails = testDetails(({ className, agentId, buildVersion }: Pr
             <span>Tests</span>
             <h2>{testsUsages.length}</h2>
           </Title>
-          <Table data={testsUsages} columnsSize="medium">
+          <Table data={testsUsages as any} columnsSize="medium">
             <Column
               name="testName"
               label="Name"

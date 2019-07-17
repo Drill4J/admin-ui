@@ -93,8 +93,11 @@ async function createNewScope(
   setErrorMessage: (error: string) => void,
 ) {
   try {
-    await axios.post(`/agents/${agentId}/dispatch-action`, { scopeName });
-    showMessage({ type: 'SUCCESS', text: 'The agent is registered' });
+    await axios.post(`/agents/${agentId}/coverage/dispatch-action`, {
+      type: 'SWITCH_ACTIVE_SCOPE',
+      payload: { scopeName, savePrevScope: true },
+    });
+    showMessage({ type: 'SUCCESS', text: 'The scope is created' });
     closeModal(false);
   } catch (error) {
     setErrorMessage(error.message);

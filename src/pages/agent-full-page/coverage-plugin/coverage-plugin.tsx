@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { BEM, div } from '@redneckz/react-bem-helper';
-import { withRouter, RouteComponentProps } from 'react-router-dom';
+import { Switch, Route, withRouter, RouteComponentProps } from 'react-router-dom';
 
 import { Panel } from '../../../layouts';
 import { Icons, PageHeader, TabsPanel, Tab } from '../../../components';
@@ -13,17 +13,18 @@ import { TestDetails } from './test-details';
 import { useBuildVersion } from './use-build-version';
 import { NewMethodsModal } from './new-methods-modal';
 import { CodeCoverageCard } from './code-coverage-card';
-import { Scopes } from './scopes';
+import { ScopesList } from './scope';
+import { PluginHeader } from './plugin-header';
+import { Dashboard } from './dashboard';
 import { Coverage } from '../../../types/coverage';
 import { NewMethodsCoverage } from '../../../types/new-methods-coverage';
-import { AgentBuildVersion } from '../../../types/agent-build-version';
+import { Agent } from '../../../types/agent';
 
 import styles from './coverage-plugin.module.scss';
 
 interface Props extends RouteComponentProps<{ agentId: string }> {
   className?: string;
-  agentBuildVersion?: string;
-  buildAlias?: string;
+  agent?: Agent;
 }
 
 const coveragePlugin = BEM(styles);
@@ -35,30 +36,28 @@ export const CoveragePlugin = withRouter(
       match: {
         params: { agentId },
       },
-      agentBuildVersion = '',
-      buildAlias = '',
+      agent: { name, buildVersion = '', buildAlias } = {},
     }: Props) => {
       const [selectedBuildVersion, setSelectedBuildVersion] = React.useState({
-        value: agentBuildVersion,
+        value: buildVersion,
         label: `Build ${buildAlias}`,
       });
       const [isNewMethodsModalOpen, setIsNewMethodsModalOpen] = React.useState(false);
-      const [selectedTab, setSelectedTab] = React.useState('packages');
+      const [selectedTab, setSelectedTab] = React.useState('dashboard');
       const coverage =
         useBuildVersion<Coverage>('/coverage', agentId, selectedBuildVersion.value) || {};
       const newMethodsCoverage =
         useBuildVersion<NewMethodsCoverage>('/coverage-new', agentId, selectedBuildVersion.value) ||
         {};
-      const agentBuildVersions =
-        useWsConnection<AgentBuildVersion[]>(defaultAdminSocket, `/agent/${agentId}/get-builds`) ||
-        [];
+      const activeScope =
+        useBuildVersion<Coverage>('/active-sessions', agentId, selectedBuildVersion.value) || {};
 
       React.useEffect(() => {
         setSelectedBuildVersion({
-          value: agentBuildVersion,
-          label: `Build ${buildAlias || agentBuildVersion}`,
+          value: buildVersion,
+          label: `Build ${buildAlias || buildVersion}`,
         });
-      }, [agentBuildVersion, buildAlias]);
+      }, [buildVersion, buildAlias]);
 
       return (
         <div className={className}>
@@ -72,24 +71,36 @@ export const CoveragePlugin = withRouter(
               </Panel>
             }
           />
+          <PluginHeader
+            agentName={name}
+            agentId={agentId}
+            buildVersion={selectedBuildVersion}
+            setBuildVersion={setSelectedBuildVersion}
+          />
+          <RoutingTabsPanel>
+            <TabsPanel activeTab={selectedTab} onSelect={setSelectedTab}>
+              <Tab name="dashboard">
+                <TabIconWrapper>
+                  <Icons.Dashboard />
+                </TabIconWrapper>
+                Dashboard
+              </Tab>
+              <Tab name="scopes">
+                <TabIconWrapper>
+                  <Icons.Scope />
+                </TabIconWrapper>
+                Scopes
+              </Tab>
+              <Tab name="tests">
+                <TabIconWrapper>
+                  <Icons.Test height={20} width={18} viewBox="0 0 20 18" />
+                </TabIconWrapper>
+                Tests
+              </Tab>
+            </TabsPanel>
+          </RoutingTabsPanel>
           <Content>
-            <Title>
-              Summary
-              <BuildVersion
-                value={selectedBuildVersion}
-                items={agentBuildVersions.map(({ id = '', name = '' }) => ({
-                  value: id,
-                  label: name || id,
-                }))}
-                onChange={({ value, label }: { value: string; label: string }) => {
-                  setSelectedBuildVersion({
-                    value,
-                    label: `Build ${label}`,
-                  });
-                }}
-              />
-            </Title>
-            <SummaryWrapper>
+            {/* <SummaryWrapper>
               <CodeCoverageCard
                 coverage={coverage}
                 agentId={agentId}
@@ -112,10 +123,8 @@ export const CoveragePlugin = withRouter(
                   ) : null
                 }
               />
-            </SummaryWrapper>
-            <ScopesHeader>Latest scopes</ScopesHeader>
-            <Scopes agentId={agentId} buildVersion={selectedBuildVersion.value} />
-            <DetailsHeader align="space-between">
+            </SummaryWrapper> */}
+            {/* <DetailsHeader align="space-between">
               Details
               <TabsPanel activeTab={selectedTab} onSelect={setSelectedTab}>
                 <Tab name="packages">
@@ -131,11 +140,15 @@ export const CoveragePlugin = withRouter(
                   Tests
                 </Tab>
               </TabsPanel>
-            </DetailsHeader>
-            {selectedTab === 'packages' ? (
-              <CoverageDetails buildVersion={selectedBuildVersion.value} />
-            ) : (
-              <TestDetails agentId={agentId} buildVersion={selectedBuildVersion.value} />
+            </DetailsHeader> */}
+            {selectedTab === 'dashboard' && (
+              <Dashboard agentId={agentId} buildVersion={buildVersion} />
+            )}
+            {selectedTab === 'scopes' && (
+              <ScopesList agentId={agentId} buildVersion={buildVersion} />
+            )}
+            {selectedTab === 'tests' && (
+              <TestDetails agentId={agentId} buildVersion={buildVersion} />
             )}
             {isNewMethodsModalOpen && (
               <NewMethodsModal
@@ -153,13 +166,12 @@ export const CoveragePlugin = withRouter(
 );
 
 const SettingsButton = coveragePlugin.settingsButton('div');
+const RoutingTabsPanel = coveragePlugin.routingTabsPanel(Panel);
 const Content = coveragePlugin.content('div');
-const Title = coveragePlugin.title('div');
-const BuildVersion = coveragePlugin.buildVersion(Inputs.Dropdown);
 const SummaryWrapper = coveragePlugin.summaryWrapper('div');
 const ScopesHeader = coveragePlugin.scopesHeader('div');
 const DetailsHeader = coveragePlugin.detailsHeader(Panel);
-const TabIconWrapper = coveragePlugin.tabIconWrapper('div');
+const TabIconWrapper = coveragePlugin.tabIconWrapper(Panel);
 const WarningIcon = coveragePlugin.warningIcon(Icons.Warning);
 const SuccessIcon = coveragePlugin.successIcon(Icons.Checkbox);
 const NewMethods = coveragePlugin.newMethods(

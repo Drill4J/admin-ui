@@ -10,7 +10,7 @@
     margin: 14px 16px;
     font-size: 14px;
     font-family: $semibold-font;
-    color: map-get($color-palette, black50);
+    color: map-get($color-palette, black100);
   }
 
   &__code-coverage {

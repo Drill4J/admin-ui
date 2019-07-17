@@ -25,7 +25,7 @@ export const CodeCoverageCard = codeCoverageCard(
       useBuildVersion<CollectionState>('/collection-state', agentId, buildVersion) || {};
     return (
       <div className={className}>
-        <Title>Code Coverage</Title>
+        <Title>Build Code Coverage</Title>
         <CodeCoverage type={coverage.arrow}>
           {coverage.coverage !== undefined ? (
             <>

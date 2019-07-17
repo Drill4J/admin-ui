@@ -3,3 +3,4 @@ export { PluginsLayout } from './plugins-layout';
 export { LoginLayout } from './login-layout';
 export { AppLayout } from './app-layout';
 export { Panel, PanelItem, PanelSpread } from './panel';
+export { Section } from './section';

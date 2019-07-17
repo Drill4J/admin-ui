@@ -39,6 +39,6 @@ const getOnClickFunction = (
 export const getSelectedAgentsMap = (agents: Agent[], selectedAgentsIds: string[]) =>
   agents.reduce<{ [key: string]: boolean }>(
     (acc, { id = '', status }) =>
-      selectedAgentsIds.includes(id) ? { ...acc, [id]: Boolean(status) } : acc,
+      selectedAgentsIds.includes(id) ? { ...acc, [id]: status === 'READY' } : acc,
     {},
   );

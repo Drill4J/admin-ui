@@ -32,8 +32,8 @@ export const CoverageDetails = withRouter(
         {coverageByPackages.length > 0 && (
           <>
             <Title>
-              <span>Packages</span>
-              <h2>{coverageByPackages.length}</h2>
+              <Icons.ProjectTree />
+              <span>Project Tree</span>
             </Title>
             <ExpandableTable
               data={coverageByPackages}

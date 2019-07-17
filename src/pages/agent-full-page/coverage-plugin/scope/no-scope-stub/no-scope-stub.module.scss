@@ -1,6 +1,9 @@
-@import '../../../../common/style-guide/index';
+@import '../../../../../common/style-guide/index';
 
-.scopes {
+.no-scope-stub {
+  height: 100%;
+  width: 100%;
+
   &__content {
     display: flex;
     flex-direction: column;
@@ -27,6 +30,7 @@
   &__start-new-scope {
     min-height: 32px;
     width: 160px;
+    margin-bottom: 32px;
     font-size: 14px;
     line-height: 19px;
   }

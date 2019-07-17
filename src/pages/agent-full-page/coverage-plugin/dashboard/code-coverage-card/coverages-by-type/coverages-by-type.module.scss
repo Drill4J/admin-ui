@@ -1,0 +1,48 @@
+@import '../../../../../../common/style-guide/index';
+
+.coverages-by-type {
+  display: flex;
+  flex-direction: column;
+  flex: 1 0 21%;
+
+  &__coverage-item {
+    display: flex;
+    align-items: center;
+  }
+
+  &__test-type-icon {
+    min-height: 8px;
+    min-width: 8px;
+    border-radius: 4px;
+    margin-right: 8px;
+
+    &--type {
+      &--manual {
+        background-color: #00d5ff;
+      }
+
+      &--auto {
+        background-color: #9600ff;
+      }
+
+      &--performance {
+        background-color: #e78e00;
+      }
+
+      &--integration {
+        background-color: #73818e;
+      }
+    }
+  }
+
+  &__test-type-name {
+    font-size: 12px;
+    line-height: 24px;
+  }
+
+  &__test-type-coverage {
+    font-size: 12px;
+    line-height: 24px;
+    font-family: $semibold-font;
+  }
+}
