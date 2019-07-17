@@ -24,7 +24,7 @@ const coverageDetails = BEM(styles);
 export const CoverageDetails = withRouter(
   coverageDetails(({ className, match: { params: { agentId } }, buildVersion }: Props) => {
     const coverageByPackages =
-      useBuildVersion<ClassCoverage[]>('/coverage-by-packages', agentId, buildVersion) || [];
+      useBuildVersion<ClassCoverage[]>('/build/coverage-by-packages', agentId, buildVersion) || [];
     const [selectedId, setSelectedId] = React.useState('');
 
     return (

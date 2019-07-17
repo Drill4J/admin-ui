@@ -38,7 +38,7 @@ export const CreateNewScopeModal = createNewScopeModal(
       <Popup
         isOpen={isOpen}
         onToggle={onToggle}
-        header={<Panel>Start new scope</Panel>}
+        header={<Panel>Set scope name</Panel>}
         type="info"
         closeOnFadeClick={true}
       >
@@ -94,10 +94,10 @@ async function createNewScope(
 ) {
   try {
     await axios.post(`/agents/${agentId}/coverage/dispatch-action`, {
-      type: 'SWITCH_ACTIVE_SCOPE',
-      payload: { scopeName, savePrevScope: true },
+      type: 'RENAME_ACTIVE_SCOPE',
+      payload: { scopeName },
     });
-    showMessage({ type: 'SUCCESS', text: 'The scope is created' });
+    showMessage({ type: 'SUCCESS', text: 'Scope name is changed' });
     closeModal(false);
   } catch (error) {
     setErrorMessage(error.message);

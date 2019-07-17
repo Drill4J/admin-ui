@@ -40,6 +40,7 @@
   &__name-cell {
     color: map-get($color-palette, blue100);
     font-family: $semibold-font;
+    cursor: pointer;
   }
 
   &__start-date {
@@ -70,6 +71,7 @@
     line-height: 20px;
     color: map-get($color-palette, black100);
     font-family: $semibold-font;
+    min-width: 20px;
   }
 
   &__test-type-test-count {

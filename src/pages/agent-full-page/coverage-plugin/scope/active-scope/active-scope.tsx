@@ -5,7 +5,7 @@ import { Panel } from '../../../../../layouts';
 import { Icons } from '../../../../../components';
 import { percentFormatter } from '../../../../../utils';
 import { useBuildVersion } from '../../use-build-version';
-import { NoScopeStub } from '../no-scope-stub';
+import { CreateNewScopeModal } from '../create-new-scope-modal';
 import { CoverageByType } from './coverage-by-type';
 import { ScopeSummary } from '../../../../../types/scope-summary';
 
@@ -22,32 +22,33 @@ const activeScope = BEM(styles);
 export const ActiveScope = activeScope(({ className, agentId, buildVersion }: Props) => {
   const { name = '', coverage = 0, coveragesByType = {}, started = 0, enabled = false } =
     useBuildVersion<ScopeSummary>('/active-scope', agentId, buildVersion) || {};
+  const [isModalOpen, setIsModalOpen] = React.useState(false);
   const scopeStartDate = new Date(started).toDateString();
 
   return (
     <div className={className}>
-      {!name ? (
-        <NoScopeStub agentId={agentId} />
-      ) : (
-        <Content>
-          <div>
-            <Panel>
-              <ScopeName>{name}</ScopeName>
-              {enabled && <ActiveBadge>Active</ActiveBadge>}
-            </Panel>
-            <ScopeStartDate>{scopeStartDate}</ScopeStartDate>
-          </div>
-          <Coverage>{coverage ? `${percentFormatter(coverage)}%` : 'n/a'}</Coverage>
-          <CoverageByTypeSection>
-            {Object.values(coveragesByType).map((coverageByType) => (
-              <CoverageByType {...coverageByType} key={coverageByType.testType} />
-            ))}
-          </CoverageByTypeSection>
-          <ActionsSection>
-            <Icons.Star />
-            <Icons.EyeCrossed />
-          </ActionsSection>
-        </Content>
+      <Content>
+        <div>
+          <Panel>
+            <ScopeName>{name}</ScopeName>
+            {enabled && <ActiveBadge>Active</ActiveBadge>}
+          </Panel>
+          <ScopeStartDate>{scopeStartDate}</ScopeStartDate>
+        </div>
+        <Coverage>{coverage ? `${percentFormatter(coverage)}%` : 'n/a'}</Coverage>
+        <CoverageByTypeSection>
+          {Object.values(coveragesByType).map((coverageByType) => (
+            <CoverageByType {...coverageByType} key={coverageByType.testType} />
+          ))}
+        </CoverageByTypeSection>
+        <ActionsSection>
+          <Icons.Star />
+          <Icons.EyeCrossed />
+          <Icons.Settings height={20} width={20} onClick={() => setIsModalOpen(true)} />
+        </ActionsSection>
+      </Content>
+      {isModalOpen && (
+        <CreateNewScopeModal isOpen={isModalOpen} onToggle={setIsModalOpen} agentId={agentId} />
       )}
     </div>
   );
