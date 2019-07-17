@@ -63,7 +63,12 @@ export const ScopesList = scopesList(({ className, agentId, buildVersion }: Prop
                 </HeaderCell>
               )}
               Cell={({ value }) => (
-                <span>{value.AUTO && `${percentFormatter(value.AUTO.coverage)}%`}</span>
+                <TestTypeCoverage>
+                  {value.AUTO && `${percentFormatter(value.AUTO.coverage)}%`}
+                  <TestTypeTestCount>
+                    {value.AUTO && value.AUTO.testCount && `${value.AUTO.testCount} tests`}
+                  </TestTypeTestCount>
+                </TestTypeCoverage>
               )}
             />
             <Column
@@ -75,7 +80,12 @@ export const ScopesList = scopesList(({ className, agentId, buildVersion }: Prop
                 </HeaderCell>
               )}
               Cell={({ value }) => (
-                <span>{value.MANUAL && `${percentFormatter(value.MANUAL.coverage)}%`}</span>
+                <TestTypeCoverage>
+                  {value.MANUAL && `${percentFormatter(value.MANUAL.coverage)}%`}
+                  <TestTypeTestCount>
+                    {value.MANUAL && value.MANUAL.testCount && `${value.MANUAL.testCount} tests`}
+                  </TestTypeTestCount>
+                </TestTypeCoverage>
               )}
             />
           </SelectableTable>
@@ -90,6 +100,8 @@ const Title = scopesList.title('div');
 const ScopesCount = scopesList.scopesCount('span');
 const HeaderCell = scopesList.headerCell('div');
 const TestTypeLabel = scopesList.testTypeLabel('div');
+const TestTypeCoverage = scopesList.testTypeCoverage('div');
+const TestTypeTestCount = scopesList.testTypeTestCount('div');
 const NameCell = scopesList.nameCell('span');
 const StartDate = scopesList.startDate('div');
 const ActiveBadge = scopesList.activeBadge('span');

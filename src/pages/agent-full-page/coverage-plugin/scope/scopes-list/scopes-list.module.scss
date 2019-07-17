@@ -64,4 +64,18 @@
     line-height: 80px;
     color: map-get($color-palette, black100);
   }
+
+  &__test-type-coverage {
+    font-size: 12px;
+    line-height: 20px;
+    color: map-get($color-palette, black100);
+    font-family: $semibold-font;
+  }
+
+  &__test-type-test-count {
+    font-size: 12px;
+    line-height: 20px;
+    color: $slate-gray;
+    font-family: $regular-font;
+  }
 }
