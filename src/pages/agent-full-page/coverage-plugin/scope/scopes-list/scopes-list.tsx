@@ -18,12 +18,14 @@ interface Props {
 const scopesList = BEM(styles);
 
 export const ScopesList = scopesList(({ className, agentId, buildVersion }: Props) => {
+  const activeScope = useBuildVersion<ScopeSummary>('/active-scope', agentId, buildVersion);
   const scopes = useBuildVersion<ScopeSummary[]>('/scopes', agentId, buildVersion) || [];
+  const scopesData = activeScope && activeScope.name ? [activeScope, ...scopes] : scopes;
   const [selectedRows, setSelectedRow] = React.useState<string[]>([]);
 
   return (
     <div className={className}>
-      {scopes.length === 0 ? (
+      {scopesData.length === 0 ? (
         <NoScopeStub agentId={agentId} />
       ) : (
         <Content>
@@ -32,7 +34,7 @@ export const ScopesList = scopesList(({ className, agentId, buildVersion }: Prop
             <ScopesCount>{scopes.length}</ScopesCount>
           </Title>
           <SelectableTable
-            data={scopes}
+            data={scopesData}
             idKey="name"
             selectedRows={selectedRows}
             onSelect={setSelectedRow}

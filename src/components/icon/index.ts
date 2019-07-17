@@ -29,6 +29,8 @@ import { path as registerPath } from './path/register.path';
 import { path as copyPath } from './path/copy.path';
 import { path as dashboardPath } from './path/dashboard.path';
 import { path as scopePath } from './path/scope.path';
+import { path as eyeCrossedPath } from './path/eye-crossed.path';
+import { path as starPath } from './path/star.path';
 import { declareIcon } from './declare-icon';
 import { ReactComponent as SettingsSvg } from './settings.svg';
 
@@ -64,5 +66,7 @@ export const Icons = {
   Copy: declareIcon(copyPath),
   Dashboard: declareIcon(dashboardPath, { defaultWidth: 20, defaultHeight: 20 }),
   Scope: declareIcon(scopePath, { defaultWidth: 20, defaultHeight: 20 }),
+  EyeCrossed: declareIcon(eyeCrossedPath, { defaultWidth: 20, defaultHeight: 20 }),
+  Star: declareIcon(starPath, { defaultWidth: 21, defaultHeight: 20 }),
   NewSettings: SettingsSvg,
 };

@@ -44,8 +44,8 @@ export const ActiveScope = activeScope(({ className, agentId, buildVersion }: Pr
             ))}
           </CoverageByTypeSection>
           <ActionsSection>
-            <Icons.Account />
-            <Icons.Account />
+            <Icons.Star />
+            <Icons.EyeCrossed />
           </ActionsSection>
         </Content>
       )}
