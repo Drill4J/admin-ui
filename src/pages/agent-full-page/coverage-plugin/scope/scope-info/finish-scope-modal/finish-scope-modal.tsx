@@ -92,7 +92,7 @@ async function finishScope(
       type: 'SWITCH_ACTIVE_SCOPE',
       payload: { savePrevScope: !ignoreScope, scopeName: '' },
     });
-    showMessage({ type: 'SUCCESS', text: 'Scope name is changed' });
+    showMessage({ type: 'SUCCESS', text: 'Scope is finished' });
     closeModal(false);
   } catch (error) {
     setErrorMessage(error.message);
