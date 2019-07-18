@@ -20,6 +20,7 @@ const codeCoverageCard = BEM(styles);
 export const CodeCoverageCard = codeCoverageCard(({ className, agentId, buildVersion }: Props) => {
   const { coverage = 0, coveragesByType = {} } =
     useBuildVersion<ScopeSummary>('/build/coverage', agentId, buildVersion) || {};
+
   return (
     <div className={className}>
       <Card header="Build Code Coverage">

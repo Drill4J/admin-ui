@@ -11,7 +11,7 @@ interface Props {
 export const Scopes = (props: Props) => {
   const [selectedScope, setSelectedScope] = React.useState('');
   return selectedScope ? (
-    <ScopeInfo {...props} selectedScope={selectedScope} />
+    <ScopeInfo {...props} selectedScope={selectedScope} onScopeClick={setSelectedScope} />
   ) : (
     <ScopesList {...props} onScopeClick={setSelectedScope} />
   );

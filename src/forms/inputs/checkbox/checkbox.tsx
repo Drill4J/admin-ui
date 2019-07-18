@@ -9,16 +9,20 @@ interface Props {
   className?: string;
   onClick?: () => any;
   selected?: boolean;
+  label?: string;
+  withoutMargin?: boolean;
 }
 
 const checkbox = BEM(styles);
 
-export const Checkbox = checkbox(({ className, onClick }: Props) => (
+export const Checkbox = checkbox(({ className, onClick, label }: Props) => (
   <div className={className} onClick={onClick}>
     <IconWrapper>
       <Icons.Checkbox />
     </IconWrapper>
+    <Label>{label}</Label>
   </div>
 ));
 
 const IconWrapper = checkbox.iconWrapper('div');
+const Label = checkbox.label('div');

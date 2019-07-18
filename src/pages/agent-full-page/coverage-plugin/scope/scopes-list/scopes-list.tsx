@@ -4,7 +4,6 @@ import { BEM } from '@redneckz/react-bem-helper';
 import { SelectableTable, Column } from '../../../../../components';
 import { percentFormatter } from '../../../../../utils';
 import { useBuildVersion } from '../../use-build-version';
-import { NoScopeStub } from '../no-scope-stub';
 import { ScopeSummary } from '../../../../../types/scope-summary';
 
 import styles from './scopes-list.module.scss';
@@ -27,73 +26,69 @@ export const ScopesList = scopesList(
 
     return (
       <div className={className}>
-        {scopesData.length === 0 ? (
-          <NoScopeStub agentId={agentId} />
-        ) : (
-          <Content>
-            <Title>
-              <span>Scopes</span>
-              <ScopesCount>{scopesData.length}</ScopesCount>
-            </Title>
-            <SelectableTable
-              data={scopesData}
-              idKey="name"
-              selectedRows={selectedRows}
-              onSelect={setSelectedRow}
-              columnsSize="wide"
-            >
-              <Column
-                name="name"
-                HeaderCell={() => <HeaderCell>Name</HeaderCell>}
-                Cell={({ value, item: { id, started, enabled } }) => (
-                  <NameCell onClick={() => onScopeClick(id)}>
-                    {value}
-                    {enabled && <ActiveBadge>Active</ActiveBadge>}
-                    <StartDate>{new Date(started).toDateString()}</StartDate>
-                  </NameCell>
-                )}
-              />
-              <Column
-                name="coverage"
-                HeaderCell={() => <HeaderCell>Coverage</HeaderCell>}
-                Cell={({ value }) => <Coverage>{percentFormatter(value)}%</Coverage>}
-              />
-              <Column
-                name="coveragesByType"
-                HeaderCell={() => (
-                  <HeaderCell>
-                    <div>By Test Type</div>
-                    <TestTypeLabel>Auto Tests</TestTypeLabel>
-                  </HeaderCell>
-                )}
-                Cell={({ value }) => (
-                  <TestTypeCoverage>
-                    {value.AUTO && `${percentFormatter(value.AUTO.coverage)}%`}
-                    <TestTypeTestCount>
-                      {value.AUTO && value.AUTO.testCount && `${value.AUTO.testCount} tests`}
-                    </TestTypeTestCount>
-                  </TestTypeCoverage>
-                )}
-              />
-              <Column
-                name="coveragesByType"
-                HeaderCell={() => (
-                  <HeaderCell>
-                    <TestTypeLabel>Manual</TestTypeLabel>
-                  </HeaderCell>
-                )}
-                Cell={({ value }) => (
-                  <TestTypeCoverage>
-                    {value.MANUAL && `${percentFormatter(value.MANUAL.coverage)}%`}
-                    <TestTypeTestCount>
-                      {value.MANUAL && value.MANUAL.testCount && `${value.MANUAL.testCount} tests`}
-                    </TestTypeTestCount>
-                  </TestTypeCoverage>
-                )}
-              />
-            </SelectableTable>
-          </Content>
-        )}
+        <Content>
+          <Title>
+            <span>Scopes</span>
+            <ScopesCount>{scopesData.length}</ScopesCount>
+          </Title>
+          <SelectableTable
+            data={scopesData}
+            idKey="name"
+            selectedRows={selectedRows}
+            onSelect={setSelectedRow}
+            columnsSize="wide"
+          >
+            <Column
+              name="name"
+              HeaderCell={() => <HeaderCell>Name</HeaderCell>}
+              Cell={({ value, item: { id, started, active } }) => (
+                <NameCell onClick={() => onScopeClick(id)}>
+                  {value}
+                  {active && <ActiveBadge>Active</ActiveBadge>}
+                  <StartDate>{new Date(started).toDateString()}</StartDate>
+                </NameCell>
+              )}
+            />
+            <Column
+              name="coverage"
+              HeaderCell={() => <HeaderCell>Coverage</HeaderCell>}
+              Cell={({ value }) => <Coverage>{percentFormatter(value)}%</Coverage>}
+            />
+            <Column
+              name="coveragesByType"
+              HeaderCell={() => (
+                <HeaderCell>
+                  <div>By Test Type</div>
+                  <TestTypeLabel>Auto Tests</TestTypeLabel>
+                </HeaderCell>
+              )}
+              Cell={({ value }) => (
+                <TestTypeCoverage>
+                  {value.AUTO && `${percentFormatter(value.AUTO.coverage)}%`}
+                  <TestTypeTestCount>
+                    {value.AUTO && value.AUTO.testCount && `${value.AUTO.testCount} tests`}
+                  </TestTypeTestCount>
+                </TestTypeCoverage>
+              )}
+            />
+            <Column
+              name="coveragesByType"
+              HeaderCell={() => (
+                <HeaderCell>
+                  <TestTypeLabel>Manual</TestTypeLabel>
+                </HeaderCell>
+              )}
+              Cell={({ value }) => (
+                <TestTypeCoverage>
+                  {value.MANUAL && `${percentFormatter(value.MANUAL.coverage)}%`}
+                  <TestTypeTestCount>
+                    {value.MANUAL && value.MANUAL.testCount && `${value.MANUAL.testCount} tests`}
+                  </TestTypeTestCount>
+                </TestTypeCoverage>
+              )}
+            />
+          </SelectableTable>
+        </Content>
       </div>
     );
   },

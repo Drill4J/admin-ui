@@ -20,7 +20,7 @@ interface Props {
 const activeScope = BEM(styles);
 
 export const ActiveScope = activeScope(({ className, agentId, buildVersion }: Props) => {
-  const { name = '', coverage = 0, coveragesByType = {}, started = 0, enabled = false } =
+  const { name = '', coverage = 0, coveragesByType = {}, started = 0, active = false } =
     useBuildVersion<ScopeSummary>('/active-scope', agentId, buildVersion) || {};
   const [isModalOpen, setIsModalOpen] = React.useState(false);
   const scopeStartDate = new Date(started).toDateString();
@@ -31,7 +31,7 @@ export const ActiveScope = activeScope(({ className, agentId, buildVersion }: Pr
         <div>
           <Panel>
             <ScopeName>{name}</ScopeName>
-            {enabled && <ActiveBadge>Active</ActiveBadge>}
+            {active && <ActiveBadge>Active</ActiveBadge>}
           </Panel>
           <ScopeStartDate>{scopeStartDate}</ScopeStartDate>
         </div>

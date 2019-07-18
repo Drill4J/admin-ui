@@ -7,5 +7,6 @@ export interface ScopeSummary {
   finished: number;
   coverage: number;
   enabled: boolean;
+  active: boolean;
   coveragesByType: { [key: string]: TestTypeSummary };
 }
