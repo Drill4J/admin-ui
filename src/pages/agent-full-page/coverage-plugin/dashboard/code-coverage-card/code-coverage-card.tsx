@@ -3,25 +3,20 @@ import { BEM } from '@redneckz/react-bem-helper';
 
 import { percentFormatter } from '../../../../../utils';
 import { Card, CardSection } from '../card';
-import { useBuildVersion } from '../../use-build-version';
 import { CoveragesByType } from './coverages-by-type';
-import { ScopeSummary } from '../../../../../types/scope-summary';
+import { Coverage } from '../../../../../types/coverage';
 
 import styles from './code-coverage-card.module.scss';
 
 interface Props {
   className?: string;
-  agentId?: string;
-  buildVersion?: string;
+  coverage: Coverage;
 }
 
 const codeCoverageCard = BEM(styles);
 
-export const CodeCoverageCard = codeCoverageCard(({ className, agentId, buildVersion }: Props) => {
-  const { coverage = 0, coveragesByType = {} } =
-    useBuildVersion<ScopeSummary>('/build/coverage', agentId, buildVersion) || {};
-
-  return (
+export const CodeCoverageCard = codeCoverageCard(
+  ({ className, coverage: { coverage = 0, coveragesByType = {} } }: Props) => (
     <div className={className}>
       <Card header="Build Code Coverage">
         <CardSection header="TOTAL">
@@ -33,7 +28,7 @@ export const CodeCoverageCard = codeCoverageCard(({ className, agentId, buildVer
         <CardSection />
       </Card>
     </div>
-  );
-});
+  ),
+);
 
 const TotalCoverage = codeCoverageCard.totalCoverage('div');
