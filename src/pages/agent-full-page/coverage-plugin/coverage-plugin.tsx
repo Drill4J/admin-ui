@@ -85,11 +85,13 @@ export const CoveragePlugin = withRouter(
           </RoutingTabsPanel>
           <Content>
             {selectedTab === 'dashboard' && (
-              <Dashboard agentId={agentId} buildVersion={buildVersion} />
+              <Dashboard agentId={agentId} buildVersion={selectedBuildVersion.value} />
             )}
-            {selectedTab === 'scopes' && <Scopes agentId={agentId} buildVersion={buildVersion} />}
+            {selectedTab === 'scopes' && (
+              <Scopes agentId={agentId} buildVersion={selectedBuildVersion.value} />
+            )}
             {selectedTab === 'tests' && (
-              <TestDetails agentId={agentId} buildVersion={buildVersion} />
+              <TestDetails agentId={agentId} buildVersion={selectedBuildVersion.value} />
             )}
             {isNewMethodsModalOpen && (
               <NewMethodsModal
