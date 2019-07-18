@@ -6,5 +6,4 @@ export interface Coverage {
   classesCount?: number;
   methodsCount?: number;
   arrow?: 'INCREASE' | 'DECREASE';
-  coveragesByType?: { [testType: string]: TestTypeSummary };
 }

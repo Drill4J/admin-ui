@@ -1,9 +1,9 @@
 import * as React from 'react';
 import { BEM, div } from '@redneckz/react-bem-helper';
 
-import { Panel } from '../../../../../../layouts';
-import { percentFormatter } from '../../../../../../utils';
-import { TestTypeSummary } from '../../../../../../types/test-type-summary';
+import { Panel } from '../../../../../layouts';
+import { percentFormatter } from '../../../../../utils';
+import { TestTypeSummary } from '../../../../../types/test-type-summary';
 
 import styles from './coverages-by-type.module.scss';
 

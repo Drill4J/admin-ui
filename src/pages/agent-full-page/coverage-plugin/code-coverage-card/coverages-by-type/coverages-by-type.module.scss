@@ -1,4 +1,4 @@
-@import '../../../../../../common/style-guide/index';
+@import '../../../../../common/style-guide/index';
 
 .coverages-by-type {
   display: flex;
@@ -8,6 +8,8 @@
   &__coverage-item {
     display: flex;
     align-items: center;
+    line-height: 32px;
+    border-bottom: 1px solid map-get($color-palette, black10);
   }
 
   &__test-type-icon {

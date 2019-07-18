@@ -11,16 +11,12 @@ import styles from './test-details.module.scss';
 
 interface Props {
   className?: string;
-  agentId?: string;
-  buildVersion?: string;
+  testsUsages: AssociatedTests[];
 }
 
 const testDetails = BEM(styles);
 
-export const TestDetails = testDetails(({ className, agentId, buildVersion }: Props) => {
-  const testsUsages =
-    useBuildVersion<AssociatedTests[]>('/tests-usages', agentId, buildVersion) || [];
-
+export const TestDetails = testDetails(({ className, testsUsages }: Props) => {
   return (
     <div className={className}>
       {testsUsages.length > 0 ? (

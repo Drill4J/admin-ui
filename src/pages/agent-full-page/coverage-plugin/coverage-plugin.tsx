@@ -4,11 +4,11 @@ import { withRouter, RouteComponentProps } from 'react-router-dom';
 
 import { Panel } from '../../../layouts';
 import { Icons, PageHeader, TabsPanel, Tab } from '../../../components';
-import { TestDetails } from './test-details';
 import { NewMethodsModal } from './new-methods-modal';
-import { Scopes } from './scope';
-import { PluginHeader } from './plugin-header';
 import { Dashboard } from './dashboard';
+import { Scopes } from './scope';
+import { Tests } from './tests';
+import { PluginHeader } from './plugin-header';
 import { Agent } from '../../../types/agent';
 
 import styles from './coverage-plugin.module.scss';
@@ -91,7 +91,7 @@ export const CoveragePlugin = withRouter(
               <Scopes agentId={agentId} buildVersion={selectedBuildVersion.value} />
             )}
             {selectedTab === 'tests' && (
-              <TestDetails agentId={agentId} buildVersion={selectedBuildVersion.value} />
+              <Tests agentId={agentId} buildVersion={selectedBuildVersion.value} />
             )}
             {isNewMethodsModalOpen && (
               <NewMethodsModal

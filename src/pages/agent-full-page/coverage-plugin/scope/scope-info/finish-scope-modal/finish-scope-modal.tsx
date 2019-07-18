@@ -6,7 +6,6 @@ import { Panel } from '../../../../../../layouts';
 import { Button, Inputs } from '../../../../../../forms';
 import { Popup, Icons, OverflowText } from '../../../../../../components';
 import { NotificationManagerContext } from '../../../../../../notification-manager';
-import { useBuildVersion } from '../../../use-build-version';
 import { ScopeSummary } from './scope-summary';
 import { Message } from '../../../../../../types/message';
 import { ScopeSummary as ScopeSummaryType } from '../../../../../../types/scope-summary';
@@ -18,18 +17,16 @@ interface Props {
   isOpen: boolean;
   onToggle: (value: boolean) => void;
   agentId: string;
-  scopeId: string;
-  buildVersion: string;
+  scope: ScopeSummaryType | null;
 }
 
 const finishScopeModal = BEM(styles);
 
 export const FinishScopeModal = finishScopeModal(
-  ({ className, isOpen, onToggle, agentId, buildVersion, scopeId }: Props) => {
+  ({ className, isOpen, onToggle, agentId, scope }: Props) => {
     const { showMessage } = React.useContext(NotificationManagerContext);
     const [errorMessage, setErrorMessage] = React.useState('');
     const [ignoreScope, setIgnoreScope] = React.useState(false);
-    const scope = useBuildVersion<ScopeSummaryType>(`/scope/${scopeId}`, agentId, buildVersion);
 
     return (
       <Popup
