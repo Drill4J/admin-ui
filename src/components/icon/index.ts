@@ -31,6 +31,7 @@ import { path as dashboardPath } from './path/dashboard.path';
 import { path as scopePath } from './path/scope.path';
 import { path as eyeCrossedPath } from './path/eye-crossed.path';
 import { path as starPath } from './path/star.path';
+import { path as coverageArrowPath } from './path/coverage-arrow.path';
 import { declareIcon } from './declare-icon';
 import { ReactComponent as SettingsSvg } from './settings.svg';
 
@@ -68,5 +69,6 @@ export const Icons = {
   Scope: declareIcon(scopePath, { defaultWidth: 20, defaultHeight: 20 }),
   EyeCrossed: declareIcon(eyeCrossedPath, { defaultWidth: 20, defaultHeight: 20 }),
   Star: declareIcon(starPath, { defaultWidth: 21, defaultHeight: 20 }),
+  CoverageArrow: declareIcon(coverageArrowPath, { defaultWidth: 22, defaultHeight: 28 }),
   NewSettings: SettingsSvg,
 };

@@ -1,6 +1,8 @@
 import * as React from 'react';
-import { BEM } from '@redneckz/react-bem-helper';
+import { BEM, div } from '@redneckz/react-bem-helper';
 
+import { Panel } from '../../../../layouts';
+import { Icons } from '../../../../components';
 import { percentFormatter } from '../../../../utils';
 import { Card, CardSection } from '../card';
 import { CoveragesByType } from './coverages-by-type';
@@ -19,11 +21,16 @@ interface Props {
 const codeCoverageCard = BEM(styles);
 
 export const CodeCoverageCard = codeCoverageCard(
-  ({ className, header, coverage: { coverage = 0 }, coverageByTypes }: Props) => (
+  ({ className, header, coverage: { coverage = 0, arrow }, coverageByTypes }: Props) => (
     <div className={className}>
       <Card header={header}>
         <CardSection header="TOTAL">
-          <TotalCoverage>{coverage ? `${percentFormatter(coverage)}%` : 'n/a'}</TotalCoverage>
+          <TotalCoverage type={arrow}>
+            <Panel>
+              {coverage ? `${percentFormatter(coverage)}%` : 'n/a'}
+              {arrow && <ArrowIcon rotate={arrow === 'INCREASE' ? 180 : 0} />}
+            </Panel>
+          </TotalCoverage>
         </CardSection>
         <CardSection header="BY TEST TYPE">
           <CoveragesByType coverageByType={coverageByTypes} />
@@ -33,4 +40,5 @@ export const CodeCoverageCard = codeCoverageCard(
   ),
 );
 
-const TotalCoverage = codeCoverageCard.totalCoverage('div');
+const TotalCoverage = codeCoverageCard.totalCoverage(div({} as { type?: 'INCREASE' | 'DECREASE' }));
+const ArrowIcon = codeCoverageCard.arrowIcon(Icons.CoverageArrow);
