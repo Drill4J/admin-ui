@@ -4,7 +4,6 @@ import { withRouter, RouteComponentProps } from 'react-router-dom';
 
 import { Panel } from '../../../layouts';
 import { Icons, PageHeader, TabsPanel, Tab } from '../../../components';
-import { NewMethodsModal } from './new-methods-modal';
 import { Dashboard } from './dashboard';
 import { Scopes } from './scope';
 import { Tests } from './tests';
@@ -33,7 +32,6 @@ export const CoveragePlugin = withRouter(
         value: buildVersion,
         label: `Build ${buildAlias}`,
       });
-      const [isNewMethodsModalOpen, setIsNewMethodsModalOpen] = React.useState(false);
       const [selectedTab, setSelectedTab] = React.useState('dashboard');
 
       React.useEffect(() => {
@@ -92,14 +90,6 @@ export const CoveragePlugin = withRouter(
             )}
             {selectedTab === 'tests' && (
               <Tests agentId={agentId} buildVersion={selectedBuildVersion.value} />
-            )}
-            {isNewMethodsModalOpen && (
-              <NewMethodsModal
-                agentId={agentId}
-                buildVersion={selectedBuildVersion.value}
-                isOpen={isNewMethodsModalOpen}
-                onToggle={setIsNewMethodsModalOpen}
-              />
             )}
           </Content>
         </div>

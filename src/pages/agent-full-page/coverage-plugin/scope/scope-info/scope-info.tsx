@@ -85,7 +85,7 @@ export const ScopeInfo = scopeInfo(
         </Header>
         <SummaryPanel align="space-between">
           <CodeCoverageCard
-            header="Build Code Coverage"
+            header="Scope Code Coverage"
             coverage={coverage}
             coverageByTypes={coverageByTypes}
           />
@@ -93,6 +93,9 @@ export const ScopeInfo = scopeInfo(
             header="Project Methods"
             coverage={coverage}
             newMethodsCoverage={newMethodsCoverage}
+            agentId={agentId}
+            buildVersion={buildVersion}
+            newMethodsTopic={`/scope/${selectedScope}/new-methods`}
           />
         </SummaryPanel>
         <RoutingTabsPanel>
@@ -105,7 +108,7 @@ export const ScopeInfo = scopeInfo(
             </Tab>
             <Tab name="tests">
               <TabIconWrapper>
-                <Icons.Scope />
+                <Icons.Test />
               </TabIconWrapper>
               Tests
             </Tab>

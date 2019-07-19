@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { BEM } from '@redneckz/react-bem-helper';
+import { BEM, div } from '@redneckz/react-bem-helper';
 
 import { CardSection } from '../../card';
 
@@ -12,6 +12,7 @@ interface Props {
   coveredMethodsCount: number;
   missedMethodsCount: number;
   excludedMethodsCount: number;
+  onTotalClick?: () => void;
 }
 
 const methodsSection = BEM(styles);
@@ -24,10 +25,13 @@ export const MethodsSection = methodsSection(
     coveredMethodsCount,
     missedMethodsCount,
     excludedMethodsCount,
+    onTotalClick,
   }: Props) => (
     <div className={className}>
       <CardSection header={header}>
-        <Total>{totalCount}</Total>
+        <Total onClick={() => onTotalClick && onTotalClick()} clickable={Boolean(onTotalClick)}>
+          {totalCount}
+        </Total>
         <AdditionalInfo>
           <AdditionalInfoItem>
             <AdditionalInfoItemHeader>Covered</AdditionalInfoItemHeader>
@@ -47,7 +51,9 @@ export const MethodsSection = methodsSection(
   ),
 );
 
-const Total = methodsSection.total('div');
+const Total = methodsSection.total(
+  div({ onClick: () => {} } as { clickable?: boolean; onClick: () => void }),
+);
 const AdditionalInfo = methodsSection.additionalInfo('div');
 const AdditionalInfoItem = methodsSection.additionalInfoItem('div');
 const AdditionalInfoItemHeader = methodsSection.additionalInfoItemHeader('div');

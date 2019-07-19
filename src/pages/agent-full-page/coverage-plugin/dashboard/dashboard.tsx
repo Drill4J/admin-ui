@@ -44,6 +44,9 @@ export const Dashboard = dashboard(({ className, agentId, buildVersion }: Props)
           header="Project Methods"
           coverage={coverage}
           newMethodsCoverage={newMethodsCoverage}
+          agentId={agentId}
+          buildVersion={buildVersion}
+          newMethodsTopic="/build/new-methods"
         />
       </SummaryPanel>
       <Section header="Latest Scope">

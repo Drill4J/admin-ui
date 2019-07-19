@@ -44,7 +44,7 @@ export const ActiveScope = activeScope(({ className, agentId, buildVersion }: Pr
         <ActionsSection>
           <Icons.Star />
           <Icons.EyeCrossed />
-          <Icons.Settings height={20} width={20} onClick={() => setIsModalOpen(true)} />
+          <Icons.MoreOptions onClick={() => setIsModalOpen(true)} />
         </ActionsSection>
       </Content>
       {isModalOpen && (

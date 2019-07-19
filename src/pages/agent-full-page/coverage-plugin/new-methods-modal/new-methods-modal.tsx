@@ -14,13 +14,14 @@ interface Props {
   buildVersion: string;
   isOpen: boolean;
   onToggle: (arg: boolean) => void;
+  newMethodsTopic: string;
 }
 
 const newMethodsModal = BEM(styles);
 
 export const NewMethodsModal = newMethodsModal(
-  ({ className, buildVersion, agentId, isOpen, onToggle }: Props) => {
-    const methods = useBuildVersion<NewMethod[]>('/new-methods', agentId, buildVersion) || [];
+  ({ className, buildVersion, agentId, isOpen, onToggle, newMethodsTopic }: Props) => {
+    const methods = useBuildVersion<NewMethod[]>(newMethodsTopic, agentId, buildVersion) || [];
     return (
       <Modal isOpen={isOpen} onToggle={onToggle}>
         <div className={className}>
