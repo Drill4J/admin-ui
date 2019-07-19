@@ -30,7 +30,7 @@ export const UnregisterAgentModal = unregisterAgentModal(
         onToggle={onToggle}
         header={
           <Panel>
-            <HaederIcon height={20} width={20} />
+            <HeaderIcon height={20} width={20} />
             Unregister the agent
           </Panel>
         }
@@ -67,7 +67,7 @@ export const UnregisterAgentModal = unregisterAgentModal(
   },
 );
 
-const HaederIcon = unregisterAgentModal.headerIcon(Icons.Warning);
+const HeaderIcon = unregisterAgentModal.headerIcon(Icons.Warning);
 const ErrorMessage = unregisterAgentModal.errorMessage(Panel);
 const ErrorMessageIcon = unregisterAgentModal.errorMessageIcon(Icons.Warning);
 const Content = unregisterAgentModal.content('div');

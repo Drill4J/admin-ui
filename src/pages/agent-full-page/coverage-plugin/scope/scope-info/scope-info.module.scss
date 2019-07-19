@@ -1,0 +1,53 @@
+@import '../../../../../common/style-guide/index';
+
+.scope-info {
+  &__back-to-scopes-list {
+    font-size: 12px;
+    line-height: 24px;
+    font-family: $semibold-font;
+    color: map-get($color-palette, blue100);
+    cursor: pointer;
+  }
+
+  &__header {
+    height: 60px;
+    margin-bottom: 24px;
+    font-size: 24px;
+    color: map-get($color-palette, black100);
+  }
+
+  &__active-badge {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 20px;
+    width: 49px;
+    margin-left: 16px;
+    border-radius: 10px;
+    background-color: map-get($color-palette, green100);
+    font-size: 11px;
+    font-family: $semibold-font;
+    color: map-get($color-palette, white);
+  }
+
+  &__finish-scope-button {
+    min-height: 32px;
+    width: 136px;
+  }
+
+  &__summary-panel {
+    & > :first-child {
+      margin-right: 16px;
+    }
+  }
+
+  &__routing-tabs-panel {
+    height: 49px;
+    width: 100%;
+    border-bottom: 1px solid map-get($color-palette, light-blue);
+  }
+
+  &__tab-icon-wrapper {
+    margin-right: 8px;
+  }
+}

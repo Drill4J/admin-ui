@@ -1,0 +1,96 @@
+@import '../../../../../common/style-guide/index';
+
+.scopes-list {
+  &__content {
+    height: 100%;
+    width: 100%;
+  }
+
+  &__title {
+    height: 58px;
+    border-bottom: 1px solid map-get($color-palette, black100);
+    font-size: 18px;
+    line-height: 24px;
+
+    & > * {
+      margin-right: 8px;
+    }
+  }
+
+  &__header-cell {
+    height: 52px;
+    position: relative;
+    margin-top: 14px;
+  }
+
+  &__test-type-label {
+    position: absolute;
+    bottom: 8px;
+    font-size: 12px;
+    line-height: 24px;
+  }
+
+  &__scopes-count {
+    font-size: 18px;
+    line-height: 24px;
+    font-family: $light-font;
+    color: map-get($color-palette, middle-blue);
+  }
+
+  &__name-cell {
+    color: map-get($color-palette, blue100);
+    font-family: $semibold-font;
+    cursor: pointer;
+  }
+
+  &__start-date {
+    font-size: 12px;
+    line-height: 17px;
+    color: $slate-gray;
+    font-family: $regular-font;
+  }
+
+  &__active-badge {
+    border-radius: 10px;
+    background-color: map-get($color-palette, green100);
+    font-size: 11px;
+    font-family: $semibold-font;
+    color: map-get($color-palette, white);
+    padding: 2px 6px;
+    margin-left: 12px;
+  }
+
+  &__ignore-badge {
+    margin-left: 12px;
+    background-color: #c6c5c6;
+    color: map-get($color-palette, white);
+    height: 20px;
+    width: 60px;
+    border-radius: 10px;
+    font-size: 11px;
+    line-height: 12px;
+    padding: 2px 6px;
+    font-family: $semibold-font;
+  }
+
+  &__coverage {
+    font-size: 24px;
+    line-height: 80px;
+    color: map-get($color-palette, black100);
+  }
+
+  &__test-type-coverage {
+    font-size: 12px;
+    line-height: 20px;
+    color: map-get($color-palette, black100);
+    font-family: $semibold-font;
+    min-width: 20px;
+  }
+
+  &__test-type-test-count {
+    font-size: 12px;
+    line-height: 20px;
+    color: $slate-gray;
+    font-family: $regular-font;
+  }
+}

@@ -1,0 +1,62 @@
+@import '../../../../../common/style-guide/index';
+
+.current-scope {
+  &__content {
+    height: 120px;
+    border-bottom: 1px solid map-get($color-palette, black10);
+  }
+
+  &__scope-name {
+    color: map-get($color-palette, blue100);
+    font-family: $semibold-font;
+    font-size: 14px;
+    line-height: 19px;
+    margin-right: 16px;
+  }
+
+  &__active-badge {
+    border: 1px solid map-get($color-palette, green100);
+    border-radius: 10px;
+    background-color: map-get($color-palette, green100);
+    font-size: 11px;
+    font-family: $semibold-font;
+    color: map-get($color-palette, white);
+    padding: 2px 6px;
+    margin-right: 100px;
+  }
+
+  &__scope-start-date {
+    font-size: 12px;
+    line-height: 17px;
+    color: $slate-gray;
+  }
+
+  &__coverage {
+    font-size: 24px;
+    line-height: 33px;
+    margin-right: 100px;
+  }
+
+  &__coverage-by-type-section {
+    display: flex;
+    flex-grow: 1;
+
+    & > * {
+      margin-right: 100px;
+    }
+  }
+
+  &__actions-section {
+    color: map-get($color-palette, blue100);
+    display: flex;
+
+    & > * {
+      margin-right: 24px;
+      cursor: pointer;
+    }
+  }
+
+  &__more-options {
+    width: 15px;
+  }
+}
