@@ -90,7 +90,7 @@ async function finishScope(
   try {
     await axios.post(`/agents/${agentId}/coverage/dispatch-action`, {
       type: 'SWITCH_ACTIVE_SCOPE',
-      payload: { prevScopeEnabled: !ignoreScope, scopeName: '' },
+      payload: { prevScopeEnabled: !ignoreScope, scopeName: '', savePrevScope: true },
     });
     showMessage({ type: 'SUCCESS', text: 'Scope is finished' });
     closeModal(false);

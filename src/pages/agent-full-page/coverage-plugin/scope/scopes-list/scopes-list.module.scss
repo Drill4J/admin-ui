@@ -60,6 +60,12 @@
     margin-left: 12px;
   }
 
+  &__ignore-badge {
+    margin-left: 12px;
+    color: map-get($color-palette, red100);
+    padding: 2px 8px;
+  }
+
   &__coverage {
     font-size: 24px;
     line-height: 80px;
