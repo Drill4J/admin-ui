@@ -34,6 +34,22 @@
     line-height: 24px;
   }
 
+  &__recording-icon {
+    height: 8px;
+    width: 8px;
+    border-radius: 4px;
+    background-color: map-get($color-palette, red100);
+    margin-right: 3px;
+    margin-left: 4px;
+  }
+
+  &__recording-text {
+    font-size: 12px;
+    line-height: 12px;
+    color: map-get($color-palette, red100);
+    font-family: $semibold-font;
+  }
+
   &__coverage {
     font-size: 12px;
     line-height: 17px;

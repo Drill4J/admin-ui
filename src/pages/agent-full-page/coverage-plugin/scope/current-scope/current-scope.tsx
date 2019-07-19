@@ -18,11 +18,31 @@ interface Props {
   buildVersion: string;
 }
 
+const coverageByTypeDefaults = {
+  MANUAL: {
+    testType: 'MANUAL',
+    coverage: 0,
+    testCount: 0,
+  },
+  AUTO: {
+    testType: 'AUTO',
+    coverage: 0,
+    testCount: 0,
+  },
+  PERFORMANCE: {
+    testType: 'PERFORMANCE',
+    coverage: 0,
+    testCount: 0,
+  },
+};
+
 const currentScope = BEM(styles);
 
 export const CurrentScope = currentScope(({ className, agentId, buildVersion }: Props) => {
   const { name = '', coverage = 0, coveragesByType = {}, started = 0, active = false } =
     useBuildVersion<ScopeSummary>('/active-scope', agentId, buildVersion) || {};
+  const { testTypes: activeSessionTestTypes = [] } =
+    useBuildVersion<{ testTypes: string[] }>('/active-sessions', agentId, buildVersion) || {};
   const [isModalOpen, setIsModalOpen] = React.useState(false);
   const scopeStartDate = new Date(started).toDateString();
 
@@ -39,9 +59,15 @@ export const CurrentScope = currentScope(({ className, agentId, buildVersion }: 
           </div>
           <Coverage>{`${percentFormatter(coverage)}%`}</Coverage>
           <CoverageByTypeSection>
-            {Object.values(coveragesByType).map((coverageByType) => (
-              <CoverageByType {...coverageByType} key={coverageByType.testType} />
-            ))}
+            {Object.values({ ...coverageByTypeDefaults, ...coveragesByType }).map(
+              (coverageByType) => (
+                <CoverageByType
+                  {...coverageByType}
+                  key={coverageByType.testType}
+                  recording={activeSessionTestTypes.includes(coverageByType.testType)}
+                />
+              ),
+            )}
           </CoverageByTypeSection>
           <ActionsSection>
             <Icons.Star />

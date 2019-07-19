@@ -11,18 +11,28 @@ interface Props {
   testType: string;
   coverage: number;
   testCount: number;
+  recording?: boolean;
 }
 
 const coverageByType = BEM(styles);
 
 export const CoverageByType = coverageByType(
-  ({ className, testType, coverage, testCount }: Props) => (
+  ({ className, testType, coverage, testCount, recording }: Props) => (
     <div className={className}>
       <Panel>
         <TestTypeIcon type={testType} />
         <TestName>{testType}</TestName>
       </Panel>
-      <Coverage>{percentFormatter(coverage)}%</Coverage>
+      <Panel>
+        <Coverage>{percentFormatter(coverage)}%</Coverage>
+        {recording && (
+          <>
+            <RecordingIcon />
+            <RecordingText>Rec</RecordingText>
+          </>
+        )}
+      </Panel>
+
       <TestsCount>{testCount} tests</TestsCount>
     </div>
   ),
@@ -30,5 +40,7 @@ export const CoverageByType = coverageByType(
 
 const TestTypeIcon = coverageByType.testTypeIcon(div({} as { type: string }));
 const TestName = coverageByType.testName('div');
+const RecordingIcon = coverageByType.recordingIcon('span');
+const RecordingText = coverageByType.recordingText('span');
 const Coverage = coverageByType.coverage('div');
 const TestsCount = coverageByType.testsCount('div');
