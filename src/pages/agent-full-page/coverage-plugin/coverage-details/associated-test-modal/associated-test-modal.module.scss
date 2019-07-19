@@ -60,9 +60,10 @@
     word-break: normal;
     word-wrap: normal;
     overflow-wrap: normal;
-    line-height: 40px;
+    min-height: 40px;
     padding-left: 56px;
     border-bottom: 1px solid map-get($color-palette, black10);
+    font-size: 13px;
   }
 
   &__test-list-item-icon {

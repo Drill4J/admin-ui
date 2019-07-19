@@ -27,7 +27,7 @@ export const NewMethodsModal = newMethodsModal(
         <div className={className}>
           <Header>
             <Icons.Function height={18} width={18} />
-            <span>New methods</span>
+            <span>MODIFIED & NEW</span>
             <h2>{methods.length}</h2>
           </Header>
           <Content>

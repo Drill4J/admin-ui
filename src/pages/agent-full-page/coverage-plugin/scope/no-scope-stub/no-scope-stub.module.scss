@@ -18,12 +18,4 @@
     text-align: center;
     color: map-get($color-palette, middle-blue);
   }
-
-  &__instructions {
-    margin-bottom: 16px;
-    font-size: 14px;
-    line-height: 22px;
-    text-align: center;
-    color: $slate-gray;
-  }
 }

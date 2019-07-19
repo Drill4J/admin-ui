@@ -32,10 +32,10 @@ export const AssociatedTestModal = associatedTestModal(
       associatedTests.find((test) => test.id === id) || {};
     const testsMap = tests.reduce(
       (acc, test) => {
-        const testName = test.slice(test.indexOf(':') + 2);
-        const testType = test.slice(0, test.indexOf(':'));
+        const testName = test.slice(test.indexOf('::') + 2);
+        const testType = test.slice(0, test.indexOf('::'));
 
-        return { [testType]: acc[testType] ? [...acc[testType], testName] : [testName] };
+        return { ...acc, [testType]: acc[testType] ? [...acc[testType], testName] : [testName] };
       },
       {} as { [testType: string]: string[] },
     );

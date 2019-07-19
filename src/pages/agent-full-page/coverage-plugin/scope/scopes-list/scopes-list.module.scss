@@ -62,8 +62,15 @@
 
   &__ignore-badge {
     margin-left: 12px;
-    color: map-get($color-palette, red100);
-    padding: 2px 8px;
+    background-color: #c6c5c6;
+    color: map-get($color-palette, white);
+    height: 20px;
+    width: 60px;
+    border-radius: 10px;
+    font-size: 11px;
+    line-height: 12px;
+    padding: 2px 6px;
+    font-family: $semibold-font;
   }
 
   &__coverage {

@@ -14,16 +14,33 @@ interface Props {
 
 const coveragesByType = BEM(styles);
 
+const coverageByTypeDefaults = {
+  MANUAL: {
+    testType: 'MANUAL',
+    coverage: 0,
+  },
+  AUTO: {
+    testType: 'AUTO',
+    coverage: 0,
+  },
+  PERFORMANCE: {
+    testType: 'PERFORMANCE',
+    coverage: 0,
+  },
+};
+
 export const CoveragesByType = coveragesByType(({ className, coverageByType }: Props) => {
   return (
     <div className={className}>
-      {Object.values(coverageByType).map(({ testType, coverage }) => (
-        <CoverageItem>
-          <TestTypeIcon type={testType} />
-          <TestTypeName>{testType}</TestTypeName>
-          <TestTypeCoverage>{coverage ? `${percentFormatter(coverage)}%` : 'n/a'}</TestTypeCoverage>
-        </CoverageItem>
-      ))}
+      {Object.values({ ...coverageByTypeDefaults, ...coverageByType }).map(
+        ({ testType, coverage = 0 }) => (
+          <CoverageItem>
+            <TestTypeIcon type={testType as any} />
+            <TestTypeName>{testType}</TestTypeName>
+            <TestTypeCoverage>{`${percentFormatter(coverage)}%`}</TestTypeCoverage>
+          </CoverageItem>
+        ),
+      )}
     </div>
   );
 });

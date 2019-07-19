@@ -46,7 +46,9 @@ export const CurrentScope = currentScope(({ className, agentId, buildVersion }: 
           <ActionsSection>
             <Icons.Star />
             <Icons.EyeCrossed />
-            <Icons.MoreOptions onClick={() => setIsModalOpen(true)} />
+            <MoreOptions align="center" onClick={() => setIsModalOpen(true)}>
+              <Icons.MoreOptions />
+            </MoreOptions>
           </ActionsSection>
         </Content>
       ) : (
@@ -66,3 +68,4 @@ const ScopeStartDate = currentScope.scopeStartDate('div');
 const Coverage = currentScope.coverage('div');
 const CoverageByTypeSection = currentScope.coverageByTypeSection('div');
 const ActionsSection = currentScope.actionsSection('div');
+const MoreOptions = currentScope.moreOptions(Panel);

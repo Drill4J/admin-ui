@@ -7,15 +7,6 @@
   outline: 0;
   cursor: pointer;
 
-  // &:hover {
-  //   &:not(.button--disabled) {
-  //     cursor: pointer;
-  //     opacity: 0.75;
-  //     background-color: map-get($color-palette, blue100);
-  //     color: map-get($color-palette, white);
-  //   }
-  // }
-
   &--disabled {
     opacity: 0.25;
     pointer-events: none;

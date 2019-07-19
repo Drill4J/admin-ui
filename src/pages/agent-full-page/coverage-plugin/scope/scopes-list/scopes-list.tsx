@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 
-import { Table, Column, Badge } from '../../../../../components';
+import { Table, Column } from '../../../../../components';
 import { percentFormatter } from '../../../../../utils';
 import { useBuildVersion } from '../../use-build-version';
 import { ScopeSummary } from '../../../../../types/scope-summary';
@@ -38,7 +38,7 @@ export const ScopesList = scopesList(
                 <NameCell onClick={() => onScopeClick(id)}>
                   {value}
                   {active && <ActiveBadge>Active</ActiveBadge>}
-                  {!enabled && <IgnoreBadge text="Ignored" />}
+                  {!enabled && <IgnoreBadge>Ignored</IgnoreBadge>}
                   <StartDate>{new Date(started).toDateString()}</StartDate>
                 </NameCell>
               )}
@@ -98,5 +98,5 @@ const TestTypeTestCount = scopesList.testTypeTestCount('div');
 const NameCell = scopesList.nameCell('span');
 const StartDate = scopesList.startDate('div');
 const ActiveBadge = scopesList.activeBadge('span');
-const IgnoreBadge = scopesList.ignoreBadge(Badge);
+const IgnoreBadge = scopesList.ignoreBadge('span');
 const Coverage = scopesList.coverage('div');
