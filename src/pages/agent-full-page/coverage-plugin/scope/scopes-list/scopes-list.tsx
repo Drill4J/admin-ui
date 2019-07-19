@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 
-import { SelectableTable, Column } from '../../../../../components';
+import { Table, Column } from '../../../../../components';
 import { percentFormatter } from '../../../../../utils';
 import { useBuildVersion } from '../../use-build-version';
 import { ScopeSummary } from '../../../../../types/scope-summary';
@@ -22,7 +22,6 @@ export const ScopesList = scopesList(
     const activeScope = useBuildVersion<ScopeSummary>('/active-scope', agentId, buildVersion);
     const scopes = useBuildVersion<ScopeSummary[]>('/scopes', agentId, buildVersion) || [];
     const scopesData = activeScope && activeScope.name ? [activeScope, ...scopes] : scopes;
-    const [selectedRows, setSelectedRow] = React.useState<string[]>([]);
 
     return (
       <div className={className}>
@@ -31,13 +30,7 @@ export const ScopesList = scopesList(
             <span>Scopes</span>
             <ScopesCount>{scopesData.length}</ScopesCount>
           </Title>
-          <SelectableTable
-            data={scopesData}
-            idKey="name"
-            selectedRows={selectedRows}
-            onSelect={setSelectedRow}
-            columnsSize="wide"
-          >
+          <Table data={scopesData as any} idKey="name" columnsSize="wide">
             <Column
               name="name"
               HeaderCell={() => <HeaderCell>Name</HeaderCell>}
@@ -87,7 +80,7 @@ export const ScopesList = scopesList(
                 </TestTypeCoverage>
               )}
             />
-          </SelectableTable>
+          </Table>
         </Content>
       </div>
     );

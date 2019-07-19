@@ -60,6 +60,7 @@ export const Dashboard = dashboard(({ className, agentId, buildVersion }: Props)
               <span>Project Tree</span>
             </>
           }
+          associatedTestsTopic="/build/associated-tests"
         />
       </Section>
     </div>

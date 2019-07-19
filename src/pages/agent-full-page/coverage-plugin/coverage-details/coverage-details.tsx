@@ -18,6 +18,7 @@ interface Props extends RouteComponentProps<{ agentId: string }> {
   buildVersion?: string;
   coverageByPackages: ClassCoverage[];
   header?: React.ReactNode;
+  associatedTestsTopic: string;
 }
 
 const coverageDetails = BEM(styles);
@@ -32,6 +33,7 @@ export const CoverageDetails = withRouter(
       buildVersion,
       coverageByPackages,
       header,
+      associatedTestsTopic,
     }: Props) => {
       const [selectedId, setSelectedId] = React.useState('');
 
@@ -110,6 +112,7 @@ export const CoverageDetails = withRouter(
               onToggle={() => setSelectedId('')}
               agentId={agentId}
               buildVersion={buildVersion}
+              associatedTestsTopic={associatedTestsTopic}
             />
           )}
         </div>

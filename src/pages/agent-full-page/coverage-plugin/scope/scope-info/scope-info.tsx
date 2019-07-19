@@ -115,7 +115,11 @@ export const ScopeInfo = scopeInfo(
           </TabsPanel>
         </RoutingTabsPanel>
         {selectedTab === 'coverage' ? (
-          <CoverageDetails buildVersion={buildVersion} coverageByPackages={coverageByPackages} />
+          <CoverageDetails
+            buildVersion={buildVersion}
+            coverageByPackages={coverageByPackages}
+            associatedTestsTopic={`/scope/${selectedScope}/associated-tests`}
+          />
         ) : (
           <TestDetails testsUsages={testsUsages} />
         )}
