@@ -27,7 +27,7 @@ export const CodeCoverageCard = codeCoverageCard(
         <CardSection header="TOTAL">
           <TotalCoverage type={arrow}>
             <Panel>
-              {coverage ? `${percentFormatter(coverage)}%` : 'n/a'}
+              {`${percentFormatter(coverage)}%`}
               {arrow && <ArrowIcon rotate={arrow === 'INCREASE' ? 180 : 0} />}
             </Panel>
           </TotalCoverage>

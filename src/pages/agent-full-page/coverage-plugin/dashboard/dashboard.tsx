@@ -4,7 +4,7 @@ import { BEM } from '@redneckz/react-bem-helper';
 import { Panel, Section } from '../../../../layouts';
 import { Icons } from '../../../../components';
 import { useBuildVersion } from '../use-build-version';
-import { ActiveScope } from '../scope';
+import { CurrentScope } from '../scope';
 import { CoverageDetails } from '../coverage-details';
 import { CodeCoverageCard } from '../code-coverage-card';
 import { ProjectMethodsCard } from '../project-methods-card';
@@ -49,8 +49,8 @@ export const Dashboard = dashboard(({ className, agentId, buildVersion }: Props)
           newMethodsTopic="/build/new-methods"
         />
       </SummaryPanel>
-      <Section header="Latest Scope">
-        <ActiveScope agentId={agentId} buildVersion={buildVersion} />
+      <Section header="Current Scope">
+        <CurrentScope agentId={agentId} buildVersion={buildVersion} />
         <CoverageDetails
           buildVersion={buildVersion}
           coverageByPackages={coverageByPackages}

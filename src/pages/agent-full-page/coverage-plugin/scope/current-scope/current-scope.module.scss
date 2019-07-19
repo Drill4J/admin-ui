@@ -1,6 +1,6 @@
 @import '../../../../../common/style-guide/index';
 
-.scopes {
+.current-scope {
   &__content {
     height: 120px;
     border-bottom: 1px solid map-get($color-palette, black10);

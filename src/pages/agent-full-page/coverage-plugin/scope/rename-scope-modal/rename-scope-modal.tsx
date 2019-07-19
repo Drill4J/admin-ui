@@ -16,7 +16,7 @@ import { Popup, Icons } from '../../../../../components';
 import { NotificationManagerContext } from '../../../../../notification-manager';
 import { Message } from '../../../../../types/message';
 
-import styles from './create-new-scope-modal.module.scss';
+import styles from './rename-scope-modal.module.scss';
 
 interface Props {
   className?: string;
@@ -25,11 +25,11 @@ interface Props {
   agentId: string;
 }
 
-const createNewScopeModal = BEM(styles);
+const renameScopeModal = BEM(styles);
 
 const validateScope = composeValidators(required('scopeName'), sizeLimit('scopeName', 3, 64));
 
-export const CreateNewScopeModal = createNewScopeModal(
+export const RenameScopeModal = renameScopeModal(
   ({ className, isOpen, onToggle, agentId }: Props) => {
     const { showMessage } = React.useContext(NotificationManagerContext);
     const [errorMessage, setErrorMessage] = React.useState('');
@@ -63,9 +63,9 @@ export const CreateNewScopeModal = createNewScopeModal(
                   />
                 </FormGroup>
                 <ActionsPanel>
-                  <CreateScopeButton type="primary" onClick={handleSubmit as any}>
+                  <RenameScopeButton type="primary" onClick={handleSubmit as any}>
                     Continue
-                  </CreateScopeButton>
+                  </RenameScopeButton>
                   <CancelButton type="secondary" onClick={() => onToggle(false)}>
                     Cancel
                   </CancelButton>
@@ -79,12 +79,12 @@ export const CreateNewScopeModal = createNewScopeModal(
   },
 );
 
-const ErrorMessage = createNewScopeModal.errorMessage(Panel);
-const ErrorMessageIcon = createNewScopeModal.errorMessageIcon(Icons.Warning);
-const Content = createNewScopeModal.content('div');
-const ActionsPanel = createNewScopeModal.actionsPanel(Panel);
-const CreateScopeButton = createNewScopeModal.createScopeButton(Button);
-const CancelButton = createNewScopeModal.cancelButton(Button);
+const ErrorMessage = renameScopeModal.errorMessage(Panel);
+const ErrorMessageIcon = renameScopeModal.errorMessageIcon(Icons.Warning);
+const Content = renameScopeModal.content('div');
+const ActionsPanel = renameScopeModal.actionsPanel(Panel);
+const RenameScopeButton = renameScopeModal.renameScopeButton(Button);
+const CancelButton = renameScopeModal.cancelButton(Button);
 
 async function createNewScope(
   { scopeName, agentId }: { scopeName?: string; agentId?: string },

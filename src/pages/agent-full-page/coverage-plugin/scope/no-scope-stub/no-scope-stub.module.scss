@@ -26,17 +26,4 @@
     text-align: center;
     color: $slate-gray;
   }
-
-  &__start-new-scope {
-    min-height: 32px;
-    width: 160px;
-    margin-bottom: 32px;
-    font-size: 14px;
-    line-height: 19px;
-  }
-
-  &__new-scope-icon {
-    margin-right: 8px;
-    color: map-get($color-palette, blue100);
-  }
 }

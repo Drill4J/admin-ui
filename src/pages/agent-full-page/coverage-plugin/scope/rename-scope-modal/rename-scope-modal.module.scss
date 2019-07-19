@@ -1,6 +1,6 @@
 @import '../../../../../common/style-guide/index';
 
-.create-new-scope-modal {
+.rename-scope-modal {
   width: 480px;
 
   &__error-message {
@@ -25,7 +25,7 @@
     margin-top: 38px;
   }
 
-  &__create-scope-button {
+  &__rename-scope-button {
     min-height: 32px;
     width: 96px;
     font-size: 14px;
