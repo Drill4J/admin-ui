@@ -1,0 +1,21 @@
+@import '../../../../common/style-guide/index';
+
+.agent-loading-stub {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  &__logo {
+    margin-bottom: 36px;
+  }
+
+  &__message {
+    font-size: 24px;
+    line-height: 36px;
+    text-align: center;
+    color: map-get($color-palette, black50);
+  }
+}
