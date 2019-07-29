@@ -44,7 +44,7 @@ export const AgentCard = withRouter(
             </HeaderName>
             {status !== AGENT_STATUS.NOT_REGISTERED && (
               <HeaderIconsWrapper>
-                <Icons.OpenLive onClick={() => push(`/full-page/${id}/coverage`)} />
+                <Icons.OpenLive onClick={() => push(`/full-page/${id}/coverage/dashboard`)} />
                 <Icons.Settings
                   height={16}
                   width={16}

@@ -1,2 +1,3 @@
 export { CurrentScope } from './current-scope';
-export { Scopes } from './scopes';
+export { ScopesList } from './scopes-list';
+export { ScopeInfo } from './scope-info';

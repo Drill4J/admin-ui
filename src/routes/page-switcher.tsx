@@ -27,7 +27,7 @@ export const PageSwitcher = () => {
     <Switch>
       <Route exact path="/login" component={LoginPage} />
       <Route exact path="/" render={() => <Redirect to="/agents" />} />
-      <Route exact path="/full-page/:agentId/:pluginId" component={AgentFullPage} />
+      <Route path="/full-page/:agentId/:pluginId/:tab" component={AgentFullPage} />
       <AppLayout
         sidebar={<Sidebar links={sidebarLinks} matchParams={{ path: '/:activeLink' }} />}
         toolbar={

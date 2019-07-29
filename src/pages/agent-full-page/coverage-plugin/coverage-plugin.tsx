@@ -1,18 +1,18 @@
 import * as React from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
-import { withRouter, RouteComponentProps } from 'react-router-dom';
+import { withRouter, RouteComponentProps, Switch, Route } from 'react-router-dom';
 
 import { Panel } from '../../../layouts';
 import { Icons, PageHeader, TabsPanel, Tab } from '../../../components';
 import { Dashboard } from './dashboard';
-import { Scopes } from './scope';
+import { ScopesList, ScopeInfo } from './scope';
 import { Tests } from './tests';
 import { PluginHeader } from './plugin-header';
 import { Agent } from '../../../types/agent';
 
 import styles from './coverage-plugin.module.scss';
 
-interface Props extends RouteComponentProps<{ agentId: string }> {
+interface Props extends RouteComponentProps<{ agentId: string; tab: string; pluginId: string }> {
   className?: string;
   agent?: Agent;
 }
@@ -24,15 +24,15 @@ export const CoveragePlugin = withRouter(
     ({
       className,
       match: {
-        params: { agentId },
+        params: { agentId, tab, pluginId },
       },
       agent: { name, buildVersion = '', buildAlias } = {},
+      history: { push },
     }: Props) => {
       const [selectedBuildVersion, setSelectedBuildVersion] = React.useState({
         value: buildVersion,
         label: `Build ${buildAlias}`,
       });
-      const [selectedTab, setSelectedTab] = React.useState('dashboard');
 
       React.useEffect(() => {
         setSelectedBuildVersion({
@@ -60,7 +60,12 @@ export const CoveragePlugin = withRouter(
             setBuildVersion={setSelectedBuildVersion}
           />
           <RoutingTabsPanel>
-            <TabsPanel activeTab={selectedTab} onSelect={setSelectedTab}>
+            <TabsPanel
+              activeTab={tab}
+              onSelect={(selectedTab: string) =>
+                push(`/full-page/${agentId}/coverage/${selectedTab}`)
+              }
+            >
               <Tab name="dashboard">
                 <TabIconWrapper>
                   <Icons.Dashboard />
@@ -82,15 +87,34 @@ export const CoveragePlugin = withRouter(
             </TabsPanel>
           </RoutingTabsPanel>
           <Content>
-            {selectedTab === 'dashboard' && (
-              <Dashboard agentId={agentId} buildVersion={selectedBuildVersion.value} />
-            )}
-            {selectedTab === 'scopes' && (
-              <Scopes agentId={agentId} buildVersion={selectedBuildVersion.value} />
-            )}
-            {selectedTab === 'tests' && (
-              <Tests agentId={agentId} buildVersion={selectedBuildVersion.value} />
-            )}
+            <Switch>
+              <Route
+                path={`/full-page/${agentId}/${pluginId}/dashboard`}
+                render={() => (
+                  <Dashboard agentId={agentId} buildVersion={selectedBuildVersion.value} />
+                )}
+                exact
+              />
+              <Route
+                path={`/full-page/${agentId}/${pluginId}/scopes`}
+                render={() => (
+                  <ScopesList agentId={agentId} buildVersion={selectedBuildVersion.value} />
+                )}
+                exact
+              />
+              <Route
+                path={`/full-page/${agentId}/${pluginId}/scopes/:scopeId`}
+                render={() => (
+                  <ScopeInfo agentId={agentId} buildVersion={selectedBuildVersion.value} />
+                )}
+                exact
+              />
+              <Route
+                path={`/full-page/${agentId}/${pluginId}/tests`}
+                render={() => <Tests agentId={agentId} buildVersion={selectedBuildVersion.value} />}
+                exact
+              />
+            </Switch>
           </Content>
         </div>
       );
