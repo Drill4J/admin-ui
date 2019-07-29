@@ -32,5 +32,5 @@ export const LayoutSwitch = layoutSwitch(
   },
 );
 
-const LeftItem = layoutSwitch.leftItem(div({ active: false, onClick: () => {} } as ItemProps));
-const RightItem = layoutSwitch.rightItem(div({ active: false, onClick: () => {} } as ItemProps));
+const LeftItem = layoutSwitch.leftItem(div({ onClick: () => {} } as ItemProps));
+const RightItem = layoutSwitch.rightItem(div({ onClick: () => {} } as ItemProps));

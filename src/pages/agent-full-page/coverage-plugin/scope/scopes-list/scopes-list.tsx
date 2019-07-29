@@ -21,7 +21,13 @@ export const ScopesList = scopesList(
   ({ className, agentId, buildVersion, onScopeClick }: Props) => {
     const activeScope = useBuildVersion<ScopeSummary>('/active-scope', agentId, buildVersion);
     const scopes = useBuildVersion<ScopeSummary[]>('/scopes', agentId, buildVersion) || [];
-    const scopesData = activeScope && activeScope.name ? [activeScope, ...scopes] : scopes;
+    const sortedScopes = scopes.sort(
+      ({ started: firstStartedDate }, { started: secondStartedDate }) =>
+        secondStartedDate - firstStartedDate,
+    );
+
+    const scopesData =
+      activeScope && activeScope.name ? [activeScope, ...sortedScopes] : sortedScopes;
 
     return (
       <div className={className}>
@@ -49,34 +55,39 @@ export const ScopesList = scopesList(
               Cell={({ value }) => <Coverage>{percentFormatter(value)}%</Coverage>}
             />
             <Column
-              name="coveragesByType"
+              name="autoTests"
               HeaderCell={() => (
                 <HeaderCell>
                   <div>By Test Type</div>
                   <TestTypeLabel>Auto Tests</TestTypeLabel>
                 </HeaderCell>
               )}
-              Cell={({ value }) => (
+              Cell={({ item: { coveragesByType } }) => (
                 <TestTypeCoverage>
-                  {value.AUTO && `${percentFormatter(value.AUTO.coverage)}%`}
+                  {coveragesByType.AUTO && `${percentFormatter(coveragesByType.AUTO.coverage)}%`}
                   <TestTypeTestCount>
-                    {value.AUTO && value.AUTO.testCount && `${value.AUTO.testCount} tests`}
+                    {coveragesByType.AUTO &&
+                      coveragesByType.AUTO.testCount &&
+                      `${coveragesByType.AUTO.testCount} tests`}
                   </TestTypeTestCount>
                 </TestTypeCoverage>
               )}
             />
             <Column
-              name="coveragesByType"
+              name="manualTests"
               HeaderCell={() => (
                 <HeaderCell>
                   <TestTypeLabel>Manual</TestTypeLabel>
                 </HeaderCell>
               )}
-              Cell={({ value }) => (
+              Cell={({ item: { coveragesByType } }) => (
                 <TestTypeCoverage>
-                  {value.MANUAL && `${percentFormatter(value.MANUAL.coverage)}%`}
+                  {coveragesByType.MANUAL &&
+                    `${percentFormatter(coveragesByType.MANUAL.coverage)}%`}
                   <TestTypeTestCount>
-                    {value.MANUAL && value.MANUAL.testCount && `${value.MANUAL.testCount} tests`}
+                    {coveragesByType.MANUAL &&
+                      coveragesByType.MANUAL.testCount &&
+                      `${coveragesByType.MANUAL.testCount} tests`}
                   </TestTypeTestCount>
                 </TestTypeCoverage>
               )}
