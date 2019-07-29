@@ -9,8 +9,8 @@ import {
   Fields,
   FormGroup,
   composeValidators,
-  required,
   sizeLimit,
+  required,
 } from '../../../../../forms';
 import { Popup, Icons } from '../../../../../components';
 import { NotificationManagerContext } from '../../../../../notification-manager';
@@ -27,7 +27,7 @@ interface Props {
 
 const renameScopeModal = BEM(styles);
 
-const validateScope = composeValidators(required('scopeName'), sizeLimit('scopeName', 3, 64));
+const validateScope = composeValidators(required('scopeName'), sizeLimit('scopeName', 1, 64));
 
 export const RenameScopeModal = renameScopeModal(
   ({ className, isOpen, onToggle, agentId }: Props) => {
