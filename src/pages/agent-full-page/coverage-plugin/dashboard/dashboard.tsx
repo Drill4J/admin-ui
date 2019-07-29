@@ -52,6 +52,7 @@ export const Dashboard = dashboard(({ className, agentId, buildVersion }: Props)
       <Section header="Current Scope">
         <CurrentScope agentId={agentId} buildVersion={buildVersion} />
         <CoverageDetails
+          agentId={agentId}
           buildVersion={buildVersion}
           coverageByPackages={coverageByPackages}
           header={
