@@ -35,7 +35,7 @@ export const ScopeInfo = withRouter(
       agentId,
       buildVersion,
       match: {
-        params: { pluginId, scopeId },
+        params: { scopeId },
       },
       history: { push },
     }: Props) => {
@@ -126,6 +126,7 @@ export const ScopeInfo = withRouter(
           </RoutingTabsPanel>
           {selectedTab === 'coverage' ? (
             <CoverageDetails
+              agentId={agentId}
               buildVersion={buildVersion}
               coverageByPackages={coverageByPackages}
               associatedTestsTopic={`/scope/${scopeId}/associated-tests`}
