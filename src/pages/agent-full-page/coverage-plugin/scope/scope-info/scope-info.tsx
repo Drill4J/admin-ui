@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
+import { withRouter, RouteComponentProps } from 'react-router-dom';
 
 import { Panel } from '../../../../../layouts';
 import { Button } from '../../../../../forms';
@@ -19,122 +20,132 @@ import { AssociatedTests } from '../../../../../types/associated-tests';
 
 import styles from './scope-info.module.scss';
 
-interface Props {
+interface Props extends RouteComponentProps<{ scopeId: string; pluginId: string }> {
   className?: string;
   agentId: string;
   buildVersion: string;
-  selectedScope: string;
-  onScopeClick: (scopeId: string) => void;
 }
 
 const scopeInfo = BEM(styles);
 
-export const ScopeInfo = scopeInfo(
-  ({ className, agentId, buildVersion, selectedScope, onScopeClick }: Props) => {
-    const coverage =
-      useBuildVersion<Coverage>(`/scope/${selectedScope}/coverage`, agentId, buildVersion) || {};
-    const newMethodsCoverage =
-      useBuildVersion<NewMethodsCoverage>(
-        `/scope/${selectedScope}/coverage-new`,
-        agentId,
-        buildVersion,
-      ) || {};
+export const ScopeInfo = withRouter(
+  scopeInfo(
+    ({
+      className,
+      agentId,
+      buildVersion,
+      match: {
+        params: { pluginId, scopeId },
+      },
+      history: { push },
+    }: Props) => {
+      const coverage =
+        useBuildVersion<Coverage>(`/scope/${scopeId}/coverage`, agentId, buildVersion) || {};
+      const newMethodsCoverage =
+        useBuildVersion<NewMethodsCoverage>(
+          `/scope/${scopeId}/coverage-new`,
+          agentId,
+          buildVersion,
+        ) || {};
 
-    const coverageByTypes =
-      useBuildVersion<CoverageByTypes>(
-        `/scope/${selectedScope}/coverage-by-types`,
-        agentId,
-        buildVersion,
-      ) || {};
-    const coverageByPackages =
-      useBuildVersion<ClassCoverage[]>(
-        `/scope/${selectedScope}/coverage-by-packages`,
-        agentId,
-        buildVersion,
-      ) || [];
+      const coverageByTypes =
+        useBuildVersion<CoverageByTypes>(
+          `/scope/${scopeId}/coverage-by-types`,
+          agentId,
+          buildVersion,
+        ) || {};
+      const coverageByPackages =
+        useBuildVersion<ClassCoverage[]>(
+          `/scope/${scopeId}/coverage-by-packages`,
+          agentId,
+          buildVersion,
+        ) || [];
 
-    const testsUsages =
-      useBuildVersion<AssociatedTests[]>(
-        `/scope/${selectedScope}/tests-usages`,
-        agentId,
-        buildVersion,
-      ) || [];
+      const testsUsages =
+        useBuildVersion<AssociatedTests[]>(
+          `/scope/${scopeId}/tests-usages`,
+          agentId,
+          buildVersion,
+        ) || [];
 
-    const scope = useBuildVersion<ScopeSummary>(`/scope/${selectedScope}`, agentId, buildVersion);
-    const { name = '', active = false } = scope || {};
-    const [isFinishModalOpen, setIsFinishModalOpen] = React.useState(false);
-    const [selectedTab, setSelectedTab] = React.useState('coverage');
+      const scope = useBuildVersion<ScopeSummary>(`/scope/${scopeId}`, agentId, buildVersion);
+      const { name = '', active = false } = scope || {};
+      const [isFinishModalOpen, setIsFinishModalOpen] = React.useState(false);
+      const [selectedTab, setSelectedTab] = React.useState('coverage');
 
-    return (
-      <div className={className}>
-        <BackToScopesList onClick={() => onScopeClick('')}>&lt; Scopes list</BackToScopesList>
-        <Header>
-          <Panel align="space-between">
-            <Panel>
-              {name}
-              {active && <ActiveBadge>Active</ActiveBadge>}
+      return (
+        <div className={className}>
+          <BackToScopesList onClick={() => push(`/full-page/${agentId}/coverage/scopes`)}>
+            &lt; Scopes list
+          </BackToScopesList>
+          <Header>
+            <Panel align="space-between">
+              <Panel>
+                {name}
+                {active && <ActiveBadge>Active</ActiveBadge>}
+              </Panel>
+              <FinishScopeButton
+                type="secondary"
+                onClick={() => setIsFinishModalOpen(true)}
+                disabled={!active}
+              >
+                Finish scope
+              </FinishScopeButton>
             </Panel>
-            <FinishScopeButton
-              type="secondary"
-              onClick={() => setIsFinishModalOpen(true)}
-              disabled={!active}
-            >
-              Finish scope
-            </FinishScopeButton>
-          </Panel>
-        </Header>
-        <SummaryPanel align="space-between">
-          <CodeCoverageCard
-            header="Scope Code Coverage"
-            coverage={coverage}
-            coverageByTypes={coverageByTypes}
-          />
-          <ProjectMethodsCard
-            header="Project Methods"
-            coverage={coverage}
-            newMethodsCoverage={newMethodsCoverage}
-            agentId={agentId}
-            buildVersion={buildVersion}
-            newMethodsTopic={`/scope/${selectedScope}/new-methods`}
-          />
-        </SummaryPanel>
-        <RoutingTabsPanel>
-          <TabsPanel activeTab={selectedTab} onSelect={setSelectedTab}>
-            <Tab name="coverage">
-              <TabIconWrapper>
-                <Icons.Coverage height={20} width={20} />
-              </TabIconWrapper>
-              Code Coverage
-            </Tab>
-            <Tab name="tests">
-              <TabIconWrapper>
-                <Icons.Test />
-              </TabIconWrapper>
-              Tests
-            </Tab>
-          </TabsPanel>
-        </RoutingTabsPanel>
-        {selectedTab === 'coverage' ? (
-          <CoverageDetails
-            buildVersion={buildVersion}
-            coverageByPackages={coverageByPackages}
-            associatedTestsTopic={`/scope/${selectedScope}/associated-tests`}
-          />
-        ) : (
-          <TestDetails testsUsages={testsUsages} />
-        )}
+          </Header>
+          <SummaryPanel align="space-between">
+            <CodeCoverageCard
+              header="Scope Code Coverage"
+              coverage={coverage}
+              coverageByTypes={coverageByTypes}
+            />
+            <ProjectMethodsCard
+              header="Project Methods"
+              coverage={coverage}
+              newMethodsCoverage={newMethodsCoverage}
+              agentId={agentId}
+              buildVersion={buildVersion}
+              newMethodsTopic={`/scope/${scopeId}/new-methods`}
+            />
+          </SummaryPanel>
+          <RoutingTabsPanel>
+            <TabsPanel activeTab={selectedTab} onSelect={setSelectedTab}>
+              <Tab name="coverage">
+                <TabIconWrapper>
+                  <Icons.Coverage height={20} width={20} />
+                </TabIconWrapper>
+                Code Coverage
+              </Tab>
+              <Tab name="tests">
+                <TabIconWrapper>
+                  <Icons.Test />
+                </TabIconWrapper>
+                Tests
+              </Tab>
+            </TabsPanel>
+          </RoutingTabsPanel>
+          {selectedTab === 'coverage' ? (
+            <CoverageDetails
+              buildVersion={buildVersion}
+              coverageByPackages={coverageByPackages}
+              associatedTestsTopic={`/scope/${scopeId}/associated-tests`}
+            />
+          ) : (
+            <TestDetails testsUsages={testsUsages} />
+          )}
 
-        {isFinishModalOpen && (
-          <FinishScopeModal
-            agentId={agentId}
-            scope={scope}
-            isOpen={isFinishModalOpen}
-            onToggle={setIsFinishModalOpen}
-          />
-        )}
-      </div>
-    );
-  },
+          {isFinishModalOpen && (
+            <FinishScopeModal
+              agentId={agentId}
+              scope={scope}
+              isOpen={isFinishModalOpen}
+              onToggle={setIsFinishModalOpen}
+            />
+          )}
+        </div>
+      );
+    },
+  ),
 );
 
 const BackToScopesList = scopeInfo.backToScopesList('span');

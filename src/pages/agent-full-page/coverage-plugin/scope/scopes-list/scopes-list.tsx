@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
+import { withRouter, RouteComponentProps } from 'react-router-dom';
 
 import { Table, Column } from '../../../../../components';
 import { percentFormatter } from '../../../../../utils';
@@ -8,17 +9,16 @@ import { ScopeSummary } from '../../../../../types/scope-summary';
 
 import styles from './scopes-list.module.scss';
 
-interface Props {
+interface Props extends RouteComponentProps {
   className?: string;
   agentId: string;
   buildVersion: string;
-  onScopeClick: (scopeId: string) => void;
 }
 
 const scopesList = BEM(styles);
 
-export const ScopesList = scopesList(
-  ({ className, agentId, buildVersion, onScopeClick }: Props) => {
+export const ScopesList = withRouter(
+  scopesList(({ className, buildVersion, agentId, history: { push } }: Props) => {
     const activeScope = useBuildVersion<ScopeSummary>('/active-scope', agentId, buildVersion);
     const scopes = useBuildVersion<ScopeSummary[]>('/scopes', agentId, buildVersion) || [];
     const sortedScopes = scopes.sort(
@@ -41,7 +41,7 @@ export const ScopesList = scopesList(
               name="name"
               HeaderCell={() => <HeaderCell>Name</HeaderCell>}
               Cell={({ value, item: { id, started, active, enabled } }) => (
-                <NameCell onClick={() => onScopeClick(id)}>
+                <NameCell onClick={() => push(`/full-page/${agentId}/coverage/scopes/${id}`)}>
                   {value}
                   {active && <ActiveBadge>Active</ActiveBadge>}
                   {!enabled && <IgnoreBadge>Ignored</IgnoreBadge>}
@@ -96,7 +96,7 @@ export const ScopesList = scopesList(
         </Content>
       </div>
     );
-  },
+  }),
 );
 
 const Content = scopesList.content('div');
