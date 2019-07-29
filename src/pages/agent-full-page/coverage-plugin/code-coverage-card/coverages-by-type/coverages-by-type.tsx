@@ -34,7 +34,7 @@ export const CoveragesByType = coveragesByType(({ className, coverageByType }: P
     <div className={className}>
       {Object.values({ ...coverageByTypeDefaults, ...coverageByType }).map(
         ({ testType, coverage = 0 }) => (
-          <CoverageItem>
+          <CoverageItem key={testType}>
             <TestTypeIcon type={testType as any} />
             <TestTypeName>{testType}</TestTypeName>
             <TestTypeCoverage>{`${percentFormatter(coverage)}%`}</TestTypeCoverage>

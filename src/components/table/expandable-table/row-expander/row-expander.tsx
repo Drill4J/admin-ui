@@ -22,6 +22,4 @@ export const RowExpander = rowExpander(({ className, expanded, onClick, withMarg
   </div>
 ));
 
-const IconWrapper = rowExpander.icon(
-  div({ expanded: false, withMargin: false } as { expanded?: boolean; withMargin?: boolean }),
-);
+const IconWrapper = rowExpander.icon(div({} as { expanded?: boolean; withMargin?: boolean }));
