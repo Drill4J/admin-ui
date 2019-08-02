@@ -138,6 +138,7 @@ export const ScopeInfo = withRouter(
           {isFinishModalOpen && (
             <FinishScopeModal
               agentId={agentId}
+              buildVersion={buildVersion}
               scope={scope}
               isOpen={isFinishModalOpen}
               onToggle={setIsFinishModalOpen}

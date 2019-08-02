@@ -7,6 +7,7 @@ import { Button, Inputs } from '../../../../../../forms';
 import { Popup, Icons, OverflowText } from '../../../../../../components';
 import { NotificationManagerContext } from '../../../../../../notification-manager';
 import { ScopeSummary } from './scope-summary';
+import { ActiveSessionsPanel } from './active-sessions-panel';
 import { Message } from '../../../../../../types/message';
 import { ScopeSummary as ScopeSummaryType } from '../../../../../../types/scope-summary';
 
@@ -17,13 +18,14 @@ interface Props {
   isOpen: boolean;
   onToggle: (value: boolean) => void;
   agentId: string;
+  buildVersion: string;
   scope: ScopeSummaryType | null;
 }
 
 const finishScopeModal = BEM(styles);
 
 export const FinishScopeModal = finishScopeModal(
-  ({ className, isOpen, onToggle, agentId, scope }: Props) => {
+  ({ className, isOpen, onToggle, agentId, buildVersion, scope }: Props) => {
     const { showMessage } = React.useContext(NotificationManagerContext);
     const [errorMessage, setErrorMessage] = React.useState('');
     const [ignoreScope, setIgnoreScope] = React.useState(false);
@@ -43,6 +45,7 @@ export const FinishScopeModal = finishScopeModal(
               {errorMessage}
             </ErrorMessage>
           )}
+          <ActiveSessionsPanel agentId={agentId} buildVersion={buildVersion} />
           <Content>
             <ScopeSummary scope={scope} />
             <IgnoreScope>

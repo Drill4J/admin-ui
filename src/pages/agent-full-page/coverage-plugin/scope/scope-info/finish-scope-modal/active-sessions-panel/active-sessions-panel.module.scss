@@ -1,0 +1,40 @@
+@import '../../../../../../../common/style-guide/index';
+
+.active-sessions-panel {
+  background-color: rgba(map-get($color-palette, yellow50), 0.1);
+  display: flex;
+  flex-direction: column;
+
+  &__content {
+    margin: 8px 24px;
+  }
+
+  &__icon {
+    color: #ffa000;
+    margin-right: 8px;
+  }
+
+  &__warning-message {
+    font-size: 14px;
+    line-height: 24px;
+  }
+
+  &__active-session-types-list {
+    display: flex;
+    flex-direction: column;
+    margin-left: 47px;
+  }
+
+  &__active-session-type {
+    font-size: 14px;
+    line-height: 24px;
+    font-family: $semibold-font;
+    text-transform: capitalize;
+  }
+
+  &__instructions {
+    font-size: 14px;
+    line-height: 24px;
+    margin-left: 24px;
+  }
+}
