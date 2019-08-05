@@ -11,6 +11,7 @@ interface Props {
   selected?: boolean;
   label?: string;
   withoutMargin?: boolean;
+  disabled?: boolean;
 }
 
 const checkbox = BEM(styles);
