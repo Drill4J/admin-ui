@@ -3,10 +3,13 @@ import { BEM } from '@redneckz/react-bem-helper';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
 
 import { Panel } from '../../../../../layouts';
-import { Icons } from '../../../../../components';
+import { Icons, Menu } from '../../../../../components';
+import { Button } from '../../../../../forms';
 import { percentFormatter } from '../../../../../utils';
 import { useBuildVersion } from '../../use-build-version';
 import { RenameScopeModal } from '../rename-scope-modal';
+import { FinishScopeModal } from '../finish-scope-modal';
+import { DeleteScopeModal } from '../delete-scope-modal';
 import { CoverageByType } from './coverage-by-type';
 import { NoScopeStub } from '../no-scope-stub';
 import { ScopeSummary } from '../../../../../types/scope-summary';
@@ -41,11 +44,14 @@ const currentScope = BEM(styles);
 
 export const CurrentScope = withRouter(
   currentScope(({ className, agentId, buildVersion, history: { push } }: Props) => {
+    const scope = useBuildVersion<ScopeSummary>('/active-scope', agentId, buildVersion);
     const { id = '', name = '', coverage = 0, coveragesByType = {}, started = 0, active = false } =
-      useBuildVersion<ScopeSummary>('/active-scope', agentId, buildVersion) || {};
+      scope || {};
     const { testTypes: activeSessionTestTypes = [] } =
       useBuildVersion<{ testTypes: string[] }>('/active-sessions', agentId, buildVersion) || {};
-    const [isModalOpen, setIsModalOpen] = React.useState(false);
+    const [isRenameModalOpen, setIsRenameModalOpen] = React.useState(false);
+    const [isFinishModalOpen, setIsFinishModalOpen] = React.useState(false);
+    const [isCancelModalOpen, setIsCancelModalOpen] = React.useState(false);
     const scopeStartDate = new Date(started).toDateString();
 
     return (
@@ -74,18 +80,48 @@ export const CurrentScope = withRouter(
               )}
             </CoverageByTypeSection>
             <ActionsSection>
-              <Icons.Star />
-              <Icons.EyeCrossed />
-              <MoreOptions align="center" onClick={() => setIsModalOpen(true)}>
-                <Icons.MoreOptions />
-              </MoreOptions>
+              <Panel>
+                <FinishScopeButton type="secondary" onClick={() => setIsFinishModalOpen(true)}>
+                  <Icons.Check height={12} width={16} />
+                  Finish
+                </FinishScopeButton>
+                <Menu
+                  items={[
+                    { label: 'Rename', icon: 'Edit', onClick: () => setIsRenameModalOpen(true) },
+                    { label: 'Cancel', icon: 'Delete', onClick: () => setIsCancelModalOpen(true) },
+                  ]}
+                />
+              </Panel>
             </ActionsSection>
           </Content>
         ) : (
           <NoScopeStub />
         )}
-        {isModalOpen && (
-          <RenameScopeModal isOpen={isModalOpen} onToggle={setIsModalOpen} agentId={agentId} />
+        {isRenameModalOpen && (
+          <RenameScopeModal
+            isOpen={isRenameModalOpen}
+            onToggle={setIsRenameModalOpen}
+            agentId={agentId}
+            scope={scope}
+          />
+        )}
+        {isFinishModalOpen && (
+          <FinishScopeModal
+            isOpen={isFinishModalOpen}
+            onToggle={setIsFinishModalOpen}
+            agentId={agentId}
+            buildVersion={buildVersion}
+            scope={scope}
+          />
+        )}
+        {isCancelModalOpen && (
+          <DeleteScopeModal
+            isOpen={isCancelModalOpen}
+            onToggle={setIsCancelModalOpen}
+            agentId={agentId}
+            buildVersion={buildVersion}
+            scope={scope as ScopeSummary}
+          />
         )}
       </div>
     );
@@ -99,4 +135,4 @@ const ScopeStartDate = currentScope.scopeStartDate('div');
 const Coverage = currentScope.coverage('div');
 const CoverageByTypeSection = currentScope.coverageByTypeSection('div');
 const ActionsSection = currentScope.actionsSection('div');
-const MoreOptions = currentScope.moreOptions(Panel);
+const FinishScopeButton = currentScope.finishScopeButton(Button);

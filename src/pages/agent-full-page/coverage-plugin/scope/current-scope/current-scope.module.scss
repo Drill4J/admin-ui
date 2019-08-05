@@ -50,14 +50,17 @@
   &__actions-section {
     color: map-get($color-palette, blue100);
     display: flex;
-
-    & > * {
-      margin-right: 24px;
-      cursor: pointer;
-    }
+    align-items: flex-start;
+    height: 60px;
   }
 
-  &__more-options {
-    width: 15px;
+  &__finish-scope-button {
+    min-height: 32px;
+    width: 96px;
+    margin-right: 16px;
+
+    & > * {
+      margin-right: 8px;
+    }
   }
 }

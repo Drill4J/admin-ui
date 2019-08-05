@@ -1,9 +1,9 @@
 import * as React from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 
-import { Panel } from '../../../../../../../layouts';
-import { Icons } from '../../../../../../../components';
-import { useBuildVersion } from '../../../../use-build-version';
+import { Panel } from '../../../../../layouts';
+import { Icons } from '../../../../../components';
+import { useBuildVersion } from '../../use-build-version';
 
 import styles from './active-sessions-panel.module.scss';
 

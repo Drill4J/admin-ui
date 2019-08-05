@@ -93,4 +93,15 @@
     color: $slate-gray;
     font-family: $regular-font;
   }
+
+  &__action-cell {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    color: map-get($color-palette, blue100);
+
+    & > * {
+      margin-right: 24px;
+    }
+  }
 }

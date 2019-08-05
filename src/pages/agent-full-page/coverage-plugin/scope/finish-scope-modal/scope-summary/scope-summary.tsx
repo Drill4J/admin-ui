@@ -3,8 +3,8 @@ import { BEM } from '@redneckz/react-bem-helper';
 
 import styles from './scope-summary.module.scss';
 
-import { percentFormatter } from '../../../../../../../utils';
-import { ScopeSummary as ScopeSummaryType } from '../../../../../../../types/scope-summary';
+import { percentFormatter } from '../../../../../../utils';
+import { ScopeSummary as ScopeSummaryType } from '../../../../../../types/scope-summary';
 
 interface Props {
   className?: string;

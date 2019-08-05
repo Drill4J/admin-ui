@@ -26,10 +26,9 @@ export const NotificationManager = ({ children }: Props) => {
 
     setMessage(incommingMessage);
   }
+  const contextValue = { showMessage: handleShowMessage, closeMessage: () => setMessage(null) };
   return (
-    <NotificationManagerContext.Provider
-      value={{ showMessage: handleShowMessage, closeMessage: () => setMessage(null) }}
-    >
+    <NotificationManagerContext.Provider value={contextValue}>
       {message && <MessagePanel message={message} onClose={() => setMessage(null)} />}
       {children}
     </NotificationManagerContext.Provider>

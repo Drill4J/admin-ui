@@ -33,6 +33,8 @@ import { path as eyeCrossedPath } from './path/eye-crossed.path';
 import { path as starPath } from './path/star.path';
 import { path as coverageArrowPath } from './path/coverage-arrow.path';
 import { path as moreOptionsPath } from './path/more-options.path';
+import { path as editPath } from './path/edit.path';
+import { path as eyePath } from './path/eye.path';
 import { declareIcon } from './declare-icon';
 import { ReactComponent as SettingsSvg } from './settings.svg';
 
@@ -72,5 +74,7 @@ export const Icons = {
   Star: declareIcon(starPath, { defaultWidth: 21, defaultHeight: 20 }),
   CoverageArrow: declareIcon(coverageArrowPath, { defaultWidth: 22, defaultHeight: 28 }),
   MoreOptions: declareIcon(moreOptionsPath, { defaultWidth: 4, defaultHeight: 16 }),
+  Edit: declareIcon(editPath, { defaultWidth: 16, defaultHeight: 18 }),
+  Eye: declareIcon(eyePath, { defaultWidth: 20, defaultHeight: 12 }),
   NewSettings: SettingsSvg,
 };

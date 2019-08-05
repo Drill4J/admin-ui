@@ -39,7 +39,7 @@ export const MethodsSection = methodsSection(
               <AdditionalInfoItemValue>{coveredCount}</AdditionalInfoItemValue>
             </AdditionalInfoItem>
             <AdditionalInfoItem>
-              <AdditionalInfoItemHeader>Ignored</AdditionalInfoItemHeader>
+              <AdditionalInfoItemHeader>Excluded</AdditionalInfoItemHeader>
               <AdditionalInfoItemValue>{0}</AdditionalInfoItemValue>
             </AdditionalInfoItem>
           </AdditionalInfo>
