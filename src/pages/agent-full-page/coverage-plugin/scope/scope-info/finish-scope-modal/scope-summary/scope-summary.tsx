@@ -9,15 +9,12 @@ import { ScopeSummary as ScopeSummaryType } from '../../../../../../../types/sco
 interface Props {
   className?: string;
   scope: ScopeSummaryType | null;
+  testsCount: number;
 }
 
 const scopeSummary = BEM(styles);
 
-export const ScopeSummary = scopeSummary(({ className, scope }: Props) => {
-  const testsCount =
-    scope &&
-    Object.values(scope.coveragesByType).reduce((acc, { testCount }) => acc + testCount, 0);
-
+export const ScopeSummary = scopeSummary(({ className, scope, testsCount }: Props) => {
   const duration = scope ? Date.now() - scope.started : 0;
 
   const minutes = Math.floor(duration / 60000);

@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
+import { withRouter, RouteComponentProps } from 'react-router-dom';
 import axios from 'axios';
 
 import { Panel } from '../../../../../../layouts';
@@ -13,7 +14,7 @@ import { ScopeSummary as ScopeSummaryType } from '../../../../../../types/scope-
 
 import styles from './finish-scope-modal.module.scss';
 
-interface Props {
+interface Props extends RouteComponentProps {
   className?: string;
   isOpen: boolean;
   onToggle: (value: boolean) => void;
@@ -24,60 +25,81 @@ interface Props {
 
 const finishScopeModal = BEM(styles);
 
-export const FinishScopeModal = finishScopeModal(
-  ({ className, isOpen, onToggle, agentId, buildVersion, scope }: Props) => {
-    const { showMessage } = React.useContext(NotificationManagerContext);
-    const [errorMessage, setErrorMessage] = React.useState('');
-    const [ignoreScope, setIgnoreScope] = React.useState(false);
+export const FinishScopeModal = withRouter(
+  finishScopeModal(
+    ({ className, isOpen, onToggle, agentId, buildVersion, scope, history: { push } }: Props) => {
+      const { showMessage } = React.useContext(NotificationManagerContext);
+      const [errorMessage, setErrorMessage] = React.useState('');
+      const [ignoreScope, setIgnoreScope] = React.useState(false);
 
-    return (
-      <Popup
-        isOpen={isOpen}
-        onToggle={onToggle}
-        header={<OverflowText>{`Finish scope ${scope && scope.name}`}</OverflowText>}
-        type="info"
-        closeOnFadeClick={true}
-      >
-        <div className={className}>
-          {errorMessage && (
-            <ErrorMessage>
-              <ErrorMessageIcon />
-              {errorMessage}
-            </ErrorMessage>
-          )}
-          <ActiveSessionsPanel agentId={agentId} buildVersion={buildVersion} />
-          <Content>
-            <ScopeSummary scope={scope} />
-            <IgnoreScope>
-              <Inputs.Checkbox
-                selected={ignoreScope}
-                onClick={() => setIgnoreScope(!ignoreScope)}
-                label="Ignore scope in build stats"
-                withoutMargin
-              />
-            </IgnoreScope>
-            <ActionsPanel>
-              <FinishScopeButton
-                type="primary"
-                onClick={() =>
-                  finishScope({ agentId, ignoreScope }, onToggle, showMessage, setErrorMessage)
-                }
-              >
-                Finish Scope
-              </FinishScopeButton>
-              <CancelButton type="secondary" onClick={() => onToggle(false)}>
-                Cancel
-              </CancelButton>
-            </ActionsPanel>
-          </Content>
-        </div>
-      </Popup>
-    );
-  },
+      const testsCount = scope
+        ? Object.values(scope.coveragesByType).reduce((acc, { testCount }) => acc + testCount, 0)
+        : 0;
+
+      return (
+        <Popup
+          isOpen={isOpen}
+          onToggle={onToggle}
+          header={<OverflowText>{`Finish scope ${scope && scope.name}`}</OverflowText>}
+          type="info"
+          closeOnFadeClick={true}
+        >
+          <div className={className}>
+            {errorMessage && (
+              <ErrorMessage>
+                <ErrorMessageIcon />
+                {errorMessage}
+              </ErrorMessage>
+            )}
+            <ActiveSessionsPanel agentId={agentId} buildVersion={buildVersion} />
+            {!testsCount && (
+              <EmptyScopeWarning>
+                <EmptyScopeWarningIcon />
+                Scope is empty and will be deleted after finishing.
+              </EmptyScopeWarning>
+            )}
+            <Content>
+              <ScopeSummary scope={scope} testsCount={testsCount} />
+              <IgnoreScope>
+                <Inputs.Checkbox
+                  selected={ignoreScope}
+                  onClick={() => setIgnoreScope(!ignoreScope)}
+                  label="Ignore scope in build stats"
+                  withoutMargin
+                  disabled={!Boolean(testsCount)}
+                />
+              </IgnoreScope>
+              <ActionsPanel>
+                <FinishScopeButton
+                  type="primary"
+                  onClick={async () => {
+                    await finishScope(
+                      { agentId, ignoreScope },
+                      onToggle,
+                      showMessage,
+                      setErrorMessage,
+                    );
+                    !testsCount && push(`/full-page/${agentId}/coverage/scopes`);
+                  }}
+                >
+                  {testsCount ? 'Finish Scope' : 'Finish and Delete'}
+                </FinishScopeButton>
+                <CancelButton type="secondary" onClick={() => onToggle(false)}>
+                  Cancel
+                </CancelButton>
+              </ActionsPanel>
+            </Content>
+          </div>
+        </Popup>
+      );
+    },
+  ),
 );
 
 const ErrorMessage = finishScopeModal.errorMessage(Panel);
 const ErrorMessageIcon = finishScopeModal.errorMessageIcon(Icons.Warning);
+const EmptyScopeWarning = finishScopeModal.emptyScopeWarning(Panel);
+const EmptyScopeWarningIcon = finishScopeModal.emptyScopeWarningIcon(Icons.Warning);
 const Content = finishScopeModal.content('div');
 const IgnoreScope = finishScopeModal.ignoreScope('div');
 const ActionsPanel = finishScopeModal.actionsPanel(Panel);
