@@ -3,49 +3,46 @@ import { BEM } from '@redneckz/react-bem-helper';
 import VirtualList from 'react-tiny-virtual-list';
 
 import { Modal, Icons, OverflowText } from '../../../../components';
-import { useBuildVersion } from '../use-build-version';
-import { NewMethod } from '../../../../types/new-method';
+import { MethodsDetails } from '../../../../types/methods-details';
 
-import styles from './new-methods-modal.module.scss';
+import styles from './methods-modal.module.scss';
 
 interface Props {
   className?: string;
-  agentId: string;
-  buildVersion: string;
+  title: string;
   isOpen: boolean;
   onToggle: (arg: boolean) => void;
-  newMethodsTopic: string;
+  methodsDetails?: MethodsDetails[];
 }
 
-const newMethodsModal = BEM(styles);
+const methodsModal = BEM(styles);
 
-export const NewMethodsModal = newMethodsModal(
-  ({ className, buildVersion, agentId, isOpen, onToggle, newMethodsTopic }: Props) => {
-    const methods = useBuildVersion<NewMethod[]>(newMethodsTopic, agentId, buildVersion) || [];
+export const MethodsModal = methodsModal(
+  ({ className, isOpen, onToggle, title, methodsDetails = [] }: Props) => {
     return (
       <Modal isOpen={isOpen} onToggle={onToggle}>
         <div className={className}>
           <Header>
             <Icons.Function height={18} width={18} />
-            <span>MODIFIED & NEW</span>
-            <h2>{methods.length}</h2>
+            <span>{title}</span>
+            <h2>{methodsDetails.length}</h2>
           </Header>
           <Content>
             <MethodsList>
               <VirtualList
                 itemSize={60}
                 height={840}
-                itemCount={methods.length}
+                itemCount={methodsDetails.length}
                 renderItem={({ index, style }) => (
                   <MethodsListItem key={index} style={style as any}>
                     <MethodsListIcon>
                       <Icons.Function />
                     </MethodsListIcon>
                     <MethodSignature>
-                      <OverflowText>{methods[index].name}</OverflowText>
-                      <MethodDescriptor>{methods[index].desc}</MethodDescriptor>
+                      <OverflowText>{methodsDetails[index].name}</OverflowText>
+                      <MethodDescriptor>{methodsDetails[index].desc}</MethodDescriptor>
                     </MethodSignature>
-                    {getCoverageIcon(methods[index].coverage)}
+                    {getCoverageIcon(methodsDetails[index].coverage)}
                   </MethodsListItem>
                 )}
               />
@@ -57,14 +54,14 @@ export const NewMethodsModal = newMethodsModal(
   },
 );
 
-const Header = newMethodsModal.header('div');
-const Content = newMethodsModal.content('div');
-const MethodsList = newMethodsModal.methodsList('div');
-const MethodsListItem = newMethodsModal.methodsListItem('div');
-const MethodsListIcon = newMethodsModal.methodsListItemIcon('div');
-const MethodSignature = newMethodsModal.methodSignature('div');
-const MethodDescriptor = newMethodsModal.methodDescriptor(OverflowText);
-const CoverageIconWrapper = newMethodsModal.coverageIconWrapper('div');
+const Header = methodsModal.header('div');
+const Content = methodsModal.content('div');
+const MethodsList = methodsModal.methodsList('div');
+const MethodsListItem = methodsModal.methodsListItem('div');
+const MethodsListIcon = methodsModal.methodsListItemIcon('div');
+const MethodSignature = methodsModal.methodSignature('div');
+const MethodDescriptor = methodsModal.methodDescriptor(OverflowText);
+const CoverageIconWrapper = methodsModal.coverageIconWrapper('div');
 
 function getCoverageIcon(coverage?: number) {
   if (!coverage) {

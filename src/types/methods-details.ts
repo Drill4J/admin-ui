@@ -1,4 +1,4 @@
-export interface NewMethod {
+export interface MethodsDetails {
   name?: string;
   ownerClass?: string;
   desc?: string;

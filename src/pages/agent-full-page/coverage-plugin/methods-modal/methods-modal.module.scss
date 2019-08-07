@@ -1,6 +1,6 @@
 @import '../../../../common/style-guide/index';
 
-.new-methods-modal {
+.methods-modal {
   display: flex;
   flex-direction: column;
   height: 100%;
@@ -17,6 +17,10 @@
 
     & > * {
       margin-right: 8px;
+    }
+
+    :first-letter {
+      text-transform: capitalize;
     }
   }
 

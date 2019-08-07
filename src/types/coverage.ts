@@ -1,4 +1,4 @@
-import { TestTypeSummary } from './test-type-summary';
+import { CoverageByType } from './coverage-by-type';
 
 export interface Coverage {
   coverage?: number;
@@ -6,4 +6,5 @@ export interface Coverage {
   classesCount?: number;
   methodsCount?: number;
   arrow?: 'INCREASE' | 'DECREASE';
+  coverageByType?: CoverageByType;
 }

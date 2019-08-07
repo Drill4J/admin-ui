@@ -17,7 +17,7 @@ export const Card = card(({ className, header, children }: Props) => (
     <Content>
       {React.Children.map(children, (child: React.ReactElement<any>) => (
         <CardSectionContent>
-          <CardSectionLabel>{child.props.header}</CardSectionLabel>
+          <CardSectionLabel>{child.props.title}</CardSectionLabel>
           <span>{child}</span>
         </CardSectionContent>
       ))}
