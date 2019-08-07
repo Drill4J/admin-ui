@@ -53,7 +53,7 @@ export const AgentSettingsForm = agentSettingsForm(
       </BuildVerison>
       <FormGroup label="Build Alias">
         <Field
-          name="buildVersionAlias"
+          name="buildAlias"
           component={Fields.Input}
           placeholder="Give build a meaningful name"
         />
