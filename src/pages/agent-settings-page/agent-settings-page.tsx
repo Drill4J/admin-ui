@@ -24,46 +24,36 @@ interface Props extends RouteComponentProps<{ agentId: string }> {
   className?: string;
 }
 
-interface FormValues extends Agent {
-  buildVersionAlias?: string;
-}
-
 const agentSettingsPage = BEM(styles);
 
 const validateSettings = composeValidators(
   required('name'),
   required('description'),
-  required('buildVersionAlias'),
+  required('buildAlias'),
   sizeLimit('name'),
   sizeLimit('group'),
   sizeLimit('description', 3, 256),
-  sizeLimit('buildVersionAlias'),
+  sizeLimit('buildAlias'),
 );
 
-const buildVersionAliasDecorator = createDecorator(
+const buildAliasDecorator = createDecorator(
   {
-    field: 'buildVersionAlias',
+    field: 'buildAlias',
     updates: {
-      buildVersions: (buildVersionAlias: string, allValues: any) =>
+      buildVersions: (buildAlias: string, allValues: any) =>
         allValues.buildVersions.map(({ id, name }: BuildVersion) =>
-          id === allValues.buildVersion ? { id, name: buildVersionAlias } : { id, name },
+          id === allValues.buildVersion ? { id, name: buildAlias } : { id, name },
         ),
     },
   },
   {
     field: 'buildVersion',
     updates: {
-      buildVersionAlias: (buildVersion, allValues: any) => {
+      buildAlias: (buildVersion, allValues: any) => {
         const { name = '' } =
           allValues.buildVersions.find(({ id }: BuildVersion) => id === buildVersion) || {};
         return name;
       },
-    },
-  },
-  {
-    field: 'buildAlias',
-    updates: {
-      buildVersionAlias: (buildAlias) => buildAlias,
     },
   },
 );
@@ -81,7 +71,7 @@ export const AgentSettingsPage = withRouter(
           onSubmit={(values) => saveChanges(values, showMessage, setErrorMessage)}
           initialValues={agent}
           validate={validateSettings as any}
-          decorators={[buildVersionAliasDecorator]}
+          decorators={[buildAliasDecorator]}
           render={({
             handleSubmit,
             submitting,
@@ -158,7 +148,7 @@ const ErrorMessageIcon = agentSettingsPage.errorMessageIcon(Icons.Warning);
 const Content = agentSettingsPage.content('div');
 
 async function saveChanges(
-  { buildVersionAlias, ...agent }: FormValues,
+  agent: Agent,
   showMessage: (message: Message) => void,
   setErrorMessage: (message: string) => void,
 ) {
