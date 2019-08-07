@@ -9,9 +9,8 @@ import { CoverageDetails } from '../coverage-details';
 import { CodeCoverageCard } from '../code-coverage-card';
 import { ProjectMethodsCard } from '../project-methods-card';
 import { Coverage } from '../../../../types/coverage';
-import { NewMethodsCoverage } from '../../../../types/new-methods-coverage';
 import { ClassCoverage } from '../../../../types/class-coverage';
-import { CoverageByTypes } from '../../../../types/coverage-by-types';
+import { Methods } from '../../../../types/methods';
 
 import styles from './dashboard.module.scss';
 
@@ -25,29 +24,15 @@ const dashboard = BEM(styles);
 
 export const Dashboard = dashboard(({ className, agentId, buildVersion }: Props) => {
   const coverage = useBuildVersion<Coverage>('/build/coverage', agentId, buildVersion) || {};
-  const newMethodsCoverage =
-    useBuildVersion<NewMethodsCoverage>('/build/coverage-new', agentId, buildVersion) || {};
+  const buildMethods = useBuildVersion<Methods>('/build/methods', agentId, buildVersion) || {};
   const coverageByPackages =
     useBuildVersion<ClassCoverage[]>('/build/coverage-by-packages', agentId, buildVersion) || [];
-  const coverageByTypes =
-    useBuildVersion<CoverageByTypes>('/build/coverage-by-types', agentId, buildVersion) || {};
 
   return (
     <div className={className}>
       <SummaryPanel align="space-between">
-        <CodeCoverageCard
-          header="Build Code Coverage"
-          coverage={coverage}
-          coverageByTypes={coverageByTypes}
-        />
-        <ProjectMethodsCard
-          header="Project Methods"
-          coverage={coverage}
-          newMethodsCoverage={newMethodsCoverage}
-          agentId={agentId}
-          buildVersion={buildVersion}
-          newMethodsTopic="/build/new-methods"
-        />
+        <CodeCoverageCard header="Build Code Coverage" coverage={coverage} />
+        <ProjectMethodsCard header="Build Methods" methods={buildMethods} />
       </SummaryPanel>
       <Section header="Current Scope">
         <CurrentScope agentId={agentId} buildVersion={buildVersion} />

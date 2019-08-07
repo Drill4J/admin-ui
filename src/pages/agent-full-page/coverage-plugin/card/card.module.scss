@@ -7,7 +7,7 @@
   background-color: map-get($color-palette, white);
 
   &__header {
-    margin: 16px;
+    margin: 16px 16px 24px 16px;
     line-height: 20px;
     font-size: 14px;
     font-family: $semibold-font;

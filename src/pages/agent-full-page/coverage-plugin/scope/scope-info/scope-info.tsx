@@ -13,9 +13,8 @@ import { CoverageDetails } from '../../coverage-details';
 import { TestDetails } from '../../test-details';
 import { ScopeSummary } from '../../../../../types/scope-summary';
 import { Coverage } from '../../../../../types/coverage';
-import { NewMethodsCoverage } from '../../../../../types/new-methods-coverage';
+import { Methods } from '../../../../../types/methods';
 import { ClassCoverage } from '../../../../../types/class-coverage';
-import { CoverageByTypes } from '../../../../../types/coverage-by-types';
 import { AssociatedTests } from '../../../../../types/associated-tests';
 
 import styles from './scope-info.module.scss';
@@ -41,19 +40,8 @@ export const ScopeInfo = withRouter(
     }: Props) => {
       const coverage =
         useBuildVersion<Coverage>(`/scope/${scopeId}/coverage`, agentId, buildVersion) || {};
-      const newMethodsCoverage =
-        useBuildVersion<NewMethodsCoverage>(
-          `/scope/${scopeId}/coverage-new`,
-          agentId,
-          buildVersion,
-        ) || {};
-
-      const coverageByTypes =
-        useBuildVersion<CoverageByTypes>(
-          `/scope/${scopeId}/coverage-by-types`,
-          agentId,
-          buildVersion,
-        ) || {};
+      const scopeMethods =
+        useBuildVersion<Methods>(`/scope/${scopeId}/methods`, agentId, buildVersion) || {};
       const coverageByPackages =
         useBuildVersion<ClassCoverage[]>(
           `/scope/${scopeId}/coverage-by-packages`,
@@ -94,19 +82,8 @@ export const ScopeInfo = withRouter(
             </Panel>
           </Header>
           <SummaryPanel align="space-between">
-            <CodeCoverageCard
-              header="Scope Code Coverage"
-              coverage={coverage}
-              coverageByTypes={coverageByTypes}
-            />
-            <ProjectMethodsCard
-              header="Project Methods"
-              coverage={coverage}
-              newMethodsCoverage={newMethodsCoverage}
-              agentId={agentId}
-              buildVersion={buildVersion}
-              newMethodsTopic={`/scope/${scopeId}/new-methods`}
-            />
+            <CodeCoverageCard header="Scope Code Coverage" coverage={coverage} />
+            <ProjectMethodsCard header="Project Methods" methods={scopeMethods} />
           </SummaryPanel>
           <RoutingTabsPanel>
             <TabsPanel activeTab={selectedTab} onSelect={setSelectedTab}>

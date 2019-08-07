@@ -7,7 +7,6 @@ import { percentFormatter } from '../../../../utils';
 import { Card, CardSection } from '../card';
 import { CoveragesByType } from './coverages-by-type';
 import { Coverage } from '../../../../types/coverage';
-import { CoverageByTypes } from '../../../../types/coverage-by-types';
 
 import styles from './code-coverage-card.module.scss';
 
@@ -15,13 +14,12 @@ interface Props {
   className?: string;
   header?: React.ReactNode;
   coverage: Coverage;
-  coverageByTypes: CoverageByTypes;
 }
 
 const codeCoverageCard = BEM(styles);
 
 export const CodeCoverageCard = codeCoverageCard(
-  ({ className, header, coverage: { coverage = 0, arrow }, coverageByTypes }: Props) => (
+  ({ className, header, coverage: { coverage = 0, arrow, coverageByType = {} } }: Props) => (
     <div className={className}>
       <Card header={header}>
         <CardSection header="TOTAL">
@@ -33,7 +31,7 @@ export const CodeCoverageCard = codeCoverageCard(
           </TotalCoverage>
         </CardSection>
         <CardSection header="BY TEST TYPE">
-          <CoveragesByType coverageByType={coverageByTypes} />
+          <CoveragesByType coverageByType={coverageByType} />
         </CardSection>
       </Card>
     </div>
