@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 import { Form, Field } from 'react-final-form';
-import axios from 'axios';
 
 import { Panel } from '../../../../../layouts';
 import {
@@ -14,7 +13,8 @@ import {
 } from '../../../../../forms';
 import { Popup, Icons } from '../../../../../components';
 import { NotificationManagerContext } from '../../../../../notification-manager';
-import { Message } from '../../../../../types/message';
+import { renameScope } from '../../api';
+import { ScopeSummary } from '../../../../../types/scope-summary';
 
 import styles from './rename-scope-modal.module.scss';
 
@@ -23,14 +23,15 @@ interface Props {
   isOpen: boolean;
   onToggle: (value: boolean) => void;
   agentId: string;
+  scope: ScopeSummary | null;
 }
 
 const renameScopeModal = BEM(styles);
 
-const validateScope = composeValidators(required('scopeName'), sizeLimit('scopeName', 1, 64));
+const validateScope = composeValidators(required('name'), sizeLimit('name', 1, 64));
 
 export const RenameScopeModal = renameScopeModal(
-  ({ className, isOpen, onToggle, agentId }: Props) => {
+  ({ className, isOpen, onToggle, agentId, scope }: Props) => {
     const { showMessage } = React.useContext(NotificationManagerContext);
     const [errorMessage, setErrorMessage] = React.useState('');
 
@@ -38,7 +39,7 @@ export const RenameScopeModal = renameScopeModal(
       <Popup
         isOpen={isOpen}
         onToggle={onToggle}
-        header={<Panel>Set scope name</Panel>}
+        header={<Panel>Rename scope</Panel>}
         type="info"
         closeOnFadeClick={true}
       >
@@ -50,17 +51,21 @@ export const RenameScopeModal = renameScopeModal(
             </ErrorMessage>
           )}
           <Form
-            onSubmit={(values) => createNewScope(values, onToggle, showMessage, setErrorMessage)}
+            onSubmit={(values) =>
+              renameScope(agentId, {
+                onSuccess: () => {
+                  showMessage({ type: 'SUCCESS', text: 'Scope name has been changed' });
+                  onToggle(false);
+                },
+                onError: setErrorMessage,
+              })(values as ScopeSummary)
+            }
             validate={validateScope as any}
-            initialValues={{ agentId }}
+            initialValues={scope || {}}
             render={({ handleSubmit }) => (
               <Content>
                 <FormGroup label="Scope Name">
-                  <Field
-                    name="scopeName"
-                    component={Fields.Input}
-                    placeholder="e.g. Automation Tests"
-                  />
+                  <Field name="name" component={Fields.Input} placeholder="e.g. Automation Tests" />
                 </FormGroup>
                 <ActionsPanel>
                   <RenameScopeButton type="primary" onClick={handleSubmit as any}>
@@ -85,21 +90,3 @@ const Content = renameScopeModal.content('div');
 const ActionsPanel = renameScopeModal.actionsPanel(Panel);
 const RenameScopeButton = renameScopeModal.renameScopeButton(Button);
 const CancelButton = renameScopeModal.cancelButton(Button);
-
-async function createNewScope(
-  { scopeName, agentId }: { scopeName?: string; agentId?: string },
-  closeModal: (value: boolean) => void,
-  showMessage: (message: Message) => void,
-  setErrorMessage: (error: string) => void,
-) {
-  try {
-    await axios.post(`/agents/${agentId}/coverage/dispatch-action`, {
-      type: 'RENAME_ACTIVE_SCOPE',
-      payload: { scopeName },
-    });
-    showMessage({ type: 'SUCCESS', text: 'Scope name is changed' });
-    closeModal(false);
-  } catch (error) {
-    setErrorMessage(error.message);
-  }
-}

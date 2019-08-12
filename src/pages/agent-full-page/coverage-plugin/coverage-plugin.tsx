@@ -44,7 +44,7 @@ export const CoveragePlugin = withRouter(
       return (
         <div className={className}>
           <PageHeader
-            title={<span>Code Coverage Tracker </span>}
+            title={<span>Code Coverage Tracker</span>}
             actions={
               <Panel align="end">
                 <SettingsButton>

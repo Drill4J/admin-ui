@@ -1,0 +1,57 @@
+@import '../../common/style-guide/index';
+
+.menu {
+  position: relative;
+  display: flex;
+  align-items: center;
+  color: map-get($color-palette, black100);
+
+  &__menu-icon {
+    width: 15px;
+    color: map-get($color-palette, blue100);
+    cursor: pointer;
+  }
+
+  &__items-list {
+    min-width: 190px;
+    position: absolute;
+    right: -100%;
+    top: 34px;
+    display: flex;
+    flex-direction: column;
+    padding: 8px 0;
+    filter: drop-shadow(0 0 24px rgba(0, 0, 0, 0.15));
+    border-radius: 8px;
+    background-color: map-get($color-palette, white);
+    z-index: 90;
+
+    &::before {
+      content: '';
+      position: absolute;
+      background-color: map-get($color-palette, white);
+      top: -7px;
+      left: calc(100% - 30px);
+      height: 15px;
+      width: 15px;
+      transform: rotate(45deg);
+    }
+  }
+
+  &__item {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 0 16px;
+    cursor: pointer;
+
+    &:hover {
+      background-color: rgba(248, 231, 28, 0.1);
+    }
+  }
+
+  &__item-label {
+    font-size: 14px;
+    line-height: 32px;
+    margin-left: 8px;
+  }
+}

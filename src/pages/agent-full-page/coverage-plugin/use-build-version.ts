@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 
 import { defaultPluginSocket } from '../../../common/connection';
 
@@ -6,7 +6,7 @@ export function useBuildVersion<Data>(topic: string, agentId?: string, buildVers
   const [data, setData] = useState<Data | null>(null);
 
   useEffect(() => {
-    function handleDataChange(newData: any) {
+    function handleDataChange(newData: Data) {
       setData(newData);
     }
 

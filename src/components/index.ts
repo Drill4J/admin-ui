@@ -13,3 +13,4 @@ export { TabsPanel, Tab } from './tabs';
 export { MessagePanel } from './message-panel';
 export { Spinner } from './spinner';
 export { Popup } from './popup';
+export { Menu } from './menu';

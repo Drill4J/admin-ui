@@ -1,16 +1,15 @@
 import * as React from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
-import axios from 'axios';
 
-import { Panel } from '../../../../../../layouts';
-import { Button, Inputs } from '../../../../../../forms';
-import { Popup, Icons, OverflowText } from '../../../../../../components';
-import { NotificationManagerContext } from '../../../../../../notification-manager';
+import { Panel } from '../../../../../layouts';
+import { Button, Inputs } from '../../../../../forms';
+import { Popup, Icons, OverflowText } from '../../../../../components';
+import { NotificationManagerContext } from '../../../../../notification-manager';
+import { finishScope } from '../../api';
 import { ScopeSummary } from './scope-summary';
-import { ActiveSessionsPanel } from './active-sessions-panel';
-import { Message } from '../../../../../../types/message';
-import { ScopeSummary as ScopeSummaryType } from '../../../../../../types/scope-summary';
+import { ActiveSessionsPanel } from '../active-sessions-panel';
+import { ScopeSummary as ScopeSummaryType } from '../../../../../types/scope-summary';
 
 import styles from './finish-scope-modal.module.scss';
 
@@ -21,13 +20,23 @@ interface Props extends RouteComponentProps {
   agentId: string;
   buildVersion: string;
   scope: ScopeSummaryType | null;
+  withRedirect?: boolean;
 }
 
 const finishScopeModal = BEM(styles);
 
 export const FinishScopeModal = withRouter(
   finishScopeModal(
-    ({ className, isOpen, onToggle, agentId, buildVersion, scope, history: { push } }: Props) => {
+    ({
+      className,
+      isOpen,
+      onToggle,
+      agentId,
+      buildVersion,
+      scope,
+      history: { push },
+      withRedirect,
+    }: Props) => {
       const { showMessage } = React.useContext(NotificationManagerContext);
       const [errorMessage, setErrorMessage] = React.useState('');
       const [ignoreScope, setIgnoreScope] = React.useState(false);
@@ -73,13 +82,14 @@ export const FinishScopeModal = withRouter(
                 <FinishScopeButton
                   type="primary"
                   onClick={async () => {
-                    await finishScope(
-                      { agentId, ignoreScope },
-                      onToggle,
-                      showMessage,
-                      setErrorMessage,
-                    );
-                    !testsCount && push(`/full-page/${agentId}/coverage/scopes`);
+                    await finishScope(agentId, {
+                      onSuccess: () => {
+                        showMessage({ type: 'SUCCESS', text: 'Scope is finished' });
+                        onToggle(false);
+                      },
+                      onError: setErrorMessage,
+                    })({ prevScopeEnabled: !ignoreScope, savePrevScope: true });
+                    !testsCount && withRedirect && push(`/full-page/${agentId}/coverage/dashboard`);
                   }}
                 >
                   {testsCount ? 'Finish Scope' : 'Finish and Delete'}
@@ -105,21 +115,3 @@ const IgnoreScope = finishScopeModal.ignoreScope('div');
 const ActionsPanel = finishScopeModal.actionsPanel(Panel);
 const FinishScopeButton = finishScopeModal.finishScopeButton(Button);
 const CancelButton = finishScopeModal.cancelButton(Button);
-
-async function finishScope(
-  { agentId, ignoreScope }: { agentId?: string; ignoreScope?: boolean },
-  closeModal: (value: boolean) => void,
-  showMessage: (message: Message) => void,
-  setErrorMessage: (error: string) => void,
-) {
-  try {
-    await axios.post(`/agents/${agentId}/coverage/dispatch-action`, {
-      type: 'SWITCH_ACTIVE_SCOPE',
-      payload: { prevScopeEnabled: !ignoreScope, scopeName: '', savePrevScope: true },
-    });
-    showMessage({ type: 'SUCCESS', text: 'Scope is finished' });
-    closeModal(false);
-  } catch (error) {
-    setErrorMessage(error.message);
-  }
-}

@@ -2,12 +2,16 @@ import * as React from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
 
-import { Table, Column } from '../../../../../components';
+import { Table, Column, Menu } from '../../../../../components';
 import { percentFormatter } from '../../../../../utils';
 import { useBuildVersion } from '../../use-build-version';
+import { toggleScope } from '../../api';
+import { RenameScopeModal } from '../rename-scope-modal';
 import { ScopeSummary } from '../../../../../types/scope-summary';
 
 import styles from './scopes-list.module.scss';
+import { DeleteScopeModal } from '../delete-scope-modal';
+import { FinishScopeModal } from '../finish-scope-modal';
 
 interface Props extends RouteComponentProps {
   className?: string;
@@ -25,6 +29,10 @@ export const ScopesList = withRouter(
       ({ started: firstStartedDate }, { started: secondStartedDate }) =>
         secondStartedDate - firstStartedDate,
     );
+    const [isFinishModalOpen, setIsFinishModalOpen] = React.useState(false);
+    const [isRenameModalOpen, setIsRenameModalOpen] = React.useState(false);
+    const [isCancelModalOpen, setIsCancelModalOpen] = React.useState(false);
+    const [selectedScope, setSelectedScope] = React.useState(null);
 
     const scopesData =
       activeScope && activeScope.name ? [activeScope, ...sortedScopes] : sortedScopes;
@@ -92,7 +100,72 @@ export const ScopesList = withRouter(
                 </TestTypeCoverage>
               )}
             />
+            <Column
+              name="actions"
+              HeaderCell={() => null}
+              Cell={({ item }) => {
+                const menuActions = [
+                  item.active && {
+                    label: 'Finish Scope',
+                    icon: 'Check',
+                    onClick: () => setIsFinishModalOpen(true),
+                  },
+                  !item.active && {
+                    label: `${item.enabled ? 'Ignore in build stats' : 'Show in build stats'}`,
+                    icon: item.enabled ? 'EyeCrossed' : 'Eye',
+                    onClick: () => toggleScope(agentId)(item.id),
+                  },
+                  {
+                    label: 'Rename',
+                    icon: 'Edit',
+                    onClick: () => {
+                      setSelectedScope(item);
+                      setIsRenameModalOpen(true);
+                    },
+                  },
+                  {
+                    label: 'Delete',
+                    icon: 'Delete',
+                    onClick: () => {
+                      setSelectedScope(item);
+                      setIsRenameModalOpen(true);
+                    },
+                  },
+                ].filter(Boolean);
+                return (
+                  <ActionCell>
+                    <Menu items={menuActions as any} />
+                  </ActionCell>
+                );
+              }}
+            />
           </Table>
+          {isFinishModalOpen && (
+            <FinishScopeModal
+              agentId={agentId}
+              buildVersion={buildVersion}
+              scope={selectedScope}
+              isOpen={isFinishModalOpen}
+              onToggle={setIsFinishModalOpen}
+            />
+          )}
+          {isRenameModalOpen && (
+            <RenameScopeModal
+              isOpen={isRenameModalOpen}
+              onToggle={setIsRenameModalOpen}
+              agentId={agentId}
+              scope={selectedScope}
+            />
+          )}
+          {isCancelModalOpen && (
+            <DeleteScopeModal
+              isOpen={isCancelModalOpen}
+              onToggle={setIsCancelModalOpen}
+              agentId={agentId}
+              buildVersion={buildVersion}
+              scope={selectedScope as any}
+            />
+          )}
         </Content>
       </div>
     );
@@ -111,3 +184,4 @@ const StartDate = scopesList.startDate('div');
 const ActiveBadge = scopesList.activeBadge('span');
 const IgnoreBadge = scopesList.ignoreBadge('span');
 const Coverage = scopesList.coverage('div');
+const ActionCell = scopesList.actionCell('div');
