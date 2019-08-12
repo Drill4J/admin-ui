@@ -5,6 +5,8 @@ import styles from './textarea.module.scss';
 
 interface Props {
   className?: string;
+  value: string;
+  onChange: (event: React.SyntheticEvent<HTMLTextAreaElement>) => void;
 }
 
 const textarea = BEM(styles);

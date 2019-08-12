@@ -7,3 +7,4 @@ export { NotFoundPage } from './not-found-page';
 export { AgentInfoPage } from './agent-info-page';
 export { AgentFullPage } from './agent-full-page';
 export { AgentSettingsPage } from './agent-settings-page';
+export { PluginSettingsPage } from './plugin-settings-page';

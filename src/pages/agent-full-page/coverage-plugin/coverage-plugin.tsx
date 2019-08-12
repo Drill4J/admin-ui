@@ -48,7 +48,7 @@ export const CoveragePlugin = withRouter(
             actions={
               <Panel align="end">
                 <SettingsButton>
-                  <Icons.Settings />
+                  <Icons.Settings onClick={() => push(`/agents/${agentId}/coverage/settings`)} />
                 </SettingsButton>
               </Panel>
             }
