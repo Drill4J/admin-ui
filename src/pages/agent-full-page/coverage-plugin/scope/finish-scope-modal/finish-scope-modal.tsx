@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
-import { withRouter, RouteComponentProps } from 'react-router-dom';
+import { withRouter, RouteComponentProps, matchPath } from 'react-router-dom';
 
 import { Panel } from '../../../../../layouts';
 import { Button, Inputs } from '../../../../../forms';
@@ -9,6 +9,7 @@ import { NotificationManagerContext } from '../../../../../notification-manager'
 import { finishScope } from '../../api';
 import { ScopeSummary } from './scope-summary';
 import { ActiveSessionsPanel } from '../active-sessions-panel';
+import { PluginContext } from '../../store';
 import { ScopeSummary as ScopeSummaryType } from '../../../../../types/scope-summary';
 
 import styles from './finish-scope-modal.module.scss';
@@ -17,33 +18,28 @@ interface Props extends RouteComponentProps {
   className?: string;
   isOpen: boolean;
   onToggle: (value: boolean) => void;
-  agentId: string;
-  buildVersion: string;
   scope: ScopeSummaryType | null;
-  withRedirect?: boolean;
 }
 
 const finishScopeModal = BEM(styles);
 
 export const FinishScopeModal = withRouter(
   finishScopeModal(
-    ({
-      className,
-      isOpen,
-      onToggle,
-      agentId,
-      buildVersion,
-      scope,
-      history: { push },
-      withRedirect,
-    }: Props) => {
+    ({ className, isOpen, onToggle, scope, history, location: { pathname } }: Props) => {
       const { showMessage } = React.useContext(NotificationManagerContext);
+      const {
+        state: { agentId },
+      } = React.useContext(PluginContext);
       const [errorMessage, setErrorMessage] = React.useState('');
       const [ignoreScope, setIgnoreScope] = React.useState(false);
 
       const testsCount = scope
         ? Object.values(scope.coveragesByType).reduce((acc, { testCount }) => acc + testCount, 0)
         : 0;
+      const { params: { scopeId = '' } = {} } =
+        matchPath<{ scopeId: string }>(pathname, {
+          path: '/:page/:agentId/:pluginId/:tab/:scopeId',
+        }) || {};
 
       return (
         <Popup
@@ -60,7 +56,7 @@ export const FinishScopeModal = withRouter(
                 {errorMessage}
               </ErrorMessage>
             )}
-            <ActiveSessionsPanel agentId={agentId} buildVersion={buildVersion} />
+            <ActiveSessionsPanel />
             {!testsCount && (
               <EmptyScopeWarning>
                 <EmptyScopeWarningIcon />
@@ -89,7 +85,7 @@ export const FinishScopeModal = withRouter(
                       },
                       onError: setErrorMessage,
                     })({ prevScopeEnabled: !ignoreScope, savePrevScope: true });
-                    !testsCount && withRedirect && push(`/full-page/${agentId}/coverage/dashboard`);
+                    !testsCount && scopeId && history.goBack();
                   }}
                 >
                   {testsCount ? 'Finish Scope' : 'Finish and Delete'}

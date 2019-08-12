@@ -4,10 +4,12 @@ import { withRouter, RouteComponentProps, Switch, Route } from 'react-router-dom
 
 import { Panel } from '../../../layouts';
 import { Icons, PageHeader, TabsPanel, Tab } from '../../../components';
+import { PluginContext, setInitialConfig } from './store';
 import { Dashboard } from './dashboard';
 import { ScopesList, ScopeInfo } from './scope';
 import { Tests } from './tests';
 import { PluginHeader } from './plugin-header';
+import { CoveragePluginModals } from './covarage-plugin-modals';
 import { Agent } from '../../../types/agent';
 
 import styles from './coverage-plugin.module.scss';
@@ -26,20 +28,14 @@ export const CoveragePlugin = withRouter(
       match: {
         params: { agentId, tab, pluginId },
       },
-      agent: { name, buildVersion = '', buildAlias } = {},
+      agent: { name, buildVersion = '' } = {},
       history: { push },
     }: Props) => {
-      const [selectedBuildVersion, setSelectedBuildVersion] = React.useState({
-        value: buildVersion,
-        label: `Build ${buildAlias}`,
-      });
+      const { dispatch } = React.useContext(PluginContext);
 
       React.useEffect(() => {
-        setSelectedBuildVersion({
-          value: buildVersion,
-          label: `Build ${buildAlias || buildVersion}`,
-        });
-      }, [buildVersion, buildAlias]);
+        dispatch(setInitialConfig({ agentId, pluginId, buildVersion }));
+      }, [buildVersion]);
 
       return (
         <div className={className}>
@@ -53,12 +49,7 @@ export const CoveragePlugin = withRouter(
               </Panel>
             }
           />
-          <PluginHeader
-            agentName={name}
-            agentId={agentId}
-            buildVersion={selectedBuildVersion}
-            setBuildVersion={setSelectedBuildVersion}
-          />
+          <PluginHeader agentName={name} agentId={agentId} />
           <RoutingTabsPanel>
             <TabsPanel
               activeTab={tab}
@@ -90,32 +81,23 @@ export const CoveragePlugin = withRouter(
             <Switch>
               <Route
                 path={`/full-page/${agentId}/${pluginId}/dashboard`}
-                render={() => (
-                  <Dashboard agentId={agentId} buildVersion={selectedBuildVersion.value} />
-                )}
+                component={Dashboard}
                 exact
               />
               <Route
                 path={`/full-page/${agentId}/${pluginId}/scopes`}
-                render={() => (
-                  <ScopesList agentId={agentId} buildVersion={selectedBuildVersion.value} />
-                )}
+                component={ScopesList}
                 exact
               />
               <Route
                 path={`/full-page/${agentId}/${pluginId}/scopes/:scopeId`}
-                render={() => (
-                  <ScopeInfo agentId={agentId} buildVersion={selectedBuildVersion.value} />
-                )}
+                component={ScopeInfo}
                 exact
               />
-              <Route
-                path={`/full-page/${agentId}/${pluginId}/tests`}
-                render={() => <Tests agentId={agentId} buildVersion={selectedBuildVersion.value} />}
-                exact
-              />
+              <Route path={`/full-page/${agentId}/${pluginId}/tests`} component={Tests} exact />
             </Switch>
           </Content>
+          <CoveragePluginModals />
         </div>
       );
     },
