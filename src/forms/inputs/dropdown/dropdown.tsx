@@ -13,7 +13,7 @@ interface DropdownItem {
 interface Props {
   className?: string;
   items: DropdownItem[];
-  value: DropdownItem;
+  value: string;
   onChange: (arg: DropdownItem) => void;
 }
 
@@ -34,11 +34,12 @@ export const Dropdown = dropdown(({ className, items, value, onChange }: Props) 
       document.removeEventListener('mousedown', handleClick);
     };
   }, []);
+  const selectedValue = items.find((item) => value === item.value);
 
   return (
     <div className={className} ref={node}>
       <Container onClick={() => setIsExpanded(!isExpanded)}>
-        <Value>{value.label}</Value>
+        <Value>{selectedValue && `Build ${selectedValue.label}`}</Value>
         <Icon>
           <Icons.Expander />
         </Icon>
@@ -52,7 +53,7 @@ export const Dropdown = dropdown(({ className, items, value, onChange }: Props) 
                   onChange(item);
                   setIsExpanded(false);
                 }}
-                selected={value.value === item.value}
+                selected={value === item.value}
                 key={item.value}
               >
                 {item.label}

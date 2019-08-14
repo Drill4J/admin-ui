@@ -2,10 +2,9 @@ import * as React from 'react';
 import { BEM, div } from '@redneckz/react-bem-helper';
 
 import { Modal, Icons } from '../../../../../components';
-import { useWsConnection } from '../../../../../hooks';
-import { defaultPluginSocket } from '../../../../../common/connection';
-import { AssociatedTests } from '../../../../../types/associated-tests';
+import { useBuildVersion } from '../../use-build-version';
 import { ItemInfo } from './item-info';
+import { AssociatedTests } from '../../../../../types/associated-tests';
 
 import styles from './associated-test-modal.module.scss';
 
@@ -14,20 +13,14 @@ interface Props {
   id?: string;
   isOpen: boolean;
   onToggle: (arg: boolean) => void;
-  agentId?: string;
-  buildVersion?: string;
   associatedTestsTopic: string;
 }
 
 const associatedTestModal = BEM(styles);
 
 export const AssociatedTestModal = associatedTestModal(
-  ({ className, isOpen, onToggle, id, agentId, buildVersion, associatedTestsTopic }: Props) => {
-    const associatedTests =
-      useWsConnection<AssociatedTests[]>(defaultPluginSocket, associatedTestsTopic, {
-        agentId,
-        buildVersion,
-      }) || [];
+  ({ className, isOpen, onToggle, id, associatedTestsTopic }: Props) => {
+    const associatedTests = useBuildVersion<AssociatedTests[]>(associatedTestsTopic) || [];
     const { tests = [], packageName = '', className: testClassName = '', methodName = '' } =
       associatedTests.find((test) => test.id === id) || {};
     const testsMap = tests.reduce(

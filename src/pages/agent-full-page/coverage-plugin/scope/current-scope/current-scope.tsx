@@ -7,10 +7,8 @@ import { Icons, Menu } from '../../../../../components';
 import { Button } from '../../../../../forms';
 import { percentFormatter } from '../../../../../utils';
 import { useBuildVersion } from '../../use-build-version';
-import { RenameScopeModal } from '../rename-scope-modal';
-import { FinishScopeModal } from '../finish-scope-modal';
-import { DeleteScopeModal } from '../delete-scope-modal';
 import { CoverageByType } from './coverage-by-type';
+import { PluginContext, openModal } from '../../store';
 import { NoScopeStub } from '../no-scope-stub';
 import { ScopeSummary } from '../../../../../types/scope-summary';
 
@@ -18,8 +16,6 @@ import styles from './current-scope.module.scss';
 
 interface Props extends RouteComponentProps {
   className?: string;
-  agentId: string;
-  buildVersion: string;
 }
 
 const coverageByTypeDefaults = {
@@ -43,15 +39,16 @@ const coverageByTypeDefaults = {
 const currentScope = BEM(styles);
 
 export const CurrentScope = withRouter(
-  currentScope(({ className, agentId, buildVersion, history: { push } }: Props) => {
-    const scope = useBuildVersion<ScopeSummary>('/active-scope', agentId, buildVersion);
+  currentScope(({ className, history: { push } }: Props) => {
+    const scope = useBuildVersion<ScopeSummary>('/active-scope');
+    const {
+      state: { agentId },
+      dispatch,
+    } = React.useContext(PluginContext);
     const { id = '', name = '', coverage = 0, coveragesByType = {}, started = 0, active = false } =
       scope || {};
     const { testTypes: activeSessionTestTypes = [] } =
-      useBuildVersion<{ testTypes: string[] }>('/active-sessions', agentId, buildVersion) || {};
-    const [isRenameModalOpen, setIsRenameModalOpen] = React.useState(false);
-    const [isFinishModalOpen, setIsFinishModalOpen] = React.useState(false);
-    const [isCancelModalOpen, setIsCancelModalOpen] = React.useState(false);
+      useBuildVersion<{ testTypes: string[] }>('/active-sessions') || {};
     const scopeStartDate = new Date(started).toDateString();
 
     return (
@@ -81,14 +78,25 @@ export const CurrentScope = withRouter(
             </CoverageByTypeSection>
             <ActionsSection>
               <Panel>
-                <FinishScopeButton type="secondary" onClick={() => setIsFinishModalOpen(true)}>
+                <FinishScopeButton
+                  type="secondary"
+                  onClick={() => dispatch(openModal('FinishScopeModal', scope))}
+                >
                   <Icons.Check height={12} width={16} />
                   Finish
                 </FinishScopeButton>
                 <Menu
                   items={[
-                    { label: 'Rename', icon: 'Edit', onClick: () => setIsRenameModalOpen(true) },
-                    { label: 'Cancel', icon: 'Delete', onClick: () => setIsCancelModalOpen(true) },
+                    {
+                      label: 'Rename',
+                      icon: 'Edit',
+                      onClick: () => dispatch(openModal('RenameScopeModal', scope)),
+                    },
+                    {
+                      label: 'Cancel',
+                      icon: 'Delete',
+                      onClick: () => dispatch(openModal('DeleteScopeModal', scope)),
+                    },
                   ]}
                 />
               </Panel>
@@ -96,32 +104,6 @@ export const CurrentScope = withRouter(
           </Content>
         ) : (
           <NoScopeStub />
-        )}
-        {isRenameModalOpen && (
-          <RenameScopeModal
-            isOpen={isRenameModalOpen}
-            onToggle={setIsRenameModalOpen}
-            agentId={agentId}
-            scope={scope}
-          />
-        )}
-        {isFinishModalOpen && (
-          <FinishScopeModal
-            isOpen={isFinishModalOpen}
-            onToggle={setIsFinishModalOpen}
-            agentId={agentId}
-            buildVersion={buildVersion}
-            scope={scope}
-          />
-        )}
-        {isCancelModalOpen && (
-          <DeleteScopeModal
-            isOpen={isCancelModalOpen}
-            onToggle={setIsCancelModalOpen}
-            agentId={agentId}
-            buildVersion={buildVersion}
-            scope={scope as ScopeSummary}
-          />
         )}
       </div>
     );

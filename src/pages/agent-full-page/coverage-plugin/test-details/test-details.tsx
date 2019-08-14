@@ -3,7 +3,6 @@ import { BEM } from '@redneckz/react-bem-helper';
 
 import { Table, Column } from '../../../../components';
 import { Panel } from '../../../../layouts';
-import { useBuildVersion } from '../use-build-version';
 import { NoTestsStub } from './no-tests-stub';
 import { AssociatedTests } from '../../../../types/associated-tests';
 

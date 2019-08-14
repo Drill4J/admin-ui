@@ -14,6 +14,7 @@ import {
 import { Popup, Icons } from '../../../../../components';
 import { NotificationManagerContext } from '../../../../../notification-manager';
 import { renameScope } from '../../api';
+import { PluginContext } from '../../store';
 import { ScopeSummary } from '../../../../../types/scope-summary';
 
 import styles from './rename-scope-modal.module.scss';
@@ -22,7 +23,6 @@ interface Props {
   className?: string;
   isOpen: boolean;
   onToggle: (value: boolean) => void;
-  agentId: string;
   scope: ScopeSummary | null;
 }
 
@@ -31,7 +31,10 @@ const renameScopeModal = BEM(styles);
 const validateScope = composeValidators(required('name'), sizeLimit('name', 1, 64));
 
 export const RenameScopeModal = renameScopeModal(
-  ({ className, isOpen, onToggle, agentId, scope }: Props) => {
+  ({ className, isOpen, onToggle, scope }: Props) => {
+    const {
+      state: { agentId },
+    } = React.useContext(PluginContext);
     const { showMessage } = React.useContext(NotificationManagerContext);
     const [errorMessage, setErrorMessage] = React.useState('');
 

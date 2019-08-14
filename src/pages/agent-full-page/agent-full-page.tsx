@@ -9,6 +9,7 @@ import { CoveragePlugin } from './coverage-plugin';
 import { useWsConnection } from '../../hooks';
 import { defaultAdminSocket } from '../../common/connection';
 import { AGENT_STATUS } from '../../common/constants';
+import { PluginStateProvider } from './coverage-plugin/store';
 
 import styles from './agent-full-page.module.scss';
 
@@ -59,7 +60,9 @@ export const AgentFullPage = withRouter(
         }
       >
         <div className={className}>
-          <CoveragePlugin agent={agent} />
+          <PluginStateProvider>
+            <CoveragePlugin agent={agent} />
+          </PluginStateProvider>
         </div>
       </AppLayout>
     );

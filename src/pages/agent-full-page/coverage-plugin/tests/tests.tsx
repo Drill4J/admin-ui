@@ -4,14 +4,7 @@ import { TestDetails } from '../test-details';
 import { useBuildVersion } from '../use-build-version';
 import { AssociatedTests } from '../../../../types/associated-tests';
 
-interface Props {
-  className?: string;
-  agentId: string;
-  buildVersion: string;
-}
-
-export const Tests = ({ agentId, buildVersion }: Props) => {
-  const testsUsages =
-    useBuildVersion<AssociatedTests[]>('/build/tests-usages', agentId, buildVersion) || [];
+export const Tests = () => {
+  const testsUsages = useBuildVersion<AssociatedTests[]>('/build/tests-usages') || [];
   return <TestDetails testsUsages={testsUsages} />;
 };

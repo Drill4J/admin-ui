@@ -14,8 +14,6 @@ import styles from './coverage-details.module.scss';
 
 interface Props {
   className?: string;
-  agentId: string;
-  buildVersion?: string;
   coverageByPackages: ClassCoverage[];
   header?: React.ReactNode;
   associatedTestsTopic: string;
@@ -24,14 +22,7 @@ interface Props {
 const coverageDetails = BEM(styles);
 
 export const CoverageDetails = coverageDetails(
-  ({
-    className,
-    agentId,
-    buildVersion,
-    coverageByPackages,
-    header,
-    associatedTestsTopic,
-  }: Props) => {
+  ({ className, coverageByPackages, header, associatedTestsTopic }: Props) => {
     const [selectedId, setSelectedId] = React.useState('');
 
     return (
@@ -102,8 +93,6 @@ export const CoverageDetails = coverageDetails(
             id={selectedId}
             isOpen={Boolean(selectedId)}
             onToggle={() => setSelectedId('')}
-            agentId={agentId}
-            buildVersion={buildVersion}
             associatedTestsTopic={associatedTestsTopic}
           />
         )}

@@ -8,6 +8,7 @@ import { CurrentScope } from '../scope';
 import { CoverageDetails } from '../coverage-details';
 import { CodeCoverageCard } from '../code-coverage-card';
 import { ProjectMethodsCard } from '../project-methods-card';
+import { PluginContext } from '../store';
 import { Coverage } from '../../../../types/coverage';
 import { ClassCoverage } from '../../../../types/class-coverage';
 import { Methods } from '../../../../types/methods';
@@ -16,17 +17,14 @@ import styles from './dashboard.module.scss';
 
 interface Props {
   className?: string;
-  agentId: string;
-  buildVersion: string;
 }
 
 const dashboard = BEM(styles);
 
-export const Dashboard = dashboard(({ className, agentId, buildVersion }: Props) => {
-  const coverage = useBuildVersion<Coverage>('/build/coverage', agentId, buildVersion) || {};
-  const buildMethods = useBuildVersion<Methods>('/build/methods', agentId, buildVersion) || {};
-  const coverageByPackages =
-    useBuildVersion<ClassCoverage[]>('/build/coverage-by-packages', agentId, buildVersion) || [];
+export const Dashboard = dashboard(({ className }: Props) => {
+  const coverage = useBuildVersion<Coverage>('/build/coverage') || {};
+  const buildMethods = useBuildVersion<Methods>('/build/methods') || {};
+  const coverageByPackages = useBuildVersion<ClassCoverage[]>('/build/coverage-by-packages') || [];
 
   return (
     <div className={className}>
@@ -35,10 +33,8 @@ export const Dashboard = dashboard(({ className, agentId, buildVersion }: Props)
         <ProjectMethodsCard header="Build Methods" methods={buildMethods} />
       </SummaryPanel>
       <Section header="Current Scope">
-        <CurrentScope agentId={agentId} buildVersion={buildVersion} />
+        <CurrentScope />
         <CoverageDetails
-          agentId={agentId}
-          buildVersion={buildVersion}
           coverageByPackages={coverageByPackages}
           header={
             <>

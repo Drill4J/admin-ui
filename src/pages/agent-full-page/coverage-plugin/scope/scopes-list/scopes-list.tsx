@@ -6,33 +6,29 @@ import { Table, Column, Menu } from '../../../../../components';
 import { percentFormatter } from '../../../../../utils';
 import { useBuildVersion } from '../../use-build-version';
 import { toggleScope } from '../../api';
-import { RenameScopeModal } from '../rename-scope-modal';
+import { PluginContext, openModal } from '../../store';
 import { ScopeSummary } from '../../../../../types/scope-summary';
 
 import styles from './scopes-list.module.scss';
-import { DeleteScopeModal } from '../delete-scope-modal';
-import { FinishScopeModal } from '../finish-scope-modal';
 
 interface Props extends RouteComponentProps {
   className?: string;
-  agentId: string;
-  buildVersion: string;
 }
 
 const scopesList = BEM(styles);
 
 export const ScopesList = withRouter(
-  scopesList(({ className, buildVersion, agentId, history: { push } }: Props) => {
-    const activeScope = useBuildVersion<ScopeSummary>('/active-scope', agentId, buildVersion);
-    const scopes = useBuildVersion<ScopeSummary[]>('/scopes', agentId, buildVersion) || [];
+  scopesList(({ className, history: { push } }: Props) => {
+    const {
+      state: { agentId },
+      dispatch,
+    } = React.useContext(PluginContext);
+    const activeScope = useBuildVersion<ScopeSummary>('/active-scope');
+    const scopes = useBuildVersion<ScopeSummary[]>('/scopes') || [];
     const sortedScopes = scopes.sort(
       ({ started: firstStartedDate }, { started: secondStartedDate }) =>
         secondStartedDate - firstStartedDate,
     );
-    const [isFinishModalOpen, setIsFinishModalOpen] = React.useState(false);
-    const [isRenameModalOpen, setIsRenameModalOpen] = React.useState(false);
-    const [isCancelModalOpen, setIsCancelModalOpen] = React.useState(false);
-    const [selectedScope, setSelectedScope] = React.useState(null);
 
     const scopesData =
       activeScope && activeScope.name ? [activeScope, ...sortedScopes] : sortedScopes;
@@ -108,7 +104,7 @@ export const ScopesList = withRouter(
                   item.active && {
                     label: 'Finish Scope',
                     icon: 'Check',
-                    onClick: () => setIsFinishModalOpen(true),
+                    onClick: () => dispatch(openModal('FinishScopeModal', item)),
                   },
                   !item.active && {
                     label: `${item.enabled ? 'Ignore in build stats' : 'Show in build stats'}`,
@@ -118,18 +114,12 @@ export const ScopesList = withRouter(
                   {
                     label: 'Rename',
                     icon: 'Edit',
-                    onClick: () => {
-                      setSelectedScope(item);
-                      setIsRenameModalOpen(true);
-                    },
+                    onClick: () => dispatch(openModal('RenameScopeModal', item)),
                   },
                   {
                     label: 'Delete',
                     icon: 'Delete',
-                    onClick: () => {
-                      setSelectedScope(item);
-                      setIsRenameModalOpen(true);
-                    },
+                    onClick: () => dispatch(openModal('DeleteScopeModal', item)),
                   },
                 ].filter(Boolean);
                 return (
@@ -140,32 +130,6 @@ export const ScopesList = withRouter(
               }}
             />
           </Table>
-          {isFinishModalOpen && (
-            <FinishScopeModal
-              agentId={agentId}
-              buildVersion={buildVersion}
-              scope={selectedScope}
-              isOpen={isFinishModalOpen}
-              onToggle={setIsFinishModalOpen}
-            />
-          )}
-          {isRenameModalOpen && (
-            <RenameScopeModal
-              isOpen={isRenameModalOpen}
-              onToggle={setIsRenameModalOpen}
-              agentId={agentId}
-              scope={selectedScope}
-            />
-          )}
-          {isCancelModalOpen && (
-            <DeleteScopeModal
-              isOpen={isCancelModalOpen}
-              onToggle={setIsCancelModalOpen}
-              agentId={agentId}
-              buildVersion={buildVersion}
-              scope={selectedScope as any}
-            />
-          )}
         </Content>
       </div>
     );

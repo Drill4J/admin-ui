@@ -22,7 +22,6 @@
     filter: drop-shadow(0 0 24px rgba(0, 0, 0, 0.15));
     border-radius: 8px;
     background-color: map-get($color-palette, white);
-    z-index: 90;
 
     &::before {
       content: '';
@@ -52,5 +51,6 @@
     font-size: 14px;
     line-height: 32px;
     margin-left: 8px;
+    white-space: nowrap;
   }
 }
