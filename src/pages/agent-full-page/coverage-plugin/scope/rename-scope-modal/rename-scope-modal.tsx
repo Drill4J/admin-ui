@@ -69,7 +69,7 @@ export const RenameScopeModal = renameScopeModal(
                 </FormGroup>
                 <ActionsPanel>
                   <RenameScopeButton type="primary" onClick={handleSubmit as any}>
-                    Continue
+                    Save
                   </RenameScopeButton>
                   <CancelButton type="secondary" onClick={() => onToggle(false)}>
                     Cancel
