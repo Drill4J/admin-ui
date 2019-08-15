@@ -40,5 +40,6 @@
     left: 0;
     opacity: 0.75;
     background-color: map-get($color-palette, white);
+    z-index: 90;
   }
 }
