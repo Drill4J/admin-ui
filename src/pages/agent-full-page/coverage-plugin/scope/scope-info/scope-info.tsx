@@ -75,7 +75,7 @@ export const ScopeInfo = withRouter(
           <Panel align="space-between">
             <Panel>
               {name}
-              {active && <ActiveBadge>Active</ActiveBadge>}
+              {active ? <ActiveBadge>Active</ActiveBadge> : <FinisedBadge>Finished</FinisedBadge>}
             </Panel>
             <Panel align="end">
               <FinishScopeButton
@@ -126,6 +126,7 @@ export const ScopeInfo = withRouter(
 const BackToScopesList = scopeInfo.backToScopesList('span');
 const Header = scopeInfo.header('div');
 const ActiveBadge = scopeInfo.activeBadge('span');
+const FinisedBadge = scopeInfo.finishedBadge('span');
 const FinishScopeButton = scopeInfo.finishScopeButton(Button);
 const SummaryPanel = scopeInfo.summaryPanel(Panel);
 const RoutingTabsPanel = scopeInfo.routingTabsPanel(Panel);

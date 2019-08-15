@@ -30,6 +30,20 @@
     color: map-get($color-palette, white);
   }
 
+  &__finished-badge {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: 16px;
+    height: 20px;
+    width: 64px;
+    border-radius: 10px;
+    border: 1px solid map-get($color-palette, middle-blue);
+    font-size: 11px;
+    font-family: $semibold-font;
+    color: map-get($color-palette, middle-blue);
+  }
+
   &__finish-scope-button {
     min-height: 32px;
     width: 136px;
