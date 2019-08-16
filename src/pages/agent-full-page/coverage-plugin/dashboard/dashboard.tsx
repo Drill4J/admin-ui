@@ -30,7 +30,7 @@ export const Dashboard = dashboard(({ className }: Props) => {
     <div className={className}>
       <SummaryPanel align="space-between">
         <CodeCoverageCard header="Build Code Coverage" coverage={coverage} />
-        <ProjectMethodsCard header="Build Methods" methods={buildMethods} />
+        <ProjectMethodsCard header="Build Methods" methods={buildMethods} showDeletedMethods />
       </SummaryPanel>
       <Section header="Current Scope">
         <CurrentScope />
