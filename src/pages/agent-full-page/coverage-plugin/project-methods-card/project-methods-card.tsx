@@ -44,7 +44,9 @@ export const ProjectMethodsCard = projectMethodsCard(
           <MethodsSection title="TOTAL" methodsInfo={totalMethods} />
           <MethodsSection title="MODIFIED" methodsInfo={modifiedMethods} />
           <MethodsSection title="NEW" methodsInfo={newMethods} />
-          {showDeletedMethods && <MethodsSection title="DELETED" methodsInfo={deletedMethods} />}
+          {showDeletedMethods && (
+            <MethodsSection title="DELETED" methodsInfo={deletedMethods} hideAdditionalInfo />
+          )}
         </Card>
       </div>
     );

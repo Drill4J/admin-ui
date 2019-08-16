@@ -11,6 +11,7 @@ interface Props {
   className?: string;
   title: string;
   methodsInfo?: MethodsInfo;
+  hideAdditionalInfo?: boolean;
 }
 
 const methodsSection = BEM(styles);
@@ -20,6 +21,7 @@ export const MethodsSection = methodsSection(
     className,
     title,
     methodsInfo: { totalCount = 0, coveredCount = 0, methods } = {},
+    hideAdditionalInfo,
   }: Props) => {
     const [isModalOpen, setIsModalOpen] = React.useState(false);
 
@@ -30,18 +32,22 @@ export const MethodsSection = methodsSection(
             {totalCount}
           </Total>
           <AdditionalInfo>
-            <AdditionalInfoItem>
-              <AdditionalInfoItemHeader>Missed</AdditionalInfoItemHeader>
-              <AdditionalInfoItemValue>{totalCount - coveredCount}</AdditionalInfoItemValue>
-            </AdditionalInfoItem>
-            <AdditionalInfoItem>
-              <AdditionalInfoItemHeader>Covered</AdditionalInfoItemHeader>
-              <AdditionalInfoItemValue>{coveredCount}</AdditionalInfoItemValue>
-            </AdditionalInfoItem>
-            <AdditionalInfoItem>
-              <AdditionalInfoItemHeader>Excluded</AdditionalInfoItemHeader>
-              <AdditionalInfoItemValue>{0}</AdditionalInfoItemValue>
-            </AdditionalInfoItem>
+            {!hideAdditionalInfo && (
+              <>
+                <AdditionalInfoItem>
+                  <AdditionalInfoItemHeader>Missed</AdditionalInfoItemHeader>
+                  <AdditionalInfoItemValue>{totalCount - coveredCount}</AdditionalInfoItemValue>
+                </AdditionalInfoItem>
+                <AdditionalInfoItem>
+                  <AdditionalInfoItemHeader>Covered</AdditionalInfoItemHeader>
+                  <AdditionalInfoItemValue>{coveredCount}</AdditionalInfoItemValue>
+                </AdditionalInfoItem>
+                <AdditionalInfoItem>
+                  <AdditionalInfoItemHeader>Excluded</AdditionalInfoItemHeader>
+                  <AdditionalInfoItemValue>{0}</AdditionalInfoItemValue>
+                </AdditionalInfoItem>
+              </>
+            )}
           </AdditionalInfo>
         </CardSection>
         {isModalOpen && (
