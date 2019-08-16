@@ -6,7 +6,7 @@ import styles from './card.module.scss';
 interface Props {
   className?: string;
   header?: React.ReactNode;
-  children: React.ReactElement | React.ReactElement[];
+  children: any[];
 }
 
 const card = BEM(styles);
@@ -15,12 +15,16 @@ export const Card = card(({ className, header, children }: Props) => (
   <div className={className}>
     <Header>{header}</Header>
     <Content>
-      {React.Children.map(children, (child: React.ReactElement<any>) => (
-        <CardSectionContent>
-          <CardSectionLabel>{child.props.title}</CardSectionLabel>
-          <span>{child}</span>
-        </CardSectionContent>
-      ))}
+      {React.Children.map(
+        children,
+        (child: React.ReactElement<any>) =>
+          child && (
+            <CardSectionContent>
+              <CardSectionLabel>{child.props.title}</CardSectionLabel>
+              <span>{child}</span>
+            </CardSectionContent>
+          ),
+      )}
     </Content>
   </div>
 ));

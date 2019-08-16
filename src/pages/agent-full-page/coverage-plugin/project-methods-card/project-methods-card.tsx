@@ -13,6 +13,7 @@ interface Props {
   className?: string;
   methods: Methods;
   header?: React.ReactNode;
+  showDeletedMethods?: boolean;
 }
 
 const projectMethodsCard = BEM(styles);
@@ -29,6 +30,7 @@ export const ProjectMethodsCard = projectMethodsCard(
       modifiedDescMethods = {},
       modifiedNameMethods = {},
     },
+    showDeletedMethods,
   }: Props) => {
     const modifiedMethods = combineModifiedMethods(
       modifiedBodyMethods,
@@ -42,7 +44,7 @@ export const ProjectMethodsCard = projectMethodsCard(
           <MethodsSection title="TOTAL" methodsInfo={totalMethods} />
           <MethodsSection title="MODIFIED" methodsInfo={modifiedMethods} />
           <MethodsSection title="NEW" methodsInfo={newMethods} />
-          <MethodsSection title="DELETED" methodsInfo={deletedMethods} />
+          {showDeletedMethods && <MethodsSection title="DELETED" methodsInfo={deletedMethods} />}
         </Card>
       </div>
     );
