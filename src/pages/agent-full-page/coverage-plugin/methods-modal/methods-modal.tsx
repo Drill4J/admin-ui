@@ -42,7 +42,7 @@ export const MethodsModal = methodsModal(
                       <OverflowText>{methodsDetails[index].name}</OverflowText>
                       <MethodDescriptor>{methodsDetails[index].desc}</MethodDescriptor>
                     </MethodSignature>
-                    {getCoverageIcon(methodsDetails[index].coverage)}
+                    {getCoverageIcon(methodsDetails[index].coverageRate)}
                   </MethodsListItem>
                 )}
               />
@@ -63,25 +63,25 @@ const MethodSignature = methodsModal.methodSignature('div');
 const MethodDescriptor = methodsModal.methodDescriptor(OverflowText);
 const CoverageIconWrapper = methodsModal.coverageIconWrapper('div');
 
-function getCoverageIcon(coverage?: number) {
-  if (!coverage) {
-    return (
-      <CoverageIconWrapper type="error">
-        <Icons.Warning height={16} width={16} />
-      </CoverageIconWrapper>
-    );
+function getCoverageIcon(coverageRate?: 'MISSED' | 'PARTLY' | 'FULL') {
+  switch (coverageRate) {
+    case 'FULL':
+      return (
+        <CoverageIconWrapper type="success">
+          <Icons.Checkbox height={16} width={16} />
+        </CoverageIconWrapper>
+      );
+    case 'PARTLY':
+      return (
+        <CoverageIconWrapper type="warning">
+          <Icons.Warning height={16} width={16} />
+        </CoverageIconWrapper>
+      );
+    default:
+      return (
+        <CoverageIconWrapper type="error">
+          <Icons.Warning height={16} width={16} />
+        </CoverageIconWrapper>
+      );
   }
-  if (coverage === 100) {
-    return (
-      <CoverageIconWrapper type="success">
-        <Icons.Checkbox height={16} width={16} />
-      </CoverageIconWrapper>
-    );
-  }
-
-  return (
-    <CoverageIconWrapper type="warning">
-      <Icons.Warning height={16} width={16} />
-    </CoverageIconWrapper>
-  );
 }

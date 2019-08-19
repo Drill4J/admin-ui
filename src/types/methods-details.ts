@@ -3,4 +3,5 @@ export interface MethodsDetails {
   ownerClass?: string;
   desc?: string;
   coverage?: number;
+  coverageRate?: 'MISSED' | 'PARTLY' | 'FULL';
 }
