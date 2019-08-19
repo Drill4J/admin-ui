@@ -7,6 +7,7 @@
   background-color: map-get($color-palette, white);
   cursor: pointer;
   overflow: hidden;
+  word-break: break-all;
 
   &__header {
     display: flex;
