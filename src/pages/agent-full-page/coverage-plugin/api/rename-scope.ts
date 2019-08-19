@@ -13,8 +13,8 @@ export function renameScope(
         payload: { scopeId: id, scopeName: name },
       });
       onSuccess && onSuccess();
-    } catch ({ message }) {
-      onError && onError(message);
+    } catch ({ response: { data } }) {
+      onError && onError(data);
     }
   };
 }
