@@ -6,6 +6,7 @@
   border: 1px solid map-get($color-palette, blue100);
   background-color: map-get($color-palette, white);
   cursor: pointer;
+  overflow: hidden;
 
   &__header {
     display: flex;
