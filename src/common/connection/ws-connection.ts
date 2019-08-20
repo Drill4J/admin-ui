@@ -10,8 +10,8 @@ export class WsConnection {
   constructor(socket: string = 'drill-admin-socket') {
     this.connection = new WebSocket(
       process.env.REACT_APP_ENV
-        ? `ws://${window.location.host}/ws/${socket}`
-        : `ws://localhost:8090/ws/${socket}`,
+        ? `wss://${window.location.host}/ws/${socket}`
+        : `wss://localhost:8443/ws/${socket}`,
     );
     this.onMessageListeners = {};
 
