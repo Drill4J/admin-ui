@@ -12,6 +12,8 @@ steps:
 
   - name: docker
     image: plugins/docker
+    environment:
+      ENV: development
     settings:
       repo: drill4j/admin-ui
       username:
