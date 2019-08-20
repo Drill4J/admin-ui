@@ -41,6 +41,19 @@
     background-color: map-get($color-palette, red100);
     margin-right: 3px;
     margin-left: 4px;
+    animation-name: blinker;
+    animation-iteration-count: infinite;
+    animation-timing-function: cubic-bezier(1, 0, 0, 1);
+    animation-duration: 1s;
+
+    @keyframes blinker {
+      from {
+        opacity: 1;
+      }
+      to {
+        opacity: 0;
+      }
+    }
   }
 
   &__recording-text {
