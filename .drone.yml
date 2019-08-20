@@ -18,6 +18,8 @@ steps:
         from_secret: drill_username
       password:
         from_secret: drill_password
+      build_args:
+        - ENV=development
     when:
       branch:
         - develop
