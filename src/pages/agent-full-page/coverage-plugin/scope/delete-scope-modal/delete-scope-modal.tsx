@@ -72,7 +72,7 @@ export const DeleteScopeModal = withRouter(
                   onClick={async () => {
                     await deleteScope(agentId, {
                       onSuccess: () => {
-                        showMessage({ type: 'SUCCESS', text: 'Scope is finished' });
+                        showMessage({ type: 'SUCCESS', text: 'Scope has been deleted' });
                         onToggle(false);
                         scopeId && history.goBack();
                       },

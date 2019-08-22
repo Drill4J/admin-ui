@@ -1,6 +1,7 @@
 import React from 'react';
 
-import { PluginState, Action } from './store-types';
+import { PluginState } from './store-types';
+import { Action } from './reducer';
 
 interface Context {
   state: PluginState;
