@@ -4,7 +4,7 @@ import { withRouter, RouteComponentProps, Switch, Route } from 'react-router-dom
 
 import { Panel } from '../../../layouts';
 import { Icons, PageHeader, TabsPanel, Tab } from '../../../components';
-import { PluginContext, setInitialConfig } from './store';
+import { usePluginDispatch, setInitialConfig } from './store';
 import { Dashboard } from './dashboard';
 import { ScopesList, ScopeInfo } from './scope';
 import { Tests } from './tests';
@@ -31,7 +31,7 @@ export const CoveragePlugin = withRouter(
       agent: { name, buildVersion = '' } = {},
       history: { push },
     }: Props) => {
-      const { dispatch } = React.useContext(PluginContext);
+      const dispatch = usePluginDispatch();
 
       React.useEffect(() => {
         dispatch(setInitialConfig({ agentId, pluginId, buildVersion }));

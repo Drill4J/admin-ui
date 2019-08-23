@@ -9,7 +9,7 @@ import { NotificationManagerContext } from '../../../../../notification-manager'
 import { finishScope } from '../../api';
 import { ScopeSummary } from './scope-summary';
 import { ActiveSessionsPanel } from '../active-sessions-panel';
-import { PluginContext } from '../../store';
+import { usePluginState } from '../../store';
 import { ScopeSummary as ScopeSummaryType } from '../../../../../types/scope-summary';
 
 import styles from './finish-scope-modal.module.scss';
@@ -27,9 +27,7 @@ export const FinishScopeModal = withRouter(
   finishScopeModal(
     ({ className, isOpen, onToggle, scope, history, location: { pathname } }: Props) => {
       const { showMessage } = React.useContext(NotificationManagerContext);
-      const {
-        state: { agentId },
-      } = React.useContext(PluginContext);
+      const { agentId } = usePluginState();
       const [errorMessage, setErrorMessage] = React.useState('');
       const [ignoreScope, setIgnoreScope] = React.useState(false);
 

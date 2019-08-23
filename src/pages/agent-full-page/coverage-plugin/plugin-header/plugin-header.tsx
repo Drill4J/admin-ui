@@ -3,7 +3,7 @@ import { BEM } from '@redneckz/react-bem-helper';
 
 import { Inputs } from '../../../../forms';
 import { ReactComponent as Logo } from './logo.svg';
-import { PluginContext, setBuildVersion } from '../store';
+import { usePluginState, usePluginDispatch, setBuildVersion } from '../store';
 import { useAgentId } from './use-agent-id';
 import { AgentBuildVersion } from '../../../../types/agent-build-version';
 
@@ -18,10 +18,8 @@ interface Props {
 const pluginHeader = BEM(styles);
 
 export const PluginHeader = pluginHeader(({ className, agentName }: Props) => {
-  const {
-    state: { buildVersion },
-    dispatch,
-  } = React.useContext(PluginContext);
+  const { buildVersion } = usePluginState();
+  const dispatch = usePluginDispatch();
 
   const agentBuildVersions = useAgentId<AgentBuildVersion[]>('get-builds') || [];
   return (

@@ -1,12 +1,10 @@
 import { useState, useEffect, useContext } from 'react';
 
 import { defaultPluginSocket } from '../../../common/connection';
-import { PluginContext } from './store';
+import { usePluginState } from './store';
 
 export function useBuildVersion<Data>(topic: string) {
-  const {
-    state: { agentId, buildVersion },
-  } = useContext(PluginContext);
+  const { agentId, buildVersion } = usePluginState();
   const [data, setData] = useState<Data | null>(null);
 
   useEffect(() => {

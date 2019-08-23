@@ -1,13 +1,11 @@
 import { useState, useEffect, useContext } from 'react';
 
-import { PluginContext } from '../store';
+import { usePluginState } from '../store';
 
 import { defaultAdminSocket } from '../../../../common/connection';
 
 export function useAgentId<Data>(topic: string) {
-  const {
-    state: { agentId },
-  } = useContext(PluginContext);
+  const { agentId } = usePluginState();
   const [data, setData] = useState<Data | null>(null);
 
   useEffect(() => {

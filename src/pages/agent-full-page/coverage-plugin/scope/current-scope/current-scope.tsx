@@ -8,7 +8,7 @@ import { Button } from '../../../../../forms';
 import { percentFormatter } from '../../../../../utils';
 import { useBuildVersion } from '../../use-build-version';
 import { CoverageByType } from './coverage-by-type';
-import { PluginContext, openModal } from '../../store';
+import { usePluginState, usePluginDispatch, openModal } from '../../store';
 import { NoScopeStub } from '../no-scope-stub';
 import { ScopeSummary } from '../../../../../types/scope-summary';
 
@@ -41,10 +41,8 @@ const currentScope = BEM(styles);
 export const CurrentScope = withRouter(
   currentScope(({ className, history: { push } }: Props) => {
     const scope = useBuildVersion<ScopeSummary>('/active-scope');
-    const {
-      state: { agentId },
-      dispatch,
-    } = React.useContext(PluginContext);
+    const { agentId } = usePluginState();
+    const dispatch = usePluginDispatch();
     const { id = '', name = '', coverage = 0, coveragesByType = {}, started = 0, active = false } =
       scope || {};
     const { testTypes: activeSessionTestTypes = [] } =

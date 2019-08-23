@@ -8,7 +8,6 @@ import { CurrentScope } from '../scope';
 import { CoverageDetails } from '../coverage-details';
 import { CodeCoverageCard } from '../code-coverage-card';
 import { ProjectMethodsCard } from '../project-methods-card';
-import { PluginContext } from '../store';
 import { Coverage } from '../../../../types/coverage';
 import { ClassCoverage } from '../../../../types/class-coverage';
 import { Methods } from '../../../../types/methods';
