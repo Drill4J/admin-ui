@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext } from 'react';
+import { useState, useEffect } from 'react';
 
 import { defaultPluginSocket } from '../../../common/connection';
 import { usePluginState } from './store';
@@ -12,7 +12,7 @@ export function useBuildVersion<Data>(topic: string) {
       setData(newData);
     }
 
-    const connection = buildVersion
+    const unsubscribe = buildVersion
       ? defaultPluginSocket.subscribe(topic, handleDataChange, {
           agentId,
           buildVersion,
@@ -20,7 +20,7 @@ export function useBuildVersion<Data>(topic: string) {
       : null;
 
     return () => {
-      connection && connection.unsubscribe(topic);
+      unsubscribe && unsubscribe();
     };
   }, [agentId, buildVersion]);
 

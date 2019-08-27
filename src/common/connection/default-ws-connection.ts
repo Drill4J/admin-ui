@@ -1,5 +1,9 @@
-import { WsConnection } from './ws-connection';
+import { DrillSocket } from '@drill4j/socket';
 
-export const defaultAdminSocket = new WsConnection();
+// process.env.REACT_APP_ENV
+//   ? `wss://${window.location.host}/ws/${socket}`
+//   : `wss://localhost:8443/ws/${socket}`,
 
-export const defaultPluginSocket = new WsConnection('drill-plugin-socket');
+export const defaultAdminSocket = new DrillSocket();
+
+export const defaultPluginSocket = new DrillSocket('drill-plugin-socket');
