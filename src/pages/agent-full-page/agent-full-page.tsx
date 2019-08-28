@@ -28,7 +28,7 @@ const getPluginsLinks = (agent: Agent) => [
 ];
 
 export const AgentFullPage = withRouter(
-  agentFullPage(({ className, match: { params: { agentId } }, history: { push } }: Props) => {
+  agentFullPage(({ className, match: { params: { agentId } }, history }: Props) => {
     const agent = useWsConnection<Agent>(defaultAdminSocket, `/get-agent/${agentId}`) || {};
 
     return (
@@ -43,7 +43,7 @@ export const AgentFullPage = withRouter(
           <Toolbar
             breadcrumbs={
               <Panel>
-                <ArrowBackIcon rotate={180} onClick={() => push('/')} />
+                <ArrowBackIcon rotate={180} onClick={() => history.goBack()} />
                 <Divider />
                 <AgentName>{agent.name}</AgentName>
                 <AgentIpAddress>{agent.ipAddress}</AgentIpAddress>

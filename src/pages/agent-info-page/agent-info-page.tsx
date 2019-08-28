@@ -55,7 +55,7 @@ export const AgentInfoPage = withRouter(
                 onClick={() => push(`/full-page/${agent.id}/coverage/dashboard`)}
               >
                 <Icons.OpenLive />
-                <span>Open live</span>
+                <span>Dashboard</span>
               </ToAgentButton>
               <Settings>
                 <Icons.Settings onClick={() => push(`/agents/${agent.id}/settings`)} />
