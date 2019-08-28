@@ -57,7 +57,7 @@ export const TableView = tableView(
         />
         <Column
           name="status"
-          label="Drill4J"
+          label="Status"
           Cell={({ value, item }) => (
             <StatusColumn>
               <Inputs.Toggler

@@ -14,12 +14,12 @@ export const getSelectedPLuginsActions = (
 
   return [
     {
-      label: 'Enable',
+      label: 'Enable plugin',
       onClick: getOnClickFunction(agent.id, enableIds, setSelectedPLugins),
       count: enableIds.length,
     },
     {
-      label: 'Disable',
+      label: 'Disable plugin',
       onClick: getOnClickFunction(agent.id, disableIds, setSelectedPLugins),
       count: disableIds.length,
     },

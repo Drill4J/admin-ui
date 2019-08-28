@@ -14,12 +14,12 @@ export const getSelectedAgentsActions = (
 
   return [
     {
-      label: 'Enable Drill4J',
+      label: 'Enable agent',
       onClick: getOnClickFunction(enableIds, setSelectedAgents),
       count: enableIds.length,
     },
     {
-      label: 'Disable Drill4J',
+      label: 'Disable agent',
       onClick: getOnClickFunction(disableIds, setSelectedAgents),
       count: disableIds.length,
     },
