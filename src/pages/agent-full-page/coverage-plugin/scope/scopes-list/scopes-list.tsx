@@ -117,7 +117,7 @@ export const ScopesList = withRouter(
                     onClick: () => dispatch(openModal('RenameScopeModal', item)),
                   },
                   {
-                    label: 'Delete',
+                    label: `${item.active ? 'Cancel' : 'Delete'}`,
                     icon: 'Delete',
                     onClick: () => dispatch(openModal('DeleteScopeModal', item)),
                   },
