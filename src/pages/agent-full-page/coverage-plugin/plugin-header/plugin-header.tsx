@@ -2,7 +2,7 @@ import * as React from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 
 import { Inputs } from '../../../../forms';
-import { ReactComponent as Logo } from './logo.svg';
+import { ReactComponent as LogoSvg } from './logo.svg';
 import { usePluginState, usePluginDispatch, setBuildVersion } from '../store';
 import { useAgentId } from './use-agent-id';
 import { AgentBuildVersion } from '../../../../types/agent-build-version';
@@ -25,7 +25,9 @@ export const PluginHeader = pluginHeader(({ className, agentName }: Props) => {
   return (
     <div className={className}>
       <Content>
-        <Logo />
+        <LogoWrapper>
+          <Logo />
+        </LogoWrapper>
         <AgentInfo>
           <AgentName>{agentName}</AgentName>
           <Inputs.Dropdown
@@ -45,5 +47,7 @@ export const PluginHeader = pluginHeader(({ className, agentName }: Props) => {
 });
 
 const Content = pluginHeader.content('div');
+const LogoWrapper = pluginHeader.logoWrapper('div');
+const Logo = pluginHeader.logo(LogoSvg);
 const AgentInfo = pluginHeader.agentInfo('div');
 const AgentName = pluginHeader.agentName('div');
