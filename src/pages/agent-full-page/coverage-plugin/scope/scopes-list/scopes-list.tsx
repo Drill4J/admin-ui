@@ -23,13 +23,12 @@ export const ScopesList = withRouter(
     const dispatch = usePluginDispatch();
     const activeScope = useBuildVersion<ScopeSummary>('/active-scope');
     const scopes = useBuildVersion<ScopeSummary[]>('/scopes') || [];
-    const sortedScopes = scopes.sort(
+    scopes.sort(
       ({ started: firstStartedDate }, { started: secondStartedDate }) =>
         secondStartedDate - firstStartedDate,
     );
 
-    const scopesData =
-      activeScope && activeScope.name ? [activeScope, ...sortedScopes] : sortedScopes;
+    const scopesData = activeScope && activeScope.name ? [activeScope, ...scopes] : scopes;
 
     return (
       <div className={className}>
