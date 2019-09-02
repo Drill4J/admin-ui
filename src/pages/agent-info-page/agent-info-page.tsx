@@ -9,7 +9,6 @@ import { useWsConnection } from '../../hooks';
 import { defaultAdminSocket } from '../../common/connection';
 import { AGENT_STATUS } from '../../common/constants';
 import { AgentPluginsTable } from './agent-plugins-table';
-import { getSelectedPLuginsActions } from './get-selected-plugins-actions';
 import { AddPluginsModal } from './add-plugins-modal';
 import { NoPluginsStub } from './no-plugins-stub';
 import { Agent } from '../../types/agent';
@@ -65,7 +64,9 @@ export const AgentInfoPage = withRouter(
           itemsActions={
             <ItemsActions
               itemsCount={selectedPlugins.length}
-              actions={getSelectedPLuginsActions(agent, selectedPlugins, setSelectedPlugins)}
+              // TODO: uncomment after backend implementation
+              // actions={getSelectedPLuginsActions(agent, selectedPlugins, setSelectedPlugins)}
+              actions={[]}
             />
           }
         />
