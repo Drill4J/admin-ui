@@ -28,24 +28,31 @@ export const Popup = popup(
     isOpen,
     type = 'info',
     closeOnFadeClick = false,
-  }: Props) => (
-    <div className={className}>
-      <Portal>
-        {isOpen && (
-          <div className={className}>
-            <Content type={type}>
-              <Header align="space-between">
-                {header}
-                <CloseButton onClick={() => onToggle(!isOpen)} />
-              </Header>
-              {children}
-            </Content>
-            <Fade onClick={() => closeOnFadeClick && onToggle(!isOpen)} />
-          </div>
-        )}
-      </Portal>
-    </div>
-  ),
+  }: Props) => {
+    function handleOnFadeClick(event: any) {
+      event.stopPropagation();
+      closeOnFadeClick && onToggle(!isOpen);
+    }
+
+    return (
+      <div className={className}>
+        <Portal>
+          {isOpen && (
+            <div className={className}>
+              <Content type={type}>
+                <Header align="space-between">
+                  {header}
+                  <CloseButton onClick={() => onToggle(!isOpen)} />
+                </Header>
+                {children}
+              </Content>
+              <Fade onClick={handleOnFadeClick} />
+            </div>
+          )}
+        </Portal>
+      </div>
+    );
+  },
 );
 
 const Content = popup.content('div');
