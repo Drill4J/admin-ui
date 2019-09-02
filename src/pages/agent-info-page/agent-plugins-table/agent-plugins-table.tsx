@@ -51,9 +51,9 @@ export const AgentPluginsTable = withRouter(
           <Column
             name="status"
             label="Status"
-            Cell={({ value, item }) => (
+            Cell={({ value }) => (
               <StatusColumn>
-                <Inputs.Toggler value={value} onChange={() => togglePlugin(agentId, item.id)} />
+                <Inputs.Toggler value={value} />
               </StatusColumn>
             )}
           />
@@ -68,7 +68,6 @@ export const AgentPluginsTable = withRouter(
                     width={18}
                     onClick={() => push(`/agents/${agentId}/${item.id}/settings`)}
                   />
-                  <Icons.Delete onClick={() => unloadPlugin(agentId, item.id)} />
                 </ActionsColumn>
               );
             }}
@@ -82,11 +81,3 @@ export const AgentPluginsTable = withRouter(
 const NameColumn = agentPluginsTable.nameColumn('div');
 const StatusColumn = agentPluginsTable.statusColumn('div');
 const ActionsColumn = agentPluginsTable.actionsColumn('div');
-
-const togglePlugin = (agentId: string, pluginId: string) => {
-  axios.post(`/agents/${agentId}/${pluginId}/toggle-plugin`);
-};
-
-const unloadPlugin = (agentId: string, pluginId: string) => {
-  axios.post(`/agents/${agentId}/unload-plugin`, { pluginId });
-};

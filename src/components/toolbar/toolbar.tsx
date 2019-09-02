@@ -19,7 +19,6 @@ export const Toolbar = toolbar(({ className, children, breadcrumbs }: Props) => 
     <Content>
       <BreadcrumbsWrapper>{breadcrumbs}</BreadcrumbsWrapper>
       <UserInfo>
-        <NotificationIcon />
         <Divider />
         <AccountIcon /> Guest
       </UserInfo>
@@ -31,5 +30,4 @@ const Content = toolbar.content('div');
 const BreadcrumbsWrapper = toolbar.breadcrumbs('div');
 const Divider = toolbar.divider('span');
 const UserInfo = toolbar.userInfo('div');
-const NotificationIcon = toolbar.notificationIcon(Icons.Notification);
 const AccountIcon = toolbar.accountIcon(Icons.Account);
