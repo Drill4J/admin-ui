@@ -1,2 +1,2 @@
 export { configureAxios } from './configure-axios';
-export { defaultAdminSocket, defaultPluginSocket } from './default-ws-connection';
+export { defaultAdminSocket, defaultPluginSocket, getSocketUrl } from './default-ws-connection';

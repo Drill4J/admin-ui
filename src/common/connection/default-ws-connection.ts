@@ -2,7 +2,7 @@ import { DrillSocket } from '@drill4j/socket';
 
 import { TOKEN_KEY } from '../constants';
 
-const getSocketUrl = (socket: string) => {
+export const getSocketUrl = (socket: string) => {
   const token = localStorage.getItem(TOKEN_KEY);
 
   return `wss://${
