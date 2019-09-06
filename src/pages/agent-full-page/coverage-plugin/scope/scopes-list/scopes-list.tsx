@@ -62,7 +62,7 @@ export const ScopesList = withRouter(
               name="autoTests"
               HeaderCell={() => (
                 <HeaderCell>
-                  <div>By Test Type</div>
+                  <div>Distribution</div>
                   <TestTypeLabel>Auto Tests</TestTypeLabel>
                 </HeaderCell>
               )}
