@@ -8,7 +8,7 @@ import { Popup, Icons, OverflowText } from '../../../../../components';
 import { NotificationManagerContext } from '../../../../../notification-manager';
 import { deleteScope } from '../../api';
 import { ActiveSessionsPanel } from '../active-sessions-panel';
-import { PluginContext } from '../../store';
+import { usePluginState } from '../../store';
 import { ScopeSummary } from '../../../../../types/scope-summary';
 
 import styles from './delete-scope-modal.module.scss';
@@ -25,9 +25,7 @@ const deleteScopeModal = BEM(styles);
 export const DeleteScopeModal = withRouter(
   deleteScopeModal(
     ({ className, isOpen, onToggle, scope, location: { pathname }, history }: Props) => {
-      const {
-        state: { agentId },
-      } = React.useContext(PluginContext);
+      const { agentId } = usePluginState();
       const { showMessage } = React.useContext(NotificationManagerContext);
       const [errorMessage, setErrorMessage] = React.useState('');
 

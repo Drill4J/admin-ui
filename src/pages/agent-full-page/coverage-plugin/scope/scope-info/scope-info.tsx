@@ -11,7 +11,7 @@ import { ProjectMethodsCard } from '../../project-methods-card';
 import { CoverageDetails } from '../../coverage-details';
 import { TestDetails } from '../../test-details';
 import { toggleScope } from '../../api';
-import { PluginContext, openModal } from '../../store';
+import { usePluginState, usePluginDispatch, openModal } from '../../store';
 import { ScopeSummary } from '../../../../../types/scope-summary';
 import { Coverage } from '../../../../../types/coverage';
 import { Methods } from '../../../../../types/methods';
@@ -28,10 +28,8 @@ const scopeInfo = BEM(styles);
 
 export const ScopeInfo = withRouter(
   scopeInfo(({ className, match: { params: { scopeId } }, history: { push } }: Props) => {
-    const {
-      state: { agentId },
-      dispatch,
-    } = React.useContext(PluginContext);
+    const { agentId } = usePluginState();
+    const dispatch = usePluginDispatch();
     const coverage = useBuildVersion<Coverage>(`/scope/${scopeId}/coverage`) || {};
     const scopeMethods = useBuildVersion<Methods>(`/scope/${scopeId}/methods`) || {};
     const coverageByPackages =

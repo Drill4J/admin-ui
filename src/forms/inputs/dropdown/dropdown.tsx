@@ -2,6 +2,7 @@ import * as React from 'react';
 import { BEM, div } from '@redneckz/react-bem-helper';
 
 import { Icons } from '../../../components';
+import { useClickOutside } from '../../../hooks';
 
 import styles from './dropdown.module.scss';
 
@@ -21,19 +22,7 @@ const dropdown = BEM(styles);
 
 export const Dropdown = dropdown(({ className, items, value, onChange }: Props) => {
   const [isExpanded, setIsExpanded] = React.useState(false);
-  const node = React.useRef<HTMLDivElement>(null);
-  React.useEffect(() => {
-    function handleClick(event: any) {
-      if (node && node.current && node.current.contains(event.target)) {
-        return;
-      }
-      setIsExpanded(false);
-    }
-    document.addEventListener('mousedown', handleClick);
-    return () => {
-      document.removeEventListener('mousedown', handleClick);
-    };
-  }, []);
+  const node = useClickOutside(() => setIsExpanded(false));
   const selectedValue = items.find((item) => value === item.value);
 
   return (

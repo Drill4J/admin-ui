@@ -15,6 +15,20 @@
     padding: 0 24px;
   }
 
+  &__logo-wrapper {
+    position: relative;
+    height: 80px;
+    width: 80px;
+    border-radius: 50%;
+    border: 2px solid map-get($color-palette, black100);
+  }
+
+  &__logo {
+    position: absolute;
+    bottom: -1px;
+    left: -1px;
+  }
+
   &__agent-info {
     display: flex;
     flex-direction: column;

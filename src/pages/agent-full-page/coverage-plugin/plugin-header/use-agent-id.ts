@@ -1,13 +1,11 @@
-import { useState, useEffect, useContext } from 'react';
+import { useState, useEffect } from 'react';
 
-import { PluginContext } from '../store';
+import { usePluginState } from '../store';
 
 import { defaultAdminSocket } from '../../../../common/connection';
 
 export function useAgentId<Data>(topic: string) {
-  const {
-    state: { agentId },
-  } = useContext(PluginContext);
+  const { agentId } = usePluginState();
   const [data, setData] = useState<Data | null>(null);
 
   useEffect(() => {
@@ -15,12 +13,12 @@ export function useAgentId<Data>(topic: string) {
       setData(newData);
     }
 
-    const connection = agentId
+    const unsubscribe = agentId
       ? defaultAdminSocket.subscribe(`/agent/${agentId}/${topic}`, handleDataChange)
       : null;
 
     return () => {
-      connection && connection.unsubscribe(topic);
+      unsubscribe && unsubscribe();
     };
   }, [agentId]);
 

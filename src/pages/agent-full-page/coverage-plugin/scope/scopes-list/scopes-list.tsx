@@ -6,7 +6,7 @@ import { Table, Column, Menu } from '../../../../../components';
 import { percentFormatter } from '../../../../../utils';
 import { useBuildVersion } from '../../use-build-version';
 import { toggleScope } from '../../api';
-import { PluginContext, openModal } from '../../store';
+import { usePluginState, usePluginDispatch, openModal } from '../../store';
 import { ScopeSummary } from '../../../../../types/scope-summary';
 
 import styles from './scopes-list.module.scss';
@@ -19,19 +19,16 @@ const scopesList = BEM(styles);
 
 export const ScopesList = withRouter(
   scopesList(({ className, history: { push } }: Props) => {
-    const {
-      state: { agentId },
-      dispatch,
-    } = React.useContext(PluginContext);
+    const { agentId } = usePluginState();
+    const dispatch = usePluginDispatch();
     const activeScope = useBuildVersion<ScopeSummary>('/active-scope');
     const scopes = useBuildVersion<ScopeSummary[]>('/scopes') || [];
-    const sortedScopes = scopes.sort(
+    scopes.sort(
       ({ started: firstStartedDate }, { started: secondStartedDate }) =>
         secondStartedDate - firstStartedDate,
     );
 
-    const scopesData =
-      activeScope && activeScope.name ? [activeScope, ...sortedScopes] : sortedScopes;
+    const scopesData = activeScope && activeScope.name ? [activeScope, ...scopes] : scopes;
 
     return (
       <div className={className}>
