@@ -1,11 +1,10 @@
 import * as React from 'react';
-import { BEM } from '@redneckz/react-bem-helper';
+import { BEM, div } from '@redneckz/react-bem-helper';
 
 import { Modal, Icons } from '../../../../../components';
-import { useWsConnection } from '../../../../../hooks';
-import { defaultPluginSocket } from '../../../../../common/connection';
-import { AssociatedTests } from '../../../../../types/associated-tests';
+import { useBuildVersion } from '../../use-build-version';
 import { ItemInfo } from './item-info';
+import { AssociatedTests } from '../../../../../types/associated-tests';
 
 import styles from './associated-test-modal.module.scss';
 
@@ -14,22 +13,26 @@ interface Props {
   id?: string;
   isOpen: boolean;
   onToggle: (arg: boolean) => void;
-  agentId?: string;
-  buildVersion?: string;
+  associatedTestsTopic: string;
 }
 
 const associatedTestModal = BEM(styles);
 
 export const AssociatedTestModal = associatedTestModal(
-  ({ className, isOpen, onToggle, id, agentId, buildVersion }: Props) => {
-    const associatedTests =
-      useWsConnection<AssociatedTests[]>(defaultPluginSocket, '/associated-tests', {
-        agentId,
-        buildVersion,
-      }) || [];
-
+  ({ className, isOpen, onToggle, id, associatedTestsTopic }: Props) => {
+    const associatedTests = useBuildVersion<AssociatedTests[]>(associatedTestsTopic) || [];
     const { tests = [], packageName = '', className: testClassName = '', methodName = '' } =
       associatedTests.find((test) => test.id === id) || {};
+    const testsMap = tests.reduce(
+      (acc, test) => {
+        const testName = test.slice(test.indexOf('::') + 2);
+        const testType = test.slice(0, test.indexOf('::'));
+
+        return { ...acc, [testType]: acc[testType] ? [...acc[testType], testName] : [testName] };
+      },
+      {} as { [testType: string]: string[] },
+    );
+    const [expandedSection, setExpandedSection] = React.useState('');
 
     return (
       <Modal isOpen={isOpen} onToggle={onToggle}>
@@ -45,16 +48,35 @@ export const AssociatedTestModal = associatedTestModal(
             methodName={methodName}
           />
           <Content>
-            <TestList>
-              {tests.map((test) => (
-                <TestListItem>
+            {Object.keys(testsMap).map((testType) => (
+              <>
+                <TestSection
+                  expanded={expandedSection === testType}
+                  onClick={() => setExpandedSection(expandedSection === testType ? '' : testType)}
+                >
+                  <ExpanderIcon
+                    rotate={expandedSection === testType ? 90 : 0}
+                    height={13}
+                    width={13}
+                  />
                   <TestListItemIcon>
                     <Icons.Test />
                   </TestListItemIcon>
-                  {test}
-                </TestListItem>
-              ))}
-            </TestList>
+                  {testType}
+                </TestSection>
+                <TestList>
+                  {testType === expandedSection &&
+                    testsMap[testType].map((test) => (
+                      <TestListItem>
+                        <TestListItemIcon>
+                          <Icons.Test />
+                        </TestListItemIcon>
+                        {test}
+                      </TestListItem>
+                    ))}
+                </TestList>
+              </>
+            ))}
           </Content>
         </div>
       </Modal>
@@ -64,6 +86,10 @@ export const AssociatedTestModal = associatedTestModal(
 
 const Header = associatedTestModal.header('div');
 const Content = associatedTestModal.content('div');
+const TestSection = associatedTestModal.section(
+  div({ onClick: () => {} } as { expanded?: boolean; onClick: () => void }),
+);
 const TestList = associatedTestModal.testList('div');
+const ExpanderIcon = associatedTestModal.expanderIcon(Icons.Expander);
 const TestListItem = associatedTestModal.testListItem('div');
 const TestListItemIcon = associatedTestModal.testListItemIcon('div');

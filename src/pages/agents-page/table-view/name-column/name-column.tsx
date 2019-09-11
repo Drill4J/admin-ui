@@ -8,6 +8,7 @@ interface Props extends RouteComponentProps {
   className?: string;
   agentName: string;
   agentId: string;
+  unregistered: boolean;
 }
 
 const nameColumn = BEM(styles);
@@ -15,7 +16,7 @@ const nameColumn = BEM(styles);
 export const NameColumn = withRouter(
   nameColumn(({ className, history: { push }, agentId, agentName }: Props) => (
     <div className={className} onClick={() => push(`/agents/${agentId}`)}>
-      {agentName}
+      {agentName || agentId}
     </div>
   )),
 );

@@ -1,16 +1,18 @@
 import { useState, useEffect } from 'react';
 
 import { defaultPluginSocket } from '../../../common/connection';
+import { usePluginState } from './store';
 
-export function useBuildVersion<Data>(topic: string, agentId?: string, buildVersion?: string) {
+export function useBuildVersion<Data>(topic: string) {
+  const { agentId, buildVersion } = usePluginState();
   const [data, setData] = useState<Data | null>(null);
 
   useEffect(() => {
-    function handleDataChange(newData: any) {
+    function handleDataChange(newData: Data) {
       setData(newData);
     }
 
-    const connection = buildVersion
+    const unsubscribe = buildVersion
       ? defaultPluginSocket.subscribe(topic, handleDataChange, {
           agentId,
           buildVersion,
@@ -18,7 +20,7 @@ export function useBuildVersion<Data>(topic: string, agentId?: string, buildVers
       : null;
 
     return () => {
-      connection && connection.unsubscribe(topic);
+      unsubscribe && unsubscribe();
     };
   }, [agentId, buildVersion]);
 

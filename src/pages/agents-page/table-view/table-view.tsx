@@ -2,10 +2,12 @@ import * as React from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 import axios from 'axios';
 
-import { SelectableTable, Column, Toggler, OverflowText } from '../../../components';
-import { Agent } from '../../../types/agent';
+import { SelectableTable, Column, OverflowText } from '../../../components';
+import { Inputs } from '../../../forms';
+import { AGENT_STATUS } from '../../../common/constants';
 import { NameColumn } from './name-column';
 import { ActionsColumn } from './actions-column';
+import { Agent } from '../../../types/agent';
 
 import styles from './table-view.module.scss';
 
@@ -26,27 +28,41 @@ export const TableView = tableView(
         idKey="id"
         selectedRows={selectedAgents}
         onSelect={handleSelectAgents}
+        checkboxDescriptor={({ status }: Agent) => status !== AGENT_STATUS.NOT_REGISTERED}
       >
         <Column
           name="name"
           label="Name"
-          Cell={({ value, item: { id } }) => <NameColumn agentId={id} agentName={value} />}
+          Cell={({ value, item: { id, status } }) => (
+            <NameColumn
+              agentId={id}
+              agentName={value}
+              unregistered={status === AGENT_STATUS.NOT_REGISTERED}
+            />
+          )}
         />
         <Column
           name="description"
           label="Description"
-          Cell={({ value }) => <OverflowText>{value}</OverflowText>}
+          Cell={({ value }) => <OverflowText>{value.substr(0, 150) || 'n/a'}</OverflowText>}
+          width="500px"
         />
         <Column name="ipAddress" label="IP Address" />
-        <Column name="group" label="Group" />
+        <Column
+          name="group"
+          label="Group"
+          Cell={({ value, item }) => (
+            <span>{item.status === AGENT_STATUS.NOT_REGISTERED ? 'n/a' : value}</span>
+          )}
+        />
         <Column
           name="status"
-          label="Drill4J"
+          label="Status"
           Cell={({ value, item }) => (
             <StatusColumn>
-              <Toggler
-                value={value}
-                label={value ? 'On' : 'Off'}
+              <Inputs.Toggler
+                value={value === AGENT_STATUS.READY}
+                label={value === AGENT_STATUS.READY ? 'On' : 'Off'}
                 onChange={() => toggleStandby(item.id)}
               />
             </StatusColumn>
@@ -60,13 +76,17 @@ export const TableView = tableView(
             </span>
           )}
           Cell={({ item }: { item: Agent }) => {
-            return <span>{`${item.activePluginsCount}/${item.pluginsCount}`}</span>;
+            return item.activePluginsCount ? (
+              <span>{`${item.activePluginsCount}/${item.pluginsCount}`}</span>
+            ) : (
+              <span>n/a</span>
+            );
           }}
         />
         <Column
           name="actions"
           label="Actions"
-          Cell={({ item }: { item: Agent }) => <ActionsColumn agentId={item.id || ''} />}
+          Cell={({ item }: { item: Agent }) => <ActionsColumn agent={item} />}
         />
       </SelectableTable>
     </div>

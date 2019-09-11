@@ -10,13 +10,13 @@
     box-sizing: border-box;
     position: relative;
     cursor: pointer;
-    min-height: 40px;
+    min-height: 47px;
     border: none;
     padding: 0 0 4px 0;
     background: none;
     white-space: nowrap;
     outline: none;
-    color: map-get($color-palette, blue100);
+    color: $slate-gray;
     font-family: $semibold-font;
     font-size: 14px;
     margin-right: 28px;
@@ -31,7 +31,7 @@
         left: 0;
         right: 0;
         bottom: 0;
-        height: 5px;
+        height: 4px;
         border-radius: 2px;
         background-color: map-get($color-palette, blue100);
         transform: translateY(50%);

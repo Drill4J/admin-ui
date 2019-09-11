@@ -11,6 +11,8 @@ import {
   NotFoundPage,
   AgentInfoPage,
   AgentFullPage,
+  AgentSettingsPage,
+  PluginSettingsPage,
 } from '../pages';
 import { PrivateRoute, Icons, Sidebar, Toolbar, Divider } from '../components';
 
@@ -26,7 +28,7 @@ export const PageSwitcher = () => {
     <Switch>
       <Route exact path="/login" component={LoginPage} />
       <Route exact path="/" render={() => <Redirect to="/agents" />} />
-      <Route exact path="/full-page/:agentId/:pluginId" component={AgentFullPage} />
+      <Route path="/full-page/:agentId/:pluginId/:tab" component={AgentFullPage} />
       <AppLayout
         sidebar={<Sidebar links={sidebarLinks} matchParams={{ path: '/:activeLink' }} />}
         toolbar={
@@ -41,6 +43,12 @@ export const PageSwitcher = () => {
         <Switch>
           <PrivateRoute exact path="/agents" component={AgentsPage} />
           <PrivateRoute exact path="/agents/:agentId" component={AgentInfoPage} />
+          <PrivateRoute exact path="/agents/:agentId/settings" component={AgentSettingsPage} />
+          <PrivateRoute
+            exact
+            path="/agents/:agentId/:pluginId/settings"
+            component={PluginSettingsPage}
+          />
           <PrivateRoute exact path="/plugins" component={PluginsPage} />
           <PrivateRoute exact path="/logs" component={LogsPage} />
           <PrivateRoute exact path="/settings" component={SettingsPage} />

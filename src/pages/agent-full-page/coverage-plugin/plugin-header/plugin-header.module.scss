@@ -1,0 +1,45 @@
+@import '../../../../common/style-guide/index';
+
+.plugin-header {
+  display: flex;
+  align-items: center;
+  height: 128px;
+  width: 100%;
+  background-color: map-get($color-palette, ultra-light-blue);
+  box-shadow: inset 0 -1px 0 0 map-get($color-palette, light-blue),
+    inset 0 1px 0 0 map-get($color-palette, light-blue);
+
+  &__content {
+    display: flex;
+    flex-direction: row;
+    padding: 0 24px;
+  }
+
+  &__logo-wrapper {
+    position: relative;
+    height: 80px;
+    width: 80px;
+    border-radius: 50%;
+    border: 2px solid map-get($color-palette, black100);
+  }
+
+  &__logo {
+    position: absolute;
+    bottom: -1px;
+    left: -1px;
+  }
+
+  &__agent-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-left: 20px;
+  }
+
+  &__agent-name {
+    font-family: $semibold-font;
+    font-size: 24px;
+    line-height: 24px;
+    margin-bottom: 10px;
+  }
+}

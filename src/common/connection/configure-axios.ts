@@ -3,7 +3,7 @@ import axios from 'axios';
 import { TOKEN_HEADER, TOKEN_KEY } from '../constants';
 
 const hosts: { [env: string]: string } = {
-  local: 'http://localhost:8090/api',
+  local: 'https://localhost:8443/api',
   development: '/api',
   qa: '',
   prod: '',

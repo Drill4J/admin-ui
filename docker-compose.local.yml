@@ -1,0 +1,12 @@
+version: '3'
+services:
+  admin-ui:
+    image: drill4j/admin-ui
+    networks:
+      - drill4j-dev-network
+    ports:
+      - 9443:443
+networks:
+  drill4j-dev-network:
+    external:
+      name: drill4j-dev-network

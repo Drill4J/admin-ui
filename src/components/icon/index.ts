@@ -24,6 +24,17 @@ import { path as packagePath } from './path/package.path';
 import { path as testPath } from './path/test.path';
 import { path as projectTreePath } from './path/project-tree.path';
 import { path as openLivePath } from './path/open-live.path';
+import { path as checkPath } from './path/check.path';
+import { path as registerPath } from './path/register.path';
+import { path as copyPath } from './path/copy.path';
+import { path as dashboardPath } from './path/dashboard.path';
+import { path as scopePath } from './path/scope.path';
+import { path as eyeCrossedPath } from './path/eye-crossed.path';
+import { path as starPath } from './path/star.path';
+import { path as coverageArrowPath } from './path/coverage-arrow.path';
+import { path as moreOptionsPath } from './path/more-options.path';
+import { path as editPath } from './path/edit.path';
+import { path as eyePath } from './path/eye.path';
 import { declareIcon } from './declare-icon';
 import { ReactComponent as SettingsSvg } from './settings.svg';
 
@@ -54,5 +65,16 @@ export const Icons = {
   Test: declareIcon(testPath, { defaultWidth: 12, defaultHeight: 16, viewBox: '0 0 16 20' }),
   ProjectTree: declareIcon(projectTreePath, { defaultWidth: 20, defaultHeight: 20 }),
   OpenLive: declareIcon(openLivePath),
+  Check: declareIcon(checkPath, { defaultWidth: 13, defaultHeight: 9 }),
+  Register: declareIcon(registerPath, { defaultWidth: 18, defaultHeight: 16 }),
+  Copy: declareIcon(copyPath),
+  Dashboard: declareIcon(dashboardPath, { defaultWidth: 20, defaultHeight: 20 }),
+  Scope: declareIcon(scopePath, { defaultWidth: 20, defaultHeight: 20 }),
+  EyeCrossed: declareIcon(eyeCrossedPath, { defaultWidth: 20, defaultHeight: 20 }),
+  Star: declareIcon(starPath, { defaultWidth: 21, defaultHeight: 20 }),
+  CoverageArrow: declareIcon(coverageArrowPath, { defaultWidth: 22, defaultHeight: 28 }),
+  MoreOptions: declareIcon(moreOptionsPath, { defaultWidth: 4, defaultHeight: 16 }),
+  Edit: declareIcon(editPath, { defaultWidth: 16, defaultHeight: 18 }),
+  Eye: declareIcon(eyePath, { defaultWidth: 20, defaultHeight: 12 }),
   NewSettings: SettingsSvg,
 };

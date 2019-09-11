@@ -3,7 +3,6 @@ import { BEM } from '@redneckz/react-bem-helper';
 
 import { Table, Column } from '../../../../components';
 import { Panel } from '../../../../layouts';
-import { useBuildVersion } from '../use-build-version';
 import { NoTestsStub } from './no-tests-stub';
 import { AssociatedTests } from '../../../../types/associated-tests';
 
@@ -11,16 +10,12 @@ import styles from './test-details.module.scss';
 
 interface Props {
   className?: string;
-  agentId?: string;
-  buildVersion?: string;
+  testsUsages: AssociatedTests[];
 }
 
 const testDetails = BEM(styles);
 
-export const TestDetails = testDetails(({ className, agentId, buildVersion }: Props) => {
-  const testsUsages =
-    useBuildVersion<AssociatedTests[]>('/tests-usages', agentId, buildVersion) || [];
-
+export const TestDetails = testDetails(({ className, testsUsages }: Props) => {
   return (
     <div className={className}>
       {testsUsages.length > 0 ? (
@@ -29,7 +24,7 @@ export const TestDetails = testDetails(({ className, agentId, buildVersion }: Pr
             <span>Tests</span>
             <h2>{testsUsages.length}</h2>
           </Title>
-          <Table data={testsUsages} columnsSize="medium">
+          <Table data={testsUsages as any} columnsSize="medium">
             <Column
               name="testName"
               label="Name"

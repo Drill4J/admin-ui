@@ -14,12 +14,12 @@ export const getSelectedAgentsActions = (
 
   return [
     {
-      label: 'Enable Drill4J',
+      label: 'Enable agent',
       onClick: getOnClickFunction(enableIds, setSelectedAgents),
       count: enableIds.length,
     },
     {
-      label: 'Disable Drill4J',
+      label: 'Disable agent',
       onClick: getOnClickFunction(disableIds, setSelectedAgents),
       count: disableIds.length,
     },
@@ -39,6 +39,6 @@ const getOnClickFunction = (
 export const getSelectedAgentsMap = (agents: Agent[], selectedAgentsIds: string[]) =>
   agents.reduce<{ [key: string]: boolean }>(
     (acc, { id = '', status }) =>
-      selectedAgentsIds.includes(id) ? { ...acc, [id]: Boolean(status) } : acc,
+      selectedAgentsIds.includes(id) ? { ...acc, [id]: status === 'READY' } : acc,
     {},
   );

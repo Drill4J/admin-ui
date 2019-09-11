@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
-import { withRouter, RouteComponentProps } from 'react-router-dom';
 
 import { ExpandableTable, Column, Icons } from '../../../../components';
 import { Panel } from '../../../../layouts';
@@ -10,31 +9,27 @@ import { CoverageCell } from './coverage-cell';
 import { NameCell } from './name-cell';
 import { AssociatedTestModal } from './associated-test-modal';
 import { AssociatedTestColumn } from './associated-test-column';
-import { useBuildVersion } from '../use-build-version';
 
 import styles from './coverage-details.module.scss';
 
-interface Props extends RouteComponentProps<{ agentId: string }> {
+interface Props {
   className?: string;
-  buildVersion?: string;
+  coverageByPackages: ClassCoverage[];
+  header?: React.ReactNode;
+  associatedTestsTopic: string;
 }
 
 const coverageDetails = BEM(styles);
 
-export const CoverageDetails = withRouter(
-  coverageDetails(({ className, match: { params: { agentId } }, buildVersion }: Props) => {
-    const coverageByPackages =
-      useBuildVersion<ClassCoverage[]>('/coverage-by-packages', agentId, buildVersion) || [];
+export const CoverageDetails = coverageDetails(
+  ({ className, coverageByPackages, header, associatedTestsTopic }: Props) => {
     const [selectedId, setSelectedId] = React.useState('');
 
     return (
       <div className={className}>
         {coverageByPackages.length > 0 && (
           <>
-            <Title>
-              <span>Packages</span>
-              <h2>{coverageByPackages.length}</h2>
-            </Title>
+            <Title>{header}</Title>
             <ExpandableTable
               data={coverageByPackages}
               idKey="name"
@@ -98,13 +93,12 @@ export const CoverageDetails = withRouter(
             id={selectedId}
             isOpen={Boolean(selectedId)}
             onToggle={() => setSelectedId('')}
-            agentId={agentId}
-            buildVersion={buildVersion}
+            associatedTestsTopic={associatedTestsTopic}
           />
         )}
       </div>
     );
-  }),
+  },
 );
 
 const Title = coverageDetails.title(Panel);

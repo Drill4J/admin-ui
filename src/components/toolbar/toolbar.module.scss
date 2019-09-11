@@ -9,22 +9,14 @@
   &__content {
     margin: 0 24px;
     display: flex;
-    flex-grow: 1;
+    align-items: center;
+    height: 100%;
+    width: 100%;
     justify-content: space-between;
   }
 
   &__breadcrumbs {
     color: $slate-gray;
-  }
-
-  &__panel {
-    display: flex;
-    flex-direction: row;
-    color: map-get($color-palette, blue100);
-
-    & > * {
-      margin-right: 8px;
-    }
   }
 
   &__divider {
@@ -33,9 +25,17 @@
     width: 1px;
   }
 
-  &__username {
+  &__user-info {
+    display: flex;
+    align-items: center;
     line-height: 20px;
     font-size: 14px;
     font-family: $semibold-font;
+    color: map-get($color-palette, blue100);
+  }
+
+  &__account-icon {
+    margin-left: 16px;
+    margin-right: 8px;
   }
 }

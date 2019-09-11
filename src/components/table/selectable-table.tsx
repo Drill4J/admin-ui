@@ -1,17 +1,18 @@
 import * as React from 'react';
 
+import { Inputs } from '../../forms';
 import { Table } from './table';
 import { Column } from './column';
-import { TableCheckbox } from '../table-checkbox';
 
 interface Props {
-  data: object[];
+  data: any[];
   children: React.ReactNode;
   idKey: string;
   footer?: React.ReactNode;
   selectedRows: string[];
   onSelect: (selectedItems: string[]) => any;
   columnsSize?: 'wide' | 'medium';
+  checkboxDescriptor?: <O>(item: O) => boolean;
 }
 
 export const SelectableTable = ({
@@ -20,6 +21,7 @@ export const SelectableTable = ({
   onSelect,
   idKey,
   selectedRows,
+  checkboxDescriptor,
   // tslint:disable-next-line
   ...restProps
 }: Props) => {
@@ -30,8 +32,9 @@ export const SelectableTable = ({
       <Column
         name="selector"
         Cell={({ item }) => {
-          return (
-            <TableCheckbox
+          const isSelectable = checkboxDescriptor ? checkboxDescriptor(item) : true;
+          return isSelectable ? (
+            <Inputs.Checkbox
               onClick={() => {
                 selectedRows.includes(item[idKey])
                   ? onSelect(selectedRows.filter((selectedItem) => selectedItem !== item[idKey]))
@@ -39,12 +42,21 @@ export const SelectableTable = ({
               }}
               selected={isAllSelected || selectedRows.includes(item[idKey])}
             />
-          );
+          ) : null;
         }}
         HeaderCell={() => (
-          <TableCheckbox
+          <Inputs.Checkbox
             onClick={() => {
-              onSelect(!isAllSelected ? data.map((item: any) => String(item[idKey])) : []);
+              onSelect(
+                !isAllSelected
+                  ? data.reduce((acc, item: any) => {
+                      if (!checkboxDescriptor) {
+                        return [...acc, String(item[idKey])];
+                      }
+                      return checkboxDescriptor(item) ? [...acc, String(item[idKey])] : acc;
+                    }, [])
+                  : [],
+              );
             }}
             selected={isAllSelected}
           />

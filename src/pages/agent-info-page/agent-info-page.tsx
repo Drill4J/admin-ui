@@ -3,14 +3,15 @@ import { BEM } from '@redneckz/react-bem-helper';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
 import axios from 'axios';
 
-import { PageHeader, Button, Icons, Toggler, ItemsActions } from '../../components';
-import { AgentPluginsTable } from './agent-plugins-table';
-import { Agent } from '../../types/agent';
-import { getSelectedPLuginsActions } from './get-selected-plugins-actions';
-import { AddPluginsModal } from './add-plugins-modal';
-import { NoPluginsStub } from './no-plugins-stub';
+import { PageHeader, Icons, ItemsActions } from '../../components';
+import { Button, Inputs } from '../../forms';
 import { useWsConnection } from '../../hooks';
 import { defaultAdminSocket } from '../../common/connection';
+import { AGENT_STATUS } from '../../common/constants';
+import { AgentPluginsTable } from './agent-plugins-table';
+import { AddPluginsModal } from './add-plugins-modal';
+import { NoPluginsStub } from './no-plugins-stub';
+import { Agent } from '../../types/agent';
 
 import styles from './agent-info-page.module.scss';
 
@@ -34,11 +35,11 @@ export const AgentInfoPage = withRouter(
               <Icons.Agents height={18} width={20} />
               <span>{agentId}</span>
               <ToggleAgent>
-                <Toggler
-                  value={agent.status}
+                <Inputs.Toggler
+                  value={agent.status === AGENT_STATUS.READY}
                   label={
                     <ToggleAgentHeader>{`Drill4J ${
-                      agent.status ? 'on' : 'off'
+                      agent.status === AGENT_STATUS.READY ? 'on' : 'off'
                     }`}</ToggleAgentHeader>
                   }
                   onChange={() => toggleAgent(agent.id || '')}
@@ -48,19 +49,24 @@ export const AgentInfoPage = withRouter(
           }
           actions={
             <HeaderActions>
-              <ToAgentButton type="primary" onClick={() => push(`/full-page/${agent.id}/coverage`)}>
+              <ToAgentButton
+                type="primary"
+                onClick={() => push(`/full-page/${agent.id}/coverage/dashboard`)}
+              >
                 <Icons.OpenLive />
-                <span>Open live</span>
+                <span>Dashboard</span>
               </ToAgentButton>
               <Settings>
-                <Icons.Settings />
+                <Icons.Settings onClick={() => push(`/agents/${agent.id}/settings`)} />
               </Settings>
             </HeaderActions>
           }
           itemsActions={
             <ItemsActions
               itemsCount={selectedPlugins.length}
-              actions={getSelectedPLuginsActions(agent, selectedPlugins, setSelectedPlugins)}
+              // TODO: uncomment after backend implementation
+              // actions={getSelectedPLuginsActions(agent, selectedPlugins, setSelectedPlugins)}
+              actions={[]}
             />
           }
         />

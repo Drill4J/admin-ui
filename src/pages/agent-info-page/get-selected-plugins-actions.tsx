@@ -1,5 +1,7 @@
 import axios from 'axios';
 
+import { AGENT_STATUS } from '../../common/constants';
+
 // TODO: write unit test
 export const getSelectedPLuginsActions = (
   agent: any,
@@ -12,12 +14,12 @@ export const getSelectedPLuginsActions = (
 
   return [
     {
-      label: 'Enable',
+      label: 'Enable plugin',
       onClick: getOnClickFunction(agent.id, enableIds, setSelectedPLugins),
       count: enableIds.length,
     },
     {
-      label: 'Disable',
+      label: 'Disable plugin',
       onClick: getOnClickFunction(agent.id, disableIds, setSelectedPLugins),
       count: disableIds.length,
     },
@@ -53,6 +55,6 @@ const getUnloadFunction = (
 export const getSelectedPluginsMap = (plugins: any[] = [], selectedPluginsIds: string[]) =>
   plugins.reduce<{ [key: string]: boolean }>(
     (acc, { id = '', status }) =>
-      selectedPluginsIds.includes(id) ? { ...acc, [id]: Boolean(status) } : acc,
+      selectedPluginsIds.includes(id) ? { ...acc, [id]: status === AGENT_STATUS.READY } : acc,
     {},
   );

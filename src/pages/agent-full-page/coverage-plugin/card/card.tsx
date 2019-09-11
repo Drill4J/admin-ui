@@ -5,21 +5,32 @@ import styles from './card.module.scss';
 
 interface Props {
   className?: string;
-  title?: string;
-  text?: number | string;
-  secondaryText?: React.ReactNode;
+  header?: React.ReactNode;
+  children: any[];
 }
 
 const card = BEM(styles);
 
-export const Card = card(({ className, title, text, secondaryText }: Props) => (
+export const Card = card(({ className, header, children }: Props) => (
   <div className={className}>
-    <Title>{title}</Title>
-    <MainText>{text}</MainText>
-    <SecondaryText>{secondaryText}</SecondaryText>
+    <Header>{header}</Header>
+    <Content>
+      {React.Children.map(
+        children,
+        (child: React.ReactElement<any>) =>
+          child && (
+            <CardSectionContent>
+              <CardSectionLabel>{child.props.title}</CardSectionLabel>
+              <span>{child}</span>
+            </CardSectionContent>
+          ),
+      )}
+    </Content>
   </div>
 ));
 
-const Title = card.title('div');
-const MainText = card.mainText(div({ color: undefined } as { color?: 'green' | 'red' }));
-const SecondaryText = card.secondaryText('div');
+const Header = card.header('div');
+const Content = card.content('div');
+export const CardSection = card.section(div({ header: undefined } as { header?: React.ReactNode }));
+const CardSectionContent = card.sectionContent('div');
+const CardSectionLabel = card.sectionLabel('div');

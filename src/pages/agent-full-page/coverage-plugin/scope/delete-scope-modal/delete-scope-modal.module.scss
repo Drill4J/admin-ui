@@ -1,0 +1,47 @@
+@import '../../../../../common/style-guide/index';
+
+.delete-scope-modal {
+  width: 530px;
+
+  &__error-message {
+    height: 40px;
+    width: 100%;
+    background-color: rgba(255, 2, 2, 0.1);
+    font-size: 14px;
+    line-height: 24px;
+    color: map-get($color-palette, red100);
+  }
+
+  &__error-message-icon {
+    margin-left: 24px;
+    margin-right: 8px;
+  }
+
+  &__content {
+    margin: 24px;
+  }
+
+  &__message {
+    font-size: 14px;
+    line-height: 24px;
+  }
+
+  &__actions-panel {
+    margin-top: 38px;
+  }
+
+  &__delete-scope-button {
+    min-height: 32px;
+    width: auto;
+    font-size: 14px;
+    padding: 0 16px;
+  }
+
+  &__cancel-button {
+    margin-left: 16px;
+    min-height: 32px;
+    width: 78px;
+    border: 1px solid $loblolly-color;
+    color: $slate-gray;
+  }
+}

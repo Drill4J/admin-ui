@@ -1,0 +1,60 @@
+@import '../../../../../common/style-guide/index';
+
+.finish-scope-modal {
+  width: 530px;
+
+  &__error-message {
+    height: 40px;
+    width: 100%;
+    background-color: rgba(255, 2, 2, 0.1);
+    font-size: 14px;
+    line-height: 24px;
+    color: map-get($color-palette, red100);
+  }
+
+  &__empty-scope-warning {
+    height: 40px;
+    width: 100%;
+    font-size: 14px;
+    background-color: rgba(map-get($color-palette, yellow50), 0.1);
+  }
+
+  &__empty-scope-warning-icon {
+    color: map-get($color-palette, yellow50);
+    margin-left: 24px;
+    margin-right: 8px;
+  }
+
+  &__error-message-icon {
+    margin-left: 24px;
+    margin-right: 8px;
+  }
+
+  &__content {
+    margin: 24px;
+  }
+
+  &__ignore-scope {
+    margin-top: 24px;
+    margin-bottom: 32px;
+  }
+
+  &__actions-panel {
+    margin-top: 38px;
+  }
+
+  &__finish-scope-button {
+    min-height: 32px;
+    width: auto;
+    font-size: 14px;
+    padding: 0 16px;
+  }
+
+  &__cancel-button {
+    margin-left: 16px;
+    min-height: 32px;
+    width: 78px;
+    border: 1px solid $loblolly-color;
+    color: $slate-gray;
+  }
+}

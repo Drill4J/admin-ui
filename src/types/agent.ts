@@ -1,11 +1,12 @@
 import { Plugin } from './plugin';
+import { BuildVersion } from './build-version';
 
 export interface Agent {
   id?: string;
   name?: string;
   group?: string;
   description?: string;
-  status?: boolean;
+  status?: 'READY' | 'NOT_REGISTERED';
   drillAdminUrl?: string;
   address?: string;
   rawPluginsName?: Plugin[];
@@ -13,4 +14,6 @@ export interface Agent {
   activePluginsCount?: number;
   pluginsCount?: number;
   buildVersion?: string;
+  buildVersions?: BuildVersion[];
+  buildAlias?: string;
 }

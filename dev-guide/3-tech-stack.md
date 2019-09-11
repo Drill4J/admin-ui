@@ -10,4 +10,4 @@ We use [react-router](https://github.com/ReactTraining/react-router) as a routin
 
 We use [@redneckz/react-bem-helper](https://github.com/redneckz/react-bem-helper) as utility helps to declare BEM entities in terms of React components.
 
-State management library is still TBD.
+We use [react-final-form](https://github.com/final-form/react-final-form) as Forms state manager

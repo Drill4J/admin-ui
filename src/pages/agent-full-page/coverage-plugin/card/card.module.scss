@@ -1,45 +1,37 @@
 @import '../../../../common/style-guide/index';
 
 .card {
-  height: 160px;
+  height: 240px;
   width: 100%;
   border: 1px solid map-get($color-palette, light-blue);
   background-color: map-get($color-palette, white);
 
-  &__title {
-    margin: 14px 16px;
+  &__header {
+    margin: 16px 16px 24px 16px;
+    line-height: 20px;
     font-size: 14px;
     font-family: $semibold-font;
-    color: map-get($color-palette, black50);
   }
 
-  &__main-text {
-    margin: 14px 16px;
-    font-size: 32px;
-    font-family: $light-font;
-    line-height: 32px;
-
-    &--color {
-      &--green {
-        color: map-get($color-palette, green100);
-      }
-
-      &--red {
-        color: map-get($color-palette, red100);
-      }
-    }
-  }
-
-  &__secondary-text {
-    margin: 14px 16px;
+  &__content {
+    margin: 16px;
     display: flex;
-    align-items: center;
-    font-size: 14px;
-    line-height: 20px;
-    color: map-get($color-palette, black50);
+    flex-direction: row;
+  }
 
-    & > * {
-      margin-right: 8px;
-    }
+  &__section {
+    margin-right: 24px;
+  }
+
+  &__section-content {
+    display: flex;
+    flex-direction: column;
+    flex: 1 0 21%;
+  }
+
+  &__section-label {
+    font-size: 12px;
+    line-height: 24px;
+    color: $slate-gray;
   }
 }
