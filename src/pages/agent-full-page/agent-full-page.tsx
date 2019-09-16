@@ -6,8 +6,7 @@ import { Icons, Sidebar, Toolbar, Badge, Divider } from '../../components';
 import { AppLayout, Panel } from '../../layouts';
 import { Agent } from '../../types/agent';
 import { CoveragePlugin } from './coverage-plugin';
-import { useWsConnection } from '../../hooks';
-import { defaultAdminSocket } from '../../common/connection';
+import { useAgent } from '../../hooks';
 import { AGENT_STATUS } from '../../common/constants';
 import { PluginProvider } from './coverage-plugin/store';
 
@@ -29,7 +28,7 @@ const getPluginsLinks = (agent: Agent) => [
 
 export const AgentFullPage = withRouter(
   agentFullPage(({ className, match: { params: { agentId } }, history }: Props) => {
-    const agent = useWsConnection<Agent>(defaultAdminSocket, `/get-agent/${agentId}`) || {};
+    const agent = useAgent(agentId, () => history.push('/not-found')) || {};
 
     return (
       <AppLayout

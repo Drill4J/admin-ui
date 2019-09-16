@@ -3,7 +3,6 @@ import { BEM } from '@redneckz/react-bem-helper';
 
 import { Card } from '../card';
 import { MethodsSection } from './methods-section';
-import { MethodsModal } from '../methods-modal';
 import { combineModifiedMethods } from './combine-modified-methods';
 import { Methods } from '../../../../types/methods';
 

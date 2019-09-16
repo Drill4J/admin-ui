@@ -20,7 +20,7 @@ export function useAgentId<Data>(topic: string) {
     return () => {
       unsubscribe && unsubscribe();
     };
-  }, [agentId]);
+  }, [agentId, topic]);
 
   return data;
 }

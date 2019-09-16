@@ -1,7 +1,5 @@
 import axios from 'axios';
 
-import { ScopeSummary } from '../../../../types/scope-summary';
-
 export function toggleScope(
   agentId: string,
   { onSuccess, onError }: { onSuccess?: () => void; onError?: (message: string) => void } = {},

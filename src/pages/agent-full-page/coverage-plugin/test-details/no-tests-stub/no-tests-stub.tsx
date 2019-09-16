@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { BEM, not } from '@redneckz/react-bem-helper';
+import { BEM } from '@redneckz/react-bem-helper';
 
 import { Icons } from '../../../../../components';
 
