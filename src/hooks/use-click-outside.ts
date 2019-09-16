@@ -14,7 +14,8 @@ export function useClickOutside(callback: () => void) {
     return () => {
       document.removeEventListener('mousedown', handleClick);
     };
-  }, [callback]);
+    // eslint-disable-next-line
+  }, []);
 
   return node;
 }

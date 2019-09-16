@@ -14,7 +14,8 @@ export function useWsConnection<Data>(socket: DrillSocket, topic: string, messag
     return () => {
       unsubscribe();
     };
-  }, [topic, socket, message]);
+    // eslint-disable-next-line
+  }, []);
 
   return data;
 }
