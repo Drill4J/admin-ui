@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 
 import { defaultAdminSocket } from '../common/connection';
+import { AGENT_STATUS } from '../common/constants';
 import { Agent } from '../types/agent';
 
 export function useAgent(agentId: string, callback?: () => void) {
@@ -8,7 +9,7 @@ export function useAgent(agentId: string, callback?: () => void) {
 
   useEffect(() => {
     function handleDataChange(newData: Agent) {
-      if (!newData) {
+      if (!newData || newData.status === AGENT_STATUS.NOT_REGISTERED) {
         callback && callback();
       }
       setData(newData);
