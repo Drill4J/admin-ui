@@ -80,7 +80,7 @@ const loadPlugins = ({
   setSelectedPlugins: (arg: any) => any;
   setIsAddPluginOpen: (arg: any) => any;
 }) => {
-  selectedPlugins.map((pluginId) => {
+  selectedPlugins.forEach((pluginId) => {
     axios.post(`/agents/${agentId}/load-plugin`, { pluginId });
   });
   setSelectedPlugins([]);

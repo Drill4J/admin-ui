@@ -1,5 +1,4 @@
 import { DrillSocket } from '@drill4j/socket';
-
 import { useEffect, useState } from 'react';
 
 export function useWsConnection<Data>(socket: DrillSocket, topic: string, message?: object) {
@@ -15,7 +14,7 @@ export function useWsConnection<Data>(socket: DrillSocket, topic: string, messag
     return () => {
       unsubscribe();
     };
-  }, []);
+  }, [topic, socket, message]);
 
   return data;
 }

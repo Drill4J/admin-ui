@@ -2,7 +2,6 @@ import * as React from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 
 import { Icons } from '../../components';
-import { Panel } from '../../layouts';
 
 import styles from './toolbar.module.scss';
 

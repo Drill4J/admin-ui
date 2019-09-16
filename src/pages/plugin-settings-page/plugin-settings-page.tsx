@@ -7,7 +7,7 @@ import axios from 'axios';
 import { PageHeader, Icons } from '../../components';
 import { Panel } from '../../layouts';
 import { FormGroup, Fields, Button, requiredArray } from '../../forms';
-import { useWsConnection } from '../../hooks';
+import { useWsConnection, useAgent } from '../../hooks';
 import { defaultAdminSocket } from '../../common/connection';
 import { NotificationManagerContext } from '../../notification-manager';
 import { Message } from '../../types/message';
@@ -24,7 +24,8 @@ const pluginSettingsPage = BEM(styles);
 const validatePathPrefixes = requiredArray('pathPrefixes');
 
 export const PluginSettingsPage = withRouter(
-  pluginSettingsPage(({ className, match: { params: { agentId } } }: Props) => {
+  pluginSettingsPage(({ className, match: { params: { agentId } }, history: { push } }: Props) => {
+    const agent = useAgent(agentId, () => push('/not-found')) || {};
     const { pathPrefixes = [] } =
       useWsConnection<CoveragePluginConfig>(defaultAdminSocket, `/${agentId}/coverage/config`) ||
       {};
@@ -33,7 +34,7 @@ export const PluginSettingsPage = withRouter(
     return (
       <div className={className}>
         <Form
-          initialValues={{ agentId, pathPrefixes }}
+          initialValues={{ agentId: agent.id, pathPrefixes }}
           onSubmit={saveChanges(showMessage) as any}
           validate={validatePathPrefixes as any}
           render={({ handleSubmit, submitting, pristine, invalid }) => (
