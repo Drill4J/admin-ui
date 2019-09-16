@@ -44,6 +44,12 @@
     color: map-get($color-palette, middle-blue);
   }
 
+  &__scope-duration {
+    margin-left: 8px;
+    font-size: 14px;
+    line-height: 24px;
+  }
+
   &__finish-scope-button {
     min-height: 32px;
     width: 136px;
