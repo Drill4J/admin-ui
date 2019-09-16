@@ -35,7 +35,7 @@ export const CoveragePlugin = withRouter(
 
       React.useEffect(() => {
         dispatch(setInitialConfig({ agentId, pluginId, buildVersion }));
-      }, [buildVersion]);
+      }, [buildVersion, pluginId, agentId, dispatch]);
 
       return (
         <div className={className}>

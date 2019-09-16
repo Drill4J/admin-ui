@@ -5,13 +5,11 @@ import axios from 'axios';
 
 import { PageHeader, Icons, ItemsActions } from '../../components';
 import { Button, Inputs } from '../../forms';
-import { useWsConnection } from '../../hooks';
-import { defaultAdminSocket } from '../../common/connection';
+import { useAgent } from '../../hooks';
 import { AGENT_STATUS } from '../../common/constants';
 import { AgentPluginsTable } from './agent-plugins-table';
 import { AddPluginsModal } from './add-plugins-modal';
 import { NoPluginsStub } from './no-plugins-stub';
-import { Agent } from '../../types/agent';
 
 import styles from './agent-info-page.module.scss';
 
@@ -23,7 +21,7 @@ const agentInfoPage = BEM(styles);
 
 export const AgentInfoPage = withRouter(
   agentInfoPage(({ className, history: { push }, match: { params: { agentId } } }: Props) => {
-    const agent = useWsConnection<Agent>(defaultAdminSocket, `/get-agent/${agentId}`) || {};
+    const agent = useAgent(agentId, () => push('/not-found')) || {};
     const [selectedPlugins, setSelectedPlugins] = React.useState<string[]>([]);
     const [isAddPluginOpen, setIsAddPluginOpen] = React.useState(false);
 
