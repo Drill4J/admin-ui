@@ -35,7 +35,8 @@ export const CoveragePlugin = withRouter(
 
       React.useEffect(() => {
         dispatch(setInitialConfig({ agentId, pluginId, buildVersion }));
-      }, [buildVersion, pluginId, agentId, dispatch]);
+        // eslint-disable-next-line
+      }, [buildVersion]);
 
       return (
         <div className={className}>

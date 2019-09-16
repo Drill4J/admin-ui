@@ -20,7 +20,8 @@ export function useAgent(agentId: string, callback?: () => void) {
     return () => {
       unsubscribe();
     };
-  }, [agentId, callback]);
+    // eslint-disable-next-line
+  }, [agentId]);
 
   return data;
 }
