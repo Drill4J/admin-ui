@@ -17,6 +17,7 @@ import { Coverage } from '../../../../../types/coverage';
 import { Methods } from '../../../../../types/methods';
 import { ClassCoverage } from '../../../../../types/class-coverage';
 import { AssociatedTests } from '../../../../../types/associated-tests';
+import { getTimeDifference } from '../../../../../utils';
 
 import styles from './scope-info.module.scss';
 
@@ -38,7 +39,7 @@ export const ScopeInfo = withRouter(
     const testsUsages = useBuildVersion<AssociatedTests[]>(`/scope/${scopeId}/tests-usages`) || [];
 
     const scope = useBuildVersion<ScopeSummary>(`/scope/${scopeId}`);
-    const { name = '', active = false, enabled = false } = scope || {};
+    const { name = '', active = false, enabled = false, started = 0, finished = 0 } = scope || {};
     const [selectedTab, setSelectedTab] = React.useState('coverage');
     const menuActions = [
       !active && {
@@ -74,6 +75,7 @@ export const ScopeInfo = withRouter(
             <Panel>
               {name}
               {active ? <ActiveBadge>Active</ActiveBadge> : <FinisedBadge>Finished</FinisedBadge>}
+              <ScopeDuration>{getTimeDifference(started, finished)}</ScopeDuration>
             </Panel>
             <Panel align="end">
               <FinishScopeButton
@@ -125,6 +127,7 @@ const BackToScopesList = scopeInfo.backToScopesList('span');
 const Header = scopeInfo.header('div');
 const ActiveBadge = scopeInfo.activeBadge('span');
 const FinisedBadge = scopeInfo.finishedBadge('span');
+const ScopeDuration = scopeInfo.scopeDuration('span');
 const FinishScopeButton = scopeInfo.finishScopeButton(Button);
 const SummaryPanel = scopeInfo.summaryPanel(Panel);
 const RoutingTabsPanel = scopeInfo.routingTabsPanel(Panel);

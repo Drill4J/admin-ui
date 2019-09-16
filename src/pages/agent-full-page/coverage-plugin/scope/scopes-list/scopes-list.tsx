@@ -3,7 +3,7 @@ import { BEM } from '@redneckz/react-bem-helper';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
 
 import { Table, Column, Menu } from '../../../../../components';
-import { percentFormatter } from '../../../../../utils';
+import { percentFormatter, getTimeDifference } from '../../../../../utils';
 import { useBuildVersion } from '../../use-build-version';
 import { toggleScope } from '../../api';
 import { usePluginState, usePluginDispatch, openModal } from '../../store';
@@ -41,12 +41,14 @@ export const ScopesList = withRouter(
             <Column
               name="name"
               HeaderCell={() => <HeaderCell>Name</HeaderCell>}
-              Cell={({ value, item: { id, started, active, enabled } }) => (
+              Cell={({ value, item: { id, started, active, enabled, finished } }) => (
                 <NameCell onClick={() => push(`/full-page/${agentId}/coverage/scopes/${id}`)}>
                   {value}
                   {active && <ActiveBadge>Active</ActiveBadge>}
                   {!enabled && <IgnoreBadge>Ignored</IgnoreBadge>}
-                  <StartDate>{new Date(started).toDateString()}</StartDate>
+                  <StartDate>
+                    {new Date(started).toDateString()} · {getTimeDifference(started, finished)}
+                  </StartDate>
                 </NameCell>
               )}
             />
