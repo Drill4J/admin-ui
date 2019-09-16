@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
-import axios from 'axios';
 
 import { SelectableTable, Column, Badge, Icons } from '../../../components';
 import { Inputs } from '../../../forms';

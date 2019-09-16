@@ -1,8 +1,6 @@
 import * as React from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 
-import { Icons } from '../icon';
-
 import styles from './page-header.module.scss';
 
 interface Props {

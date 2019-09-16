@@ -8,8 +8,7 @@ import axios from 'axios';
 import { PageHeader, Icons } from '../../components';
 import { Panel } from '../../layouts';
 import { Button, composeValidators, sizeLimit, required } from '../../forms';
-import { useWsConnection } from '../../hooks';
-import { defaultAdminSocket } from '../../common/connection';
+import { useAgent } from '../../hooks';
 import { AGENT_STATUS } from '../../common/constants';
 import { NotificationManagerContext } from '../../notification-manager';
 import { AgentSettingsForm } from './agent-settings-form/agent-settings-form';
@@ -59,8 +58,8 @@ const buildAliasDecorator = createDecorator(
 );
 
 export const AgentSettingsPage = withRouter(
-  agentSettingsPage(({ className, match: { params: { agentId } } }: Props) => {
-    const agent = useWsConnection<Agent>(defaultAdminSocket, `/get-agent/${agentId}`) || {};
+  agentSettingsPage(({ className, match: { params: { agentId } }, history: { push } }: Props) => {
+    const agent = useAgent(agentId, () => push('/not-found')) || {};
     const { showMessage } = React.useContext(NotificationManagerContext);
     const [errorMessage, setErrorMessage] = React.useState('');
     const [isUnregisterModalOpen, setIsUnregisterModalOpen] = React.useState(false);

@@ -22,7 +22,7 @@ export function useBuildVersion<Data>(topic: string) {
     return () => {
       unsubscribe && unsubscribe();
     };
-  }, [agentId, buildVersion]);
+  }, [agentId, buildVersion, topic]);
 
   return data;
 }
