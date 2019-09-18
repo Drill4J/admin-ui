@@ -10,6 +10,7 @@ import { useBuildVersion } from '../../use-build-version';
 import { CoverageByType } from './coverage-by-type';
 import { usePluginState, usePluginDispatch, openModal } from '../../store';
 import { NoScopeStub } from '../no-scope-stub';
+import { ScopeTimer } from '../scope-timer';
 import { ScopeSummary } from '../../../../../types/scope-summary';
 
 import styles from './current-scope.module.scss';
@@ -43,8 +44,15 @@ export const CurrentScope = withRouter(
     const scope = useBuildVersion<ScopeSummary>('/active-scope');
     const { agentId } = usePluginState();
     const dispatch = usePluginDispatch();
-    const { id = '', name = '', coverage = 0, coveragesByType = {}, started = 0, active = false } =
-      scope || {};
+    const {
+      id = '',
+      name = '',
+      coverage = 0,
+      coveragesByType = {},
+      started = 0,
+      active = false,
+      finished = 0,
+    } = scope || {};
     const { testTypes: activeSessionTestTypes = [] } =
       useBuildVersion<{ testTypes: string[] }>('/active-sessions') || {};
     const scopeStartDate = new Date(started).toDateString();
@@ -60,7 +68,11 @@ export const CurrentScope = withRouter(
                 </ScopeName>
                 {active && <ActiveBadge>Active</ActiveBadge>}
               </Panel>
-              <ScopeStartDate>{scopeStartDate}</ScopeStartDate>
+              <ScopeStartDate>
+                {scopeStartDate}
+                {' · '}
+                <ScopeTimer started={started} finised={finished} active={true} />
+              </ScopeStartDate>
             </div>
             <Coverage>{`${percentFormatter(coverage)}%`}</Coverage>
             <CoverageByTypeSection>
