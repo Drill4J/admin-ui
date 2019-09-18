@@ -12,12 +12,12 @@ import { CoverageDetails } from '../../coverage-details';
 import { TestDetails } from '../../test-details';
 import { toggleScope } from '../../api';
 import { usePluginState, usePluginDispatch, openModal } from '../../store';
+import { ScopeTimer } from '../scope-timer';
 import { ScopeSummary } from '../../../../../types/scope-summary';
 import { Coverage } from '../../../../../types/coverage';
 import { Methods } from '../../../../../types/methods';
 import { ClassCoverage } from '../../../../../types/class-coverage';
 import { AssociatedTests } from '../../../../../types/associated-tests';
-import { getTimeDifference } from '../../../../../utils';
 
 import styles from './scope-info.module.scss';
 
@@ -75,7 +75,7 @@ export const ScopeInfo = withRouter(
             <Panel>
               {name}
               {active ? <ActiveBadge>Active</ActiveBadge> : <FinisedBadge>Finished</FinisedBadge>}
-              <ScopeDuration>{getTimeDifference(started, finished)}</ScopeDuration>
+              <ScopeTimer started={started} finised={finished} active={active} />
             </Panel>
             <Panel align="end">
               <FinishScopeButton

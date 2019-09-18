@@ -3,10 +3,11 @@ import { BEM } from '@redneckz/react-bem-helper';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
 
 import { Table, Column, Menu } from '../../../../../components';
-import { percentFormatter, getTimeDifference } from '../../../../../utils';
+import { percentFormatter } from '../../../../../utils';
 import { useBuildVersion } from '../../use-build-version';
 import { toggleScope } from '../../api';
 import { usePluginState, usePluginDispatch, openModal } from '../../store';
+import { ScopeTimer } from '../scope-timer';
 import { ScopeSummary } from '../../../../../types/scope-summary';
 
 import styles from './scopes-list.module.scss';
@@ -47,7 +48,9 @@ export const ScopesList = withRouter(
                   {active && <ActiveBadge>Active</ActiveBadge>}
                   {!enabled && <IgnoreBadge>Ignored</IgnoreBadge>}
                   <StartDate>
-                    {new Date(started).toDateString()} · {getTimeDifference(started, finished)}
+                    {new Date(started).toDateString()}
+                    {` · `}
+                    <ScopeTimer started={started} finised={finished} active={active} />
                   </StartDate>
                 </NameCell>
               )}
