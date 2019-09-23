@@ -1,0 +1,24 @@
+@import '../../../../../common/style-guide/index';
+
+.scope-timer {
+  line-height: 24px;
+
+  &__duration {
+    color: $slate-gray;
+  }
+
+  &__timer {
+    margin-left: 4px;
+    font-family: $semibold-font;
+    color: map-get($color-palette, green100);
+  }
+
+  &--size {
+    &--normal {
+      font-size: 14px;
+    }
+    &--small {
+      font-size: 12px;
+    }
+  }
+}

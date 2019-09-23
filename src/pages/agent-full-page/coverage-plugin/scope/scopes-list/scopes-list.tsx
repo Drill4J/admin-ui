@@ -7,6 +7,7 @@ import { percentFormatter } from '../../../../../utils';
 import { useBuildVersion } from '../../use-build-version';
 import { toggleScope } from '../../api';
 import { usePluginState, usePluginDispatch, openModal } from '../../store';
+import { ScopeTimer } from '../scope-timer';
 import { ScopeSummary } from '../../../../../types/scope-summary';
 
 import styles from './scopes-list.module.scss';
@@ -41,12 +42,16 @@ export const ScopesList = withRouter(
             <Column
               name="name"
               HeaderCell={() => <HeaderCell>Name</HeaderCell>}
-              Cell={({ value, item: { id, started, active, enabled } }) => (
+              Cell={({ value, item: { id, started, active, enabled, finished } }) => (
                 <NameCell onClick={() => push(`/full-page/${agentId}/coverage/scopes/${id}`)}>
                   {value}
                   {active && <ActiveBadge>Active</ActiveBadge>}
                   {!enabled && <IgnoreBadge>Ignored</IgnoreBadge>}
-                  <StartDate>{new Date(started).toDateString()}</StartDate>
+                  <StartDate>
+                    {new Date(started).toDateString()}
+                    {` · `}
+                    <ScopeTimer started={started} finised={finished} active={active} />
+                  </StartDate>
                 </NameCell>
               )}
             />
