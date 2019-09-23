@@ -14,7 +14,7 @@ import {
 import { Popup, Icons } from '../../../../../components';
 import { NotificationManagerContext } from '../../../../../notification-manager';
 import { renameScope } from '../../api';
-import { usePluginState } from '../../store';
+import { usePluginState } from '../../../store';
 import { ScopeSummary } from '../../../../../types/scope-summary';
 
 import styles from './rename-scope-modal.module.scss';

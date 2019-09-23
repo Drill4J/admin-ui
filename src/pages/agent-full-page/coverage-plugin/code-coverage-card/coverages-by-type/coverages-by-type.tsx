@@ -18,34 +18,42 @@ const coverageByTypeDefaults = {
   MANUAL: {
     testType: 'MANUAL',
     coverage: 0,
+    testCount: 0,
   },
   AUTO: {
     testType: 'AUTO',
     coverage: 0,
+    testCount: 0,
   },
   PERFORMANCE: {
     testType: 'PERFORMANCE',
     coverage: 0,
+    testCount: 0,
   },
 };
 
 export const CoveragesByType = coveragesByType(({ className, coverageByType }: Props) => {
   return (
     <div className={className}>
-      {Object.values({ ...coverageByTypeDefaults, ...coverageByType }).map(
-        ({ testType, coverage = 0 }) => (
-          <CoverageItem key={testType}>
-            <TestTypeIcon type={testType as any} />
-            <TestTypeName>{testType}</TestTypeName>
-            <TestTypeCoverage>{`${percentFormatter(coverage)}%`}</TestTypeCoverage>
-          </CoverageItem>
-        ),
-      )}
+      <CoverageTypesContainer>
+        {Object.values({ ...coverageByTypeDefaults, ...coverageByType }).map(
+          ({ testType, coverage = 0, testCount = 0 }) => (
+            <CoverageItem key={testType}>
+              <TestTypeIcon type={testType as any} />
+              <TestTypeName>{testType.toLocaleLowerCase()}</TestTypeName>
+              <TestsCount>({testCount})</TestsCount>
+              <TestTypeCoverage>{`${percentFormatter(coverage)}%`}</TestTypeCoverage>
+            </CoverageItem>
+          ),
+        )}
+      </CoverageTypesContainer>
     </div>
   );
 });
 
+const CoverageTypesContainer = coveragesByType.coverageTypesContaier('div');
 const CoverageItem = coveragesByType.coverageItem('div');
 const TestTypeIcon = coveragesByType.testTypeIcon(div({} as { type: 'MANUAL' | 'AUTO' }));
-const TestTypeName = coveragesByType.testTypeName(Panel);
+const TestTypeName = coveragesByType.testTypeName('div');
+const TestsCount = coveragesByType.testsCount(Panel);
 const TestTypeCoverage = coveragesByType.testTypeCoverage('div');

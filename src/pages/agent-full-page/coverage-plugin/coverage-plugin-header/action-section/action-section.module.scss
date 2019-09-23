@@ -1,0 +1,33 @@
+@import '../../../../../common/style-guide/index';
+
+.action-section {
+  border-left: 1px solid map-get($color-palette, light-blue);
+
+  &__action {
+    padding-left: 16px;
+    padding-right: 40px;
+  }
+
+  &__action-name {
+    margin-bottom: 5px;
+    font-size: 13px;
+    line-height: 16px;
+    font-family: $semibold-font;
+    text-transform: uppercase;
+    color: $slate-gray;
+  }
+
+  &__count {
+    font-size: 20px;
+    line-height: 24px;
+    cursor: pointer;
+    background-image: linear-gradient(
+      to right,
+      map-get($color-palette, black100) 50%,
+      transparent 50%
+    );
+    background-position: 0 1.15em;
+    background-repeat: repeat-x;
+    background-size: 2px 1px;
+  }
+}

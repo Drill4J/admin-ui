@@ -14,21 +14,28 @@ interface Props {
   className?: string;
   header?: React.ReactNode;
   coverage: Coverage;
+  additionalInfo?: React.ReactNode;
 }
 
 const codeCoverageCard = BEM(styles);
 
 export const CodeCoverageCard = codeCoverageCard(
-  ({ className, header, coverage: { coverage = 0, arrow, coverageByType = {} } }: Props) => (
+  ({
+    className,
+    header,
+    coverage: { coverage = 0, arrow, coverageByType = {} },
+    additionalInfo,
+  }: Props) => (
     <div className={className}>
       <Card header={header}>
         <CardSection header="TOTAL">
-          <TotalCoverage type={arrow}>
+          <TotalCoverage>
             <Panel>
               {`${percentFormatter(coverage)}%`}
-              {arrow && <ArrowIcon rotate={arrow === 'INCREASE' ? 180 : 0} />}
+              {arrow && <ArrowIcon rotate={arrow === 'INCREASE' ? 180 : 0} type={arrow} />}
             </Panel>
           </TotalCoverage>
+          <AdditionalInfo>{additionalInfo}</AdditionalInfo>
         </CardSection>
         <CardSection header="BY TEST TYPE">
           <CoveragesByType coverageByType={coverageByType} />
@@ -38,5 +45,9 @@ export const CodeCoverageCard = codeCoverageCard(
   ),
 );
 
-const TotalCoverage = codeCoverageCard.totalCoverage(div({} as { type?: 'INCREASE' | 'DECREASE' }));
-const ArrowIcon = codeCoverageCard.arrowIcon(Icons.CoverageArrow);
+const TotalCoverage = codeCoverageCard.totalCoverage('div');
+const ArrowIcon: React.FC<{
+  rotate: number;
+  type: 'INCREASE' | 'DECREASE';
+}> = codeCoverageCard.arrowIcon(Icons.CoverageArrow);
+const AdditionalInfo = codeCoverageCard.additionalInfo('div');

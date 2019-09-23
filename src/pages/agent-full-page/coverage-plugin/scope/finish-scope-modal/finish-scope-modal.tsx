@@ -9,7 +9,7 @@ import { NotificationManagerContext } from '../../../../../notification-manager'
 import { finishScope } from '../../api';
 import { ScopeSummary } from './scope-summary';
 import { ActiveSessionsPanel } from '../active-sessions-panel';
-import { usePluginState } from '../../store';
+import { usePluginState } from '../../../store';
 import { ScopeSummary as ScopeSummaryType } from '../../../../../types/scope-summary';
 
 import styles from './finish-scope-modal.module.scss';

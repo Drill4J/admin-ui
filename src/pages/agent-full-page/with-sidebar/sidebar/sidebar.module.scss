@@ -1,0 +1,25 @@
+@import '../../../../common/style-guide/index';
+
+.new-sidebar {
+  width: 100%;
+  height: 100%;
+  background-color: map-get($color-palette, ultra-light-blue);
+
+  &__link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 80px;
+    width: 100%;
+    border-bottom: 1px solid #e4e6ec;
+    color: map-get($color-palette, blue100);
+    cursor: pointer;
+
+    &--type {
+      &--active {
+        color: #8f9da8;
+        background-color: map-get($color-palette, white);
+      }
+    }
+  }
+}

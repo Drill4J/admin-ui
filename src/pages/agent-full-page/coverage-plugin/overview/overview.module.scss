@@ -1,0 +1,36 @@
+@import '../../../../common/style-guide/index';
+
+.overview {
+  &__summary-panel {
+    & > :first-child {
+      margin-right: 8px;
+    }
+  }
+
+  &__scopes-list-link {
+    color: map-get($color-palette, blue100);
+    text-transform: capitalize;
+    font-family: $regular-font;
+    text-decoration: none;
+  }
+
+  &__routing-tabs-panel {
+    height: 49px;
+    margin-top: 24px;
+    border-bottom: 1px solid map-get($color-palette, light-blue);
+  }
+
+  &__tab-content {
+    margin-top: 8px;
+  }
+
+  &__tab-icon-wrapper {
+    display: flex;
+    align-items: center;
+    margin-right: 8px;
+  }
+
+  &__scope-duration-icon {
+    margin-right: 8px;
+  }
+}

@@ -7,22 +7,24 @@ interface Props {
   className?: string;
   children?: React.ReactNode;
   toolbar?: React.ReactNode;
-  sidebar?: React.ReactNode;
+  header?: React.ReactNode;
+  breadcrumbs?: React.ReactNode;
 }
 
 const pluginsLayout = BEM(styles);
 
-export const PluginsLayout = pluginsLayout(({ className, toolbar, sidebar, children }: Props) => (
-  <div className={className}>
-    <SidebarWrapper>{sidebar}</SidebarWrapper>
-    <ContentWrapper>
-      <HeaderWrapper>{toolbar}</HeaderWrapper>
+export const PluginsLayout = pluginsLayout(
+  ({ className, toolbar, header, breadcrumbs, children }: Props) => (
+    <div className={className}>
+      <ToolbarWrapper>{toolbar}</ToolbarWrapper>
+      <HeaderWrapper>{header}</HeaderWrapper>
+      <BreadcrumbsWrapper>{breadcrumbs}</BreadcrumbsWrapper>
       <Content>{children}</Content>
-    </ContentWrapper>
-  </div>
-));
+    </div>
+  ),
+);
 
-const SidebarWrapper = pluginsLayout.sidebar('div');
-const ContentWrapper = pluginsLayout.contentWrapper('div');
+const ToolbarWrapper = pluginsLayout.toolbar('div');
 const HeaderWrapper = pluginsLayout.header('div');
+const BreadcrumbsWrapper = pluginsLayout.breadcrumbs('div');
 const Content = pluginsLayout.content('div');

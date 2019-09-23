@@ -1,0 +1,16 @@
+.with-sidebar {
+  display: flex;
+  flex-direction: row;
+  height: 100%;
+  width: 100%;
+
+  &__sidebar {
+    height: 100%;
+    min-width: 80px;
+  }
+
+  &__content {
+    height: 100%;
+    width: 100%;
+  }
+}

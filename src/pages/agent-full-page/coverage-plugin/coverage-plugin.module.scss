@@ -2,16 +2,18 @@
 
 .coverage-plugin {
   height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
 
-  &__routing-tabs-panel {
-    height: 49px;
-    width: 100%;
-    padding-left: 24px;
-    border-bottom: 1px solid map-get($color-palette, light-blue);
+  &__header {
+    margin: 0 24px;
   }
 
   &__content {
-    margin: 33px 29px;
+    flex-grow: 1;
+    overflow-y: auto;
+    padding: 16px 24px 0 24px;
   }
 
   &__settings-button {
@@ -25,9 +27,5 @@
     color: map-get($color-palette, blue100);
     margin-left: 16px;
     cursor: pointer;
-  }
-
-  &__tab-icon-wrapper {
-    margin-right: 8px;
   }
 }

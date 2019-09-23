@@ -1,0 +1,70 @@
+@import '../../../../common/style-guide/index';
+
+.risks-modal {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+
+  &__header {
+    display: flex;
+    align-items: center;
+    height: 63px;
+    border-bottom: 1px solid map-get($color-palette, light-blue);
+    padding-left: 24px;
+    font-size: 18px;
+    line-height: 24px;
+    color: map-get($color-palette, black100);
+
+    & > * {
+      margin-right: 8px;
+    }
+  }
+
+  &__tabs-panel {
+    height: 49px;
+    width: 100%;
+    padding-left: 24px;
+    border-bottom: 1px solid map-get($color-palette, light-blue);
+  }
+
+  &__content {
+    height: 100%;
+    width: 100%;
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+
+  &__methods-list {
+    display: flex;
+    flex-direction: column;
+    font-size: 14px;
+    margin-top: 16px;
+  }
+
+  &__methods-list-item {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    min-height: 40px;
+    padding-left: 24px;
+    font-size: 12px;
+    margin-bottom: 16px;
+    width: 400px;
+  }
+
+  &__methods-list-item-icon {
+    display: flex;
+    align-items: center;
+    margin-right: 18px;
+  }
+
+  &__methods-info {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__methods-package {
+    width: 320px;
+    color: $slate-gray;
+  }
+}
