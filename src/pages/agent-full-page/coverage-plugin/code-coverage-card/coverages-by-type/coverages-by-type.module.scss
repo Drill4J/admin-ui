@@ -4,12 +4,18 @@
   display: flex;
   flex-direction: column;
   flex: 1 0 21%;
+  color: $slate-gray;
+
+  &__coverage-types-contaier {
+    & > *:not(:last-child) {
+      border-bottom: 1px solid map-get($color-palette, black10);
+    }
+  }
 
   &__coverage-item {
     display: flex;
     align-items: center;
     line-height: 32px;
-    border-bottom: 1px solid map-get($color-palette, black10);
   }
 
   &__test-type-icon {
@@ -39,7 +45,13 @@
 
   &__test-type-name {
     font-size: 12px;
-    line-height: 24px;
+    line-height: 32px;
+    text-transform: capitalize;
+  }
+
+  &__tests-count {
+    font-size: 12px;
+    margin-left: 8px;
   }
 
   &__test-type-coverage {

@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 
 import { defaultPluginSocket } from '../../../common/connection';
-import { usePluginState } from './store';
+import { usePluginState } from '../store';
 
 export function useBuildVersion<Data>(topic: string) {
   const { agentId, buildVersion } = usePluginState();

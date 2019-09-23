@@ -30,6 +30,7 @@ export const ScopeTimer = scopeTimer(({ className, started, finised, active }: P
       setDuration(getTimeDifference(started, finised));
     }
 
+    updateTimer();
     const timer = setInterval(updateTimer, 1000);
 
     return () => {

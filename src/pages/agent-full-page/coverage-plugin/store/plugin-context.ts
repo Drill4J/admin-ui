@@ -4,27 +4,24 @@ import { PluginState } from './store-types';
 import { Action } from './reducer';
 
 export const defaultState = {
-  agentId: '',
-  pluginId: '',
-  buildVersion: '',
   scope: null,
   openedModalName: undefined,
 };
 
-export const PluginStateContext = React.createContext<PluginState>(defaultState);
+export const CoveragePluginStateContext = React.createContext<PluginState>(defaultState);
 
-export const PluginDispatchContext = React.createContext<React.Dispatch<Action>>(() => {});
+export const CoveragePluginDispatchContext = React.createContext<React.Dispatch<Action>>(() => {});
 
-export function usePluginState() {
-  const context = React.useContext(PluginStateContext);
+export function useCoveragePluginState() {
+  const context = React.useContext(CoveragePluginStateContext);
   if (!context) {
     throw new Error('usePluginState must be used within a PluginStateContext');
   }
   return context;
 }
 
-export function usePluginDispatch() {
-  const context = React.useContext(PluginDispatchContext);
+export function useCoveragePluginDispatch() {
+  const context = React.useContext(CoveragePluginDispatchContext);
   if (!context) {
     throw new Error('usePluginDispatch must be used within a PluginDispatchContext');
   }

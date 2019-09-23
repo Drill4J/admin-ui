@@ -11,7 +11,8 @@ import { ProjectMethodsCard } from '../../project-methods-card';
 import { CoverageDetails } from '../../coverage-details';
 import { TestDetails } from '../../test-details';
 import { toggleScope } from '../../api';
-import { usePluginState, usePluginDispatch, openModal } from '../../store';
+import { usePluginState } from '../../../store';
+import { useCoveragePluginDispatch, openModal } from '../../store';
 import { ScopeTimer } from '../scope-timer';
 import { ScopeSummary } from '../../../../../types/scope-summary';
 import { Coverage } from '../../../../../types/coverage';
@@ -30,7 +31,7 @@ const scopeInfo = BEM(styles);
 export const ScopeInfo = withRouter(
   scopeInfo(({ className, match: { params: { scopeId } }, history: { push } }: Props) => {
     const { agentId } = usePluginState();
-    const dispatch = usePluginDispatch();
+    const dispatch = useCoveragePluginDispatch();
     const coverage = useBuildVersion<Coverage>(`/scope/${scopeId}/coverage`) || {};
     const scopeMethods = useBuildVersion<Methods>(`/scope/${scopeId}/methods`) || {};
     const coverageByPackages =
@@ -94,10 +95,8 @@ export const ScopeInfo = withRouter(
             </Panel>
           </Panel>
         </Header>
-        <SummaryPanel align="space-between">
-          <CodeCoverageCard header="Scope Code Coverage" coverage={coverage} />
-          <ProjectMethodsCard header="Project Methods" methods={scopeMethods} />
-        </SummaryPanel>
+        <CodeCoverageCard header="Scope Code Coverage" coverage={coverage} />
+        <ProjectMethods methods={scopeMethods} />
         <RoutingTabsPanel>
           <TabsPanel activeTab={selectedTab} onSelect={setSelectedTab}>
             <Tab name="coverage">
@@ -133,6 +132,6 @@ const ActiveBadge = scopeInfo.activeBadge('span');
 const FinisedBadge = scopeInfo.finishedBadge('span');
 const ScopeDuration = scopeInfo.scopeDuration('span');
 const FinishScopeButton = scopeInfo.finishScopeButton(Button);
-const SummaryPanel = scopeInfo.summaryPanel(Panel);
+const ProjectMethods = scopeInfo.projectMethods(ProjectMethodsCard);
 const RoutingTabsPanel = scopeInfo.routingTabsPanel(Panel);
 const TabIconWrapper = scopeInfo.tabIconWrapper('div');
