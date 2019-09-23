@@ -35,6 +35,8 @@ import { path as coverageArrowPath } from './path/coverage-arrow.path';
 import { path as moreOptionsPath } from './path/more-options.path';
 import { path as editPath } from './path/edit.path';
 import { path as eyePath } from './path/eye.path';
+import { path as clockPath } from './path/clock.path';
+import { path as totalPath } from './path/total.path';
 import { declareIcon } from './declare-icon';
 import { ReactComponent as SettingsSvg } from './settings.svg';
 
@@ -76,5 +78,7 @@ export const Icons = {
   MoreOptions: declareIcon(moreOptionsPath, { defaultWidth: 4, defaultHeight: 16 }),
   Edit: declareIcon(editPath, { defaultWidth: 16, defaultHeight: 18 }),
   Eye: declareIcon(eyePath, { defaultWidth: 20, defaultHeight: 12 }),
+  Clock: declareIcon(clockPath),
+  Total: declareIcon(totalPath, { defaultWidth: 13, defaultHeight: 16 }),
   NewSettings: SettingsSvg,
 };

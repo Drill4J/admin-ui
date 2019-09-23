@@ -8,7 +8,7 @@ import { Popup, Icons, OverflowText } from '../../../../../components';
 import { NotificationManagerContext } from '../../../../../notification-manager';
 import { deleteScope } from '../../api';
 import { ActiveSessionsPanel } from '../active-sessions-panel';
-import { usePluginState } from '../../store';
+import { usePluginState } from '../../../store';
 import { ScopeSummary } from '../../../../../types/scope-summary';
 
 import styles from './delete-scope-modal.module.scss';

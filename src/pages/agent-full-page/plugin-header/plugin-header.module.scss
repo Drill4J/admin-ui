@@ -1,13 +1,10 @@
-@import '../../../../common/style-guide/index';
+@import '../../../common/style-guide/index';
 
 .plugin-header {
   display: flex;
   align-items: center;
-  height: 128px;
+  height: 112px;
   width: 100%;
-  background-color: map-get($color-palette, ultra-light-blue);
-  box-shadow: inset 0 -1px 0 0 map-get($color-palette, light-blue),
-    inset 0 1px 0 0 map-get($color-palette, light-blue);
 
   &__content {
     display: flex;
@@ -37,9 +34,7 @@
   }
 
   &__agent-name {
-    font-family: $semibold-font;
-    font-size: 24px;
-    line-height: 24px;
-    margin-bottom: 10px;
+    font-size: 32px;
+    line-height: 40px;
   }
 }

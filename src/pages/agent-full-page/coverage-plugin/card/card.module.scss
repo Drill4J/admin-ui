@@ -1,16 +1,18 @@
 @import '../../../../common/style-guide/index';
 
 .card {
-  height: 240px;
+  height: 160px;
   width: 100%;
   border: 1px solid map-get($color-palette, light-blue);
-  background-color: map-get($color-palette, white);
+  background-color: map-get($color-palette, ultra-light-blue);
 
   &__header {
-    margin: 16px 16px 24px 16px;
+    margin: 16px;
     line-height: 20px;
-    font-size: 14px;
+    font-size: 13px;
     font-family: $semibold-font;
+    color: $slate-gray;
+    text-transform: uppercase;
   }
 
   &__content {
@@ -27,11 +29,5 @@
     display: flex;
     flex-direction: column;
     flex: 1 0 21%;
-  }
-
-  &__section-label {
-    font-size: 12px;
-    line-height: 24px;
-    color: $slate-gray;
   }
 }

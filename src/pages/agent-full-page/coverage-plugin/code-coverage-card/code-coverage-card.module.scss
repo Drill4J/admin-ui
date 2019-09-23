@@ -8,10 +8,13 @@
     width: 100%;
     line-height: 40px;
     font-family: $light-font;
-    font-size: 40px;
-    padding-bottom: 24px;
-    border-bottom: 1px solid map-get($color-palette, black10);
+    font-size: 48px;
+    padding-bottom: 22px;
+    color: $slate-gray;
+  }
 
+  &__arrow-icon {
+    margin-left: 6px;
     &--type {
       &--increase {
         color: map-get($color-palette, green100);
@@ -22,7 +25,9 @@
     }
   }
 
-  &__arrow-icon {
-    margin-left: 6px;
+  &__additional-info {
+    font-size: 12px;
+    line-height: 20px;
+    color: $slate-gray;
   }
 }

@@ -1,3 +1,3 @@
-export { PluginProvider } from './plugin-provider';
-export { setBuildVersion, openModal, setInitialConfig } from './reducer';
-export { usePluginState, usePluginDispatch } from './plugin-context';
+export { CoveragePluginProvider } from './plugin-provider';
+export { openModal } from './reducer';
+export { useCoveragePluginState, useCoveragePluginDispatch } from './plugin-context';

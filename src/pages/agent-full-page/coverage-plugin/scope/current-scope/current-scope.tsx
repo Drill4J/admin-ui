@@ -8,7 +8,8 @@ import { Button } from '../../../../../forms';
 import { percentFormatter } from '../../../../../utils';
 import { useBuildVersion } from '../../use-build-version';
 import { CoverageByType } from './coverage-by-type';
-import { usePluginState, usePluginDispatch, openModal } from '../../store';
+import { usePluginState } from '../../../store';
+import { useCoveragePluginDispatch, openModal } from '../../store';
 import { NoScopeStub } from '../no-scope-stub';
 import { ScopeTimer } from '../scope-timer';
 import { ScopeSummary } from '../../../../../types/scope-summary';
@@ -43,7 +44,7 @@ export const CurrentScope = withRouter(
   currentScope(({ className, history: { push } }: Props) => {
     const scope = useBuildVersion<ScopeSummary>('/active-scope');
     const { agentId } = usePluginState();
-    const dispatch = usePluginDispatch();
+    const dispatch = useCoveragePluginDispatch();
     const {
       id = '',
       name = '',

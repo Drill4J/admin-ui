@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { BEM, span } from '@redneckz/react-bem-helper';
 
-import { CardSection } from '../../card';
 import { MethodsModal } from '../../methods-modal';
 import { MethodsInfo } from '../../../../../types/methods-info';
 
@@ -27,29 +26,27 @@ export const MethodsSection = methodsSection(
 
     return (
       <div className={className}>
-        <CardSection header={title}>
-          <Total onClick={() => totalCount && setIsModalOpen(true)} clickable={Boolean(totalCount)}>
-            {totalCount}
-          </Total>
-          <AdditionalInfo>
-            {!hideAdditionalInfo && (
-              <>
-                <AdditionalInfoItem>
-                  <AdditionalInfoItemHeader>Missed</AdditionalInfoItemHeader>
-                  <AdditionalInfoItemValue>{totalCount - coveredCount}</AdditionalInfoItemValue>
-                </AdditionalInfoItem>
-                <AdditionalInfoItem>
-                  <AdditionalInfoItemHeader>Covered</AdditionalInfoItemHeader>
-                  <AdditionalInfoItemValue>{coveredCount}</AdditionalInfoItemValue>
-                </AdditionalInfoItem>
-                <AdditionalInfoItem>
-                  <AdditionalInfoItemHeader>Excluded</AdditionalInfoItemHeader>
-                  <AdditionalInfoItemValue>{0}</AdditionalInfoItemValue>
-                </AdditionalInfoItem>
-              </>
-            )}
-          </AdditionalInfo>
-        </CardSection>
+        <Total onClick={() => totalCount && setIsModalOpen(true)} clickable={Boolean(totalCount)}>
+          {totalCount}
+        </Total>
+        <AdditionalInfo>
+          {!hideAdditionalInfo && (
+            <>
+              <AdditionalInfoItem>
+                <AdditionalInfoItemHeader>Missed</AdditionalInfoItemHeader>
+                <AdditionalInfoItemValue>{totalCount - coveredCount}</AdditionalInfoItemValue>
+              </AdditionalInfoItem>
+              <AdditionalInfoItem>
+                <AdditionalInfoItemHeader>Covered</AdditionalInfoItemHeader>
+                <AdditionalInfoItemValue>{coveredCount}</AdditionalInfoItemValue>
+              </AdditionalInfoItem>
+              <AdditionalInfoItem>
+                <AdditionalInfoItemHeader>Excluded</AdditionalInfoItemHeader>
+                <AdditionalInfoItemValue>{0}</AdditionalInfoItemValue>
+              </AdditionalInfoItem>
+            </>
+          )}
+        </AdditionalInfo>
         {isModalOpen && (
           <MethodsModal
             isOpen={isModalOpen}

@@ -6,7 +6,7 @@ import styles from './card.module.scss';
 interface Props {
   className?: string;
   header?: React.ReactNode;
-  children: any[];
+  children: any;
 }
 
 const card = BEM(styles);
@@ -20,7 +20,6 @@ export const Card = card(({ className, header, children }: Props) => (
         (child: React.ReactElement<any>) =>
           child && (
             <CardSectionContent>
-              <CardSectionLabel>{child.props.title}</CardSectionLabel>
               <span>{child}</span>
             </CardSectionContent>
           ),
@@ -33,4 +32,3 @@ const Header = card.header('div');
 const Content = card.content('div');
 export const CardSection = card.section(div({ header: undefined } as { header?: React.ReactNode }));
 const CardSectionContent = card.sectionContent('div');
-const CardSectionLabel = card.sectionLabel('div');

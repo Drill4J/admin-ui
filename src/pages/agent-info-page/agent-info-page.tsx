@@ -49,7 +49,7 @@ export const AgentInfoPage = withRouter(
             <HeaderActions>
               <ToAgentButton
                 type="primary"
-                onClick={() => push(`/full-page/${agent.id}/coverage/dashboard`)}
+                onClick={() => push(`/full-page/${agent.id}/dashboard`)}
               >
                 <Icons.OpenLive />
                 <span>Dashboard</span>
