@@ -75,7 +75,11 @@ export const ScopeInfo = withRouter(
             <Panel>
               {name}
               {active ? <ActiveBadge>Active</ActiveBadge> : <FinisedBadge>Finished</FinisedBadge>}
-              <ScopeTimer started={started} finised={finished} active={active} />
+              {Boolean(started) && (
+                <ScopeDuration>
+                  <ScopeTimer started={started} finised={finished} active={active} />
+                </ScopeDuration>
+              )}
             </Panel>
             <Panel align="end">
               <FinishScopeButton
