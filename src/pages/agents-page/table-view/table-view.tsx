@@ -61,8 +61,8 @@ export const TableView = tableView(
           Cell={({ value, item }) => (
             <StatusColumn>
               <Inputs.Toggler
-                value={value === AGENT_STATUS.READY}
-                label={value === AGENT_STATUS.READY ? 'On' : 'Off'}
+                value={value === AGENT_STATUS.ONLINE}
+                label={value === AGENT_STATUS.ONLINE ? 'On' : 'Off'}
                 onChange={() => toggleStandby(item.id)}
               />
             </StatusColumn>

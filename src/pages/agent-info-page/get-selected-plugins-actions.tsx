@@ -55,6 +55,6 @@ const getUnloadFunction = (
 export const getSelectedPluginsMap = (plugins: any[] = [], selectedPluginsIds: string[]) =>
   plugins.reduce<{ [key: string]: boolean }>(
     (acc, { id = '', status }) =>
-      selectedPluginsIds.includes(id) ? { ...acc, [id]: status === AGENT_STATUS.READY } : acc,
+      selectedPluginsIds.includes(id) ? { ...acc, [id]: status === AGENT_STATUS.ONLINE } : acc,
     {},
   );
