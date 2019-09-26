@@ -34,10 +34,10 @@ export const AgentInfoPage = withRouter(
               <span>{agentId}</span>
               <ToggleAgent>
                 <Inputs.Toggler
-                  value={agent.status === AGENT_STATUS.READY}
+                  value={agent.status === AGENT_STATUS.ONLINE}
                   label={
                     <ToggleAgentHeader>{`Drill4J ${
-                      agent.status === AGENT_STATUS.READY ? 'on' : 'off'
+                      agent.status === AGENT_STATUS.ONLINE ? 'on' : 'off'
                     }`}</ToggleAgentHeader>
                   }
                   onChange={() => toggleAgent(agent.id || '')}

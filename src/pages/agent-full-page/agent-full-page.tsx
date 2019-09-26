@@ -47,8 +47,8 @@ export const AgentFullPage = withRouter(
                 <AgentName>{agent.name}</AgentName>
                 <AgentIpAddress>{agent.ipAddress}</AgentIpAddress>
                 <AgentStatus
-                  status={agent.status === AGENT_STATUS.READY ? 'online' : 'offline'}
-                  text={agent.status === AGENT_STATUS.READY ? 'Online' : 'Offline'}
+                  status={agent.status === AGENT_STATUS.ONLINE ? 'online' : 'offline'}
+                  text={agent.status === AGENT_STATUS.ONLINE ? 'Online' : 'Offline'}
                   bold
                 />
               </Panel>
