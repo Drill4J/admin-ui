@@ -34,7 +34,7 @@ export const CardView = cardView(
                   )
                 : handleSelectAgents([...selectedAgents, String(agent[idKey])]);
             }}
-            disabled={agent.status !== AGENT_STATUS.READY && !selected}
+            disabled={agent.status !== AGENT_STATUS.ONLINE && !selected}
           />
         );
       })}

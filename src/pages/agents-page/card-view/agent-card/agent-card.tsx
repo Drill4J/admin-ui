@@ -55,15 +55,15 @@ export const AgentCard = withRouter(
           </Header>
           <DrillStatus>
             <Inputs.Toggler
-              value={status === AGENT_STATUS.READY}
-              label={`DRILL4J ${status === AGENT_STATUS.READY ? 'ON' : 'OFF'}`}
+              value={status === AGENT_STATUS.ONLINE}
+              label={`DRILL4J ${status === AGENT_STATUS.ONLINE ? 'ON' : 'OFF'}`}
               onChange={() => {
                 if (id) {
                   toggleStandby(id);
                 }
               }}
             />
-            {status === AGENT_STATUS.READY && (
+            {status === AGENT_STATUS.ONLINE && (
               <ActivePlugins>{`(${activePluginsCount} of ${pluginsCount} plugins on)`}</ActivePlugins>
             )}
           </DrillStatus>
