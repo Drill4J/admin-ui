@@ -52,7 +52,7 @@ export const AgentPluginsTable = withRouter(
             label="Status"
             Cell={({ value }) => (
               <StatusColumn>
-                <Inputs.Toggler value={value} />
+                <Inputs.Toggler value={value} disabled />
               </StatusColumn>
             )}
           />
