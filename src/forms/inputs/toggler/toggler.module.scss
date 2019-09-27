@@ -63,4 +63,10 @@
       color: map-get($color-palette, green100);
     }
   }
+
+  &--disabled {
+    opacity: 0.65;
+    pointer-events: none;
+    cursor: default;
+  }
 }
