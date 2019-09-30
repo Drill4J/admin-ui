@@ -924,10 +924,10 @@
   resolved "https://registry.yarnpkg.com/@csstools/normalize.css/-/normalize.css-9.0.1.tgz#c27b391d8457d1e893f1eddeaf5e5412d12ffbb5"
   integrity sha512-6It2EVfGskxZCQhuykrfnALg7oVeiI6KclWSmGDqB0AiInVrTGB9Jp9i4/Ad21u9Jde/voVQz6eFX/eSg/UsPA==
 
-"@drill4j/socket@0.1.3":
-  version "0.1.3"
-  resolved "https://registry.yarnpkg.com/@drill4j/socket/-/socket-0.1.3.tgz#2a78e98bc6928c71015126349a1cfdc9fe40ce74"
-  integrity sha512-VOtQm+J/LVn/K+4hN5Hpe+0aMLEIyPXVwPrbrOmfvrxHUCTvAzPpkCghcHBbK34OF0lLzg+qSPJFS8Xq7UzSzA==
+"@drill4j/socket@0.1.4":
+  version "0.1.4"
+  resolved "https://registry.yarnpkg.com/@drill4j/socket/-/socket-0.1.4.tgz#009175d50ef4d22c08acd0e29812a0628c67d1f6"
+  integrity sha512-CSAA1Z+O7F7MZLtIbzfdl95zpexU3mNyS8OxfxJ1Hn56zHeBWqPYeYwIQtiLs0Rz+ebz+g/Ghm29Ua3kQSrBeQ==
   dependencies:
     rxjs "6.5.2"
     typescript "3.6.2"
