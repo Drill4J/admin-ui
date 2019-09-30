@@ -3,7 +3,7 @@
   "version": "0.3.0",
   "private": true,
   "dependencies": {
-    "@drill4j/socket": "0.1.3",
+    "@drill4j/socket": "0.1.4",
     "@redneckz/react-bem-helper": "2.0.3",
     "@types/jest": "24.0.11",
     "@types/node": "11.12.2",
