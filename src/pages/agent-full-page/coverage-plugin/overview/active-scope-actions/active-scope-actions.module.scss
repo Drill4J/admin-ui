@@ -1,0 +1,22 @@
+@import '../../../../../common/style-guide/index';
+
+.active-scope-actions {
+  color: map-get($color-palette, blue100);
+  display: flex;
+  align-items: flex-start;
+  text-transform: none;
+  font-family: $regular-font;
+
+  &__finish-scope-button {
+    min-height: 24px;
+    width: 120px;
+    margin-right: 16px;
+    font-size: 12px;
+    line-height: 17px;
+    font-family: $semibold-font;
+
+    & > * {
+      margin-right: 8px;
+    }
+  }
+}

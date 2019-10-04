@@ -6,7 +6,8 @@ import { Table, Column, Menu } from '../../../../../components';
 import { percentFormatter } from '../../../../../utils';
 import { useBuildVersion } from '../../use-build-version';
 import { toggleScope } from '../../api';
-import { usePluginState, usePluginDispatch, openModal } from '../../store';
+import { usePluginState } from '../../../store';
+import { useCoveragePluginDispatch, openModal } from '../../store';
 import { ScopeTimer } from '../scope-timer';
 import { ScopeSummary } from '../../../../../types/scope-summary';
 
@@ -21,7 +22,7 @@ const scopesList = BEM(styles);
 export const ScopesList = withRouter(
   scopesList(({ className, history: { push } }: Props) => {
     const { agentId } = usePluginState();
-    const dispatch = usePluginDispatch();
+    const dispatch = useCoveragePluginDispatch();
     const activeScope = useBuildVersion<ScopeSummary>('/active-scope');
     const scopes = useBuildVersion<ScopeSummary[]>('/scopes') || [];
     scopes.sort(
