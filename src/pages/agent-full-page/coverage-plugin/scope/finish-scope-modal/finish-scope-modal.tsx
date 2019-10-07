@@ -78,7 +78,7 @@ export const FinishScopeModal = withRouter(
                   onClick={async () => {
                     await finishScope(agentId, {
                       onSuccess: () => {
-                        showMessage({ type: 'SUCCESS', text: 'Scope is finished' });
+                        showMessage({ type: 'SUCCESS', text: 'Scope has been finished' });
                         onToggle(false);
                       },
                       onError: setErrorMessage,
