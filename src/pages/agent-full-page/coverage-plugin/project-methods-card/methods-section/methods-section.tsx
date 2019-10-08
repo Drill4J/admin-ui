@@ -33,12 +33,12 @@ export const MethodsSection = methodsSection(
           {!hideAdditionalInfo && (
             <>
               <AdditionalInfoItem>
-                <AdditionalInfoItemHeader>Missed</AdditionalInfoItemHeader>
-                <AdditionalInfoItemValue>{totalCount - coveredCount}</AdditionalInfoItemValue>
-              </AdditionalInfoItem>
-              <AdditionalInfoItem>
                 <AdditionalInfoItemHeader>Covered</AdditionalInfoItemHeader>
                 <AdditionalInfoItemValue>{coveredCount}</AdditionalInfoItemValue>
+              </AdditionalInfoItem>
+              <AdditionalInfoItem>
+                <AdditionalInfoItemHeader>Not covered</AdditionalInfoItemHeader>
+                <AdditionalInfoItemValue>{totalCount - coveredCount}</AdditionalInfoItemValue>
               </AdditionalInfoItem>
               <AdditionalInfoItem>
                 <AdditionalInfoItemHeader>Excluded</AdditionalInfoItemHeader>
