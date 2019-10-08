@@ -10,6 +10,7 @@ import { usePluginState } from '../../../store';
 import { useCoveragePluginDispatch, openModal } from '../../store';
 import { ScopeTimer } from '../scope-timer';
 import { ScopeSummary } from '../../../../../types/scope-summary';
+import { NotificationManagerContext } from '../../../../../notification-manager';
 
 import styles from './scopes-list.module.scss';
 
@@ -21,6 +22,7 @@ const scopesList = BEM(styles);
 
 export const ScopesList = withRouter(
   scopesList(({ className, history: { push } }: Props) => {
+    const { showMessage } = React.useContext(NotificationManagerContext);
     const { agentId } = usePluginState();
     const dispatch = useCoveragePluginDispatch();
     const activeScope = useBuildVersion<ScopeSummary>('/active-scope');
@@ -31,7 +33,6 @@ export const ScopesList = withRouter(
     );
 
     const scopesData = activeScope && activeScope.name ? [activeScope, ...scopes] : scopes;
-
     return (
       <div className={className}>
         <Content>
@@ -112,7 +113,17 @@ export const ScopesList = withRouter(
                   !item.active && {
                     label: `${item.enabled ? 'Ignore in build stats' : 'Show in build stats'}`,
                     icon: item.enabled ? 'EyeCrossed' : 'Eye',
-                    onClick: () => toggleScope(agentId)(item.id),
+                    onClick: () =>
+                      toggleScope(agentId, {
+                        onSuccess: () => {
+                          showMessage({
+                            type: 'SUCCESS',
+                            text: `${item.name} has been ${
+                              item.enabled ? 'excluded from' : 'included in'
+                            } the build stats.`,
+                          });
+                        },
+                      })(item.id),
                   },
                   {
                     label: 'Rename',
