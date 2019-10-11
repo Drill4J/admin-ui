@@ -44,7 +44,7 @@ export const AgentFullPage = withRouter(
           <div className={className}>
             <Switch>
               <Route
-                path="/full-page/:agentId/coverage/:tab"
+                path="/full-page/:agentId/test-to-code-mapping/:tab"
                 render={() => <CoveragePlugin agent={agent} />}
               />
               <Route path="/full-page/:agentId/dashboard" component={Dashboard} />

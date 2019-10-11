@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { BEM, div } from '@redneckz/react-bem-helper';
+import { BEM } from '@redneckz/react-bem-helper';
 
 import { Panel } from '../../../../layouts';
 import { Icons } from '../../../../components';
@@ -15,6 +15,7 @@ interface Props {
   header?: React.ReactNode;
   coverage: Coverage;
   additionalInfo?: React.ReactNode;
+  showRecording?: boolean;
 }
 
 const codeCoverageCard = BEM(styles);
@@ -25,10 +26,11 @@ export const CodeCoverageCard = codeCoverageCard(
     header,
     coverage: { coverage = 0, arrow, coverageByType = {} },
     additionalInfo,
+    showRecording,
   }: Props) => (
     <div className={className}>
       <Card header={header}>
-        <CardSection header="TOTAL">
+        <CardSection>
           <TotalCoverage>
             <Panel>
               {`${percentFormatter(coverage)}%`}
@@ -37,8 +39,8 @@ export const CodeCoverageCard = codeCoverageCard(
           </TotalCoverage>
           <AdditionalInfo>{additionalInfo}</AdditionalInfo>
         </CardSection>
-        <CardSection header="BY TEST TYPE">
-          <CoveragesByType coverageByType={coverageByType} />
+        <CardSection>
+          <CoveragesByType coverageByType={coverageByType} showRecording={showRecording} />
         </CardSection>
       </Card>
     </div>
