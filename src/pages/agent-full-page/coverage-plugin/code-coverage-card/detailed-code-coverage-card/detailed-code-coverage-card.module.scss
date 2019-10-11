@@ -1,0 +1,60 @@
+@import '../../../../../common/style-guide/index';
+
+.detailed-code-coverage-card {
+  height: 160px;
+  width: 100%;
+  border: 1px solid map-get($color-palette, light-blue);
+  background-color: map-get($color-palette, ultra-light-blue);
+
+  &__header {
+    margin: 16px;
+    line-height: 20px;
+    font-size: 13px;
+    font-family: $semibold-font;
+    color: $slate-gray;
+    text-transform: uppercase;
+  }
+
+  &__content {
+    margin: 16px;
+    display: flex;
+    flex-direction: row;
+  }
+
+  &__total-coverage-wrapper {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__total-coverage {
+    width: 250px;
+    line-height: 40px;
+    font-family: $light-font;
+    font-size: 48px;
+    padding-bottom: 22px;
+    color: $slate-gray;
+  }
+
+  &__arrow-icon {
+    margin-left: 6px;
+    &--type {
+      &--increase {
+        color: map-get($color-palette, green100);
+      }
+      &--decrease {
+        color: map-get($color-palette, red100);
+      }
+    }
+  }
+
+  &__additional-info {
+    font-size: 12px;
+    line-height: 20px;
+    color: $slate-gray;
+  }
+
+  &__distribution-wrapper {
+    display: flex;
+    flex-grow: 1;
+  }
+}

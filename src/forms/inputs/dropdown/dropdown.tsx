@@ -1,7 +1,8 @@
 import * as React from 'react';
-import { BEM, div } from '@redneckz/react-bem-helper';
+import { BEM } from '@redneckz/react-bem-helper';
 
 import { Icons } from '../../../components';
+import { Panel } from '../../../layouts';
 import { useClickOutside } from '../../../hooks';
 
 import styles from './dropdown.module.scss';
@@ -28,7 +29,7 @@ export const Dropdown = dropdown(({ className, items, value, onChange }: Props) 
   return (
     <div className={className} ref={node}>
       <Container onClick={() => setIsExpanded(!isExpanded)}>
-        <Value>{selectedValue && `Build ${selectedValue.label}`}</Value>
+        <Value>{selectedValue && selectedValue.label}</Value>
         <Icon>
           <Icons.Expander />
         </Icon>
@@ -42,9 +43,9 @@ export const Dropdown = dropdown(({ className, items, value, onChange }: Props) 
                   onChange(item);
                   setIsExpanded(false);
                 }}
-                selected={value === item.value}
                 key={item.value}
               >
+                <SelectedIcon>{value === item.value && <Icons.Check />}</SelectedIcon>
                 {item.label}
               </Item>
             ))}
@@ -60,6 +61,5 @@ const Value = dropdown.value('div');
 const Icon = dropdown.icon('div');
 const ItemsListWrapper = dropdown.itemListWrapper('div');
 const ItemsList = dropdown.itemsList('div');
-const Item = dropdown.item(
-  div({ onClick: () => {} } as { selected?: boolean; onClick: (arg: DropdownItem) => void }),
-);
+const Item = dropdown.item('div');
+const SelectedIcon = dropdown.selectedIcon(Panel);

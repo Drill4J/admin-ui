@@ -1,6 +1,6 @@
 @import '../../../../common/style-guide/index';
 
-.risks-modal {
+.test-to-run-modal {
   display: flex;
   flex-direction: column;
   height: 100%;
@@ -46,7 +46,7 @@
     align-items: center;
     min-height: 40px;
     padding-left: 24px;
-    font-size: 12px;
+    font-size: 14px;
     margin-bottom: 16px;
     width: 400px;
   }
@@ -60,10 +60,5 @@
   &__methods-info {
     display: flex;
     flex-direction: column;
-  }
-
-  &__methods-package {
-    width: 320px;
-    color: $slate-gray;
   }
 }

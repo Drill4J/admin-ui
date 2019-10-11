@@ -45,7 +45,9 @@ export const ScopesList = withRouter(
               name="name"
               HeaderCell={() => <HeaderCell>Name</HeaderCell>}
               Cell={({ value, item: { id, started, active, enabled, finished } }) => (
-                <NameCell onClick={() => push(`/full-page/${agentId}/coverage/scopes/${id}`)}>
+                <NameCell
+                  onClick={() => push(`/full-page/${agentId}/test-to-code-mapping/scopes/${id}`)}
+                >
                   {value}
                   {active && <ActiveBadge>Active</ActiveBadge>}
                   {!enabled && <IgnoreBadge>Ignored</IgnoreBadge>}

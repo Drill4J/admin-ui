@@ -23,7 +23,7 @@ export const Breadcrumbs = withRouter(
 
     // TODO: should be moved from this compenent
     React.useEffect(() => {
-      dispatch(setInitialConfig({ agentId, pluginId: 'coverage', buildVersion }));
+      dispatch(setInitialConfig({ agentId, pluginId: 'test-to-code-mapping', buildVersion }));
       // eslint-disable-next-line
     }, [buildVersion]);
 
