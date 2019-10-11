@@ -3,9 +3,10 @@ import { BEM } from '@redneckz/react-bem-helper';
 
 import { Panel } from '../../../../layouts';
 import { Icons, TabsPanel, Tab } from '../../../../components';
+import { percentFormatter } from '../../../../utils';
 import { useBuildVersion } from '../use-build-version';
 import { CoverageDetails } from '../coverage-details';
-import { CodeCoverageCard } from '../code-coverage-card';
+import { CodeCoverageCard, DetailedCodeCoverageCard } from '../code-coverage-card';
 import { ProjectMethodsCard } from '../project-methods-card';
 import { ScopeTimer } from '../scope';
 import { usePluginState } from '../../store';
@@ -28,6 +29,7 @@ const overview = BEM(styles);
 export const Overview = overview(({ className }: Props) => {
   const { agentId, pluginId } = usePluginState();
   const buildCoverage = useBuildVersion<Coverage>('/build/coverage') || {};
+  const { previousBuildInfo: { first = '', second = '' } = {}, diff = 0 } = buildCoverage;
   const { started = 0, finished = 0, active = false, coverage = 0, coveragesByType = {} } =
     useBuildVersion<ScopeSummary>('/active-scope') || {};
   const coverageByPackages = useBuildVersion<ClassCoverage[]>('/build/coverage-by-packages') || [];
@@ -37,32 +39,65 @@ export const Overview = overview(({ className }: Props) => {
   return (
     <div className={className}>
       <SummaryPanel align="space-between">
-        <CodeCoverageCard
-          header={
-            <Panel align="space-between">
-              Build Coverage
-              <ScopesListLink to={`/full-page/${agentId}/${pluginId}/scopes`}>
-                All Scopes >
-              </ScopesListLink>
-            </Panel>
-          }
-          coverage={buildCoverage}
-        />
-        <CodeCoverageCard
-          header={
-            <Panel align="space-between">
-              Active Scope Coverage
-              <ActiveScopeActions />
-            </Panel>
-          }
-          coverage={{ coverage, coverageByType: coveragesByType }}
-          additionalInfo={
-            <Panel>
-              <ScopeDurationIcon />
-              <ScopeTimer started={started} finised={finished} active={active} />
-            </Panel>
-          }
-        />
+        {active ? (
+          <CodeCoverageCard
+            header={
+              <Panel align="space-between">
+                Build Coverage
+                <ScopesListLink to={`/full-page/${agentId}/${pluginId}/scopes`}>
+                  All Scopes >
+                </ScopesListLink>
+              </Panel>
+            }
+            coverage={buildCoverage}
+            additionalInfo={
+              <Panel>
+                {diff && first
+                  ? `${diff > 0 && '+ '} ${percentFormatter(diff)} comparing to Build: ${second ||
+                      first}`
+                  : 'Will change when at least 1 scope is done.'}
+              </Panel>
+            }
+          />
+        ) : (
+          <DetailedCodeCoverageCard
+            header={
+              <Panel align="space-between">
+                Build Coverage
+                <ScopesListLink to={`/full-page/${agentId}/${pluginId}/scopes`}>
+                  All Scopes >
+                </ScopesListLink>
+              </Panel>
+            }
+            coverage={buildCoverage}
+            additionalInfo={
+              <Panel>
+                {diff > 0 &&
+                  first &&
+                  `${diff > 0 && '+ '} ${percentFormatter(diff)} comparing to Build: ${second ||
+                    first}`}
+              </Panel>
+            }
+          />
+        )}
+        {active && (
+          <CodeCoverageCard
+            header={
+              <Panel align="space-between">
+                Active Scope Coverage
+                <ActiveScopeActions />
+              </Panel>
+            }
+            coverage={{ coverage, coverageByType: coveragesByType }}
+            additionalInfo={
+              <Panel>
+                <ScopeDurationIcon />
+                <ScopeTimer started={started} finised={finished} active={active} />
+              </Panel>
+            }
+            showRecording
+          />
+        )}
       </SummaryPanel>
       <RoutingTabsPanel>
         <TabsPanel activeTab={selectedTab} onSelect={setSelectedTab}>

@@ -49,12 +49,48 @@
     text-transform: capitalize;
   }
 
+  &__recording-wrapper {
+    margin-left: 8px;
+  }
+
+  &__recording-icon {
+    height: 8px;
+    width: 8px;
+    border-radius: 4px;
+    background-color: map-get($color-palette, red100);
+    margin-right: 3px;
+    margin-left: 4px;
+    animation-name: blinker;
+    animation-iteration-count: infinite;
+    animation-timing-function: cubic-bezier(1, 0, 0, 1);
+    animation-duration: 1s;
+
+    @keyframes blinker {
+      from {
+        opacity: 1;
+      }
+      to {
+        opacity: 0;
+      }
+    }
+  }
+
+  &__recording-text {
+    font-size: 12px;
+    line-height: 12px;
+    color: map-get($color-palette, red100);
+    font-family: $semibold-font;
+  }
+
   &__tests-count {
     font-size: 12px;
     margin-left: 8px;
   }
 
   &__test-type-coverage {
+    display: flex;
+    flex-direction: row-reverse;
+    width: 100%;
     font-size: 12px;
     line-height: 24px;
     font-family: $semibold-font;

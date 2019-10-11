@@ -1,0 +1,47 @@
+@import '../../../../../../common/style-guide/index';
+
+.coverage-distribution {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  flex-grow: 1;
+  color: $slate-gray;
+
+  &__distribution-container {
+    display: flex;
+    align-items: center;
+    flex-grow: 1;
+
+    & > :not(:last-child) {
+      margin-right: 40px;
+    }
+  }
+
+  &__coverage-item {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+
+    & > :not(:last-child) {
+      border-bottom: 1px solid map-get($color-palette, light-blue);
+    }
+  }
+
+  &__item-name {
+    margin-left: 8px;
+    font-size: 12px;
+    line-height: 32px;
+    text-transform: capitalize;
+  }
+
+  &__tests-count {
+    font-size: 12px;
+    margin-left: 8px;
+  }
+
+  &__test-type-coverage {
+    font-size: 12px;
+    line-height: 24px;
+    font-family: $semibold-font;
+  }
+}

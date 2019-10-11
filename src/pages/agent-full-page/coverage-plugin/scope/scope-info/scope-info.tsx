@@ -6,7 +6,7 @@ import { Panel } from '../../../../../layouts';
 import { Button } from '../../../../../forms';
 import { TabsPanel, Tab, Icons, Menu } from '../../../../../components';
 import { useBuildVersion } from '../../use-build-version';
-import { CodeCoverageCard } from '../../code-coverage-card';
+import { DetailedCodeCoverageCard } from '../../code-coverage-card';
 import { ProjectMethodsCard } from '../../project-methods-card';
 import { CoverageDetails } from '../../coverage-details';
 import { TestDetails } from '../../test-details';
@@ -68,7 +68,7 @@ export const ScopeInfo = withRouter(
 
     return (
       <div className={className}>
-        <BackToScopesList onClick={() => push(`/full-page/${agentId}/coverage/scopes`)}>
+        <BackToScopesList onClick={() => push(`/full-page/${agentId}/test-to-code-mapping/scopes`)}>
           &lt; Scopes list
         </BackToScopesList>
         <Header>
@@ -95,7 +95,7 @@ export const ScopeInfo = withRouter(
             </Panel>
           </Panel>
         </Header>
-        <CodeCoverageCard header="Scope Code Coverage" coverage={coverage} />
+        <DetailedCodeCoverageCard header="Scope Code Coverage" coverage={coverage} />
         <ProjectMethods methods={scopeMethods} />
         <RoutingTabsPanel>
           <TabsPanel activeTab={selectedTab} onSelect={setSelectedTab}>
