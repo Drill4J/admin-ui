@@ -34,7 +34,7 @@ export const AgentSettingsForm = agentSettingsForm(
         <Field name="id" component={Fields.Input} disabled />
       </FormGroup>
       <Group label="Group" optional>
-        <Field name="group" component={Fields.Input} placeholder="Select a group" />
+        <Field name="group" component={Fields.Input} placeholder="Specify a group" />
       </Group>
       <Description label="Description">
         <Field name="description" component={Fields.Textarea} placeholder="Add a description" />
