@@ -53,8 +53,9 @@ export const Overview = overview(({ className }: Props) => {
             additionalInfo={
               <Panel>
                 {diff && first
-                  ? `${diff > 0 && '+ '} ${percentFormatter(diff)} comparing to Build: ${second ||
-                      first}`
+                  ? `${diff > 0 ? '+ ' : '- '} ${percentFormatter(
+                      Math.abs(diff),
+                    )}% comparing to Build: ${second || first}`
                   : 'Will change when at least 1 scope is done.'}
               </Panel>
             }
@@ -74,8 +75,9 @@ export const Overview = overview(({ className }: Props) => {
               <Panel>
                 {diff > 0 &&
                   first &&
-                  `${diff > 0 && '+ '} ${percentFormatter(diff)} comparing to Build: ${second ||
-                    first}`}
+                  `${diff > 0 ? '+ ' : '- '} ${percentFormatter(
+                    Math.abs(diff),
+                  )}% comparing to Build: ${second || first}`}
               </Panel>
             }
           />
