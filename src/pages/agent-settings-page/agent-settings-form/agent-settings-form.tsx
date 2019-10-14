@@ -39,25 +39,6 @@ export const AgentSettingsForm = agentSettingsForm(
       <Description label="Description">
         <Field name="description" component={Fields.Textarea} placeholder="Add a description" />
       </Description>
-      <Section withLine>Build Info</Section>
-      <BuildVerison label="Agent Build Version">
-        <Field
-          name="buildVersion"
-          component={Fields.Dropdown}
-          placeholder="Select a build"
-          options={buildVersions.map(({ id, name }: BuildVersion) => ({
-            label: name,
-            value: id,
-          }))}
-        />
-      </BuildVerison>
-      <FormGroup label="Build Alias">
-        <Field
-          name="buildAlias"
-          component={Fields.Input}
-          placeholder="Give build a meaningful name"
-        />
-      </FormGroup>
     </div>
   ),
 );
@@ -66,4 +47,3 @@ const Section = agentSettingsForm.section(div({} as { withLine?: boolean }));
 const Group = agentSettingsForm.group(FormGroup);
 const CopyAgentId = agentSettingsForm.copyButton(Icons.Copy);
 const Description = agentSettingsForm.description(FormGroup);
-const BuildVerison = agentSettingsForm.buildVersion(FormGroup);

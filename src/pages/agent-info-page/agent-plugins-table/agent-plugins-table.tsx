@@ -40,7 +40,9 @@ export const AgentPluginsTable = withRouter(
             name="name"
             label="Plugin"
             Cell={({ value }) => (
-              <NameColumn onClick={() => push(`/full-page/${agentId}/coverage/dashboard`)}>
+              <NameColumn
+                onClick={() => push(`/full-page/${agentId}/test-to-code-mapping/dashboard`)}
+              >
                 {value}
               </NameColumn>
             )}

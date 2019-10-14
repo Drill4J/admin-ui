@@ -7,4 +7,6 @@ export interface Coverage {
   methodsCount?: number;
   arrow?: 'INCREASE' | 'DECREASE';
   coverageByType?: CoverageByType;
+  diff?: number;
+  previousBuildInfo?: { first: string; second: string };
 }

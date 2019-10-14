@@ -1,6 +1,8 @@
 import * as React from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 
+import { OverflowText } from '../../../../../components';
+
 import styles from './name-cell.module.scss';
 
 interface Props {
@@ -19,4 +21,4 @@ export const NameCell = nameCell(({ className, icon, value }: Props) => (
 ));
 
 const Prefix = nameCell.prefix('div');
-const Content = nameCell.content('div');
+const Content = nameCell.content(OverflowText);

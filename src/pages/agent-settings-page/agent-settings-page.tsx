@@ -2,7 +2,6 @@ import * as React from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
 import { Form } from 'react-final-form';
-import createDecorator from 'final-form-calculate';
 import axios from 'axios';
 
 import { PageHeader, Icons } from '../../components';
@@ -28,33 +27,9 @@ const agentSettingsPage = BEM(styles);
 const validateSettings = composeValidators(
   required('name'),
   required('description'),
-  required('buildAlias'),
   sizeLimit('name'),
   sizeLimit('group'),
   sizeLimit('description', 3, 256),
-  sizeLimit('buildAlias'),
-);
-
-const buildAliasDecorator = createDecorator(
-  {
-    field: 'buildAlias',
-    updates: {
-      buildVersions: (buildAlias: string, allValues: any) =>
-        allValues.buildVersions.map(({ id, name }: BuildVersion) =>
-          id === allValues.buildVersion ? { id, name: buildAlias } : { id, name },
-        ),
-    },
-  },
-  {
-    field: 'buildVersion',
-    updates: {
-      buildAlias: (buildVersion, allValues: any) => {
-        const { name = '' } =
-          allValues.buildVersions.find(({ id }: BuildVersion) => id === buildVersion) || {};
-        return name;
-      },
-    },
-  },
 );
 
 export const AgentSettingsPage = withRouter(
@@ -70,7 +45,6 @@ export const AgentSettingsPage = withRouter(
           onSubmit={(values) => saveChanges(values, showMessage, setErrorMessage)}
           initialValues={agent}
           validate={validateSettings as any}
-          decorators={[buildAliasDecorator]}
           render={({
             handleSubmit,
             submitting,

@@ -21,8 +21,8 @@ const pluginsLinks = [
     computed: true,
   },
   {
-    id: 'coverage',
-    link: 'coverage/dashboard',
+    id: 'test-to-code-mapping',
+    link: 'test-to-code-mapping/dashboard',
     icon: Icons.Coverage,
     computed: true,
   },
