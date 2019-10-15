@@ -18,12 +18,42 @@
     width: 80px;
     border-radius: 50%;
     border: 2px solid map-get($color-palette, black100);
+    &--recording {
+      &:before {
+        content: '';
+        position: absolute;
+        height: 76px;
+        width: 76px;
+        border-radius: 50%;
+        background: conic-gradient(
+          red,
+          #ff8000,
+          yellow,
+          #80ff00,
+          lime,
+          #00ff80,
+          cyan,
+          #0080ff,
+          blue,
+          #8000ff,
+          magenta,
+          #ff0080,
+          red
+        );
+        animation: rotation 10s linear infinite;
+        @keyframes rotation {
+          to {
+            transform: rotate(1turn);
+          }
+        }
+      }
+    }
   }
 
   &__logo {
     position: absolute;
-    bottom: -1px;
-    left: -1px;
+    bottom: 0;
+    left: 0;
   }
 
   &__agent-info {
