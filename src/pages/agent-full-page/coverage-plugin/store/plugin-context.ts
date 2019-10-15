@@ -6,6 +6,7 @@ import { Action } from './reducer';
 export const defaultState = {
   scope: null,
   openedModalName: undefined,
+  activeSessions: {},
 };
 
 export const CoveragePluginStateContext = React.createContext<PluginState>(defaultState);
