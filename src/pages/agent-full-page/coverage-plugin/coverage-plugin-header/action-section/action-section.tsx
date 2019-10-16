@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { BEM } from '@redneckz/react-bem-helper';
+import { BEM, span } from '@redneckz/react-bem-helper';
 
 import styles from './action-section.module.scss';
 import { Icons } from '../../../../../components';
@@ -20,7 +20,7 @@ export const ActionSection = actionSection(
       <div className={className}>
         <Action>
           <ActionName>{label}</ActionName>
-          <Count onClick={onClick} type={count ? type : ''}>
+          <Count onClick={onClick} type={count ? type : ''} clickable={Boolean(count)}>
             {`${count} `}
             {count > 0 && type === 'error' && <Icons.Warning />}
           </Count>
@@ -32,4 +32,6 @@ export const ActionSection = actionSection(
 
 const Action = actionSection.action('div');
 const ActionName = actionSection.actionName('div');
-const Count = actionSection.count('span');
+const Count = actionSection.count(
+  span({ onClick: () => {} } as { clickable?: boolean; onClick?: () => void }),
+);
