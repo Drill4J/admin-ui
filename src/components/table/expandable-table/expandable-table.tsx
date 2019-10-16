@@ -1,8 +1,11 @@
 import * as React from 'react';
+import { BEM } from '@redneckz/react-bem-helper';
 
 import { Table } from '../table';
 import { Column } from '../column';
 import { RowExpander } from './row-expander';
+
+import styles from './expandable-table.module.scss';
 
 interface Props {
   data: object[];
@@ -12,41 +15,48 @@ interface Props {
   expandedColumns?: any[];
   expandedContentKey: string;
   secondLevelExpand: any[];
+  className?: string;
 }
 
-export const ExpandableTable = ({
-  children,
-  data,
-  idKey,
-  expandedColumns,
-  // @ts-ignore
-  ...restProps,
-}: Props) => {
-  const [expandedRows, setExpandedRows] = React.useState<string[]>([]);
+const expandableTable = BEM(styles);
 
-  return (
-    <Table
-      data={data}
-      expandedRows={expandedRows}
-      idKey={idKey}
-      expandedColumns={
-        expandedColumns
-          ? [
-              getExpanderColumn({ idKey, expandedRows, setExpandedRows, withMargin: true }),
-              ...expandedColumns,
-            ]
-          : undefined
-      }
-      secondLevelExpand={expandedColumns}
-      {...restProps}
-    >
-      {[
-        getExpanderColumn({ idKey, expandedRows, setExpandedRows }),
-        ...React.Children.toArray(children),
-      ]}
-    </Table>
-  );
-};
+export const ExpandableTable = expandableTable(
+  ({
+    children,
+    data,
+    idKey,
+    expandedColumns,
+    className,
+    // @ts-ignore
+    ...restProps,
+  }: Props) => {
+    const [expandedRows, setExpandedRows] = React.useState<string[]>([]);
+
+    return (
+      <Table
+        className={className}
+        data={data as any}
+        expandedRows={expandedRows}
+        idKey={idKey}
+        expandedColumns={
+          expandedColumns
+            ? [
+                getExpanderColumn({ idKey, expandedRows, setExpandedRows, withMargin: true }),
+                ...expandedColumns,
+              ]
+            : undefined
+        }
+        secondLevelExpand={expandedColumns}
+        {...restProps}
+      >
+        {[
+          getExpanderColumn({ idKey, expandedRows, setExpandedRows }),
+          ...React.Children.toArray(children),
+        ]}
+      </Table>
+    );
+  },
+);
 
 const getExpanderColumn = ({
   expandedRows,
