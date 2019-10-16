@@ -2,19 +2,17 @@
 
 .name-call {
   display: flex;
-  flex-direction: row;
-  position: relative;
+  align-items: center;
 
   &__prefix {
-    position: absolute;
-    top: 2px;
+    display: flex;
+    align-items: center;
+    margin-right: 8px;
   }
 
   &__content {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    margin-left: 20px;
+    margin-right: 8px;
+    width: 40vw;
     color: map-get($color-palette, black100);
     font-size: 14px;
     font-family: $semibold-font;
