@@ -20,20 +20,25 @@
   &__count {
     font-size: 20px;
     line-height: 24px;
-    cursor: pointer;
-    background-image: linear-gradient(
-      to right,
-      map-get($color-palette, black100) 50%,
-      transparent 50%
-    );
-    background-position: 0 1.15em;
-    background-repeat: repeat-x;
-    background-size: 2px 1px;
+    pointer-events: none;
 
     &--type {
       &--error {
         color: map-get($color-palette, red100);
       }
+    }
+
+    &--clickable {
+      background-image: linear-gradient(
+        to right,
+        map-get($color-palette, black100) 50%,
+        transparent 50%
+      );
+      background-position: 0 1.15em;
+      background-repeat: repeat-x;
+      background-size: 2px 1px;
+      pointer-events: auto;
+      cursor: pointer;
     }
   }
 }
