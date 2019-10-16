@@ -5,13 +5,13 @@
   width: 100%;
   font-size: 14px;
   color: $slate-gray;
+  white-space: nowrap;
 
   tbody {
     tr {
       td {
         border-bottom: 1px solid map-get($color-palette, light-blue);
         height: 48px;
-        white-space: nowrap;
       }
     }
   }
