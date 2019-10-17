@@ -19,6 +19,7 @@ import { Coverage } from '../../../../../types/coverage';
 import { Methods } from '../../../../../types/methods';
 import { ClassCoverage } from '../../../../../types/class-coverage';
 import { AssociatedTests } from '../../../../../types/associated-tests';
+import { NotificationManagerContext } from '../../../../../notification-manager';
 
 import styles from './scope-info.module.scss';
 
@@ -30,6 +31,7 @@ const scopeInfo = BEM(styles);
 
 export const ScopeInfo = withRouter(
   scopeInfo(({ className, match: { params: { scopeId } }, history: { push } }: Props) => {
+    const { showMessage } = React.useContext(NotificationManagerContext);
     const { agentId } = usePluginState();
     const dispatch = useCoveragePluginDispatch();
     const coverage = useBuildVersion<Coverage>(`/scope/${scopeId}/coverage`) || {};
@@ -46,7 +48,17 @@ export const ScopeInfo = withRouter(
       !active && {
         label: `${enabled ? 'Ignore in build stats' : 'Show in build stats'}`,
         icon: enabled ? 'EyeCrossed' : 'Eye',
-        onClick: () => toggleScope(agentId)(scopeId),
+        onClick: () =>
+          toggleScope(agentId, {
+            onSuccess: () => {
+              showMessage({
+                type: 'SUCCESS',
+                text: `${name} has been ${
+                  enabled ? 'excluded from' : 'included in'
+                } the build stats.`,
+              });
+            },
+          })(scopeId),
       },
       {
         label: 'Rename',
