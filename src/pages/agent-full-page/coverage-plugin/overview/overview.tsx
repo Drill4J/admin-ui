@@ -29,7 +29,11 @@ const overview = BEM(styles);
 export const Overview = overview(({ className }: Props) => {
   const { agentId, pluginId } = usePluginState();
   const buildCoverage = useBuildVersion<Coverage>('/build/coverage') || {};
-  const { previousBuildInfo: { first = '', second = '' } = {}, diff = 0 } = buildCoverage;
+  const {
+    previousBuildInfo: { first = '', second = '' } = {},
+    diff = 0,
+    coverage: buildCodeCoverage = 0,
+  } = buildCoverage;
   const { started = 0, finished = 0, active = false, coverage = 0, coveragesByType = {} } =
     useBuildVersion<ScopeSummary>('/active-scope') || {};
   const coverageByPackages = useBuildVersion<ClassCoverage[]>('/build/coverage-by-packages') || [];
@@ -52,11 +56,14 @@ export const Overview = overview(({ className }: Props) => {
             coverage={buildCoverage}
             additionalInfo={
               <Panel>
-                {diff && first
-                  ? `${diff > 0 ? '+ ' : '- '} ${percentFormatter(
-                      Math.abs(diff),
-                    )}% comparing to Build: ${second || first}`
-                  : 'Will change when at least 1 scope is done.'}
+                {Boolean(diff) &&
+                  first &&
+                  `${diff > 0 ? '+ ' : '- '} ${percentFormatter(
+                    Math.abs(diff),
+                  )}% comparing to Build: ${second || first}`}
+                {!Boolean(buildCodeCoverage) &&
+                  !first &&
+                  'Will change when at least 1 scope is done.'}
               </Panel>
             }
           />
@@ -73,7 +80,7 @@ export const Overview = overview(({ className }: Props) => {
             coverage={buildCoverage}
             additionalInfo={
               <Panel>
-                {diff > 0 &&
+                {Boolean(diff) &&
                   first &&
                   `${diff > 0 ? '+ ' : '- '} ${percentFormatter(
                     Math.abs(diff),
