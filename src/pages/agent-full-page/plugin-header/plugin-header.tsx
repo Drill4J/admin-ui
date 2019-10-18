@@ -30,7 +30,7 @@ export const PluginHeader = pluginHeader(
             <Panel>
               <AgentIpAddress>{agentIPAddress}</AgentIpAddress>
               <AgentStatus status={agentStatus}>
-                {agentStatus === 'ONLINE' ? 'Online' : 'Offline'}
+                {agentStatus === 'ONLINE' ? 'Online' : 'Busy'}
               </AgentStatus>
             </Panel>
           </AgentInfo>

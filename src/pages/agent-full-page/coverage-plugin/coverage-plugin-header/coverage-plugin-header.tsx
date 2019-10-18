@@ -6,7 +6,6 @@ import { ActionSection } from './action-section';
 import { RisksModal } from '../risks-modal';
 import { TestsToRunModal } from '../tests-to-run-modal';
 import { Risks } from '../../../../types/risks';
-import { TestsToRun } from '../../../../types/tests-to-run';
 
 import styles from './coverage-plugin-header.module.scss';
 
@@ -20,11 +19,15 @@ const coveragePluginHeader = BEM(styles);
 
 export const CoveragePluginHeader = coveragePluginHeader(({ className }: Props) => {
   const risks = useBuildVersion<Risks>('/build/risks') || {};
-  const testsToRun = useBuildVersion<TestsToRun>('/build/tests-to-run') || {};
+  const key = 'no-useless-computed-key';
+  const { [key]: testsToRun = {} } = useBuildVersion<any>('/build/tests-to-run') || {};
   const [isRisksModalOpen, setIsRisksModalOpen] = React.useState(false);
   const [isTestsToRunModalOpen, setIsTestToRunModalOpen] = React.useState(false);
   const { newMethods = [], modifiedMethods = [] } = risks;
-  const { test = [] } = testsToRun;
+  const testToRunLength = Object.values(testsToRun).reduce(
+    (acc: string[], tests: any) => [...acc, ...tests],
+    [],
+  );
   const risksCount = newMethods.length + modifiedMethods.length;
 
   return (
@@ -39,7 +42,7 @@ export const CoveragePluginHeader = coveragePluginHeader(({ className }: Props) 
         />
         <ActionSection
           label="Tests to run"
-          count={test.length}
+          count={testToRunLength.length}
           onClick={() => setIsTestToRunModalOpen(true)}
         />
       </Actions>
@@ -56,7 +59,7 @@ export const CoveragePluginHeader = coveragePluginHeader(({ className }: Props) 
           testsToRun={testsToRun}
           isOpen={isTestsToRunModalOpen}
           onToggle={setIsTestToRunModalOpen}
-          count={test.length}
+          count={testToRunLength.length}
         />
       )}
     </div>
