@@ -5,7 +5,6 @@ import axios from 'axios';
 import { Icons, Modal } from '../../../../components';
 import { Inputs } from '../../../../forms';
 import { usePluginState } from '../../store';
-import { TestsToRun } from '../../../../types/tests-to-run';
 
 import styles from './tests-to-run-modal.module.scss';
 
@@ -13,24 +12,15 @@ interface Props {
   className?: string;
   isOpen: boolean;
   onToggle: (value: boolean) => void;
-  testsToRun: TestsToRun;
+  testsToRun: { [testType: string]: string[] };
   count: number;
 }
 
 const testsToRunModal = BEM(styles);
 
 export const TestsToRunModal = testsToRunModal(
-  ({ className, isOpen, onToggle, testsToRun: { test: testsToRun = [] }, count }: Props) => {
-    const testsMap = testsToRun.reduce(
-      (acc, test) => {
-        const testName = test.slice(test.indexOf('::') + 2);
-        const testType = test.slice(0, test.indexOf('::'));
-
-        return { ...acc, [testType]: acc[testType] ? [...acc[testType], testName] : [testName] };
-      },
-      {} as { [testType: string]: string[] },
-    );
-    const allTests = Object.values(testsMap).reduce((acc, tests) => [...acc, ...tests], []);
+  ({ className, isOpen, onToggle, testsToRun, count }: Props) => {
+    const allTests = Object.values(testsToRun).reduce((acc, tests) => [...acc, ...tests], []);
     const [selectedFilter, setSelectedFilter] = React.useState('all');
     const { agentId, pluginId } = usePluginState();
 
@@ -45,9 +35,9 @@ export const TestsToRunModal = testsToRunModal(
     const getSelectedTests = () => {
       switch (selectedFilter) {
         case 'manual':
-          return testsMap.MANUAL;
+          return testsToRun.MANUAL;
         case 'auto':
-          return testsMap.AUTO;
+          return testsToRun.AUTO;
         default:
           return allTests;
       }
@@ -70,10 +60,10 @@ export const TestsToRunModal = testsToRunModal(
             <Filter
               items={[
                 { value: 'all', label: 'All test types' },
-                { value: 'manual', label: `Manual tests (${(testsMap.MANUAL || []).length})` },
+                { value: 'manual', label: `Manual tests (${(testsToRun.MANUAL || []).length})` },
                 {
                   value: 'auto',
-                  label: `Auto test (${(testsMap.AUTO || []).length})`,
+                  label: `Auto test (${(testsToRun.AUTO || []).length})`,
                 },
               ]}
               onChange={({ value }) => setSelectedFilter(value)}

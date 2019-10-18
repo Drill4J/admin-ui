@@ -24,11 +24,8 @@ export const AssociatedTestModal = associatedTestModal(
     const { tests = [], packageName = '', className: testClassName = '', methodName = '' } =
       associatedTests.find((test) => test.id === id) || {};
     const testsMap = tests.reduce(
-      (acc, test) => {
-        const testName = test.slice(test.indexOf('::') + 2);
-        const testType = test.slice(0, test.indexOf('::'));
-
-        return { ...acc, [testType]: acc[testType] ? [...acc[testType], testName] : [testName] };
+      (acc, { type = '', name = '' }) => {
+        return { ...acc, [type]: acc[type] ? [...acc[type], name] : [name] };
       },
       {} as { [testType: string]: string[] },
     );
