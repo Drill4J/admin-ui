@@ -38,7 +38,13 @@ export const AgentFullPage = withRouter(
               }
             />
           }
-          header={<PluginHeader agentName={agent.name} />}
+          header={
+            <PluginHeader
+              agentName={agent.name}
+              agentStatus={agent.status}
+              agentIPAddress={agent.ipAddress}
+            />
+          }
           breadcrumbs={<Breadcrumbs />}
         >
           <div className={className}>
