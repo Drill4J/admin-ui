@@ -19,8 +19,6 @@ const pluginHeader = BEM(styles);
 
 export const PluginHeader = pluginHeader(
   ({ className, agentName, agentStatus, agentIPAddress }: Props) => {
-    console.log(agentStatus);
-
     return (
       <div className={className}>
         <Content>
