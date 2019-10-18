@@ -1,8 +1,10 @@
 import * as React from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
+import axios from 'axios';
 
 import { Icons, Modal } from '../../../../components';
 import { Inputs } from '../../../../forms';
+import { usePluginState } from '../../store';
 import { TestsToRun } from '../../../../types/tests-to-run';
 
 import styles from './tests-to-run-modal.module.scss';
@@ -30,6 +32,15 @@ export const TestsToRunModal = testsToRunModal(
     );
     const allTests = Object.values(testsMap).reduce((acc, tests) => [...acc, ...tests], []);
     const [selectedFilter, setSelectedFilter] = React.useState('all');
+    const { agentId, pluginId } = usePluginState();
+
+    // TODO: should be removed after SSL certificate impl
+    const adminUrl = new URL(String(axios.defaults.baseURL));
+    adminUrl.port = '8090';
+    adminUrl.protocol = 'http';
+
+    const openApiUrl = `curl -i -H "Accept: application/json" -H "Content-Type: application/json"
+      -X GET ${adminUrl}/agents/${agentId}/${pluginId}/get-data?type=test-to-run`;
 
     const getSelectedTests = () => {
       switch (selectedFilter) {
@@ -50,6 +61,11 @@ export const TestsToRunModal = testsToRunModal(
             <span>Tests to run</span>
             <h2>{count}</h2>
           </Header>
+          <NotificaitonPanel>
+            <span>These are recommendations for this build updates only.</span>
+            <Bold>Use this Curl in your command line to get JSON:</Bold>
+            <span>{openApiUrl}</span>
+          </NotificaitonPanel>
           <Content>
             <Filter
               items={[
@@ -81,6 +97,8 @@ export const TestsToRunModal = testsToRunModal(
 );
 
 const Header = testsToRunModal.header('div');
+const NotificaitonPanel = testsToRunModal.notificationPanel('div');
+const Bold = testsToRunModal.bold('span');
 const Content = testsToRunModal.content('div');
 const Filter = testsToRunModal.filter(Inputs.Dropdown);
 const MethodsList = testsToRunModal.methodsList('div');

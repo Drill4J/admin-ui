@@ -20,6 +20,26 @@
     }
   }
 
+  &__notification-panel {
+    display: flex;
+    flex-direction: column;
+    padding: 10px 24px;
+    font-size: 13px;
+    line-height: 20px;
+    opacity: 0.5;
+    background-color: map-get($color-palette, light-blue);
+
+    & > * {
+      margin-bottom: 8px;
+    }
+  }
+
+  &__bold {
+    font-family: $semibold-font;
+    font-size: 13px;
+    line-height: 20px;
+  }
+
   &__content {
     height: 100%;
     width: 100%;
