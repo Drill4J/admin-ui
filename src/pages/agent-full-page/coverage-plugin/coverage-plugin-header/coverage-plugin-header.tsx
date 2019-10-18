@@ -19,7 +19,7 @@ const coveragePluginHeader = BEM(styles);
 
 export const CoveragePluginHeader = coveragePluginHeader(({ className }: Props) => {
   const risks = useBuildVersion<Risks>('/build/risks') || {};
-  const key = 'no-useless-computed-key';
+  const key = 'tests-to-run';
   const { [key]: testsToRun = {} } = useBuildVersion<any>('/build/tests-to-run') || {};
   const [isRisksModalOpen, setIsRisksModalOpen] = React.useState(false);
   const [isTestsToRunModalOpen, setIsTestToRunModalOpen] = React.useState(false);
