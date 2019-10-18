@@ -95,7 +95,11 @@ export const ScopeInfo = withRouter(
             </Panel>
           </Panel>
         </Header>
-        <DetailedCodeCoverageCard header="Scope Code Coverage" coverage={coverage} />
+        <DetailedCodeCoverageCard
+          header="Scope Code Coverage"
+          coverage={coverage}
+          showRecording={active}
+        />
         <ProjectMethods methods={scopeMethods} />
         <RoutingTabsPanel>
           <TabsPanel activeTab={selectedTab} onSelect={setSelectedTab}>
