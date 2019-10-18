@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
-import axios from 'axios';
 
 import { Icons, Modal } from '../../../../components';
 import { Inputs } from '../../../../forms';
@@ -25,12 +24,14 @@ export const TestsToRunModal = testsToRunModal(
     const { agentId, pluginId } = usePluginState();
 
     // TODO: should be removed after SSL certificate impl
-    const adminUrl = new URL(String(axios.defaults.baseURL));
-    adminUrl.port = '8090';
+    const adminUrl = new URL(
+      process.env.REACT_APP_ENV ? window.location.host : 'http://ecse005002af.epam.com:8443',
+    );
     adminUrl.protocol = 'http';
+    adminUrl.port = '8090';
 
     const openApiUrl = `curl -i -H "Accept: application/json" -H "Content-Type: application/json"
-      -X GET ${adminUrl}/agents/${agentId}/${pluginId}/get-data?type=test-to-run`;
+      -X GET ${adminUrl}api/agents/${agentId}/${pluginId}/get-data?type=test-to-run`;
 
     const getSelectedTests = () => {
       switch (selectedFilter) {
