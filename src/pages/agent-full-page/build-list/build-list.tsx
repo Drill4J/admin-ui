@@ -34,7 +34,7 @@ export const BuildList = withRouter(
                 <NameCell
                   onClick={() => {
                     dispatch(setBuildVersion(buildVersion));
-                    push(`/full-page/${agentId}/dashboard`);
+                    push(`/full-page/${agentId}/test-to-code-mapping/dashboard`);
                   }}
                 >
                   {value || buildVersion}

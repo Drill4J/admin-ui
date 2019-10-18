@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 
+import { Panel } from '../../../../layouts';
 import { Icons, Modal, OverflowText } from '../../../../components';
 import { Inputs } from '../../../../forms';
 import { Risks } from '../../../../types/risks';
@@ -46,6 +47,9 @@ export const RisksModal = risksModal(
             <span>Risks</span>
             <h2>{count}</h2>
           </Header>
+          <NotificationPanel>
+            Risks are not covered <Bold>New</Bold> and <Bold>Modified</Bold> methods.
+          </NotificationPanel>
           <Content>
             <Filter
               items={[
@@ -82,6 +86,8 @@ export const RisksModal = risksModal(
 const Header = risksModal.header('div');
 const Content = risksModal.content('div');
 const Filter = risksModal.filter(Inputs.Dropdown);
+const NotificationPanel = risksModal.notificationPanel(Panel);
+const Bold = risksModal.bold('span');
 const MethodsList = risksModal.methodsList('div');
 const MethodsListItem = risksModal.methodsListItem('div');
 const MethodInfo = risksModal.methodsInfo('div');

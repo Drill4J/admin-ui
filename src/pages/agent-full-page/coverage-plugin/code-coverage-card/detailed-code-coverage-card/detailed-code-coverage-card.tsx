@@ -14,6 +14,7 @@ interface Props {
   coverage: Coverage;
   additionalInfo?: React.ReactNode;
   header?: React.ReactNode;
+  showRecording?: boolean;
 }
 
 const detailedCodeCoverageCard = BEM(styles);
@@ -24,6 +25,7 @@ export const DetailedCodeCoverageCard = detailedCodeCoverageCard(
     coverage: { coverage = 0, arrow, coverageByType = {} },
     additionalInfo,
     header,
+    showRecording,
   }: Props) => (
     <div className={className}>
       <Header>{header}</Header>
@@ -37,9 +39,8 @@ export const DetailedCodeCoverageCard = detailedCodeCoverageCard(
           </TotalCoverage>
           <AdditionalInfo>{additionalInfo}</AdditionalInfo>
         </TotalCoverageWrapper>
-
         <DistributionWrapper>
-          <CoverageDistribution coverageByType={coverageByType} />
+          <CoverageDistribution coverageByType={coverageByType} showRecording={showRecording} />
         </DistributionWrapper>
       </Content>
     </div>
