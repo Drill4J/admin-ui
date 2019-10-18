@@ -25,13 +25,14 @@ export const TestsToRunModal = testsToRunModal(
 
     // TODO: should be removed after SSL certificate impl
     const adminUrl = new URL(
-      process.env.REACT_APP_ENV ? window.location.host : 'http://ecse005002af.epam.com:8443',
+      process.env.REACT_APP_ENV
+        ? `http://${window.location.host}`
+        : 'http://ecse005002af.epam.com:8443',
     );
-    adminUrl.protocol = 'http';
     adminUrl.port = '8090';
 
     const openApiUrl = `curl -i -H "Accept: application/json" -H "Content-Type: application/json"
-      -X GET ${adminUrl}api/agents/${agentId}/${pluginId}/get-data?type=test-to-run`;
+      -X GET ${adminUrl}api/agents/${agentId}/${pluginId}/get-data?type=tests-to-run`;
 
     const getSelectedTests = () => {
       switch (selectedFilter) {
