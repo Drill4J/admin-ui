@@ -26,7 +26,9 @@ export const ActionsColumn = withRouter(
           <Icons.Register onClick={() => setIsModalOpen(true)} />
         ) : (
           <>
-            <Icons.OpenLive onClick={() => push(`/full-page/${agentId}/dashboard`)} />
+            <Icons.OpenLive
+              onClick={() => push(`/full-page/${agentId}/tests-to-code-mapping/dashboard`)}
+            />
             <Icons.Settings
               onClick={() => push(`/agents/${agentId}/settings`)}
               height={16}

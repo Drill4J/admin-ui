@@ -27,6 +27,22 @@
     overflow-x: hidden;
   }
 
+  &__notification-panel {
+    height: 40px;
+    font-size: 13px;
+    line-height: 20px;
+    opacity: 0.5;
+    background-color: map-get($color-palette, light-blue);
+    padding: 0 24px;
+  }
+
+  &__bold {
+    margin: 0 4px;
+    font-family: $semibold-font;
+    font-size: 13px;
+    line-height: 20px;
+  }
+
   &__filter {
     margin-top: 14px;
     margin-left: 24px;
