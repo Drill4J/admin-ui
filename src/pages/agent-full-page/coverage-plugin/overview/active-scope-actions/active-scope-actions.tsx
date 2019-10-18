@@ -6,6 +6,7 @@ import { Panel } from '../../../../../layouts';
 import { Icons, Menu } from '../../../../../components';
 import { Button } from '../../../../../forms';
 import { useBuildVersion } from '../../use-build-version';
+import { usePluginState } from '../../../store';
 import { useCoveragePluginDispatch, openModal } from '../../store';
 import { ScopeSummary } from '../../../../../types/scope-summary';
 
@@ -18,13 +19,19 @@ interface Props extends RouteComponentProps {
 const activeScopeActions = BEM(styles);
 
 export const ActiveScopeActions = withRouter(
-  activeScopeActions(({ className }: Props) => {
+  activeScopeActions(({ className, history: { push } }: Props) => {
+    const { agentId, pluginId } = usePluginState();
     const scope = useBuildVersion<ScopeSummary>('/active-scope');
     const dispatch = useCoveragePluginDispatch();
 
     return (
       <div className={className}>
         <Panel>
+          <ScopeDetails
+            onClick={() => push(`/full-page/${agentId}/${pluginId}/scopes/${scope && scope.id}`)}
+          >
+            Scope details >
+          </ScopeDetails>
           <FinishScopeButton
             type="primary"
             onClick={() => dispatch(openModal('FinishScopeModal', scope))}
@@ -52,4 +59,5 @@ export const ActiveScopeActions = withRouter(
   }),
 );
 
+const ScopeDetails = activeScopeActions.scopeDetails('span');
 const FinishScopeButton = activeScopeActions.finishScopeButton(Button);
