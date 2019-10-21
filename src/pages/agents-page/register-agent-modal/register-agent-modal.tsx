@@ -36,7 +36,7 @@ const validateAgent = composeValidators(
   sizeLimit('name'),
   sizeLimit('group'),
   sizeLimit('description', 3, 256),
-  sizeLimit('buildAlias'),
+  sizeLimit('buildAlias', 1, 64),
 );
 
 export const RegisterAgentModal = registerAgentModal(
