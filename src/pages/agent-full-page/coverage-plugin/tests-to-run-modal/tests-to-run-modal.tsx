@@ -3,6 +3,8 @@ import { BEM } from '@redneckz/react-bem-helper';
 
 import { Icons, Modal } from '../../../../components';
 import { Inputs } from '../../../../forms';
+import { Panel } from '../../../../layouts';
+import { copyToClipboard } from '../../../../utils';
 import { usePluginState } from '../../store';
 
 import styles from './tests-to-run-modal.module.scss';
@@ -56,7 +58,10 @@ export const TestsToRunModal = testsToRunModal(
           <NotificaitonPanel>
             <span>These are recommendations for this build updates only.</span>
             <Bold>Use this Curl in your command line to get JSON:</Bold>
-            <span>{openApiUrl}</span>
+            <CommandWrapper align="space-between">
+              <CurlCommand>{openApiUrl}</CurlCommand>
+              <CopyIcon onClick={() => copyToClipboard(openApiUrl)} />
+            </CommandWrapper>
           </NotificaitonPanel>
           <Content>
             <Filter
@@ -97,3 +102,6 @@ const MethodsList = testsToRunModal.methodsList('div');
 const MethodsListItem = testsToRunModal.methodsListItem('div');
 const MethodInfo = testsToRunModal.methodsInfo('div');
 const MethodsListItemIcon = testsToRunModal.methodsListItemIcon('div');
+const CommandWrapper = testsToRunModal.commandWrapper(Panel);
+const CopyIcon = testsToRunModal.copyIcon(Icons.Copy);
+const CurlCommand = testsToRunModal.curlCommand('span');
