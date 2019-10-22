@@ -9,6 +9,7 @@ import { Tests } from './tests';
 import { CoveragePluginModals } from './covarage-plugin-modals';
 import { withSidebar } from '../with-sidebar';
 import { CoveragePluginProvider } from './store';
+import { InitialDataController } from './initial-data-controller';
 import { Agent } from '../../../types/agent';
 
 import styles from './coverage-plugin.module.scss';
@@ -25,22 +26,30 @@ export const CoveragePlugin = withSidebar(
     return (
       <div className={className}>
         <CoveragePluginProvider>
-          <HeaderWrapper>
-            <CoveragePluginHeader />
-          </HeaderWrapper>
-          <Content>
-            <Switch>
-              <Route path="/full-page/:agentId/:pluginId/dashboard" component={Overview} exact />
-              <Route path="/full-page/:agentId/:pluginId/scopes" component={ScopesList} exact />
-              <Route
-                path="/full-page/:agentId/:pluginId/scopes/:scopeId"
-                component={ScopeInfo}
-                exact
-              />
-              <Route path="/full-page/:agentId/:pluginId/tests" component={Tests} exact />
-            </Switch>
-          </Content>
-          <CoveragePluginModals />
+          <InitialDataController>
+            <>
+              <HeaderWrapper>
+                <CoveragePluginHeader />
+              </HeaderWrapper>
+              <Content>
+                <Switch>
+                  <Route
+                    path="/full-page/:agentId/:pluginId/dashboard"
+                    component={Overview}
+                    exact
+                  />
+                  <Route path="/full-page/:agentId/:pluginId/scopes" component={ScopesList} exact />
+                  <Route
+                    path="/full-page/:agentId/:pluginId/scopes/:scopeId"
+                    component={ScopeInfo}
+                    exact
+                  />
+                  <Route path="/full-page/:agentId/:pluginId/tests" component={Tests} exact />
+                </Switch>
+              </Content>
+              <CoveragePluginModals />
+            </>
+          </InitialDataController>
         </CoveragePluginProvider>
       </div>
     );
