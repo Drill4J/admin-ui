@@ -3,8 +3,9 @@ import { BEM, div } from '@redneckz/react-bem-helper';
 
 import { Panel } from '../../../../../layouts';
 import { percentFormatter } from '../../../../../utils';
-import { useBuildVersion } from '../../use-build-version';
+import { useCoveragePluginState } from '../../store';
 import { TestTypeSummary } from '../../../../../types/test-type-summary';
+import { TestTypes } from '../../../../../types/test-types';
 
 import styles from './coverages-by-type.module.scss';
 
@@ -16,7 +17,7 @@ interface Props {
 
 const coveragesByType = BEM(styles);
 
-const coverageByTypeDefaults = {
+const coverageByTypeDefaults: { [testType: string]: TestTypeSummary } = {
   MANUAL: {
     testType: 'MANUAL',
     coverage: 0,
@@ -36,8 +37,8 @@ const coverageByTypeDefaults = {
 
 export const CoveragesByType = coveragesByType(
   ({ className, coverageByType, showRecording }: Props) => {
-    const { testTypes: activeSessionTestTypes = [] } = showRecording
-      ? useBuildVersion<{ testTypes: string[] }>('/active-sessions') || {}
+    const { activeSessions: { testTypes = [] } = {} } = showRecording
+      ? useCoveragePluginState()
       : {};
     return (
       <div className={className}>
@@ -45,10 +46,10 @@ export const CoveragesByType = coveragesByType(
           {Object.values({ ...coverageByTypeDefaults, ...coverageByType }).map(
             ({ testType, coverage = 0, testCount = 0 }) => (
               <CoverageItem key={testType}>
-                <TestTypeIcon type={testType as any} />
+                <TestTypeIcon type={testType} />
                 <TestTypeName>{testType.toLocaleLowerCase()}</TestTypeName>
                 <TestsCount>({testCount})</TestsCount>
-                {showRecording && activeSessionTestTypes.includes(testType) && (
+                {showRecording && testTypes.includes(testType) && (
                   <RecordingWrapper>
                     <RecordingIcon />
                     <RecordingText>Rec</RecordingText>
@@ -66,7 +67,7 @@ export const CoveragesByType = coveragesByType(
 
 const CoverageTypesContainer = coveragesByType.coverageTypesContaier('div');
 const CoverageItem = coveragesByType.coverageItem('div');
-const TestTypeIcon = coveragesByType.testTypeIcon(div({} as { type: 'MANUAL' | 'AUTO' }));
+const TestTypeIcon = coveragesByType.testTypeIcon(div({} as { type: TestTypes }));
 const RecordingWrapper = coveragesByType.recordingWrapper(Panel);
 const RecordingIcon = coveragesByType.recordingIcon('span');
 const RecordingText = coveragesByType.recordingText('span');

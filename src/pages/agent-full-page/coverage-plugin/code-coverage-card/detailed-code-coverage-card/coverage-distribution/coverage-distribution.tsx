@@ -4,7 +4,7 @@ import { BEM } from '@redneckz/react-bem-helper';
 import { Panel } from '../../../../../../layouts';
 import { Icons } from '../../../../../../components';
 import { percentFormatter } from '../../../../../../utils';
-import { useBuildVersion } from '../../../use-build-version';
+import { useCoveragePluginState } from '../../../store';
 import { TestTypeSummary } from '../../../../../../types/test-type-summary';
 
 import styles from './coverage-distribution.module.scss';
@@ -17,7 +17,7 @@ interface Props {
 
 const coverageDistribution = BEM(styles);
 
-const coverageByTypeDefaults = {
+const coverageByTypeDefaults: { [testType: string]: TestTypeSummary } = {
   MANUAL: {
     testType: 'MANUAL',
     coverage: 0,
@@ -37,8 +37,8 @@ const coverageByTypeDefaults = {
 
 export const CoverageDistribution = coverageDistribution(
   ({ className, coverageByType, showRecording }: Props) => {
-    const { testTypes: activeSessionTestTypes = [] } = showRecording
-      ? useBuildVersion<{ testTypes: string[] }>('/active-sessions') || {}
+    const { activeSessions: { testTypes = [] } = {} } = showRecording
+      ? useCoveragePluginState()
       : {};
     return (
       <div className={className}>
@@ -50,7 +50,7 @@ export const CoverageDistribution = coverageDistribution(
                   <Panel>
                     <Icons.Test height={16} width={16} />
                     <ItemName>{testType.toLocaleLowerCase()}</ItemName>
-                    {showRecording && activeSessionTestTypes.includes(testType) && (
+                    {showRecording && testTypes.includes(testType) && (
                       <RecordingWrapper>
                         <RecordingIcon />
                         <RecordingText>Rec</RecordingText>

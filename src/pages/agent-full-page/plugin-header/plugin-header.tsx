@@ -2,12 +2,8 @@ import * as React from 'react';
 import { BEM, div } from '@redneckz/react-bem-helper';
 
 import { Panel } from '../../../layouts';
-
+import { usePluginState } from '../store';
 import { ReactComponent as LogoSvg } from './logo.svg';
-import { useBuildVersion } from '../coverage-plugin/use-build-version';
-import { ActiveSessions } from '../../../types/active-sessions';
-import { useCoveragePluginDispatch } from '../coverage-plugin/store';
-import { setActiveSession } from '../coverage-plugin/store/reducer';
 
 import styles from './plugin-header.module.scss';
 
@@ -23,16 +19,11 @@ const pluginHeader = BEM(styles);
 
 export const PluginHeader = pluginHeader(
   ({ className, agentName, agentStatus, agentIPAddress }: Props) => {
-    const activeSessions = useBuildVersion<ActiveSessions>('/active-sessions') || {};
-    const dispatch = useCoveragePluginDispatch();
-    React.useEffect(() => {
-      dispatch(setActiveSession(activeSessions));
-      // eslint-disable-next-line
-    }, [activeSessions]);
+    const { loading } = usePluginState();
     return (
       <div className={className}>
         <Content>
-          <LogoWrapper recording={Boolean(activeSessions.count)}>
+          <LogoWrapper recording={loading}>
             <Logo />
           </LogoWrapper>
           <AgentInfo>

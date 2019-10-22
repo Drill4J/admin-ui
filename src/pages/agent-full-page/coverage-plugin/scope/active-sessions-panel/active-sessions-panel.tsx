@@ -3,8 +3,7 @@ import { BEM } from '@redneckz/react-bem-helper';
 
 import { Panel } from '../../../../../layouts';
 import { Icons } from '../../../../../components';
-import { useBuildVersion } from '../../use-build-version';
-
+import { useCoveragePluginState } from '../../store';
 import styles from './active-sessions-panel.module.scss';
 
 interface Props {
@@ -14,7 +13,9 @@ interface Props {
 const activeSessionsPanel = BEM(styles);
 
 export const ActiveSessionsPanel = activeSessionsPanel(({ className }: Props) => {
-  const { testTypes = [] } = useBuildVersion<{ testTypes: string[] }>('/active-sessions') || {};
+  const {
+    activeSessions: { testTypes = [] },
+  } = useCoveragePluginState();
 
   return (
     <div className={className}>

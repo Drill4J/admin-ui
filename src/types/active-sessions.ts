@@ -1,4 +1,4 @@
-type TestTypes = 'AUTO' | 'MANUAL' | 'PERFORMANCE';
+import { TestTypes } from './test-types';
 
 export interface ActiveSessions {
   count?: number;
