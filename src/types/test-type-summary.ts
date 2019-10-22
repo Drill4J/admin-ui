@@ -1,5 +1,7 @@
+import { TestTypes } from './test-types';
+
 export interface TestTypeSummary {
-  testType: 'MANUAL' | 'AUTO' | 'PERFORMANCE' | 'INTEGRATION';
+  testType: TestTypes;
   coverage: number;
   testCount: number;
 }

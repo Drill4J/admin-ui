@@ -7,7 +7,7 @@ import { percentFormatter } from '../../../../../utils';
 import { useBuildVersion } from '../../use-build-version';
 import { toggleScope } from '../../api';
 import { usePluginState } from '../../../store';
-import { useCoveragePluginDispatch, openModal } from '../../store';
+import { useCoveragePluginDispatch, useCoveragePluginState, openModal } from '../../store';
 import { ScopeTimer } from '../scope-timer';
 import { ScopeSummary } from '../../../../../types/scope-summary';
 import { NotificationManagerContext } from '../../../../../notification-manager';
@@ -23,6 +23,9 @@ const scopesList = BEM(styles);
 export const ScopesList = withRouter(
   scopesList(({ className, history: { push } }: Props) => {
     const { showMessage } = React.useContext(NotificationManagerContext);
+    const {
+      activeSessions: { testTypes = [] },
+    } = useCoveragePluginState();
     const { agentId } = usePluginState();
     const dispatch = useCoveragePluginDispatch();
     const activeScope = useBuildVersion<ScopeSummary>('/active-scope');
@@ -72,9 +75,17 @@ export const ScopesList = withRouter(
                   <TestTypeLabel>Auto Tests</TestTypeLabel>
                 </HeaderCell>
               )}
-              Cell={({ item: { coveragesByType } }) => (
+              Cell={({ item: { coveragesByType, active } }) => (
                 <TestTypeCoverage>
-                  {coveragesByType.AUTO && `${percentFormatter(coveragesByType.AUTO.coverage)}%`}
+                  {coveragesByType.AUTO && (
+                    <span>{`${percentFormatter(coveragesByType.AUTO.coverage)}%`}</span>
+                  )}
+                  {active && testTypes.includes('AUTO') && (
+                    <>
+                      <RecordingIcon />
+                      <RecordingText>Rec</RecordingText>
+                    </>
+                  )}
                   <TestTypeTestCount>
                     {coveragesByType.AUTO &&
                       coveragesByType.AUTO.testCount &&
@@ -90,10 +101,17 @@ export const ScopesList = withRouter(
                   <TestTypeLabel>Manual</TestTypeLabel>
                 </HeaderCell>
               )}
-              Cell={({ item: { coveragesByType } }) => (
+              Cell={({ item: { coveragesByType, active } }) => (
                 <TestTypeCoverage>
-                  {coveragesByType.MANUAL &&
-                    `${percentFormatter(coveragesByType.MANUAL.coverage)}%`}
+                  {coveragesByType.MANUAL && (
+                    <span>{`${percentFormatter(coveragesByType.MANUAL.coverage)}%`}</span>
+                  )}
+                  {active && testTypes.includes('MANUAL') && (
+                    <>
+                      <RecordingIcon />
+                      <RecordingText>Rec</RecordingText>
+                    </>
+                  )}
                   <TestTypeTestCount>
                     {coveragesByType.MANUAL &&
                       coveragesByType.MANUAL.testCount &&
@@ -159,6 +177,8 @@ const HeaderCell = scopesList.headerCell('div');
 const TestTypeLabel = scopesList.testTypeLabel('div');
 const TestTypeCoverage = scopesList.testTypeCoverage('div');
 const TestTypeTestCount = scopesList.testTypeTestCount('div');
+const RecordingIcon = scopesList.recordingIcon('span');
+const RecordingText = scopesList.recordingText('span');
 const NameCell = scopesList.nameCell('span');
 const StartDate = scopesList.startDate('div');
 const ActiveBadge = scopesList.activeBadge('span');

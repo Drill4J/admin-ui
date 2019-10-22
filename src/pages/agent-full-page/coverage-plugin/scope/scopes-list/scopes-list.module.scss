@@ -30,6 +30,36 @@
     line-height: 24px;
   }
 
+  &__recording-icon {
+    display: inline-block;
+    height: 8px;
+    width: 8px;
+    border-radius: 4px;
+    background-color: map-get($color-palette, red100);
+    margin-right: 3px;
+    margin-left: 4px;
+    animation-name: blinker;
+    animation-iteration-count: infinite;
+    animation-timing-function: cubic-bezier(1, 0, 0, 1);
+    animation-duration: 1s;
+
+    @keyframes blinker {
+      from {
+        opacity: 1;
+      }
+      to {
+        opacity: 0;
+      }
+    }
+  }
+
+  &__recording-text {
+    font-size: 12px;
+    line-height: 12px;
+    color: map-get($color-palette, red100);
+    font-family: $semibold-font;
+  }
+
   &__scopes-count {
     font-size: 18px;
     line-height: 24px;
