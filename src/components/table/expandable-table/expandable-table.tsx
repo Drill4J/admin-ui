@@ -14,8 +14,9 @@ interface Props {
   columnsSize?: 'wide' | 'medium';
   expandedColumns?: any[];
   expandedContentKey: string;
-  secondLevelExpand: any[];
+  secondLevelExpand?: any[];
   className?: string;
+  hasSecondLevelExpand?: boolean;
 }
 
 const expandableTable = BEM(styles);
@@ -27,11 +28,11 @@ export const ExpandableTable = expandableTable(
     idKey,
     expandedColumns,
     className,
+    hasSecondLevelExpand,
     // @ts-ignore
     ...restProps,
   }: Props) => {
     const [expandedRows, setExpandedRows] = React.useState<string[]>([]);
-
     return (
       <Table
         className={className}
@@ -41,7 +42,14 @@ export const ExpandableTable = expandableTable(
         expandedColumns={
           expandedColumns
             ? [
-                getExpanderColumn({ idKey, expandedRows, setExpandedRows, withMargin: true }),
+                hasSecondLevelExpand
+                  ? getExpanderColumn({
+                      idKey,
+                      expandedRows,
+                      setExpandedRows,
+                      withMargin: true,
+                    })
+                  : null,
                 ...expandedColumns,
               ]
             : undefined

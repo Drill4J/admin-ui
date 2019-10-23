@@ -5,7 +5,7 @@ import { ExpandableTable, Column, Icons } from '../../../../components';
 import { Panel } from '../../../../layouts';
 import { ClassCoverage } from '../../../../types/class-coverage';
 import { CompoundCell } from './compound-cell';
-import { CoverageCell } from './coverage-cell';
+import { CoverageCell } from '../coverage-cell';
 import { NameCell } from './name-cell';
 import { AssociatedTestModal } from './associated-test-modal';
 import { AssociatedTestColumn } from './associated-test-column';
@@ -24,7 +24,6 @@ const coverageDetails = BEM(styles);
 export const CoverageDetails = coverageDetails(
   ({ className, coverageByPackages, header, associatedTestsTopic }: Props) => {
     const [selectedId, setSelectedId] = React.useState('');
-
     return (
       <div className={className}>
         {coverageByPackages.length > 0 && (
@@ -71,6 +70,7 @@ export const CoverageDetails = coverageDetails(
                 />,
               ]}
               expandedContentKey="classes"
+              hasSecondLevelExpand
             >
               <Column
                 name="name"
