@@ -17,4 +17,28 @@
   &__test-cell {
     color: map-get($color-palette, black100);
   }
+
+  &__table-cell {
+    display: flex;
+    align-items: center;
+    color: map-get($color-palette, black100);
+
+    & > * {
+      margin-right: 16px;
+    }
+
+    &--type {
+      &--primary {
+        font-family: $semibold-font;
+        text-transform: capitalize;
+      }
+      &--secondary {
+        margin-left: 54px;
+      }
+    }
+  }
+
+  &__table-cell-content {
+    width: 40vw;
+  }
 }
