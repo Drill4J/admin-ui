@@ -70,7 +70,7 @@ export const TestsToRunModal = testsToRunModal(
                 { value: 'manual', label: `Manual tests (${(testsToRun.MANUAL || []).length})` },
                 {
                   value: 'auto',
-                  label: `Auto test (${(testsToRun.AUTO || []).length})`,
+                  label: `Auto tests (${(testsToRun.AUTO || []).length})`,
                 },
               ]}
               onChange={({ value }) => setSelectedFilter(value)}
