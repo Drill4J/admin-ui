@@ -81,7 +81,6 @@ export const AgentInfoPage = withRouter(
                 <span>Add plugin</span>
               </AddPluginButton>
             }
-            borderColor="black"
           />
           {(agent.rawPluginsName || []).length > 0 ? (
             <AgentPluginsTable
