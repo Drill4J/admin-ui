@@ -9,7 +9,6 @@ interface Props {
   title?: React.ReactNode;
   actions?: React.ReactNode;
   itemsActions?: React.ReactNode;
-  borderColor?: 'gray' | 'black';
 }
 
 const pageHeader = BEM(styles);
