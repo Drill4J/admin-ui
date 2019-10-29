@@ -5,6 +5,7 @@
   "dependencies": {
     "@drill4j/socket": "0.1.4",
     "@redneckz/react-bem-helper": "2.0.3",
+    "@redneckz/react-devirt": "0.0.5",
     "@types/jest": "24.0.11",
     "@types/node": "11.12.2",
     "@types/react": "16.8.10",
