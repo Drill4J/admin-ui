@@ -1129,6 +1129,11 @@
   dependencies:
     classnames "~2.2.6"
 
+"@redneckz/react-devirt@^0.0.5":
+  version "0.0.5"
+  resolved "https://registry.yarnpkg.com/@redneckz/react-devirt/-/react-devirt-0.0.5.tgz#02afb488aa0af5037a3c3d443b6552ca649b1c1e"
+  integrity sha512-0hakgh5KTOmSUSv1OvWRSdLujQlnh5Nr4W1V3ZfWUYnIixIvB/Om6DPdec1koO0QxvnuBE7ufdZdTtcpRc82Ig==
+
 "@samverschueren/stream-to-observable@^0.3.0":
   version "0.3.0"
   resolved "https://registry.yarnpkg.com/@samverschueren/stream-to-observable/-/stream-to-observable-0.3.0.tgz#ecdf48d532c58ea477acfcab80348424f8d0662f"
