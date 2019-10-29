@@ -5,7 +5,7 @@ import { PageSwitcher } from './routes';
 import { NotificationManager } from './notification-manager';
 import { configureAxios } from './common/connection';
 
-if (process.env.NODE_ENV === 'development') {
+if (process.env.REACT_APP_ENV === 'development') {
   devirt();
 }
 
