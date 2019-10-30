@@ -1,0 +1,33 @@
+@import '../../../../../../common/style-guide/index';
+
+.recommended-actions {
+  height: 100%;
+  width: 100%;
+
+  &__title {
+    width: 100%;
+    font-size: 14px;
+    line-height: 32px;
+    font-family: $semibold-font;
+    padding-bottom: 8px;
+  }
+
+  &__content {
+    padding: 16px 0 0 16px;
+    border: 1px solid map-get($color-palette, green100);
+    background-color: rgba(0, 182, 2, 0.05);
+  }
+
+  &__action-name {
+    display: flex;
+    align-items: center;
+    margin-bottom: 16px;
+    font-size: 14px;
+    line-height: 10px;
+  }
+
+  &__icons-wrapper {
+    margin-right: 5px;
+    color: map-get($color-palette, green100);
+  }
+}

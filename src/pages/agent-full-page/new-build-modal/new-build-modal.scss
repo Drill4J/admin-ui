@@ -1,0 +1,29 @@
+@import '../../../../../common/style-guide/index';
+
+.finish-scope-modal {
+  width: 530px;
+
+  &__content {
+    margin: 24px;
+  }
+
+  &__ok-button {
+    min-height: 32px;
+    width: auto;
+    font-size: 14px;
+    padding: 0 16px;
+  }
+
+  &__logo {
+    position: relative;
+    margin: 20px 0;
+    height: 80px;
+    width: 80px;
+    border-radius: 50%;
+    border: 2px solid map-get($color-palette, black100);
+  }
+
+  &__block {
+    margin-top: 20px;
+  }
+}
