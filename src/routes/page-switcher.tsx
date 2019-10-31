@@ -14,7 +14,7 @@ import {
   AgentSettingsPage,
   PluginSettingsPage,
 } from '../pages';
-import { PrivateRoute, Icons, Sidebar, Toolbar, Divider } from '../components';
+import { PrivateRoute, Icons, Sidebar, Toolbar, Divider, Footer } from '../components';
 
 const sidebarLinks = [
   { link: 'agents', icon: Icons.Agents },
@@ -39,6 +39,7 @@ export const PageSwitcher = () => {
             <span>Guest</span>
           </Toolbar>
         }
+        footer={<Footer />}
       >
         <Switch>
           <PrivateRoute exact path="/agents" component={AgentsPage} />

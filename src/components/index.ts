@@ -14,3 +14,4 @@ export { MessagePanel } from './message-panel';
 export { Spinner } from './spinner';
 export { Popup } from './popup';
 export { Menu } from './menu';
+export { Footer } from './footer';

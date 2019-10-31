@@ -6,6 +6,7 @@ interface Attrs {
   className?: string;
   align?: 'space-between' | 'end' | 'center';
   verticalAlign?: 'center' | 'stretch' | 'start' | 'end';
+  direction?: 'row' | 'column';
 }
 
 const panel = BEM(styles);
