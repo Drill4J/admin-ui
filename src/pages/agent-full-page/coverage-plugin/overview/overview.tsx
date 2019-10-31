@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
+import { Link } from 'react-router-dom';
 
 import { Panel } from '../../../../layouts';
 import { Icons, TabsPanel, Tab } from '../../../../components';
@@ -18,7 +19,6 @@ import { ScopeSummary } from '../../../../types/scope-summary';
 import { Methods } from '../../../../types/methods';
 
 import styles from './overview.module.scss';
-import { Link } from 'react-router-dom';
 
 interface Props {
   className?: string;

@@ -45,7 +45,6 @@ export const Breadcrumbs = withRouter(
         dispatch(setInitialConfig({ agentId, pluginId: 'test-to-code-mapping', buildVersion }));
         // eslint-disable-next-line
       }, [buildVersion]);
-
       return (
         <div className={className}>
           <Content>
