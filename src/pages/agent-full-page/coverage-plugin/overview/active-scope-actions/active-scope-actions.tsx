@@ -44,7 +44,7 @@ export const ActiveScopeActions = withRouter(
               {
                 label: 'Manage sessions',
                 icon: 'ManageSessions',
-                onClick: () => dispatch(openModal('ManageSessionsModal', scope)),
+                onClick: () => dispatch(openModal('ManageSessionsModal', null)),
               },
               {
                 label: 'Rename',

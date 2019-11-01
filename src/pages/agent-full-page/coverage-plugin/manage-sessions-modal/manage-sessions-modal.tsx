@@ -64,6 +64,7 @@ export const ManageSessionsModal = manageSessionsModal(({ className, isOpen, onT
                   type: 'SUCCESS',
                   text: `Session has been ${values.type === 'START' ? 'started' : 'finished'}`,
                 });
+                onToggle(false);
               },
               onError: setErrorMessage,
             })(values)
