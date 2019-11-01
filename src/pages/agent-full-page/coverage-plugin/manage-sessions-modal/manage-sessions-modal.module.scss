@@ -1,0 +1,70 @@
+@import '../../../../common/style-guide/index';
+
+.manage-sessions-modal {
+  width: 480px;
+
+  &__manage-sessions-warning {
+    height: 64px;
+    width: 100%;
+    font-size: 14px;
+    padding: 0 24px;
+    background-color: rgba(map-get($color-palette, yellow50), 0.1);
+  }
+
+  &__manage-sessions-warning-icon {
+    display: flex;
+    height: 100%;
+    width: 16px;
+    color: map-get($color-palette, yellow50);
+    margin-top: 30px;
+    margin-right: 8px;
+  }
+
+  &__error-message {
+    width: 100%;
+    background-color: rgba(255, 2, 2, 0.1);
+    font-size: 14px;
+    line-height: 24px;
+    color: map-get($color-palette, red100);
+  }
+
+  &__error-message-icon {
+    margin-left: 24px;
+    margin-right: 8px;
+    flex-shrink: 0;
+  }
+
+  &__content {
+    margin: 24px;
+  }
+
+  &__info {
+    font-size: 14px;
+    line-height: 24px;
+  }
+
+  &__actions-panel {
+    margin-top: 38px;
+  }
+
+  &__action-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 16px;
+    min-height: 32px;
+    width: 144px;
+    font-size: 14px;
+
+    & > * {
+      margin-right: 8px;
+    }
+  }
+
+  &__cancel-button {
+    min-height: 32px;
+    width: 78px;
+    border: 1px solid $loblolly-color;
+    color: $slate-gray;
+  }
+}
