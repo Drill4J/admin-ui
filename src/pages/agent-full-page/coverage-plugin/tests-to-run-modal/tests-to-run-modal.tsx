@@ -33,8 +33,9 @@ export const TestsToRunModal = testsToRunModal(
     );
     adminUrl.port = '8090';
 
-    const openApiUrl = `curl -i -H "Accept: application/json" -H "Content-Type: application/json"
-      -X GET ${adminUrl}api/agents/${agentId}/${pluginId}/get-data?type=tests-to-run`;
+    const openApiUrl =
+      'curl -i -H "Accept: application/json" -H "Content-Type: application/json" ' +
+      `-X GET ${adminUrl}api/agents/${agentId}/${pluginId}/get-data?type=tests-to-run`;
 
     const getSelectedTests = () => {
       switch (selectedFilter) {
