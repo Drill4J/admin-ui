@@ -42,6 +42,11 @@ export const ActiveScopeActions = withRouter(
           <Menu
             items={[
               {
+                label: 'Manage sessions',
+                icon: 'ManageSessions',
+                onClick: () => dispatch(openModal('ManageSessionsModal', scope)),
+              },
+              {
                 label: 'Rename',
                 icon: 'Edit',
                 onClick: () => dispatch(openModal('RenameScopeModal', scope)),

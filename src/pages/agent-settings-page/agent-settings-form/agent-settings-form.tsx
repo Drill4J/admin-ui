@@ -36,6 +36,13 @@ export const AgentSettingsForm = agentSettingsForm(
       <Group label="Group" optional>
         <Field name="group" component={Fields.Input} placeholder="Specify a group" />
       </Group>
+      <FormGroup label="Header Mapping" optional>
+        <Field
+          name="sessionIdHeaderName"
+          component={Fields.Input}
+          placeholer="Enter session header name"
+        />
+      </FormGroup>
       <Description label="Description">
         <Field name="description" component={Fields.Textarea} placeholder="Add a description" />
       </Description>
