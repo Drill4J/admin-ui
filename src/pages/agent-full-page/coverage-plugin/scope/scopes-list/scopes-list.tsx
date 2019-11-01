@@ -130,6 +130,11 @@ export const ScopesList = withRouter(
                     icon: 'Check',
                     onClick: () => dispatch(openModal('FinishScopeModal', item)),
                   },
+                  item.active && {
+                    label: 'Manage sessions',
+                    icon: 'ManageSessions',
+                    onClick: () => dispatch(openModal('ManageSessionsModal', null)),
+                  },
                   !item.active && {
                     label: `${item.enabled ? 'Ignore in build stats' : 'Show in build stats'}`,
                     icon: item.enabled ? 'EyeCrossed' : 'Eye',
