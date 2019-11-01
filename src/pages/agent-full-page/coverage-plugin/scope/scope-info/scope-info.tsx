@@ -60,6 +60,11 @@ export const ScopeInfo = withRouter(
             },
           })(scopeId),
       },
+      active && {
+        label: 'Manage sessions',
+        icon: 'ManageSessions',
+        onClick: () => dispatch(openModal('ManageSessionsModal', null)),
+      },
       {
         label: 'Rename',
         icon: 'Edit',
