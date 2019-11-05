@@ -3,12 +3,45 @@ name: default
 
 steps:
   - name: build
-    image: node:8
+    image: node:10
     commands:
       - yarn
       - yarn test
       - yarn typecheck
       - yarn lint
+    when:
+      branch:
+        - develop
+
+---
+kind: pipeline
+type: docker
+name: tag
+
+steps:
+  - name: tag
+    image: docker:git
+    commands:
+      - ./pipeline.sh
+      - git tag $(<.tags)
+      - git push origin $(<.tags)
+
+trigger:
+  branch:
+    - develop
+  event:
+    - push
+
+---
+kind: pipeline
+type: docker
+name: publish
+
+steps:
+  - name: build
+    image: node:10
+    commands:
+      - echo -n ${DRONE_TAG} > .tags
 
   - name: docker
     image: plugins/docker
@@ -20,9 +53,7 @@ steps:
         from_secret: drill_password
       build_args:
         - ENV=development
-    when:
-      branch:
-        - develop
-      event:
-        exclude:
-          - pull_request
+
+trigger:
+  event:
+    - tag
