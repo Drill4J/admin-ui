@@ -25,12 +25,13 @@ steps:
       - ./pipeline.sh
       - git tag $(<.tags)
       - git push origin $(<.tags)
-
-trigger:
-  branch:
-    - develop
-  event:
-    - push
+    when:
+      branch:
+        - develop
+      event:
+        exclude:
+          - pull_request
+          - tag
 
 ---
 kind: pipeline
