@@ -1,6 +1,8 @@
 import * as React from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 
+import { OverflowText } from '../../../../../components';
+
 import styles from './compound-cell.module.scss';
 
 interface Props {
@@ -27,5 +29,5 @@ export const CompoundCell = compoundCell(
 
 const Prefix = compoundCell.prefix('div');
 const Content = compoundCell.content('div');
-const ClassName = compoundCell.className('span');
-const ClassPath = compoundCell.classPath('span');
+const ClassName = compoundCell.className(OverflowText);
+const ClassPath = compoundCell.classPath(OverflowText);
