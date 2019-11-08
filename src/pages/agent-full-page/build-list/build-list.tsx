@@ -43,10 +43,10 @@ export const BuildList = withRouter(
               <Column
                 name="alias"
                 label="Name"
-                Cell={({ value, item: { buildVersion } }) => (
+                Cell={({ value, item: { buildVersion, alias } }) => (
                   <NameCell
                     onClick={() => {
-                      dispatch(setBuildVersion(buildVersion));
+                      dispatch(setBuildVersion({ id: buildVersion, name: alias }));
                       push(`/full-page/${agentId}/test-to-code-mapping/dashboard`);
                     }}
                   >

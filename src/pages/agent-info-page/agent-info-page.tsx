@@ -71,7 +71,7 @@ export const AgentInfoPage = withRouter(
         <Content>
           <PageHeader
             title={<PluginsTableTitle>Plugins</PluginsTableTitle>}
-            itemsCount={(agent.rawPluginsName || []).length}
+            itemsCount={(agent.plugins || []).length}
             actions={
               <AddPluginButton
                 type="secondary"
@@ -82,9 +82,9 @@ export const AgentInfoPage = withRouter(
               </AddPluginButton>
             }
           />
-          {(agent.rawPluginsName || []).length > 0 ? (
+          {(agent.plugins || []).length > 0 ? (
             <AgentPluginsTable
-              plugins={agent.rawPluginsName}
+              plugins={agent.plugins}
               selectedPlugins={selectedPlugins}
               handleSelectPlugin={setSelectedPlugins}
               agentId={agent.id || ''}

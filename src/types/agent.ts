@@ -9,11 +9,11 @@ export interface Agent {
   status?: 'ONLINE' | 'NOT_REGISTERED' | 'BUSY';
   drillAdminUrl?: string;
   address?: string;
-  rawPluginsName?: Plugin[];
+  plugins?: Plugin[];
   ipAddress?: string;
   activePluginsCount?: number;
-  pluginsCount?: number;
   buildVersion?: string;
   buildVersions?: BuildVersion[];
   buildAlias?: string;
+  packagesPrefixes?: string[];
 }
