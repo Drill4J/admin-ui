@@ -1,4 +1,4 @@
 export interface BuildVersion {
-  id: string;
-  name: string;
+  id?: string;
+  name?: string;
 }

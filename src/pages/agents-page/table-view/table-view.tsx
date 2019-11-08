@@ -74,9 +74,9 @@ export const TableView = tableView(
               Plugins <br /> on / total
             </span>
           )}
-          Cell={({ item }: { item: Agent }) => {
-            return item.activePluginsCount ? (
-              <span>{`${item.activePluginsCount}/${item.pluginsCount}`}</span>
+          Cell={({ item: { activePluginsCount, plugins = [] } }: { item: Agent }) => {
+            return activePluginsCount ? (
+              <span>{`${activePluginsCount}/${plugins.length}`}</span>
             ) : (
               <span>n/a</span>
             );
