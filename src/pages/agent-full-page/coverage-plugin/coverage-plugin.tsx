@@ -31,14 +31,26 @@ export const CoveragePlugin = coveragePlugin(({ className }: Props) => {
             </HeaderWrapper>
             <Content>
               <Switch>
-                <Route path="/full-page/:agentId/:pluginId/dashboard" component={Overview} exact />
-                <Route path="/full-page/:agentId/:pluginId/scopes" component={ScopesList} exact />
                 <Route
-                  path="/full-page/:agentId/:pluginId/scopes/:scopeId"
+                  path="/full-page/:agentId/:buildVersion/:pluginId/dashboard"
+                  component={Overview}
+                  exact
+                />
+                <Route
+                  path="/full-page/:agentId/:buildVersion/:pluginId/scopes"
+                  component={ScopesList}
+                  exact
+                />
+                <Route
+                  path="/full-page/:agentId/:buildVersion/:pluginId/scopes/:scopeId"
                   component={ScopeInfo}
                   exact
                 />
-                <Route path="/full-page/:agentId/:pluginId/tests" component={Tests} exact />
+                <Route
+                  path="/full-page/:agentId/:buildVersion/:pluginId/tests"
+                  component={Tests}
+                  exact
+                />
               </Switch>
             </Content>
             <CoveragePluginModals />

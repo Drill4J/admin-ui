@@ -11,7 +11,7 @@ export function toggleScope(
         payload: { scopeId },
       });
       onSuccess && onSuccess();
-    } catch ({ message }) {
+    } catch ({ response: { data: { message } = {} } = {} }) {
       onError && onError(message);
     }
   };

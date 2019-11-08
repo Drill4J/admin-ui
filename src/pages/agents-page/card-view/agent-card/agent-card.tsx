@@ -5,10 +5,11 @@ import axios from 'axios';
 
 import { Panel } from '../../../../layouts';
 import { Icons } from '../../../../components';
-import { Inputs, Button } from '../../../../forms';
+import { Button } from '../../../../forms';
 import { Agent } from '../../../../types/agent';
 import { AGENT_STATUS } from '../../../../common/constants';
 import { RegisterAgentModal } from '../../register-agent-modal';
+import { AgentStatusToggler } from '../../agent-status-toggler';
 
 import styles from './agent-card.module.scss';
 
@@ -26,7 +27,7 @@ export const AgentCard = withRouter(
   agentCard(
     ({
       className,
-      agent: { name, description, status, activePluginsCount, plugins = [], id = '' },
+      agent: { name, description, status, activePluginsCount, plugins = [], id = '', buildVersion },
       onSelect,
       history: { push },
     }: Props) => {
@@ -44,7 +45,9 @@ export const AgentCard = withRouter(
             </HeaderName>
             {status !== AGENT_STATUS.NOT_REGISTERED && (
               <HeaderIconsWrapper>
-                <Icons.OpenLive onClick={() => push(`/full-page/${id}/dashboard`)} />
+                <Icons.OpenLive
+                  onClick={() => push(`/full-page/${id}/${buildVersion}/dashboard`)}
+                />
                 <Icons.Settings
                   height={16}
                   width={16}
@@ -54,9 +57,8 @@ export const AgentCard = withRouter(
             )}
           </Header>
           <DrillStatus>
-            <Inputs.Toggler
-              value={status === AGENT_STATUS.ONLINE}
-              label={`DRILL4J ${status === AGENT_STATUS.ONLINE ? 'ON' : 'OFF'}`}
+            <AgentStatusToggler
+              status={status}
               onChange={() => {
                 if (id) {
                   toggleStandby(id);

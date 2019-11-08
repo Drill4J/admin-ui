@@ -3,13 +3,13 @@ import { BEM } from '@redneckz/react-bem-helper';
 import axios from 'axios';
 
 import { SelectableTable, Column, OverflowText } from '../../../components';
-import { Inputs } from '../../../forms';
 import { AGENT_STATUS } from '../../../common/constants';
 import { NameColumn } from './name-column';
 import { ActionsColumn } from './actions-column';
 import { Agent } from '../../../types/agent';
 
 import styles from './table-view.module.scss';
+import { AgentStatusToggler } from '../agent-status-toggler';
 
 interface Props {
   className?: string;
@@ -58,13 +58,7 @@ export const TableView = tableView(
           name="status"
           label="Status"
           Cell={({ value, item }) => (
-            <StatusColumn>
-              <Inputs.Toggler
-                value={value === AGENT_STATUS.ONLINE}
-                label={value === AGENT_STATUS.ONLINE ? 'On' : 'Off'}
-                onChange={() => toggleStandby(item.id)}
-              />
-            </StatusColumn>
+            <AgentStatusToggler status={value} onChange={() => toggleStandby(item.id)} />
           )}
         />
         <Column
@@ -91,8 +85,6 @@ export const TableView = tableView(
     </div>
   ),
 );
-
-const StatusColumn = tableView.statusColumn('div');
 
 const toggleStandby = (agentId: string) => {
   axios.post(`/agents/${agentId}/toggle-standby`);

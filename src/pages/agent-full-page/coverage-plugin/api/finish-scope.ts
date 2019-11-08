@@ -11,7 +11,7 @@ export function finishScope(
         payload: { scopeName: '', ...params },
       });
       onSuccess && onSuccess();
-    } catch ({ message }) {
+    } catch ({ response: { data: { message } = {} } = {} }) {
       onError && onError(message);
     }
   };

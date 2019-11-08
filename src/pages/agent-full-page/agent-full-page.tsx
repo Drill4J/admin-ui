@@ -12,6 +12,7 @@ import { Breadcrumbs } from './breadcrumbs';
 import { Dashboard } from './dashboard';
 import { BuildList } from './build-list';
 import { Sidebar } from './sidebar';
+import { InitialConfigController } from './initial-config-controller';
 
 import styles from './agent-full-page.module.scss';
 
@@ -47,49 +48,49 @@ export const AgentFullPage = withRouter(
       location: { pathname },
     }: Props) => {
       const agent = useAgent(agentId, () => history.push('/not-found')) || {};
-      const path = '/:page/:agentId/:activeLink';
+      const path = '/:page/:agentId/:buildVersion/:activeLink';
       const { params: { activeLink = '' } = {} } =
         matchPath<{ activeLink: string }>(pathname, {
           path,
         }) || {};
       return (
         <PluginProvider>
-          <PluginsLayout
-            sidebar={
-              activeLink !== 'build-list' && <Sidebar links={pluginsLinks} matchParams={{ path }} />
-            }
-            toolbar={
-              <Toolbar
-                breadcrumbs={
-                  <Panel>
-                    <ArrowBackLabel onClick={() => history.push('/agents')}>
-                      {'<  Back to Admin'}
-                    </ArrowBackLabel>
-                  </Panel>
-                }
-              />
-            }
-            header={
-              <PluginHeader
-                agentName={agent.name}
-                agentStatus={agent.status}
-                agentIPAddress={agent.ipAddress}
-              />
-            }
-            breadcrumbs={<Breadcrumbs />}
-            footer={<Footer />}
-          >
-            <div className={className}>
-              <Switch>
-                <Route
-                  path="/full-page/:agentId/test-to-code-mapping/:tab"
-                  render={() => <CoveragePlugin agent={agent} />}
+          <InitialConfigController>
+            <PluginsLayout
+              sidebar={activeLink && <Sidebar links={pluginsLinks} matchParams={{ path }} />}
+              toolbar={
+                <Toolbar
+                  breadcrumbs={
+                    <Panel>
+                      <ArrowBackLabel onClick={() => history.push('/agents')}>
+                        {'<  Back to Admin'}
+                      </ArrowBackLabel>
+                    </Panel>
+                  }
                 />
-                <Route path="/full-page/:agentId/dashboard" component={Dashboard} />
-                <Route path="/full-page/:agentId/build-list" component={BuildList} />
-              </Switch>
-            </div>
-          </PluginsLayout>
+              }
+              header={
+                <PluginHeader
+                  agentName={agent.name}
+                  agentStatus={agent.status}
+                  agentIPAddress={agent.ipAddress}
+                />
+              }
+              breadcrumbs={<Breadcrumbs />}
+              footer={<Footer />}
+            >
+              <div className={className}>
+                <Switch>
+                  <Route
+                    path="/full-page/:agentId/:buildVersion/test-to-code-mapping/:tab"
+                    component={CoveragePlugin}
+                  />
+                  <Route path="/full-page/:agentId/:buildVersion/dashboard" component={Dashboard} />
+                  <Route path="/full-page/:agentId/build-list" component={BuildList} />
+                </Switch>
+              </div>
+            </PluginsLayout>
+          </InitialConfigController>
         </PluginProvider>
       );
     },

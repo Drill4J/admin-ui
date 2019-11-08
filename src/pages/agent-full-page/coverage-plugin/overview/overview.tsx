@@ -27,7 +27,11 @@ interface Props {
 const overview = BEM(styles);
 
 export const Overview = overview(({ className }: Props) => {
-  const { agentId, pluginId } = usePluginState();
+  const {
+    agentId,
+    pluginId,
+    buildVersion: { id: buildVersion },
+  } = usePluginState();
   const buildCoverage = useBuildVersion<Coverage>('/build/coverage') || {};
   const {
     previousBuildInfo: { first = '', second = '' } = {},
@@ -48,7 +52,7 @@ export const Overview = overview(({ className }: Props) => {
             header={
               <Panel align="space-between">
                 Build Coverage
-                <ScopesListLink to={`/full-page/${agentId}/${pluginId}/scopes`}>
+                <ScopesListLink to={`/full-page/${agentId}/${buildVersion}/${pluginId}/scopes`}>
                   All Scopes >
                 </ScopesListLink>
               </Panel>
@@ -72,7 +76,7 @@ export const Overview = overview(({ className }: Props) => {
             header={
               <Panel align="space-between">
                 Build Coverage
-                <ScopesListLink to={`/full-page/${agentId}/${pluginId}/scopes`}>
+                <ScopesListLink to={`/full-page/${agentId}/${buildVersion}/${pluginId}/scopes`}>
                   All Scopes >
                 </ScopesListLink>
               </Panel>

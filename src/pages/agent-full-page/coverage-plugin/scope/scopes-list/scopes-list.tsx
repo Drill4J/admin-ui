@@ -26,7 +26,10 @@ export const ScopesList = withRouter(
     const {
       activeSessions: { testTypes = [] },
     } = useCoveragePluginState();
-    const { agentId } = usePluginState();
+    const {
+      agentId,
+      buildVersion: { id: buildVersion },
+    } = usePluginState();
     const dispatch = useCoveragePluginDispatch();
     const activeScope = useBuildVersion<ScopeSummary>('/active-scope');
     const scopes = useBuildVersion<ScopeSummary[]>('/scopes') || [];
@@ -49,7 +52,9 @@ export const ScopesList = withRouter(
               HeaderCell={() => <HeaderCell>Name</HeaderCell>}
               Cell={({ value, item: { id, started, active, enabled, finished } }) => (
                 <NameCell
-                  onClick={() => push(`/full-page/${agentId}/test-to-code-mapping/scopes/${id}`)}
+                  onClick={() =>
+                    push(`/full-page/${agentId}/${buildVersion}/test-to-code-mapping/scopes/${id}`)
+                  }
                 >
                   {value}
                   {active && <ActiveBadge>Active</ActiveBadge>}
