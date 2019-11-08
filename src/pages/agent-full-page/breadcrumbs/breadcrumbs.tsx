@@ -2,9 +2,8 @@ import * as React from 'react';
 import { BEM, div } from '@redneckz/react-bem-helper';
 import { withRouter, RouteComponentProps, matchPath } from 'react-router-dom';
 
-import { useAgent } from '../../../hooks';
 import { kebabToPascalCase, camelToTitle } from '../../../utils';
-import { usePluginDispatch, setInitialConfig, usePluginState } from '../store';
+import { usePluginState } from '../store';
 
 import styles from './breadcrumbs.module.scss';
 
@@ -24,32 +23,23 @@ export const Breadcrumbs = withRouter(
       },
       location: { pathname },
     }: Props) => {
-      const { buildVersion = '', buildAlias = '' } = useAgent(agentId) || {};
       const {
         buildVersion: { id, name },
       } = usePluginState();
-      const dispatch = usePluginDispatch();
 
-      const { params: { pluginId = '', page = '', scopeId = '' } = {} } =
-        matchPath<{ pluginId: string; page: string; scopeId: string }>(pathname, {
-          path: [
-            '/full-page/:agentId/:pluginId/',
-            '/full-page/:agentId/:pluginId/:page/',
-            '/full-page/:agentId/:pluginId/:page/:scopeId',
-          ],
-          exact: true,
-        }) || {};
-      // TODO: should be moved from this compenent
-      React.useEffect(() => {
-        dispatch(
-          setInitialConfig({
-            agentId,
-            pluginId: 'test-to-code-mapping',
-            buildVersion: { id: buildVersion, name: buildAlias },
-          }),
-        );
-        // eslint-disable-next-line
-      }, [buildVersion]);
+      const { params: { pluginId = '', page = '', scopeId = '', urlBuildVersion = '' } = {} } =
+        matchPath<{ pluginId: string; page: string; scopeId: string; urlBuildVersion: string }>(
+          pathname,
+          {
+            path: [
+              '/full-page/:agentId/:urlBuildVersion/:pluginId/',
+              '/full-page/:agentId/:urlBuildVersion/:pluginId/:page/',
+              '/full-page/:agentId/:urlBuildVersion/:pluginId/:page/:scopeId',
+            ],
+            exact: true,
+          },
+        ) || {};
+
       return (
         <div className={className}>
           <Content>
@@ -59,11 +49,11 @@ export const Breadcrumbs = withRouter(
             >
               All builds
             </Item>
-            {pluginId !== 'build-list' && (
+            {urlBuildVersion && (
               <>
                 <Divider>/</Divider>
                 <Item
-                  onClick={() => push(`/full-page/${agentId}/${pluginId}/dashboard`)}
+                  onClick={() => push(`/full-page/${agentId}/${id}/${pluginId}/dashboard`)}
                   active={pluginId !== 'build-list' && page !== 'scopes' && !scopeId}
                 >{`Build ${name || id}: ${camelToTitle(kebabToPascalCase(pluginId))}`}</Item>
               </>
@@ -73,7 +63,7 @@ export const Breadcrumbs = withRouter(
                 <Divider>/</Divider>
                 <Item
                   active={page === 'scopes' && !Boolean(scopeId)}
-                  onClick={() => push(`/full-page/${agentId}/${pluginId}/scopes`)}
+                  onClick={() => push(`/full-page/${agentId}/${id}/${pluginId}/scopes`)}
                 >
                   Scopes List
                 </Item>

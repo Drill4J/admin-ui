@@ -8,6 +8,7 @@ export const defaultState = {
   pluginId: '',
   buildVersion: {},
   loading: false,
+  agent: {},
 };
 
 export const PluginStateContext = React.createContext<PluginState>(defaultState);

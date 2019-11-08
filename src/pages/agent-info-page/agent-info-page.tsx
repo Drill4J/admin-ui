@@ -4,12 +4,12 @@ import { withRouter, RouteComponentProps } from 'react-router-dom';
 import axios from 'axios';
 
 import { PageHeader, Icons, ItemsActions } from '../../components';
-import { Button, Inputs } from '../../forms';
+import { Button } from '../../forms';
 import { useAgent } from '../../hooks';
-import { AGENT_STATUS } from '../../common/constants';
 import { AgentPluginsTable } from './agent-plugins-table';
 import { AddPluginsModal } from './add-plugins-modal';
 import { NoPluginsStub } from './no-plugins-stub';
+import { AgentStatusToggler } from '../agents-page/agent-status-toggler';
 
 import styles from './agent-info-page.module.scss';
 
@@ -24,7 +24,6 @@ export const AgentInfoPage = withRouter(
     const agent = useAgent(agentId, () => push('/not-found')) || {};
     const [selectedPlugins, setSelectedPlugins] = React.useState<string[]>([]);
     const [isAddPluginOpen, setIsAddPluginOpen] = React.useState(false);
-
     return (
       <div className={className}>
         <PageHeader
@@ -33,15 +32,12 @@ export const AgentInfoPage = withRouter(
               <Icons.Agents height={18} width={20} />
               <span>{agentId}</span>
               <ToggleAgent>
-                <Inputs.Toggler
-                  value={agent.status === AGENT_STATUS.ONLINE}
-                  label={
-                    <ToggleAgentHeader>{`Drill4J ${
-                      agent.status === AGENT_STATUS.ONLINE ? 'on' : 'off'
-                    }`}</ToggleAgentHeader>
-                  }
-                  onChange={() => toggleAgent(agent.id || '')}
-                />
+                <ToggleAgentHeader>
+                  <AgentStatusToggler
+                    status={agent.status}
+                    onChange={() => toggleAgent(agent.id || '')}
+                  />
+                </ToggleAgentHeader>
               </ToggleAgent>
             </HeaderTitle>
           }
@@ -49,7 +45,7 @@ export const AgentInfoPage = withRouter(
             <HeaderActions>
               <ToAgentButton
                 type="primary"
-                onClick={() => push(`/full-page/${agent.id}/dashboard`)}
+                onClick={() => push(`/full-page/${agent.id}/${agent.buildVersion}/dashboard`)}
               >
                 <Icons.OpenLive />
                 <span>Dashboard</span>
@@ -88,6 +84,7 @@ export const AgentInfoPage = withRouter(
               selectedPlugins={selectedPlugins}
               handleSelectPlugin={setSelectedPlugins}
               agentId={agent.id || ''}
+              buildVersion={agent.buildVersion || ''}
             />
           ) : (
             <NoPluginsStub />

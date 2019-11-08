@@ -20,7 +20,11 @@ const activeScopeActions = BEM(styles);
 
 export const ActiveScopeActions = withRouter(
   activeScopeActions(({ className, history: { push } }: Props) => {
-    const { agentId, pluginId } = usePluginState();
+    const {
+      agentId,
+      pluginId,
+      buildVersion: { id: buildVersion },
+    } = usePluginState();
     const scope = useBuildVersion<ScopeSummary>('/active-scope');
     const dispatch = useCoveragePluginDispatch();
 
@@ -28,7 +32,9 @@ export const ActiveScopeActions = withRouter(
       <div className={className}>
         <Panel>
           <ScopeDetails
-            onClick={() => push(`/full-page/${agentId}/${pluginId}/scopes/${scope && scope.id}`)}
+            onClick={() =>
+              push(`/full-page/${agentId}/${buildVersion}/${pluginId}/scopes/${scope && scope.id}`)
+            }
           >
             Scope details >
           </ScopeDetails>
