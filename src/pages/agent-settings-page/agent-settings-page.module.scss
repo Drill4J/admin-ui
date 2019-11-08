@@ -8,15 +8,6 @@
     margin-right: 8px;
   }
 
-  &__save-changes-button {
-    margin-right: 16px;
-    min-height: 32px;
-    border-radius: 16px;
-    width: 122px;
-    font-size: 14px;
-    font-family: $semibold-font;
-  }
-
   &__unregister-agent-button {
     min-height: 32px;
     width: 108px;
@@ -25,21 +16,7 @@
     font-family: $semibold-font;
   }
 
-  &__error-message {
-    height: 40px;
-    width: 100%;
-    background-color: rgba(255, 2, 2, 0.1);
-    font-size: 14px;
-    line-height: 24px;
-    color: map-get($color-palette, red100);
-  }
-
-  &__error-message-icon {
-    margin-left: 24px;
-    margin-right: 8px;
-  }
-
-  &__content {
-    margin: 32px 24px;
+  &__tabs-panel {
+    margin: 0 24px;
   }
 }

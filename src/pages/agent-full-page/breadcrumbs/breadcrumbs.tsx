@@ -24,12 +24,11 @@ export const Breadcrumbs = withRouter(
       },
       location: { pathname },
     }: Props) => {
-      const { buildVersion = '', buildVersions = [] } = useAgent(agentId) || {};
-      const { buildVersion: selectedBuildVersion } = usePluginState();
+      const { buildVersion = '', buildAlias = '' } = useAgent(agentId) || {};
+      const {
+        buildVersion: { id, name },
+      } = usePluginState();
       const dispatch = usePluginDispatch();
-      const { name = '', id = '' } =
-        buildVersions.find(({ id: buildVersionId }) => buildVersionId === selectedBuildVersion) ||
-        {};
 
       const { params: { pluginId = '', page = '', scopeId = '' } = {} } =
         matchPath<{ pluginId: string; page: string; scopeId: string }>(pathname, {
@@ -42,7 +41,13 @@ export const Breadcrumbs = withRouter(
         }) || {};
       // TODO: should be moved from this compenent
       React.useEffect(() => {
-        dispatch(setInitialConfig({ agentId, pluginId: 'test-to-code-mapping', buildVersion }));
+        dispatch(
+          setInitialConfig({
+            agentId,
+            pluginId: 'test-to-code-mapping',
+            buildVersion: { id: buildVersion, name: buildAlias },
+          }),
+        );
         // eslint-disable-next-line
       }, [buildVersion]);
       return (

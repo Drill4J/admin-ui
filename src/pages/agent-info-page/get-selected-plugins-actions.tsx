@@ -8,7 +8,7 @@ export const getSelectedPLuginsActions = (
   selectedPluginsIds: string[],
   setSelectedPLugins: (selected: string[]) => void,
 ) => {
-  const selectedAgentsMap = getSelectedPluginsMap(agent.rawPluginsName, selectedPluginsIds);
+  const selectedAgentsMap = getSelectedPluginsMap(agent.plugins, selectedPluginsIds);
   const disableIds = Object.keys(selectedAgentsMap).filter((key) => selectedAgentsMap[key]);
   const enableIds = Object.keys(selectedAgentsMap).filter((key) => !selectedAgentsMap[key]);
 
