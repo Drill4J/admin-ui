@@ -30,8 +30,8 @@ export const Sidebar = withRouter(
         params: { agentId },
       },
     }: Props) => {
-      const { params: { activeLink = '' } = {} } =
-        matchPath<{ activeLink: string }>(pathname, matchParams) || {};
+      const { params: { buildVersion = '', activeLink = '' } = {} } =
+        matchPath<{ buildVersion: string; activeLink: string }>(pathname, matchParams) || {};
 
       return (
         <div className={className}>
@@ -40,7 +40,9 @@ export const Sidebar = withRouter(
               <SidebarLink
                 key={link}
                 type={id === activeLink ? 'active' : ''}
-                onClick={() => push(`/${computed ? `full-page/${agentId}/${link}` : link}`)}
+                onClick={() =>
+                  push(`/${computed ? `full-page/${agentId}/${buildVersion}/${link}` : link}`)
+                }
               >
                 <Icon />
               </SidebarLink>

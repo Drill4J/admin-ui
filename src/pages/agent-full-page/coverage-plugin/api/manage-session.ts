@@ -17,8 +17,8 @@ export function manageSession(
         payload: { sessionId },
       });
       onSuccess && onSuccess();
-    } catch ({ response: { data } }) {
-      onError && onError(data);
+    } catch ({ response: { data: { message } = {} } = {} }) {
+      onError && onError(message);
     }
   };
 }

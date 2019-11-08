@@ -20,7 +20,7 @@ export function deleteScope(
           payload: { scopeId: id },
         });
         onSuccess && onSuccess();
-      } catch ({ message }) {
+      } catch ({ response: { data: { message } = {} } = {} }) {
         onError && onError(message);
       }
     }

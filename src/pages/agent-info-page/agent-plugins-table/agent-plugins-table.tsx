@@ -14,6 +14,7 @@ interface Props extends RouteComponentProps {
   selectedPlugins: string[];
   handleSelectPlugin: (selectedId: string[]) => any;
   agentId: string;
+  buildVersion: string;
 }
 
 const agentPluginsTable = BEM(styles);
@@ -26,6 +27,7 @@ export const AgentPluginsTable = withRouter(
       selectedPlugins,
       handleSelectPlugin,
       agentId,
+      buildVersion,
       history: { push },
     }: Props) => (
       <div className={className}>
@@ -41,7 +43,9 @@ export const AgentPluginsTable = withRouter(
             label="Plugin"
             Cell={({ value }) => (
               <NameColumn
-                onClick={() => push(`/full-page/${agentId}/test-to-code-mapping/dashboard`)}
+                onClick={() =>
+                  push(`/full-page/${agentId}/${buildVersion}/test-to-code-mapping/dashboard`)
+                }
               >
                 {value}
               </NameColumn>
