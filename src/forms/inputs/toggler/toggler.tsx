@@ -18,10 +18,8 @@ const checkbox = BEM(styles);
 
 export const Toggler = checkbox(({ className, label, value, onChange = () => {} }: Attrs) => (
   <label className={className}>
-    <React.Fragment>
-      <CheckboxInput type="checkbox" checked={Boolean(value)} value={value} onChange={onChange} />
-      <CheckboxTogglerLabel />
-    </React.Fragment>
+    <CheckboxInput type="checkbox" checked={Boolean(value)} value={value} onChange={onChange} />
+    <CheckboxTogglerLabel />
     {label && <Label checked={Boolean(value)}>{label}</Label>}
   </label>
 ));
