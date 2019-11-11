@@ -1,4 +1,5 @@
 import { PluginState } from './store-types';
+import { BuildVersion } from '../../../types/build-version';
 
 const SET_INITIAL_CONFIG = 'SET_INITIAL_CONFIG';
 const SET_BUILD_VERSION = 'SET_BUILD_VERSION';
@@ -8,7 +9,7 @@ export type Action = ReturnType<
   typeof setBuildVersion | typeof setInitialConfig | typeof setLoading
 >;
 
-export const setBuildVersion = (buildVersion: string) => {
+export const setBuildVersion = (buildVersion: BuildVersion) => {
   return { type: SET_BUILD_VERSION, payload: buildVersion } as const;
 };
 
@@ -19,7 +20,7 @@ export const setLoading = (isLoading: boolean) => {
 export const setInitialConfig = (config: {
   agentId: string;
   pluginId: string;
-  buildVersion: string;
+  buildVersion: BuildVersion;
 }) => {
   return { type: SET_INITIAL_CONFIG, payload: config } as const;
 };

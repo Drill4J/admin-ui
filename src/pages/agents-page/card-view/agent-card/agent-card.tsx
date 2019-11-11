@@ -26,7 +26,7 @@ export const AgentCard = withRouter(
   agentCard(
     ({
       className,
-      agent: { name, description, status, activePluginsCount, pluginsCount, id = '' },
+      agent: { name, description, status, activePluginsCount, plugins = [], id = '' },
       onSelect,
       history: { push },
     }: Props) => {
@@ -64,7 +64,9 @@ export const AgentCard = withRouter(
               }}
             />
             {status === AGENT_STATUS.ONLINE && (
-              <ActivePlugins>{`(${activePluginsCount} of ${pluginsCount} plugins on)`}</ActivePlugins>
+              <ActivePlugins>{`(${activePluginsCount} of ${
+                plugins.length
+              } plugins on)`}</ActivePlugins>
             )}
           </DrillStatus>
           {status === AGENT_STATUS.NOT_REGISTERED ? (
