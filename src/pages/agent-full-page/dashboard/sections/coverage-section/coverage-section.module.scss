@@ -1,0 +1,16 @@
+@import '../../../../../common/style-guide/index';
+
+.coverage-section {
+  &__coverage-arrow {
+    margin-left: 6px;
+
+    &--type {
+      &--increase {
+        color: map-get($color-palette, green100);
+      }
+      &--decrease {
+        color: map-get($color-palette, red100);
+      }
+    }
+  }
+}

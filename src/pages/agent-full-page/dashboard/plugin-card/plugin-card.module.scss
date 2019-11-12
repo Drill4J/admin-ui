@@ -1,0 +1,37 @@
+@import '../../../../common/style-guide/index';
+
+.plugin-card {
+  border: 1px solid map-get($color-palette, light-blue);
+
+  &__header {
+    height: 52px;
+    padding: 16px;
+    font-size: 13px;
+    line-height: 20px;
+    font-family: $semibold-font;
+    border-bottom: 1px solid map-get($color-palette, light-blue);
+    color: $slate-gray;
+  }
+
+  &__link {
+    text-decoration: none;
+    color: map-get($color-palette, blue100);
+    font-family: $regular-font;
+  }
+
+  &__content {
+    display: flex;
+    flex-direction: row;
+    height: 160px;
+
+    & > *:not(:last-child) {
+      border-right: 1px solid map-get($color-palette, light-blue);
+    }
+  }
+
+  &__section {
+    height: 100%;
+    width: 100%;
+    padding: 16px;
+  }
+}

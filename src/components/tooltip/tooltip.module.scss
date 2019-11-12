@@ -1,0 +1,84 @@
+@import '../../common/style-guide/index';
+
+.tooltip {
+  position: relative;
+  display: inline-flex;
+
+  &__message {
+    position: relative;
+    padding: 8px 16px;
+    white-space: pre;
+    text-decoration: none;
+    z-index: 50;
+    color: map-get($color-palette, white);
+    font-size: 12px;
+    background: map-get($color-palette, black100);
+    border-radius: 2px;
+
+    &::after {
+      width: 0;
+      height: 0;
+      border: 6px solid transparent;
+      content: '';
+      position: absolute;
+      z-index: 50;
+    }
+
+    &--position {
+      &--top {
+        bottom: 100%;
+        transform: translate(-50%);
+        position: absolute;
+
+        &::after {
+          border-top-color: map-get($color-palette, black100);
+          border-bottom: none;
+          bottom: -6px;
+          left: 50%;
+          transform: translate(-50%);
+          margin-bottom: 0;
+        }
+      }
+      &--bottom {
+        top: 100%;
+        transform: translate(-50%);
+        position: absolute;
+
+        &::after {
+          border-bottom-color: map-get($color-palette, black100);
+          border-top: none;
+          top: -6px;
+          left: 50%;
+          transform: translate(-50%);
+          margin-top: 0;
+        }
+      }
+      &--right {
+        left: 100%;
+        transform: translateY(-50%);
+        position: absolute;
+
+        &::after {
+          border-right-color: map-get($color-palette, black100);
+          border-left: none;
+          top: 50%;
+          transform: translateY(-50%);
+          left: -6px;
+        }
+      }
+      &--left {
+        right: 100%;
+        transform: translateY(-50%);
+        position: absolute;
+
+        &::after {
+          border-left-color: map-get($color-palette, black100);
+          border-right: none;
+          top: 50%;
+          transform: translateY(-50%);
+          right: -6px;
+        }
+      }
+    }
+  }
+}
