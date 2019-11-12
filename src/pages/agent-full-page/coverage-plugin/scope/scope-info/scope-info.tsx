@@ -32,7 +32,10 @@ const scopeInfo = BEM(styles);
 export const ScopeInfo = withRouter(
   scopeInfo(({ className, match: { params: { scopeId } }, history: { push } }: Props) => {
     const { showMessage } = React.useContext(NotificationManagerContext);
-    const { agentId } = usePluginState();
+    const {
+      agentId,
+      buildVersion: { id: buildVersion },
+    } = usePluginState();
     const dispatch = useCoveragePluginDispatch();
     const coverage = useBuildVersion<Coverage>(`/scope/${scopeId}/coverage`) || {};
     const scopeMethods = useBuildVersion<Methods>(`/scope/${scopeId}/methods`) || {};
@@ -85,7 +88,9 @@ export const ScopeInfo = withRouter(
 
     return (
       <div className={className}>
-        <BackToScopesList onClick={() => push(`/full-page/${agentId}/test-to-code-mapping/scopes`)}>
+        <BackToScopesList
+          onClick={() => push(`/full-page/${agentId}/${buildVersion}/test-to-code-mapping/scopes`)}
+        >
           &lt; Scopes list
         </BackToScopesList>
         <Header>
