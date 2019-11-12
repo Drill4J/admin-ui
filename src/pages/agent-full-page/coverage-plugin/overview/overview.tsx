@@ -37,6 +37,7 @@ export const Overview = overview(({ className }: Props) => {
     previousBuildInfo: { first = '', second = '' } = {},
     diff = 0,
     coverage: buildCodeCoverage = 0,
+    scopesCount,
   } = buildCoverage;
   const { started = 0, finished = 0, active = false, coverage = 0, coveragesByType = {} } =
     useBuildVersion<ScopeSummary>('/active-scope') || {};
@@ -53,7 +54,7 @@ export const Overview = overview(({ className }: Props) => {
               <Panel align="space-between">
                 Build Coverage
                 <ScopesListLink to={`/full-page/${agentId}/${buildVersion}/${pluginId}/scopes`}>
-                  All Scopes >
+                  {`All Scopes (${scopesCount}) >`}
                 </ScopesListLink>
               </Panel>
             }
@@ -78,7 +79,7 @@ export const Overview = overview(({ className }: Props) => {
               <Panel align="space-between">
                 Build Coverage
                 <ScopesListLink to={`/full-page/${agentId}/${buildVersion}/${pluginId}/scopes`}>
-                  All Scopes >
+                  {`All Scopes (${scopesCount}) >`}
                 </ScopesListLink>
               </Panel>
             }
