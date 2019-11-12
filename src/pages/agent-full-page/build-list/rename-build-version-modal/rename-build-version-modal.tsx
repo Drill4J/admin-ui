@@ -12,7 +12,6 @@ import {
   required,
 } from '../../../../forms';
 import { Popup, Icons } from '../../../../components';
-import { usePluginState } from '../../store';
 import { NotificationManagerContext } from '../../../../notification-manager';
 import { renameBuildVersion } from './rename-build-version';
 
@@ -22,6 +21,7 @@ interface Props {
   className?: string;
   isOpen: boolean;
   onToggle: (value: boolean) => void;
+  agentId: string;
   buildVersion: any;
 }
 
@@ -30,8 +30,7 @@ const renameBuildVersionModal = BEM(styles);
 const validateScope = composeValidators(required('alias'), sizeLimit('alias', 1, 64));
 
 export const RenameBuildVersionModal = renameBuildVersionModal(
-  ({ className, isOpen, onToggle, buildVersion }: Props) => {
-    const { agentId } = usePluginState();
+  ({ className, isOpen, onToggle, agentId, buildVersion }: Props) => {
     const { showMessage } = React.useContext(NotificationManagerContext);
     const [errorMessage, setErrorMessage] = React.useState('');
 

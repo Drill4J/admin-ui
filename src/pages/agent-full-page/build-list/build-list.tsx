@@ -130,6 +130,7 @@ export const BuildList = withRouter(
         </Content>
         {isModalOpened && (
           <RenameBuildVersionModal
+            agentId={agentId}
             isOpen={isModalOpened}
             onToggle={setIsModalOpened}
             buildVersion={selectedItem}

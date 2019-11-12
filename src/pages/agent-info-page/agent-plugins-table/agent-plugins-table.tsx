@@ -2,7 +2,7 @@ import * as React from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
 
-import { SelectableTable, Column, Badge, Icons } from '../../../components';
+import { SelectableTable, Column, Badge } from '../../../components';
 import { Inputs } from '../../../forms';
 import { Plugin } from '../../../types/plugin';
 
@@ -62,21 +62,6 @@ export const AgentPluginsTable = withRouter(
               </StatusColumn>
             )}
           />
-          <Column
-            name="actions"
-            label="Actions"
-            Cell={({ item }) => {
-              return (
-                <ActionsColumn>
-                  <Icons.Settings
-                    height={18}
-                    width={18}
-                    onClick={() => push(`/agents/${agentId}/${item.id}/settings`)}
-                  />
-                </ActionsColumn>
-              );
-            }}
-          />
         </SelectableTable>
       </div>
     ),
@@ -85,4 +70,3 @@ export const AgentPluginsTable = withRouter(
 
 const NameColumn = agentPluginsTable.nameColumn('div');
 const StatusColumn = agentPluginsTable.statusColumn('div');
-const ActionsColumn = agentPluginsTable.actionsColumn('div');
