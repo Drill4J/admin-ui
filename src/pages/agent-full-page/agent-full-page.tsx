@@ -85,7 +85,10 @@ export const AgentFullPage = withRouter(
                     path="/full-page/:agentId/:buildVersion/test-to-code-mapping/:tab"
                     component={CoveragePlugin}
                   />
-                  <Route path="/full-page/:agentId/:buildVersion/dashboard" component={Dashboard} />
+                  <Route
+                    path="/full-page/:agentId/:buildVersion/dashboard"
+                    render={() => <Dashboard agent={agent} />}
+                  />
                   <Route path="/full-page/:agentId/build-list" component={BuildList} />
                 </Switch>
               </div>
