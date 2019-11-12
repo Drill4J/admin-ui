@@ -5,7 +5,7 @@ import { Column, ExpandableTable, Icons, OverflowText } from '../../../../compon
 import { Panel } from '../../../../layouts';
 import { NoTestsStub } from './no-tests-stub';
 import { AssociatedTests } from '../../../../types/associated-tests';
-import { CoverageCell } from '../coverage-cell';
+import { percentFormatter } from '../../../../utils';
 
 import styles from './test-details.module.scss';
 
@@ -40,7 +40,10 @@ export const TestDetails = testDetails(({ className, testsUsages }: Props) => {
                 )}
                 colSpan={2}
               />,
-              <Column name="coverage" Cell={CoverageCell} />,
+              <Column
+                name="coverage"
+                Cell={({ value }) => <span>{percentFormatter(value)}%</span>}
+              />,
               <Column name="methodCalls" />,
             ]}
             expandedContentKey="tests"
@@ -55,7 +58,11 @@ export const TestDetails = testDetails(({ className, testsUsages }: Props) => {
                 </TableCell>
               )}
             />
-            <Column name="coverage" label="Coverage" Cell={CoverageCell} />
+            <Column
+              name="coverage"
+              label="Coverage"
+              Cell={({ value }) => <span>{percentFormatter(value)}%</span>}
+            />
             <Column name="methodsCount" label="Methods covered" />
           </ExpandableTable>
         </>

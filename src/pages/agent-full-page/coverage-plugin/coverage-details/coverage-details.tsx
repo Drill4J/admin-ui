@@ -5,7 +5,7 @@ import { ExpandableTable, Column, Icons } from '../../../../components';
 import { Panel } from '../../../../layouts';
 import { ClassCoverage } from '../../../../types/class-coverage';
 import { CompoundCell } from './compound-cell';
-import { CoverageCell } from '../coverage-cell';
+import { CoverageCell } from './coverage-cell';
 import { NameCell } from './name-cell';
 import { AssociatedTestModal } from './associated-test-modal';
 import { AssociatedTestColumn } from './associated-test-column';
