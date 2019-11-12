@@ -20,6 +20,6 @@ jobs:
           npm install
           npm run test
           npm run typecheck
-          npm run test
+          npm run lint
         env:
           CI: true
