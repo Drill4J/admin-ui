@@ -5,7 +5,6 @@ import { Icons } from '../../../../components';
 import { Panel } from '../../../../layouts';
 import { Card } from '../card';
 import { MethodsSection } from './methods-section';
-import { combineModifiedMethods } from './combine-modified-methods';
 import { Methods } from '../../../../types/methods';
 
 import styles from './project-methods-card.module.scss';
@@ -25,18 +24,10 @@ export const ProjectMethodsCard = projectMethodsCard(
       totalMethods = {},
       newMethods = {},
       deletedMethods = {},
+      allModified = {},
       deletedCoveredMethodsCount = 0,
-      modifiedBodyMethods = {},
-      modifiedDescMethods = {},
-      modifiedNameMethods = {},
     },
   }: Props) => {
-    const modifiedMethods = combineModifiedMethods(
-      modifiedBodyMethods,
-      modifiedDescMethods,
-      modifiedNameMethods,
-    );
-
     return (
       <div className={className}>
         <Card
@@ -67,7 +58,7 @@ export const ProjectMethodsCard = projectMethodsCard(
             </CardHeader>
           }
         >
-          <MethodsSection title="MODIFIED" methodsInfo={modifiedMethods} />
+          <MethodsSection title="MODIFIED" methodsInfo={allModified} />
         </Card>
         <Card
           header={
@@ -83,7 +74,7 @@ export const ProjectMethodsCard = projectMethodsCard(
             additionalInfo={
               <DeletedMethodsAdditionalInfo>
                 {`${deletedCoveredMethodsCount} of ${deletedMethods.totalCount ||
-                  0} deleted methods were covered in previous`}
+                  0} deleted methods were covered in previous build.`}
               </DeletedMethodsAdditionalInfo>
             }
           />
