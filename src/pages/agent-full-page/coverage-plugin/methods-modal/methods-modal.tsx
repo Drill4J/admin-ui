@@ -24,8 +24,8 @@ export const MethodsModal = methodsModal(
         <div className={className}>
           <Header>
             <Icons.Function height={18} width={18} />
-            <span>{title}</span>
-            <h2>{methodsDetails.length}</h2>
+            <span data-test="method-modal:total-methods:title">{title}</span>
+            <h2 data-test="method-modal:total-methods:count">{methodsDetails.length}</h2>
           </Header>
           <Content>
             <MethodsList>
@@ -39,8 +39,12 @@ export const MethodsModal = methodsModal(
                       <Icons.Function />
                     </MethodsListIcon>
                     <MethodSignature>
-                      <OverflowText>{methodsDetails[index].name}</OverflowText>
-                      <MethodDescriptor>{methodsDetails[index].desc}</MethodDescriptor>
+                      <OverflowText data-test="method-modal:method-name">
+                        {methodsDetails[index].name}
+                      </OverflowText>
+                      <MethodDescriptor data-test="method-modal:method-descriptor">
+                        {methodsDetails[index].desc}
+                      </MethodDescriptor>
                     </MethodSignature>
                     {getCoverageIcon(methodsDetails[index].coverageRate)}
                   </MethodsListItem>

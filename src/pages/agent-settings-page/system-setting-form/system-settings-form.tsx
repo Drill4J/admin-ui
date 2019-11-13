@@ -52,6 +52,7 @@ export const SystemSettingsForm = systemSettingsForm(
                   type="primary"
                   onClick={handleSubmit}
                   disabled={submitting || pristine || invalid}
+                  data-test="system-settings-form:save-changes-button"
                 >
                   Save changes
                 </SaveChangesButton>

@@ -14,7 +14,7 @@ interface Props {
 
 export const AgentStatusToggler = ({ className, status, onChange }: Props) => (
   <div className={className}>
-    <Panel>
+    <Panel data-test="agent-status-toggler">
       {status === AGENT_STATUS.BUSY ? (
         <Inputs.Toggler value={status === AGENT_STATUS.BUSY} label={<Spinner />} disabled />
       ) : (

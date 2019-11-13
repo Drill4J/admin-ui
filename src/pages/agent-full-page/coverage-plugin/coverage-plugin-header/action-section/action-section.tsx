@@ -20,7 +20,12 @@ export const ActionSection = actionSection(
       <div className={className}>
         <Action>
           <ActionName>{label}</ActionName>
-          <Count onClick={onClick} type={count ? type : ''} clickable={Boolean(count)}>
+          <Count
+            onClick={onClick}
+            type={count ? type : ''}
+            clickable={Boolean(count)}
+            data-test={`action-section:count:${label}`}
+          >
             {`${count} `}
             {count > 0 && type === 'error' && <Icons.Warning />}
           </Count>
@@ -33,5 +38,9 @@ export const ActionSection = actionSection(
 const Action = actionSection.action('div');
 const ActionName = actionSection.actionName('div');
 const Count = actionSection.count(
-  span({ onClick: () => {} } as { clickable?: boolean; onClick?: () => void }),
+  span({ 'data-test': '', onClick: () => {} } as {
+    'data-test'?: string;
+    clickable?: boolean;
+    onClick?: () => void;
+  }),
 );

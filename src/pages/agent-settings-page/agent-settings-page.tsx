@@ -41,6 +41,7 @@ export const AgentSettingsPage = withRouter(
                 <UnregisterAgentButton
                   type="secondary"
                   onClick={() => setIsUnregisterModalOpen(true)}
+                  data-test="agent-settings-page:unregister-button"
                 >
                   Unregister
                 </UnregisterAgentButton>

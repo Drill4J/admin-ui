@@ -55,6 +55,7 @@ export const ScopesList = withRouter(
                   onClick={() =>
                     push(`/full-page/${agentId}/${buildVersion}/test-to-code-mapping/scopes/${id}`)
                   }
+                  data-test="scopes-list:scope-name"
                 >
                   {value}
                   {active && <ActiveBadge>Active</ActiveBadge>}
@@ -70,7 +71,9 @@ export const ScopesList = withRouter(
             <Column
               name="coverage"
               HeaderCell={() => <HeaderCell>Coverage</HeaderCell>}
-              Cell={({ value }) => <Coverage>{percentFormatter(value)}%</Coverage>}
+              Cell={({ value }) => (
+                <Coverage data-test="scopes-list:coverage">{percentFormatter(value)}%</Coverage>
+              )}
             />
             <Column
               name="autoTests"
