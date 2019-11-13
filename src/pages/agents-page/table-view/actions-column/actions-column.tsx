@@ -28,18 +28,23 @@ export const ActionsColumn = withRouter(
       return (
         <div className={className}>
           {status === AGENT_STATUS.NOT_REGISTERED ? (
-            <Icons.Register onClick={() => setIsModalOpen(true)} />
+            <Icons.Register
+              onClick={() => setIsModalOpen(true)}
+              data-test="action-column:icons-register"
+            />
           ) : (
             <>
               <Icons.OpenLive
                 onClick={() =>
                   push(`/full-page/${agentId}/${buildVersion}/test-to-code-mapping/dashboard`)
                 }
+                data-test="action-column:icons-open-live"
               />
               <Icons.Settings
                 onClick={() => push(`/agents/${agentId}/settings`)}
                 height={16}
                 width={16}
+                data-test="action-column:icons-settings"
               />
             </>
           )}

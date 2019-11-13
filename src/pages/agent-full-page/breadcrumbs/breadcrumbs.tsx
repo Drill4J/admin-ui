@@ -46,6 +46,7 @@ export const Breadcrumbs = withRouter(
             <Item
               onClick={() => push(`/full-page/${agentId}/build-list`)}
               active={pluginId === 'build-list'}
+              data-test="breadcrumbs:all-builds"
             >
               All builds
             </Item>
@@ -55,6 +56,7 @@ export const Breadcrumbs = withRouter(
                 <Item
                   onClick={() => push(`/full-page/${agentId}/${id}/${pluginId}/dashboard`)}
                   active={pluginId !== 'build-list' && page !== 'scopes' && !scopeId}
+                  data-test={`breadcrumbs:build`}
                 >{`Build ${name || id}: ${camelToTitle(kebabToPascalCase(pluginId))}`}</Item>
               </>
             )}
@@ -64,6 +66,7 @@ export const Breadcrumbs = withRouter(
                 <Item
                   active={page === 'scopes' && !Boolean(scopeId)}
                   onClick={() => push(`/full-page/${agentId}/${id}/${pluginId}/scopes`)}
+                  data-test="breadcrumbs:scopes-list"
                 >
                   Scopes List
                 </Item>
@@ -84,6 +87,10 @@ export const Breadcrumbs = withRouter(
 
 const Content = breadcrumbs.content('div');
 const Item = breadcrumbs.item(
-  div({ onClick: () => {} } as { active?: boolean; onClick?: () => void }),
+  div({ onClick: () => {}, 'data-test': '' } as {
+    active?: boolean;
+    onClick?: () => void;
+    'data-test'?: string;
+  }),
 );
 const Divider = breadcrumbs.divider('div');

@@ -16,6 +16,7 @@ interface Props {
   coverage: Coverage;
   additionalInfo?: React.ReactNode;
   showRecording?: boolean;
+  testContext?: string;
 }
 
 const codeCoverageCard = BEM(styles);
@@ -27,24 +28,31 @@ export const CodeCoverageCard = codeCoverageCard(
     coverage: { coverage = 0, arrow, coverageByType = {} },
     additionalInfo,
     showRecording,
-  }: Props) => (
-    <div className={className}>
-      <Card header={header}>
-        <CardSection>
-          <TotalCoverage>
-            <Panel>
-              {`${percentFormatter(coverage)}%`}
-              {arrow && <ArrowIcon rotate={arrow === 'INCREASE' ? 180 : 0} type={arrow} />}
-            </Panel>
-          </TotalCoverage>
-          <AdditionalInfo>{additionalInfo}</AdditionalInfo>
-        </CardSection>
-        <CardSection>
-          <CoveragesByType coverageByType={coverageByType} showRecording={showRecording} />
-        </CardSection>
-      </Card>
-    </div>
-  ),
+    testContext,
+  }: Props) => {
+    return (
+      <div className={className}>
+        <Card header={header}>
+          <CardSection>
+            <TotalCoverage>
+              <Panel data-test={`code-coverage-card:${testContext}`}>
+                {`${percentFormatter(coverage)}%`}
+                {arrow && <ArrowIcon rotate={arrow === 'INCREASE' ? 180 : 0} type={arrow} />}
+              </Panel>
+            </TotalCoverage>
+            <AdditionalInfo>{additionalInfo}</AdditionalInfo>
+          </CardSection>
+          <CardSection>
+            <CoveragesByType
+              testContext={testContext}
+              coverageByType={coverageByType}
+              showRecording={showRecording}
+            />
+          </CardSection>
+        </Card>
+      </div>
+    );
+  },
 );
 
 const TotalCoverage = codeCoverageCard.totalCoverage('div');

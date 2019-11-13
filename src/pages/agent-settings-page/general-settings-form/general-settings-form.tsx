@@ -59,6 +59,7 @@ export const GeneralSettingsForm = generalSettingsForm(
                   type="primary"
                   onClick={handleSubmit}
                   disabled={submitting || pristine || invalid}
+                  data-test="general-settings-form:save-changes-button"
                 >
                   Save changes
                 </SaveChangesButton>
