@@ -6,6 +6,7 @@ import { ActionSection } from './action-section';
 import { RisksModal } from '../risks-modal';
 import { TestsToRunModal } from '../tests-to-run-modal';
 import { Risks } from '../../../../types/risks';
+import { TestsToRun } from '../../../../types/tests-to-run';
 
 import styles from './coverage-plugin-header.module.scss';
 
@@ -19,8 +20,7 @@ const coveragePluginHeader = BEM(styles);
 
 export const CoveragePluginHeader = coveragePluginHeader(({ className }: Props) => {
   const risks = useBuildVersion<Risks>('/build/risks') || {};
-  const key = 'tests-to-run';
-  const { [key]: testsToRun = {} } = useBuildVersion<any>('/build/tests-to-run') || {};
+  const { testsToRun = {} } = useBuildVersion<TestsToRun>('/build/tests-to-run') || {};
   const [isRisksModalOpen, setIsRisksModalOpen] = React.useState(false);
   const [isTestsToRunModalOpen, setIsTestToRunModalOpen] = React.useState(false);
   const { newMethods = [], modifiedMethods = [] } = risks;
