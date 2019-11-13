@@ -6,5 +6,6 @@ export const Button = BEM(styles)(
   button({
     type: 'button',
     disabled: false,
-  } as { type?: string; disabled?: boolean }),
+    'data-test': '',
+  } as { type?: string; disabled?: boolean; 'data-test'?: string }),
 );

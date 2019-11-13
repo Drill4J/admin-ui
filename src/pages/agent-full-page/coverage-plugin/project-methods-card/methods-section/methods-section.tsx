@@ -26,7 +26,11 @@ export const MethodsSection = methodsSection(
 
     return (
       <div className={className}>
-        <Total onClick={() => totalCount && setIsModalOpen(true)} clickable={Boolean(totalCount)}>
+        <Total
+          data-test={`methods-section:total:${title.toLowerCase()}`}
+          onClick={() => totalCount && setIsModalOpen(true)}
+          clickable={Boolean(totalCount)}
+        >
           {totalCount}
         </Total>
         <AdditionalInfo>
@@ -34,15 +38,27 @@ export const MethodsSection = methodsSection(
             <>
               <AdditionalInfoItem>
                 <AdditionalInfoItemHeader>Covered</AdditionalInfoItemHeader>
-                <AdditionalInfoItemValue>{coveredCount}</AdditionalInfoItemValue>
+                <AdditionalInfoItemValue
+                  data-test={`methods-section:covered:${title.toLowerCase()}`}
+                >
+                  {coveredCount}
+                </AdditionalInfoItemValue>
               </AdditionalInfoItem>
               <AdditionalInfoItem>
                 <AdditionalInfoItemHeader>Not covered</AdditionalInfoItemHeader>
-                <AdditionalInfoItemValue>{totalCount - coveredCount}</AdditionalInfoItemValue>
+                <AdditionalInfoItemValue
+                  data-test={`methods-section:not-covered:${title.toLowerCase()}`}
+                >
+                  {totalCount - coveredCount}
+                </AdditionalInfoItemValue>
               </AdditionalInfoItem>
               <AdditionalInfoItem>
                 <AdditionalInfoItemHeader>Excluded</AdditionalInfoItemHeader>
-                <AdditionalInfoItemValue>{0}</AdditionalInfoItemValue>
+                <AdditionalInfoItemValue
+                  data-test={`methods-section:excluded:${title.toLowerCase()}`}
+                >
+                  {0}
+                </AdditionalInfoItemValue>
               </AdditionalInfoItem>
             </>
           )}
@@ -61,7 +77,11 @@ export const MethodsSection = methodsSection(
 );
 
 const Total = methodsSection.total(
-  span({ onClick: () => {} } as { clickable?: boolean; onClick: () => void }),
+  span({ 'data-test': '', onClick: () => {} } as {
+    'data-test'?: string;
+    clickable?: boolean;
+    onClick: () => void;
+  }),
 );
 const AdditionalInfo = methodsSection.additionalInfo('div');
 const AdditionalInfoItem = methodsSection.additionalInfoItem('div');

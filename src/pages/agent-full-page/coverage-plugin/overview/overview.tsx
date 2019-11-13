@@ -70,6 +70,7 @@ export const Overview = overview(({ className }: Props) => {
                   'Will change when at least 1 scope is done.'}
               </Panel>
             }
+            testContext="build-coverage"
           />
         ) : (
           <DetailedCodeCoverageCard
@@ -108,6 +109,7 @@ export const Overview = overview(({ className }: Props) => {
                 <ScopeTimer started={started} finised={finished} active={active} />
               </Panel>
             }
+            testContext="active-scope-coverage"
             showRecording
           />
         )}

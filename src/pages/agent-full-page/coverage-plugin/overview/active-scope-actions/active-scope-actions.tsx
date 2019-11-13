@@ -41,6 +41,7 @@ export const ActiveScopeActions = withRouter(
           <FinishScopeButton
             type="primary"
             onClick={() => dispatch(openModal('FinishScopeModal', scope))}
+            data-test="active-scope-actions:finish-scope-button"
           >
             <Icons.Check height={10} width={14} />
             Finish scope

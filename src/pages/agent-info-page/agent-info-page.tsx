@@ -46,11 +46,12 @@ export const AgentInfoPage = withRouter(
               <ToAgentButton
                 type="primary"
                 onClick={() => push(`/full-page/${agent.id}/${agent.buildVersion}/dashboard`)}
+                data-test="agent-info-page:dashboard-button"
               >
                 <Icons.OpenLive />
                 <span>Dashboard</span>
               </ToAgentButton>
-              <Settings>
+              <Settings data-test="agent-info-page:settings-button">
                 <Icons.Settings onClick={() => push(`/agents/${agent.id}/settings`)} />
               </Settings>
             </HeaderActions>
@@ -72,6 +73,7 @@ export const AgentInfoPage = withRouter(
               <AddPluginButton
                 type="secondary"
                 onClick={() => setIsAddPluginOpen(!isAddPluginOpen)}
+                data-test="agent-info-page:add-plugin-button"
               >
                 <Icons.Add />
                 <span>Add plugin</span>
