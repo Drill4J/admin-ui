@@ -1,3 +1,3 @@
 export interface TestsToRun {
-  test?: string[];
+  [testType: string]: string[];
 }
