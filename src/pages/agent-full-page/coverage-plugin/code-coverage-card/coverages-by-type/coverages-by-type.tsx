@@ -13,6 +13,7 @@ interface Props {
   className?: string;
   coverageByType: { [testType: string]: TestTypeSummary };
   showRecording?: boolean;
+  testContext?: string;
 }
 
 const coveragesByType = BEM(styles);
@@ -36,7 +37,7 @@ const coverageByTypeDefaults: { [testType: string]: TestTypeSummary } = {
 };
 
 export const CoveragesByType = coveragesByType(
-  ({ className, coverageByType, showRecording }: Props) => {
+  ({ className, coverageByType, showRecording, testContext }: Props) => {
     const { activeSessions: { testTypes = [] } = {} } = showRecording
       ? useCoveragePluginState()
       : {};
@@ -48,14 +49,20 @@ export const CoveragesByType = coveragesByType(
               <CoverageItem key={testType}>
                 <TestTypeIcon type={testType} />
                 <TestTypeName>{testType.toLocaleLowerCase()}</TestTypeName>
-                <TestsCount>({testCount})</TestsCount>
+                <TestsCount
+                  data-test={`coverage-by-type:test-count:${testContext}-${testType.toLowerCase()}`}
+                >
+                  ({testCount})
+                </TestsCount>
                 {showRecording && testTypes.includes(testType) && (
                   <RecordingWrapper>
                     <RecordingIcon />
                     <RecordingText>Rec</RecordingText>
                   </RecordingWrapper>
                 )}
-                <TestTypeCoverage>{`${percentFormatter(coverage)}%`}</TestTypeCoverage>
+                <TestTypeCoverage
+                  data-test={`coverage-by-type:test-type-coverage:${testContext}-${testType.toLowerCase()}`}
+                >{`${percentFormatter(coverage)}%`}</TestTypeCoverage>
               </CoverageItem>
             ),
           )}

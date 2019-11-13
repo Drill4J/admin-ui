@@ -14,6 +14,7 @@ interface Props {
   onClick?: () => void;
   viewBox?: string;
   rotate?: number;
+  'data-test'?: string;
 }
 
 export function declareIcon(path: string, settings: Settings = {}) {

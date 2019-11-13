@@ -15,7 +15,7 @@ const nameColumn = BEM(styles);
 
 export const NameColumn = withRouter(
   nameColumn(({ className, history: { push }, agentId, agentName }: Props) => (
-    <div className={className} onClick={() => push(`/agents/${agentId}`)}>
+    <div className={className} onClick={() => push(`/agents/${agentId}`)} data-test="name-column">
       {agentName || agentId}
     </div>
   )),

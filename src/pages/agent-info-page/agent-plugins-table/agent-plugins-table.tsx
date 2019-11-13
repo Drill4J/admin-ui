@@ -46,6 +46,7 @@ export const AgentPluginsTable = withRouter(
                 onClick={() =>
                   push(`/full-page/${agentId}/${buildVersion}/test-to-code-mapping/dashboard`)
                 }
+                data-test="agent-plugins-table:plugin-name"
               >
                 {value}
               </NameColumn>
