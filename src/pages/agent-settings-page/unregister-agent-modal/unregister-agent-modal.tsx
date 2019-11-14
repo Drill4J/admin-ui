@@ -85,7 +85,7 @@ async function unregisterAgent(
     await axios.post(`/agents/${agentId}/unregister`);
     showMessage({ type: 'SUCCESS', text: 'Agent has been deactivated' });
     closeModal(false);
-  } catch (error) {
-    setErrorMessage(error.message);
+  } catch ({ response: { data: { message } = {} } = {} }) {
+    setErrorMessage(message);
   }
 }

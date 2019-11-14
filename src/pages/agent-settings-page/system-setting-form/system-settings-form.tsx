@@ -111,7 +111,7 @@ async function saveChanges(
     await axios.post(`/agents/${id}/set-packages`, { packagesPrefixes });
     showError('');
     showMessage({ type: 'SUCCESS', text: 'New settings have been saved' });
-  } catch (error) {
-    showError(error.message);
+  } catch ({ response: { data: { message } = {} } = {} }) {
+    showError(message);
   }
 }

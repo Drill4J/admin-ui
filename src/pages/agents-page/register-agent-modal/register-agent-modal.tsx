@@ -132,7 +132,7 @@ async function registerAgent(
     await axios.post(`/agents/${id}/register`, agentRegistrationInfo);
     showMessage({ type: 'SUCCESS', text: 'Agent has been registered' });
     closeModal(false);
-  } catch (error) {
-    setErrorMessage(error.message);
+  } catch ({ response: { data: { message } = {} } = {} }) {
+    setErrorMessage(message);
   }
 }
