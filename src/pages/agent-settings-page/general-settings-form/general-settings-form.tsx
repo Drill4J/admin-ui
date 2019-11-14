@@ -127,7 +127,7 @@ async function saveChanges(
     await axios.post(`/agent/${agent.id}`, agent);
     showError('');
     showMessage({ type: 'SUCCESS', text: 'New settings have been saved' });
-  } catch (error) {
-    showError(error.message);
+  } catch ({ response: { data: { message } = {} } = {} }) {
+    showError(message);
   }
 }
