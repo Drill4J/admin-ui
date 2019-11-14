@@ -16,4 +16,5 @@ export interface Agent {
   buildVersions?: BuildVersion[];
   buildAlias?: string;
   packagesPrefixes?: string[];
+  sessionIdHeaderName?: string;
 }

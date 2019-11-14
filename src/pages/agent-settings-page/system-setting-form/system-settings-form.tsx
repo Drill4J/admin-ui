@@ -8,6 +8,7 @@ import { Icons } from '../../../components';
 import { Fields, requiredArray, Button } from '../../../forms';
 import { Agent } from '../../../types/agent';
 import { Message } from '../../../types/message';
+import { parsePackges, formatPackages } from '../../../utils';
 
 import styles from './system-settings-form.module.scss';
 
@@ -74,14 +75,8 @@ export const SystemSettingsForm = systemSettingsForm(
                 <Field
                   name="packagesPrefixes"
                   component={ProjectPackages}
-                  parse={(value) => value.split(/\n/)}
-                  format={(value) =>
-                    value.reduce(
-                      (acc: string, item: string, index: number) =>
-                        index !== value.length - 1 ? acc + item + '\n' : acc + item,
-                      '',
-                    )
-                  }
+                  parse={parsePackges}
+                  format={formatPackages}
                   placeholder="Package name 1&#10;Package name 2&#10;Package name 3&#10;and so on."
                 />
               </Content>
@@ -103,12 +98,14 @@ const Instruction = systemSettingsForm.instructions('div');
 const ProjectPackages = systemSettingsForm.projectPackages(Fields.Textarea);
 
 async function saveChanges(
-  { id, packagesPrefixes }: Agent,
+  { id, packagesPrefixes = [] }: Agent,
   showMessage: (message: Message) => void,
   showError: (message: string) => void,
 ) {
   try {
-    await axios.post(`/agents/${id}/set-packages`, { packagesPrefixes });
+    await axios.post(`/agents/${id}/set-packages`, {
+      packagesPrefixes: packagesPrefixes.filter(Boolean),
+    });
     showError('');
     showMessage({ type: 'SUCCESS', text: 'New settings have been saved' });
   } catch ({ response: { data: { message } = {} } = {} }) {

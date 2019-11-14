@@ -35,18 +35,18 @@ export const SelectableTable = ({
           const isSelectable = checkboxDescriptor ? checkboxDescriptor(item) : true;
           return isSelectable ? (
             <Inputs.Checkbox
-              onClick={() => {
+              onChange={() => {
                 selectedRows.includes(item[idKey])
                   ? onSelect(selectedRows.filter((selectedItem) => selectedItem !== item[idKey]))
                   : onSelect([...selectedRows, item[idKey]]);
               }}
-              selected={isAllSelected || selectedRows.includes(item[idKey])}
+              checked={isAllSelected || selectedRows.includes(item[idKey])}
             />
           ) : null;
         }}
         HeaderCell={() => (
           <Inputs.Checkbox
-            onClick={() => {
+            onChange={() => {
               onSelect(
                 !isAllSelected
                   ? data.reduce((acc, item: any) => {
@@ -58,7 +58,7 @@ export const SelectableTable = ({
                   : [],
               );
             }}
-            selected={isAllSelected}
+            checked={isAllSelected}
           />
         )}
       />

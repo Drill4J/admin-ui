@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { BEM } from '@redneckz/react-bem-helper';
+import { BEM, input } from '@redneckz/react-bem-helper';
 
 import { Icons } from '../../../components/icon';
 
@@ -7,23 +7,43 @@ import styles from './checkbox.module.scss';
 
 interface Props {
   className?: string;
-  onClick?: () => any;
-  selected?: boolean;
+  onChange?: (event?: any) => any;
+  checked?: boolean;
   label?: string;
   withoutMargin?: boolean;
   disabled?: boolean;
+  value?: string;
 }
 
 const checkbox = BEM(styles);
 
-export const Checkbox = checkbox(({ className, onClick, label }: Props) => (
-  <div className={className} onClick={onClick}>
-    <IconWrapper>
-      <Icons.Checkbox />
-    </IconWrapper>
-    <Label>{label}</Label>
-  </div>
-));
+export const Checkbox = checkbox(({ className, onChange, checked, label, value }: Props) => {
+  const handleOnChange = () => {
+    onChange &&
+      onChange({
+        target: {
+          type: 'checkbox',
+          checked: !checked,
+        },
+      });
+  };
+  return (
+    <div className={className} onClick={handleOnChange}>
+      <CheckboxInput name={value} checked={checked} />
+      <IconWrapper>
+        <Icons.Checkbox />
+      </IconWrapper>
+      <Label>{label}</Label>
+    </div>
+  );
+});
 
+const CheckboxInput = checkbox.input(
+  input({ type: 'checkbox', checked: false, name: '' } as {
+    type?: string;
+    checked?: boolean;
+    name?: string;
+  }),
+);
 const IconWrapper = checkbox.iconWrapper('div');
 const Label = checkbox.label('div');

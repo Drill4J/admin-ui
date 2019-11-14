@@ -1,0 +1,64 @@
+@import '../../../common/style-guide/index';
+
+.system-registration-settings-form {
+  &__info-panel {
+    height: 48px;
+    padding: 0 24px;
+    font-size: 14px;
+    line-height: 24px;
+    background-color: map-get($color-palette, ultra-light-blue);
+    color: $slate-gray;
+  }
+
+  &__save-changes-button {
+    min-height: 32px;
+    width: 122px;
+    margin-right: 16px;
+    border-radius: 16px;
+    font-size: 14px;
+    font-family: $semibold-font;
+  }
+
+  &__error-message {
+    height: 40px;
+    width: 100%;
+    font-size: 14px;
+    line-height: 24px;
+    background-color: rgba(255, 2, 2, 0.1);
+    color: map-get($color-palette, red100);
+  }
+
+  &__error-message-icon {
+    margin-left: 24px;
+    margin-right: 8px;
+  }
+
+  &__content {
+    margin: 16px 24px;
+  }
+
+  &__field-name {
+    font-family: $semibold-font;
+    font-size: 14px;
+    line-height: 24px;
+    color: map-get($color-palette, black100);
+  }
+
+  &__instructions {
+    margin-bottom: 8px;
+    font-size: 12px;
+    line-height: 24px;
+    color: $slate-gray;
+  }
+
+  &__project-packages {
+    height: 120px;
+    width: 728px;
+    font-size: 14px;
+    line-height: 24px;
+  }
+
+  &__header-mapping {
+    width: 728px;
+  }
+}

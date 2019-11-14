@@ -4,7 +4,6 @@ import { withRouter, RouteComponentProps } from 'react-router-dom';
 
 import { Icons } from '../../../../components';
 import { AGENT_STATUS } from '../../../../common/constants';
-import { RegisterAgentModal } from '../../register-agent-modal';
 import { Agent } from '../../../../types/agent';
 
 import styles from './actions-column.module.scss';
@@ -23,13 +22,11 @@ export const ActionsColumn = withRouter(
       history: { push },
       agent: { id: agentId = '', status, buildVersion },
     }: Props) => {
-      const [isModalOpen, setIsModalOpen] = React.useState(false);
-
       return (
         <div className={className}>
           {status === AGENT_STATUS.NOT_REGISTERED ? (
             <Icons.Register
-              onClick={() => setIsModalOpen(true)}
+              onClick={() => push(`/registration/${agentId}`)}
               data-test="action-column:icons-register"
             />
           ) : (
@@ -45,9 +42,6 @@ export const ActionsColumn = withRouter(
                 data-test="action-column:icons-settings"
               />
             </>
-          )}
-          {isModalOpen && (
-            <RegisterAgentModal isOpen={isModalOpen} onToggle={setIsModalOpen} agentId={agentId} />
           )}
         </div>
       );
