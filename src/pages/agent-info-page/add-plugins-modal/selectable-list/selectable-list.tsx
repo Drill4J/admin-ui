@@ -23,12 +23,12 @@ export const SelectableList = selectableList(
         {data.map((element) => (
           <Element key={element[idKey]}>
             <Inputs.Checkbox
-              onClick={() => {
+              onChange={() => {
                 selectedRows.includes(element[idKey])
                   ? onSelect(selectedRows.filter((selectedItem) => selectedItem !== element[idKey]))
                   : onSelect([...selectedRows, element[idKey]]);
               }}
-              selected={selectedRows.includes(element[idKey])}
+              checked={selectedRows.includes(element[idKey])}
             />
             <div>
               <PluginName>{element.name}</PluginName>

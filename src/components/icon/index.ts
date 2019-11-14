@@ -40,6 +40,7 @@ import { path as totalPath } from './path/total.path';
 import { path as manageSessionsPath } from './path/manage-sessions.path';
 import { path as startPath } from './path/start.path';
 import { path as infoPath } from './path/info.path';
+import { path as testToCodeMappingPath } from './path/test-to-code-mapping.path';
 import { declareIcon } from './declare-icon';
 import { ReactComponent as SettingsSvg } from './settings.svg';
 
@@ -86,5 +87,10 @@ export const Icons = {
   ManageSessions: declareIcon(manageSessionsPath, { defaultWidth: 17, defaultHeight: 19 }),
   Start: declareIcon(startPath, { defaultWidth: 18, defaultHeight: 18 }),
   Info: declareIcon(infoPath, { viewBox: '0 0 20 20' }),
+  TestToCodeMapping: declareIcon(testToCodeMappingPath, {
+    defaultWidth: 48,
+    defaultHeight: 48,
+    viewBox: '0 0 32 32',
+  }),
   NewSettings: SettingsSvg,
 };

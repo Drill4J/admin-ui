@@ -6,3 +6,5 @@ export { getTimeDifference } from './get-time-difference';
 export { kebabToPascalCase } from './kebab-to-pascal-case';
 export { dateFormatter } from './date-formatter';
 export { camelToSpaces } from './camel-to-spaces';
+export { parsePackges } from './parse-packges';
+export { formatPackages } from './format-packages';

@@ -69,8 +69,8 @@ export const FinishScopeModal = withRouter(
               <ScopeSummary scope={scope} testsCount={testsCount} />
               <IgnoreScope>
                 <Inputs.Checkbox
-                  selected={ignoreScope}
-                  onClick={() => setIgnoreScope(!ignoreScope)}
+                  checked={ignoreScope}
+                  onChange={() => setIgnoreScope(!ignoreScope)}
                   label="Ignore scope in build stats"
                   withoutMargin
                   disabled={!Boolean(testsCount)}
