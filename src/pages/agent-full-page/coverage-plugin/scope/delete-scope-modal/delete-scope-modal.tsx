@@ -35,7 +35,7 @@ export const DeleteScopeModal = withRouter(
 
       const { params: { scopeId = '' } = {} } =
         matchPath<{ scopeId: string }>(pathname, {
-          path: '/:page/:agentId/:pluginId/:tab/:scopeId',
+          path: '/:page/:agentId/:buildVersion/:pluginId/:tab/:scopeId',
         }) || {};
 
       return (
