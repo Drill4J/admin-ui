@@ -1,0 +1,56 @@
+@import '../../../common/style-guide/index';
+
+.general-registration-settings-form {
+  &__info-panel {
+    height: 48px;
+    padding: 0 24px;
+    font-size: 14px;
+    line-height: 24px;
+    background-color: map-get($color-palette, ultra-light-blue);
+    color: $slate-gray;
+  }
+
+  &__error-message {
+    height: 40px;
+    width: 100%;
+    font-size: 14px;
+    line-height: 24px;
+    background-color: rgba(255, 2, 2, 0.1);
+    color: map-get($color-palette, red100);
+  }
+
+  &__error-message-icon {
+    margin-left: 24px;
+    margin-right: 8px;
+  }
+
+  &__content {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-column-gap: 24px;
+    margin: 16px 24px 0 24px;
+  }
+
+  &__copy-button {
+    color: map-get($color-palette, blue100);
+    cursor: pointer;
+  }
+
+  &__register-agent-button {
+    min-height: 32px;
+    width: 164px;
+    font-family: $semibold-font;
+    font-size: 14px;
+    line-height: 19px;
+  }
+
+  &__agent-name {
+    grid-column-start: 1;
+    grid-column-end: 3;
+  }
+
+  &__description {
+    grid-column-start: 1;
+    grid-column-end: 3;
+  }
+}

@@ -6,6 +6,10 @@
   display: flex;
   align-items: center;
 
+  &__input {
+    display: none;
+  }
+
   &__icon-wrapper {
     display: flex;
     align-items: center;
@@ -19,7 +23,7 @@
     color: map-get($color-palette, dark-blue);
   }
 
-  &--selected {
+  &--checked {
     color: map-get($color-palette, blue100);
   }
 

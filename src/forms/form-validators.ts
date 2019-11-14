@@ -1,8 +1,8 @@
 import { camelToSpaces } from '../utils';
 
-type FormValidationResult = { [key: string]: FormValidationResult | string } | void;
+type FormValidationResult = { [key: string]: string } | undefined;
 type FormValidator = (formValues: {
-  [key: string]: string | null | undefined;
+  [key: string]: string | string[] | null | undefined;
 }) => FormValidationResult;
 
 export function composeValidators(...validators: FormValidator[]): FormValidator {
@@ -11,7 +11,7 @@ export function composeValidators(...validators: FormValidator[]): FormValidator
 
 export function required(fieldName: string): FormValidator {
   return ({ [fieldName]: value = '' }) =>
-    !value || !value.trim()
+    !value || (typeof value === 'string' && !value.trim())
       ? {
           [fieldName]: `${camelToSpaces(fieldName)} is required.`,
         }
@@ -19,8 +19,8 @@ export function required(fieldName: string): FormValidator {
 }
 
 export function requiredArray(fieldName: string) {
-  return ({ [fieldName]: value = [] }: { [key: string]: string[] | null | undefined }) =>
-    !value || value.filter(Boolean).length === 0
+  return ({ [fieldName]: value = [] }: { [key: string]: string | string[] | null | undefined }) =>
+    !value || (typeof value === 'object' && value.filter(Boolean).length === 0)
       ? {
           [fieldName]: `${camelToSpaces(fieldName)} is required.`,
         }
@@ -29,7 +29,8 @@ export function requiredArray(fieldName: string) {
 
 export function sizeLimit(fieldName: string, min: number = 3, max: number = 32): FormValidator {
   return ({ [fieldName]: value = '' }) =>
-    (value && value.trim().length < min) || (value && value.trim().length > max)
+    (value && typeof value === 'string' && value.trim().length < min) ||
+    (value && typeof value === 'string' && value.trim().length > max)
       ? {
           [fieldName]: `${camelToSpaces(
             fieldName,
