@@ -1,6 +1,8 @@
 import * as React from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 
+import { OverflowText } from '../../../../../../components';
+
 import styles from './item-info.module.scss';
 
 interface Props {
@@ -19,19 +21,19 @@ export const ItemInfo = itemInfo(({ className, packageName, testClassName, metho
       {packageName && (
         <ItemWrapper>
           <Label>Package</Label>
-          <Value>{packageName}</Value>
+          <Value title={packageName}>{packageName}</Value>
         </ItemWrapper>
       )}
       {testClassName && (
         <ItemWrapper>
           <Label>Class</Label>
-          <Value>{testClassName}</Value>
+          <Value title={testClassName}>{testClassName}</Value>
         </ItemWrapper>
       )}
       {methodName && (
         <ItemWrapper>
           <Label>Method</Label>
-          <Value>{methodName}</Value>
+          <Value title={methodName}>{methodName}</Value>
         </ItemWrapper>
       )}
     </Content>
@@ -39,6 +41,6 @@ export const ItemInfo = itemInfo(({ className, packageName, testClassName, metho
 ));
 
 const Content = itemInfo.content('div');
-const ItemWrapper = itemInfo.itemWrapper('div');
+const ItemWrapper = itemInfo.itemWrapper(OverflowText);
 const Label = itemInfo.label('div');
 const Value = itemInfo.value('div');
