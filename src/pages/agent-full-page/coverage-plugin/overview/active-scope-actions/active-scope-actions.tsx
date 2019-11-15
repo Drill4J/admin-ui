@@ -35,6 +35,7 @@ export const ActiveScopeActions = withRouter(
             onClick={() =>
               push(`/full-page/${agentId}/${buildVersion}/${pluginId}/scopes/${scope && scope.id}`)
             }
+            data-test="active-scope-actions:scope-details"
           >
             Scope details >
           </ScopeDetails>

@@ -16,7 +16,7 @@ interface FooterLinkProps {
 }
 
 const FooterLink = ({ name, link }: FooterLinkProps) => (
-  <Link href={link} target="_blank" rel="noopener noreferrer">
+  <Link href={link} target="_blank" rel="noopener noreferrer" data-test={`footer:link:${name}`}>
     {name}
   </Link>
 );
@@ -70,5 +70,10 @@ const ContentWrapper = footer.contentWrapper('div');
 const Content = footer.content(Panel);
 const AdminInfo = footer.adminInfo('span');
 const Link = footer.link(
-  tag('a')({ href: '', rel: '', target: '' } as { href: string; rel: string; target: string }),
+  tag('a')({ href: '', rel: '', target: '', 'data-test': '' } as {
+    href: string;
+    rel: string;
+    target: string;
+    'data-test': string;
+  }),
 );

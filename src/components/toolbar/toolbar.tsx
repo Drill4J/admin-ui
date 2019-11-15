@@ -19,7 +19,7 @@ export const Toolbar = toolbar(({ className, children, breadcrumbs }: Props) => 
       <BreadcrumbsWrapper>{breadcrumbs}</BreadcrumbsWrapper>
       <UserInfo>
         <Divider />
-        <AccountIcon /> Guest
+        <AccountIcon data-test="toolbar:account-icon" /> Guest
       </UserInfo>
     </Content>
   </div>

@@ -18,7 +18,7 @@ export const PageHeader = pageHeader(
     <div className={className}>
       <Content>
         <Title>{title}</Title>
-        <AgentsCount>{itemsCount}</AgentsCount>
+        <AgentsCount data-test="page-header:agents-count">{itemsCount}</AgentsCount>
         <ItemsActions>{itemsActions}</ItemsActions>
         <Actions>{actions}</Actions>
       </Content>

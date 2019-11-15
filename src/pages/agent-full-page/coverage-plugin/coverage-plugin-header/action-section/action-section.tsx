@@ -1,8 +1,10 @@
 import * as React from 'react';
 import { BEM, span } from '@redneckz/react-bem-helper';
 
-import styles from './action-section.module.scss';
 import { Icons } from '../../../../../components';
+import { toLowerCaseWithoutSpaces } from '../../../../../utils';
+
+import styles from './action-section.module.scss';
 
 interface Props {
   className?: string;
@@ -15,7 +17,7 @@ interface Props {
 const actionSection = BEM(styles);
 
 export const ActionSection = actionSection(
-  ({ className, label, count = 0, onClick, type }: Props) => {
+  ({ className, label = '', count = 0, onClick, type }: Props) => {
     return (
       <div className={className}>
         <Action>
@@ -24,7 +26,7 @@ export const ActionSection = actionSection(
             onClick={onClick}
             type={count ? type : ''}
             clickable={Boolean(count)}
-            data-test={`action-section:count:${label}`}
+            data-test={`action-section:count:${toLowerCaseWithoutSpaces(label)}`}
           >
             {`${count} `}
             {count > 0 && type === 'error' && <Icons.Warning />}

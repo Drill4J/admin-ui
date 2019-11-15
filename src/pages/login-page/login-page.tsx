@@ -48,12 +48,16 @@ export const LoginPage = withRouter(
           <SignInForm>
             <Inputs.Text placeholder="User ID" disabled rounded icon={<Icons.Account />} />
             <Inputs.Text placeholder="Password" disabled rounded icon={<Icons.Lock />} />
-            <SignInButton disabled type="primary">
+            <SignInButton disabled type="primary" data-test="login-page:sign-in-button">
               Sign in <Icons.Arrow />
             </SignInButton>
           </SignInForm>
           <ForgotPasswordLink>Forgot your password?</ForgotPasswordLink>
-          <Button type="secondary" onClick={handleLogin}>
+          <Button
+            type="secondary"
+            onClick={handleLogin}
+            data-test="login-page:button-continue-as-a-guest"
+          >
             Continue as a guest (read only)
           </Button>
           <Copyright>{`© ${new Date().getFullYear()} Drill4J. All rights reserved.`}</Copyright>

@@ -44,7 +44,7 @@ export const ScopesList = withRouter(
         <Content>
           <Title>
             <span>Scopes</span>
-            <ScopesCount>{scopesData.length}</ScopesCount>
+            <ScopesCount data-test="scopes-list:scopes-count">{scopesData.length}</ScopesCount>
           </Title>
           <Table data={scopesData as any} idKey="name" columnsSize="wide">
             <Column
@@ -55,7 +55,6 @@ export const ScopesList = withRouter(
                   onClick={() =>
                     push(`/full-page/${agentId}/${buildVersion}/test-to-code-mapping/scopes/${id}`)
                   }
-                  data-test="scopes-list:scope-name"
                 >
                   {value}
                   {active && <ActiveBadge>Active</ActiveBadge>}

@@ -22,10 +22,10 @@ export const LayoutSwitch = layoutSwitch(
     return (
       <div className={className}>
         <LeftItem active={isLeftActive} onClick={onLeftClick}>
-          <Icons.GridLayout />
+          <Icons.GridLayout data-test="layout-switch:icons:grid-layout" />
         </LeftItem>
         <RightItem active={!isLeftActive} onClick={onRightClick}>
-          <Icons.ListLayout />
+          <Icons.ListLayout data-test="layout-switch:icons:list-layout" />
         </RightItem>
       </div>
     );

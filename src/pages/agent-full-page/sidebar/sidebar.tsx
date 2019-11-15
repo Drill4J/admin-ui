@@ -43,6 +43,7 @@ export const Sidebar = withRouter(
                 onClick={() =>
                   push(`/${computed ? `full-page/${agentId}/${buildVersion}/${link}` : link}`)
                 }
+                data-test={`sidebar:sidebar-link:${link}`}
               >
                 <Icon />
               </SidebarLink>
@@ -54,9 +55,10 @@ export const Sidebar = withRouter(
 );
 
 export const SidebarLink = sidebar.link(
-  div({ active: undefined, onClick: () => {}, long: undefined } as {
+  div({ active: undefined, onClick: () => {}, long: undefined, 'data-test': '' } as {
     active?: boolean;
     onClick: () => void;
     long?: boolean;
+    'data-test'?: string;
   }),
 );

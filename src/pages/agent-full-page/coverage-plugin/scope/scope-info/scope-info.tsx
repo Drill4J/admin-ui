@@ -90,6 +90,7 @@ export const ScopeInfo = withRouter(
       <div className={className}>
         <BackToScopesList
           onClick={() => push(`/full-page/${agentId}/${buildVersion}/test-to-code-mapping/scopes`)}
+          data-test="scope-info:back-to-scopes-list"
         >
           &lt; Scopes list
         </BackToScopesList>
@@ -109,6 +110,7 @@ export const ScopeInfo = withRouter(
                 type="secondary"
                 onClick={() => dispatch(openModal('FinishScopeModal', scope))}
                 disabled={!active}
+                data-test="scope-info:finish-scope-button"
               >
                 <Icons.Check height={12} width={16} />
                 {` Finish scope`}
@@ -121,6 +123,7 @@ export const ScopeInfo = withRouter(
           header="Scope Code Coverage"
           coverage={coverage}
           showRecording={active}
+          testContext={name}
         />
         <ProjectMethods methods={scopeMethods} />
         <RoutingTabsPanel>

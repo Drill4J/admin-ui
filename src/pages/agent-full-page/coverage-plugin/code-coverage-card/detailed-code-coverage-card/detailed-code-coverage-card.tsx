@@ -15,6 +15,7 @@ interface Props {
   additionalInfo?: React.ReactNode;
   header?: React.ReactNode;
   showRecording?: boolean;
+  testContext?: string;
 }
 
 const detailedCodeCoverageCard = BEM(styles);
@@ -26,13 +27,14 @@ export const DetailedCodeCoverageCard = detailedCodeCoverageCard(
     additionalInfo,
     header,
     showRecording,
+    testContext,
   }: Props) => (
     <div className={className}>
       <Header>{header}</Header>
       <Content>
         <TotalCoverageWrapper>
           <TotalCoverage>
-            <Panel>
+            <Panel data-test={`detailed-code-coverage-card:panel:${testContext}`}>
               {`${percentFormatter(coverage)}%`}
               {arrow && <ArrowIcon rotate={arrow === 'INCREASE' ? 180 : 0} type={arrow} />}
             </Panel>

@@ -62,7 +62,10 @@ export const AgentFullPage = withRouter(
                 <Toolbar
                   breadcrumbs={
                     <Panel>
-                      <ArrowBackLabel onClick={() => history.push('/agents')}>
+                      <ArrowBackLabel
+                        onClick={() => history.push('/agents')}
+                        data-test="agent-full-page:arrow-back-label"
+                      >
                         {'<  Back to Admin'}
                       </ArrowBackLabel>
                     </Panel>

@@ -31,6 +31,7 @@ export const Sidebar = withRouter(
               key={link}
               type={link === activeLink ? 'active' : ''}
               onClick={() => push(`/${computedLink ? computedLink : link}`)}
+              data-test={`sidebar:sidebar-link:${link}`}
             >
               <Icon />
             </SidebarLink>
@@ -42,9 +43,10 @@ export const Sidebar = withRouter(
 
 const Logo = sidebar.logo('div');
 export const SidebarLink = sidebar.link(
-  div({ active: undefined, onClick: () => {}, long: undefined } as {
+  div({ active: undefined, onClick: () => {}, long: undefined, 'data-test': '' } as {
     active?: boolean;
     onClick: () => void;
     long?: boolean;
+    'data-test'?: string;
   }),
 );

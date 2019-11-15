@@ -57,14 +57,20 @@ export const CoverageDistribution = coverageDistribution(
                       </RecordingWrapper>
                     )}
                   </Panel>
-                  <TestsCount>{testCount}</TestsCount>
+                  <TestsCount data-test={`coverage-distibution:tests-count:${testType}`}>
+                    {testCount}
+                  </TestsCount>
                 </Panel>
                 <Panel>
                   <Panel>
                     <Icons.Function height={16} width={16} />
                     <ItemName>Methods covered</ItemName>
                   </Panel>
-                  <TestTypeCoverage>({`${percentFormatter(coverage)}%`})</TestTypeCoverage>
+                  <TestTypeCoverage
+                    data-test={`coverage-distibution:test-type-coverage:${testType}`}
+                  >
+                    ({`${percentFormatter(coverage)}%`})
+                  </TestTypeCoverage>
                 </Panel>
               </CoverageItem>
             ),

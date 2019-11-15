@@ -56,7 +56,7 @@ export const Breadcrumbs = withRouter(
                 <Item
                   onClick={() => push(`/full-page/${agentId}/${id}/${pluginId}/dashboard`)}
                   active={pluginId !== 'build-list' && page !== 'scopes' && !scopeId}
-                  data-test={`breadcrumbs:build`}
+                  data-test="breadcrumbs:build"
                 >{`Build ${name || id}: ${camelToTitle(kebabToPascalCase(pluginId))}`}</Item>
               </>
             )}

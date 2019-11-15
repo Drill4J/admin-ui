@@ -2,6 +2,7 @@ import * as React from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 
 import { Icons } from '../icon';
+import { toLowerCaseWithoutSpaces } from '../../utils';
 
 import styles from './menu.module.scss';
 
@@ -29,13 +30,17 @@ export const Menu = menu(({ className, items }: Props) => {
   }, []);
   return (
     <div className={className} ref={node}>
-      <MenuIcon onClick={() => setIsListOpened(!isListOpened)} />
+      <MenuIcon onClick={() => setIsListOpened(!isListOpened)} data-test="menu:menu-icon" />
       {isListOpened && (
         <ItemsList>
           {items.map(({ icon, label, onClick }, index) => {
             const ItemIcon = Icons[icon];
             return (
-              <Item onClick={onClick} key={index}>
+              <Item
+                onClick={onClick}
+                key={index}
+                data-test={`menu:item:${toLowerCaseWithoutSpaces(label)}`}
+              >
                 <ItemIcon />
                 <ItemLabel>{label}</ItemLabel>
               </Item>
