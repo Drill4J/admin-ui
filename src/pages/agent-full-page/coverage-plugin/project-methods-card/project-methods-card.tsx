@@ -83,7 +83,7 @@ export const ProjectMethodsCard = projectMethodsCard(
             additionalInfo={
               <DeletedMethodsAdditionalInfo>
                 {`${deletedCoveredMethodsCount} of ${deletedMethods.totalCount ||
-                  0} deleted methods were covered in previous`}
+                  0} deleted methods were covered in previous build.`}
               </DeletedMethodsAdditionalInfo>
             }
           />
