@@ -10,7 +10,7 @@ interface Props {
   className?: string;
   title: string;
   methodsInfo?: MethodsInfo;
-  hideAdditionalInfo?: boolean;
+  additionalInfo?: React.ReactNode;
 }
 
 const methodsSection = BEM(styles);
@@ -20,7 +20,7 @@ export const MethodsSection = methodsSection(
     className,
     title,
     methodsInfo: { totalCount = 0, coveredCount = 0, methods } = {},
-    hideAdditionalInfo,
+    additionalInfo,
   }: Props) => {
     const [isModalOpen, setIsModalOpen] = React.useState(false);
 
@@ -34,7 +34,7 @@ export const MethodsSection = methodsSection(
           {totalCount}
         </Total>
         <AdditionalInfo>
-          {!hideAdditionalInfo && (
+          {!additionalInfo ? (
             <>
               <AdditionalInfoItem>
                 <AdditionalInfoItemHeader>Covered</AdditionalInfoItemHeader>
@@ -61,6 +61,8 @@ export const MethodsSection = methodsSection(
                 </AdditionalInfoItemValue>
               </AdditionalInfoItem>
             </>
+          ) : (
+            additionalInfo
           )}
         </AdditionalInfo>
         {isModalOpen && (

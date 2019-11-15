@@ -25,6 +25,7 @@ export const ProjectMethodsCard = projectMethodsCard(
       totalMethods = {},
       newMethods = {},
       deletedMethods = {},
+      deletedCoveredMethodsCount = 0,
       modifiedBodyMethods = {},
       modifiedDescMethods = {},
       modifiedNameMethods = {},
@@ -76,7 +77,16 @@ export const ProjectMethodsCard = projectMethodsCard(
             </CardHeader>
           }
         >
-          <MethodsSection title="DELETED" methodsInfo={deletedMethods} />
+          <MethodsSection
+            title="DELETED"
+            methodsInfo={deletedMethods}
+            additionalInfo={
+              <DeletedMethodsAdditionalInfo>
+                {`${deletedCoveredMethodsCount} of ${deletedMethods.totalCount ||
+                  0} deleted methods were covered in previous`}
+              </DeletedMethodsAdditionalInfo>
+            }
+          />
         </Card>
       </div>
     );
@@ -84,3 +94,4 @@ export const ProjectMethodsCard = projectMethodsCard(
 );
 
 const CardHeader = projectMethodsCard.cardHeader(Panel);
+const DeletedMethodsAdditionalInfo = projectMethodsCard.deletedMethodsAdditionalInfo('span');
