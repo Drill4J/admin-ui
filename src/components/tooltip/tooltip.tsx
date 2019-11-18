@@ -34,7 +34,7 @@ export const Tooltip = tooltip(({ className, position = 'top', message, children
       <div onMouseOverCapture={toggle} onMouseOut={toggle} ref={node}>
         {children}
       </div>
-      {isVisible && (
+      {isVisible && message && (
         <Message style={style} position={position}>
           {message}
         </Message>

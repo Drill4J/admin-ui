@@ -1,12 +1,14 @@
 import * as React from 'react';
 
-import { Panel } from '../../../../../layouts';
-import { Tooltip } from '../../../../../components';
-import { useBuildVersion } from '../../../coverage-plugin/use-build-version';
-import { SingleBar } from '../../single-bar';
-import { Section } from '../section';
-import { TestsTooltip } from './tests-tooltip';
-import { Coverage } from '../../../../../types/coverage';
+import { Panel } from '../../../../layouts';
+import { Tooltip } from '../../../../components';
+import { TEST_TYPES_COLOR } from '../../../../common/constants';
+import { useBuildVersion } from '../../coverage-plugin/use-build-version';
+import { SingleBar } from '../single-bar';
+import { Section } from './section';
+import { Coverage } from '../../../../types/coverage';
+import { SectionTooltip } from './section-tooltip';
+import { TestTypes } from '../../../../types/test-types';
 
 export const TestsSection = () => {
   const { coverageByType = {}, scopesCount = 0 } =
@@ -15,6 +17,17 @@ export const TestsSection = () => {
     (acc, { testCount }) => acc + testCount,
     0,
   );
+  const tooltipData = Object.keys(coverageByType).reduce(
+    (acc, testType) => ({
+      ...acc,
+      [testType.toLowerCase()]: {
+        value: coverageByType[testType].coverage,
+        count: coverageByType[testType].testCount,
+        color: TEST_TYPES_COLOR[testType as TestTypes],
+      },
+    }),
+    {},
+  );
 
   return (
     <Section
@@ -22,12 +35,12 @@ export const TestsSection = () => {
       info={totalCoveredMethodCount}
       additionalInfo={`${scopesCount} scopes`}
       graph={
-        <Tooltip message={<TestsTooltip coverageByType={coverageByType} />}>
+        <Tooltip message={totalCoveredMethodCount > 0 && <SectionTooltip data={tooltipData} />}>
           <Panel>
             <SingleBar
-              width={64}
+              width={48}
               height={128}
-              color="#9600FF"
+              color={TEST_TYPES_COLOR.AUTO}
               percent={
                 (coverageByType.AUTO && coverageByType.AUTO.testCount / totalCoveredMethodCount) *
                 100
@@ -35,9 +48,9 @@ export const TestsSection = () => {
               icon="Auto"
             />
             <SingleBar
-              width={64}
+              width={48}
               height={128}
-              color="#00D5FF"
+              color={TEST_TYPES_COLOR.MANUAL}
               percent={
                 (coverageByType.MANUAL &&
                   coverageByType.MANUAL.testCount / totalCoveredMethodCount) * 100
@@ -45,9 +58,9 @@ export const TestsSection = () => {
               icon="Manual"
             />
             <SingleBar
-              width={64}
+              width={48}
               height={128}
-              color="#E78E00"
+              color={TEST_TYPES_COLOR.PERFORMANCE}
               percent={
                 (coverageByType.PERFORMANCE &&
                   coverageByType.PERFORMANCE.testCount / totalCoveredMethodCount) * 100
