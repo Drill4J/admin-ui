@@ -24,8 +24,12 @@ const deleteScopeModal = BEM(styles);
 
 export const DeleteScopeModal = withRouter(
   deleteScopeModal(
-    ({ className, isOpen, onToggle, scope, location: { pathname }, history }: Props) => {
-      const { agentId } = usePluginState();
+    ({ className, isOpen, onToggle, scope, location: { pathname }, history: { push } }: Props) => {
+      const {
+        agentId,
+        pluginId,
+        buildVersion: { id: buildVersion },
+      } = usePluginState();
       const { showMessage } = React.useContext(NotificationManagerContext);
       const [errorMessage, setErrorMessage] = React.useState('');
 
@@ -72,7 +76,8 @@ export const DeleteScopeModal = withRouter(
                       onSuccess: () => {
                         showMessage({ type: 'SUCCESS', text: 'Scope has been deleted' });
                         onToggle(false);
-                        scopeId && history.goBack();
+                        scopeId &&
+                          push(`/full-page/${agentId}/${buildVersion}/${pluginId}/dashboard`);
                       },
                       onError: setErrorMessage,
                     })(scope as ScopeSummary);
