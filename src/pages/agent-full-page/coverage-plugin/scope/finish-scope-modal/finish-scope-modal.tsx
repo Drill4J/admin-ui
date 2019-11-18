@@ -25,9 +25,13 @@ const finishScopeModal = BEM(styles);
 
 export const FinishScopeModal = withRouter(
   finishScopeModal(
-    ({ className, isOpen, onToggle, scope, history, location: { pathname } }: Props) => {
+    ({ className, isOpen, onToggle, scope, history: { push }, location: { pathname } }: Props) => {
       const { showMessage } = React.useContext(NotificationManagerContext);
-      const { agentId } = usePluginState();
+      const {
+        agentId,
+        pluginId,
+        buildVersion: { id: buildVersion },
+      } = usePluginState();
       const [errorMessage, setErrorMessage] = React.useState('');
       const [ignoreScope, setIgnoreScope] = React.useState(false);
 
@@ -83,7 +87,9 @@ export const FinishScopeModal = withRouter(
                       },
                       onError: setErrorMessage,
                     })({ prevScopeEnabled: !ignoreScope, savePrevScope: true });
-                    !testsCount && scopeId && history.goBack();
+                    !testsCount &&
+                      scopeId &&
+                      push(`/full-page/${agentId}/${buildVersion}/${pluginId}/dashboard`);
                   }}
                 >
                   {testsCount ? 'Finish Scope' : 'Finish and Delete'}
