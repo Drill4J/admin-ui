@@ -6,12 +6,12 @@ import { percentFormatter } from '../../../../../utils';
 import { useBuildVersion } from '../../../coverage-plugin/use-build-version';
 import { SingleBar } from '../../single-bar';
 import { Section } from '../section';
-import { CoverageTooltip } from './coverage-tooltip';
 import { Coverage } from '../../../../../types/coverage';
 import { Icons, Tooltip } from '../../../../../components';
 import { Methods } from '../../../../../types/methods';
 
 import styles from './coverage-section.module.scss';
+import { SectionTooltip } from '../section-tooltip';
 
 const coverageSection = BEM(styles);
 
@@ -22,7 +22,7 @@ export const CoverageSection = coverageSection(({ className }) => {
     previousBuildInfo: { first = '', second = '' } = {},
     arrow = '',
   } = useBuildVersion<Coverage>(`/build/coverage`) || {};
-  const { newMethods = {}, allModified = {}, notModifiedMethods = {} } =
+  const { newMethods = {}, allModified = {}, unaffectedMethods = {} } =
     useBuildVersion<Methods>(`/build/methods`) || {};
 
   return (
@@ -45,8 +45,24 @@ export const CoverageSection = coverageSection(({ className }) => {
         graph={
           <Tooltip
             message={
-              <CoverageTooltip
-                methods={{ newMethods, modifiedMethods: allModified, notModifiedMethods }}
+              <SectionTooltip
+                data={{
+                  new: {
+                    count: newMethods.totalCount,
+                    value: newMethods.coveredCount,
+                    color: '#FA6400',
+                  },
+                  modified: {
+                    count: allModified.totalCount,
+                    value: allModified.coveredCount,
+                    color: '#F7B500',
+                  },
+                  unaffected: {
+                    count: unaffectedMethods.totalCount,
+                    value: unaffectedMethods.coveredCount,
+                    color: '#6DD400',
+                  },
+                }}
               />
             }
           >
@@ -70,8 +86,7 @@ export const CoverageSection = coverageSection(({ className }) => {
                 height={128}
                 color="#6DD400"
                 percent={
-                  (Number(notModifiedMethods.coveredCount) /
-                    Number(notModifiedMethods.totalCount)) *
+                  (Number(unaffectedMethods.coveredCount) / Number(unaffectedMethods.totalCount)) *
                   100
                 }
                 icon={<Icons.Check />}
