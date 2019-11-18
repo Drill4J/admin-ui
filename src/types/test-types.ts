@@ -1,1 +1,1 @@
-export type TestTypes = 'AUTO' | 'MANUAL' | 'PERFORMANCE' | 'INTEGRATION';
+export type TestTypes = 'AUTO' | 'MANUAL' | 'PERFORMANCE';

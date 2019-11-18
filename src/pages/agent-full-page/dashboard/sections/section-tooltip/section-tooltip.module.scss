@@ -1,0 +1,25 @@
+@import '../../../../../common/style-guide/index';
+
+.section-tooltip {
+  display: flex;
+  flex-direction: column;
+
+  &__tooltip-item {
+    display: flex;
+  }
+
+  &__tooltip-item-icon {
+    height: 8px;
+    width: 8px;
+    border-radius: 50%;
+    margin-right: 8px;
+  }
+
+  &__tooltip-item-value {
+    margin-left: 12px;
+    font-family: $semibold-font;
+    line-height: 20px;
+    text-align: right;
+    opacity: 0.5;
+  }
+}
