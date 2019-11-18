@@ -7,7 +7,7 @@ export interface Methods {
   modifiedNameMethods?: MethodsInfo;
   modifiedDescMethods?: MethodsInfo;
   modifiedBodyMethods?: MethodsInfo;
-  notModifiedMethods?: MethodsInfo;
+  unaffectedMethods?: MethodsInfo;
   deletedMethods?: MethodsInfo;
   deletedCoveredMethodsCount?: number;
 }

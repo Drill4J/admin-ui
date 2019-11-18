@@ -35,9 +35,7 @@ export const ActionsColumn = withRouter(
           ) : (
             <>
               <Icons.OpenLive
-                onClick={() =>
-                  push(`/full-page/${agentId}/${buildVersion}/test-to-code-mapping/dashboard`)
-                }
+                onClick={() => push(`/full-page/${agentId}/${buildVersion}/dashboard`)}
                 data-test="action-column:icons-open-live"
               />
               <Icons.Settings
