@@ -19,7 +19,7 @@ export const TestsToRunSection = () => {
   const tooltipData = Object.keys(testsToRun).reduce(
     (acc, testType) => ({
       ...acc,
-      [testType]: {
+      [testType.toLowerCase()]: {
         count: testsToRun[testType].length,
         color: TEST_TYPES_COLOR[testType as TestTypes],
       },

@@ -72,7 +72,7 @@ export const Icons = {
   Check: declareIcon(checkPath, { defaultWidth: 13, defaultHeight: 9 }),
   Register: declareIcon(registerPath, { defaultWidth: 18, defaultHeight: 16 }),
   Copy: declareIcon(copyPath),
-  Dashboard: declareIcon(dashboardPath, { defaultWidth: 20, defaultHeight: 20 }),
+  Dashboard: declareIcon(dashboardPath, { defaultWidth: 31, defaultHeight: 31 }),
   Scope: declareIcon(scopePath, { defaultWidth: 20, defaultHeight: 20 }),
   EyeCrossed: declareIcon(eyeCrossedPath, { defaultWidth: 20, defaultHeight: 20 }),
   Star: declareIcon(starPath, { defaultWidth: 21, defaultHeight: 20 }),
