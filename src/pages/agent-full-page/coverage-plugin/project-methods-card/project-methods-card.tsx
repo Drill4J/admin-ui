@@ -24,7 +24,7 @@ export const ProjectMethodsCard = projectMethodsCard(
       totalMethods = {},
       newMethods = {},
       deletedMethods = {},
-      allModifiedModified = {},
+      allModifiedMethods = {},
       deletedCoveredMethodsCount = 0,
     },
   }: Props) => {
@@ -58,7 +58,7 @@ export const ProjectMethodsCard = projectMethodsCard(
             </CardHeader>
           }
         >
-          <MethodsSection title="MODIFIED" methodsInfo={allModifiedModified} />
+          <MethodsSection title="MODIFIED" methodsInfo={allModifiedMethods} />
         </Card>
         <Card
           header={
