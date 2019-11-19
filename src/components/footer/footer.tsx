@@ -52,7 +52,7 @@ export const Footer = footer(({ className }: Props) => {
         <Content align="space-between">
           <AdminInfo>
             <span>© Drill4J {new Date().getFullYear()}</span>
-            <span>Build {packageJson.version}</span>
+            <span>Build {process.env.REACT_APP_VERSION || packageJson.version}</span>
             <span>All rights reserved.</span>
           </AdminInfo>
           <span>
