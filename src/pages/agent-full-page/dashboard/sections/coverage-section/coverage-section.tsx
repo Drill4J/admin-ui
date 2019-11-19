@@ -22,8 +22,20 @@ export const CoverageSection = coverageSection(({ className }) => {
     previousBuildInfo: { first = '', second = '' } = {},
     arrow = '',
   } = useBuildVersion<Coverage>(`/build/coverage`) || {};
-  const { newMethods = {}, allModified = {}, unaffectedMethods = {} } =
-    useBuildVersion<Methods>(`/build/methods`) || {};
+  const {
+    newMethods: {
+      totalCount: newMethodsTotalCount = 0,
+      coveredCount: newMethodsCoveredCount = 0,
+    } = {},
+    allModified: {
+      totalCount: modifiedMethodsTotalCount = 0,
+      coveredCount: modifiedMethodsCoveredCount = 0,
+    } = {},
+    unaffectedMethods: {
+      totalCount: unaffectedTotalCount = 0,
+      coveredCount: unaffectedCoveredCount = 0,
+    } = {},
+  } = useBuildVersion<Methods>(`/build/methods`) || {};
 
   return (
     <div className={className}>
@@ -48,18 +60,18 @@ export const CoverageSection = coverageSection(({ className }) => {
               <SectionTooltip
                 data={{
                   new: {
-                    count: newMethods.totalCount,
-                    value: newMethods.coveredCount,
+                    count: newMethodsTotalCount,
+                    value: (newMethodsCoveredCount / newMethodsTotalCount) * 100,
                     color: '#FA6400',
                   },
                   modified: {
-                    count: allModified.totalCount,
-                    value: allModified.coveredCount,
+                    count: modifiedMethodsTotalCount,
+                    value: (modifiedMethodsCoveredCount / modifiedMethodsTotalCount) * 100,
                     color: '#F7B500',
                   },
                   unaffected: {
-                    count: unaffectedMethods.totalCount,
-                    value: unaffectedMethods.coveredCount,
+                    count: unaffectedTotalCount,
+                    value: (unaffectedCoveredCount / unaffectedTotalCount) * 100,
                     color: '#6DD400',
                   },
                 }}
@@ -71,24 +83,21 @@ export const CoverageSection = coverageSection(({ className }) => {
                 width={32}
                 height={128}
                 color="#FA6400"
-                percent={(Number(newMethods.coveredCount) / Number(newMethods.totalCount)) * 100}
+                percent={(newMethodsCoveredCount / newMethodsTotalCount) * 100}
                 icon={<Icons.Add />}
               />
               <SingleBar
                 width={32}
                 height={128}
                 color="#F7B500"
-                percent={(Number(allModified.coveredCount) / Number(allModified.totalCount)) * 100}
+                percent={(modifiedMethodsCoveredCount / modifiedMethodsTotalCount) * 100}
                 icon={<Icons.Edit height={16} width={16} viewBox="0 0 16 15" />}
               />
               <SingleBar
                 width={32}
                 height={128}
                 color="#6DD400"
-                percent={
-                  (Number(unaffectedMethods.coveredCount) / Number(unaffectedMethods.totalCount)) *
-                  100
-                }
+                percent={(unaffectedCoveredCount / unaffectedTotalCount) * 100}
                 icon={<Icons.Check />}
               />
             </Panel>
