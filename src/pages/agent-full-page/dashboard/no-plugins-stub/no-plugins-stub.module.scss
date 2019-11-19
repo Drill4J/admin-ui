@@ -3,6 +3,7 @@
 .no-installed-plugins-stub {
   display: flex;
   flex-direction: column;
+  flex-grow: 1;
   justify-content: center;
   align-items: center;
   color: map-get($color-palette, middle-blue);
