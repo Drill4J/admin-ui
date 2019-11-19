@@ -2,6 +2,7 @@ FROM nginx:1.15.8-alpine-perl
 
 # Build args
 ARG ENV
+ARG VERSION
 
 # Install Node and Yarn
 RUN apk update && apk add yarn \
@@ -18,6 +19,7 @@ WORKDIR /usr/src/app
 
 # Define environment
 ENV REACT_APP_ENV "$ENV"
+ENV REACT_APP_VERSION "$VERSION"
 
 # Copy app settings
 COPY package.json yarn.lock .env ./
