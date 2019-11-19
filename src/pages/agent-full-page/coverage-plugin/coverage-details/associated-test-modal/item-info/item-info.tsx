@@ -42,5 +42,5 @@ export const ItemInfo = itemInfo(({ className, packageName, testClassName, metho
 
 const Content = itemInfo.content('div');
 const ItemWrapper = itemInfo.itemWrapper(OverflowText);
-const Label = itemInfo.label('div');
-const Value = itemInfo.value('div');
+const Label = itemInfo.label('span');
+const Value = itemInfo.value('span');
