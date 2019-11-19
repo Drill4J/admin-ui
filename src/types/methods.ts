@@ -3,7 +3,7 @@ import { MethodsInfo } from './methods-info';
 export interface Methods {
   totalMethods?: MethodsInfo;
   newMethods?: MethodsInfo;
-  allModifiedModified?: MethodsInfo;
+  allModifiedMethods?: MethodsInfo;
   modifiedNameMethods?: MethodsInfo;
   modifiedDescMethods?: MethodsInfo;
   modifiedBodyMethods?: MethodsInfo;
