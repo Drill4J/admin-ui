@@ -60,7 +60,7 @@ export const TestsToRunSection = () => {
                 (testsToRun.PERFORMANCE &&
                   testsToRun.PERFORMANCE.length / totalCoveredMethodCount) * 100
               }
-              icon="Manual"
+              icon="Perf"
             />
           </Panel>
         </Tooltip>
