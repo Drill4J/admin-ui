@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 
+import { usePluginState } from '../store';
 import { PluginCard } from './plugin-card';
 import { NoPluginsStub } from './no-plugins-stub';
 import { CoverageSection, TestsSection, RisksSection, TestsToRunSection } from './sections';
@@ -16,7 +17,10 @@ interface Props {
 const dashboard = BEM(styles);
 
 export const Dashboard = dashboard(({ className, agent }: Props) => {
-  const { id: agentId, plugins = [], buildVersion } = agent;
+  const { id: agentId, plugins = [] } = agent;
+  const {
+    buildVersion: { id: buildVersion },
+  } = usePluginState();
 
   return (
     <div className={className}>
