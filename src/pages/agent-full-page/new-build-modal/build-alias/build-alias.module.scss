@@ -1,0 +1,72 @@
+@import '../../../../common/style-guide/index';
+
+.build-alias {
+  height: 100%;
+  width: 100%;
+
+  &__error-message {
+    width: 100%;
+    background-color: rgba(255, 2, 2, 0.1);
+    font-size: 14px;
+    line-height: 40px;
+    color: map-get($color-palette, red100);
+  }
+
+  &__error-message-icon {
+    margin-left: 16px;
+    margin-right: 8px;
+    flex-shrink: 0;
+  }
+
+  &__title {
+    width: 100%;
+    font-size: 14px;
+    line-height: 32px;
+    font-family: $semibold-font;
+  }
+
+  &__form-content {
+    display: flex;
+    align-items: flex-start;
+  }
+
+  &__build-version-alias-field {
+    width: 360px;
+  }
+
+  &__build-version-alias {
+    height: 40px;
+    font-size: 14px;
+    line-height: 40px;
+  }
+
+  &__actions-panel {
+    display: flex;
+    height: 40px;
+    font-size: 14px;
+    line-height: 19px;
+    font-family: $semibold-font;
+  }
+
+  &__icons-wrapper {
+    display: flex;
+    align-items: center;
+    color: map-get($color-palette, blue100);
+    cursor: pointer;
+
+    & > * {
+      margin-left: 16px;
+    }
+
+    &--type {
+      &--save {
+        margin-right: 8px;
+        color: map-get($color-palette, green100);
+      }
+      &--cancel {
+        margin-right: 8px;
+        color: map-get($color-palette, red100);
+      }
+    }
+  }
+}

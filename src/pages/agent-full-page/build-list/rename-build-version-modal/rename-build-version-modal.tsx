@@ -13,7 +13,7 @@ import {
 } from '../../../../forms';
 import { Popup, Icons } from '../../../../components';
 import { NotificationManagerContext } from '../../../../notification-manager';
-import { renameBuildVersion } from './rename-build-version';
+import { renameBuildVersion } from '../../api';
 
 import styles from './rename-build-version-modal.module.scss';
 
@@ -27,7 +27,7 @@ interface Props {
 
 const renameBuildVersionModal = BEM(styles);
 
-const validateScope = composeValidators(required('alias'), sizeLimit('alias', 1, 64));
+const validateAlias = composeValidators(required('alias'), sizeLimit('alias', 1, 64));
 
 export const RenameBuildVersionModal = renameBuildVersionModal(
   ({ className, isOpen, onToggle, agentId, buildVersion }: Props) => {
@@ -59,7 +59,7 @@ export const RenameBuildVersionModal = renameBuildVersionModal(
                 onError: setErrorMessage,
               })(values as any)
             }
-            validate={validateScope as any}
+            validate={validateAlias as any}
             initialValues={buildVersion || {}}
             render={({ handleSubmit }) => (
               <Content>
