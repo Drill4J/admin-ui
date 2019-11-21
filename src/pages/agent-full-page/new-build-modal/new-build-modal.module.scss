@@ -1,0 +1,23 @@
+@import '../../../common/style-guide/index';
+
+.new-build-modal {
+  width: 586px;
+
+  &__content {
+    margin: 24px;
+  }
+
+  &__build-alias {
+    margin-bottom: 16px;
+  }
+
+  &__section {
+    margin-bottom: 24px;
+  }
+
+  &__ok-button {
+    width: 100px;
+    min-height: 32px;
+    font-size: 14px;
+  }
+}

@@ -39,6 +39,7 @@ import { path as clockPath } from './path/clock.path';
 import { path as totalPath } from './path/total.path';
 import { path as manageSessionsPath } from './path/manage-sessions.path';
 import { path as startPath } from './path/start.path';
+import { path as infoPath } from './path/info.path';
 import { declareIcon } from './declare-icon';
 import { ReactComponent as SettingsSvg } from './settings.svg';
 
@@ -84,5 +85,6 @@ export const Icons = {
   Total: declareIcon(totalPath, { defaultWidth: 13, defaultHeight: 16 }),
   ManageSessions: declareIcon(manageSessionsPath, { defaultWidth: 17, defaultHeight: 19 }),
   Start: declareIcon(startPath, { defaultWidth: 18, defaultHeight: 18 }),
+  Info: declareIcon(infoPath, { viewBox: '0 0 20 20' }),
   NewSettings: SettingsSvg,
 };

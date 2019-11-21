@@ -13,6 +13,8 @@ import { Dashboard } from './dashboard';
 import { BuildList } from './build-list';
 import { Sidebar } from './sidebar';
 import { InitialConfigController } from './initial-config-controller';
+import { NewBuildModal } from './new-build-modal';
+import { useNotification } from './use-notification';
 
 import styles from './agent-full-page.module.scss';
 
@@ -53,6 +55,12 @@ export const AgentFullPage = withRouter(
         matchPath<{ activeLink: string }>(pathname, {
           path,
         }) || {};
+      const notification = useNotification() || {};
+      const [isNewBuildModalOpened, setIsNewBuildModalOpened] = React.useState(false);
+      React.useEffect(() => {
+        notification.status === 'UNREAD' && setIsNewBuildModalOpened(true);
+      }, [notification]);
+
       return (
         <PluginProvider>
           <InitialConfigController>
@@ -91,6 +99,13 @@ export const AgentFullPage = withRouter(
                   />
                   <Route path="/full-page/:agentId/build-list" component={BuildList} />
                 </Switch>
+                {isNewBuildModalOpened && (
+                  <NewBuildModal
+                    isOpen={isNewBuildModalOpened}
+                    onToggle={setIsNewBuildModalOpened}
+                    notification={notification}
+                  />
+                )}
               </div>
             </PluginsLayout>
           </InitialConfigController>
