@@ -12,7 +12,7 @@ export function renameBuildVersion(
       });
       onSuccess && onSuccess();
     } catch ({ response: { data: { message } = {} } = {} }) {
-      onError && onError(message);
+      onError && onError(message || 'Internal service error');
     }
   };
 }
