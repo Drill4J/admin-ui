@@ -11,7 +11,7 @@ import { SectionTooltip } from './section-tooltip';
 import { TestTypes } from '../../../../types/test-types';
 
 export const TestsSection = () => {
-  const { coverageByType = {}, scopesCount = 0 } =
+  const { coverageByType = {}, finishedScopesCount = 0 } =
     useBuildVersion<Coverage>(`/build/coverage`) || {};
   const totalCoveredMethodCount = Object.values(coverageByType).reduce(
     (acc, { testCount }) => acc + testCount,
@@ -33,7 +33,7 @@ export const TestsSection = () => {
     <Section
       label="Tests"
       info={totalCoveredMethodCount}
-      additionalInfo={`${scopesCount} scopes`}
+      additionalInfo={`${finishedScopesCount} scopes`}
       graph={
         <Tooltip message={totalCoveredMethodCount > 0 && <SectionTooltip data={tooltipData} />}>
           <Panel>
