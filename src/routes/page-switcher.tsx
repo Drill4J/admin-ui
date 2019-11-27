@@ -9,7 +9,6 @@ import {
   LogsPage,
   SettingsPage,
   NotFoundPage,
-  AgentInfoPage,
   AgentFullPage,
   AgentSettingsPage,
   AgentRegistrationPage,
@@ -43,7 +42,6 @@ export const PageSwitcher = () => {
       >
         <Switch>
           <PrivateRoute exact path="/agents" component={AgentsPage} />
-          <PrivateRoute exact path="/agents/:agentId" component={AgentInfoPage} />
           <PrivateRoute exact path="/agents/:agentId/settings" component={AgentSettingsPage} />
           <PrivateRoute exact path="/plugins" component={PluginsPage} />
           <PrivateRoute exact path="/logs" component={LogsPage} />

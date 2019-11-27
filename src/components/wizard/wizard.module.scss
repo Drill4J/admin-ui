@@ -10,7 +10,7 @@
     font-family: $light-font;
     font-size: 20px;
     line-height: 32px;
-    color: $gravel-color;
+    color: map-get($color-palette, black100);
   }
 
   &__previous-button {
@@ -20,6 +20,7 @@
     min-height: 32px;
     width: 90px;
     margin-right: 16px;
+    font-family: $semibold-font;
     font-size: 14px;
 
     & > :not(:last-child) {
@@ -33,6 +34,7 @@
     justify-content: center;
     min-height: 32px;
     width: 116px;
+    font-family: $semibold-font;
     font-size: 14px;
 
     & > :not(:last-child) {
@@ -46,6 +48,7 @@
     justify-content: center;
     min-height: 32px;
     width: 176px;
+    font-family: $semibold-font;
     font-size: 14px;
 
     & > :not(:last-child) {

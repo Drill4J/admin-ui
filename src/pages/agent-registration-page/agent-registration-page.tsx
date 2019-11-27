@@ -72,7 +72,7 @@ export const AgentRegistrationPage = withRouter(
                 sizeLimit('sessionIdHeaderName', 1, 256),
               )}
             />
-            <Step name="InstallPluginsStep" component={InstallPluginsStep} />
+            <Step name="Plugins" component={InstallPluginsStep} />
           </Wizard>
           {isCancelModalOpened && (
             <CancelAgentRegistrationModal
