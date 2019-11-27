@@ -1,14 +1,15 @@
 import * as React from 'react';
-import { BEM } from '@redneckz/react-bem-helper';
+import { BEM, div } from '@redneckz/react-bem-helper';
 import { Field, Form } from 'react-final-form';
 import axios from 'axios';
 
 import { Panel } from '../../../layouts';
-import { Icons } from '../../../components';
-import { Fields, requiredArray, Button } from '../../../forms';
+import { Icons, Tooltip } from '../../../components';
+import { Fields, requiredArray, Button, FormGroup } from '../../../forms';
 import { Agent } from '../../../types/agent';
 import { Message } from '../../../types/message';
 import { parsePackges, formatPackages } from '../../../utils';
+import { UnlockingSystemSettingsFormModal } from './unlocking-system-settings-form-modal';
 
 import styles from './system-settings-form.module.scss';
 
@@ -23,14 +24,19 @@ const systemSettingsForm = BEM(styles);
 const validateSettings = requiredArray('packagesPrefixes');
 
 export const SystemSettingsForm = systemSettingsForm(
-  ({ className, agent: { id, packagesPrefixes = [] }, showMessage }: Props) => {
+  ({
+    className,
+    agent: { id, packagesPrefixes = [], sessionIdHeaderName },
+    showMessage,
+  }: Props) => {
     const [errorMessage, setErrorMessage] = React.useState('');
-
+    const [unlocked, setUnlocked] = React.useState(false);
+    const [isUnlockingModalOpened, setIsUnlockingModalOpened] = React.useState(false);
     return (
       <div className={className}>
         <Form
           onSubmit={(values) => saveChanges(values, showMessage, setErrorMessage)}
-          initialValues={{ id, packagesPrefixes }}
+          initialValues={{ id, packagesPrefixes, sessionIdHeaderName }}
           validate={validateSettings as any}
           render={({
             handleSubmit,
@@ -46,7 +52,7 @@ export const SystemSettingsForm = systemSettingsForm(
             <>
               <InfoPanel align="space-between">
                 <Panel>
-                  <Icons.Warning />
+                  <Icons.Info />
                   &nbsp;Information related to your application / project
                 </Panel>
                 <SaveChangesButton
@@ -65,20 +71,60 @@ export const SystemSettingsForm = systemSettingsForm(
                 </ErrorMessage>
               )}
               <Content>
-                <div>
-                  <FieldName>Project Package(s)</FieldName>
-                  <Instruction>
-                    Make sure you add application packages only, otherwise agent's performance will
-                    be affected. Use new line as a separator.
-                  </Instruction>
-                </div>
-                <Field
-                  name="packagesPrefixes"
-                  component={ProjectPackages}
-                  parse={parsePackges}
-                  format={formatPackages}
-                  placeholder="Package name 1&#10;Package name 2&#10;Package name 3&#10;and so on."
-                />
+                <FieldName>
+                  Project Package(s)
+                  <BlockerStatus
+                    unlocked={unlocked}
+                    onClick={() => {
+                      unlocked ? setUnlocked(false) : setIsUnlockingModalOpened(true);
+                    }}
+                  >
+                    {unlocked ? (
+                      <Icons.Unlocked />
+                    ) : (
+                      <Tooltip
+                        message={
+                          <SecuredMessage direction="column">
+                            <span>Secured from editing.</span>
+                            <span> Click to unlock.</span>
+                          </SecuredMessage>
+                        }
+                      >
+                        <Icons.Locked />
+                      </Tooltip>
+                    )}
+                  </BlockerStatus>
+                </FieldName>
+                <Panel verticalAlign="start">
+                  <Field
+                    name="packagesPrefixes"
+                    component={ProjectPackages}
+                    parse={parsePackges}
+                    format={formatPackages}
+                    placeholder="Package name 1&#10;Package name 2&#10;Package name 3&#10;and so on."
+                    disabled={!unlocked}
+                  />
+                  {unlocked && (
+                    <Instruction>
+                      Make sure you add application packages only, otherwise agent's performance
+                      will be affected. Use new line as a separator.
+                    </Instruction>
+                  )}
+                </Panel>
+                <HeaderMapping label="Header Mapping" optional>
+                  <Field
+                    name="sessionIdHeaderName"
+                    component={Fields.Input}
+                    placeholder="Enter session header name"
+                  />
+                </HeaderMapping>
+                {isUnlockingModalOpened && (
+                  <UnlockingSystemSettingsFormModal
+                    isOpen={isUnlockingModalOpened}
+                    onToggle={setIsUnlockingModalOpened}
+                    setUnlocked={setUnlocked}
+                  />
+                )}
               </Content>
             </>
           )}
@@ -93,22 +139,28 @@ const SaveChangesButton = systemSettingsForm.saveChangesButton(Button);
 const ErrorMessage = systemSettingsForm.errorMessage(Panel);
 const ErrorMessageIcon = systemSettingsForm.errorMessageIcon(Icons.Warning);
 const Content = systemSettingsForm.content('div');
-const FieldName = systemSettingsForm.fieldName('div');
+const FieldName = systemSettingsForm.fieldName(Panel);
+const BlockerStatus = systemSettingsForm.blockerStatus(
+  div({ onClick: () => {} } as { unlocked: boolean; onClick: () => void }),
+);
+const SecuredMessage = systemSettingsForm.securedMessage(Panel);
 const Instruction = systemSettingsForm.instructions('div');
 const ProjectPackages = systemSettingsForm.projectPackages(Fields.Textarea);
+const HeaderMapping = systemSettingsForm.headerMapping(FormGroup);
 
 async function saveChanges(
-  { id, packagesPrefixes = [] }: Agent,
+  { id, packagesPrefixes = [], sessionIdHeaderName }: Agent,
   showMessage: (message: Message) => void,
   showError: (message: string) => void,
 ) {
   try {
-    await axios.post(`/agents/${id}/set-packages`, {
+    await axios.post(`/agents/${id}/system-settings`, {
       packagesPrefixes: packagesPrefixes.filter(Boolean),
+      sessionIdHeaderName,
     });
     showError('');
     showMessage({ type: 'SUCCESS', text: 'New settings have been saved' });
   } catch ({ response: { data: { message } = {} } = {} }) {
-    showError(message);
+    showError(message || 'Internal service error');
   }
 }

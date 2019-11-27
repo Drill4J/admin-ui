@@ -33,9 +33,10 @@ export const TableView = tableView(
         <Column
           name="name"
           label="Name"
-          Cell={({ value, item: { id, status } }) => (
+          Cell={({ value, item: { id, status, buildVersion } }) => (
             <NameColumn
               agentId={id}
+              buildVersion={buildVersion}
               agentName={value}
               unregistered={status === AGENT_STATUS.NOT_REGISTERED}
             />

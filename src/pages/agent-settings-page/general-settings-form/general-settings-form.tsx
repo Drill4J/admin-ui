@@ -31,7 +31,6 @@ const validateSettings = composeValidators(
 export const GeneralSettingsForm = generalSettingsForm(
   ({ className, agent, showMessage }: Props) => {
     const [errorMessage, setErrorMessage] = React.useState('');
-
     return (
       <div className={className}>
         <Form
@@ -52,8 +51,8 @@ export const GeneralSettingsForm = generalSettingsForm(
             <>
               <InfoPanel align="space-between">
                 <Panel>
-                  <Icons.Warning />
-                  &nbsp;Basic agent settings Information related to your application project
+                  <Icons.Info />
+                  &nbsp;Basic agent settings
                 </Panel>
                 <SaveChangesButton
                   type="primary"
@@ -71,9 +70,6 @@ export const GeneralSettingsForm = generalSettingsForm(
                 </ErrorMessage>
               )}
               <Content>
-                <FormGroup label="Agent name">
-                  <Field name="name" component={Fields.Input} placeholder="Give agent a name" />
-                </FormGroup>
                 <FormGroup label="IP Address">
                   <Field name="ipAddress" component={Fields.Input} disabled />
                 </FormGroup>
@@ -83,15 +79,14 @@ export const GeneralSettingsForm = generalSettingsForm(
                 >
                   <Field name="id" component={Fields.Input} disabled />
                 </FormGroup>
-                <Group label="Group" optional>
+                <FormGroup label="Service Group">
+                  <Field name="serviceGroup" component={Fields.Input} placeholder="n/a" disabled />
+                </FormGroup>
+                <FormGroup label="Agent name">
+                  <Field name="name" component={Fields.Input} placeholder="Give agent a name" />
+                </FormGroup>
+                <FormGroup label="Group" optional>
                   <Field name="group" component={Fields.Input} placeholder="Specify a group" />
-                </Group>
-                <FormGroup label="Header Mapping" optional>
-                  <Field
-                    name="sessionIdHeaderName"
-                    component={Fields.Input}
-                    placeholer="Enter session header name"
-                  />
                 </FormGroup>
                 <Description label="Description">
                   <Field
@@ -114,7 +109,6 @@ const SaveChangesButton = generalSettingsForm.saveChangesButton(Button);
 const ErrorMessage = generalSettingsForm.errorMessage(Panel);
 const ErrorMessageIcon = generalSettingsForm.errorMessageIcon(Icons.Warning);
 const Content = generalSettingsForm.content('div');
-const Group = generalSettingsForm.group(FormGroup);
 const CopyAgentId = generalSettingsForm.copyButton(Icons.Copy);
 const Description = generalSettingsForm.description(FormGroup);
 
