@@ -1,0 +1,16 @@
+@import '../../../../common/style-guide/index';
+
+.plugins-settings-table {
+  display: flex;
+  flex-grow: 1;
+
+  &__name-column {
+    color: map-get($color-palette, blue100);
+    font-family: $semibold-font;
+    cursor: pointer;
+  }
+
+  &__status-column {
+    display: flex;
+  }
+}

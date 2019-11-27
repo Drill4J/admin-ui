@@ -8,14 +8,19 @@ interface Props extends RouteComponentProps {
   className?: string;
   agentName: string;
   agentId: string;
+  buildVersion: string;
   unregistered: boolean;
 }
 
 const nameColumn = BEM(styles);
 
 export const NameColumn = withRouter(
-  nameColumn(({ className, history: { push }, agentId, agentName }: Props) => (
-    <div className={className} onClick={() => push(`/agents/${agentId}`)} data-test="name-column">
+  nameColumn(({ className, history: { push }, agentId, agentName, buildVersion }: Props) => (
+    <div
+      className={className}
+      onClick={() => push(`/full-page/${agentId}/${buildVersion}/dashboard`)}
+      data-test="name-column"
+    >
       {agentName || agentId}
     </div>
   )),

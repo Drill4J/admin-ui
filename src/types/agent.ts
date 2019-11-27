@@ -17,4 +17,5 @@ export interface Agent {
   buildAlias?: string;
   packagesPrefixes?: string[];
   sessionIdHeaderName?: string;
+  serviceGroup?: string;
 }

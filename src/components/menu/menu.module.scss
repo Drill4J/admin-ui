@@ -1,27 +1,29 @@
 @import '../../common/style-guide/index';
 
 .menu {
-  position: relative;
-  display: flex;
-  align-items: center;
   color: map-get($color-palette, black100);
 
   &__menu-icon {
-    width: 15px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    max-height: 32px;
+    max-width: 32px;
     color: map-get($color-palette, blue100);
     cursor: pointer;
   }
 
   &__items-list {
     position: absolute;
-    right: -100%;
-    top: 34px;
+    right: calc(50% - 22px);
+    top: calc(100% + 12px);
     display: flex;
     flex-direction: column;
     padding: 8px 0;
     filter: drop-shadow(0 0 24px rgba(0, 0, 0, 0.15));
     border-radius: 8px;
     background-color: map-get($color-palette, white);
+    color: map-get($color-palette, black100);
     z-index: 50;
 
     &::before {

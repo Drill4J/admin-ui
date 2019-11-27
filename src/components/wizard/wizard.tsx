@@ -56,7 +56,11 @@ export const Wizard = wizard(({ className, children, initialValues, onSubmit }: 
               } `}</StepName>
               <Panel align="end">
                 {currentStepIndex > 0 && (
-                  <PreviousButton type="secondary" onClick={() => dispatch(previousStep())}>
+                  <PreviousButton
+                    type="secondary"
+                    onClick={() => dispatch(previousStep())}
+                    data-test="wizard:previous-button"
+                  >
                     <Icons.Arrow rotate={180} />
                     <span>Back</span>
                   </PreviousButton>
@@ -66,12 +70,17 @@ export const Wizard = wizard(({ className, children, initialValues, onSubmit }: 
                     type="primary"
                     onClick={() => dispatch(nextStep())}
                     disabled={submitting || invalid}
+                    data-test="wizard:continue-button"
                   >
                     <span>Continue</span>
                     <Icons.Arrow />
                   </ContinueButton>
                 ) : (
-                  <FinishRegistrationButton type="primary" onClick={handleSubmit}>
+                  <FinishRegistrationButton
+                    type="primary"
+                    onClick={handleSubmit}
+                    data-test="wizard:finish-registration-button"
+                  >
                     <Icons.Check height={11} width={17} />
                     <span>Finish registration</span>
                   </FinishRegistrationButton>

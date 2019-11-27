@@ -8,12 +8,24 @@
     margin-right: 8px;
   }
 
-  &__unregister-agent-button {
-    min-height: 32px;
-    width: 108px;
-    border-radius: 16px;
+  &__agent-status {
+    margin-top: 8px;
+    margin-left: 16px;
+    line-height: 20px;
+  }
+
+  &__error-message {
+    height: 40px;
+    width: 100%;
+    background-color: rgba(255, 2, 2, 0.1);
     font-size: 14px;
-    font-family: $semibold-font;
+    line-height: 24px;
+    color: map-get($color-palette, red100);
+  }
+
+  &__error-message-icon {
+    margin-left: 24px;
+    margin-right: 8px;
   }
 
   &__tabs-panel {

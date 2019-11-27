@@ -33,26 +33,55 @@
   }
 
   &__content {
-    margin: 16px 24px;
+    margin: 24px 24px;
   }
 
   &__field-name {
+    margin-bottom: 8px;
     color: map-get($color-palette, black100);
     font-family: $semibold-font;
     font-size: 14px;
     line-height: 24px;
   }
 
-  &__instructions {
+  &__blocker-status {
     color: $slate-gray;
+    margin-left: 8px;
+    line-height: 0;
+    cursor: pointer;
+
+    &--unlocked {
+      color: map-get($color-palette, red100);
+    }
+  }
+
+  &__secured-message {
+    font-family: $light-font;
     font-size: 12px;
-    line-height: 24px;
+    line-height: 16px;
   }
 
   &__project-packages {
     height: 120px;
-    width: 728px;
+    max-width: 728px;
     font-size: 14px;
     line-height: 24px;
+
+    &--disabled {
+      background-color: map-get($color-palette, ultra-light-blue);
+      color: $slate-gray;
+    }
+  }
+
+  &__instructions {
+    max-width: 352px;
+    margin-left: 24px;
+    color: $slate-gray;
+    font-size: 12px;
+    line-height: 20px;
+  }
+
+  &__header-mapping {
+    max-width: 728px;
   }
 }
