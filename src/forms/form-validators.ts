@@ -1,4 +1,4 @@
-import { camelToTitle } from '../utils';
+import { camelToSpaces } from '../utils';
 
 type FormValidationResult = { [key: string]: FormValidationResult | string } | void;
 type FormValidator = (formValues: {
@@ -13,7 +13,7 @@ export function required(fieldName: string): FormValidator {
   return ({ [fieldName]: value = '' }) =>
     !value || !value.trim()
       ? {
-          [fieldName]: `${camelToTitle(fieldName)} is required.`,
+          [fieldName]: `${camelToSpaces(fieldName)} is required.`,
         }
       : undefined;
 }
@@ -22,7 +22,7 @@ export function requiredArray(fieldName: string) {
   return ({ [fieldName]: value = [] }: { [key: string]: string[] | null | undefined }) =>
     !value || value.filter(Boolean).length === 0
       ? {
-          [fieldName]: `${camelToTitle(fieldName)} is required.`,
+          [fieldName]: `${camelToSpaces(fieldName)} is required.`,
         }
       : undefined;
 }
@@ -31,7 +31,7 @@ export function sizeLimit(fieldName: string, min: number = 3, max: number = 32):
   return ({ [fieldName]: value = '' }) =>
     (value && value.trim().length < min) || (value && value.trim().length > max)
       ? {
-          [fieldName]: `${camelToTitle(
+          [fieldName]: `${camelToSpaces(
             fieldName,
           )} size should be between ${min} and ${max} characters.`,
         }

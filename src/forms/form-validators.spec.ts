@@ -3,15 +3,15 @@ import { required, sizeLimit, composeValidators } from './form-validators';
 describe('required', () => {
   const validator = required('username');
   it('should return errors if property dosent exist or empty', () => {
-    expect(validator({})).toEqual({ username: 'Username is required.' });
+    expect(validator({})).toEqual({ username: 'username is required.' });
     expect(validator({ username: '      ' })).toEqual({
-      username: 'Username is required.',
+      username: 'username is required.',
     });
     expect(validator({ username: null })).toEqual({
-      username: 'Username is required.',
+      username: 'username is required.',
     });
     expect(validator({ username: undefined })).toEqual({
-      username: 'Username is required.',
+      username: 'username is required.',
     });
   });
 
@@ -24,7 +24,7 @@ describe('sizeLimit', () => {
   const validator = sizeLimit('username');
   it('should return errors if property goes beoynd limits', () => {
     expect(validator({ username: '      ' })).toEqual({
-      username: 'Username size should be between 3 and 32 characters.',
+      username: 'username size should be between 3 and 32 characters.',
     });
   });
 
@@ -45,8 +45,8 @@ describe('composeValidators', () => {
   const composedValidators = composeValidators(validator, secondValidator);
   it('should compose all validators and return errors', () => {
     expect(composedValidators({ username: null, password: '12' })).toEqual({
-      username: 'Username is required.',
-      password: 'Password size should be between 3 and 32 characters.',
+      username: 'username is required.',
+      password: 'password size should be between 3 and 32 characters.',
     });
   });
 
