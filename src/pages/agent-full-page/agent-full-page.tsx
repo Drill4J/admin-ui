@@ -58,8 +58,10 @@ export const AgentFullPage = withRouter(
       const notification = useNotification() || {};
       const [isNewBuildModalOpened, setIsNewBuildModalOpened] = React.useState(false);
       React.useEffect(() => {
-        notification.status === 'UNREAD' && setIsNewBuildModalOpened(true);
-      }, [notification]);
+        if (notification.status === 'UNREAD' && notification.agentId === agentId) {
+          setIsNewBuildModalOpened(true);
+        }
+      }, [notification, agentId]);
 
       return (
         <PluginProvider>
