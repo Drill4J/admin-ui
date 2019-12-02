@@ -59,7 +59,7 @@ export const Icons = {
   Checkbox: declareIcon(checkboxPath, { defaultWidth: 20, defaultHeight: 20 }),
   GridLayout: declareIcon(gridLayoutPath, { defaultWidth: 16, defaultHeight: 16 }),
   ListLayout: declareIcon(listLayoutPath, { defaultWidth: 16, defaultHeight: 14 }),
-  Delete: declareIcon(deletePath, { defaultWidth: 16, defaultHeight: 18 }),
+  Delete: declareIcon(deletePath, { defaultWidth: 16, defaultHeight: 16 }),
   Add: declareIcon(addPath),
   Close: declareIcon(closePath),
   Coverage: declareIcon(coveragePath, { defaultWidth: 32, defaultHeight: 34 }),

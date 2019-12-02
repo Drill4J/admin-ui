@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
-import { Form, Field } from 'react-final-form';
+import { Field, withTypes } from 'react-final-form';
 
 import { Panel } from '../../../../layouts';
 import {
@@ -14,6 +14,7 @@ import {
 import { Popup, Icons } from '../../../../components';
 import { NotificationManagerContext } from '../../../../notification-manager';
 import { renameBuildVersion } from '../../api';
+import { BuildVersion } from '../../../../types/build-version';
 
 import styles from './rename-build-version-modal.module.scss';
 
@@ -22,12 +23,14 @@ interface Props {
   isOpen: boolean;
   onToggle: (value: boolean) => void;
   agentId: string;
-  buildVersion: any;
+  buildVersion: BuildVersion;
 }
 
 const renameBuildVersionModal = BEM(styles);
 
-const validateAlias = composeValidators(required('alias'), sizeLimit('alias', 1, 64));
+const { Form } = withTypes<BuildVersion>();
+
+const validateAlias = composeValidators(required('name'), sizeLimit('name', 1, 64));
 
 export const RenameBuildVersionModal = renameBuildVersionModal(
   ({ className, isOpen, onToggle, agentId, buildVersion }: Props) => {
@@ -57,14 +60,14 @@ export const RenameBuildVersionModal = renameBuildVersionModal(
                   onToggle(false);
                 },
                 onError: setErrorMessage,
-              })(values as any)
+              })(values)
             }
             validate={validateAlias as any}
             initialValues={buildVersion || {}}
             render={({ handleSubmit }) => (
               <Content>
                 <FormGroup label="Build Name">
-                  <Field name="alias" component={Fields.Input} />
+                  <Field name="name" component={Fields.Input} />
                 </FormGroup>
                 <ActionsPanel>
                   <RenameScopeButton type="primary" onClick={handleSubmit as any}>

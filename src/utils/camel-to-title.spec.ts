@@ -14,8 +14,4 @@ describe('camelToTitle', () => {
   it('should return empty string if empty string privoded', () => {
     expect(camelToTitle('')).toBe('');
   });
-
-  it('should return empty string if empty string privoded', () => {
-    expect(camelToTitle('')).toBe('');
-  });
 });

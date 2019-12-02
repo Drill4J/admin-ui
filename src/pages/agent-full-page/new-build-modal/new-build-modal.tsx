@@ -31,7 +31,7 @@ export const NewBuildModal = withRouter(
       notification: {
         id = '',
         agentId = '',
-        additionalInfo: { currentId, prevId, prevAlias, buildDiff, recommendations = [] } = {},
+        additionalInfo: { currentId, prevId, prevAlias, buildDiff = {}, recommendations = [] } = {},
       },
     }: Props) => {
       const [currentAlias, setCurrentAlias] = React.useState('');
@@ -63,7 +63,13 @@ export const NewBuildModal = withRouter(
                 setCurrentAlias={setCurrentAlias}
               />
               <Section>
-                <BuildUpdates buildDiff={buildDiff} />
+                <BuildUpdates
+                  buildDiff={{
+                    new: buildDiff.new,
+                    modified: buildDiff.modified,
+                    deleted: buildDiff.deleted,
+                  }}
+                />
               </Section>
               {recommendations.length > 0 && (
                 <Section>
