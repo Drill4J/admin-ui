@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
-import { Form, Field } from 'react-final-form';
+import { Field, withTypes } from 'react-final-form';
 
 import { Panel } from '../../../../layouts';
 import { Icons } from '../../../../components';
@@ -19,12 +19,17 @@ interface Props {
 
 interface FormValues {
   buildVersion: string;
-  alias: string;
+  buildVersionName: string;
 }
 
 const buildAlias = BEM(styles);
 
-const validateAlias = composeValidators(required('alias'), sizeLimit('alias', 1, 64));
+const { Form } = withTypes<FormValues>();
+
+const validateAlias = composeValidators(
+  required('buildVersionName'),
+  sizeLimit('buildVersionName', 1, 64),
+);
 
 export const BuildAlias = buildAlias(
   ({ className, agentId, currentId, currentAlias, setCurrentAlias }: Props) => {
@@ -42,19 +47,24 @@ export const BuildAlias = buildAlias(
         <Title>Build version name</Title>
         {isEditMode ? (
           <Form
-            initialValues={{ buildVersion: currentId, alias: currentAlias }}
+            initialValues={
+              { buildVersion: currentId, buildVersionName: currentAlias } as FormValues
+            }
             onSubmit={(values) => {
               renameBuildVersion(agentId, {
                 onSuccess: () => setIsEditMode(false),
                 onError: setErrorMessage,
-              })(values as FormValues);
-              setCurrentAlias((values as FormValues).alias);
+              })({
+                id: values.buildVersion,
+                name: values.buildVersionName,
+              });
+              setCurrentAlias((values as FormValues).buildVersionName);
             }}
             validate={validateAlias as any}
             render={({ handleSubmit }) => (
               <FormContent>
                 <Panel direction="column" verticalAlign="start">
-                  <Field name="alias" component={BuildVersionAliasField} />
+                  <Field name="buildVersionName" component={BuildVersionAliasField} />
                 </Panel>
                 <ActionsPanel>
                   <IconsWrapper type="save" onClick={handleSubmit as any}>

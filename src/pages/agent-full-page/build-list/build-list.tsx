@@ -26,7 +26,7 @@ export const BuildList = withRouter(
       useWsConnection<BuildVersion[]>(defaultAdminSocket, `/${agentId}/builds`) || [];
     const dispatch = usePluginDispatch();
     const [isModalOpened, setIsModalOpened] = React.useState(false);
-    const [selectedItem, setSelectedItem] = React.useState({});
+    const [selectedItem, setSelectedItem] = React.useState<BuildVersion>({});
     const node = React.useRef<HTMLDivElement>(null);
     const contentWidth = useElementWidth(node);
     const columnWidth = `${(contentWidth - 48) / 10}px`;
@@ -108,7 +108,7 @@ export const BuildList = withRouter(
               <Column
                 name="actions"
                 HeaderCell={() => null}
-                Cell={({ item }) => (
+                Cell={({ item: { buildVersion, alias } }) => (
                   <ActionCell>
                     <Menu
                       items={[
@@ -116,7 +116,7 @@ export const BuildList = withRouter(
                           label: 'Rename',
                           icon: 'Edit',
                           onClick: () => {
-                            setSelectedItem(item);
+                            setSelectedItem({ id: buildVersion, name: alias });
                             setIsModalOpened(true);
                           },
                         },

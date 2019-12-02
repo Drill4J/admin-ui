@@ -29,8 +29,8 @@ export const ExpandableTable = expandableTable(
     expandedColumns,
     className,
     hasSecondLevelExpand,
-    // @ts-ignore
-    ...restProps,
+    // tslint:disable-next-line
+    ...restProps
   }: Props) => {
     const [expandedRows, setExpandedRows] = React.useState<string[]>([]);
     return (
