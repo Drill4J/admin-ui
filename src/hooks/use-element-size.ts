@@ -1,14 +1,14 @@
 import { useState, useEffect } from 'react';
 
-export function useElementWidth<E extends HTMLElement>(ref: React.RefObject<E>) {
-  const [width, setWidth] = useState(0);
+export function useElementSize<E extends HTMLElement>(ref: React.RefObject<E>) {
+  const [size, setSize] = useState({ width: 0, height: 0 });
 
   useEffect(() => {
     const element = ref && ref.current;
     function handleResize() {
       if (ref && ref.current) {
-        const { width: elementWidth } = ref.current.getBoundingClientRect();
-        setWidth(elementWidth);
+        const { width, height } = ref.current.getBoundingClientRect();
+        setSize({ width, height });
       }
     }
     handleResize();
@@ -21,5 +21,5 @@ export function useElementWidth<E extends HTMLElement>(ref: React.RefObject<E>) 
     };
   }, [ref]);
 
-  return width;
+  return size;
 }
