@@ -3,9 +3,7 @@ import { BEM } from '@redneckz/react-bem-helper';
 
 import { PageHeader, ItemsActions } from '../../components';
 import { Agent } from '../../types/agent';
-import { LayoutSwitch } from './layout-switch';
 import { TableView } from './table-view';
-import { CardView } from './card-view';
 import { NoAgentsStub } from './no-agents-stub';
 import { getSelectedAgentsActions } from './get-selected-agents-actions';
 import { useWsConnection } from '../../hooks';
@@ -20,7 +18,6 @@ interface Props {
 const agentsPage = BEM(styles);
 
 export const AgentsPage = agentsPage(({ className }: Props) => {
-  const [isTableView, setIsTableView] = React.useState(true);
   const agents = useWsConnection<Agent[]>(defaultAdminSocket, '/get-all-agents') || [];
   const [selectedAgents, setSelectedAgents] = React.useState<string[]>([]);
 
@@ -29,13 +26,6 @@ export const AgentsPage = agentsPage(({ className }: Props) => {
       <PageHeader
         title="Agents"
         itemsCount={agents.length}
-        actions={
-          <LayoutSwitch
-            isLeftActive={!isTableView}
-            onLeftClick={() => setIsTableView(false)}
-            onRightClick={() => setIsTableView(true)}
-          />
-        }
         itemsActions={
           <ItemsActions
             itemsCount={selectedAgents.length}
@@ -45,20 +35,11 @@ export const AgentsPage = agentsPage(({ className }: Props) => {
       />
       <Content>
         {agents.length > 0 ? (
-          isTableView ? (
-            <TableView
-              agents={agents}
-              selectedAgents={selectedAgents}
-              handleSelectAgents={setSelectedAgents}
-            />
-          ) : (
-            <CardView
-              idKey="id"
-              agents={agents}
-              selectedAgents={selectedAgents}
-              handleSelectAgents={setSelectedAgents}
-            />
-          )
+          <TableView
+            agents={agents}
+            selectedAgents={selectedAgents}
+            handleSelectAgents={setSelectedAgents}
+          />
         ) : (
           <NoAgentsStub />
         )}
