@@ -3,6 +3,7 @@ import { BEM } from '@redneckz/react-bem-helper';
 import VirtualList from 'react-tiny-virtual-list';
 
 import { Modal, Icons, OverflowText } from '../../../../components';
+import { useElementSize } from '../../../../hooks';
 import { MethodsDetails } from '../../../../types/methods-details';
 
 import styles from './methods-modal.module.scss';
@@ -19,6 +20,8 @@ const methodsModal = BEM(styles);
 
 export const MethodsModal = methodsModal(
   ({ className, isOpen, onToggle, title, methodsDetails = [] }: Props) => {
+    const node = React.useRef<HTMLDivElement>(null);
+    const { height: methodsListHeight } = useElementSize(node);
     return (
       <Modal isOpen={isOpen} onToggle={onToggle}>
         <div className={className}>
@@ -29,27 +32,29 @@ export const MethodsModal = methodsModal(
           </Header>
           <Content>
             <MethodsList>
-              <VirtualList
-                itemSize={60}
-                height={840}
-                itemCount={methodsDetails.length}
-                renderItem={({ index, style }) => (
-                  <MethodsListItem key={index} style={style as any}>
-                    <MethodsListIcon>
-                      <Icons.Function />
-                    </MethodsListIcon>
-                    <MethodSignature>
-                      <OverflowText data-test="method-modal:method-name">
-                        {methodsDetails[index].name}
-                      </OverflowText>
-                      <MethodDescriptor data-test="method-modal:method-descriptor">
-                        {methodsDetails[index].desc}
-                      </MethodDescriptor>
-                    </MethodSignature>
-                    {getCoverageIcon(methodsDetails[index].coverageRate)}
-                  </MethodsListItem>
-                )}
-              />
+              <div ref={node} style={{ height: '100%' }}>
+                <VirtualList
+                  itemSize={60}
+                  height={methodsListHeight}
+                  itemCount={methodsDetails.length}
+                  renderItem={({ index, style }) => (
+                    <MethodsListItem key={index} style={style as any}>
+                      <MethodsListIcon>
+                        <Icons.Function />
+                      </MethodsListIcon>
+                      <MethodSignature>
+                        <OverflowText data-test="method-modal:method-name">
+                          {methodsDetails[index].name}
+                        </OverflowText>
+                        <MethodDescriptor data-test="method-modal:method-descriptor">
+                          {methodsDetails[index].desc}
+                        </MethodDescriptor>
+                      </MethodSignature>
+                      {getCoverageIcon(methodsDetails[index].coverageRate)}
+                    </MethodsListItem>
+                  )}
+                />
+              </div>
             </MethodsList>
           </Content>
         </div>
