@@ -8,7 +8,7 @@ jobs:
   bump:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@master
+      - uses: actions/checkout@v1.2.0
       - name: Bump version and push tag
         uses: anothrNick/github-tag-action@master
         env:
