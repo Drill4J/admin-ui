@@ -28,7 +28,7 @@ const { Form } = withTypes<FormValues>();
 
 const validateAlias = composeValidators(
   required('buildVersionName'),
-  sizeLimit('buildVersionName', 1, 64),
+  sizeLimit({ name: 'buildVersionName', min: 1, max: 64 }),
 );
 
 export const BuildAlias = buildAlias(

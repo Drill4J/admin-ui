@@ -52,8 +52,8 @@ export const SystemSettingsForm = systemSettingsForm(
             <>
               <InfoPanel align="space-between">
                 <Panel>
-                  <Icons.Info />
-                  &nbsp;Information related to your application / project
+                  <InfoIcon />
+                  Information related to your application / project
                 </Panel>
                 <SaveChangesButton
                   type="primary"
@@ -135,6 +135,7 @@ export const SystemSettingsForm = systemSettingsForm(
 );
 
 const InfoPanel = systemSettingsForm.infoPanel(Panel);
+const InfoIcon = systemSettingsForm.infoIcon(Icons.Info);
 const SaveChangesButton = systemSettingsForm.saveChangesButton(Button);
 const ErrorMessage = systemSettingsForm.errorMessage(Panel);
 const ErrorMessageIcon = systemSettingsForm.errorMessageIcon(Icons.Warning);

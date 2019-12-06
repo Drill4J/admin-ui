@@ -9,7 +9,6 @@ interface Props {
   className?: string;
   children?: React.ReactNode;
   label?: string;
-  disabled?: boolean;
   optional?: boolean;
   actions?: React.ReactNode;
 }

@@ -28,7 +28,10 @@ interface Props {
 
 const renameScopeModal = BEM(styles);
 
-const validateScope = composeValidators(required('name'), sizeLimit('name', 1, 64));
+const validateScope = composeValidators(
+  required('name'),
+  sizeLimit({ name: 'name', min: 1, max: 64 }),
+);
 
 export const RenameScopeModal = renameScopeModal(
   ({ className, isOpen, onToggle, scope }: Props) => {

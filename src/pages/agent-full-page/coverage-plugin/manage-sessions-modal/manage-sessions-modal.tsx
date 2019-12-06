@@ -26,7 +26,10 @@ interface Props {
 
 const manageSessionsModal = BEM(styles);
 
-const validateScope = composeValidators(required('sessionId'), sizeLimit('sessionId', 1, 256));
+const validateScope = composeValidators(
+  required('sessionId'),
+  sizeLimit({ name: 'sessionId', min: 1, max: 256 }),
+);
 
 export const ManageSessionsModal = manageSessionsModal(({ className, isOpen, onToggle }: Props) => {
   const { agentId } = usePluginState();
