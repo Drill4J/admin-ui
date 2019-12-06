@@ -23,9 +23,9 @@ const generalSettingsForm = BEM(styles);
 const validateSettings = composeValidators(
   required('name'),
   required('description'),
-  sizeLimit('name'),
-  sizeLimit('group'),
-  sizeLimit('description', 3, 256),
+  sizeLimit({ name: 'name' }),
+  sizeLimit({ name: 'group' }),
+  sizeLimit({ name: 'description', min: 3, max: 256 }),
 );
 
 export const GeneralSettingsForm = generalSettingsForm(
@@ -51,8 +51,8 @@ export const GeneralSettingsForm = generalSettingsForm(
             <>
               <InfoPanel align="space-between">
                 <Panel>
-                  <Icons.Info />
-                  &nbsp;Basic agent settings
+                  <InfoIcon />
+                  Basic agent settings
                 </Panel>
                 <SaveChangesButton
                   type="primary"
@@ -105,6 +105,7 @@ export const GeneralSettingsForm = generalSettingsForm(
 );
 
 const InfoPanel = generalSettingsForm.infoPanel(Panel);
+const InfoIcon = generalSettingsForm.infoIcon(Icons.Info);
 const SaveChangesButton = generalSettingsForm.saveChangesButton(Button);
 const ErrorMessage = generalSettingsForm.errorMessage(Panel);
 const ErrorMessageIcon = generalSettingsForm.errorMessageIcon(Icons.Warning);

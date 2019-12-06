@@ -59,9 +59,9 @@ export const AgentRegistrationPage = withRouter(
               validate={composeValidators(
                 required('name'),
                 required('description'),
-                sizeLimit('name'),
-                sizeLimit('group'),
-                sizeLimit('description', 3, 256),
+                sizeLimit({ name: 'name' }),
+                sizeLimit({ name: 'group' }),
+                sizeLimit({ name: 'description', min: 3, max: 256 }),
               )}
             />
             <Step
@@ -69,7 +69,12 @@ export const AgentRegistrationPage = withRouter(
               component={SystemSettingsForm}
               validate={composeValidators(
                 requiredArray('packagesPrefixes'),
-                sizeLimit('sessionIdHeaderName', 1, 256),
+                sizeLimit({
+                  name: 'sessionIdHeaderName',
+                  alias: 'Session header name',
+                  min: 1,
+                  max: 256,
+                }),
               )}
             />
             <Step name="Plugins" component={InstallPluginsStep} />

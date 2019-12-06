@@ -25,9 +25,9 @@ export const InstallPluginsStep = installPluginsStep(
       <div className={className}>
         <InfoPanel align="space-between">
           <Panel>
-            <Icons.Info />
-            &nbsp;Choose plugins to install on your agent. You will also be able to add them later
-            on Agent’s page or Plugins Library.
+            <InfoIcon />
+            Choose plugins to install on your agent. You will also be able to add them later on
+            Agent’s page or Plugins Library.
           </Panel>
         </InfoPanel>
         <SelectedPluginsInfo>
@@ -61,10 +61,11 @@ export const InstallPluginsStep = installPluginsStep(
   },
 );
 
+const InfoPanel = installPluginsStep.infoPanel(Panel);
+const InfoIcon = installPluginsStep.infoIcon(Icons.Info);
+const SelectedPluginsInfo = installPluginsStep.selectedPluginsInfo('div');
 const PluginsList = installPluginsStep.pluginsList('div');
 const PluginsListItem = installPluginsStep.pluginsListItem(div({} as { selected?: boolean }));
-const SelectedPluginsInfo = installPluginsStep.selectedPluginsInfo('div');
-const InfoPanel = installPluginsStep.infoPanel(Panel);
+const PluginsIconWrapper = installPluginsStep.pluginsIconWrapper(div({} as { selected?: boolean }));
 const PluginName = installPluginsStep.pluginName('div');
 const PluginDescription = installPluginsStep.pluginDescription('span');
-const PluginsIconWrapper = installPluginsStep.pluginsIconWrapper(div({} as { selected?: boolean }));

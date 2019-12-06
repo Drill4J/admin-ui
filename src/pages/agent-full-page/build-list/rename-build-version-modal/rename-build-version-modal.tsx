@@ -30,7 +30,10 @@ const renameBuildVersionModal = BEM(styles);
 
 const { Form } = withTypes<BuildVersion>();
 
-const validateAlias = composeValidators(required('name'), sizeLimit('name', 1, 64));
+const validateAlias = composeValidators(
+  required('name'),
+  sizeLimit({ name: 'name', min: 1, max: 64 }),
+);
 
 export const RenameBuildVersionModal = renameBuildVersionModal(
   ({ className, isOpen, onToggle, agentId, buildVersion }: Props) => {

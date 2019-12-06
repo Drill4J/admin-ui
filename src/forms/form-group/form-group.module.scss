@@ -10,6 +10,7 @@
     font-family: $semibold-font;
     font-size: 14px;
     line-height: 40px;
+    color: map-get($color-palette, dark-blue);
     cursor: pointer;
   }
 
@@ -24,11 +25,5 @@
     flex-grow: 1;
     width: 100%;
     margin-left: 0;
-  }
-
-  &--disabled {
-    .form-group__label {
-      color: rgba(33, 33, 33, 0.65);
-    }
   }
 }
