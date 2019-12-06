@@ -10,6 +10,10 @@
     color: $slate-gray;
   }
 
+  &__info-icon {
+    margin-right: 8px;
+  }
+
   &__content {
     margin: 16px 24px;
   }
@@ -18,7 +22,7 @@
     font-family: $semibold-font;
     font-size: 14px;
     line-height: 24px;
-    color: map-get($color-palette, black100);
+    color: map-get($color-palette, dark-blue);
   }
 
   &__project-packages {
@@ -26,13 +30,7 @@
     max-width: 728px;
     font-size: 14px;
     line-height: 24px;
-  }
-
-  &__project-packages {
-    height: 120px;
-    max-width: 728px;
-    font-size: 14px;
-    line-height: 24px;
+    color: map-get($color-palette, dark-blue);
   }
 
   &__instructions {

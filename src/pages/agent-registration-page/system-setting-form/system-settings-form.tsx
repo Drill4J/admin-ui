@@ -20,8 +20,8 @@ export const SystemSettingsForm = systemSettingsForm(({ className }: Props) => {
     <div className={className}>
       <InfoPanel align="space-between">
         <Panel>
-          <Icons.Info />
-          &nbsp;Information related to your application / project
+          <InfoIcon />
+          Information related to your application / project
         </Panel>
       </InfoPanel>
       <Content>
@@ -44,6 +44,7 @@ export const SystemSettingsForm = systemSettingsForm(({ className }: Props) => {
             name="sessionIdHeaderName"
             component={Fields.Input}
             placeholder="Enter session header name"
+            label="Session header name"
           />
         </HeaderMapping>
       </Content>
@@ -52,6 +53,7 @@ export const SystemSettingsForm = systemSettingsForm(({ className }: Props) => {
 });
 
 const InfoPanel = systemSettingsForm.infoPanel(Panel);
+const InfoIcon = systemSettingsForm.infoIcon(Icons.Info);
 const Content = systemSettingsForm.content('div');
 const FieldName = systemSettingsForm.fieldName('div');
 const Instruction = systemSettingsForm.instructions('div');

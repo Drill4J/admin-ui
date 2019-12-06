@@ -28,6 +28,8 @@
     &--disabled {
       border: 1px solid map-get($color-palette, light-blue);
       background-color: $athens-gray;
+      color: map-get($color-palette, dark-blue);
+      opacity: 0.5;
     }
 
     &--error {
