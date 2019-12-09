@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { BEM, span } from '@redneckz/react-bem-helper';
 
-import { MethodsModal } from '../../methods-modal';
+import { MethodsSidebar } from '../../methods-sidebar';
 import { MethodsInfo } from '../../../../../types/methods-info';
 
 import styles from './methods-section.module.scss';
@@ -22,13 +22,13 @@ export const MethodsSection = methodsSection(
     methodsInfo: { totalCount = 0, coveredCount = 0, methods } = {},
     additionalInfo,
   }: Props) => {
-    const [isModalOpen, setIsModalOpen] = React.useState(false);
+    const [isSidebarOpen, setIsSidebarOpen] = React.useState(false);
 
     return (
       <div className={className}>
         <Total
           data-test={`methods-section:total:${title.toLowerCase()}`}
-          onClick={() => totalCount && setIsModalOpen(true)}
+          onClick={() => totalCount && setIsSidebarOpen(true)}
           clickable={Boolean(totalCount)}
         >
           {totalCount}
@@ -65,10 +65,10 @@ export const MethodsSection = methodsSection(
             additionalInfo
           )}
         </AdditionalInfo>
-        {isModalOpen && (
-          <MethodsModal
-            isOpen={isModalOpen}
-            onToggle={setIsModalOpen}
+        {isSidebarOpen && (
+          <MethodsSidebar
+            isOpen={isSidebarOpen}
+            onToggle={setIsSidebarOpen}
             title={`${title.toLowerCase()} methods`}
             methodsDetails={methods}
           />

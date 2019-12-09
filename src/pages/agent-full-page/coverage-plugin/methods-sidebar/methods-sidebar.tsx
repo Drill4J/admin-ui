@@ -4,9 +4,10 @@ import VirtualList from 'react-tiny-virtual-list';
 
 import { Modal, Icons, OverflowText } from '../../../../components';
 import { useElementSize } from '../../../../hooks';
+import { CoverageRateIcon } from '../coverage-rate-icon';
 import { MethodsDetails } from '../../../../types/methods-details';
 
-import styles from './methods-modal.module.scss';
+import styles from './methods-sidebar.module.scss';
 
 interface Props {
   className?: string;
@@ -16,9 +17,9 @@ interface Props {
   methodsDetails?: MethodsDetails[];
 }
 
-const methodsModal = BEM(styles);
+const methodsSidebar = BEM(styles);
 
-export const MethodsModal = methodsModal(
+export const MethodsSidebar = methodsSidebar(
   ({ className, isOpen, onToggle, title, methodsDetails = [] }: Props) => {
     const node = React.useRef<HTMLDivElement>(null);
     const { height: methodsListHeight } = useElementSize(node);
@@ -50,7 +51,7 @@ export const MethodsModal = methodsModal(
                           {methodsDetails[index].desc}
                         </MethodDescriptor>
                       </MethodSignature>
-                      {getCoverageIcon(methodsDetails[index].coverageRate)}
+                      <CoverageRateIcon coverageRate={methodsDetails[index].coverageRate} />
                     </MethodsListItem>
                   )}
                 />
@@ -63,34 +64,10 @@ export const MethodsModal = methodsModal(
   },
 );
 
-const Header = methodsModal.header('div');
-const Content = methodsModal.content('div');
-const MethodsList = methodsModal.methodsList('div');
-const MethodsListItem = methodsModal.methodsListItem('div');
-const MethodsListIcon = methodsModal.methodsListItemIcon('div');
-const MethodSignature = methodsModal.methodSignature('div');
-const MethodDescriptor = methodsModal.methodDescriptor(OverflowText);
-const CoverageIconWrapper = methodsModal.coverageIconWrapper('div');
-
-function getCoverageIcon(coverageRate?: 'MISSED' | 'PARTLY' | 'FULL') {
-  switch (coverageRate) {
-    case 'FULL':
-      return (
-        <CoverageIconWrapper type="success">
-          <Icons.Checkbox height={16} width={16} />
-        </CoverageIconWrapper>
-      );
-    case 'PARTLY':
-      return (
-        <CoverageIconWrapper type="warning">
-          <Icons.Warning height={16} width={16} />
-        </CoverageIconWrapper>
-      );
-    default:
-      return (
-        <CoverageIconWrapper type="error">
-          <Icons.Warning height={16} width={16} />
-        </CoverageIconWrapper>
-      );
-  }
-}
+const Header = methodsSidebar.header('div');
+const Content = methodsSidebar.content('div');
+const MethodsList = methodsSidebar.methodsList('div');
+const MethodsListItem = methodsSidebar.methodsListItem('div');
+const MethodsListIcon = methodsSidebar.methodsListItemIcon('div');
+const MethodSignature = methodsSidebar.methodSignature('div');
+const MethodDescriptor = methodsSidebar.methodDescriptor(OverflowText);

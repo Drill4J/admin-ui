@@ -15,7 +15,7 @@ interface Props {
 const singleBar = BEM(styles);
 
 export const SingleBar = singleBar(({ className, width, height, color, percent, icon }: Props) => {
-  const y = height - (height * percent) / 100;
+  const y = isNaN(percent) ? height : height - (height * percent) / 100;
 
   return (
     <div className={className}>
