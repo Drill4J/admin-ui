@@ -28,7 +28,7 @@ export const RisksModal = risksModal(
   }: Props) => {
     const [selectedSection, setSelectedSection] = React.useState('all');
     const allMethods = newMethods.concat(modifiedMethods);
-    const getMetods = () => {
+    const getMethods = () => {
       switch (selectedSection) {
         case 'new':
           return newMethods;
@@ -64,7 +64,7 @@ export const RisksModal = risksModal(
               value={selectedSection}
             />
             <MethodsList>
-              {getMetods().map((method) => (
+              {getMethods().map((method) => (
                 <MethodsListItem>
                   <MethodsListItemIcon>
                     <Icons.Function />
