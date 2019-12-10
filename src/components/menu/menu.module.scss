@@ -16,7 +16,6 @@
   &__items-list {
     position: absolute;
     right: calc(50% - 22px);
-    top: calc(100% + 12px);
     display: flex;
     flex-direction: column;
     padding: 8px 0;
@@ -26,11 +25,27 @@
     color: map-get($color-palette, black100);
     z-index: 50;
 
+    &--position {
+      &--bottom {
+        top: calc(100% + 12px);
+
+        &::before {
+          top: -7px;
+        }
+      }
+      &--top {
+        bottom: calc(100% + 12px);
+
+        &::before {
+          bottom: -7px;
+        }
+      }
+    }
+
     &::before {
       content: '';
       position: absolute;
       background-color: map-get($color-palette, white);
-      top: -7px;
       left: calc(100% - 30px);
       height: 15px;
       width: 15px;
