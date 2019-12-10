@@ -5,7 +5,14 @@ import axios from 'axios';
 
 import { Panel } from '../../../layouts';
 import { Icons, Tooltip } from '../../../components';
-import { Fields, requiredArray, Button, FormGroup } from '../../../forms';
+import {
+  Fields,
+  requiredArray,
+  Button,
+  FormGroup,
+  composeValidators,
+  sizeLimit,
+} from '../../../forms';
 import { Agent } from '../../../types/agent';
 import { Message } from '../../../types/message';
 import { parsePackges, formatPackages } from '../../../utils';
@@ -21,7 +28,15 @@ interface Props {
 
 const systemSettingsForm = BEM(styles);
 
-const validateSettings = requiredArray('packagesPrefixes');
+const validateSettings = composeValidators(
+  requiredArray('packagesPrefixes'),
+  sizeLimit({
+    name: 'sessionIdHeaderName',
+    alias: 'Session header name',
+    min: 1,
+    max: 256,
+  }),
+);
 
 export const SystemSettingsForm = systemSettingsForm(
   ({
@@ -96,14 +111,16 @@ export const SystemSettingsForm = systemSettingsForm(
                   </BlockerStatus>
                 </FieldName>
                 <Panel verticalAlign="start">
-                  <Field
-                    name="packagesPrefixes"
-                    component={ProjectPackages}
-                    parse={parsePackges}
-                    format={formatPackages}
-                    placeholder="Package name 1&#10;Package name 2&#10;Package name 3&#10;and so on."
-                    disabled={!unlocked}
-                  />
+                  <PackagesTextarea>
+                    <Field
+                      name="packagesPrefixes"
+                      component={ProjectPackages}
+                      parse={parsePackges}
+                      format={formatPackages}
+                      placeholder="Package name 1&#10;Package name 2&#10;Package name 3&#10;and so on."
+                      disabled={!unlocked}
+                    />
+                  </PackagesTextarea>
                   {unlocked && (
                     <Instruction>
                       Make sure you add application packages only, otherwise agent's performance
@@ -145,6 +162,7 @@ const BlockerStatus = systemSettingsForm.blockerStatus(
   div({ onClick: () => {} } as { unlocked: boolean; onClick: () => void }),
 );
 const SecuredMessage = systemSettingsForm.securedMessage(Panel);
+const PackagesTextarea = systemSettingsForm.packagesTextarea('div');
 const Instruction = systemSettingsForm.instructions('div');
 const ProjectPackages = systemSettingsForm.projectPackages(Fields.Textarea);
 const HeaderMapping = systemSettingsForm.headerMapping(FormGroup);

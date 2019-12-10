@@ -101,7 +101,7 @@ export const AgentSettingsPage = withRouter(
           {tabsComponents
             .filter(({ name }) => name === selectedTab)
             .map(({ name, component }) => (
-              <div key={name}>{component}</div>
+              <TabContent key={name}>{component}</TabContent>
             ))}
           {isUnregisterModalOpen && (
             <UnregisterAgentModal
@@ -121,3 +121,4 @@ const AgentStatus = agentSettingsPage.agentStatus(AgentStatusToggler);
 const ErrorMessage = agentSettingsPage.errorMessage(Panel);
 const ErrorMessageIcon = agentSettingsPage.errorMessageIcon(Icons.Warning);
 const Tabs = agentSettingsPage.tabsPanel(TabsPanel);
+const TabContent = agentSettingsPage.tabContent('div');
