@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { BEM, span } from '@redneckz/react-bem-helper';
+import { BEM, span, div } from '@redneckz/react-bem-helper';
 
 import { Column, ExpandableTable, Icons, OverflowText } from '../../../../components';
 import { Panel } from '../../../../layouts';
@@ -51,21 +51,20 @@ export const TestDetails = testDetails(
                 />,
                 <Column
                   name="coverage"
-                  Cell={({ value }) => <span>{percentFormatter(value)}%</span>}
+                  Cell={({ value }) => <CoverageCell>{percentFormatter(value)}%</CoverageCell>}
                 />,
-                <Column name="methodCalls" />,
                 <Column
-                  name="testActions"
-                  label="Actions"
-                  Cell={({ item: { id } }) => (
-                    <ActionsCell
+                  name="methodCalls"
+                  Cell={({ value, item: { id = '' } = {} }) => (
+                    <MethodCallsCell
                       onClick={() => {
                         setSelectedTest(id);
                       }}
                       data-test={`test-actions:view-curl:id`}
+                      clickable={Boolean(value)}
                     >
-                      View cURL
-                    </ActionsCell>
+                      {value}
+                    </MethodCallsCell>
                   )}
                 />,
               ]}
@@ -86,21 +85,21 @@ export const TestDetails = testDetails(
               <Column
                 name="coverage"
                 label="Coverage"
-                Cell={({ value }) => <span>{percentFormatter(value)}%</span>}
+                Cell={({ value }) => <CoverageCell>{percentFormatter(value)}%</CoverageCell>}
               />
-              <Column name="methodsCount" label="Methods covered" />
               <Column
-                name="testTypeActions"
-                label="Actions"
-                Cell={({ item: { testType } }) => (
-                  <ActionsCell
+                name="methodsCount"
+                label="Methods covered"
+                Cell={({ value, item: { testType = '' } = {} }) => (
+                  <MethodCallsCell
                     onClick={() => {
                       setSelectedTestType(testType);
                     }}
                     data-test={`test-actions:view-curl:id`}
+                    clickable={Boolean(value)}
                   >
-                    View cURL
-                  </ActionsCell>
+                    {value}
+                  </MethodCallsCell>
                 )}
               />
             </ExpandableTable>
@@ -132,4 +131,7 @@ export const TestDetails = testDetails(
 const Title = testDetails.title(Panel);
 const TableCell = testDetails.tableCell(span({} as { type?: 'primary' | 'secondary' }));
 const TableCellContent = testDetails.tableCellContent(OverflowText);
-const ActionsCell = testDetails.actionsCell('div');
+const CoverageCell = testDetails.coverageCell('span');
+const MethodCallsCell = testDetails.methodCallsCell(
+  div({ onClick: () => {} } as { clickable?: boolean }),
+);

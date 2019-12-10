@@ -34,12 +34,20 @@
     }
   }
 
+  &__coverage-cell {
+    color: map-get($color-palette, black100);
+  }
+
   &__table-cell-content {
     width: 40vw;
   }
 
-  &__actions-cell {
-    color: map-get($color-palette, blue100);
+  &__method-calls-cell {
+    color: map-get($color-palette, black100);
     cursor: pointer;
+
+    &--clickable {
+      text-decoration: underline;
+    }
   }
 }
