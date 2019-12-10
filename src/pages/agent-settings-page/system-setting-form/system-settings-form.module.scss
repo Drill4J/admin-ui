@@ -65,9 +65,15 @@
     line-height: 16px;
   }
 
+  &__packages-textarea {
+    display: flex;
+    flex-direction: column;
+    max-width: 728px;
+    flex-grow: 1;
+  }
+
   &__project-packages {
     height: 120px;
-    max-width: 728px;
     font-size: 14px;
     line-height: 24px;
     color: map-get($color-palette, dark-blue);
