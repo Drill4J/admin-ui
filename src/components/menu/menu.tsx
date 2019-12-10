@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { BEM, div } from '@redneckz/react-bem-helper';
+import VisibilitySensor from 'react-visibility-sensor';
 
 import { Icons } from '../icon';
 
@@ -15,6 +16,7 @@ const menu = BEM(styles);
 
 export const Menu = menu(({ className, items, bordered }: Props) => {
   const [isListOpened, setIsListOpened] = React.useState(false);
+  const [position, setPosition] = React.useState<'bottom' | 'top'>('bottom');
   const node = React.useRef<HTMLDivElement>(null);
   React.useEffect(() => {
     function handleClick(event: any) {
@@ -33,17 +35,23 @@ export const Menu = menu(({ className, items, bordered }: Props) => {
       <MenuIcon onClick={() => setIsListOpened(!isListOpened)}>
         {bordered ? <Icons.MoreOptionsWithBorder /> : <Icons.MoreOptions />}
         {isListOpened && (
-          <ItemsList>
-            {items.map(({ icon, label, onClick }, index) => {
-              const ItemIcon = Icons[icon];
-              return (
-                <Item onClick={onClick} key={index}>
-                  <ItemIcon />
-                  <ItemLabel>{label}</ItemLabel>
-                </Item>
-              );
-            })}
-          </ItemsList>
+          <VisibilitySensor
+            onChange={(isVisible) => {
+              !isVisible && setPosition('top');
+            }}
+          >
+            <ItemsList position={position}>
+              {items.map(({ icon, label, onClick }, index) => {
+                const ItemIcon = Icons[icon];
+                return (
+                  <Item onClick={onClick} key={index}>
+                    <ItemIcon />
+                    <ItemLabel>{label}</ItemLabel>
+                  </Item>
+                );
+              })}
+            </ItemsList>
+          </VisibilitySensor>
         )}
       </MenuIcon>
     </div>
@@ -51,6 +59,6 @@ export const Menu = menu(({ className, items, bordered }: Props) => {
 });
 
 const MenuIcon = menu.menuIcon(div({ onClick: () => {} } as { onClick?: () => void }));
-const ItemsList = menu.itemsList('div');
+const ItemsList = menu.itemsList(div({} as { position?: 'bottom' | 'top' }));
 const Item = menu.item('div');
 const ItemLabel = menu.itemLabel('span');
