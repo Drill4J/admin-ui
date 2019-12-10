@@ -2,8 +2,9 @@
 
 .plugins-settings {
   display: flex;
-  flex-grow: 1;
   flex-direction: column;
+  height: 100%;
+  width: 100%;
 
   &__info-panel {
     height: 48px;
@@ -19,81 +20,28 @@
   }
 
   &__content {
-    display: flex;
-    flex-direction: column;
-    margin: 0 24px 24px 24px;
     flex-grow: 1;
+    margin: 0px 24px;
   }
 
-  &__header-title {
-    display: flex;
-    align-items: center;
-  }
-
-  &__toggle-agent {
-    display: flex;
-    margin-left: 24px;
-    height: 20px;
-    align-items: center;
-  }
-
-  &__spinner-wrapper {
-    margin-left: 8px;
-  }
-
-  &__toggle-agent-header {
-    font-size: 16px;
-    font-family: $light-font;
-    line-height: 20px;
-    top: -9px;
-  }
-
-  &__header-actions {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  &__to-agent {
-    width: 135px;
-    font-size: 14px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    min-height: 32px;
-
-    span {
-      margin-left: 8px;
-    }
-  }
-
-  &__settings {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 32px;
-    width: 32px;
-    border: 1px solid map-get($color-palette, blue100);
-    border-radius: 16px;
-    color: map-get($color-palette, blue100);
-    margin-left: 16px;
-    cursor: pointer;
-  }
-
-  &__plugins-table-title {
-    display: flex;
-    align-items: center;
+  &__header {
+    padding: 24px;
     font-size: 18px;
-    line-height: 24px;
+  }
+
+  &__plugins-count {
+    margin-left: 8px;
+    font-family: $light-font;
+    color: map-get($color-palette, middle-blue);
   }
 
   &__add-plugin {
-    width: 135px;
-    font-size: 14px;
     display: flex;
     align-items: center;
     justify-content: center;
+    width: 124px;
     min-height: 32px;
+    font-size: 14px;
 
     span {
       margin-left: 8px;

@@ -27,13 +27,15 @@ export const SystemSettingsForm = systemSettingsForm(({ className }: Props) => {
       <Content>
         <FieldName>Project Package(s)</FieldName>
         <Panel verticalAlign="start">
-          <Field
-            name="packagesPrefixes"
-            component={ProjectPackages}
-            parse={parsePackges}
-            format={formatPackages}
-            placeholder="Package name 1&#10;Package name 2&#10;Package name 3&#10;and so on."
-          />
+          <PackagesTextarea>
+            <Field
+              name="packagesPrefixes"
+              component={ProjectPackages}
+              parse={parsePackges}
+              format={formatPackages}
+              placeholder="Package name 1&#10;Package name 2&#10;Package name 3&#10;and so on."
+            />
+          </PackagesTextarea>
           <Instruction>
             Make sure you add application packages only, otherwise agent's performance will be
             affected. Use new line as a separator.
@@ -56,6 +58,7 @@ const InfoPanel = systemSettingsForm.infoPanel(Panel);
 const InfoIcon = systemSettingsForm.infoIcon(Icons.Info);
 const Content = systemSettingsForm.content('div');
 const FieldName = systemSettingsForm.fieldName('div');
-const Instruction = systemSettingsForm.instructions('div');
+const PackagesTextarea = systemSettingsForm.packagesTextarea('div');
 const ProjectPackages = systemSettingsForm.projectPackages(Fields.Textarea);
+const Instruction = systemSettingsForm.instructions('div');
 const HeaderMapping = systemSettingsForm.headerMapping(FormGroup);

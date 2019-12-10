@@ -2,7 +2,7 @@ import * as React from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
 
-import { PageHeader, Icons } from '../../../components';
+import { Icons } from '../../../components';
 import { Button } from '../../../forms';
 import { useAgent } from '../../../hooks';
 import { PluginsSettingsTable } from './plugins-settings-table';
@@ -38,21 +38,20 @@ export const PluginsSettings = withRouter(
               Plugins installed on your agent.
             </Panel>
           </InfoPanel>
+          <Header align="space-between">
+            <span>
+              Plugins<PluginsQuantity>{(agent.plugins || []).length}</PluginsQuantity>
+            </span>
+            <AddPluginButton
+              type="secondary"
+              onClick={() => setIsAddPluginOpen(!isAddPluginOpen)}
+              data-test="agent-info-page:add-plugin-button"
+            >
+              <Icons.Add />
+              <span>Add plugin</span>
+            </AddPluginButton>
+          </Header>
           <Content>
-            <PageHeader
-              title={<PluginsTableTitle>Plugins</PluginsTableTitle>}
-              itemsCount={(agent.plugins || []).length}
-              actions={
-                <AddPluginButton
-                  type="secondary"
-                  onClick={() => setIsAddPluginOpen(!isAddPluginOpen)}
-                  data-test="agent-info-page:add-plugin-button"
-                >
-                  <Icons.Add />
-                  <span>Add plugin</span>
-                </AddPluginButton>
-              }
-            />
             {(agent.plugins || []).length > 0 ? (
               <PluginsSettingsTable
                 plugins={agent.plugins}
@@ -79,5 +78,6 @@ export const PluginsSettings = withRouter(
 const InfoPanel = pluginsSettings.infoPanel(Panel);
 const InfoIcon = pluginsSettings.infoIcon(Icons.Info);
 const Content = pluginsSettings.content('div');
-const PluginsTableTitle = pluginsSettings.pluginsTableTitle('div');
+const Header = pluginsSettings.header(Panel);
+const PluginsQuantity = pluginsSettings.pluginsCount('span');
 const AddPluginButton = pluginsSettings.addPlugin(Button);
