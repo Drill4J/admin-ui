@@ -6,7 +6,7 @@ import { Panel } from 'layouts';
 import { AGENT_STATUS } from 'common/constants';
 import { usePluginState } from '../store';
 import { ReactComponent as LogoSvg } from './logo.svg';
-import { AgentStatus } from 'types/AgentStatus';
+import { AgentStatus } from 'types/agent-status';
 
 import styles from './plugin-header.module.scss';
 

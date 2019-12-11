@@ -7,10 +7,10 @@ import {
   AgentsPage,
   PluginsPage,
   LogsPage,
-  SettingsPage,
+  ApplicationSettingsPage,
   NotFoundPage,
   AgentFullPage,
-  AgentSettingsPage,
+  SettingsPage,
   AgentRegistrationPage,
 } from 'pages';
 import { PrivateRoute, Icons, Sidebar, Toolbar, Divider, Footer } from 'components';
@@ -42,10 +42,10 @@ export const PageSwitcher = () => {
       >
         <Switch>
           <PrivateRoute exact path="/agents" component={AgentsPage} />
-          <PrivateRoute exact path="/agents/:agentId/settings" component={AgentSettingsPage} />
+          <PrivateRoute exact path="/agents/:type/:id/settings" component={SettingsPage} />
           <PrivateRoute exact path="/plugins" component={PluginsPage} />
           <PrivateRoute exact path="/logs" component={LogsPage} />
-          <PrivateRoute exact path="/settings" component={SettingsPage} />
+          <PrivateRoute exact path="/settings" component={ApplicationSettingsPage} />
           <PrivateRoute exact path="/registration/:agentId" component={AgentRegistrationPage} />
           <PrivateRoute component={NotFoundPage} />
         </Switch>
