@@ -5,7 +5,7 @@ services:
     networks:
       - drill4j-dev-network
     ports:
-      - 9443:443
+      - 8080:8080
 networks:
   drill4j-dev-network:
     external:

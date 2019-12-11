@@ -17,6 +17,9 @@ COPY nginx /etc/nginx/
 RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app
 
+# support running as arbitrary user which belogs to the root group
+RUN chmod -R g+rwx /var/cache/nginx /var/run /var/log/nginx /usr/src/app
+
 # Define environment
 ENV REACT_APP_ENV "$ENV"
 ENV REACT_APP_VERSION "$VERSION"
@@ -29,8 +32,7 @@ RUN yarn
 COPY . ./
 RUN yarn build
 
-EXPOSE 80
-EXPOSE 443
+EXPOSE 8080
 
 STOPSIGNAL SIGTERM
 
