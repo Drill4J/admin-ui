@@ -1,0 +1,11 @@
+@import '~common/style-guide/index';
+
+.agent-settings {
+  &__tabs-panel {
+    margin: 0 24px;
+  }
+
+  &__tab-content {
+    flex: 1;
+  }
+}

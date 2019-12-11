@@ -4,7 +4,7 @@ import { Panel } from 'layouts';
 import { Spinner } from 'components';
 import { Inputs } from 'forms';
 import { AGENT_STATUS } from 'common/constants';
-import { AgentStatus } from 'types/AgentStatus';
+import { AgentStatus } from 'types/agent-status';
 
 interface Props {
   className?: string;

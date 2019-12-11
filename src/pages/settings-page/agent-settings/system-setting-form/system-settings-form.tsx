@@ -44,9 +44,9 @@ export const SystemSettingsForm = systemSettingsForm(
       <div className={className}>
         <Form
           onSubmit={saveChanges({
-            onSuccess: (message: Message) => {
+            onSuccess: () => {
               setErrorMessage('');
-              showMessage(message);
+              showMessage({ type: 'SUCCESS', text: 'New settings have been saved' });
               setUnlocked(false);
             },
             onError: setErrorMessage,
@@ -171,7 +171,7 @@ function saveChanges({
   onSuccess,
   onError,
 }: {
-  onSuccess: (message: Message) => void;
+  onSuccess: () => void;
   onError: (message: string) => void;
 }) {
   return async ({ id, packagesPrefixes = [], sessionIdHeaderName }: Agent) => {
@@ -180,7 +180,7 @@ function saveChanges({
         packagesPrefixes: packagesPrefixes.filter(Boolean),
         sessionIdHeaderName,
       });
-      onSuccess && onSuccess({ type: 'SUCCESS', text: 'New settings have been saved' });
+      onSuccess && onSuccess();
     } catch ({ response: { data: { message } = {} } = {} }) {
       onError && onError(message || 'Internal service error');
     }

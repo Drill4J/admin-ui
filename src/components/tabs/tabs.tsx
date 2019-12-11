@@ -5,7 +5,7 @@ import styles from './tabs.module.scss';
 
 interface Props {
   className?: string;
-  children: React.ReactElement[];
+  children: React.ReactElement | React.ReactElement[];
   activeTab: number | string;
   onSelect: (tabName: string) => void;
 }
