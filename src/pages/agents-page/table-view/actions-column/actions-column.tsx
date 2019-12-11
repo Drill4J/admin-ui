@@ -2,9 +2,9 @@ import * as React from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
 
-import { Icons } from '../../../../components';
-import { AGENT_STATUS } from '../../../../common/constants';
-import { Agent } from '../../../../types/agent';
+import { Icons } from 'components';
+import { AGENT_STATUS } from 'common/constants';
+import { Agent } from 'types/agent';
 
 import styles from './actions-column.module.scss';
 
@@ -36,7 +36,7 @@ export const ActionsColumn = withRouter(
                 data-test="action-column:icons-open-live"
               />
               <Icons.Settings
-                onClick={() => push(`/agents/${agentId}/settings`)}
+                onClick={() => push(`/agents/agent/${agentId}/settings/`)}
                 height={16}
                 width={16}
                 data-test="action-column:icons-settings"

@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 
-import { Inputs } from '../../../../../forms';
+import { Inputs } from 'forms';
 
 import styles from './selectable-list.module.scss';
 

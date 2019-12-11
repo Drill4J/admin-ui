@@ -1,11 +1,8 @@
+import { CommonEntity } from 'types/common-entity';
 import { Plugin } from './plugin';
 import { BuildVersion } from './build-version';
 
-export interface Agent {
-  id?: string;
-  name?: string;
-  group?: string;
-  description?: string;
+export interface Agent extends CommonEntity {
   status?: 'ONLINE' | 'NOT_REGISTERED' | 'BUSY';
   drillAdminUrl?: string;
   address?: string;

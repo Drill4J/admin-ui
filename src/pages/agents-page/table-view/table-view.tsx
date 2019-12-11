@@ -2,11 +2,11 @@ import * as React from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 import axios from 'axios';
 
-import { SelectableTable, Column, OverflowText } from '../../../components';
-import { AGENT_STATUS } from '../../../common/constants';
+import { SelectableTable, Column, OverflowText } from 'components';
+import { AGENT_STATUS } from 'common/constants';
 import { NameColumn } from './name-column';
 import { ActionsColumn } from './actions-column';
-import { Agent } from '../../../types/agent';
+import { Agent } from 'types/agent';
 
 import styles from './table-view.module.scss';
 import { AgentStatusToggler } from '../agent-status-toggler';

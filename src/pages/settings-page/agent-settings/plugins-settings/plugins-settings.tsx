@@ -12,7 +12,7 @@ import { NoPluginsStub } from './no-plugins-stub';
 
 import styles from './plugins-settings.module.scss';
 
-interface Props extends RouteComponentProps<{ agentId: string }> {
+interface Props extends RouteComponentProps<{ id: string }> {
   className?: string;
 }
 
@@ -24,10 +24,10 @@ export const PluginsSettings = withRouter(
       className,
       history: { push },
       match: {
-        params: { agentId },
+        params: { id },
       },
     }: Props) => {
-      const agent = useAgent(agentId, () => push('/not-found')) || {};
+      const agent = useAgent(id, () => push('/not-found')) || {};
       const [selectedPlugins, setSelectedPlugins] = React.useState<string[]>([]);
       const [isAddPluginOpen, setIsAddPluginOpen] = React.useState(false);
       return (
@@ -64,11 +64,7 @@ export const PluginsSettings = withRouter(
               <NoPluginsStub />
             )}
           </Content>
-          <AddPluginsModal
-            isOpen={isAddPluginOpen}
-            onToggle={setIsAddPluginOpen}
-            agentId={agentId}
-          />
+          <AddPluginsModal isOpen={isAddPluginOpen} onToggle={setIsAddPluginOpen} agentId={id} />
         </div>
       );
     },

@@ -2,10 +2,10 @@ import * as React from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 import { Switch, withRouter, RouteComponentProps, Route, matchPath } from 'react-router-dom';
 
-import { Toolbar, Icons, Footer } from '../../components';
-import { PluginsLayout, Panel } from '../../layouts';
+import { Toolbar, Icons, Footer } from 'components';
+import { PluginsLayout, Panel } from 'layouts';
 import { CoveragePlugin } from './coverage-plugin';
-import { useAgent } from '../../hooks';
+import { useAgent } from 'hooks';
 import { PluginProvider } from './store';
 import { PluginHeader } from './plugin-header';
 import { Breadcrumbs } from './breadcrumbs';
