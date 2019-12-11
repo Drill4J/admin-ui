@@ -13,10 +13,11 @@ export const InitialDataController = ({ children }: Props) => {
   const activeSessions = useBuildVersion<ActiveSessions>('/active-sessions') || {};
   const dispatch = useCoveragePluginDispatch();
   const pluginDispatch = usePluginDispatch();
+
   React.useEffect(() => {
     dispatch(setActiveSessions(activeSessions));
     pluginDispatch(setLoading(Boolean(activeSessions.count)));
     // eslint-disable-next-line
-  }, [activeSessions]);
+  }, [activeSessions.count]);
   return children as React.ReactElement<any>;
 };
