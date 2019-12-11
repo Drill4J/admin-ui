@@ -3,7 +3,7 @@ import axios from 'axios';
 import { TOKEN_HEADER, TOKEN_KEY } from '../constants';
 
 const hosts: { [env: string]: string } = {
-  local: 'https://ecse005002af.epam.com:8443/api',
+  local: 'http://ecse005002af.epam.com:8090/api',
   development: '/api',
   qa: '',
   prod: '',
