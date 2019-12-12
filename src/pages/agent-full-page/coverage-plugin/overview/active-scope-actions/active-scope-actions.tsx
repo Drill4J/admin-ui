@@ -2,13 +2,13 @@ import * as React from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
 
-import { Panel } from '../../../../../layouts';
-import { Icons, Menu } from '../../../../../components';
-import { Button } from '../../../../../forms';
+import { Panel } from 'layouts';
+import { Icons, Menu } from 'components';
+import { Button } from 'forms';
 import { useBuildVersion } from '../../use-build-version';
 import { usePluginState } from '../../../store';
 import { useCoveragePluginDispatch, openModal } from '../../store';
-import { ScopeSummary } from '../../../../../types/scope-summary';
+import { ScopeSummary } from 'types/scope-summary';
 
 import styles from './active-scope-actions.module.scss';
 

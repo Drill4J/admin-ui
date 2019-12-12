@@ -1,12 +1,12 @@
 import * as React from 'react';
 import { BEM, div } from '@redneckz/react-bem-helper';
 
-import { Spinner } from '../../../components';
-import { Panel } from '../../../layouts';
+import { Spinner } from 'components';
+import { Panel } from 'layouts';
+import { AGENT_STATUS } from 'common/constants';
 import { usePluginState } from '../store';
 import { ReactComponent as LogoSvg } from './logo.svg';
-import { AGENT_STATUS } from '../../../common/constants';
-import { AgentStatus } from '../../../types/AgentStatus';
+import { AgentStatus } from 'types/AgentStatus';
 
 import styles from './plugin-header.module.scss';
 
@@ -52,8 +52,10 @@ const AgentInfo = pluginHeader.agentInfo('div');
 const AgentName = pluginHeader.agentName('div');
 const AgentIpAddress = pluginHeader.agentIpAddress('div');
 const AgentStatusWrapper = pluginHeader.agentStatusWrapper(
-  div({} as {
-    status?: AgentStatus;
-  }),
+  div(
+    {} as {
+      status?: AgentStatus;
+    },
+  ),
 );
 const SpinnerWrapper = pluginHeader.spinnerWrapper(Panel);

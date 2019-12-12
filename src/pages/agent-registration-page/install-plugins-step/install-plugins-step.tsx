@@ -2,12 +2,12 @@ import * as React from 'react';
 import { BEM, div } from '@redneckz/react-bem-helper';
 import { Field } from 'react-final-form';
 
-import { Panel } from '../../../layouts';
-import { Icons } from '../../../components';
-import { Fields } from '../../../forms';
-import { useWsConnection } from '../../../hooks';
-import { defaultAdminSocket } from '../../../common/connection';
-import { Plugin } from '../../../types/plugin';
+import { Panel } from 'layouts';
+import { Icons } from 'components';
+import { Fields } from 'forms';
+import { useWsConnection } from 'hooks';
+import { defaultAdminSocket } from 'common/connection';
+import { Plugin } from 'types/plugin';
 
 import styles from './install-plugins-step.module.scss';
 

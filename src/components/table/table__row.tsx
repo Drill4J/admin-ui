@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
-import { get } from '../../utils';
 
+import { get } from 'utils';
 import { DefaultCell } from './default-cell';
 import { ExpandedRowContent } from './expanded-row-content';
 

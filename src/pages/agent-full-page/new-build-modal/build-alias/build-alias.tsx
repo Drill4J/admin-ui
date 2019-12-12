@@ -2,9 +2,9 @@ import * as React from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 import { Field, withTypes } from 'react-final-form';
 
-import { Panel } from '../../../../layouts';
-import { Icons } from '../../../../components';
-import { Fields, composeValidators, required, sizeLimit } from '../../../../forms';
+import { Panel } from 'layouts';
+import { Icons } from 'components';
+import { Fields, composeValidators, required, sizeLimit } from 'forms';
 import { renameBuildVersion } from '../../api';
 
 import styles from './build-alias.module.scss';

@@ -1,8 +1,9 @@
 import * as React from 'react';
 import { BEM, span } from '@redneckz/react-bem-helper';
 
+import { Icons } from 'components';
+
 import styles from './action-section.module.scss';
-import { Icons } from '../../../../../components';
 
 interface Props {
   className?: string;

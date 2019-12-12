@@ -1,10 +1,10 @@
 import * as React from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 
-import { Panel } from '../../../../layouts';
-import { Icons, Modal, OverflowText } from '../../../../components';
-import { Inputs } from '../../../../forms';
-import { Risks } from '../../../../types/risks';
+import { Panel } from 'layouts';
+import { Icons, Modal, OverflowText } from 'components';
+import { Inputs } from 'forms';
+import { Risks } from 'types/risks';
 
 import styles from './risks-modal.module.scss';
 

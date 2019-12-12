@@ -2,14 +2,14 @@ import * as React from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 import { withRouter, RouteComponentProps, matchPath } from 'react-router-dom';
 
-import { Panel } from '../../../../../layouts';
-import { Button } from '../../../../../forms';
-import { Popup, Icons, OverflowText } from '../../../../../components';
-import { NotificationManagerContext } from '../../../../../notification-manager';
+import { Panel } from 'layouts';
+import { Button } from 'forms';
+import { Popup, Icons, OverflowText } from 'components';
+import { NotificationManagerContext } from 'notification-manager';
 import { deleteScope } from '../../api';
 import { ActiveSessionsPanel } from '../active-sessions-panel';
 import { usePluginState } from '../../../store';
-import { ScopeSummary } from '../../../../../types/scope-summary';
+import { ScopeSummary } from 'types/scope-summary';
 
 import styles from './delete-scope-modal.module.scss';
 

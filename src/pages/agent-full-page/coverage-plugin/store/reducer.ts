@@ -1,6 +1,6 @@
 import { PluginState, ModalName } from './store-types';
-import { ScopeSummary } from '../../../../types/scope-summary';
-import { ActiveSessions } from '../../../../types/active-sessions';
+import { ScopeSummary } from 'types/scope-summary';
+import { ActiveSessions } from 'types/active-sessions';
 
 const OPEN_MODAL = 'OPEN_MODAL';
 const SET_ACTIVE_SESSIONS = 'SET_ACTIVE_SESSIONS';

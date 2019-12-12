@@ -2,9 +2,9 @@ import * as React from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
 
-import { SelectableTable, Column, Badge } from '../../../../components';
-import { Inputs } from '../../../../forms';
-import { Plugin } from '../../../../types/plugin';
+import { SelectableTable, Column, Badge } from 'components';
+import { Inputs } from 'forms';
+import { Plugin } from 'types/plugin';
 
 import styles from './plugins-settings-table.module.scss';
 

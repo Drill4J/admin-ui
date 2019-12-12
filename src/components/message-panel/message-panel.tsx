@@ -1,9 +1,9 @@
 import * as React from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 
-import { Panel } from '../../layouts';
-import { Icons } from '../icon';
-import { Message } from '../../types/message';
+import { Panel } from 'layouts';
+import { Icons } from 'components';
+import { Message } from 'types/message';
 
 import styles from './message-panel.module.scss';
 

@@ -1,14 +1,14 @@
 import * as React from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 
-import { Modal } from '../../../../components';
-import { Button } from '../../../../forms';
-import { useWsConnection } from '../../../../hooks';
-import { defaultAdminSocket } from '../../../../common/connection';
-import { NotificationManagerContext } from '../../../../notification-manager';
+import { Modal } from 'components';
+import { Button } from 'forms';
+import { useWsConnection } from 'hooks';
+import { defaultAdminSocket } from 'common/connection';
+import { NotificationManagerContext } from 'notification-manager';
 import { SelectableList } from './selectable-list';
 import { loadPlugins } from './load-plugins';
-import { Plugin } from '../../../../types/plugin';
+import { Plugin } from 'types/plugin';
 
 import styles from './add-plugins-modal.module.scss';
 

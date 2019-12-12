@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { Inputs } from '../../forms';
+import { Inputs } from 'forms';
 import { Table } from './table';
 import { Column } from './column';
 

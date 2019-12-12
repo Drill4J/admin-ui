@@ -2,14 +2,14 @@ import * as React from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
 
-import { Table, Column, Menu } from '../../../components';
-import { defaultAdminSocket } from '../../../common/connection';
-import { useWsConnection, useElementSize } from '../../../hooks';
+import { Panel } from 'layouts';
+import { Table, Column, Menu } from 'components';
+import { defaultAdminSocket } from 'common/connection';
+import { useWsConnection, useElementSize } from 'hooks';
 import { setBuildVersion, usePluginDispatch } from '../store';
 import { RenameBuildVersionModal } from './rename-build-version-modal';
-import { Panel } from '../../../layouts';
-import { dateFormatter } from '../../../utils';
-import { BuildVersion } from '../../../types/build-version';
+import { dateFormatter } from 'utils';
+import { BuildVersion } from 'types/build-version';
 
 import styles from './build-list.module.scss';
 

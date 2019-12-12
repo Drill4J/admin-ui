@@ -1,4 +1,5 @@
 import React from 'react';
+
 import { GenericIcon } from './generic-icon';
 
 interface Settings {

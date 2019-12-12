@@ -2,20 +2,13 @@ import * as React from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 import { Form, Field } from 'react-final-form';
 
-import { Panel } from '../../../../../layouts';
-import {
-  Button,
-  Fields,
-  FormGroup,
-  composeValidators,
-  sizeLimit,
-  required,
-} from '../../../../../forms';
-import { Popup, Icons } from '../../../../../components';
-import { NotificationManagerContext } from '../../../../../notification-manager';
+import { Panel } from 'layouts';
+import { Button, Fields, FormGroup, composeValidators, sizeLimit, required } from 'forms';
+import { Popup, Icons } from 'components';
+import { NotificationManagerContext } from 'notification-manager';
 import { renameScope } from '../../api';
 import { usePluginState } from '../../../store';
-import { ScopeSummary } from '../../../../../types/scope-summary';
+import { ScopeSummary } from 'types/scope-summary';
 
 import styles from './rename-scope-modal.module.scss';
 

@@ -1,10 +1,10 @@
 import * as React from 'react';
 import { BEM, div } from '@redneckz/react-bem-helper';
 
-import { Modal, Icons } from '../../../../../components';
+import { Modal, Icons } from 'components';
 import { useBuildVersion } from '../../use-build-version';
 import { ItemInfo } from './item-info';
-import { AssociatedTests } from '../../../../../types/associated-tests';
+import { AssociatedTests } from 'types/associated-tests';
 
 import styles from './associated-test-modal.module.scss';
 
@@ -23,12 +23,9 @@ export const AssociatedTestModal = associatedTestModal(
     const associatedTests = useBuildVersion<AssociatedTests[]>(associatedTestsTopic) || [];
     const { tests = [], packageName = '', className: testClassName = '', methodName = '' } =
       associatedTests.find((test) => test.id === id) || {};
-    const testsMap = tests.reduce(
-      (acc, { type = '', name = '' }) => {
-        return { ...acc, [type]: acc[type] ? [...acc[type], name] : [name] };
-      },
-      {} as { [testType: string]: string[] },
-    );
+    const testsMap = tests.reduce((acc, { type = '', name = '' }) => {
+      return { ...acc, [type]: acc[type] ? [...acc[type], name] : [name] };
+    }, {} as { [testType: string]: string[] });
     const [expandedSection, setExpandedSection] = React.useState('');
 
     return (

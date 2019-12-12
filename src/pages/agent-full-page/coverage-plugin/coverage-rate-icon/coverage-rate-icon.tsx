@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { BEM, div } from '@redneckz/react-bem-helper';
 
-import { Icons } from '../../../../components';
+import { Icons } from 'components';
 
 import styles from './coverage-rate-icon.module.scss';
 

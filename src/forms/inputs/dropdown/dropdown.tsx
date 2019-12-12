@@ -1,9 +1,9 @@
 import * as React from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 
-import { Icons } from '../../../components';
-import { Panel } from '../../../layouts';
-import { useClickOutside } from '../../../hooks';
+import { Icons } from 'components';
+import { Panel } from 'layouts';
+import { useClickOutside } from 'hooks';
 
 import styles from './dropdown.module.scss';
 

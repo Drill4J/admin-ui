@@ -2,15 +2,15 @@ import * as React from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 import { withRouter, RouteComponentProps, matchPath } from 'react-router-dom';
 
-import { Panel } from '../../../../../layouts';
-import { Button, Inputs } from '../../../../../forms';
-import { Popup, Icons, OverflowText } from '../../../../../components';
-import { NotificationManagerContext } from '../../../../../notification-manager';
+import { Panel } from 'layouts';
+import { Button, Inputs } from 'forms';
+import { Popup, Icons, OverflowText } from 'components';
+import { NotificationManagerContext } from 'notification-manager';
 import { finishScope } from '../../api';
 import { ScopeSummary } from './scope-summary';
 import { ActiveSessionsPanel } from '../active-sessions-panel';
 import { usePluginState } from '../../../store';
-import { ScopeSummary as ScopeSummaryType } from '../../../../../types/scope-summary';
+import { ScopeSummary as ScopeSummaryType } from 'types/scope-summary';
 
 import styles from './finish-scope-modal.module.scss';
 

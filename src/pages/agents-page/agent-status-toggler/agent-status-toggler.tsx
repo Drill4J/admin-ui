@@ -1,10 +1,10 @@
 import * as React from 'react';
 
-import { Panel } from '../../../layouts';
-import { Spinner } from '../../../components';
-import { Inputs } from '../../../forms';
-import { AGENT_STATUS } from '../../../common/constants';
-import { AgentStatus } from '../../../types/AgentStatus';
+import { Panel } from 'layouts';
+import { Spinner } from 'components';
+import { Inputs } from 'forms';
+import { AGENT_STATUS } from 'common/constants';
+import { AgentStatus } from 'types/AgentStatus';
 
 interface Props {
   className?: string;

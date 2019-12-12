@@ -1,9 +1,8 @@
 import * as React from 'react';
 import { BEM, span } from '@redneckz/react-bem-helper';
 
-import { Panel } from '../../../../../layouts';
-import { percentFormatter } from '../../../../../utils';
-import { camelToTitle } from '../../../../../utils';
+import { Panel } from 'layouts';
+import { percentFormatter, camelToTitle } from 'utils';
 
 import styles from './section-tooltip.module.scss';
 

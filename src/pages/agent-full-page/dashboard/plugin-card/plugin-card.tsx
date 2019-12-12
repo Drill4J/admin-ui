@@ -2,7 +2,7 @@ import * as React from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 import { Link } from 'react-router-dom';
 
-import { Panel } from '../../../../layouts';
+import { Panel } from 'layouts';
 
 import styles from './plugin-card.module.scss';
 

@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
+
 import { Panel } from '../panel';
 
 import styles from './plugins-layout.module.scss';

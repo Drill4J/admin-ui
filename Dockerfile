@@ -25,7 +25,7 @@ ENV REACT_APP_ENV "$ENV"
 ENV REACT_APP_VERSION "$VERSION"
 
 # Copy app settings
-COPY package.json yarn.lock .env ./
+COPY package.json yarn.lock ./
 RUN yarn
 
 # Copy app sources

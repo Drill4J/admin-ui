@@ -2,7 +2,7 @@ import * as React from 'react';
 import { BEM, tag } from '@redneckz/react-bem-helper';
 
 import packageJson from '../../../package.json';
-import { Panel } from '../../layouts';
+import { Panel } from 'layouts';
 
 import styles from './footer.module.scss';
 

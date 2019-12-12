@@ -2,11 +2,11 @@ import * as React from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 import axios from 'axios';
 
-import { Panel } from '../../../layouts';
-import { Popup, Icons } from '../../../components';
-import { Button } from '../../../forms';
-import { NotificationManagerContext } from '../../../notification-manager';
-import { Message } from '../../../types/message';
+import { Panel } from 'layouts';
+import { Popup, Icons } from 'components';
+import { Button } from 'forms';
+import { NotificationManagerContext } from 'notification-manager';
+import { Message } from 'types/message';
 
 import styles from './unregister-agent-modal.module.scss';
 

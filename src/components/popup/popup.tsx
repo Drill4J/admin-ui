@@ -1,9 +1,9 @@
 import * as React from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 
-import { Panel } from '../../layouts';
+import { Panel } from 'layouts';
+import { Icons } from 'components';
 import { Portal } from '../portal';
-import { Icons } from '../icon';
 
 import styles from './popup.module.scss';
 
