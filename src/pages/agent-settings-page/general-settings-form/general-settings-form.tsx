@@ -3,12 +3,12 @@ import { BEM } from '@redneckz/react-bem-helper';
 import { Form, Field } from 'react-final-form';
 import axios from 'axios';
 
-import { Panel } from '../../../layouts';
-import { Icons } from '../../../components';
-import { Fields, FormGroup, composeValidators, required, sizeLimit, Button } from '../../../forms';
-import { copyToClipboard } from '../../../utils';
-import { Agent } from '../../../types/agent';
-import { Message } from '../../../types/message';
+import { Panel } from 'layouts';
+import { Icons } from 'components';
+import { Fields, FormGroup, composeValidators, required, sizeLimit, Button } from 'forms';
+import { copyToClipboard } from 'utils';
+import { Agent } from 'types/agent';
+import { Message } from 'types/message';
 
 import styles from './general-settings-form.module.scss';
 

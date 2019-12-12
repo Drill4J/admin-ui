@@ -1,8 +1,7 @@
 import * as React from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 
-import { Table } from '../table';
-import { Column } from '../column';
+import { Table, Column } from 'components';
 import { RowExpander } from './row-expander';
 
 import styles from './expandable-table.module.scss';

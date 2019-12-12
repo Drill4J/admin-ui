@@ -2,19 +2,12 @@ import * as React from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 import { Field, withTypes } from 'react-final-form';
 
-import { Panel } from '../../../../layouts';
-import {
-  Button,
-  Fields,
-  FormGroup,
-  composeValidators,
-  sizeLimit,
-  required,
-} from '../../../../forms';
-import { Popup, Icons } from '../../../../components';
-import { NotificationManagerContext } from '../../../../notification-manager';
+import { Panel } from 'layouts';
+import { Button, Fields, FormGroup, composeValidators, sizeLimit, required } from 'forms';
+import { Popup, Icons } from 'components';
+import { NotificationManagerContext } from 'notification-manager';
 import { renameBuildVersion } from '../../api';
-import { BuildVersion } from '../../../../types/build-version';
+import { BuildVersion } from 'types/build-version';
 
 import styles from './rename-build-version-modal.module.scss';
 

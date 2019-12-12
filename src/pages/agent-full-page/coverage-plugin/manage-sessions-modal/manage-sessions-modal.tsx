@@ -2,17 +2,10 @@ import * as React from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 import { Form, Field } from 'react-final-form';
 
-import { Panel } from '../../../../layouts';
-import {
-  Button,
-  Fields,
-  FormGroup,
-  composeValidators,
-  sizeLimit,
-  required,
-} from '../../../../forms';
-import { Popup, Icons } from '../../../../components';
-import { NotificationManagerContext } from '../../../../notification-manager';
+import { Panel } from 'layouts';
+import { Button, Fields, FormGroup, composeValidators, sizeLimit, required } from 'forms';
+import { Popup, Icons } from 'components';
+import { NotificationManagerContext } from 'notification-manager';
 import { manageSession } from '../api';
 import { usePluginState } from '../../store';
 

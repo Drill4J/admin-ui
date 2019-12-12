@@ -5,8 +5,8 @@ import { useBuildVersion } from '../use-build-version';
 import { ActionSection } from './action-section';
 import { RisksModal } from '../risks-modal';
 import { TestsToRunModal } from '../tests-to-run-modal';
-import { Risks } from '../../../../types/risks';
-import { TestsToRun } from '../../../../types/tests-to-run';
+import { Risks } from 'types/risks';
+import { TestsToRun } from 'types/tests-to-run';
 
 import styles from './coverage-plugin-header.module.scss';
 

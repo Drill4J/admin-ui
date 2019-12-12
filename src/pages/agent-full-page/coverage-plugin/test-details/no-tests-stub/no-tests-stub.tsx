@@ -1,9 +1,9 @@
 import * as React from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 
-import { Icons } from '../../../../../components';
+import { Icons } from 'components';
+import { AGENT_STATUS } from 'common/constants';
 import { usePluginState } from '../../../store';
-import { AGENT_STATUS } from '../../../../../common/constants';
 
 import styles from './no-tests-stub.module.scss';
 

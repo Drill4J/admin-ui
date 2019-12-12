@@ -2,9 +2,9 @@ import * as React from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 import { Link } from 'react-router-dom';
 
-import { Panel } from '../../../../layouts';
-import { Icons, TabsPanel, Tab } from '../../../../components';
-import { percentFormatter } from '../../../../utils';
+import { Panel } from 'layouts';
+import { Icons, TabsPanel, Tab } from 'components';
+import { percentFormatter } from 'utils';
 import { useBuildVersion } from '../use-build-version';
 import { CoverageDetails } from '../coverage-details';
 import { CodeCoverageCard, DetailedCodeCoverageCard } from '../code-coverage-card';
@@ -13,10 +13,10 @@ import { ScopeTimer } from '../scope';
 import { usePluginState } from '../../store';
 import { Tests } from '../tests';
 import { ActiveScopeActions } from './active-scope-actions';
-import { Coverage } from '../../../../types/coverage';
-import { ClassCoverage } from '../../../../types/class-coverage';
-import { ScopeSummary } from '../../../../types/scope-summary';
-import { Methods } from '../../../../types/methods';
+import { Coverage } from 'types/coverage';
+import { ClassCoverage } from 'types/class-coverage';
+import { ScopeSummary } from 'types/scope-summary';
+import { Methods } from 'types/methods';
 
 import styles from './overview.module.scss';
 

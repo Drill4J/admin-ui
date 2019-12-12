@@ -2,13 +2,13 @@ import * as React from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
 
-import { Icons } from '../../../components';
-import { Button } from '../../../forms';
-import { useAgent } from '../../../hooks';
+import { Panel } from 'layouts';
+import { Icons } from 'components';
+import { Button } from 'forms';
+import { useAgent } from 'hooks';
 import { PluginsSettingsTable } from './plugins-settings-table';
 import { AddPluginsModal } from './add-plugins-modal';
 import { NoPluginsStub } from './no-plugins-stub';
-import { Panel } from '../../../layouts';
 
 import styles from './plugins-settings.module.scss';
 

@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
+
 import { TableRow } from './table__row';
 import { TableHeader } from './table__header';
 

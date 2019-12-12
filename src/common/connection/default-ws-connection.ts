@@ -6,7 +6,7 @@ export const getSocketUrl = (socket: string) => {
   const token = localStorage.getItem(TOKEN_KEY);
 
   return `ws://${
-    process.env.REACT_APP_ENV ? window.location.host : 'ecse005002af.epam.com:8443'
+    process.env.REACT_APP_ENV ? window.location.host : 'ecse005002af.epam.com:8090'
   }/ws/${socket}?token=${token}`;
 };
 

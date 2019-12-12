@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { Agent } from '../../types/agent';
+import { Agent } from 'types/agent';
 
 export function registerAgent(onSuccess: () => void) {
   return async (

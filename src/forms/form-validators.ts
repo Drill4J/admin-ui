@@ -1,4 +1,4 @@
-import { camelToSpaces } from '../utils';
+import { camelToSpaces } from 'utils';
 
 type FormValidationResult = { [key: string]: string } | undefined;
 type FormValidator = (formValues: {

@@ -2,7 +2,7 @@ import * as React from 'react';
 import { withRouter, RouteComponentProps, matchPath } from 'react-router-dom';
 
 import { useAgent, useWsConnection } from '../../hooks';
-import { defaultAdminSocket } from '../../common/connection';
+import { defaultAdminSocket } from 'common/connection';
 import { usePluginDispatch, setInitialConfig, setAgent } from './store';
 
 interface Props extends RouteComponentProps {

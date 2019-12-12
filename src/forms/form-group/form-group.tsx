@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 
-import { Panel } from '../../layouts';
+import { Panel } from 'layouts';
 
 import styles from './form-group.module.scss';
 

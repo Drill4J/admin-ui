@@ -2,11 +2,11 @@ import * as React from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
 
-import { PageHeader, Icons, Tab, TabsPanel, Menu } from '../../components';
-import { Panel } from '../../layouts';
-import { useAgent } from '../../hooks';
-import { AGENT_STATUS } from '../../common/constants';
-import { NotificationManagerContext } from '../../notification-manager';
+import { PageHeader, Icons, Tab, TabsPanel, Menu } from 'components';
+import { Panel } from 'layouts';
+import { useAgent } from 'hooks';
+import { AGENT_STATUS } from 'common/constants';
+import { NotificationManagerContext } from 'notification-manager';
 import { GeneralSettingsForm } from './general-settings-form';
 import { SystemSettingsForm } from './system-setting-form';
 import { UnregisterAgentModal } from './unregister-agent-modal';

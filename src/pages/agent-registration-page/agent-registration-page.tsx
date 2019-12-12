@@ -2,10 +2,10 @@ import * as React from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
 
-import { PageHeader, Icons, Wizard, Step } from '../../components';
-import { Panel } from '../../layouts';
-import { Button, requiredArray, composeValidators, required, sizeLimit } from '../../forms';
-import { useAgent } from '../../hooks';
+import { PageHeader, Icons, Wizard, Step } from 'components';
+import { Panel } from 'layouts';
+import { Button, requiredArray, composeValidators, required, sizeLimit } from 'forms';
+import { useAgent } from 'hooks';
 import { GeneralSettingsForm } from './general-settings-form';
 import { SystemSettingsForm } from './system-setting-form';
 import { CancelAgentRegistrationModal } from './cancel-agent-registration-modal';

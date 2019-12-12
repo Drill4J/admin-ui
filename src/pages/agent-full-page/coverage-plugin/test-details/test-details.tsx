@@ -1,14 +1,14 @@
 import * as React from 'react';
 import { BEM, span, div } from '@redneckz/react-bem-helper';
 
-import { Column, ExpandableTable, Icons, OverflowText } from '../../../../components';
-import { Panel } from '../../../../layouts';
+import { Column, ExpandableTable, Icons, OverflowText } from 'components';
+import { Panel } from 'layouts';
+import { percentFormatter } from 'utils';
 import { NoTestsStub } from './no-tests-stub';
-import { AssociatedTests } from '../../../../types/associated-tests';
-import { percentFormatter } from '../../../../utils';
 import { CoveredMethodsByTestSidebar } from './covered-methods-by-test-sidebar';
 import { CoveredMethodsByTestTypeSidebar } from './covered-methods-by-test-type-sidebar';
-import { MethodCoveredByTest } from '../../../../types/method-covered-by-test';
+import { AssociatedTests } from 'types/associated-tests';
+import { MethodCoveredByTest } from 'types/method-covered-by-test';
 
 import styles from './test-details.module.scss';
 

@@ -2,7 +2,7 @@ import * as React from 'react';
 import { BEM, span } from '@redneckz/react-bem-helper';
 
 import { MethodsSidebar } from '../../methods-sidebar';
-import { MethodsInfo } from '../../../../../types/methods-info';
+import { MethodsInfo } from 'types/methods-info';
 
 import styles from './methods-section.module.scss';
 

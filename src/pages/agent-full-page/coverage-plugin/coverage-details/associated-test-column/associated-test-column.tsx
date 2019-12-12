@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 
-import { ClassCoverage } from '../../../../../types/class-coverage';
+import { ClassCoverage } from 'types/class-coverage';
 
 import styles from './associated-test-column.module.scss';
 

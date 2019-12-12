@@ -2,10 +2,10 @@ import * as React from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 import VirtualList from 'react-tiny-virtual-list';
 
-import { Modal, Icons, OverflowText } from '../../../../components';
-import { useElementSize } from '../../../../hooks';
+import { Modal, Icons, OverflowText } from 'components';
+import { useElementSize } from 'hooks';
 import { CoverageRateIcon } from '../coverage-rate-icon';
-import { MethodsDetails } from '../../../../types/methods-details';
+import { MethodsDetails } from 'types/methods-details';
 
 import styles from './methods-sidebar.module.scss';
 

@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 
-import { Icons } from '../../../components';
+import { Icons } from 'components';
 
 import styles from './error-panel.module.scss';
 

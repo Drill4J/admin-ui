@@ -9,7 +9,7 @@ import { Tests } from './tests';
 import { CoveragePluginModals } from './covarage-plugin-modals';
 import { CoveragePluginProvider } from './store';
 import { InitialDataController } from './initial-data-controller';
-import { Agent } from '../../../types/agent';
+import { Agent } from 'types/agent';
 
 import styles from './coverage-plugin.module.scss';
 

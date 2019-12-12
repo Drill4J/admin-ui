@@ -2,8 +2,8 @@ import * as React from 'react';
 
 import { TestDetails } from '../test-details';
 import { useBuildVersion } from '../use-build-version';
-import { AssociatedTests } from '../../../../types/associated-tests';
-import { MethodCoveredByTest } from '../../../../types/method-covered-by-test';
+import { AssociatedTests } from 'types/associated-tests';
+import { MethodCoveredByTest } from 'types/method-covered-by-test';
 
 export const Tests = () => {
   const testsUsages = useBuildVersion<AssociatedTests[]>('/build/tests-usages') || [];

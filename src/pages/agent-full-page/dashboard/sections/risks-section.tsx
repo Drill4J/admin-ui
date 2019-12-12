@@ -1,12 +1,12 @@
 import * as React from 'react';
 
+import { Panel } from 'layouts';
+import { Icons, Tooltip } from 'components';
 import { useBuildVersion } from '../../coverage-plugin/use-build-version';
 import { SingleBar } from '../single-bar';
 import { Section } from './section';
-import { Risks } from '../../../../types/risks';
-import { Icons, Tooltip } from '../../../../components';
-import { Panel } from '../../../../layouts';
 import { SectionTooltip } from './section-tooltip';
+import { Risks } from 'types/risks';
 
 export const RisksSection = () => {
   const { newMethods = [], modifiedMethods = [] } = useBuildVersion<Risks>(`/build/risks`) || {};
