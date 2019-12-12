@@ -1,4 +1,4 @@
-FROM nginx:1.15.8-alpine-perl
+FROM nginx:1.17.6-alpine-perl
 
 # Build args
 ARG ENV
@@ -18,7 +18,9 @@ RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app
 
 # support running as arbitrary user which belogs to the root group
-RUN chmod -R g+rwx /var/cache/nginx /var/run /var/log/nginx /usr/src/app
+RUN chmod g+rwx /var/cache/nginx /var/run /var/log/nginx /usr/src/app
+RUN addgroup nginx root
+USER nginx
 
 # Define environment
 ENV REACT_APP_ENV "$ENV"
