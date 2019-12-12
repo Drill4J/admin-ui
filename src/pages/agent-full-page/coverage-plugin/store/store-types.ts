@@ -1,5 +1,5 @@
-import { ScopeSummary } from '../../../../types/scope-summary';
-import { ActiveSessions } from '../../../../types/active-sessions';
+import { ScopeSummary } from 'types/scope-summary';
+import { ActiveSessions } from 'types/active-sessions';
 
 export type ModalName =
   | 'RenameScopeModal'

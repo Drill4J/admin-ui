@@ -2,15 +2,15 @@ import * as React from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
 
-import { Table, Column, Menu } from '../../../../../components';
-import { percentFormatter } from '../../../../../utils';
+import { Table, Column, Menu } from 'components';
+import { percentFormatter } from 'utils';
 import { useBuildVersion } from '../../use-build-version';
 import { toggleScope } from '../../api';
 import { usePluginState } from '../../../store';
 import { useCoveragePluginDispatch, useCoveragePluginState, openModal } from '../../store';
 import { ScopeTimer } from '../scope-timer';
-import { ScopeSummary } from '../../../../../types/scope-summary';
-import { NotificationManagerContext } from '../../../../../notification-manager';
+import { ScopeSummary } from 'types/scope-summary';
+import { NotificationManagerContext } from 'notification-manager';
 
 import styles from './scopes-list.module.scss';
 

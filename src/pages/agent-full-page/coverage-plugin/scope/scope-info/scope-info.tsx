@@ -2,9 +2,9 @@ import * as React from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
 
-import { Panel } from '../../../../../layouts';
-import { Button } from '../../../../../forms';
-import { TabsPanel, Tab, Icons, Menu } from '../../../../../components';
+import { Panel } from 'layouts';
+import { Button } from 'forms';
+import { TabsPanel, Tab, Icons, Menu } from 'components';
 import { useBuildVersion } from '../../use-build-version';
 import { DetailedCodeCoverageCard } from '../../code-coverage-card';
 import { ProjectMethodsCard } from '../../project-methods-card';
@@ -14,13 +14,13 @@ import { toggleScope } from '../../api';
 import { usePluginState } from '../../../store';
 import { useCoveragePluginDispatch, openModal } from '../../store';
 import { ScopeTimer } from '../scope-timer';
-import { ScopeSummary } from '../../../../../types/scope-summary';
-import { Coverage } from '../../../../../types/coverage';
-import { Methods } from '../../../../../types/methods';
-import { ClassCoverage } from '../../../../../types/class-coverage';
-import { AssociatedTests } from '../../../../../types/associated-tests';
-import { NotificationManagerContext } from '../../../../../notification-manager';
-import { MethodCoveredByTest } from '../../../../../types/method-covered-by-test';
+import { ScopeSummary } from 'types/scope-summary';
+import { Coverage } from 'types/coverage';
+import { Methods } from 'types/methods';
+import { ClassCoverage } from 'types/class-coverage';
+import { AssociatedTests } from 'types/associated-tests';
+import { NotificationManagerContext } from 'notification-manager';
+import { MethodCoveredByTest } from 'types/method-covered-by-test';
 
 import styles from './scope-info.module.scss';
 

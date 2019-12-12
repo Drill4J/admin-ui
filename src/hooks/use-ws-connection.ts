@@ -1,5 +1,5 @@
-import { DrillSocket } from '@drill4j/socket';
 import { useEffect, useState } from 'react';
+import { DrillSocket } from '@drill4j/socket';
 
 export function useWsConnection<Data>(socket: DrillSocket, topic: string, message?: object) {
   const [data, setData] = useState<Data | null>(null);

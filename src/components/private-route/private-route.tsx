@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { RouteProps, Route, Redirect } from 'react-router-dom';
 
-import { TOKEN_KEY } from '../../common/constants';
+import { TOKEN_KEY } from 'common/constants';
 
 interface PrivateRouteProps extends RouteProps {
   component: React.ComponentType<any>;

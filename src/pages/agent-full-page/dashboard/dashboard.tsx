@@ -5,7 +5,7 @@ import { usePluginState } from '../store';
 import { PluginCard } from './plugin-card';
 import { NoPluginsStub } from './no-plugins-stub';
 import { CoverageSection, TestsSection, RisksSection, TestsToRunSection } from './sections';
-import { Agent } from '../../../types/agent';
+import { Agent } from 'types/agent';
 
 import styles from './dashboard.module.scss';
 

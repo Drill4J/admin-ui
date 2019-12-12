@@ -1,7 +1,7 @@
 import * as React from 'react';
 
-import { MessagePanel } from '../components';
-import { Message } from '../types/message';
+import { MessagePanel } from 'components';
+import { Message } from 'types/message';
 
 interface Props {
   className?: string;

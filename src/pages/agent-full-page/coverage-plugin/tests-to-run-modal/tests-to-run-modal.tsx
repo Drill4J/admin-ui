@@ -1,10 +1,10 @@
 import * as React from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 
-import { Icons, Modal } from '../../../../components';
-import { Inputs } from '../../../../forms';
-import { Panel } from '../../../../layouts';
-import { copyToClipboard } from '../../../../utils';
+import { Icons, Modal } from 'components';
+import { Inputs } from 'forms';
+import { Panel } from 'layouts';
+import { copyToClipboard } from 'utils';
 import { usePluginState } from '../../store';
 
 import styles from './tests-to-run-modal.module.scss';

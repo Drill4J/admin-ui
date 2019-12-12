@@ -3,20 +3,13 @@ import { BEM, div } from '@redneckz/react-bem-helper';
 import { Field, Form } from 'react-final-form';
 import axios from 'axios';
 
-import { Panel } from '../../../layouts';
-import { Icons, Tooltip } from '../../../components';
-import {
-  Fields,
-  requiredArray,
-  Button,
-  FormGroup,
-  composeValidators,
-  sizeLimit,
-} from '../../../forms';
-import { Agent } from '../../../types/agent';
-import { Message } from '../../../types/message';
-import { parsePackges, formatPackages } from '../../../utils';
+import { Panel } from 'layouts';
+import { Icons, Tooltip } from 'components';
+import { Fields, requiredArray, Button, FormGroup, composeValidators, sizeLimit } from 'forms';
+import { parsePackges, formatPackages } from 'utils';
 import { UnlockingSystemSettingsFormModal } from './unlocking-system-settings-form-modal';
+import { Agent } from 'types/agent';
+import { Message } from 'types/message';
 
 import styles from './system-settings-form.module.scss';
 

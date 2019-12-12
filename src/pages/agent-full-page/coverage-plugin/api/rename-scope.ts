@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-import { ScopeSummary } from '../../../../types/scope-summary';
+import { ScopeSummary } from 'types/scope-summary';
 
 export function renameScope(
   agentId: string,

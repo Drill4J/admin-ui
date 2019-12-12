@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
 
-import { useWsConnection } from '../../hooks';
-import { defaultAdminSocket } from '../../common/connection';
-import { Notification } from '../../types/notificaiton';
-import { NewBuildNotification } from '../../types/new-build-notification';
+import { useWsConnection } from 'hooks';
+import { defaultAdminSocket } from 'common/connection';
+import { Notification } from 'types/notificaiton';
+import { NewBuildNotification } from 'types/new-build-notification';
 
 export function useNotification() {
   const [notification = {}] =

@@ -1,11 +1,11 @@
 import * as React from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 
-import { Panel } from '../../../../../../layouts';
-import { Icons } from '../../../../../../components';
-import { percentFormatter } from '../../../../../../utils';
+import { Panel } from 'layouts';
+import { Icons } from 'components';
+import { percentFormatter } from 'utils';
 import { useCoveragePluginState } from '../../../store';
-import { TestTypeSummary } from '../../../../../../types/test-type-summary';
+import { TestTypeSummary } from 'types/test-type-summary';
 
 import styles from './coverage-distribution.module.scss';
 

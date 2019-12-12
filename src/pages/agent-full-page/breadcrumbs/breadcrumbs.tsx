@@ -2,7 +2,7 @@ import * as React from 'react';
 import { BEM, div } from '@redneckz/react-bem-helper';
 import { withRouter, RouteComponentProps, matchPath } from 'react-router-dom';
 
-import { kebabToPascalCase, camelToTitle } from '../../../utils';
+import { kebabToPascalCase, camelToTitle } from 'utils';
 import { usePluginState } from '../store';
 
 import styles from './breadcrumbs.module.scss';

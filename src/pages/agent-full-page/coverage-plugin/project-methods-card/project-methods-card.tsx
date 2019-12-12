@@ -1,11 +1,11 @@
 import * as React from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 
-import { Icons } from '../../../../components';
-import { Panel } from '../../../../layouts';
+import { Icons } from 'components';
+import { Panel } from 'layouts';
 import { Card } from '../card';
 import { MethodsSection } from './methods-section';
-import { Methods } from '../../../../types/methods';
+import { Methods } from 'types/methods';
 
 import styles from './project-methods-card.module.scss';
 

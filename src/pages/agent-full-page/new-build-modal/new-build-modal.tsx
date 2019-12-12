@@ -2,14 +2,14 @@ import * as React from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
 
-import { Button } from '../../../forms';
-import { Popup } from '../../../components';
+import { Button } from 'forms';
+import { Popup } from 'components';
 import { readNotification } from '../api';
 import { BuildUpdates } from './build-updates';
 import { BuildAlias } from './build-alias';
 import { RecommendedActions } from './recommended-actions';
 import { Header } from './header';
-import { NewBuildNotification } from '../../../types/new-build-notification';
+import { NewBuildNotification } from 'types/new-build-notification';
 
 import styles from './new-build-modal.module.scss';
 

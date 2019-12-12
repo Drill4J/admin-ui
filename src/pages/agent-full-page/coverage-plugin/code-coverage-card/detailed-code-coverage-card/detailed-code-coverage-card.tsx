@@ -1,11 +1,11 @@
 import * as React from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 
-import { Panel } from '../../../../../layouts';
-import { Icons } from '../../../../../components';
-import { percentFormatter } from '../../../../../utils';
+import { Panel } from 'layouts';
+import { Icons } from 'components';
+import { percentFormatter } from 'utils';
 import { CoverageDistribution } from './coverage-distribution';
-import { Coverage } from '../../../../../types/coverage';
+import { Coverage } from 'types/coverage';
 
 import styles from './detailed-code-coverage-card.module.scss';
 

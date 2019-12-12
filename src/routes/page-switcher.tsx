@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
 
-import { AppLayout } from '../layouts';
+import { AppLayout } from 'layouts';
 import {
   LoginPage,
   AgentsPage,
@@ -12,8 +12,8 @@ import {
   AgentFullPage,
   AgentSettingsPage,
   AgentRegistrationPage,
-} from '../pages';
-import { PrivateRoute, Icons, Sidebar, Toolbar, Divider, Footer } from '../components';
+} from 'pages';
+import { PrivateRoute, Icons, Sidebar, Toolbar, Divider, Footer } from 'components';
 
 const sidebarLinks = [
   { link: 'agents', icon: Icons.Agents },

@@ -1,10 +1,10 @@
 import * as React from 'react';
 import { BEM, capitalize } from '@redneckz/react-bem-helper';
 
-import { Panel } from '../../../../../layouts';
-import { Icons, Modal } from '../../../../../components';
+import { Panel } from 'layouts';
+import { Icons, Modal } from 'components';
 import { MethodsList } from '../methods-list';
-import { MethodCoveredByTest } from '../../../../../types/method-covered-by-test';
+import { MethodCoveredByTest } from 'types/method-covered-by-test';
 
 import styles from './covered-methods-by-test-sidebar.module.scss';
 

@@ -2,7 +2,7 @@ import * as React from 'react';
 import { BEM, div } from '@redneckz/react-bem-helper';
 import VisibilitySensor from 'react-visibility-sensor';
 
-import { Icons } from '../icon';
+import { Icons } from 'components';
 
 import styles from './menu.module.scss';
 

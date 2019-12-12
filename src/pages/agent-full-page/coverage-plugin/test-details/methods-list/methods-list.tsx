@@ -2,11 +2,11 @@ import * as React from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 import VirtualList from 'react-tiny-virtual-list';
 
-import { Inputs } from '../../../../../forms';
-import { OverflowText, Icons } from '../../../../../components';
-import { useElementSize } from '../../../../../hooks';
+import { Inputs } from 'forms';
+import { OverflowText, Icons } from 'components';
+import { useElementSize } from 'hooks';
 import { CoverageRateIcon } from '../../coverage-rate-icon';
-import { MethodCoveredByTest } from '../../../../../types/method-covered-by-test';
+import { MethodCoveredByTest } from 'types/method-covered-by-test';
 
 import styles from './methods-list.module.scss';
 

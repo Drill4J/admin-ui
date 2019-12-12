@@ -3,10 +3,10 @@ import { BEM } from '@redneckz/react-bem-helper';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
 import { Field } from 'react-final-form';
 
-import { Panel } from '../../../layouts';
-import { Icons } from '../../../components';
-import { Fields, FormGroup } from '../../../forms';
-import { copyToClipboard } from '../../../utils';
+import { Panel } from 'layouts';
+import { Icons } from 'components';
+import { Fields, FormGroup } from 'forms';
+import { copyToClipboard } from 'utils';
 
 import styles from './general-settings-form.module.scss';
 

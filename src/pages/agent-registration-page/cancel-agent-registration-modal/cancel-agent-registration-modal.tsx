@@ -2,9 +2,9 @@ import * as React from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
 
-import { Panel } from '../../../layouts';
-import { Button } from '../../../forms';
-import { Popup, Icons } from '../../../components';
+import { Panel } from 'layouts';
+import { Button } from 'forms';
+import { Popup, Icons } from 'components';
 
 import styles from './cancel-agent-registration-modal.module.scss';
 

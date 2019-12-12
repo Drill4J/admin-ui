@@ -2,9 +2,9 @@ import * as React from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 import { Form } from 'react-final-form';
 
-import { Panel } from '../../layouts';
-import { Button } from '../../forms';
-import { Icons } from '../icon';
+import { Panel } from 'layouts';
+import { Button } from 'forms';
+import { Icons } from 'components';
 import { wizardReducer, previousStep, nextStep, state } from './wizard-reducer';
 
 import styles from './wizard.module.scss';

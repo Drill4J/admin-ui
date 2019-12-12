@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 
-import { Panel } from '../../../../layouts';
-import { Icons } from '../../../../components';
+import { Panel } from 'layouts';
+import { Icons } from 'components';
 import { ReactComponent as LogoSvg } from './logo.svg';
 
 import styles from './header.module.scss';

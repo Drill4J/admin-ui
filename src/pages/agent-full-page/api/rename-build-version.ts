@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-import { BuildVersion } from '../../../types/build-version';
+import { BuildVersion } from 'types/build-version';
 
 export function renameBuildVersion(
   agentId: string,

@@ -1,14 +1,14 @@
 import * as React from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 
-import { Panel } from '../../../../../layouts';
-import { percentFormatter } from '../../../../../utils';
+import { Panel } from 'layouts';
+import { percentFormatter } from 'utils';
 import { useBuildVersion } from '../../../coverage-plugin/use-build-version';
 import { SingleBar } from '../../single-bar';
 import { Section } from '../section';
-import { Coverage } from '../../../../../types/coverage';
-import { Icons, Tooltip } from '../../../../../components';
-import { Methods } from '../../../../../types/methods';
+import { Coverage } from 'types/coverage';
+import { Icons, Tooltip } from 'components';
+import { Methods } from 'types/methods';
 
 import styles from './coverage-section.module.scss';
 import { SectionTooltip } from '../section-tooltip';

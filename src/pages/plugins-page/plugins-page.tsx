@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 
-import { PageHeader, Icons } from '../../components';
+import { PageHeader, Icons } from 'components';
 
 import styles from './plugins-page.module.scss';
 
