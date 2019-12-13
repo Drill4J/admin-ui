@@ -35,7 +35,7 @@ export const CoveredMethodsByTestSidebar = coveredMethodsByTestSidebar(
       <Modal isOpen={isOpen} onToggle={onToggle}>
         <div className={className}>
           <Header>
-            <Icons.Test height={20} width={18} viewBox="0 0 18 20" />
+            <Icons.Function height={18} width={18} />
             <span>Covered methods</span>
             <h2>{allMethods.length}</h2>
           </Header>

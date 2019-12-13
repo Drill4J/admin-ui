@@ -21,7 +21,12 @@ const coveredMethodsByTestTypeSidebar = BEM(styles);
 export const CoveredMethodsByTestTypeSidebar = coveredMethodsByTestTypeSidebar(
   ({ className, isOpen, onToggle, testType, coveredMethods = [] }: Props) => {
     const filtredMethods = coveredMethods.find(({ testType: type }) => type === testType) || {};
-    const { newMethods = [], modifiedMethods = [], unaffectedMethods = [] } = filtredMethods;
+    const {
+      newMethods = [],
+      modifiedMethods = [],
+      unaffectedMethods = [],
+      testsCount,
+    } = filtredMethods;
 
     const allMethods = newMethods.concat(modifiedMethods, unaffectedMethods);
 
@@ -29,7 +34,7 @@ export const CoveredMethodsByTestTypeSidebar = coveredMethodsByTestTypeSidebar(
       <Modal isOpen={isOpen} onToggle={onToggle}>
         <div className={className}>
           <Header>
-            <Icons.Test height={20} width={18} viewBox="0 0 18 20" />
+            <Icons.Function height={18} width={18} />
             <span>Covered methods</span>
             <h2>{allMethods.length}</h2>
           </Header>
@@ -40,7 +45,7 @@ export const CoveredMethodsByTestTypeSidebar = coveredMethodsByTestTypeSidebar(
             </Panel>
             <Panel>
               <MethodInfoLabel># of tests</MethodInfoLabel>
-              <MethodInfoValue>{allMethods.length}</MethodInfoValue>
+              <MethodInfoValue>{testsCount}</MethodInfoValue>
             </Panel>
           </Info>
           <MethodsList coveredMethods={filtredMethods} />
