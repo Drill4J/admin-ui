@@ -97,7 +97,7 @@ export const BuildList = withRouter(
                   name="unaffectedMethods"
                   HeaderCell={() => (
                     <HeaderCell>
-                      <HeaderLabel>Not Modified</HeaderLabel>
+                      <HeaderLabel>Unaffected</HeaderLabel>
                     </HeaderCell>
                   )}
                   width={columnWidth}
