@@ -1,30 +1,69 @@
 @import '~common/style-guide/index';
 
 .selectable-list {
-  display: flex;
-  flex-direction: column;
-
   &__element {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+
+    &--selected {
+      background-color: rgba(248, 231, 28, 0.1);
+    }
+  }
+
+  &__plugin-relation {
+    height: 20px;
+    width: 56px;
+    padding: 0 5px;
+    line-height: 20px;
+    font-size: 11px;
+    font-family: $semibold-font;
+    color: map-get($color-palette, white);
+
+    &--relation {
+      &--installed {
+        background-color: map-get($color-palette, middle-blue);
+      }
+      &--new {
+        background-color: map-get($color-palette, green100);
+      }
+    }
+  }
+
+  &__plugin {
     display: flex;
     align-items: center;
     flex-direction: row;
-    height: 67px;
+    width: 100%;
+    padding-bottom: 16px;
     border-bottom: 1px solid map-get($color-palette, light-blue);
+    padding-left: 42px;
 
-    & > * {
-      margin-left: 16px;
+    &--selectable {
+      padding-left: 0;
+    }
+  }
+
+  &__plugins-icon-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 16px;
+    height: 56px;
+    min-width: 56px;
+    border-radius: 8px;
+    background-color: map-get($color-palette, ultra-light-blue);
+    color: $slate-gray;
+
+    &--selected {
+      background-color: map-get($color-palette, blue100);
+      color: map-get($color-palette, white);
     }
   }
 
   &__plugin-name {
-    color: map-get($color-palette, blue100);
     font-size: 14px;
     font-family: $semibold-font;
-  }
-
-  &__plugin-description {
-    color: $slate-gray;
-    font-size: 12px;
-    line-height: 16px;
+    color: $gravel-color;
   }
 }

@@ -3,4 +3,5 @@ export interface Plugin {
   name?: string;
   description?: string;
   type?: string;
+  relation?: 'Installed' | 'New';
 }

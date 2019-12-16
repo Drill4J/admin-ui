@@ -24,7 +24,7 @@ const addPluginModal = BEM(styles);
 export const AddPluginsModal = addPluginModal(({ className, isOpen, onToggle, agentId }: Props) => {
   const [selectedPlugins, setSelectedPlugins] = React.useState<string[]>([]);
   const { showMessage } = React.useContext(NotificationManagerContext);
-  const plugins = useWsConnection<Plugin[]>(defaultAdminSocket, '/get-all-plugins');
+  const plugins = useWsConnection<Plugin[]>(defaultAdminSocket, `/${agentId}/get-plugin-info`);
   const handleLoadPlugins = loadPlugins(agentId, {
     onSuccess: () => {
       onToggle(false);
@@ -38,6 +38,7 @@ export const AddPluginsModal = addPluginModal(({ className, isOpen, onToggle, ag
       <div className={className}>
         <Header>Add new plugin</Header>
         <Content>
+          <Title>Choose one or more plugins:</Title>
           <PluginsList>
             <SelectableList
               data={plugins || []}
@@ -66,6 +67,7 @@ export const AddPluginsModal = addPluginModal(({ className, isOpen, onToggle, ag
 
 const Header = addPluginModal.header('div');
 const Content = addPluginModal.content('div');
+const Title = addPluginModal.title('div');
 const PluginsList = addPluginModal.pluginsList('div');
 const Actions = addPluginModal.actions('div');
 const AddPluginButton = addPluginModal.addPluginButton(Button);

@@ -18,3 +18,4 @@ export { Footer } from './footer';
 export { Tooltip } from './tooltip';
 export { Wizard, Step } from './wizard';
 export { FilledBadge } from './filled-badge';
+export { PluginListEntry } from './plugin-list-entry';
