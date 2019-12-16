@@ -14,7 +14,6 @@ interface Props {
   className?: string;
   showMessage: (message: Message) => void;
   agent: Agent;
-  type?: string;
 }
 
 interface TabsComponents {
@@ -37,7 +36,7 @@ export const AgentSettings = agentSettings(({ className, showMessage, agent }: P
     },
     {
       name: 'plugins',
-      component: <PluginsSettings />,
+      component: <PluginsSettings agent={agent} />,
     },
   ];
   return (

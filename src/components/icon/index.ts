@@ -92,8 +92,8 @@ export const Icons = {
   Start: declareIcon(startPath, { defaultWidth: 18, defaultHeight: 18 }),
   Info: declareIcon(infoPath, { viewBox: '0 0 20 20' }),
   TestToCodeMapping: declareIcon(testToCodeMappingPath, {
-    defaultWidth: 48,
-    defaultHeight: 48,
+    defaultWidth: 32,
+    defaultHeight: 32,
     viewBox: '0 0 32 32',
   }),
   Locked: declareIcon(lockedPath),
