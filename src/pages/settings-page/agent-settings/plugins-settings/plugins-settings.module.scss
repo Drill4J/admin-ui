@@ -19,11 +19,6 @@
     margin-right: 8px;
   }
 
-  &__content {
-    flex-grow: 1;
-    margin: 0px 24px;
-  }
-
   &__header {
     padding: 24px;
     font-size: 18px;
@@ -46,5 +41,10 @@
     span {
       margin-left: 8px;
     }
+  }
+
+  &__content {
+    flex-grow: 1;
+    margin: 0px 24px;
   }
 }

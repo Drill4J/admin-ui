@@ -14,10 +14,9 @@ interface Props {
   className?: string;
   showMessage: (message: Message) => void;
   agent: Agent;
-  type?: string;
 }
 
-interface TabsComponents {
+interface TabsComponent {
   name: string;
   component: React.ReactNode;
 }
@@ -26,7 +25,7 @@ const agentSettings = BEM(styles);
 
 export const AgentSettings = agentSettings(({ className, showMessage, agent }: Props) => {
   const [selectedTab, setSelectedTab] = React.useState('general');
-  const tabsComponents: TabsComponents[] = [
+  const tabsComponents: TabsComponent[] = [
     {
       name: 'general',
       component: <GeneralSettingsForm agent={agent} showMessage={showMessage} />,
@@ -37,7 +36,7 @@ export const AgentSettings = agentSettings(({ className, showMessage, agent }: P
     },
     {
       name: 'plugins',
-      component: <PluginsSettings />,
+      component: <PluginsSettings agent={agent} />,
     },
   ];
   return (
@@ -47,14 +46,9 @@ export const AgentSettings = agentSettings(({ className, showMessage, agent }: P
         <Tab name="system">System</Tab>
         <Tab name="plugins">Plugins</Tab>
       </Tabs>
-      {tabsComponents
-        .filter(({ name }) => name === selectedTab)
-        .map(({ name, component }) => (
-          <TabContent key={name}>{component}</TabContent>
-        ))}
+      {tabsComponents.find(({ name }) => name === selectedTab)!.component}
     </div>
   );
 });
 
 const Tabs = agentSettings.tabsPanel(TabsPanel);
-const TabContent = agentSettings.tabContent('div');

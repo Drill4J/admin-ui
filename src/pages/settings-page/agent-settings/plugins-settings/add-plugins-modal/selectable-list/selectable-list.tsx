@@ -1,7 +1,8 @@
 import * as React from 'react';
-import { BEM } from '@redneckz/react-bem-helper';
+import { BEM, div, span } from '@redneckz/react-bem-helper';
 
-import { Inputs } from 'forms';
+import { Icons } from 'components';
+import { Inputs } from '../../../../../../forms';
 
 import styles from './selectable-list.module.scss';
 
@@ -20,20 +21,30 @@ export const SelectableList = selectableList(
   ({ className, data, onSelect, idKey, selectedRows }: Props) => {
     return (
       <div className={className}>
-        {data.map((element) => (
-          <Element key={element[idKey]}>
-            <Inputs.Checkbox
-              onChange={() => {
-                selectedRows.includes(element[idKey])
-                  ? onSelect(selectedRows.filter((selectedItem) => selectedItem !== element[idKey]))
-                  : onSelect([...selectedRows, element[idKey]]);
-              }}
-              checked={selectedRows.includes(element[idKey])}
-            />
-            <div>
-              <PluginName>{element.name}</PluginName>
-              <PluginDescription>{element.description}</PluginDescription>
-            </div>
+        {data.map((plugin) => (
+          <Element key={plugin[idKey]} selected={selectedRows.includes(plugin[idKey])}>
+            <PluginRelation relation={plugin.relation}>{plugin.relation}</PluginRelation>
+            <Plugin
+              selected={selectedRows.includes(plugin[idKey])}
+              selectable={plugin.relation === 'New'}
+            >
+              {plugin.relation === 'New' && (
+                <Inputs.Checkbox
+                  onChange={() => {
+                    selectedRows.includes(plugin[idKey])
+                      ? onSelect(
+                          selectedRows.filter((selectedItem) => selectedItem !== plugin[idKey]),
+                        )
+                      : onSelect([...selectedRows, plugin[idKey]]);
+                  }}
+                  checked={selectedRows.includes(plugin[idKey])}
+                />
+              )}
+              <PluginsIconWrapper selected={selectedRows.includes(plugin[idKey])}>
+                <Icons.TestToCodeMapping />
+              </PluginsIconWrapper>
+              <PluginName>{plugin.name}</PluginName>
+            </Plugin>
           </Element>
         ))}
       </div>
@@ -41,6 +52,10 @@ export const SelectableList = selectableList(
   },
 );
 
-const Element = selectableList.element('div');
+const Element = selectableList.element(div({} as { selected?: boolean }));
+const PluginRelation = selectableList.pluginRelation(
+  span({ relation: 'Installed' } as { relation?: 'Installed' | 'New' }),
+);
+const Plugin = selectableList.plugin(div({} as { selected?: boolean; selectable?: boolean }));
+const PluginsIconWrapper = selectableList.pluginsIconWrapper(div({} as { selected?: boolean }));
 const PluginName = selectableList.pluginName('div');
-const PluginDescription = selectableList.pluginDescription('div');
