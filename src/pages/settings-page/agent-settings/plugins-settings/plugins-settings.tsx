@@ -3,17 +3,17 @@ import { BEM } from '@redneckz/react-bem-helper';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
 
 import { Panel } from 'layouts';
-import { Icons } from 'components';
+import { Icons, PluginListEntry } from 'components';
 import { Button } from 'forms';
-import { useAgent } from 'hooks';
-import { PluginsSettingsTable } from './plugins-settings-table';
 import { AddPluginsModal } from './add-plugins-modal';
 import { NoPluginsStub } from './no-plugins-stub';
+import { Agent } from 'types/agent';
 
 import styles from './plugins-settings.module.scss';
 
 interface Props extends RouteComponentProps<{ id: string }> {
   className?: string;
+  agent: Agent;
 }
 
 const pluginsSettings = BEM(styles);
@@ -22,13 +22,9 @@ export const PluginsSettings = withRouter(
   pluginsSettings(
     ({
       className,
+      agent: { id: agentId = '', plugins = [], buildVersion },
       history: { push },
-      match: {
-        params: { id },
-      },
     }: Props) => {
-      const agent = useAgent(id, () => push('/not-found')) || {};
-      const [selectedPlugins, setSelectedPlugins] = React.useState<string[]>([]);
       const [isAddPluginOpen, setIsAddPluginOpen] = React.useState(false);
       return (
         <div className={className}>
@@ -40,7 +36,7 @@ export const PluginsSettings = withRouter(
           </InfoPanel>
           <Header align="space-between">
             <span>
-              Plugins<PluginsQuantity>{(agent.plugins || []).length}</PluginsQuantity>
+              Plugins<PluginsCount>{(plugins || []).length}</PluginsCount>
             </span>
             <AddPluginButton
               type="secondary"
@@ -52,19 +48,25 @@ export const PluginsSettings = withRouter(
             </AddPluginButton>
           </Header>
           <Content>
-            {(agent.plugins || []).length > 0 ? (
-              <PluginsSettingsTable
-                plugins={agent.plugins}
-                selectedPlugins={selectedPlugins}
-                handleSelectPlugin={setSelectedPlugins}
-                agentId={agent.id || ''}
-                buildVersion={agent.buildVersion || ''}
-              />
+            {(plugins || []).length > 0 ? (
+              plugins.map(({ id, name, description }) => (
+                <PluginListEntry
+                  key={id}
+                  name={name}
+                  description={description}
+                  onClick={() => push(`/full-page/${agentId}/${buildVersion}/${id}/dashboard`)}
+                  icon={id === 'test-to-code-mapping' ? 'TestToCodeMapping' : 'Plugins'}
+                />
+              ))
             ) : (
               <NoPluginsStub />
             )}
           </Content>
-          <AddPluginsModal isOpen={isAddPluginOpen} onToggle={setIsAddPluginOpen} agentId={id} />
+          <AddPluginsModal
+            isOpen={isAddPluginOpen}
+            onToggle={setIsAddPluginOpen}
+            agentId={agentId}
+          />
         </div>
       );
     },
@@ -75,5 +77,5 @@ const InfoPanel = pluginsSettings.infoPanel(Panel);
 const InfoIcon = pluginsSettings.infoIcon(Icons.Info);
 const Content = pluginsSettings.content('div');
 const Header = pluginsSettings.header(Panel);
-const PluginsQuantity = pluginsSettings.pluginsCount('span');
+const PluginsCount = pluginsSettings.pluginsCount('span');
 const AddPluginButton = pluginsSettings.addPlugin(Button);

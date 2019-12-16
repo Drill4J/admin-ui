@@ -3,8 +3,7 @@ import { BEM, div } from '@redneckz/react-bem-helper';
 import { Field } from 'react-final-form';
 
 import { Panel } from 'layouts';
-import { Icons } from 'components';
-import { Fields } from 'forms';
+import { Icons, PluginListEntry } from 'components';
 import { useWsConnection } from 'hooks';
 import { defaultAdminSocket } from 'common/connection';
 import { Plugin } from 'types/plugin';
@@ -33,29 +32,25 @@ export const InstallPluginsStep = installPluginsStep(
         <SelectedPluginsInfo>
           {pluginsFormValue.length} of {plugins.length} selected
         </SelectedPluginsInfo>
-        {plugins.map(({ id = '', name, description }) => (
-          <div key={id}>
-            <PluginsList>
-              <Field
-                name="plugins"
-                type="checkbox"
-                value={id}
-                render={({ input, meta }) => (
-                  <PluginsListItem selected={input.checked}>
-                    <Fields.Checkbox input={input} meta={meta} />
-                    <PluginsIconWrapper selected={input.checked}>
-                      <Icons.TestToCodeMapping />
-                    </PluginsIconWrapper>
-                    <div>
-                      <PluginName>{name}</PluginName>
-                      <PluginDescription>{description}</PluginDescription>
-                    </div>
-                  </PluginsListItem>
-                )}
-              />
-            </PluginsList>
-          </div>
-        ))}
+        <PluginsList>
+          {plugins.map(({ id = '', name, description }) => (
+            <Field
+              name="plugins"
+              type="checkbox"
+              value={id}
+              key={id}
+              render={({ input, meta }) => (
+                <PluginListEntry
+                  name={name}
+                  description={description}
+                  input={input}
+                  meta={meta}
+                  icon={id === 'test-to-code-mapping' ? 'TestToCodeMapping' : 'Plugins'}
+                />
+              )}
+            />
+          ))}
+        </PluginsList>
       </div>
     );
   },
@@ -65,7 +60,3 @@ const InfoPanel = installPluginsStep.infoPanel(Panel);
 const InfoIcon = installPluginsStep.infoIcon(Icons.Info);
 const SelectedPluginsInfo = installPluginsStep.selectedPluginsInfo('div');
 const PluginsList = installPluginsStep.pluginsList('div');
-const PluginsListItem = installPluginsStep.pluginsListItem(div({} as { selected?: boolean }));
-const PluginsIconWrapper = installPluginsStep.pluginsIconWrapper(div({} as { selected?: boolean }));
-const PluginName = installPluginsStep.pluginName('div');
-const PluginDescription = installPluginsStep.pluginDescription('span');
