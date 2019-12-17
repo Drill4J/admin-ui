@@ -26,7 +26,10 @@ export const AddPluginsModal = addPluginModal(({ className, isOpen, onToggle, ag
   const { showMessage } = React.useContext(NotificationManagerContext);
   const plugins = useWsConnection<Plugin[]>(defaultAdminSocket, '/get-all-plugins');
   const handleLoadPlugins = loadPlugins(agentId, {
-    onSuccess: () => onToggle(false),
+    onSuccess: () => {
+      onToggle(false);
+      showMessage({ type: 'SUCCESS', text: 'Plugin has been added' });
+    },
     onError: (message: string) => showMessage({ type: 'ERROR', text: message }),
   });
 
