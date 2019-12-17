@@ -43,7 +43,14 @@ export const SystemSettingsForm = systemSettingsForm(
     return (
       <div className={className}>
         <Form
-          onSubmit={(values) => saveChanges(values, showMessage, setErrorMessage)}
+          onSubmit={saveChanges({
+            onSuccess: (message: Message) => {
+              setErrorMessage('');
+              showMessage(message);
+              setUnlocked(false);
+            },
+            onError: setErrorMessage,
+          })}
           initialValues={{ id, packagesPrefixes, sessionIdHeaderName }}
           validate={validateSettings as any}
           render={({
@@ -84,7 +91,7 @@ export const SystemSettingsForm = systemSettingsForm(
                   <BlockerStatus
                     unlocked={unlocked}
                     onClick={() => {
-                      unlocked ? setUnlocked(false) : setIsUnlockingModalOpened(true);
+                      unlocked ? !invalid && setUnlocked(false) : setIsUnlockingModalOpened(true);
                     }}
                   >
                     {unlocked ? (
@@ -160,19 +167,22 @@ const Instruction = systemSettingsForm.instructions('div');
 const ProjectPackages = systemSettingsForm.projectPackages(Fields.Textarea);
 const HeaderMapping = systemSettingsForm.headerMapping(FormGroup);
 
-async function saveChanges(
-  { id, packagesPrefixes = [], sessionIdHeaderName }: Agent,
-  showMessage: (message: Message) => void,
-  showError: (message: string) => void,
-) {
-  try {
-    await axios.post(`/agents/${id}/system-settings`, {
-      packagesPrefixes: packagesPrefixes.filter(Boolean),
-      sessionIdHeaderName,
-    });
-    showError('');
-    showMessage({ type: 'SUCCESS', text: 'New settings have been saved' });
-  } catch ({ response: { data: { message } = {} } = {} }) {
-    showError(message || 'Internal service error');
-  }
+function saveChanges({
+  onSuccess,
+  onError,
+}: {
+  onSuccess: (message: Message) => void;
+  onError: (message: string) => void;
+}) {
+  return async ({ id, packagesPrefixes = [], sessionIdHeaderName }: Agent) => {
+    try {
+      await axios.post(`/agents/${id}/system-settings`, {
+        packagesPrefixes: packagesPrefixes.filter(Boolean),
+        sessionIdHeaderName,
+      });
+      onSuccess && onSuccess({ type: 'SUCCESS', text: 'New settings have been saved' });
+    } catch ({ response: { data: { message } = {} } = {} }) {
+      onError && onError(message || 'Internal service error');
+    }
+  };
 }
