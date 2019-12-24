@@ -11,6 +11,7 @@ import { SystemSettingsForm } from './system-setting-form';
 import { CancelAgentRegistrationModal } from './cancel-agent-registration-modal';
 import { InstallPluginsStep } from './install-plugins-step';
 import { registerAgent } from './register-agent';
+import { NotificationManagerContext } from 'notification-manager';
 
 import styles from './agent-registration-page.module.scss';
 
@@ -32,7 +33,7 @@ export const AgentRegistrationPage = withRouter(
       // eslint-disable-next-line
       const { buildVersion = '', plugins = [], ...agent } = useAgent(agentId) || {};
       const [isCancelModalOpened, setIsCancelModalOpened] = React.useState(false);
-
+      const { showMessage } = React.useContext(NotificationManagerContext);
       return (
         <div className={className}>
           <PageHeader
@@ -51,7 +52,10 @@ export const AgentRegistrationPage = withRouter(
           />
           <Wizard
             initialValues={agent}
-            onSubmit={registerAgent(() => push(`/full-page/${agentId}/${buildVersion}/dashboard`))}
+            onSubmit={registerAgent(() => {
+              showMessage({ type: 'SUCCESS', text: 'Agent has been registered' });
+              push(`/full-page/${agentId}/${buildVersion}/dashboard`);
+            })}
           >
             <Step
               name="General settings"
