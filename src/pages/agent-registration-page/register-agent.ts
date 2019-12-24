@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { Agent } from 'types/agent';
 
-export function registerAgent(onSuccess: () => void) {
+export function registerAgent(onSuccess?: () => void) {
   return async (
     { id, name, group, packagesPrefixes = [], description, plugins, sessionIdHeaderName }: Agent,
     onError: (message: string) => void,
