@@ -1,7 +1,7 @@
 export interface AgentRegistrationInfo {
   name: string;
   description: string;
-  group: string;
+  environment: string;
   packagesPrefixes: string[];
   sessionIdHeaderName: string;
   plugins: string[];

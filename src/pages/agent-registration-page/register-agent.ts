@@ -3,13 +3,21 @@ import { Agent } from 'types/agent';
 
 export function registerAgent(onSuccess?: () => void) {
   return async (
-    { id, name, group, packagesPrefixes = [], description, plugins, sessionIdHeaderName }: Agent,
+    {
+      id,
+      name,
+      environment,
+      packagesPrefixes = [],
+      description,
+      plugins,
+      sessionIdHeaderName,
+    }: Agent,
     onError: (message: string) => void,
   ) => {
     try {
       await axios.post(`/agents/${id}/register`, {
         name,
-        group,
+        environment,
         packagesPrefixes: packagesPrefixes.filter(Boolean),
         description,
         plugins,

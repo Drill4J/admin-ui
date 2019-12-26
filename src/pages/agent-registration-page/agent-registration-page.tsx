@@ -64,7 +64,7 @@ export const AgentRegistrationPage = withRouter(
                 required('name'),
                 required('description'),
                 sizeLimit({ name: 'name' }),
-                sizeLimit({ name: 'group' }),
+                sizeLimit({ name: 'environment' }),
                 sizeLimit({ name: 'description', min: 3, max: 256 }),
               )}
             />

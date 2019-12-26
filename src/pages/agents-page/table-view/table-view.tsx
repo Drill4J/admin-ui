@@ -49,8 +49,8 @@ export const TableView = tableView(
         />
         <Column name="ipAddress" label="IP Address" />
         <Column
-          name="group"
-          label="Group"
+          name="environment"
+          label="Environment"
           Cell={({ value, item }) => (
             <span>{item.status === AGENT_STATUS.NOT_REGISTERED ? 'n/a' : value}</span>
           )}
