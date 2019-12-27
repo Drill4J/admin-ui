@@ -2,12 +2,12 @@ import axios from 'axios';
 import { Agent } from 'types/agent';
 
 export function registerAgent(onSuccess?: () => void) {
-  return async (
+  return (
     { id, name, group, packagesPrefixes = [], description, plugins, sessionIdHeaderName }: Agent,
     onError: (message: string) => void,
   ) => {
     try {
-      await axios.post(`/agents/${id}/register`, {
+      axios.post(`/agents/${id}/register`, {
         name,
         group,
         packagesPrefixes: packagesPrefixes.filter(Boolean),
