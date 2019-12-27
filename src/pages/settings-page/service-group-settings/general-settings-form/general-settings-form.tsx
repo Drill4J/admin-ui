@@ -21,10 +21,10 @@ interface Props {
 const generalSettingsForm = BEM(styles);
 
 const validateSettings = composeValidators(
-  required('name'),
+  required('name', 'Service Group Name'),
   required('description'),
-  sizeLimit({ name: 'name' }),
-  sizeLimit({ name: 'group' }),
+  sizeLimit({ name: 'name', alias: 'Service Group Name' }),
+  sizeLimit({ name: 'environment' }),
   sizeLimit({ name: 'description', min: 3, max: 256 }),
 );
 
@@ -84,13 +84,6 @@ export const GeneralSettingsForm = generalSettingsForm(
                 >
                   <Field name="id" component={Fields.Input} disabled />
                 </FormGroup>
-                <ServiceGroupName label="Service Group Name">
-                  <Field
-                    name="name"
-                    component={Fields.Input}
-                    placeholder="Give Service Group a name"
-                  />
-                </ServiceGroupName>
                 <FormGroup label="Environment" optional>
                   <Field
                     name="environment"
@@ -98,6 +91,14 @@ export const GeneralSettingsForm = generalSettingsForm(
                     placeholder="Specify an environment"
                   />
                 </FormGroup>
+                <ServiceGroupName label="Service Group Name">
+                  <Field
+                    name="name"
+                    component={Fields.Input}
+                    placeholder="Give Service Group a name"
+                  />
+                </ServiceGroupName>
+
                 <Description label="Description">
                   <Field
                     name="description"
