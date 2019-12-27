@@ -7,6 +7,7 @@ import { defaultAdminSocket } from 'common/connection';
 import { TableView } from './table-view';
 import { NoAgentsStub } from './no-agents-stub';
 import { Agent } from 'types/agent';
+import { ServiceGroup } from 'types/service-group';
 
 import styles from './agents-page.module.scss';
 
@@ -17,8 +18,16 @@ interface Props {
 const agentsPage = BEM(styles);
 
 export const AgentsPage = agentsPage(({ className }: Props) => {
-  const agents = useWsConnection<Agent[]>(defaultAdminSocket, '/get-all-agents') || [];
+  const { single = [], grouped = [] } =
+    useWsConnection<{ single: Agent[]; grouped: ServiceGroup[] }>(
+      defaultAdminSocket,
+      '/get-all-agents',
+    ) || {};
   const [selectedAgents, setSelectedAgents] = React.useState<string[]>([]);
+  const agents: any = [
+    ...single,
+    ...grouped.map(({ agents: groupedAgents }) => groupedAgents).flat(),
+  ];
 
   return (
     <div className={className}>
