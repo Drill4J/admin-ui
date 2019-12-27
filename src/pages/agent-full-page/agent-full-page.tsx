@@ -49,7 +49,7 @@ export const AgentFullPage = withRouter(
       history,
       location: { pathname },
     }: Props) => {
-      const agent = useAgent(agentId, () => history.push('/not-found')) || {};
+      const agent = useAgent(agentId) || {};
       const path = '/:page/:agentId/:buildVersion/:activeLink';
       const { params: { activeLink = '' } = {} } =
         matchPath<{ activeLink: string }>(pathname, {
