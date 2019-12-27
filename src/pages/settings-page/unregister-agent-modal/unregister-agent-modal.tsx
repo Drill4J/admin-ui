@@ -1,16 +1,16 @@
 import * as React from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
+import { withRouter, RouteComponentProps } from 'react-router-dom';
 import axios from 'axios';
 
 import { Panel } from 'layouts';
 import { Popup, Icons } from 'components';
 import { Button } from 'forms';
 import { NotificationManagerContext } from 'notification-manager';
-import { Message } from 'types/message';
 
 import styles from './unregister-agent-modal.module.scss';
 
-interface Props {
+interface Props extends RouteComponentProps {
   className?: string;
   isOpen: boolean;
   onToggle: (value: boolean) => void;
@@ -19,8 +19,8 @@ interface Props {
 
 const unregisterAgentModal = BEM(styles);
 
-export const UnregisterAgentModal = unregisterAgentModal(
-  ({ className, isOpen, onToggle, agentId }: Props) => {
+export const UnregisterAgentModal = withRouter(
+  unregisterAgentModal(({ className, isOpen, onToggle, agentId, history: { push } }: Props) => {
     const { showMessage } = React.useContext(NotificationManagerContext);
     const [errorMessage, setErrorMessage] = React.useState('');
 
@@ -52,7 +52,15 @@ export const UnregisterAgentModal = unregisterAgentModal(
             <Panel>
               <UnregisterButton
                 type="primary"
-                onClick={() => unregisterAgent(agentId, onToggle, showMessage, setErrorMessage)}
+                onClick={() =>
+                  unregisterAgent(agentId, {
+                    onSuccess: () => {
+                      showMessage({ type: 'SUCCESS', text: 'Agent has been deactivated' });
+                      push('/agents');
+                    },
+                    onError: setErrorMessage,
+                  })
+                }
               >
                 Yes, unregister this agent
               </UnregisterButton>
@@ -64,7 +72,7 @@ export const UnregisterAgentModal = unregisterAgentModal(
         </div>
       </Popup>
     );
-  },
+  }),
 );
 
 const HeaderIcon = unregisterAgentModal.headerIcon(Icons.Warning);
@@ -77,15 +85,12 @@ const CancelButton = unregisterAgentModal.cancelButton(Button);
 
 async function unregisterAgent(
   agentId: string,
-  closeModal: (value: boolean) => void,
-  showMessage: (message: Message) => void,
-  setErrorMessage: (error: string) => void,
+  { onSuccess, onError }: { onSuccess?: () => void; onError?: (error: string) => void },
 ) {
   try {
     await axios.post(`/agents/${agentId}/unregister`);
-    showMessage({ type: 'SUCCESS', text: 'Agent has been deactivated' });
-    closeModal(false);
+    onSuccess && onSuccess();
   } catch ({ response: { data: { message } = {} } = {} }) {
-    setErrorMessage(message);
+    onError && onError(message || 'Internal service error');
   }
 }
