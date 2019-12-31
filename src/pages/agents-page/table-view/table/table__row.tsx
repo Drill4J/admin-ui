@@ -16,6 +16,8 @@ interface Props {
   expandedColumns?: any[];
   expandedContentKey?: string;
   expandedRows?: string[];
+  nested?: boolean;
+  nestedLast?: boolean;
 }
 
 export const TableRow = BEM(styles).row(
