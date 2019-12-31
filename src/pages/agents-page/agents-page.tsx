@@ -23,26 +23,21 @@ export const AgentsPage = agentsPage(({ className }: Props) => {
       defaultAdminSocket,
       '/get-all-agents',
     ) || {};
-  const [selectedAgents, setSelectedAgents] = React.useState<string[]>([]);
-  const agents: any = [
+  const agents = [
+    ...grouped
+      .map(({ group, agents: groupedAgents }: any) => ({
+        ...group,
+        agents: groupedAgents,
+        agentType: 'ServiceGroup',
+      }))
+      .flat(),
     ...single,
-    ...grouped.map(({ agents: groupedAgents }) => groupedAgents).flat(),
   ];
 
   return (
     <div className={className}>
       <PageHeader title="Agents" itemsCount={agents.length} />
-      <Content>
-        {agents.length > 0 ? (
-          <TableView
-            agents={agents}
-            selectedAgents={selectedAgents}
-            handleSelectAgents={setSelectedAgents}
-          />
-        ) : (
-          <NoAgentsStub />
-        )}
-      </Content>
+      <Content>{agents.length > 0 ? <TableView agents={agents} /> : <NoAgentsStub />}</Content>
     </div>
   );
 });

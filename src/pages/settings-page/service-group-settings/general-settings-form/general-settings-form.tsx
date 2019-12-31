@@ -8,13 +8,13 @@ import { Icons } from 'components';
 import { Fields, FormGroup, composeValidators, required, sizeLimit, Button } from 'forms';
 import { copyToClipboard } from 'utils';
 import { Message } from 'types/message';
-import { ServiceGroup } from 'types/service-group';
+import { CommonEntity } from 'types/common-entity';
 
 import styles from './general-settings-form.module.scss';
 
 interface Props {
   className?: string;
-  serviceGroup: ServiceGroup;
+  serviceGroup: CommonEntity;
   showMessage: (message: Message) => void;
 }
 
@@ -126,7 +126,7 @@ const ServiceGroupName = generalSettingsForm.serviceGroupName(FormGroup);
 const Description = generalSettingsForm.description(FormGroup);
 
 async function saveChanges(
-  serviceGroup: ServiceGroup,
+  serviceGroup: CommonEntity,
   {
     onSuccess,
     onError,

@@ -20,7 +20,7 @@ export const ActionsColumn = withRouter(
     ({
       className,
       history: { push },
-      agent: { id: agentId = '', status, buildVersion },
+      agent: { id: agentId = '', status, agentType = '' },
     }: Props) => {
       return (
         <div className={className}>
@@ -30,18 +30,18 @@ export const ActionsColumn = withRouter(
               data-test="action-column:icons-register"
             />
           ) : (
-            <>
-              <Icons.OpenLive
-                onClick={() => push(`/full-page/${agentId}/${buildVersion}/dashboard`)}
-                data-test="action-column:icons-open-live"
-              />
-              <Icons.Settings
-                onClick={() => push(`/agents/agent/${agentId}/settings/`)}
-                height={16}
-                width={16}
-                data-test="action-column:icons-settings"
-              />
-            </>
+            <Icons.Settings
+              onClick={() =>
+                push(
+                  `/agents/${
+                    agentType === 'ServiceGroup' ? 'service-group' : 'agent'
+                  }/${agentId}/settings/`,
+                )
+              }
+              height={16}
+              width={16}
+              data-test="action-column:icons-settings"
+            />
           )}
         </div>
       );
