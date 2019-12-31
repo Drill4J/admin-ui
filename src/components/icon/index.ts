@@ -45,6 +45,8 @@ import { path as lockedPath } from './path/locked.path';
 import { path as unlockedPath } from './path/unlocked.path';
 import { path as unregisterPath } from './path/unregister.path';
 import { path as moreOptionsWithBorderPath } from './path/more-options-with-border.path';
+import { path as agentPath } from './path/agent.path';
+import { path as serviceGroupPath } from './path/service-group.path';
 import { declareIcon } from './declare-icon';
 import { ReactComponent as SettingsSvg } from './settings.svg';
 
@@ -104,5 +106,7 @@ export const Icons = {
     defaultHeight: 32,
     viewBox: '0 0 32 32',
   }),
+  Agent: declareIcon(agentPath, { defaultWidth: 18, defaultHeight: 20 }),
+  ServiceGroup: declareIcon(serviceGroupPath, { defaultWidth: 18, defaultHeight: 20 }),
   NewSettings: SettingsSvg,
 };
