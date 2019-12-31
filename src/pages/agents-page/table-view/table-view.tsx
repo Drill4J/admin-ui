@@ -29,14 +29,8 @@ export const TableView = tableView(({ className, agents }: Props) => (
         <Column
           name="name"
           label="Name"
-          Cell={({ value, item: { id, status, buildVersion, agentType } }) => (
-            <NameColumn
-              agentId={id}
-              buildVersion={buildVersion}
-              agentName={value}
-              unregistered={status === AGENT_STATUS.NOT_REGISTERED}
-              agentType={agentType}
-            />
+          Cell={({ item }) => (
+            <NameColumn agent={item} unregistered={item.status === AGENT_STATUS.NOT_REGISTERED} />
           )}
         />,
         <Column
@@ -69,14 +63,8 @@ export const TableView = tableView(({ className, agents }: Props) => (
       <Column
         name="name"
         label="Name"
-        Cell={({ value, item: { id, status, buildVersion, agentType } }) => (
-          <NameColumn
-            agentId={id}
-            buildVersion={buildVersion}
-            agentName={value}
-            unregistered={status === AGENT_STATUS.NOT_REGISTERED}
-            agentType={agentType}
-          />
+        Cell={({ item }) => (
+          <NameColumn agent={item} unregistered={item.status === AGENT_STATUS.NOT_REGISTERED} />
         )}
       />
       <Column
