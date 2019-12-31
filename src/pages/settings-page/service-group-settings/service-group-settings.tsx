@@ -4,14 +4,14 @@ import { BEM } from '@redneckz/react-bem-helper';
 import { TabsPanel, Tab } from 'components';
 import { GeneralSettingsForm } from './general-settings-form';
 import { Message } from 'types/message';
-import { ServiceGroup } from 'types/service-group';
+import { CommonEntity } from 'types/common-entity';
 
 import styles from './service-group-settings.module.scss';
 
 interface Props {
   className?: string;
   showMessage: (message: Message) => void;
-  serviceGroup: ServiceGroup;
+  serviceGroup: CommonEntity;
   type?: string;
 }
 

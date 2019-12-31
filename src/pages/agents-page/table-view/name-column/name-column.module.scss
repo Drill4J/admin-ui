@@ -7,6 +7,12 @@
   line-height: 48px;
   cursor: pointer;
 
+  &__agent-type-icon {
+    display: flex;
+    align-items: center;
+    margin-right: 16px;
+  }
+
   &--unregistered {
     pointer-events: none;
     color: $slate-gray;
