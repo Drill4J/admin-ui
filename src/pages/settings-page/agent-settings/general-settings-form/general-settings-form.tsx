@@ -22,7 +22,6 @@ const generalSettingsForm = BEM(styles);
 
 const validateSettings = composeValidators(
   required('name'),
-  required('description'),
   sizeLimit({ name: 'name' }),
   sizeLimit({ name: 'group' }),
   sizeLimit({ name: 'description', min: 3, max: 256 }),
