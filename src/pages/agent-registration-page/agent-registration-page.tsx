@@ -63,7 +63,7 @@ export const AgentRegistrationPage = withRouter(
               validate={composeValidators(
                 required('name'),
                 sizeLimit({ name: 'name' }),
-                sizeLimit({ name: 'group' }),
+                sizeLimit({ name: 'environment' }),
                 sizeLimit({ name: 'description', min: 3, max: 256 }),
               )}
             />

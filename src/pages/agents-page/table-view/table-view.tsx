@@ -40,8 +40,8 @@ export const TableView = tableView(({ className, agents }: Props) => (
         />,
         <Column name="agentType" label="Type" />,
         <Column
-          name="group"
-          label="Group"
+          name="environment"
+          label="Environment"
           Cell={({ value, item }) => (
             <span>{item.status === AGENT_STATUS.NOT_REGISTERED ? 'n/a' : value}</span>
           )}
