@@ -48,8 +48,12 @@ export const GeneralSettingsForm = withRouter(
             <AgentName label="Agent name">
               <Field name="name" component={Fields.Input} placeholder="Enter agent's name" />
             </AgentName>
-            <FormGroup label="Group" optional>
-              <Field name="group" component={Fields.Input} placeholder="Specify a group" />
+            <FormGroup label="Environment" optional>
+              <Field
+                name="environment"
+                component={Fields.Input}
+                placeholder="Specify an environment"
+              />
             </FormGroup>
             <Description label="Description">
               <Field
