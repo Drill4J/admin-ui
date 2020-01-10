@@ -3,7 +3,15 @@ import { BEM } from '@redneckz/react-bem-helper';
 import { Form, Field } from 'react-final-form';
 
 import { Panel } from 'layouts';
-import { Button, Fields, FormGroup, composeValidators, sizeLimit, required } from 'forms';
+import {
+  Button,
+  Fields,
+  FormGroup,
+  composeValidators,
+  sizeLimit,
+  required,
+  CancelButton,
+} from 'forms';
 import { Popup, Icons } from 'components';
 import { NotificationManagerContext } from 'notification-manager';
 import { renameScope } from '../../api';
@@ -68,7 +76,7 @@ export const RenameScopeModal = renameScopeModal(
                   <RenameScopeButton type="primary" onClick={handleSubmit as any}>
                     Save
                   </RenameScopeButton>
-                  <CancelButton type="secondary" onClick={() => onToggle(false)}>
+                  <CancelButton size="large" onClick={() => onToggle(false)}>
                     Cancel
                   </CancelButton>
                 </ActionsPanel>
@@ -86,4 +94,3 @@ const ErrorMessageIcon = renameScopeModal.errorMessageIcon(Icons.Warning);
 const Content = renameScopeModal.content('div');
 const ActionsPanel = renameScopeModal.actionsPanel(Panel);
 const RenameScopeButton = renameScopeModal.renameScopeButton(Button);
-const CancelButton = renameScopeModal.cancelButton(Button);

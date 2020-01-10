@@ -4,7 +4,7 @@ import { withRouter, RouteComponentProps } from 'react-router-dom';
 
 import { PageHeader, Icons, Wizard, Step } from 'components';
 import { Panel } from 'layouts';
-import { Button, requiredArray, composeValidators, required, sizeLimit } from 'forms';
+import { requiredArray, composeValidators, required, sizeLimit, CancelButton } from 'forms';
 import { useAgent } from 'hooks';
 import { GeneralSettingsForm } from './general-settings-form';
 import { SystemSettingsForm } from './system-setting-form';
@@ -44,7 +44,7 @@ export const AgentRegistrationPage = withRouter(
             }
             actions={
               <Panel align="end">
-                <CancelButton type="secondary" onClick={() => setIsCancelModalOpened(true)}>
+                <CancelButton size="large" onClick={() => setIsCancelModalOpened(true)}>
                   Cancel
                 </CancelButton>
               </Panel>
@@ -95,4 +95,3 @@ export const AgentRegistrationPage = withRouter(
 );
 
 const HeaderIcon = agentRegistrationPage.headerIcon(Icons.Register);
-const CancelButton = agentRegistrationPage.cancelButton(Button);

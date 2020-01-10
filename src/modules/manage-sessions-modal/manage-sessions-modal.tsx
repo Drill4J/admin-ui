@@ -3,7 +3,15 @@ import { BEM } from '@redneckz/react-bem-helper';
 import { Form, Field } from 'react-final-form';
 
 import { Panel } from 'layouts';
-import { Button, Fields, FormGroup, composeValidators, sizeLimit, required } from 'forms';
+import {
+  Button,
+  Fields,
+  FormGroup,
+  composeValidators,
+  sizeLimit,
+  required,
+  CancelButton,
+} from 'forms';
 import { Popup, Icons } from 'components';
 import { NotificationManagerContext } from 'notification-manager';
 import { manageSession } from './manage-session';
@@ -94,7 +102,7 @@ export const ManageSessionsModal = manageSessionsModal(
                     <Icons.Check height={12} width={16} />
                     Finish session
                   </ActionButton>
-                  <CancelButton type="secondary" onClick={() => onToggle(false)}>
+                  <CancelButton size="large" onClick={() => onToggle(false)}>
                     Cancel
                   </CancelButton>
                 </ActionsPanel>
@@ -115,4 +123,3 @@ const Content = manageSessionsModal.content('div');
 const Info = manageSessionsModal.info('div');
 const ActionsPanel = manageSessionsModal.actionsPanel(Panel);
 const ActionButton = manageSessionsModal.actionButton(Button);
-const CancelButton = manageSessionsModal.cancelButton(Button);

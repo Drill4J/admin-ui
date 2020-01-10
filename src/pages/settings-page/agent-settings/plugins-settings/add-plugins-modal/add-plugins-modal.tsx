@@ -2,7 +2,7 @@ import * as React from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 
 import { Modal } from 'components';
-import { Button } from 'forms';
+import { Button, CancelButton } from 'forms';
 import { useWsConnection } from 'hooks';
 import { defaultAdminSocket } from 'common/connection';
 import { NotificationManagerContext } from 'notification-manager';
@@ -56,9 +56,9 @@ export const AddPluginsModal = addPluginModal(({ className, isOpen, onToggle, ag
           >
             Add plugin
           </AddPluginButton>
-          <CandelButton type="secondary" onClick={() => onToggle(!isOpen)}>
+          <CancelButton size="large" onClick={() => onToggle(!isOpen)}>
             Cancel
-          </CandelButton>
+          </CancelButton>
         </Actions>
       </div>
     </Modal>
@@ -71,4 +71,3 @@ const Title = addPluginModal.title('div');
 const PluginsList = addPluginModal.pluginsList('div');
 const Actions = addPluginModal.actions('div');
 const AddPluginButton = addPluginModal.addPluginButton(Button);
-const CandelButton = addPluginModal.cancelButton(Button);

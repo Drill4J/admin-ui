@@ -10,7 +10,6 @@ interface Props {
   onChange?: (event?: any) => any;
   checked?: boolean;
   label?: string;
-  withoutMargin?: boolean;
   disabled?: boolean;
   value?: string;
 }

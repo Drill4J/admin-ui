@@ -2,7 +2,7 @@ import * as React from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 
 import { Panel } from 'layouts';
-import { Button } from 'forms';
+import { Button, CancelButton } from 'forms';
 import { Popup, Icons, OverflowText } from 'components';
 import { NotificationManagerContext } from 'notification-manager';
 import { finishAllScopes } from './finish-all-scopes';
@@ -67,7 +67,7 @@ export const FinishAllScopesModal = finishAllScopesModal(
               >
                 Finish all scopes
               </FinishScopeButton>
-              <CancelButton type="secondary" onClick={() => onToggle(false)}>
+              <CancelButton size="large" onClick={() => onToggle(false)}>
                 Cancel
               </CancelButton>
             </ActionsPanel>
@@ -84,4 +84,3 @@ const Content = finishAllScopesModal.content('div');
 const Instructions = finishAllScopesModal.instructions('div');
 const ActionsPanel = finishAllScopesModal.actionsPanel(Panel);
 const FinishScopeButton = finishAllScopesModal.finishScopeButton(Button);
-const CancelButton = finishAllScopesModal.cancelButton(Button);

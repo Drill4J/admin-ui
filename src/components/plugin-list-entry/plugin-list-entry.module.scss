@@ -2,9 +2,14 @@
 
 .plugin-list-entry {
   border-bottom: 1px solid map-get($color-palette, light-blue);
+  cursor: pointer;
 
   &:first-child {
     border-top: 1px solid map-get($color-palette, light-blue);
+  }
+
+  &:hover {
+    background-color: rgba(248, 231, 28, 0.1);
   }
 
   &__plugin-elements {
@@ -21,7 +26,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    margin: 16px 24px 16px 0px;
+    margin: 16px 24px 16px 16px;
     height: 80px;
     min-width: 80px;
     border-radius: 16px;
@@ -31,18 +36,6 @@
     &--selected {
       background-color: map-get($color-palette, blue100);
       color: map-get($color-palette, white);
-    }
-  }
-
-  &__plugin-name {
-    font-family: $semibold-font;
-    font-size: 14px;
-    line-height: 22px;
-    color: $gravel-color;
-
-    &--on-click {
-      color: map-get($color-palette, blue100);
-      cursor: pointer;
     }
   }
 

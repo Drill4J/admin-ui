@@ -3,7 +3,7 @@ import { BEM } from '@redneckz/react-bem-helper';
 import { withRouter, RouteComponentProps, matchPath } from 'react-router-dom';
 
 import { Panel } from 'layouts';
-import { Button } from 'forms';
+import { Button, CancelButton } from 'forms';
 import { Popup, Icons, OverflowText } from 'components';
 import { NotificationManagerContext } from 'notification-manager';
 import { deleteScope } from '../../api';
@@ -85,7 +85,7 @@ export const DeleteScopeModal = withRouter(
                 >
                   {scope && scope.active ? 'Yes, Cancel Scope' : 'Yes, Delete Scope'}
                 </DeleteScopeButton>
-                <CancelButton type="secondary" onClick={() => onToggle(false)}>
+                <CancelButton size="large" onClick={() => onToggle(false)}>
                   Cancel
                 </CancelButton>
               </ActionsPanel>
@@ -103,4 +103,3 @@ const Content = deleteScopeModal.content('div');
 const Message = deleteScopeModal.message('div');
 const ActionsPanel = deleteScopeModal.actionsPanel(Panel);
 const DeleteScopeButton = deleteScopeModal.deleteScopeButton(Button);
-const CancelButton = deleteScopeModal.cancelButton(Button);

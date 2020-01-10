@@ -58,6 +58,7 @@ export const Wizard = wizard(({ className, children, initialValues, onSubmit }: 
                 {currentStepIndex > 0 && (
                   <PreviousButton
                     type="secondary"
+                    size="large"
                     onClick={() => dispatch(previousStep())}
                     data-test="wizard:previous-button"
                   >
@@ -68,6 +69,7 @@ export const Wizard = wizard(({ className, children, initialValues, onSubmit }: 
                 {currentStepIndex < steps.length - 1 ? (
                   <ContinueButton
                     type="primary"
+                    size="large"
                     onClick={() => dispatch(nextStep())}
                     disabled={submitting || invalid}
                     data-test="wizard:continue-button"
@@ -78,6 +80,7 @@ export const Wizard = wizard(({ className, children, initialValues, onSubmit }: 
                 ) : (
                   <FinishRegistrationButton
                     type="primary"
+                    size="large"
                     onClick={handleSubmit}
                     data-test="wizard:finish-registration-button"
                   >

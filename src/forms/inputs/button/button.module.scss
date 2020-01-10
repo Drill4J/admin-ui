@@ -2,32 +2,62 @@
 
 .button {
   border-radius: 20px;
-  min-height: $common-element-height;
-  width: 320px;
   outline: 0;
   cursor: pointer;
 
-  &--disabled {
-    opacity: 0.25;
-    pointer-events: none;
+  & > :not(:last-child) {
+    margin-right: 8px;
   }
 
   &--type {
     &--primary {
-      font-family: $regular-font;
       border: 1px solid map-get($color-palette, blue100);
       background-color: map-get($color-palette, blue100);
       color: map-get($color-palette, white);
-      font-size: 16px;
-      line-height: 22px;
+      font-family: $semibold-font;
+
+      &:hover {
+        border: 1px solid map-get($color-palette, blue75);
+        background-color: map-get($color-palette, blue75);
+      }
+
+      &:active {
+        border: 1px solid map-get($color-palette, blue125);
+        background-color: map-get($color-palette, blue125);
+      }
     }
     &--secondary {
-      font-family: $semibold-font;
       border: 1px solid map-get($color-palette, blue100);
       background-color: map-get($color-palette, white);
       color: map-get($color-palette, blue100);
-      font-size: 14px;
-      line-height: 19px;
+      font-family: $semibold-font;
+
+      &:hover {
+        border: 1px solid map-get($color-palette, blue75);
+      }
+
+      &:active {
+        border: 1px solid map-get($color-palette, blue125);
+      }
     }
+  }
+
+  &--size {
+    &--large {
+      height: 32px;
+      padding: 6px 16px;
+      font-size: 14px;
+    }
+
+    &--small {
+      height: 24px;
+      padding: 1px 12px;
+      font-size: 12px;
+    }
+  }
+
+  &--disabled {
+    opacity: 0.25;
+    pointer-events: none;
   }
 }

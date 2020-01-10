@@ -3,7 +3,7 @@ import { BEM } from '@redneckz/react-bem-helper';
 import { withRouter, RouteComponentProps, matchPath } from 'react-router-dom';
 
 import { Panel } from 'layouts';
-import { Button, Inputs } from 'forms';
+import { Button, Inputs, CancelButton } from 'forms';
 import { Popup, Icons, OverflowText } from 'components';
 import { NotificationManagerContext } from 'notification-manager';
 import { finishScope } from '../../api';
@@ -67,17 +67,14 @@ export const FinishScopeModal = withRouter(
             )}
             <Content>
               <ScopeSummary scope={scope} testsCount={testsCount} />
-              <IgnoreScope>
-                <Inputs.Checkbox
-                  checked={ignoreScope}
-                  onChange={() => setIgnoreScope(!ignoreScope)}
-                  label="Ignore scope in build stats"
-                  withoutMargin
-                  disabled={!Boolean(testsCount)}
-                />
-              </IgnoreScope>
+              <IgnoreScope
+                checked={ignoreScope}
+                onChange={() => setIgnoreScope(!ignoreScope)}
+                label="Ignore scope in build stats"
+                disabled={!Boolean(testsCount)}
+              />
               <ActionsPanel>
-                <FinishScopeButton
+                <Button
                   type="primary"
                   onClick={async () => {
                     await finishScope(agentId, {
@@ -93,8 +90,8 @@ export const FinishScopeModal = withRouter(
                   }}
                 >
                   {testsCount ? 'Finish Scope' : 'Finish and Delete'}
-                </FinishScopeButton>
-                <CancelButton type="secondary" onClick={() => onToggle(false)}>
+                </Button>
+                <CancelButton size="large" onClick={() => onToggle(false)}>
                   Cancel
                 </CancelButton>
               </ActionsPanel>
@@ -111,7 +108,5 @@ const ErrorMessageIcon = finishScopeModal.errorMessageIcon(Icons.Warning);
 const EmptyScopeWarning = finishScopeModal.emptyScopeWarning(Panel);
 const EmptyScopeWarningIcon = finishScopeModal.emptyScopeWarningIcon(Icons.Warning);
 const Content = finishScopeModal.content('div');
-const IgnoreScope = finishScopeModal.ignoreScope('div');
+const IgnoreScope = finishScopeModal.ignoreScope(Inputs.Checkbox);
 const ActionsPanel = finishScopeModal.actionsPanel(Panel);
-const FinishScopeButton = finishScopeModal.finishScopeButton(Button);
-const CancelButton = finishScopeModal.cancelButton(Button);

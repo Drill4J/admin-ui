@@ -29,6 +29,10 @@
   }
 
   &__row {
+    &:hover {
+      background-color: rgba(248, 231, 28, 0.1);
+    }
+
     &--nested {
       border-left: 2px solid map-get($color-palette, blue15);
       border-right: 2px solid map-get($color-palette, blue15);
