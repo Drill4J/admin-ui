@@ -37,18 +37,11 @@
   }
 
   &__finish-scope-button {
-    padding: 0 16px;
     min-height: 32px;
+    margin-right: 16px;
+    padding: 0 16px;
     width: auto;
     font-size: 14px;
     font-family: $semibold-font;
-  }
-
-  &__cancel-button {
-    margin-left: 16px;
-    min-height: 32px;
-    width: 78px;
-    border: 1px solid $loblolly-color;
-    color: $slate-gray;
   }
 }

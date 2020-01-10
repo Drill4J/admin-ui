@@ -33,15 +33,8 @@
   &__delete-scope-button {
     min-height: 32px;
     width: auto;
-    font-size: 14px;
     padding: 0 16px;
-  }
-
-  &__cancel-button {
-    margin-left: 16px;
-    min-height: 32px;
-    width: 78px;
-    border: 1px solid $loblolly-color;
-    color: $slate-gray;
+    margin-right: 16px;
+    font-size: 14px;
   }
 }

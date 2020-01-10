@@ -4,10 +4,21 @@
   display: grid;
   align-items: center;
 
-  & > div {
-    display: flex;
-    align-items: center;
-    height: 80px;
-    border-bottom: 1px solid map-get($color-palette, black10);
+  &__header {
+    @extend %grid-row-styles;
   }
+
+  &__row {
+    @extend %grid-row-styles;
+    &:hover {
+      background-color: rgba(248, 231, 28, 0.1);
+    }
+  }
+}
+
+%grid-row-styles {
+  display: grid;
+  align-items: center;
+  height: 80px;
+  border-bottom: 1px solid map-get($color-palette, black10);
 }

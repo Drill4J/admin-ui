@@ -23,18 +23,29 @@ const list = BEM(styles);
 
 export const List = list(({ className, data = [], children, gridTemplateColumns }: Props) => {
   const columns = React.Children.map(children, (column) => column && column.props);
-
   return (
     <div
       className={className}
       style={{
-        gridTemplateColumns: gridTemplateColumns || `repeat(${columns.length}, 1fr)`,
         gridTemplateRows: `repeat(${data.length + 1}, 80px)`,
       }}
     >
-      <ListHeader columns={columns} />
+      <ListHeader
+        columns={columns}
+        style={{
+          gridTemplateColumns: gridTemplateColumns || `repeat(${columns.length}, 1fr)`,
+        }}
+      />
       {data.map((item, index) => (
-        <ListRow item={item} columns={columns} index={index} key={`row${index}`} />
+        <ListRow
+          item={item}
+          columns={columns}
+          index={index}
+          key={`row${index}`}
+          style={{
+            gridTemplateColumns: gridTemplateColumns || `repeat(${columns.length}, 1fr)`,
+          }}
+        />
       ))}
     </div>
   );

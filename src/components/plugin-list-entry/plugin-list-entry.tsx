@@ -14,22 +14,23 @@ interface Props extends Plugin {
   input?: FieldInputProps<any>;
   meta?: FieldMetaState<any>;
   icon: keyof typeof Icons;
+  children?: React.ReactNode;
 }
 
 const pluginListEntry = BEM(styles);
 
 export const PluginListEntry = pluginListEntry(
-  ({ className, input, meta, name, description, onClick, icon }: Props) => {
+  ({ className, input, meta, description, onClick, icon, children }: Props) => {
     const PluginIcon = Icons[icon];
     return (
       <div className={className}>
-        <PluginElements selected={input && input.checked}>
+        <PluginElements onClick={onClick} selected={input && input.checked}>
           {input && meta && <Fields.Checkbox input={input} meta={meta} />}
           <PluginsIconWrapper selected={input && input.checked}>
             <PluginIcon />
           </PluginsIconWrapper>
           <div>
-            <PluginName onClick={onClick}>{name}</PluginName>
+            {children}
             <PluginDescription>{description}</PluginDescription>
           </div>
         </PluginElements>
@@ -38,9 +39,8 @@ export const PluginListEntry = pluginListEntry(
   },
 );
 
-const PluginElements = pluginListEntry.pluginElements(div({} as { selected?: boolean }));
-const PluginsIconWrapper = pluginListEntry.pluginsIconWrapper(div({} as { selected?: boolean }));
-const PluginName = pluginListEntry.pluginName(
-  div({ onClick: () => {} } as { onClick?: () => void }),
+const PluginElements = pluginListEntry.pluginElements(
+  div({ onClick: () => {} } as { onClick?: () => void; selected?: boolean }),
 );
+const PluginsIconWrapper = pluginListEntry.pluginsIconWrapper(div({} as { selected?: boolean }));
 const PluginDescription = pluginListEntry.pluginDescription('span');

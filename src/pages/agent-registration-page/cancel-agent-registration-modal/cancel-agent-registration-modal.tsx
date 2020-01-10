@@ -3,7 +3,7 @@ import { BEM } from '@redneckz/react-bem-helper';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
 
 import { Panel } from 'layouts';
-import { Button } from 'forms';
+import { Button, CancelButton } from 'forms';
 import { Popup, Icons } from 'components';
 
 import styles from './cancel-agent-registration-modal.module.scss';
@@ -42,8 +42,8 @@ export const CancelAgentRegistrationModal = withRouter(
               <AcceptButton type="primary" onClick={() => push('/agents')}>
                 Yes, cancel registration
               </AcceptButton>
-              <CancelButton type="secondary" onClick={() => onToggle(false)}>
-                No, take me back
+              <CancelButton size="large" onClick={() => onToggle(false)}>
+                Cancel
               </CancelButton>
             </ActionsPanel>
           </Content>
@@ -58,4 +58,3 @@ const Content = cancelAgentRegistrationModal.content('div');
 const Message = cancelAgentRegistrationModal.message('span');
 const ActionsPanel = cancelAgentRegistrationModal.actionsPanel(Panel);
 const AcceptButton = cancelAgentRegistrationModal.acceptButton(Button);
-const CancelButton = cancelAgentRegistrationModal.cancelButton(Button);

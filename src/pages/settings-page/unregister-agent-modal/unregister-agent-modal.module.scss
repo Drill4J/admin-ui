@@ -37,15 +37,8 @@
   &__unregister-button {
     min-height: 32px;
     width: 208px;
+    margin-right: 16px;
     font-family: $semibold-font;
     font-size: 14px;
-  }
-
-  &__cancel-button {
-    margin-left: 16px;
-    min-height: 32px;
-    width: 78px;
-    border: 1px solid $loblolly-color;
-    color: $slate-gray;
   }
 }

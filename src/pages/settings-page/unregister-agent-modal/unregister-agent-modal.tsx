@@ -5,7 +5,7 @@ import axios from 'axios';
 
 import { Panel } from 'layouts';
 import { Popup, Icons } from 'components';
-import { Button } from 'forms';
+import { Button, CancelButton } from 'forms';
 import { NotificationManagerContext } from 'notification-manager';
 
 import styles from './unregister-agent-modal.module.scss';
@@ -64,7 +64,7 @@ export const UnregisterAgentModal = withRouter(
               >
                 Yes, unregister this agent
               </UnregisterButton>
-              <CancelButton type="secondary" onClick={() => onToggle(false)}>
+              <CancelButton size="large" onClick={() => onToggle(false)}>
                 Cancel
               </CancelButton>
             </Panel>
@@ -81,7 +81,6 @@ const ErrorMessageIcon = unregisterAgentModal.errorMessageIcon(Icons.Warning);
 const Content = unregisterAgentModal.content('div');
 const Notification = unregisterAgentModal.notification('div');
 const UnregisterButton = unregisterAgentModal.unregisterButton(Button);
-const CancelButton = unregisterAgentModal.cancelButton(Button);
 
 async function unregisterAgent(
   agentId: string,

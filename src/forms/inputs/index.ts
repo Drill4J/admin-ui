@@ -5,7 +5,7 @@ import { Checkbox } from './checkbox';
 import { Toggler } from './toggler';
 
 export { DropdownInput } from './dropdown-input';
-export { Button } from './button';
+export { Button, LinkButton, CancelButton } from './button';
 export const Inputs = {
   Text: Input,
   Dropdown,

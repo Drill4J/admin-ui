@@ -26,4 +26,10 @@
   &__plugins-list {
     margin: 0 24px;
   }
+  &__plugin-name {
+    font-family: $semibold-font;
+    font-size: 14px;
+    line-height: 22px;
+    color: $gravel-color;
+  }
 }

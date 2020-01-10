@@ -2,7 +2,7 @@ import * as React from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 
 import { Panel } from 'layouts';
-import { Button } from 'forms';
+import { Button, CancelButton } from 'forms';
 import { Popup, Icons } from 'components';
 
 import styles from './unlocking-system-settings-form-modal.module.scss';
@@ -42,7 +42,6 @@ export const UnlockingSystemSettingsFormModal = unlockingSystemSettingsFormModal
             </Message>
             <ActionsPanel>
               <AcceptButton
-                type="secondary"
                 onClick={() => {
                   setUnlocked(true);
                   onToggle(false);
@@ -50,9 +49,9 @@ export const UnlockingSystemSettingsFormModal = unlockingSystemSettingsFormModal
               >
                 Unlock and proceed
               </AcceptButton>
-              <CancelButton type="primary" onClick={() => onToggle(false)}>
+              <CancelUnlockingButton type="secondary" size="large" onClick={() => onToggle(false)}>
                 Cancel
-              </CancelButton>
+              </CancelUnlockingButton>
             </ActionsPanel>
           </Content>
         </div>
@@ -65,5 +64,5 @@ const HeaderIcon = unlockingSystemSettingsFormModal.headerIcon('div');
 const Content = unlockingSystemSettingsFormModal.content('div');
 const Message = unlockingSystemSettingsFormModal.message('span');
 const ActionsPanel = unlockingSystemSettingsFormModal.actionsPanel(Panel);
-const AcceptButton = unlockingSystemSettingsFormModal.acceptButton(Button);
-const CancelButton = unlockingSystemSettingsFormModal.cancelButton(Button);
+const AcceptButton = unlockingSystemSettingsFormModal.acceptButton(CancelButton);
+const CancelUnlockingButton = unlockingSystemSettingsFormModal.cancelUnlockingButton(Button);

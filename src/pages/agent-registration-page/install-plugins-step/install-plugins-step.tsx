@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { BEM, div } from '@redneckz/react-bem-helper';
+import { BEM } from '@redneckz/react-bem-helper';
 import { Field } from 'react-final-form';
 
 import { Panel } from 'layouts';
@@ -41,12 +41,21 @@ export const InstallPluginsStep = installPluginsStep(
               key={id}
               render={({ input, meta }) => (
                 <PluginListEntry
-                  name={name}
                   description={description}
                   input={input}
                   meta={meta}
                   icon={id === 'test-to-code-mapping' ? 'TestToCodeMapping' : 'Plugins'}
-                />
+                  onClick={() =>
+                    input.onChange({
+                      target: {
+                        type: 'checkbox',
+                        checked: !input.checked,
+                      },
+                    })
+                  }
+                >
+                  <PluginName>{name}</PluginName>
+                </PluginListEntry>
               )}
             />
           ))}
@@ -60,3 +69,4 @@ const InfoPanel = installPluginsStep.infoPanel(Panel);
 const InfoIcon = installPluginsStep.infoIcon(Icons.Info);
 const SelectedPluginsInfo = installPluginsStep.selectedPluginsInfo('div');
 const PluginsList = installPluginsStep.pluginsList('div');
+const PluginName = installPluginsStep.pluginName('div');
