@@ -41,7 +41,9 @@ export const NameColumn = withRouter(
               <FilledBadge>{`+${unregisteredAgentsCount}`}</FilledBadge>
             )}
             <AgentName
-              onClick={() => push(`/full-page/${id}/${buildVersion}/dashboard`)}
+              onClick={() =>
+                agentType !== 'ServiceGroup' && push(`/full-page/${id}/${buildVersion}/dashboard`)
+              }
               data-test="name-column"
             >
               {name || id}
