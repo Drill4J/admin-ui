@@ -3,6 +3,7 @@ import { BEM } from '@redneckz/react-bem-helper';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
 
 import { Icons } from 'components';
+import { Button } from 'forms';
 import { AGENT_STATUS } from 'common/constants';
 import { Agent } from 'types/agent';
 
@@ -24,27 +25,36 @@ export const ActionsColumn = withRouter(
     }: Props) => {
       return (
         <div className={className}>
-          {status === AGENT_STATUS.NOT_REGISTERED ? (
-            <Icons.Register
-              onClick={() => push(`/registration/${agentId}`)}
-              data-test="action-column:icons-register"
-            />
-          ) : (
-            <Icons.Settings
-              onClick={() =>
-                push(
-                  `/agents/${
-                    agentType === 'ServiceGroup' ? 'service-group' : 'agent'
-                  }/${agentId}/settings/`,
-                )
-              }
-              height={16}
-              width={16}
-              data-test="action-column:icons-settings"
-            />
-          )}
+          <Content>
+            {status === AGENT_STATUS.NOT_REGISTERED ? (
+              <RegisterButton
+                onClick={() => push(`/registration/${agentId}`)}
+                data-test="action-column:icons-register"
+                type="primary"
+              >
+                <Icons.Register />
+                Register
+              </RegisterButton>
+            ) : (
+              <Icons.Settings
+                onClick={() =>
+                  push(
+                    `/agents/${
+                      agentType === 'ServiceGroup' ? 'service-group' : 'agent'
+                    }/${agentId}/settings/`,
+                  )
+                }
+                height={16}
+                width={16}
+                data-test="action-column:icons-settings"
+              />
+            )}
+          </Content>
         </div>
       );
     },
   ),
 );
+
+const Content = actionsColumn.content('div');
+const RegisterButton = actionsColumn.registerButton(Button);
