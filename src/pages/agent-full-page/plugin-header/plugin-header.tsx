@@ -1,9 +1,10 @@
 import * as React from 'react';
 import { BEM, div } from '@redneckz/react-bem-helper';
 
-import { Spinner } from 'components';
 import { Panel } from 'layouts';
+import { Spinner } from 'components';
 import { AGENT_STATUS } from 'common/constants';
+import { capitalize } from 'utils';
 import { usePluginState } from '../store';
 import { ReactComponent as LogoSvg } from './logo.svg';
 import { AgentStatus } from 'types/agent-status';
@@ -13,7 +14,6 @@ import styles from './plugin-header.module.scss';
 interface Props {
   className?: string;
   agentName?: string;
-  agentId?: string;
   agentStatus?: AgentStatus;
   agentIPAddress?: string;
 }
@@ -34,7 +34,7 @@ export const PluginHeader = pluginHeader(
             <Panel>
               <AgentIpAddress>{agentIPAddress}</AgentIpAddress>
               <AgentStatusWrapper status={agentStatus}>
-                {agentStatus === AGENT_STATUS.ONLINE ? 'Online' : 'Busy'}
+                {capitalize(agentStatus)}
               </AgentStatusWrapper>
               <SpinnerWrapper>{agentStatus === AGENT_STATUS.BUSY && <Spinner />}</SpinnerWrapper>
             </Panel>
