@@ -26,9 +26,9 @@ export const SelectableList = selectableList(
             <PluginRelation relation={plugin.relation}>{plugin.relation}</PluginRelation>
             <Plugin
               selected={selectedRows.includes(plugin[idKey])}
-              selectable={plugin.relation === 'New'}
+              selectable={plugin.relation !== 'Installed'}
             >
-              {plugin.relation === 'New' && (
+              {plugin.relation !== 'Installed' && (
                 <Inputs.Checkbox
                   onChange={() => {
                     selectedRows.includes(plugin[idKey])
