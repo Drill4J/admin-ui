@@ -23,7 +23,7 @@ const generalSettingsForm = BEM(styles);
 const validateSettings = composeValidators(
   required('name'),
   sizeLimit({ name: 'name' }),
-  sizeLimit({ name: 'group' }),
+  sizeLimit({ name: 'environment' }),
   sizeLimit({ name: 'description', min: 3, max: 256 }),
 );
 
@@ -86,11 +86,15 @@ export const GeneralSettingsForm = generalSettingsForm(
                 <FormGroup label="Service Group">
                   <Field name="serviceGroup" component={Fields.Input} placeholder="n/a" disabled />
                 </FormGroup>
-                <FormGroup label="Agent name">
+                <AgentName label="Agent name">
                   <Field name="name" component={Fields.Input} placeholder="Give agent a name" />
-                </FormGroup>
-                <FormGroup label="Group" optional>
-                  <Field name="group" component={Fields.Input} placeholder="Specify a group" />
+                </AgentName>
+                <FormGroup label="Environment" optional>
+                  <Field
+                    name="environment"
+                    component={Fields.Input}
+                    placeholder="Specify an environment"
+                  />
                 </FormGroup>
                 <Description label="Description">
                   <Field
@@ -115,6 +119,7 @@ const ErrorMessage = generalSettingsForm.errorMessage(Panel);
 const ErrorMessageIcon = generalSettingsForm.errorMessageIcon(Icons.Warning);
 const Content = generalSettingsForm.content('div');
 const CopyAgentId = generalSettingsForm.copyButton(Icons.Copy);
+const AgentName = generalSettingsForm.agentName(FormGroup);
 const Description = generalSettingsForm.description(FormGroup);
 
 function saveChanges({

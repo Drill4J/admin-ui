@@ -1,7 +1,7 @@
 export interface CommonEntity {
   id?: string;
   name?: string;
-  group?: string;
+  environment?: string;
   description?: string;
   type?: string;
 }
