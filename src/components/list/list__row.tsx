@@ -1,17 +1,21 @@
 import * as React from 'react';
+import { BEM } from '@redneckz/react-bem-helper';
 
 import { get } from 'utils';
 import { ColumnProps } from './list-types';
+
+import styles from './list.module.scss';
 
 interface Props {
   className?: string;
   item: { [key: string]: unknown };
   columns: ColumnProps[];
   index: number;
+  style: { [key: string]: string };
 }
 
-export const ListRow = ({ item, columns }: Props) => (
-  <>
+export const ListRow = BEM(styles).row(({ className, item, columns, style }: Props) => (
+  <div className={className} style={style}>
     {columns.map((column) => {
       const DefaultCell = ({ value }: { value: unknown; item: { [key: string]: unknown } }) => (
         <div>{String(value)}</div>
@@ -23,5 +27,5 @@ export const ListRow = ({ item, columns }: Props) => (
         </div>
       );
     })}
-  </>
-);
+  </div>
+));

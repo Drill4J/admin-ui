@@ -53,7 +53,7 @@ export const LoginPage = withRouter(
             </SignInButton>
           </SignInForm>
           <ForgotPasswordLink>Forgot your password?</ForgotPasswordLink>
-          <Button type="secondary" onClick={handleLogin}>
+          <Button type="secondary" size="large" onClick={handleLogin}>
             Continue as a guest (read only)
           </Button>
           <Copyright>{`© ${new Date().getFullYear()} Drill4J. All rights reserved.`}</Copyright>

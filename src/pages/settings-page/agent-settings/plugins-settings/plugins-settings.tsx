@@ -52,11 +52,12 @@ export const PluginsSettings = withRouter(
               plugins.map(({ id, name, description }) => (
                 <PluginListEntry
                   key={id}
-                  name={name}
                   description={description}
                   onClick={() => push(`/full-page/${agentId}/${buildVersion}/${id}/dashboard`)}
                   icon={id === 'test-to-code-mapping' ? 'TestToCodeMapping' : 'Plugins'}
-                />
+                >
+                  <PluginName>{name}</PluginName>
+                </PluginListEntry>
               ))
             ) : (
               <NoPluginsStub />
@@ -81,3 +82,4 @@ const Content = pluginsSettings.content('div');
 const Header = pluginsSettings.header(Panel);
 const PluginsCount = pluginsSettings.pluginsCount('span');
 const AddPluginButton = pluginsSettings.addPlugin(Button);
+const PluginName = pluginsSettings.pluginName('div');

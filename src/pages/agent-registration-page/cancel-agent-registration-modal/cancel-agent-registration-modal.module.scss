@@ -23,15 +23,8 @@
   &__accept-button {
     min-height: 32px;
     width: 192px;
+    margin-right: 16px;
     font-family: $semibold-font;
     font-size: 14px;
-  }
-
-  &__cancel-button {
-    min-height: 32px;
-    width: 150px;
-    margin-left: 16px;
-    border: 1px solid $loblolly-color;
-    color: $slate-gray;
   }
 }

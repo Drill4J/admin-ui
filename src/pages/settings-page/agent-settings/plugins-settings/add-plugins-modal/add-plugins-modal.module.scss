@@ -102,12 +102,4 @@
     font-size: 14px;
     line-height: 19px;
   }
-
-  &__cancel-button {
-    min-height: 32px;
-    max-width: 78px;
-    background-color: map-get($color-palette, light-blue);
-    border: 1px solid $slate-gray;
-    color: $slate-gray;
-  }
 }

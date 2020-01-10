@@ -3,7 +3,15 @@ import { BEM } from '@redneckz/react-bem-helper';
 import { Field, withTypes } from 'react-final-form';
 
 import { Panel } from 'layouts';
-import { Button, Fields, FormGroup, composeValidators, sizeLimit, required } from 'forms';
+import {
+  Button,
+  CancelButton,
+  Fields,
+  FormGroup,
+  composeValidators,
+  sizeLimit,
+  required,
+} from 'forms';
 import { Popup, Icons } from 'components';
 import { NotificationManagerContext } from 'notification-manager';
 import { renameBuildVersion } from '../../api';
@@ -69,7 +77,7 @@ export const RenameBuildVersionModal = renameBuildVersionModal(
                   <RenameScopeButton type="primary" onClick={handleSubmit as any}>
                     Save
                   </RenameScopeButton>
-                  <CancelButton type="secondary" onClick={() => onToggle(false)}>
+                  <CancelButton size="large" onClick={() => onToggle(false)}>
                     Cancel
                   </CancelButton>
                 </ActionsPanel>
@@ -87,4 +95,3 @@ const ErrorMessageIcon = renameBuildVersionModal.errorMessageIcon(Icons.Warning)
 const Content = renameBuildVersionModal.content('div');
 const ActionsPanel = renameBuildVersionModal.actionsPanel(Panel);
 const RenameScopeButton = renameBuildVersionModal.renameScopeButton(Button);
-const CancelButton = renameBuildVersionModal.cancelButton(Button);

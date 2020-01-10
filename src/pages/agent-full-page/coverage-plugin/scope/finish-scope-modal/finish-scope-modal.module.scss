@@ -35,26 +35,14 @@
   }
 
   &__ignore-scope {
-    margin-top: 24px;
-    margin-bottom: 32px;
+    margin: 24px 0px 32px 0px;
+    :nth-child(2) {
+      margin-right: 16px;
+      margin-left: 0px;
+    }
   }
 
   &__actions-panel {
     margin-top: 38px;
-  }
-
-  &__finish-scope-button {
-    min-height: 32px;
-    width: auto;
-    font-size: 14px;
-    padding: 0 16px;
-  }
-
-  &__cancel-button {
-    margin-left: 16px;
-    min-height: 32px;
-    width: 78px;
-    border: 1px solid $loblolly-color;
-    color: $slate-gray;
   }
 }
