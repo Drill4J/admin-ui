@@ -62,11 +62,13 @@ export const PluginsSettings = withRouter(
               <NoPluginsStub />
             )}
           </Content>
-          <AddPluginsModal
-            isOpen={isAddPluginOpen}
-            onToggle={setIsAddPluginOpen}
-            agentId={agentId}
-          />
+          {isAddPluginOpen && (
+            <AddPluginsModal
+              isOpen={isAddPluginOpen}
+              onToggle={setIsAddPluginOpen}
+              agentId={agentId}
+            />
+          )}
         </div>
       );
     },
