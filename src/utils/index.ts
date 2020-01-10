@@ -8,3 +8,4 @@ export { dateFormatter } from './date-formatter';
 export { camelToSpaces } from './camel-to-spaces';
 export { parsePackges } from './parse-packges';
 export { formatPackages } from './format-packages';
+export { capitalize } from './capitalize';
