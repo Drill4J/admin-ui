@@ -1,13 +1,34 @@
 @import '~common/style-guide/index';
 
 .actions-column {
+  display: flex;
+  justify-content: flex-end;
   color: map-get($color-palette, blue100);
 
-  :not(:first-child) {
-    margin-left: 24px;
+  &__content {
+    margin-right: 16px;
+
+    :not(:first-child) {
+      margin-left: 24px;
+    }
+
+    & > * {
+      cursor: pointer;
+    }
   }
 
-  & > * {
-    cursor: pointer;
+  &__register-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 28px;
+    width: 96px;
+    font-family: $semibold-font;
+    font-size: 12px;
+    line-height: 18px;
+
+    & > * {
+      margin-right: 8px;
+    }
   }
 }
