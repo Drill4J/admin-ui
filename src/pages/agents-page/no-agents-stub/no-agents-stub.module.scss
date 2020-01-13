@@ -21,4 +21,8 @@
     line-height: 24px;
     text-align: center;
   }
+
+  &__link {
+    color: map-get($color-palette, blue100);
+  }
 }
