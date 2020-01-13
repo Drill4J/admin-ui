@@ -25,7 +25,7 @@ export const AgentsPage = agentsPage(({ className }: Props) => {
     ) || {};
   const agents = [
     ...grouped
-      .map(({ group, agents: groupedAgents }: any) => ({
+      .map(({ group, agents: groupedAgents }: ServiceGroup) => ({
         ...group,
         agents: groupedAgents,
         agentType: 'ServiceGroup',
@@ -33,11 +33,15 @@ export const AgentsPage = agentsPage(({ className }: Props) => {
       .flat(),
     ...single,
   ];
+  const agentsCount = grouped.reduce(
+    (sum, { agents: groupedAgents = [] }) => sum + groupedAgents.length,
+    single.length,
+  );
 
   return (
     <div className={className}>
-      <PageHeader title="Agents" itemsCount={agents.length} />
-      <Content>{agents.length > 0 ? <TableView agents={agents} /> : <NoAgentsStub />}</Content>
+      <PageHeader title="Agents" itemsCount={agentsCount} />
+      <Content>{agentsCount > 0 ? <TableView agents={agents} /> : <NoAgentsStub />}</Content>
     </div>
   );
 });
