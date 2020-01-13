@@ -79,27 +79,21 @@ export const AgentFullPage = withRouter(
                   }
                 />
               }
-              header={
-                <PluginHeader
-                  agentName={agent.name}
-                  agentStatus={agent.status}
-                  agentIPAddress={agent.ipAddress}
-                />
-              }
+              header={<PluginHeader agentName={agent.name} agentStatus={agent.status} />}
               breadcrumbs={<Breadcrumbs />}
               footer={<Footer />}
             >
               <div className={className}>
                 <Switch>
                   <Route
-                    path="/full-page/:agentId/:buildVersion/test-to-code-mapping/:tab"
-                    component={CoveragePlugin}
-                  />
-                  <Route
                     path="/full-page/:agentId/:buildVersion/dashboard"
                     render={() => <Dashboard agent={agent} />}
                   />
                   <Route path="/full-page/:agentId/build-list" component={BuildList} />
+                  <Route
+                    path="/full-page/:agentId/:buildVersion/test-to-code-mapping/:tab"
+                    component={CoveragePlugin}
+                  />
                 </Switch>
                 {isNewBuildModalOpened && (
                   <NewBuildModal

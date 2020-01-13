@@ -26,17 +26,11 @@ export const TableView = tableView(({ className, agents }: Props) => (
       idKey="id"
       expandedColumns={[
         <Column name="expander" Cell={() => null} />,
-        <Column
-          name="name"
-          label="Name"
-          Cell={({ item }) => (
-            <NameColumn agent={item} unregistered={item.status === AGENT_STATUS.NOT_REGISTERED} />
-          )}
-        />,
+        <Column name="name" label="Name" Cell={({ item }) => <NameColumn agent={item} />} />,
         <Column
           name="description"
           label="Description"
-          Cell={({ value }) => <OverflowText>{value.substr(0, 150) || 'n/a'}</OverflowText>}
+          Cell={({ value }) => <OverflowText>{value.substr(0, 150)}</OverflowText>}
         />,
         <Column name="agentType" label="Type" />,
         <Column
@@ -60,22 +54,16 @@ export const TableView = tableView(({ className, agents }: Props) => (
       ]}
       expandedContentKey="agents"
     >
-      <Column
-        name="name"
-        label="Name"
-        Cell={({ item }) => (
-          <NameColumn agent={item} unregistered={item.status === AGENT_STATUS.NOT_REGISTERED} />
-        )}
-      />
+      <Column name="name" label="Name" Cell={({ item }) => <NameColumn agent={item} />} />
       <Column
         name="description"
         label="Description"
-        Cell={({ value }) => <OverflowText>{value.substr(0, 150) || 'n/a'}</OverflowText>}
+        Cell={({ value }) => <OverflowText>{value.substr(0, 150)}</OverflowText>}
       />
       <Column name="agentType" label="Type" />,
       <Column
-        name="group"
-        label="Group"
+        name="environment"
+        label="Environment"
         Cell={({ value, item }) => (
           <span>{item.status === AGENT_STATUS.NOT_REGISTERED ? 'n/a' : value}</span>
         )}

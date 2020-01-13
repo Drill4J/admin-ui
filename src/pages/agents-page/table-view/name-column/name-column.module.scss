@@ -16,10 +16,10 @@
     margin-left: 8px;
     color: map-get($color-palette, blue100);
     cursor: pointer;
-  }
 
-  &--unregistered {
-    pointer-events: none;
-    color: $slate-gray;
+    &--disabled {
+      pointer-events: none;
+      color: $slate-gray;
+    }
   }
 }

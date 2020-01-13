@@ -97,7 +97,6 @@ export const GeneralSettingsForm = generalSettingsForm(
                     placeholder="Give Service Group a name"
                   />
                 </ServiceGroupName>
-
                 <Description label="Description">
                   <Field
                     name="description"

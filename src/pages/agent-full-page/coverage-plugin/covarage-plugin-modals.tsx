@@ -1,10 +1,11 @@
 import * as React from 'react';
 
+import { ManageSessionsModal } from 'modules';
+import { usePluginState } from '../store';
 import { useCoveragePluginState, useCoveragePluginDispatch, openModal } from './store';
 import { RenameScopeModal } from './scope/rename-scope-modal';
 import { FinishScopeModal } from './scope/finish-scope-modal';
 import { DeleteScopeModal } from './scope/delete-scope-modal';
-import { ManageSessionsModal } from './manage-sessions-modal';
 
 const modals = {
   RenameScopeModal,
@@ -14,6 +15,7 @@ const modals = {
 };
 
 export const CoveragePluginModals = () => {
+  const { agentId } = usePluginState();
   const { openedModalName, scope } = useCoveragePluginState();
   const dispatch = useCoveragePluginDispatch();
 
@@ -25,6 +27,7 @@ export const CoveragePluginModals = () => {
           isOpen={Boolean(openedModalName)}
           onToggle={() => dispatch(openModal(undefined, null))}
           scope={scope}
+          agentId={agentId}
         />
       )}
     </>

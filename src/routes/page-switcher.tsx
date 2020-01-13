@@ -12,6 +12,7 @@ import {
   AgentFullPage,
   SettingsPage,
   AgentRegistrationPage,
+  ServiceGroupFullPage,
 } from 'pages';
 import { PrivateRoute, Icons, Sidebar, Toolbar, Divider, Footer } from 'components';
 
@@ -28,6 +29,7 @@ export const PageSwitcher = () => {
       <Route exact path="/login" component={LoginPage} />
       <Route exact path="/" render={() => <Redirect to="/agents" />} />
       <Route path="/full-page/:agentId" component={AgentFullPage} />
+      <Route path="/service-group-full-page/:id" component={ServiceGroupFullPage} />
       <AppLayout
         sidebar={<Sidebar links={sidebarLinks} matchParams={{ path: '/:activeLink' }} />}
         toolbar={

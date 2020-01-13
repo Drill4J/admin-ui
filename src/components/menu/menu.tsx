@@ -45,7 +45,7 @@ export const Menu = menu(({ className, items, bordered }: Props) => {
                 const ItemIcon = Icons[icon];
                 return (
                   <Item onClick={onClick} key={index}>
-                    <ItemIcon />
+                    <ItemIcon width={16} height={16} />
                     <ItemLabel>{label}</ItemLabel>
                   </Item>
                 );

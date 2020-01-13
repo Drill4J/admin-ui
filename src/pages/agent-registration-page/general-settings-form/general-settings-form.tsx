@@ -33,9 +33,6 @@ export const GeneralSettingsForm = withRouter(
             </Panel>
           </InfoPanel>
           <Content>
-            <FormGroup label="IP Address">
-              <Field name="ipAddress" component={Fields.Input} disabled />
-            </FormGroup>
             <FormGroup
               label="Agent ID"
               actions={<CopyAgentId onClick={() => copyToClipboard(String(agentId))} />}
@@ -45,9 +42,6 @@ export const GeneralSettingsForm = withRouter(
             <FormGroup label="Service Group">
               <Field name="serviceGroup" component={Fields.Input} placeholder="n/a" disabled />
             </FormGroup>
-            <AgentName label="Agent name">
-              <Field name="name" component={Fields.Input} placeholder="Enter agent's name" />
-            </AgentName>
             <FormGroup label="Environment" optional>
               <Field
                 name="environment"
@@ -55,6 +49,9 @@ export const GeneralSettingsForm = withRouter(
                 placeholder="Specify an environment"
               />
             </FormGroup>
+            <AgentName label="Agent name">
+              <Field name="name" component={Fields.Input} placeholder="Enter agent's name" />
+            </AgentName>
             <Description label="Description">
               <Field
                 name="description"

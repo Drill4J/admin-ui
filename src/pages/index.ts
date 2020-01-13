@@ -7,3 +7,4 @@ export { NotFoundPage } from './not-found-page';
 export { AgentFullPage } from './agent-full-page';
 export { SettingsPage } from './settings-page';
 export { AgentRegistrationPage } from './agent-registration-page';
+export { ServiceGroupFullPage } from './service-group-full-page';
