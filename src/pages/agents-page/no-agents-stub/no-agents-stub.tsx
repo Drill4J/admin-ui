@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { BEM } from '@redneckz/react-bem-helper';
+import { BEM, tag } from '@redneckz/react-bem-helper';
 
 import { ReactComponent as NoAgentsSvg } from './no-agents.svg';
 
@@ -15,9 +15,21 @@ export const NoAgentsStub = noAgentsStub(({ className }: Props) => (
   <div className={className}>
     <NoAgentsSvg />
     <Title>No agents online at the moment</Title>
-    <SubTitle>For agent to appear here turn it on in your project folder.</SubTitle>
+    <SubTitle>
+      Run your application with Drill4J Agent using&nbsp;
+      <Link
+        href="https://drill4j.github.io/how-to-start/"
+        rel="noopener noreferrer"
+        target="_blank"
+      >
+        this guide.
+      </Link>
+    </SubTitle>
   </div>
 ));
 
 const Title = noAgentsStub.title('div');
 const SubTitle = noAgentsStub.subTitle('div');
+const Link = noAgentsStub.link(
+  tag('a')({ href: '', rel: '', target: '' } as { href: string; rel: string; target: string }),
+);
