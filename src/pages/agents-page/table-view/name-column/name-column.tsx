@@ -1,19 +1,18 @@
 import * as React from 'react';
-import { BEM } from '@redneckz/react-bem-helper';
+import { BEM, div } from '@redneckz/react-bem-helper';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
 
 import { Panel } from 'layouts';
 import { Icons, FilledBadge } from 'components';
 import { AGENT_STATUS } from 'common/constants';
 import { Agent } from 'types/agent';
+import { ServiceGroup } from 'types/service-group';
 
 import styles from './name-column.module.scss';
-import { ServiceGroup } from 'types/service-group';
 
 interface Props extends RouteComponentProps {
   className?: string;
   agent?: Agent;
-  unregistered?: boolean;
 }
 
 const nameColumn = BEM(styles);
@@ -30,6 +29,7 @@ export const NameColumn = withRouter(
         (acc, item) => (item.status === AGENT_STATUS.NOT_REGISTERED ? acc + 1 : acc),
         0,
       );
+
       return (
         <div className={className}>
           <Panel>
@@ -42,7 +42,15 @@ export const NameColumn = withRouter(
             )}
             <AgentName
               onClick={() =>
-                agentType !== 'ServiceGroup' && push(`/full-page/${id}/${buildVersion}/dashboard`)
+                push(
+                  agentType === 'ServiceGroup'
+                    ? `/service-group-full-page/${id}/service-group-dashboard`
+                    : `/full-page/${id}/${buildVersion}/dashboard`,
+                )
+              }
+              disabled={
+                status === AGENT_STATUS.NOT_REGISTERED ||
+                (unregisteredAgentsCount !== 0 && unregisteredAgentsCount === agents.length)
               }
               data-test="name-column"
             >
@@ -56,4 +64,6 @@ export const NameColumn = withRouter(
 );
 
 const AgentTypeIcon = nameColumn.agentTypeIcon('div');
-const AgentName = nameColumn.agentName('div');
+const AgentName = nameColumn.agentName(
+  div({ onClick: () => {} } as { onClick: () => void; disabled: boolean }),
+);
