@@ -3,7 +3,7 @@ import { BEM } from '@redneckz/react-bem-helper';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
 
 import { Panel } from 'layouts';
-import { useSettingsTarget } from 'hooks';
+import { useCommonEntity } from 'hooks';
 import { PageHeader, Icons, Menu } from 'components';
 import { AGENT_STATUS } from 'common/constants';
 import { NotificationManagerContext } from 'notification-manager';
@@ -30,7 +30,7 @@ export const SettingsPage = withRouter(
         params: { id, type },
       },
     }: Props) => {
-      const data = useSettingsTarget(id, type) || {};
+      const data = useCommonEntity(id, type) || {};
       const { showMessage } = React.useContext(NotificationManagerContext);
       const [errorMessage, setErrorMessage] = React.useState('');
       const [isUnregisterModalOpen, setIsUnregisterModalOpen] = React.useState(false);

@@ -7,7 +7,6 @@ export interface Agent extends CommonEntity {
   drillAdminUrl?: string;
   address?: string;
   plugins?: Plugin[];
-  ipAddress?: string;
   activePluginsCount?: number;
   buildVersion?: string;
   buildVersions?: BuildVersion[];

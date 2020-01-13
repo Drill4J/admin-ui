@@ -1,0 +1,38 @@
+@import '~common/style-guide/index';
+
+.dashboard-header-cell {
+  &__content {
+    display: flex;
+    flex-direction: column;
+    border-left: 1px solid map-get($color-palette, black10);
+  }
+  &__label {
+    font-family: $semibold-font;
+    font-size: 12px;
+    color: $slate-gray;
+    text-transform: uppercase;
+    padding-left: 16px;
+  }
+
+  &__value {
+    padding-left: 16px;
+
+    font-size: 20px;
+    color: map-get($color-palette, black100);
+  }
+
+  &__arrow-icon {
+    height: 14px;
+    width: 12px;
+    margin-right: 8px;
+
+    &--type {
+      &--increase {
+        color: map-get($color-palette, green100);
+      }
+      &--decrease {
+        color: map-get($color-palette, red100);
+      }
+    }
+  }
+}

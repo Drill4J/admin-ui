@@ -47,6 +47,7 @@ import { path as unregisterPath } from './path/unregister.path';
 import { path as moreOptionsWithBorderPath } from './path/more-options-with-border.path';
 import { path as agentPath } from './path/agent.path';
 import { path as serviceGroupPath } from './path/service-group.path';
+import { path as buildListPath } from './path/build-list.path';
 import { declareIcon } from './declare-icon';
 import { ReactComponent as SettingsSvg } from './settings.svg';
 
@@ -108,5 +109,6 @@ export const Icons = {
   }),
   Agent: declareIcon(agentPath, { defaultWidth: 18, defaultHeight: 20 }),
   ServiceGroup: declareIcon(serviceGroupPath, { defaultWidth: 18, defaultHeight: 20 }),
+  BuildList: declareIcon(buildListPath, { defaultWidth: 18, defaultHeight: 16 }),
   NewSettings: SettingsSvg,
 };

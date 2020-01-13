@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react';
 import { defaultAdminSocket } from 'common/connection';
+
 import { CommonEntity } from 'types/common-entity';
 
-export function useSettingsTarget(id: string, type: string) {
+export function useCommonEntity(id: string, type: string) {
   const [data, setData] = useState<CommonEntity | null>(null);
 
   useEffect(() => {

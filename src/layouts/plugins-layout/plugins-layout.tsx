@@ -22,7 +22,7 @@ export const PluginsLayout = pluginsLayout(
     <div className={className}>
       <ToolbarWrapper>{toolbar}</ToolbarWrapper>
       <HeaderWrapper>{header}</HeaderWrapper>
-      <BreadcrumbsWrapper>{breadcrumbs}</BreadcrumbsWrapper>
+      {breadcrumbs && <BreadcrumbsWrapper>{breadcrumbs}</BreadcrumbsWrapper>}
       <WithSidebarWrapper>
         <SidebarWrapper>{sidebar}</SidebarWrapper>
         <OverflowWrapper verticalAlign="start" direction="column">
