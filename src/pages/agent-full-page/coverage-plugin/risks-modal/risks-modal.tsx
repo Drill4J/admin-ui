@@ -1,8 +1,10 @@
 import * as React from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
+import VirtualList from 'react-tiny-virtual-list';
 
 import { Panel } from 'layouts';
 import { Icons, Modal, OverflowText } from 'components';
+import { useElementSize } from 'hooks';
 import { Inputs } from 'forms';
 import { Risks } from 'types/risks';
 
@@ -28,6 +30,8 @@ export const RisksModal = risksModal(
   }: Props) => {
     const [selectedSection, setSelectedSection] = React.useState('all');
     const allMethods = newMethods.concat(modifiedMethods);
+    const node = React.useRef<HTMLDivElement>(null);
+    const { height: methodsListHeight } = useElementSize(node);
     const getMethods = () => {
       switch (selectedSection) {
         case 'new':
@@ -38,7 +42,6 @@ export const RisksModal = risksModal(
           return allMethods;
       }
     };
-
     return (
       <Modal isOpen={isOpen} onToggle={onToggle}>
         <div className={className}>
@@ -64,17 +67,24 @@ export const RisksModal = risksModal(
               value={selectedSection}
             />
             <MethodsList>
-              {getMethods().map((method) => (
-                <MethodsListItem>
-                  <MethodsListItemIcon>
-                    <Icons.Function />
-                  </MethodsListItemIcon>
-                  <MethodInfo>
-                    {method.name}
-                    <MethodsPackage>{method.ownerClass}</MethodsPackage>
-                  </MethodInfo>
-                </MethodsListItem>
-              ))}
+              <div ref={node} style={{ height: '100%' }}>
+                <VirtualList
+                  itemSize={60}
+                  height={methodsListHeight}
+                  itemCount={getMethods().length}
+                  renderItem={({ index, style }) => (
+                    <MethodsListItem key={index} style={style as any}>
+                      <MethodsListItemIcon>
+                        <Icons.Function />
+                      </MethodsListItemIcon>
+                      <MethodInfo>
+                        <OverflowText>{getMethods()[index].name}</OverflowText>
+                        <MethodsPackage>{getMethods()[index].ownerClass}</MethodsPackage>
+                      </MethodInfo>
+                    </MethodsListItem>
+                  )}
+                />
+              </div>
             </MethodsList>
           </Content>
         </div>
