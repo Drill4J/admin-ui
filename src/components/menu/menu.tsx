@@ -3,6 +3,7 @@ import { BEM, div } from '@redneckz/react-bem-helper';
 import VisibilitySensor from 'react-visibility-sensor';
 
 import { Icons } from 'components';
+import { useClickOutside } from 'hooks';
 
 import styles from './menu.module.scss';
 
@@ -17,19 +18,8 @@ const menu = BEM(styles);
 export const Menu = menu(({ className, items, bordered }: Props) => {
   const [isListOpened, setIsListOpened] = React.useState(false);
   const [position, setPosition] = React.useState<'bottom' | 'top'>('bottom');
-  const node = React.useRef<HTMLDivElement>(null);
-  React.useEffect(() => {
-    function handleClick(event: any) {
-      if (node && node.current && node.current.contains(event.target)) {
-        return;
-      }
-      setIsListOpened(false);
-    }
-    document.addEventListener('mousedown', handleClick);
-    return () => {
-      document.removeEventListener('mousedown', handleClick);
-    };
-  }, []);
+  const node = useClickOutside(() => setIsListOpened(false));
+
   return (
     <div className={className} ref={node}>
       <MenuIcon onClick={() => setIsListOpened(!isListOpened)}>

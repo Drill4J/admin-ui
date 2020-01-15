@@ -14,7 +14,7 @@ import {
   AgentRegistrationPage,
   ServiceGroupFullPage,
 } from 'pages';
-import { PrivateRoute, Icons, Sidebar, Toolbar, Divider, Footer } from 'components';
+import { PrivateRoute, Icons, Sidebar, Toolbar, Footer } from 'components';
 
 const sidebarLinks = [
   { link: 'agents', icon: Icons.Agents },
@@ -32,14 +32,7 @@ export const PageSwitcher = () => {
       <Route path="/service-group-full-page/:id" component={ServiceGroupFullPage} />
       <AppLayout
         sidebar={<Sidebar links={sidebarLinks} matchParams={{ path: '/:activeLink' }} />}
-        toolbar={
-          <Toolbar>
-            <Icons.Notification />
-            <Divider />
-            <Icons.Account />
-            <span>Guest</span>
-          </Toolbar>
-        }
+        toolbar={<Toolbar />}
         footer={<Footer />}
       >
         <Switch>
