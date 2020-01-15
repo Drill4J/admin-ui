@@ -13,6 +13,7 @@ import styles from './name-column.module.scss';
 interface Props extends RouteComponentProps {
   className?: string;
   agent?: Agent;
+  withMargin?: boolean;
 }
 
 const nameColumn = BEM(styles);
@@ -36,9 +37,9 @@ export const NameColumn = withRouter(
             <AgentTypeIcon>
               {agentType === 'ServiceGroup' ? <Icons.ServiceGroup /> : <Icons.Agent />}
             </AgentTypeIcon>
-            {status === AGENT_STATUS.NOT_REGISTERED && <FilledBadge>New</FilledBadge>}
+            {status === AGENT_STATUS.NOT_REGISTERED && <NewAgentBadge>New</NewAgentBadge>}
             {unregisteredAgentsCount > 0 && (
-              <FilledBadge>{`+${unregisteredAgentsCount}`}</FilledBadge>
+              <NewAgentBadge>{`+${unregisteredAgentsCount}`}</NewAgentBadge>
             )}
             <AgentName
               onClick={() =>
@@ -64,6 +65,7 @@ export const NameColumn = withRouter(
 );
 
 const AgentTypeIcon = nameColumn.agentTypeIcon('div');
+const NewAgentBadge = nameColumn.newAgentBadge(FilledBadge);
 const AgentName = nameColumn.agentName(
   div({ onClick: () => {}, 'data-test': '' } as {
     onClick: () => void;
