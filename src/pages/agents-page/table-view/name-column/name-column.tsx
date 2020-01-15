@@ -65,5 +65,9 @@ export const NameColumn = withRouter(
 
 const AgentTypeIcon = nameColumn.agentTypeIcon('div');
 const AgentName = nameColumn.agentName(
-  div({ onClick: () => {} } as { onClick: () => void; disabled: boolean }),
+  div({ onClick: () => {}, 'data-test': '' } as {
+    onClick: () => void;
+    disabled: boolean;
+    'data-test': string;
+  }),
 );
