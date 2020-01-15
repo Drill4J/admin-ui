@@ -23,19 +23,23 @@
     background-color: map-get($color-palette, light-blue);
     height: 20px;
     width: 1px;
+    margin-right: 16px;
   }
 
   &__user-info {
     display: flex;
     align-items: center;
+    font-size: 12px;
     line-height: 20px;
-    font-size: 14px;
-    font-family: $semibold-font;
-    color: map-get($color-palette, blue100);
+    color: $slate-gray;
   }
 
-  &__account-icon {
-    margin-left: 16px;
-    margin-right: 8px;
+  &__sign-out {
+    margin-left: 8px;
+    font-size: 12px;
+    line-height: 20px;
+    font-family: $semibold-font;
+    color: map-get($color-palette, blue100);
+    cursor: pointer;
   }
 }

@@ -9,6 +9,7 @@ import { DashboardNameCell } from './dashboard-name-cell';
 import { DashboardCoverageCell } from './dashboard-coverage-cell';
 import { DashboardCell } from './dashboard-cell';
 import { DashboardHeaderCell } from './dashboard-header-cell';
+import { FinishAllScopesModal } from './finish-all-scopes-modal';
 import { Summary } from 'types/service-group-summary';
 
 import styles from './service-group-dashboard.module.scss';
@@ -38,6 +39,8 @@ export const ServiceGroupDashboard = withRouter(
       },
     }: Props) => {
       const [isManageSessionsModalOpen, setIsManageSessionsModalOpen] = React.useState(false);
+      const [isFinishScopesModalOpen, setIsFinishScopesModalOpen] = React.useState(false);
+
       const serviceGroupSummaries = summaries
         .filter((summary) => summary.data)
         .map((summary) => ({ ...summary, ...summary.data }));
@@ -118,6 +121,11 @@ export const ServiceGroupDashboard = withRouter(
                   <Actions
                     items={[
                       {
+                        label: 'Finish all scopes',
+                        icon: 'Check',
+                        onClick: () => setIsFinishScopesModalOpen(true),
+                      },
+                      {
                         label: 'Manage sessions',
                         icon: 'ManageSessions',
                         onClick: () => setIsManageSessionsModalOpen(true),
@@ -132,6 +140,14 @@ export const ServiceGroupDashboard = withRouter(
                 isOpen={isManageSessionsModalOpen}
                 onToggle={setIsManageSessionsModalOpen}
                 agentId={serviceGroupId}
+              />
+            )}
+            {isFinishScopesModalOpen && (
+              <FinishAllScopesModal
+                isOpen={isFinishScopesModalOpen}
+                onToggle={setIsFinishScopesModalOpen}
+                serviceGroupId={serviceGroupId}
+                agentsCount={serviceGroupSummaries.length}
               />
             )}
           </div>
