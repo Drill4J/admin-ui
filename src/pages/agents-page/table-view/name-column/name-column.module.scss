@@ -12,8 +12,11 @@
     color: map-get($color-palette, dark-blue);
   }
 
+  &__new-agent-badge {
+    margin-right: 8px;
+  }
+
   &__agent-name {
-    margin-left: 8px;
     color: map-get($color-palette, blue100);
     cursor: pointer;
 
@@ -21,5 +24,9 @@
       pointer-events: none;
       color: $slate-gray;
     }
+  }
+
+  &--with-margin {
+    margin-left: 36px;
   }
 }

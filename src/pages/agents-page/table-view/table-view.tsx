@@ -26,7 +26,11 @@ export const TableView = tableView(({ className, agents }: Props) => (
       idKey="id"
       expandedColumns={[
         <Column name="expander" Cell={() => null} />,
-        <Column name="name" label="Name" Cell={({ item }) => <NameColumn agent={item} />} />,
+        <Column
+          name="name"
+          label="Name"
+          Cell={({ item }) => <NameColumn agent={item} withMargin />}
+        />,
         <Column
           name="description"
           label="Description"
