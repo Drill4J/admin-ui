@@ -36,7 +36,7 @@ const MessageText = messagePanel.messageText('div');
 const CloseIcon = messagePanel.closeIcon(Icons.Close);
 const MessageIconWrapper = messagePanel.messageIconWrapper('div');
 
-function getMessageIcon(type: 'SUCCESS' | 'ERROR' | 'WARNING') {
+function getMessageIcon(type: 'SUCCESS' | 'ERROR' | 'WARNING' | 'INFO') {
   switch (type) {
     case 'ERROR': {
       return (
