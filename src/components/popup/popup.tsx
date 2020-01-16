@@ -1,8 +1,9 @@
 import * as React from 'react';
-import { BEM } from '@redneckz/react-bem-helper';
+import { BEM, div } from '@redneckz/react-bem-helper';
 
 import { Panel } from 'layouts';
 import { Icons } from 'components';
+import { useClickOutside } from 'hooks';
 import { Portal } from '../portal';
 
 import styles from './popup.module.scss';
@@ -29,10 +30,7 @@ export const Popup = popup(
     type = 'info',
     closeOnFadeClick = false,
   }: Props) => {
-    function handleOnFadeClick(event: any) {
-      event.stopPropagation();
-      closeOnFadeClick && onToggle(!isOpen);
-    }
+    const node = useClickOutside(() => closeOnFadeClick && onToggle(!isOpen));
 
     return (
       <div className={className}>
@@ -40,13 +38,15 @@ export const Popup = popup(
           {isOpen && (
             <div className={className}>
               <Content type={type}>
-                <Header align="space-between">
-                  {header}
-                  <CloseButton onClick={() => onToggle(!isOpen)} />
-                </Header>
-                {children}
+                <div ref={node}>
+                  <Header align="space-between">
+                    {header}
+                    <CloseButton onClick={() => onToggle(!isOpen)} />
+                  </Header>
+                  {children}
+                </div>
               </Content>
-              <Fade onClick={handleOnFadeClick} />
+              <Fade />
             </div>
           )}
         </Portal>
@@ -55,7 +55,7 @@ export const Popup = popup(
   },
 );
 
-const Content = popup.content('div');
+const Content = popup.content(div({ type: '' } as { type: string }));
 const Header = popup.header(Panel);
 const CloseButton = popup.closeButton(Icons.Close);
 const Fade = popup.fade('div');
