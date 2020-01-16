@@ -46,6 +46,7 @@ export const FinishAllScopesModal = finishAllScopesModal(
             <Instructions>
               <div>• All gathered data will be added to build stats</div>
               <div>• New scopes will start automatically</div>
+              <div>• Empty scopes will be deleted</div>
             </Instructions>
             <ActionsPanel>
               <FinishScopeButton
@@ -53,8 +54,12 @@ export const FinishAllScopesModal = finishAllScopesModal(
                 onClick={async () => {
                   await finishAllScopes(serviceGroupId, {
                     onSuccess: () => {
-                      showMessage({ type: 'SUCCESS', text: 'Scope has been finished' });
+                      showMessage({
+                        type: 'SUCCESS',
+                        text: 'All scopes have been successfully finished',
+                      });
                       onToggle(false);
+                      window.location.href = `/service-group-full-page/${serviceGroupId}/service-group-dashboard`;
                     },
                     onError: setErrorMessage,
                   })({ prevScopeEnabled: true, savePrevScope: true });
