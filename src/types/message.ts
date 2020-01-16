@@ -1,4 +1,5 @@
 export interface Message {
-  type: 'SUCCESS' | 'ERROR' | 'WARNING';
+  type: 'SUCCESS' | 'ERROR' | 'WARNING' | 'INFO';
   text: string;
+  system?: boolean;
 }
