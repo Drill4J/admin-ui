@@ -105,7 +105,7 @@ export const ServiceGroupDashboard = withRouter(
                   <Actions
                     items={[
                       {
-                        label: 'Build list',
+                        label: 'Builds list',
                         icon: 'BuildList',
                         onClick: () => push(`/full-page/${agentId}/build-list`),
                       },
