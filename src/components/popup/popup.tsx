@@ -1,8 +1,9 @@
 import * as React from 'react';
-import { BEM } from '@redneckz/react-bem-helper';
+import { BEM, div } from '@redneckz/react-bem-helper';
 
 import { Panel } from 'layouts';
 import { Icons } from 'components';
+import { useClickOutside } from 'hooks';
 import { Portal } from '../portal';
 
 import styles from './popup.module.scss';
@@ -29,24 +30,21 @@ export const Popup = popup(
     type = 'info',
     closeOnFadeClick = false,
   }: Props) => {
-    function handleOnFadeClick(event: any) {
-      event.stopPropagation();
-      closeOnFadeClick && onToggle(!isOpen);
-    }
+    const node = useClickOutside(() => closeOnFadeClick && onToggle(!isOpen));
 
     return (
       <div className={className}>
         <Portal>
           {isOpen && (
             <div className={className}>
-              <Content type={type}>
+              <Content type={type} ref={node}>
                 <Header align="space-between">
                   {header}
                   <CloseButton onClick={() => onToggle(!isOpen)} />
                 </Header>
                 {children}
               </Content>
-              <Fade onClick={handleOnFadeClick} />
+              <Fade />
             </div>
           )}
         </Portal>
@@ -55,7 +53,9 @@ export const Popup = popup(
   },
 );
 
-const Content = popup.content('div');
+const Content = popup.content(
+  div({ type: '', ref: null } as { type: string; ref: React.Ref<any> }),
+);
 const Header = popup.header(Panel);
 const CloseButton = popup.closeButton(Icons.Close);
 const Fade = popup.fade('div');
