@@ -25,6 +25,11 @@
 
   &__instructions {
     margin-top: 8px;
+
+    & > *::before {
+      margin: 0px 16px;
+      content: '•';
+    }
   }
 
   &__actions-panel {
