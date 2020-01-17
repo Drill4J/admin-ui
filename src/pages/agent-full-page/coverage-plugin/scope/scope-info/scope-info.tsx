@@ -125,6 +125,7 @@ export const ScopeInfo = withRouter(
               <Panel align="end">
                 <FinishScopeButton
                   type="secondary"
+                  size="large"
                   onClick={() => dispatch(openModal('FinishScopeModal', scope))}
                   disabled={!active}
                 >

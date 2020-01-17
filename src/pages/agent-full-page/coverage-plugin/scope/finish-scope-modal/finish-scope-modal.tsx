@@ -76,6 +76,7 @@ export const FinishScopeModal = withRouter(
               <ActionsPanel>
                 <Button
                   type="primary"
+                  size="large"
                   onClick={async () => {
                     await finishScope(agentId, {
                       onSuccess: () => {

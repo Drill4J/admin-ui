@@ -44,5 +44,9 @@
 
   &__actions-panel {
     margin-top: 38px;
+
+    & > * {
+      margin-right: 16px;
+    }
   }
 }
