@@ -44,9 +44,9 @@ export const FinishAllScopesModal = finishAllScopesModal(
               You are about to finish active scopes of all {agentsCount} service group agents.
             </span>
             <Instructions>
-              <div>• All gathered data will be added to build stats</div>
-              <div>• New scopes will start automatically</div>
-              <div>• Empty scopes will be deleted</div>
+              <div>All gathered data will be added to build stats</div>
+              <div>Empty scopes and open test sessions will be deleted</div>
+              <div>New scopes will start automatically</div>
             </Instructions>
             <ActionsPanel>
               <FinishScopeButton
