@@ -13,7 +13,9 @@ interface Props {
 
 const appLayout = BEM(styles);
 
-export const AppLayout = appLayout(({ className, toolbar, sidebar, children, footer }: Props) => (
+export const AppLayout = appLayout(({
+  className, toolbar, sidebar, children, footer,
+}: Props) => (
   <div className={className}>
     <SidebarWrapper>{sidebar}</SidebarWrapper>
     <ContentWrapper>

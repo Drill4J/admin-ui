@@ -3,8 +3,8 @@ import { BEM } from '@redneckz/react-bem-helper';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
 
 import { Icons } from 'components';
-import { ReactComponent as LogoSvg } from './service-group-logo.svg';
 import { ServiceGroupSummary } from 'types/service-group-summary';
+import { ReactComponent as LogoSvg } from './service-group-logo.svg';
 
 import styles from './service-group-header.module.scss';
 
@@ -30,7 +30,9 @@ export const ServiceGroupHeader = withRouter(
         <Content>
           <AgentInfo>
             <ServiceGroupName>{name}</ServiceGroupName>
-            <AgentsCount>{count} agents</AgentsCount>
+            <AgentsCount>
+              {`${count} agents`}
+            </AgentsCount>
           </AgentInfo>
           <SettingsButton onClick={() => push(`/agents/service-group/${id}/settings`)}>
             <Icons.Settings />

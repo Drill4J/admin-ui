@@ -6,8 +6,7 @@ import { Notification } from 'types/notificaiton';
 import { NewBuildNotification } from 'types/new-build-notification';
 
 export function useNotification() {
-  const [notification = {}] =
-    useWsConnection<Notification[]>(defaultAdminSocket, '/notifications') || [];
+  const [notification = {}] = useWsConnection<Notification[]>(defaultAdminSocket, '/notifications') || [];
   const [newBuildNotification, setNewBuildNotification] = useState<NewBuildNotification>({});
 
   useEffect(() => {

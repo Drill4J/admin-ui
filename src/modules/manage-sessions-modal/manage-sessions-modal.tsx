@@ -33,7 +33,9 @@ const validateScope = composeValidators(
 );
 
 export const ManageSessionsModal = manageSessionsModal(
-  ({ className, isOpen, onToggle, agentId }: Props) => {
+  ({
+    className, isOpen, onToggle, agentId,
+  }: Props) => {
     const { showMessage } = React.useContext(NotificationManagerContext);
     const [errorMessage, setErrorMessage] = React.useState('');
 
@@ -43,7 +45,7 @@ export const ManageSessionsModal = manageSessionsModal(
         onToggle={onToggle}
         header={<Panel>Manage sessions</Panel>}
         type="info"
-        closeOnFadeClick={true}
+        closeOnFadeClick
       >
         <div className={className}>
           {errorMessage && (
@@ -61,18 +63,16 @@ export const ManageSessionsModal = manageSessionsModal(
           </ManageSessionsWarning>
 
           <Form
-            onSubmit={(values: { sessionId?: string; type?: 'START' | 'STOP' }) =>
-              manageSession(agentId, {
-                onSuccess: () => {
-                  showMessage({
-                    type: 'SUCCESS',
-                    text: `Session has been ${values.type === 'START' ? 'started' : 'finished'}`,
-                  });
-                  onToggle(false);
-                },
-                onError: setErrorMessage,
-              })(values)
-            }
+            onSubmit={(values: { sessionId?: string; type?: 'START' | 'STOP' }) => manageSession(agentId, {
+              onSuccess: () => {
+                showMessage({
+                  type: 'SUCCESS',
+                  text: `Session has been ${values.type === 'START' ? 'started' : 'finished'}`,
+                });
+                onToggle(false);
+              },
+              onError: setErrorMessage,
+            })(values)}
             validate={validateScope as any}
             initialValues={{} as { sessionId?: string; type?: 'START' | 'STOP' }}
             render={({ handleSubmit, form }) => (

@@ -6,10 +6,10 @@ import { Panel } from 'layouts';
 import { Table, Column, Menu } from 'components';
 import { defaultAdminSocket } from 'common/connection';
 import { useWsConnection, useElementSize } from 'hooks';
-import { setBuildVersion, usePluginDispatch } from '../store';
-import { RenameBuildVersionModal } from './rename-build-version-modal';
 import { dateFormatter } from 'utils';
 import { BuildVersion } from 'types/build-version';
+import { setBuildVersion, usePluginDispatch } from '../store';
+import { RenameBuildVersionModal } from './rename-build-version-modal';
 
 import styles from './build-list.module.scss';
 
@@ -28,8 +28,7 @@ export const BuildList = withRouter(
       },
       history: { push },
     }: Props) => {
-      const buildVersions =
-        useWsConnection<BuildVersion[]>(defaultAdminSocket, `/${agentId}/builds`) || [];
+      const buildVersions = useWsConnection<BuildVersion[]>(defaultAdminSocket, `/${agentId}/builds`) || [];
       const dispatch = usePluginDispatch();
       const [isModalOpened, setIsModalOpened] = React.useState(false);
       const [selectedItem, setSelectedItem] = React.useState<BuildVersion>({});

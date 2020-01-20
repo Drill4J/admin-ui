@@ -15,22 +15,21 @@ interface Props {
 const header = BEM(styles);
 
 export const Header = header(
-  ({ className, prevBuildVersion: { prevId = '', prevAlias = '' } = {} }: Props) => {
-    return (
-      <div className={className}>
-        <LogoWrapper>
-          <Logo />
-        </LogoWrapper>
-        <Content>
-          <Title>New build has arrived!</Title>
-          <PrevBuildInfo>
-            <PrevBuildIcon />
-            Previous build: <PrevBuildVersion>{prevAlias || prevId}</PrevBuildVersion>
-          </PrevBuildInfo>
-        </Content>
-      </div>
-    );
-  },
+  ({ className, prevBuildVersion: { prevId = '', prevAlias = '' } = {} }: Props) => (
+    <div className={className}>
+      <LogoWrapper>
+        <Logo />
+      </LogoWrapper>
+      <Content>
+        <Title>New build has arrived!</Title>
+        <PrevBuildInfo>
+          <PrevBuildIcon />
+            Previous build:
+          <PrevBuildVersion>{prevAlias || prevId}</PrevBuildVersion>
+        </PrevBuildInfo>
+      </Content>
+    </div>
+  ),
 );
 
 const LogoWrapper = header.logoWrapper('div');

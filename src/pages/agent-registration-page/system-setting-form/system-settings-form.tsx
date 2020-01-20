@@ -15,44 +15,42 @@ interface Props {
 
 const systemSettingsForm = BEM(styles);
 
-export const SystemSettingsForm = systemSettingsForm(({ className }: Props) => {
-  return (
-    <div className={className}>
-      <InfoPanel align="space-between">
-        <Panel>
-          <InfoIcon />
+export const SystemSettingsForm = systemSettingsForm(({ className }: Props) => (
+  <div className={className}>
+    <InfoPanel align="space-between">
+      <Panel>
+        <InfoIcon />
           Information related to your application / project
-        </Panel>
-      </InfoPanel>
-      <Content>
-        <FieldName>Project Package(s)</FieldName>
-        <Panel verticalAlign="start">
-          <PackagesTextarea>
-            <Field
-              name="packagesPrefixes"
-              component={ProjectPackages}
-              parse={parsePackges}
-              format={formatPackages}
-              placeholder="Package name 1&#10;Package name 2&#10;Package name 3&#10;and so on."
-            />
-          </PackagesTextarea>
-          <Instruction>
-            Make sure you add application packages only, otherwise agent's performance will be
-            affected. Use new line as a separator.
-          </Instruction>
-        </Panel>
-        <HeaderMapping label="Header Mapping" optional>
+      </Panel>
+    </InfoPanel>
+    <Content>
+      <FieldName>Project Package(s)</FieldName>
+      <Panel verticalAlign="start">
+        <PackagesTextarea>
           <Field
-            name="sessionIdHeaderName"
-            component={Fields.Input}
-            placeholder="Enter session header name"
-            label="Session header name"
+            name="packagesPrefixes"
+            component={ProjectPackages}
+            parse={parsePackges}
+            format={formatPackages}
+            placeholder="Package name 1&#10;Package name 2&#10;Package name 3&#10;and so on."
           />
-        </HeaderMapping>
-      </Content>
-    </div>
-  );
-});
+        </PackagesTextarea>
+        <Instruction>
+            Make sure you add application packages only, otherwise agent&apos;s performance will be
+            affected. Use new line as a separator.
+        </Instruction>
+      </Panel>
+      <HeaderMapping label="Header Mapping" optional>
+        <Field
+          name="sessionIdHeaderName"
+          component={Fields.Input}
+          placeholder="Enter session header name"
+          label="Session header name"
+        />
+      </HeaderMapping>
+    </Content>
+  </div>
+));
 
 const InfoPanel = systemSettingsForm.infoPanel(Panel);
 const InfoIcon = systemSettingsForm.infoIcon(Icons.Info);

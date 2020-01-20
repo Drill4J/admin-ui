@@ -2,9 +2,9 @@ import * as React from 'react';
 import { BEM, div } from '@redneckz/react-bem-helper';
 
 import { Modal, Icons } from 'components';
+import { AssociatedTests } from 'types/associated-tests';
 import { useBuildVersion } from '../../use-build-version';
 import { ItemInfo } from './item-info';
-import { AssociatedTests } from 'types/associated-tests';
 
 import styles from './associated-test-modal.module.scss';
 
@@ -19,13 +19,15 @@ interface Props {
 const associatedTestModal = BEM(styles);
 
 export const AssociatedTestModal = associatedTestModal(
-  ({ className, isOpen, onToggle, id, associatedTestsTopic }: Props) => {
+  ({
+    className, isOpen, onToggle, id, associatedTestsTopic,
+  }: Props) => {
     const associatedTests = useBuildVersion<AssociatedTests[]>(associatedTestsTopic) || [];
-    const { tests = [], packageName = '', className: testClassName = '', methodName = '' } =
-      associatedTests.find((test) => test.id === id) || {};
-    const testsMap = tests.reduce((acc, { type = '', name = '' }) => {
-      return { ...acc, [type]: acc[type] ? [...acc[type], name] : [name] };
-    }, {} as { [testType: string]: string[] });
+    const {
+      tests = [], packageName = '', className: testClassName = '', methodName = '',
+    } = associatedTests.find((test) => test.id === id) || {};
+    const testsMap = tests.reduce((acc, { type = '', name = '' }) =>
+      ({ ...acc, [type]: acc[type] ? [...acc[type], name] : [name] }), {} as { [testType: string]: string[] });
     const [expandedSection, setExpandedSection] = React.useState('');
 
     return (
@@ -59,8 +61,8 @@ export const AssociatedTestModal = associatedTestModal(
                   {testType}
                 </TestSection>
                 <TestList>
-                  {testType === expandedSection &&
-                    testsMap[testType].map((test) => (
+                  {testType === expandedSection
+                    && testsMap[testType].map((test) => (
                       <TestListItem>
                         <TestListItemIcon>
                           <Icons.Test />

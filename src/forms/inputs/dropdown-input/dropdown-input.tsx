@@ -18,7 +18,9 @@ interface Props {
 const dropdownInput = BEM(styles);
 
 export const DropdownInput = dropdownInput(
-  ({ className, options, value, onChange, error }: Props) => {
+  ({
+    className, options, value, onChange, error,
+  }: Props) => {
     const [isExpanded, setIsExpanded] = React.useState(false);
     const node = useClickOutside(() => setIsExpanded(false));
     return (

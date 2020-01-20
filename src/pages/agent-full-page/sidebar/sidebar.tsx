@@ -35,14 +35,14 @@ export const Sidebar = withRouter(
 
       return (
         <div className={className}>
-          {links.length > 0 &&
-            links.map(({ id, icon: Icon, link, computed }) => (
+          {links.length > 0
+            && links.map(({
+              id, icon: Icon, link, computed,
+            }) => (
               <SidebarLink
                 key={link}
                 type={id === activeLink ? 'active' : ''}
-                onClick={() =>
-                  push(`/${computed ? `full-page/${agentId}/${buildVersion}/${link}` : link}`)
-                }
+                onClick={() => push(`/${computed ? `full-page/${agentId}/${buildVersion}/${link}` : link}`)}
               >
                 <Icon />
               </SidebarLink>

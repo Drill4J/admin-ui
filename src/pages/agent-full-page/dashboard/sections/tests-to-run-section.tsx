@@ -3,15 +3,15 @@ import * as React from 'react';
 import { Panel } from 'layouts';
 import { Tooltip } from 'components';
 import { TEST_TYPES_COLOR } from 'common/constants';
+import { TestsToRun } from 'types/tests-to-run';
+import { TestTypes } from 'types/test-types';
 import { useBuildVersion } from '../../coverage-plugin/use-build-version';
 import { SingleBar } from '../single-bar';
 import { Section } from './section';
 import { SectionTooltip } from './section-tooltip';
-import { TestsToRun } from 'types/tests-to-run';
-import { TestTypes } from 'types/test-types';
 
 export const TestsToRunSection = () => {
-  const { testsToRun = {} } = useBuildVersion<TestsToRun>(`/build/tests-to-run`) || {};
+  const { testsToRun = {} } = useBuildVersion<TestsToRun>('/build/tests-to-run') || {};
   const totalCoveredMethodCount = Object.values(testsToRun).reduce(
     (acc, tests) => acc + tests.length,
     0,
@@ -31,7 +31,7 @@ export const TestsToRunSection = () => {
     <Section
       label="Tests to run"
       info={totalCoveredMethodCount}
-      graph={
+      graph={(
         <Tooltip
           message={totalCoveredMethodCount > 0 && <SectionTooltip data={tooltipData} hideValue />}
         >
@@ -57,14 +57,14 @@ export const TestsToRunSection = () => {
               height={128}
               color="#E78E00"
               percent={
-                (testsToRun.PERFORMANCE &&
-                  testsToRun.PERFORMANCE.length / totalCoveredMethodCount) * 100
+                (testsToRun.PERFORMANCE
+                  && testsToRun.PERFORMANCE.length / totalCoveredMethodCount) * 100
               }
               icon="Perf"
             />
           </Panel>
         </Tooltip>
-      }
+      )}
     />
   );
 };

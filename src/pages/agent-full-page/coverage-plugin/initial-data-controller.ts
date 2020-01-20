@@ -1,9 +1,9 @@
 import * as React from 'react';
 
+import { ActiveSessions } from 'types/active-sessions';
 import { useBuildVersion } from './use-build-version';
 import { useCoveragePluginDispatch, setActiveSessions } from './store';
 import { usePluginDispatch, setLoading } from '../store';
-import { ActiveSessions } from 'types/active-sessions';
 
 interface Props {
   children?: React.ReactElement;

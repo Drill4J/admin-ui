@@ -1,8 +1,9 @@
 import * as React from 'react';
 import { BEM, tag } from '@redneckz/react-bem-helper';
+import nanoid from 'nanoid';
 
-import packageJson from '../../../package.json';
 import { Panel } from 'layouts';
+import packageJson from '../../../package.json';
 
 import styles from './footer.module.scss';
 
@@ -51,13 +52,17 @@ export const Footer = footer(({ className }: Props) => {
       <ContentWrapper>
         <Content align="space-between">
           <AdminInfo>
-            <span>© Drill4J {new Date().getFullYear()}</span>
-            <span>Build {process.env.REACT_APP_VERSION || packageJson.version}</span>
+            <span>
+              {`© Drill4J ${new Date().getFullYear()}`}
+            </span>
+            <span>
+              {`Build ${process.env.REACT_APP_VERSION || packageJson.version}`}
+            </span>
             <span>All rights reserved.</span>
           </AdminInfo>
           <span>
-            {socialLinks.map(({ name, link }, index) => (
-              <FooterLink name={name} link={link} key={index} />
+            {socialLinks.map(({ name, link }) => (
+              <FooterLink name={name} link={link} key={nanoid()} />
             ))}
           </span>
         </Content>

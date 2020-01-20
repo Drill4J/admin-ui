@@ -3,9 +3,9 @@ import { BEM, div } from '@redneckz/react-bem-helper';
 
 import { Panel } from 'layouts';
 import { percentFormatter } from 'utils';
-import { useCoveragePluginState } from '../../store';
 import { TestTypeSummary } from 'types/test-type-summary';
 import { TestTypes } from 'types/test-types';
+import { useCoveragePluginState } from '../../store';
 
 import styles from './coverages-by-type.module.scss';
 
@@ -37,7 +37,9 @@ const coverageByTypeDefaults: { [testType: string]: TestTypeSummary } = {
 };
 
 export const CoveragesByType = coveragesByType(
-  ({ className, coverageByType, showRecording, testContext }: Props) => {
+  ({
+    className, coverageByType, showRecording, testContext,
+  }: Props) => {
     const { activeSessions: { testTypes = [] } = {} } = showRecording
       ? useCoveragePluginState()
       : {};
@@ -52,7 +54,7 @@ export const CoveragesByType = coveragesByType(
                 <TestsCount
                   data-test={`coverage-by-type:test-count:${testContext}-${testType.toLowerCase()}`}
                 >
-                  ({testCount})
+                  {`(${testCount})`}
                 </TestsCount>
                 {showRecording && testTypes.includes(testType) && (
                   <RecordingWrapper>
@@ -62,7 +64,9 @@ export const CoveragesByType = coveragesByType(
                 )}
                 <TestTypeCoverage
                   data-test={`coverage-by-type:test-type-coverage:${testContext}-${testType.toLowerCase()}`}
-                >{`${percentFormatter(coverage)}%`}</TestTypeCoverage>
+                >
+                  {`${percentFormatter(coverage)}%`}
+                </TestTypeCoverage>
               </CoverageItem>
             ),
           )}

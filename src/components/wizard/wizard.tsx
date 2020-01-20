@@ -5,7 +5,9 @@ import { Form } from 'react-final-form';
 import { Panel } from 'layouts';
 import { Button } from 'forms';
 import { Icons } from 'components';
-import { wizardReducer, previousStep, nextStep, state } from './wizard-reducer';
+import {
+  wizardReducer, previousStep, nextStep, state,
+} from './wizard-reducer';
 
 import styles from './wizard.module.scss';
 
@@ -26,7 +28,9 @@ const wizard = BEM(styles);
 
 export const Step = (props: StepProps) => null;
 
-export const Wizard = wizard(({ className, children, initialValues, onSubmit }: Props) => {
+export const Wizard = wizard(({
+  className, children, initialValues, onSubmit,
+}: Props) => {
   const [{ currentStepIndex }, dispatch] = React.useReducer(wizardReducer, state);
   const [errorMessage, setErrorMessage] = React.useState('');
   const steps = React.Children.toArray(children);
@@ -51,9 +55,11 @@ export const Wizard = wizard(({ className, children, initialValues, onSubmit }: 
         }) => (
           <>
             <Header>
-              <StepName>{`${currentStepIndex + 1} of ${React.Children.count(children)}. ${
-                steps[currentStepIndex].props.name
-              } `}</StepName>
+              <StepName>
+                {`${currentStepIndex + 1} of ${React.Children.count(children)}. ${
+                  steps[currentStepIndex].props.name
+                } `}
+              </StepName>
               <Panel align="end">
                 {currentStepIndex > 0 && (
                   <PreviousButton

@@ -5,9 +5,9 @@ import { withRouter, RouteComponentProps } from 'react-router-dom';
 import { Panel } from 'layouts';
 import { Icons, PluginListEntry } from 'components';
 import { Button } from 'forms';
+import { Agent } from 'types/agent';
 import { AddPluginsModal } from './add-plugins-modal';
 import { NoPluginsStub } from './no-plugins-stub';
-import { Agent } from 'types/agent';
 
 import styles from './plugins-settings.module.scss';
 
@@ -36,7 +36,8 @@ export const PluginsSettings = withRouter(
           </InfoPanel>
           <Header align="space-between">
             <span>
-              Plugins<PluginsCount>{(plugins || []).length}</PluginsCount>
+              Plugins
+              <PluginsCount>{(plugins || []).length}</PluginsCount>
             </span>
             <AddPluginButton
               type="secondary"

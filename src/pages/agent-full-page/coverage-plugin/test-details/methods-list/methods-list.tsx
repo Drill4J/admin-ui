@@ -5,8 +5,8 @@ import VirtualList from 'react-tiny-virtual-list';
 import { Inputs } from 'forms';
 import { OverflowText, Icons } from 'components';
 import { useElementSize } from 'hooks';
-import { CoverageRateIcon } from '../../coverage-rate-icon';
 import { MethodCoveredByTest } from 'types/method-covered-by-test';
+import { CoverageRateIcon } from '../../coverage-rate-icon';
 
 import styles from './methods-list.module.scss';
 

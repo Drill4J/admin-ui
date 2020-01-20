@@ -11,13 +11,9 @@ export const state = {
 
 export type Action = ReturnType<typeof nextStep | typeof previousStep>;
 
-export const nextStep = () => {
-  return { type: NEXT_STEP };
-};
+export const nextStep = () => ({ type: NEXT_STEP });
 
-export const previousStep = () => {
-  return { type: PREVIOUS_STEP };
-};
+export const previousStep = () => ({ type: PREVIOUS_STEP });
 
 export const wizardReducer = ({ currentStepIndex }: State, action: Action) => {
   switch (action.type) {

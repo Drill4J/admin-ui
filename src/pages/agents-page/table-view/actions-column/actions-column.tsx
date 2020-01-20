@@ -22,37 +22,33 @@ export const ActionsColumn = withRouter(
       className,
       history: { push },
       agent: { id: agentId = '', status, agentType = '' },
-    }: Props) => {
-      return (
-        <div className={className}>
-          <Content>
-            {status === AGENT_STATUS.NOT_REGISTERED ? (
-              <RegisterButton
-                onClick={() => push(`/registration/${agentId}`)}
-                data-test="action-column:icons-register"
-                type="primary"
-              >
-                <Icons.Register />
+    }: Props) => (
+      <div className={className}>
+        <Content>
+          {status === AGENT_STATUS.NOT_REGISTERED ? (
+            <RegisterButton
+              onClick={() => push(`/registration/${agentId}`)}
+              data-test="action-column:icons-register"
+              type="primary"
+            >
+              <Icons.Register />
                 Register
-              </RegisterButton>
-            ) : (
-              <Icons.Settings
-                onClick={() =>
-                  push(
-                    `/agents/${
-                      agentType === 'ServiceGroup' ? 'service-group' : 'agent'
-                    }/${agentId}/settings/`,
-                  )
-                }
-                height={16}
-                width={16}
-                data-test="action-column:icons-settings"
-              />
-            )}
-          </Content>
-        </div>
-      );
-    },
+            </RegisterButton>
+          ) : (
+            <Icons.Settings
+              onClick={() => push(
+                `/agents/${
+                  agentType === 'ServiceGroup' ? 'service-group' : 'agent'
+                }/${agentId}/settings/`,
+              )}
+              height={16}
+              width={16}
+              data-test="action-column:icons-settings"
+            />
+          )}
+        </Content>
+      </div>
+    ),
   ),
 );
 

@@ -5,6 +5,10 @@ import { Link } from 'react-router-dom';
 import { Panel } from 'layouts';
 import { Icons, TabsPanel, Tab } from 'components';
 import { percentFormatter } from 'utils';
+import { Coverage } from 'types/coverage';
+import { ClassCoverage } from 'types/class-coverage';
+import { ScopeSummary } from 'types/scope-summary';
+import { Methods } from 'types/methods';
 import { useBuildVersion } from '../use-build-version';
 import { CoverageDetails } from '../coverage-details';
 import { CodeCoverageCard, DetailedCodeCoverageCard } from '../code-coverage-card';
@@ -13,10 +17,6 @@ import { ScopeTimer } from '../scope';
 import { usePluginState } from '../../store';
 import { Tests } from '../tests';
 import { ActiveScopeActions } from './active-scope-actions';
-import { Coverage } from 'types/coverage';
-import { ClassCoverage } from 'types/class-coverage';
-import { ScopeSummary } from 'types/scope-summary';
-import { Methods } from 'types/methods';
 
 import styles from './overview.module.scss';
 
@@ -39,8 +39,9 @@ export const Overview = overview(({ className }: Props) => {
     coverage: buildCodeCoverage = 0,
     finishedScopesCount = 0,
   } = buildCoverage;
-  const { started = 0, finished = 0, active = false, coverage = 0, coveragesByType = {} } =
-    useBuildVersion<ScopeSummary>('/active-scope') || {};
+  const {
+    started = 0, finished = 0, active = false, coverage = 0, coveragesByType = {},
+  } = useBuildVersion<ScopeSummary>('/active-scope') || {};
   const coverageByPackages = useBuildVersion<ClassCoverage[]>('/build/coverage-by-packages') || [];
   const [selectedTab, setSelectedTab] = React.useState('methods');
   const buildMethods = useBuildVersion<Methods>('/build/methods') || {};
@@ -50,66 +51,66 @@ export const Overview = overview(({ className }: Props) => {
       <SummaryPanel align="space-between">
         {active ? (
           <CodeCoverageCard
-            header={
+            header={(
               <Panel align="space-between">
                 Build Coverage
                 <ScopesListLink to={`/full-page/${agentId}/${buildVersion}/${pluginId}/scopes`}>
                   {`All Scopes (${finishedScopesCount + 1}) >`}
                 </ScopesListLink>
               </Panel>
-            }
+            )}
             coverage={buildCoverage}
-            additionalInfo={
+            additionalInfo={(
               <Panel>
-                {Boolean(diff) &&
-                  first &&
-                  `${diff > 0 ? '+ ' : '- '} ${percentFormatter(
+                {Boolean(diff)
+                  && first
+                  && `${diff > 0 ? '+ ' : '- '} ${percentFormatter(
                     Math.abs(diff),
                   )}% comparing to Build: ${second || first}`}
-                {!Boolean(buildCodeCoverage) &&
-                  !first &&
-                  'Will change when at least 1 scope is done.'}
+                {!buildCodeCoverage
+                  && !first
+                  && 'Will change when at least 1 scope is done.'}
               </Panel>
-            }
+            )}
             testContext="build-coverage"
           />
         ) : (
           <DetailedCodeCoverageCard
-            header={
+            header={(
               <Panel align="space-between">
                 Build Coverage
                 <ScopesListLink to={`/full-page/${agentId}/${buildVersion}/${pluginId}/scopes`}>
                   {`All Scopes (${finishedScopesCount}) >`}
                 </ScopesListLink>
               </Panel>
-            }
+            )}
             coverage={buildCoverage}
-            additionalInfo={
+            additionalInfo={(
               <Panel>
-                {Boolean(diff) &&
-                  first &&
-                  `${diff > 0 ? '+ ' : '- '} ${percentFormatter(
+                {Boolean(diff)
+                  && first
+                  && `${diff > 0 ? '+ ' : '- '} ${percentFormatter(
                     Math.abs(diff),
                   )}% comparing to Build: ${second || first}`}
               </Panel>
-            }
+            )}
           />
         )}
         {active && (
           <CodeCoverageCard
-            header={
+            header={(
               <Panel align="space-between">
                 Active Scope Coverage
                 <ActiveScopeActions />
               </Panel>
-            }
+            )}
             coverage={{ coverage, coverageByType: coveragesByType }}
-            additionalInfo={
+            additionalInfo={(
               <Panel>
                 <ScopeDurationIcon />
                 <ScopeTimer started={started} finised={finished} active={active} />
               </Panel>
-            }
+            )}
             testContext="active-scope-coverage"
             showRecording
           />

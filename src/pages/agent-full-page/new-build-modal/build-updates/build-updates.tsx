@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
+import nanoid from 'nanoid';
 
 import { Panel } from 'layouts';
 import { Icons } from 'components';
@@ -17,8 +18,8 @@ export const BuildUpdates = buildUpdates(({ className, buildDiff = {} }: Props) 
   <div className={className}>
     <Title>Build updates</Title>
     <Content>
-      {Object.keys(buildDiff).map((methodType, index) => (
-        <div key={index}>
+      {Object.keys(buildDiff).map((methodType) => (
+        <div key={nanoid()}>
           <Panel>
             <IconsWrapper type={methodType}>{getMethodsIcon(methodType)}</IconsWrapper>
             <MethodsType>{methodType}</MethodsType>

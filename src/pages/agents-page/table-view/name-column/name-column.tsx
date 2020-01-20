@@ -23,7 +23,9 @@ export const NameColumn = withRouter(
     ({
       className,
       history: { push },
-      agent: { id, name, buildVersion, agentType, status, ...agent } = {},
+      agent: {
+        id, name, buildVersion, agentType, status, ...agent
+      } = {},
     }: Props) => {
       const { agents = [] } = agent as ServiceGroup;
       const unregisteredAgentsCount = agents.reduce(
@@ -42,16 +44,14 @@ export const NameColumn = withRouter(
               <NewAgentBadge>{`+${unregisteredAgentsCount}`}</NewAgentBadge>
             )}
             <AgentName
-              onClick={() =>
-                push(
-                  agentType === 'ServiceGroup'
-                    ? `/service-group-full-page/${id}/service-group-dashboard`
-                    : `/full-page/${id}/${buildVersion}/dashboard`,
-                )
-              }
+              onClick={() => push(
+                agentType === 'ServiceGroup'
+                  ? `/service-group-full-page/${id}/service-group-dashboard`
+                  : `/full-page/${id}/${buildVersion}/dashboard`,
+              )}
               disabled={
-                status === AGENT_STATUS.NOT_REGISTERED ||
-                (unregisteredAgentsCount !== 0 && unregisteredAgentsCount === agents.length)
+                status === AGENT_STATUS.NOT_REGISTERED
+                || (unregisteredAgentsCount !== 0 && unregisteredAgentsCount === agents.length)
               }
               data-test="name-column"
             >

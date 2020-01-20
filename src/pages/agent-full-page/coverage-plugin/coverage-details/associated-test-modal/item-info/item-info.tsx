@@ -15,7 +15,9 @@ interface Props {
 
 const itemInfo = BEM(styles);
 
-export const ItemInfo = itemInfo(({ className, packageName, testClassName, methodName }: Props) => (
+export const ItemInfo = itemInfo(({
+  className, packageName, testClassName, methodName,
+}: Props) => (
   <div className={className}>
     <Content>
       {packageName && (

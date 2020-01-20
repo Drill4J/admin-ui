@@ -9,7 +9,6 @@
 
 // To learn more about the benefits of this model and instructions on how to
 // opt-in, read http://bit.ly/CRA-PWA
-/* tslint:disable*/
 
 const isLocalhost = Boolean(
   window.location.hostname === 'localhost' ||

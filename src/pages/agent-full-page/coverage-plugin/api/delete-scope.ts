@@ -1,7 +1,7 @@
 import axios from 'axios';
 
-import { finishScope } from './finish-scope';
 import { ScopeSummary } from 'types/scope-summary';
+import { finishScope } from './finish-scope';
 
 export function deleteScope(
   agentId: string,

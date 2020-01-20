@@ -14,8 +14,8 @@ import {
 } from 'forms';
 import { Popup, Icons } from 'components';
 import { NotificationManagerContext } from 'notification-manager';
-import { renameBuildVersion } from '../../api';
 import { BuildVersion } from 'types/build-version';
+import { renameBuildVersion } from '../../api';
 
 import styles from './rename-build-version-modal.module.scss';
 
@@ -37,7 +37,9 @@ const validateAlias = composeValidators(
 );
 
 export const RenameBuildVersionModal = renameBuildVersionModal(
-  ({ className, isOpen, onToggle, agentId, buildVersion }: Props) => {
+  ({
+    className, isOpen, onToggle, agentId, buildVersion,
+  }: Props) => {
     const { showMessage } = React.useContext(NotificationManagerContext);
     const [errorMessage, setErrorMessage] = React.useState('');
 
@@ -47,7 +49,7 @@ export const RenameBuildVersionModal = renameBuildVersionModal(
         onToggle={onToggle}
         header={<Panel>Rename build</Panel>}
         type="info"
-        closeOnFadeClick={true}
+        closeOnFadeClick
       >
         <div className={className}>
           {errorMessage && (
@@ -57,15 +59,13 @@ export const RenameBuildVersionModal = renameBuildVersionModal(
             </ErrorMessage>
           )}
           <Form
-            onSubmit={(values) =>
-              renameBuildVersion(agentId, {
-                onSuccess: () => {
-                  showMessage({ type: 'SUCCESS', text: 'Build name has been changed' });
-                  onToggle(false);
-                },
-                onError: setErrorMessage,
-              })(values)
-            }
+            onSubmit={(values) => renameBuildVersion(agentId, {
+              onSuccess: () => {
+                showMessage({ type: 'SUCCESS', text: 'Build name has been changed' });
+                onToggle(false);
+              },
+              onError: setErrorMessage,
+            })(values)}
             validate={validateAlias as any}
             initialValues={buildVersion || {}}
             render={({ handleSubmit }) => (

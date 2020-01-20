@@ -4,8 +4,8 @@ import { BEM } from '@redneckz/react-bem-helper';
 import { Panel } from 'layouts';
 import { Icons } from 'components';
 import { percentFormatter } from 'utils';
-import { useCoveragePluginState } from '../../../store';
 import { TestTypeSummary } from 'types/test-type-summary';
+import { useCoveragePluginState } from '../../../store';
 
 import styles from './coverage-distribution.module.scss';
 
@@ -64,7 +64,9 @@ export const CoverageDistribution = coverageDistribution(
                     <Icons.Function height={16} width={16} />
                     <ItemName>Methods covered</ItemName>
                   </Panel>
-                  <TestTypeCoverage>({`${percentFormatter(coverage)}%`})</TestTypeCoverage>
+                  <TestTypeCoverage>
+                    {`(${percentFormatter(coverage)}%)`}
+                  </TestTypeCoverage>
                 </Panel>
               </CoverageItem>
             ),

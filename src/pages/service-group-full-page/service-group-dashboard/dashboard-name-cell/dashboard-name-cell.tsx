@@ -13,14 +13,14 @@ interface Props {
 const dashboardNameCell = BEM(styles);
 
 export const DashboardNameCell = dashboardNameCell(
-  ({ className, name, additionalInformation, onClick }: Props) => {
-    return (
-      <div className={className}>
-        <NameCell onClick={onClick}>{name}</NameCell>
-        <AdditionalInformation>{additionalInformation}</AdditionalInformation>
-      </div>
-    );
-  },
+  ({
+    className, name, additionalInformation, onClick,
+  }: Props) => (
+    <div className={className}>
+      <NameCell onClick={onClick}>{name}</NameCell>
+      <AdditionalInformation>{additionalInformation}</AdditionalInformation>
+    </div>
+  ),
 );
 
 const NameCell = dashboardNameCell.nameCell(div({ onClick: () => {} } as { onClick?: () => void }));

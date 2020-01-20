@@ -3,9 +3,9 @@ import { BEM } from '@redneckz/react-bem-helper';
 
 import { Icons } from 'components';
 import { Panel } from 'layouts';
+import { Methods } from 'types/methods';
 import { Card } from '../card';
 import { MethodsSection } from './methods-section';
-import { Methods } from 'types/methods';
 
 import styles from './project-methods-card.module.scss';
 
@@ -27,61 +27,59 @@ export const ProjectMethodsCard = projectMethodsCard(
       allModifiedMethods = {},
       deletedCoveredMethodsCount = 0,
     },
-  }: Props) => {
-    return (
-      <div className={className}>
-        <Card
-          header={
-            <CardHeader>
-              <Icons.Total />
+  }: Props) => (
+    <div className={className}>
+      <Card
+        header={(
+          <CardHeader>
+            <Icons.Total />
               Total
-            </CardHeader>
-          }
-        >
-          <MethodsSection title="TOTAL" methodsInfo={totalMethods} />
-        </Card>
-        <Card
-          header={
-            <CardHeader>
-              <Icons.Add />
+          </CardHeader>
+        )}
+      >
+        <MethodsSection title="TOTAL" methodsInfo={totalMethods} />
+      </Card>
+      <Card
+        header={(
+          <CardHeader>
+            <Icons.Add />
               New
-            </CardHeader>
-          }
-        >
-          <MethodsSection title="NEW" methodsInfo={newMethods} />
-        </Card>
-        <Card
-          header={
-            <CardHeader>
-              <Icons.Edit />
+          </CardHeader>
+        )}
+      >
+        <MethodsSection title="NEW" methodsInfo={newMethods} />
+      </Card>
+      <Card
+        header={(
+          <CardHeader>
+            <Icons.Edit />
               Modified
-            </CardHeader>
-          }
-        >
-          <MethodsSection title="MODIFIED" methodsInfo={allModifiedMethods} />
-        </Card>
-        <Card
-          header={
-            <CardHeader>
-              <Icons.Delete />
+          </CardHeader>
+        )}
+      >
+        <MethodsSection title="MODIFIED" methodsInfo={allModifiedMethods} />
+      </Card>
+      <Card
+        header={(
+          <CardHeader>
+            <Icons.Delete />
               Deleted
-            </CardHeader>
-          }
-        >
-          <MethodsSection
-            title="DELETED"
-            methodsInfo={deletedMethods}
-            additionalInfo={
-              <DeletedMethodsAdditionalInfo>
-                {`${deletedCoveredMethodsCount} of ${deletedMethods.totalCount ||
-                  0} deleted methods were covered in previous build.`}
-              </DeletedMethodsAdditionalInfo>
-            }
-          />
-        </Card>
-      </div>
-    );
-  },
+          </CardHeader>
+        )}
+      >
+        <MethodsSection
+          title="DELETED"
+          methodsInfo={deletedMethods}
+          additionalInfo={(
+            <DeletedMethodsAdditionalInfo>
+              {`${deletedCoveredMethodsCount} of ${deletedMethods.totalCount
+                  || 0} deleted methods were covered in previous build.`}
+            </DeletedMethodsAdditionalInfo>
+          )}
+        />
+      </Card>
+    </div>
+  ),
 );
 
 const CardHeader = projectMethodsCard.cardHeader(Panel);

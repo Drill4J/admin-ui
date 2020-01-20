@@ -20,7 +20,9 @@ interface Props extends Plugin {
 const pluginListEntry = BEM(styles);
 
 export const PluginListEntry = pluginListEntry(
-  ({ className, input, meta, description, onClick, icon, children }: Props) => {
+  ({
+    className, input, meta, description, onClick, icon, children,
+  }: Props) => {
     const PluginIcon = Icons[icon];
     return (
       <div className={className}>

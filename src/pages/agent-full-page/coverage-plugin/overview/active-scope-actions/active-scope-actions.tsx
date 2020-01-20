@@ -5,10 +5,10 @@ import { withRouter, RouteComponentProps } from 'react-router-dom';
 import { Panel } from 'layouts';
 import { Icons, Menu } from 'components';
 import { Button } from 'forms';
+import { ScopeSummary } from 'types/scope-summary';
 import { useBuildVersion } from '../../use-build-version';
 import { usePluginState } from '../../../store';
 import { useCoveragePluginDispatch, openModal } from '../../store';
-import { ScopeSummary } from 'types/scope-summary';
 
 import styles from './active-scope-actions.module.scss';
 
@@ -32,11 +32,9 @@ export const ActiveScopeActions = withRouter(
       <div className={className}>
         <Panel>
           <ScopeDetails
-            onClick={() =>
-              push(`/full-page/${agentId}/${buildVersion}/${pluginId}/scopes/${scope && scope.id}`)
-            }
+            onClick={() => push(`/full-page/${agentId}/${buildVersion}/${pluginId}/scopes/${scope && scope.id}`)}
           >
-            Scope details >
+            Scope details &gt;
           </ScopeDetails>
           <FinishScopeButton
             type="primary"

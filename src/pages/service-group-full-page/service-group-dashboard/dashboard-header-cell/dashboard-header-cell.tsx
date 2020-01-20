@@ -11,16 +11,14 @@ interface Props {
 
 const dashboardHeaderCell = BEM(styles);
 
-export const DashboardHeaderCell = dashboardHeaderCell(({ className, label, value }: Props) => {
-  return (
-    <div className={className}>
-      <Content>
-        <Label>{label}</Label>
-        <Value>{value}</Value>
-      </Content>
-    </div>
-  );
-});
+export const DashboardHeaderCell = dashboardHeaderCell(({ className, label, value }: Props) => (
+  <div className={className}>
+    <Content>
+      <Label>{label}</Label>
+      <Value>{value}</Value>
+    </Content>
+  </div>
+));
 
 const Content = dashboardHeaderCell.content('div');
 const Label = dashboardHeaderCell.label('span');

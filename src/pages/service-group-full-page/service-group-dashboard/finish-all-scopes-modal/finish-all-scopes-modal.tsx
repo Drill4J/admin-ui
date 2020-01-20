@@ -20,7 +20,9 @@ interface Props {
 const finishAllScopesModal = BEM(styles);
 
 export const FinishAllScopesModal = finishAllScopesModal(
-  ({ className, isOpen, onToggle, serviceGroupId, agentsCount }: Props) => {
+  ({
+    className, isOpen, onToggle, serviceGroupId, agentsCount,
+  }: Props) => {
     const { showMessage } = React.useContext(NotificationManagerContext);
     const [errorMessage, setErrorMessage] = React.useState('');
 
@@ -41,7 +43,9 @@ export const FinishAllScopesModal = finishAllScopesModal(
           )}
           <Content>
             <span>
-              You are about to finish active scopes of all {agentsCount} service group agents.
+              You are about to finish active scopes of all
+              {` ${agentsCount} `}
+              service group agents.
             </span>
             <Instructions>
               <div>All gathered data will be added to build stats</div>

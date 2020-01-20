@@ -2,9 +2,9 @@ import * as React from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 
 import { TabsPanel, Tab } from 'components';
-import { GeneralSettingsForm } from './general-settings-form';
 import { Message } from 'types/message';
 import { CommonEntity } from 'types/common-entity';
+import { GeneralSettingsForm } from './general-settings-form';
 
 import styles from './service-group-settings.module.scss';
 

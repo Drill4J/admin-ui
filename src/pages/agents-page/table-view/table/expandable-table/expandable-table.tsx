@@ -29,7 +29,6 @@ export const ExpandableTable = expandableTable(
     expandedColumns,
     className,
     expandedContentKey,
-    // tslint:disable-next-line
     ...restProps
   }: Props) => {
     const [expandedRows, setExpandedRows] = React.useState<string[]>([]);
@@ -44,7 +43,9 @@ export const ExpandableTable = expandableTable(
         {...restProps}
       >
         {[
-          getExpanderColumn({ idKey, expandedRows, setExpandedRows, expandedContentKey }),
+          getExpanderColumn({
+            idKey, expandedRows, setExpandedRows, expandedContentKey,
+          }),
           ...React.Children.toArray(children),
         ]}
       </Table>
@@ -68,19 +69,17 @@ const getExpanderColumn = ({
   <Column
     name="selector"
     key={idKey}
-    Cell={({ item }) => {
-      return item[expandedContentKey] ? (
-        <RowExpander
-          onClick={() => {
-            expandedRows.includes(item[idKey])
-              ? setExpandedRows(expandedRows.filter((selectedItem) => selectedItem !== item[idKey]))
-              : setExpandedRows([...expandedRows, item[idKey]]);
-          }}
-          expanded={expandedRows.includes(item[idKey])}
-          key={item[idKey]}
-          withMargin={withMargin}
-        />
-      ) : null;
-    }}
+    Cell={({ item }) => (item[expandedContentKey] ? (
+      <RowExpander
+        onClick={() => {
+          expandedRows.includes(item[idKey])
+            ? setExpandedRows(expandedRows.filter((selectedItem) => selectedItem !== item[idKey]))
+            : setExpandedRows([...expandedRows, item[idKey]]);
+        }}
+        expanded={expandedRows.includes(item[idKey])}
+        key={item[idKey]}
+        withMargin={withMargin}
+      />
+    ) : null)}
   />
 );

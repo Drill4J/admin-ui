@@ -16,10 +16,12 @@ interface Props {
 
 const checkbox = BEM(styles);
 
-export const Checkbox = checkbox(({ className, onChange, checked, label, value }: Props) => {
+export const Checkbox = checkbox(({
+  className, onChange, checked, label, value,
+}: Props) => {
   const handleOnChange = () => {
-    onChange &&
-      onChange({
+    onChange
+      && onChange({
         target: {
           type: 'checkbox',
           checked: !checked,

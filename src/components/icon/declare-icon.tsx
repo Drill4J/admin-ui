@@ -19,7 +19,9 @@ interface Props {
 }
 
 export function declareIcon(path: string, settings: Settings = {}) {
-  const { defaultWidth = 16, defaultHeight = 16, fillRule = 'evenodd', viewBox } = settings;
+  const {
+    defaultWidth = 16, defaultHeight = 16, fillRule = 'evenodd', viewBox,
+  } = settings;
   return ({ width = defaultWidth, height = defaultHeight, ...rest }: Props) => (
     <GenericIcon
       path={path}
