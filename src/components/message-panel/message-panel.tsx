@@ -52,10 +52,17 @@ function getMessageIcon(type: 'SUCCESS' | 'ERROR' | 'WARNING' | 'INFO') {
         </MessageIconWrapper>
       );
     }
-    default: {
+    case 'WARNING': {
       return (
         <MessageIconWrapper type={type}>
           <Icons.Warning height={16} width={16} />
+        </MessageIconWrapper>
+      );
+    }
+    default: {
+      return (
+        <MessageIconWrapper type={type}>
+          <Icons.Info height={16} width={16} />
         </MessageIconWrapper>
       );
     }
