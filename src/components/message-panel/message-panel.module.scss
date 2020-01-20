@@ -13,23 +13,28 @@
     flex-grow: 1;
     height: 100%;
     width: 100%;
-    color: map-get($color-palette, white);
+    color: map-get($color-palette, black100);
     font-size: 14px;
     font-family: $semibold-font;
-    line-height: 19px;
+    line-height: 20px;
     position: absolute;
 
     &--type {
       &--success {
-        background-color: map-get($color-palette, green100);
+        background-color: map-get($color-palette, green10);
       }
 
       &--error {
-        background-color: map-get($color-palette, red50);
+        color: map-get($color-palette, white);
+        background-color: map-get($color-palette, red100);
       }
 
       &--warning {
-        background-color: map-get($color-palette, yellow50);
+        background-color: map-get($color-palette, yellow25);
+      }
+
+      &--info {
+        background-color: map-get($color-palette, ultra-light-blue);
       }
     }
   }
@@ -37,7 +42,25 @@
   &__message-icon-wrapper {
     display: flex;
     align-items: center;
-    margin-left: 25px;
+    margin-left: 24px;
+
+    &--type {
+      &--success {
+        color: map-get($color-palette, green100);
+      }
+
+      &--error {
+        color: map-get($color-palette, white);
+      }
+
+      &--warning {
+        color: map-get($color-palette, yellow50);
+      }
+
+      &--info {
+        color: map-get($color-palette, middle-blue);
+      }
+    }
   }
 
   &__message-text {
