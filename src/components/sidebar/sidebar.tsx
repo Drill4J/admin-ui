@@ -16,21 +16,22 @@ interface Props extends RouteComponentProps {
 const sidebar = BEM(styles);
 
 export const Sidebar = withRouter(
-  sidebar(({ className, links, history: { push }, location: { pathname }, matchParams }: Props) => {
-    const { params: { activeLink = '' } = {} } =
-      matchPath<{ activeLink: string }>(pathname, matchParams) || {};
+  sidebar(({
+    className, links, history: { push }, location: { pathname }, matchParams,
+  }: Props) => {
+    const { params: { activeLink = '' } = {} } = matchPath<{ activeLink: string }>(pathname, matchParams) || {};
 
     return (
       <div className={className}>
         <Logo onClick={() => push('/')}>
           <LogoSvg />
         </Logo>
-        {links.length > 0 &&
-          links.map(({ icon: Icon, link, computedLink }) => (
+        {links.length > 0
+          && links.map(({ icon: Icon, link, computedLink }) => (
             <SidebarLink
               key={link}
               type={link === activeLink ? 'active' : ''}
-              onClick={() => push(`/${computedLink ? computedLink : link}`)}
+              onClick={() => push(`/${computedLink || link}`)}
             >
               <Icon />
             </SidebarLink>

@@ -16,7 +16,9 @@ interface Props {
 const compoundCell = BEM(styles);
 
 export const CompoundCell = compoundCell(
-  ({ className, pathKey, icon, item: { name, [pathKey]: path } = {} }: Props) => (
+  ({
+    className, pathKey, icon, item: { name, [pathKey]: path } = {},
+  }: Props) => (
     <span className={className}>
       {icon && <Prefix>{icon}</Prefix>}
       <Content>

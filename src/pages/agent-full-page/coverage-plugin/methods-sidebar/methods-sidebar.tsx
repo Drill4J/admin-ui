@@ -4,8 +4,8 @@ import VirtualList from 'react-tiny-virtual-list';
 
 import { Modal, Icons, OverflowText } from 'components';
 import { useElementSize } from 'hooks';
-import { CoverageRateIcon } from '../coverage-rate-icon';
 import { MethodsDetails } from 'types/methods-details';
+import { CoverageRateIcon } from '../coverage-rate-icon';
 
 import styles from './methods-sidebar.module.scss';
 
@@ -20,7 +20,9 @@ interface Props {
 const methodsSidebar = BEM(styles);
 
 export const MethodsSidebar = methodsSidebar(
-  ({ className, isOpen, onToggle, title, methodsDetails = [] }: Props) => {
+  ({
+    className, isOpen, onToggle, title, methodsDetails = [],
+  }: Props) => {
     const node = React.useRef<HTMLDivElement>(null);
     const { height: methodsListHeight } = useElementSize(node);
     return (

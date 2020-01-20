@@ -16,24 +16,24 @@ interface Props {
 const actionSection = BEM(styles);
 
 export const ActionSection = actionSection(
-  ({ className, label, count = 0, onClick, type }: Props) => {
-    return (
-      <div className={className}>
-        <Action>
-          <ActionName>{label}</ActionName>
-          <Count
-            onClick={onClick}
-            type={count ? type : ''}
-            clickable={Boolean(count)}
-            data-test={`action-section:count:${label}`}
-          >
-            {`${count} `}
-            {count > 0 && type === 'error' && <Icons.Warning />}
-          </Count>
-        </Action>
-      </div>
-    );
-  },
+  ({
+    className, label, count = 0, onClick, type,
+  }: Props) => (
+    <div className={className}>
+      <Action>
+        <ActionName>{label}</ActionName>
+        <Count
+          onClick={onClick}
+          type={count ? type : ''}
+          clickable={Boolean(count)}
+          data-test={`action-section:count:${label}`}
+        >
+          {`${count} `}
+          {count > 0 && type === 'error' && <Icons.Warning />}
+        </Count>
+      </Action>
+    </div>
+  ),
 );
 
 const Action = actionSection.action('div');

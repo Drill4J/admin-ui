@@ -5,12 +5,12 @@ import { withRouter, RouteComponentProps } from 'react-router-dom';
 import { Menu, List, ListColumn } from 'components';
 import { ManageSessionsModal } from 'modules';
 import { percentFormatter } from 'utils';
+import { Summary } from 'types/service-group-summary';
 import { DashboardNameCell } from './dashboard-name-cell';
 import { DashboardCoverageCell } from './dashboard-coverage-cell';
 import { DashboardCell } from './dashboard-cell';
 import { DashboardHeaderCell } from './dashboard-header-cell';
 import { FinishAllScopesModal } from './finish-all-scopes-modal';
-import { Summary } from 'types/service-group-summary';
 
 import styles from './service-group-dashboard.module.scss';
 
@@ -48,7 +48,7 @@ export const ServiceGroupDashboard = withRouter(
       return (
         <>
           <div className={className}>
-            <List data={serviceGroupSummaries} gridTemplateColumns={`3fr repeat(3, 1fr) 50px`}>
+            <List data={serviceGroupSummaries} gridTemplateColumns="3fr repeat(3, 1fr) 50px">
               <ListColumn
                 name="agentName"
                 Cell={({

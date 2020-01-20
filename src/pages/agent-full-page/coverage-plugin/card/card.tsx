@@ -17,12 +17,11 @@ export const Card = card(({ className, header, children }: Props) => (
     <Content>
       {React.Children.map(
         children,
-        (child: React.ReactElement<any>) =>
-          child && (
-            <CardSectionContent>
-              <span>{child}</span>
-            </CardSectionContent>
-          ),
+        (child: React.ReactElement<any>) => child && (
+          <CardSectionContent>
+            <span>{child}</span>
+          </CardSectionContent>
+        ),
       )}
     </Content>
   </div>

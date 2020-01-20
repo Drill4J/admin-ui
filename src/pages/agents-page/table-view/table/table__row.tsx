@@ -3,6 +3,7 @@ import { BEM } from '@redneckz/react-bem-helper';
 
 import { get } from 'utils';
 import { DefaultCell } from './default-cell';
+// eslint-disable-next-line import/no-cycle
 import { ExpandedRowContent } from './expanded-row-content';
 
 import styles from './table.module.scss';

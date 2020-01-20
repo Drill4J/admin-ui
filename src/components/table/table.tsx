@@ -53,21 +53,19 @@ export const Table = table(
       <table className={className}>
         {!withoutHeader && <TableHeader columns={columns} />}
         <tbody>
-          {data.map((item, index) => {
-            return (
-              <TableRow
-                key={idKey ? String(item[idKey]) : index}
-                item={item}
-                columns={columns}
-                index={index}
-                expandedColumns={expandedColumnsComponents}
-                color={getRowColor({ expandedRows, selectedRows, itemId: String(item[idKey]) })}
-                expandedContentKey={expandedContentKey}
-                expandedRows={expandedRows}
-                secondLevelExpand={expandedColumnsSecondLevel}
-              />
-            );
-          })}
+          {data.map((item, index) => (
+            <TableRow
+              key={idKey ? String(item[idKey]) : index}
+              item={item}
+              columns={columns}
+              index={index}
+              expandedColumns={expandedColumnsComponents}
+              color={getRowColor({ expandedRows, selectedRows, itemId: String(item[idKey]) })}
+              expandedContentKey={expandedContentKey}
+              expandedRows={expandedRows}
+              secondLevelExpand={expandedColumnsSecondLevel}
+            />
+          ))}
         </tbody>
         {footer}
       </table>
@@ -75,6 +73,7 @@ export const Table = table(
   },
 );
 
+// eslint-disable-next-line consistent-return
 function getRowColor({
   expandedRows,
   selectedRows,

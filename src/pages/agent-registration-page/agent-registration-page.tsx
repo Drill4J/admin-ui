@@ -2,16 +2,20 @@ import * as React from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
 
-import { PageHeader, Icons, Wizard, Step } from 'components';
+import {
+  PageHeader, Icons, Wizard, Step,
+} from 'components';
 import { Panel } from 'layouts';
-import { requiredArray, composeValidators, required, sizeLimit, CancelButton } from 'forms';
+import {
+  requiredArray, composeValidators, required, sizeLimit, CancelButton,
+} from 'forms';
 import { useAgent } from 'hooks';
+import { NotificationManagerContext } from 'notification-manager';
 import { GeneralSettingsForm } from './general-settings-form';
 import { SystemSettingsForm } from './system-setting-form';
 import { CancelAgentRegistrationModal } from './cancel-agent-registration-modal';
 import { InstallPluginsStep } from './install-plugins-step';
 import { registerAgent } from './register-agent';
-import { NotificationManagerContext } from 'notification-manager';
 
 import styles from './agent-registration-page.module.scss';
 
@@ -37,18 +41,20 @@ export const AgentRegistrationPage = withRouter(
       return (
         <div className={className}>
           <PageHeader
-            title={
+            title={(
               <Panel>
-                <HeaderIcon height={20} width={20} /> Register new agent
+                <HeaderIcon height={20} width={20} />
+                {' '}
+Register new agent
               </Panel>
-            }
-            actions={
+            )}
+            actions={(
               <Panel align="end">
                 <CancelButton size="large" onClick={() => setIsCancelModalOpened(true)}>
                   Cancel
                 </CancelButton>
               </Panel>
-            }
+            )}
           />
           <Wizard
             initialValues={agent}

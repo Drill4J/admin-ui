@@ -2,16 +2,16 @@ import * as React from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 
 import { Panel } from 'layouts';
+import { Icons, Tooltip } from 'components';
 import { percentFormatter } from 'utils';
+import { Coverage } from 'types/coverage';
+import { Methods } from 'types/methods';
 import { useBuildVersion } from '../../../coverage-plugin/use-build-version';
 import { SingleBar } from '../../single-bar';
 import { Section } from '../section';
-import { Coverage } from 'types/coverage';
-import { Icons, Tooltip } from 'components';
-import { Methods } from 'types/methods';
+import { SectionTooltip } from '../section-tooltip';
 
 import styles from './coverage-section.module.scss';
-import { SectionTooltip } from '../section-tooltip';
 
 const coverageSection = BEM(styles);
 
@@ -21,7 +21,7 @@ export const CoverageSection = coverageSection(({ className }) => {
     diff = 0,
     previousBuildInfo: { first = '', second = '' } = {},
     arrow = '',
-  } = useBuildVersion<Coverage>(`/build/coverage`) || {};
+  } = useBuildVersion<Coverage>('/build/coverage') || {};
   const {
     newMethods: {
       totalCount: newMethodsTotalCount = 0,
@@ -35,13 +35,13 @@ export const CoverageSection = coverageSection(({ className }) => {
       totalCount: unaffectedTotalCount = 0,
       coveredCount: unaffectedCoveredCount = 0,
     } = {},
-  } = useBuildVersion<Methods>(`/build/methods`) || {};
+  } = useBuildVersion<Methods>('/build/methods') || {};
 
   return (
     <div className={className}>
       <Section
         label="Build Coverage"
-        info={
+        info={(
           <>
             {`${percentFormatter(coverage)}%`}
             {arrow && (
@@ -53,10 +53,10 @@ export const CoverageSection = coverageSection(({ className }) => {
               />
             )}
           </>
-        }
-        graph={
+        )}
+        graph={(
           <Tooltip
-            message={
+            message={(
               <SectionTooltip
                 data={{
                   new: {
@@ -76,7 +76,7 @@ export const CoverageSection = coverageSection(({ className }) => {
                   },
                 }}
               />
-            }
+            )}
           >
             <Panel>
               <SingleBar
@@ -102,16 +102,16 @@ export const CoverageSection = coverageSection(({ className }) => {
               />
             </Panel>
           </Tooltip>
-        }
-        additionalInfo={
+        )}
+        additionalInfo={(
           <Panel>
-            {Boolean(diff) &&
-              first &&
-              `${diff > 0 ? '+' : '-'}${percentFormatter(Math.abs(diff))}% vs Build: ${second ||
-                first}`}
-            {!Boolean(coverage) && !first && 'Will change when at least 1 scope is done.'}
+            {Boolean(diff)
+              && first
+              && `${diff > 0 ? '+' : '-'}${percentFormatter(Math.abs(diff))}% vs Build: ${second
+                || first}`}
+            {!coverage && !first && 'Will change when at least 1 scope is done.'}
           </Panel>
-        }
+        )}
       />
     </div>
   );

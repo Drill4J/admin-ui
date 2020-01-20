@@ -5,11 +5,13 @@ import axios from 'axios';
 
 import { Panel } from 'layouts';
 import { Icons, Tooltip } from 'components';
-import { Fields, requiredArray, Button, FormGroup, composeValidators, sizeLimit } from 'forms';
+import {
+  Fields, requiredArray, Button, FormGroup, composeValidators, sizeLimit,
+} from 'forms';
 import { parsePackges, formatPackages } from 'utils';
-import { UnlockingSystemSettingsFormModal } from './unlocking-system-settings-form-modal';
 import { Agent } from 'types/agent';
 import { Message } from 'types/message';
+import { UnlockingSystemSettingsFormModal } from './unlocking-system-settings-form-modal';
 
 import styles from './system-settings-form.module.scss';
 
@@ -98,12 +100,12 @@ export const SystemSettingsForm = systemSettingsForm(
                       <Icons.Unlocked />
                     ) : (
                       <Tooltip
-                        message={
+                        message={(
                           <SecuredMessage direction="column">
                             <span>Secured from editing.</span>
                             <span> Click to unlock.</span>
                           </SecuredMessage>
-                        }
+                        )}
                       >
                         <Icons.Locked />
                       </Tooltip>
@@ -123,7 +125,7 @@ export const SystemSettingsForm = systemSettingsForm(
                   </PackagesTextarea>
                   {unlocked && (
                     <Instruction>
-                      Make sure you add application packages only, otherwise agent's performance
+                      Make sure you add application packages only, otherwise agent&apos;s performance
                       will be affected. Use new line as a separator.
                     </Instruction>
                   )}

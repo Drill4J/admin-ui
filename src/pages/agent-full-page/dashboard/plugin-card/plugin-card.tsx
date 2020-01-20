@@ -15,11 +15,13 @@ interface Props {
 
 const pluginCard = BEM(styles);
 
-export const PluginCard = pluginCard(({ className, label, children, pluginLink }: Props) => (
+export const PluginCard = pluginCard(({
+  className, label, children, pluginLink,
+}: Props) => (
   <div className={className}>
     <Header align="space-between">
       <span>{label}</span>
-      <PluginLink to={pluginLink}>View more ></PluginLink>
+      <PluginLink to={pluginLink}>View more &gt;</PluginLink>
     </Header>
     <Content>
       {React.Children.map(children, (child) => (

@@ -21,7 +21,7 @@ export const NoPluginsStub = noPluginsStub(({ className, agent = {} }: Props) =>
     <Message>
       <div>There are no enabled plugins on this agent to collect the data from.</div>
       <div>
-        To enable or install a plugin,{' '}
+        To enable or install a plugin,&nbsp;
         <AgentInfoLink to={`/agents/agent/${agent.id}/settings`}>
           go back to Agent administration page.
         </AgentInfoLink>

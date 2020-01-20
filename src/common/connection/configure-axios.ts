@@ -19,6 +19,7 @@ export function configureAxios() {
       const token = localStorage.getItem(TOKEN_KEY);
 
       if (token) {
+        // eslint-disable-next-line no-param-reassign
         config.headers[TOKEN_HEADER] = `Bearer ${token}`;
       }
 

@@ -4,10 +4,10 @@ import { BEM } from '@redneckz/react-bem-helper';
 import { PageHeader } from 'components';
 import { useWsConnection } from 'hooks';
 import { defaultAdminSocket } from 'common/connection';
-import { TableView } from './table-view';
-import { NoAgentsStub } from './no-agents-stub';
 import { Agent } from 'types/agent';
 import { ServiceGroup } from 'types/service-group';
+import { TableView } from './table-view';
+import { NoAgentsStub } from './no-agents-stub';
 
 import styles from './agents-page.module.scss';
 
@@ -18,11 +18,10 @@ interface Props {
 const agentsPage = BEM(styles);
 
 export const AgentsPage = agentsPage(({ className }: Props) => {
-  const { single = [], grouped = [] } =
-    useWsConnection<{ single: Agent[]; grouped: ServiceGroup[] }>(
-      defaultAdminSocket,
-      '/get-all-agents',
-    ) || {};
+  const { single = [], grouped = [] } = useWsConnection<{ single: Agent[]; grouped: ServiceGroup[] }>(
+    defaultAdminSocket,
+    '/get-all-agents',
+  ) || {};
   const agents = [
     ...grouped
       .map(({ group, agents: groupedAgents }: ServiceGroup) => ({

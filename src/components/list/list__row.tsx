@@ -14,7 +14,9 @@ interface Props {
   style: { [key: string]: string };
 }
 
-export const ListRow = BEM(styles).row(({ className, item, columns, style }: Props) => (
+export const ListRow = BEM(styles).row(({
+  className, item, columns, style,
+}: Props) => (
   <div className={className} style={style}>
     {columns.map((column) => {
       const DefaultCell = ({ value }: { value: unknown; item: { [key: string]: unknown } }) => (

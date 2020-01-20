@@ -1,1 +1,1 @@
-export { NameColumn } from './name-column'
+export { NameColumn } from './name-column';

@@ -18,46 +18,44 @@ interface Props {
 
 const coveragePlugin = BEM(styles);
 
-export const CoveragePlugin = coveragePlugin(({ className }: Props) => {
-  return (
-    <div className={className}>
-      <CoveragePluginProvider>
-        <InitialDataController>
-          <>
-            <HeaderWrapper>
-              <CoveragePluginHeader />
-            </HeaderWrapper>
-            <Content>
-              <Switch>
-                <Route
-                  path="/full-page/:agentId/:buildVersion/:pluginId/dashboard"
-                  component={Overview}
-                  exact
-                />
-                <Route
-                  path="/full-page/:agentId/:buildVersion/:pluginId/scopes"
-                  component={ScopesList}
-                  exact
-                />
-                <Route
-                  path="/full-page/:agentId/:buildVersion/:pluginId/scopes/:scopeId"
-                  component={ScopeInfo}
-                  exact
-                />
-                <Route
-                  path="/full-page/:agentId/:buildVersion/:pluginId/tests"
-                  component={Tests}
-                  exact
-                />
-              </Switch>
-            </Content>
-            <CoveragePluginModals />
-          </>
-        </InitialDataController>
-      </CoveragePluginProvider>
-    </div>
-  );
-});
+export const CoveragePlugin = coveragePlugin(({ className }: Props) => (
+  <div className={className}>
+    <CoveragePluginProvider>
+      <InitialDataController>
+        <>
+          <HeaderWrapper>
+            <CoveragePluginHeader />
+          </HeaderWrapper>
+          <Content>
+            <Switch>
+              <Route
+                path="/full-page/:agentId/:buildVersion/:pluginId/dashboard"
+                component={Overview}
+                exact
+              />
+              <Route
+                path="/full-page/:agentId/:buildVersion/:pluginId/scopes"
+                component={ScopesList}
+                exact
+              />
+              <Route
+                path="/full-page/:agentId/:buildVersion/:pluginId/scopes/:scopeId"
+                component={ScopeInfo}
+                exact
+              />
+              <Route
+                path="/full-page/:agentId/:buildVersion/:pluginId/tests"
+                component={Tests}
+                exact
+              />
+            </Switch>
+          </Content>
+          <CoveragePluginModals />
+        </>
+      </InitialDataController>
+    </CoveragePluginProvider>
+  </div>
+));
 
 const HeaderWrapper = coveragePlugin.header('div');
 const Content = coveragePlugin.content('div');

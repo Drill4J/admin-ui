@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-ts-ignore */
 import { useState, useEffect } from 'react';
 
 export function useElementSize<E extends HTMLElement>(ref: React.RefObject<E>) {

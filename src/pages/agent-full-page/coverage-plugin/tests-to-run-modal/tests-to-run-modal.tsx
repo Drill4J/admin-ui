@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
+import nanoid from 'nanoid';
 
 import { Icons, Modal } from 'components';
 import { Inputs } from 'forms';
@@ -20,7 +21,9 @@ interface Props {
 const testsToRunModal = BEM(styles);
 
 export const TestsToRunModal = testsToRunModal(
-  ({ className, isOpen, onToggle, testsToRun, count }: Props) => {
+  ({
+    className, isOpen, onToggle, testsToRun, count,
+  }: Props) => {
     const allTests = Object.values(testsToRun).reduce((acc, tests) => [...acc, ...tests], []);
     const [selectedFilter, setSelectedFilter] = React.useState('all');
     const { agentId, pluginId } = usePluginState();
@@ -33,9 +36,8 @@ export const TestsToRunModal = testsToRunModal(
     );
     adminUrl.port = '8090';
 
-    const openApiUrl =
-      'curl -i -H "Accept: application/json" -H "Content-Type: application/json" ' +
-      `-X GET ${adminUrl}api/agents/${agentId}/${pluginId}/get-data?type=tests-to-run`;
+    const openApiUrl = 'curl -i -H "Accept: application/json" -H "Content-Type: application/json" '
+      + `-X GET ${adminUrl}api/agents/${agentId}/${pluginId}/get-data?type=tests-to-run`;
 
     const getSelectedTests = () => {
       switch (selectedFilter) {
@@ -78,8 +80,8 @@ export const TestsToRunModal = testsToRunModal(
               value={selectedFilter}
             />
             <MethodsList>
-              {(getSelectedTests() || []).map((test, index) => (
-                <MethodsListItem key={index}>
+              {(getSelectedTests() || []).map((test) => (
+                <MethodsListItem key={nanoid()}>
                   <MethodsListItemIcon>
                     <Icons.Test />
                   </MethodsListItemIcon>

@@ -1,11 +1,13 @@
 import * as React from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
-import { Switch, withRouter, RouteComponentProps, Route, matchPath } from 'react-router-dom';
+import {
+  Switch, withRouter, RouteComponentProps, Route, matchPath,
+} from 'react-router-dom';
 
 import { Toolbar, Icons, Footer } from 'components';
 import { PluginsLayout, Panel } from 'layouts';
-import { CoveragePlugin } from './coverage-plugin';
 import { useAgent } from 'hooks';
+import { CoveragePlugin } from './coverage-plugin';
 import { PluginProvider } from './store';
 import { PluginHeader } from './plugin-header';
 import { Breadcrumbs } from './breadcrumbs';
@@ -51,10 +53,9 @@ export const AgentFullPage = withRouter(
     }: Props) => {
       const agent = useAgent(agentId) || {};
       const path = '/:page/:agentId/:buildVersion/:activeLink';
-      const { params: { activeLink = '' } = {} } =
-        matchPath<{ activeLink: string }>(pathname, {
-          path,
-        }) || {};
+      const { params: { activeLink = '' } = {} } = matchPath<{ activeLink: string }>(pathname, {
+        path,
+      }) || {};
       const notification = useNotification() || {};
       const [isNewBuildModalOpened, setIsNewBuildModalOpened] = React.useState(false);
       React.useEffect(() => {
@@ -68,17 +69,17 @@ export const AgentFullPage = withRouter(
           <InitialConfigController>
             <PluginsLayout
               sidebar={activeLink && <Sidebar links={pluginsLinks} matchParams={{ path }} />}
-              toolbar={
+              toolbar={(
                 <Toolbar
-                  breadcrumbs={
+                  breadcrumbs={(
                     <Panel>
                       <ArrowBackLabel onClick={() => history.push('/agents')}>
                         {'<  Back to Admin'}
                       </ArrowBackLabel>
                     </Panel>
-                  }
+                  )}
                 />
-              }
+              )}
               header={<PluginHeader agentName={agent.name} agentStatus={agent.status} />}
               breadcrumbs={<Breadcrumbs />}
               footer={<Footer />}

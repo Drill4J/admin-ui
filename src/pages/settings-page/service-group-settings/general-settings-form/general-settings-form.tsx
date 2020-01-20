@@ -5,7 +5,9 @@ import axios from 'axios';
 
 import { Panel } from 'layouts';
 import { Icons } from 'components';
-import { Fields, FormGroup, composeValidators, required, sizeLimit, Button } from 'forms';
+import {
+  Fields, FormGroup, composeValidators, required, sizeLimit, Button,
+} from 'forms';
 import { copyToClipboard } from 'utils';
 import { Message } from 'types/message';
 import { CommonEntity } from 'types/common-entity';
@@ -34,14 +36,12 @@ export const GeneralSettingsForm = generalSettingsForm(
     return (
       <div className={className}>
         <Form
-          onSubmit={(values) =>
-            saveChanges(values, {
-              onSuccess: (message: Message) => {
-                showMessage(message);
-              },
-              onError: setErrorMessage,
-            })
-          }
+          onSubmit={(values) => saveChanges(values, {
+            onSuccess: (message: Message) => {
+              showMessage(message);
+            },
+            onError: setErrorMessage,
+          })}
           initialValues={serviceGroup}
           validate={validateSettings as any}
           render={({

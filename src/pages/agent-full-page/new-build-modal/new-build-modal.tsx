@@ -4,12 +4,12 @@ import { withRouter, RouteComponentProps } from 'react-router-dom';
 
 import { Button } from 'forms';
 import { Popup } from 'components';
+import { NewBuildNotification } from 'types/new-build-notification';
 import { readNotification } from '../api';
 import { BuildUpdates } from './build-updates';
 import { BuildAlias } from './build-alias';
 import { RecommendedActions } from './recommended-actions';
 import { Header } from './header';
-import { NewBuildNotification } from 'types/new-build-notification';
 
 import styles from './new-build-modal.module.scss';
 
@@ -31,7 +31,9 @@ export const NewBuildModal = withRouter(
       notification: {
         id = '',
         agentId = '',
-        additionalInfo: { currentId, prevId, prevAlias, buildDiff = {}, recommendations = [] } = {},
+        additionalInfo: {
+          currentId, prevId, prevAlias, buildDiff = {}, recommendations = [],
+        } = {},
       },
     }: Props) => {
       const [currentAlias, setCurrentAlias] = React.useState('');
@@ -43,14 +45,14 @@ export const NewBuildModal = withRouter(
         <Popup
           isOpen={isOpen}
           onToggle={onToggle}
-          header={
+          header={(
             <Header
               prevBuildVersion={{
                 prevAlias,
                 prevId,
               }}
             />
-          }
+          )}
           type="info"
           closeOnFadeClick
         >

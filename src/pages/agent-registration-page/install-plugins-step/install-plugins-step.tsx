@@ -30,7 +30,12 @@ export const InstallPluginsStep = installPluginsStep(
           </Panel>
         </InfoPanel>
         <SelectedPluginsInfo>
-          {pluginsFormValue.length} of {plugins.length} selected
+          {pluginsFormValue.length}
+          {' '}
+of
+          {plugins.length}
+          {' '}
+selected
         </SelectedPluginsInfo>
         <PluginsList>
           {plugins.map(({ id = '', name, description }) => (
@@ -45,14 +50,12 @@ export const InstallPluginsStep = installPluginsStep(
                   input={input}
                   meta={meta}
                   icon={id === 'test-to-code-mapping' ? 'TestToCodeMapping' : 'Plugins'}
-                  onClick={() =>
-                    input.onChange({
-                      target: {
-                        type: 'checkbox',
-                        checked: !input.checked,
-                      },
-                    })
-                  }
+                  onClick={() => input.onChange({
+                    target: {
+                      type: 'checkbox',
+                      checked: !input.checked,
+                    },
+                  })}
                 >
                   <PluginName>{name}</PluginName>
                 </PluginListEntry>

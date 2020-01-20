@@ -28,7 +28,6 @@ export const ExpandableTable = expandableTable(
     expandedColumns,
     className,
     hasSecondLevelExpand,
-    // tslint:disable-next-line
     ...restProps
   }: Props) => {
     const [expandedRows, setExpandedRows] = React.useState<string[]>([]);
@@ -41,16 +40,16 @@ export const ExpandableTable = expandableTable(
         expandedColumns={
           expandedColumns
             ? [
-                hasSecondLevelExpand
-                  ? getExpanderColumn({
-                      idKey,
-                      expandedRows,
-                      setExpandedRows,
-                      withMargin: true,
-                    })
-                  : null,
-                ...expandedColumns,
-              ]
+              hasSecondLevelExpand
+                ? getExpanderColumn({
+                  idKey,
+                  expandedRows,
+                  setExpandedRows,
+                  withMargin: true,
+                })
+                : null,
+              ...expandedColumns,
+            ]
             : undefined
         }
         secondLevelExpand={expandedColumns}
@@ -79,19 +78,17 @@ const getExpanderColumn = ({
   <Column
     name="selector"
     key={idKey}
-    Cell={({ item }) => {
-      return (
-        <RowExpander
-          onClick={() => {
-            expandedRows.includes(item[idKey])
-              ? setExpandedRows(expandedRows.filter((selectedItem) => selectedItem !== item[idKey]))
-              : setExpandedRows([...expandedRows, item[idKey]]);
-          }}
-          expanded={expandedRows.includes(item[idKey])}
-          key={item[idKey]}
-          withMargin={withMargin}
-        />
-      );
-    }}
+    Cell={({ item }) => (
+      <RowExpander
+        onClick={() => {
+          expandedRows.includes(item[idKey])
+            ? setExpandedRows(expandedRows.filter((selectedItem) => selectedItem !== item[idKey]))
+            : setExpandedRows([...expandedRows, item[idKey]]);
+        }}
+        expanded={expandedRows.includes(item[idKey])}
+        key={item[idKey]}
+        withMargin={withMargin}
+      />
+    )}
   />
 );

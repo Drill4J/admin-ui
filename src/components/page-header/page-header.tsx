@@ -14,7 +14,9 @@ interface Props {
 const pageHeader = BEM(styles);
 
 export const PageHeader = pageHeader(
-  ({ className, title, itemsCount, itemsActions, actions }: Props) => (
+  ({
+    className, title, itemsCount, itemsActions, actions,
+  }: Props) => (
     <div className={className}>
       <Content>
         <Title>{title}</Title>

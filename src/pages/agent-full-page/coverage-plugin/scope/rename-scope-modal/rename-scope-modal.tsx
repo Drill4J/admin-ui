@@ -14,9 +14,9 @@ import {
 } from 'forms';
 import { Popup, Icons } from 'components';
 import { NotificationManagerContext } from 'notification-manager';
+import { ScopeSummary } from 'types/scope-summary';
 import { renameScope } from '../../api';
 import { usePluginState } from '../../../store';
-import { ScopeSummary } from 'types/scope-summary';
 
 import styles from './rename-scope-modal.module.scss';
 
@@ -35,7 +35,9 @@ const validateScope = composeValidators(
 );
 
 export const RenameScopeModal = renameScopeModal(
-  ({ className, isOpen, onToggle, scope }: Props) => {
+  ({
+    className, isOpen, onToggle, scope,
+  }: Props) => {
     const { agentId } = usePluginState();
     const { showMessage } = React.useContext(NotificationManagerContext);
     const [errorMessage, setErrorMessage] = React.useState('');
@@ -46,7 +48,7 @@ export const RenameScopeModal = renameScopeModal(
         onToggle={onToggle}
         header={<Panel>Rename scope</Panel>}
         type="info"
-        closeOnFadeClick={true}
+        closeOnFadeClick
       >
         <div className={className}>
           {errorMessage && (
@@ -56,15 +58,13 @@ export const RenameScopeModal = renameScopeModal(
             </ErrorMessage>
           )}
           <Form
-            onSubmit={(values) =>
-              renameScope(agentId, {
-                onSuccess: () => {
-                  showMessage({ type: 'SUCCESS', text: 'Scope name has been changed' });
-                  onToggle(false);
-                },
-                onError: setErrorMessage,
-              })(values as ScopeSummary)
-            }
+            onSubmit={(values) => renameScope(agentId, {
+              onSuccess: () => {
+                showMessage({ type: 'SUCCESS', text: 'Scope name has been changed' });
+                onToggle(false);
+              },
+              onError: setErrorMessage,
+            })(values as ScopeSummary)}
             validate={validateScope as any}
             initialValues={scope || {}}
             render={({ handleSubmit }) => (

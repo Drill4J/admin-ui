@@ -1,4 +1,6 @@
-import { wizardReducer, NEXT_STEP, state, PREVIOUS_STEP } from './wizard-reducer';
+import {
+  wizardReducer, NEXT_STEP, state, PREVIOUS_STEP,
+} from './wizard-reducer';
 
 describe('Wizard reducer actions', () => {
   it('should return the state changed to 1', () => {

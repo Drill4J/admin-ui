@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { BEM, div } from '@redneckz/react-bem-helper';
 import VisibilitySensor from 'react-visibility-sensor';
+import nanoid from 'nanoid';
 
 import { Icons } from 'components';
 import { useClickOutside } from 'hooks';
@@ -31,10 +32,10 @@ export const Menu = menu(({ className, items, bordered }: Props) => {
             }}
           >
             <ItemsList position={position}>
-              {items.map(({ icon, label, onClick }, index) => {
+              {items.map(({ icon, label, onClick }) => {
                 const ItemIcon = Icons[icon];
                 return (
-                  <Item onClick={onClick} key={index}>
+                  <Item onClick={onClick} key={nanoid()}>
                     <ItemIcon width={16} height={16} />
                     <ItemLabel>{label}</ItemLabel>
                   </Item>

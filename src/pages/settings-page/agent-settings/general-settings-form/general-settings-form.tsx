@@ -5,7 +5,9 @@ import axios from 'axios';
 
 import { Panel } from 'layouts';
 import { Icons } from 'components';
-import { Fields, FormGroup, composeValidators, required, sizeLimit, Button } from 'forms';
+import {
+  Fields, FormGroup, composeValidators, required, sizeLimit, Button,
+} from 'forms';
 import { copyToClipboard } from 'utils';
 import { Message } from 'types/message';
 import { Agent } from 'types/agent';

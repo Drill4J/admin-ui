@@ -4,13 +4,13 @@ import { withRouter, RouteComponentProps } from 'react-router-dom';
 
 import { Table, Column, Menu } from 'components';
 import { percentFormatter } from 'utils';
+import { ScopeSummary } from 'types/scope-summary';
+import { NotificationManagerContext } from 'notification-manager';
 import { useBuildVersion } from '../../use-build-version';
 import { toggleScope } from '../../api';
 import { usePluginState } from '../../../store';
 import { useCoveragePluginDispatch, useCoveragePluginState, openModal } from '../../store';
 import { ScopeTimer } from '../scope-timer';
-import { ScopeSummary } from 'types/scope-summary';
-import { NotificationManagerContext } from 'notification-manager';
 
 import styles from './scopes-list.module.scss';
 
@@ -34,8 +34,7 @@ export const ScopesList = withRouter(
     const activeScope = useBuildVersion<ScopeSummary>('/active-scope');
     const scopes = useBuildVersion<ScopeSummary[]>('/scopes') || [];
     scopes.sort(
-      ({ started: firstStartedDate }, { started: secondStartedDate }) =>
-        secondStartedDate - firstStartedDate,
+      ({ started: firstStartedDate }, { started: secondStartedDate }) => secondStartedDate - firstStartedDate,
     );
 
     const scopesData = activeScope && activeScope.name ? [activeScope, ...scopes] : scopes;
@@ -50,11 +49,13 @@ export const ScopesList = withRouter(
             <Column
               name="name"
               HeaderCell={() => <HeaderCell>Name</HeaderCell>}
-              Cell={({ value, item: { id, started, active, enabled, finished } }) => (
+              Cell={({
+                value, item: {
+                  id, started, active, enabled, finished,
+                },
+              }) => (
                 <NameCell
-                  onClick={() =>
-                    push(`/full-page/${agentId}/${buildVersion}/test-to-code-mapping/scopes/${id}`)
-                  }
+                  onClick={() => push(`/full-page/${agentId}/${buildVersion}/test-to-code-mapping/scopes/${id}`)}
                   data-test="scopes-list:scope-name"
                 >
                   {value}
@@ -62,7 +63,6 @@ export const ScopesList = withRouter(
                   {!enabled && <IgnoreBadge>Ignored</IgnoreBadge>}
                   <StartDate>
                     {new Date(started).toDateString()}
-                    {` · `}
                     <ScopeTimer started={started} finised={finished} active={active} />
                   </StartDate>
                 </NameCell>
@@ -72,7 +72,9 @@ export const ScopesList = withRouter(
               name="coverage"
               HeaderCell={() => <HeaderCell>Coverage</HeaderCell>}
               Cell={({ value }) => (
-                <Coverage data-test="scopes-list:coverage">{percentFormatter(value)}%</Coverage>
+                <Coverage data-test="scopes-list:coverage">
+                  {`${percentFormatter(value)}%`}
+                </Coverage>
               )}
             />
             <Column
@@ -95,9 +97,9 @@ export const ScopesList = withRouter(
                     </>
                   )}
                   <TestTypeTestCount>
-                    {coveragesByType.AUTO &&
-                      coveragesByType.AUTO.testCount &&
-                      `${coveragesByType.AUTO.testCount} tests`}
+                    {coveragesByType.AUTO
+                      && coveragesByType.AUTO.testCount
+                      && `${coveragesByType.AUTO.testCount} tests`}
                   </TestTypeTestCount>
                 </TestTypeCoverage>
               )}
@@ -121,9 +123,9 @@ export const ScopesList = withRouter(
                     </>
                   )}
                   <TestTypeTestCount>
-                    {coveragesByType.MANUAL &&
-                      coveragesByType.MANUAL.testCount &&
-                      `${coveragesByType.MANUAL.testCount} tests`}
+                    {coveragesByType.MANUAL
+                      && coveragesByType.MANUAL.testCount
+                      && `${coveragesByType.MANUAL.testCount} tests`}
                   </TestTypeTestCount>
                 </TestTypeCoverage>
               )}
@@ -146,17 +148,16 @@ export const ScopesList = withRouter(
                   !item.active && {
                     label: `${item.enabled ? 'Ignore in build stats' : 'Show in build stats'}`,
                     icon: item.enabled ? 'EyeCrossed' : 'Eye',
-                    onClick: () =>
-                      toggleScope(agentId, {
-                        onSuccess: () => {
-                          showMessage({
-                            type: 'SUCCESS',
-                            text: `${item.name} has been ${
-                              item.enabled ? 'excluded from' : 'included in'
-                            } the build stats.`,
-                          });
-                        },
-                      })(item.id),
+                    onClick: () => toggleScope(agentId, {
+                      onSuccess: () => {
+                        showMessage({
+                          type: 'SUCCESS',
+                          text: `${item.name} has been ${
+                            item.enabled ? 'excluded from' : 'included in'
+                          } the build stats.`,
+                        });
+                      },
+                    })(item.id),
                   },
                   {
                     label: 'Rename',

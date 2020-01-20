@@ -3,6 +3,7 @@ import { createPortal } from 'react-dom';
 
 export class Portal<Props extends {}> extends React.Component<Props> {
   public element: HTMLDivElement;
+
   public modalRoot: HTMLElement | null;
 
   constructor(props: Props) {
@@ -24,6 +25,7 @@ export class Portal<Props extends {}> extends React.Component<Props> {
   }
 
   public render() {
-    return createPortal(this.props.children, this.element);
+    const { children } = this.props;
+    return createPortal(children, this.element);
   }
 }

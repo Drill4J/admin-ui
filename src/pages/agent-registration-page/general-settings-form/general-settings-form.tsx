@@ -23,46 +23,44 @@ export const GeneralSettingsForm = withRouter(
       match: {
         params: { agentId },
       },
-    }: Props) => {
-      return (
-        <div className={className}>
-          <InfoPanel align="space-between">
-            <Panel>
-              <InfoIcon />
+    }: Props) => (
+      <div className={className}>
+        <InfoPanel align="space-between">
+          <Panel>
+            <InfoIcon />
               Set up basic agent settings
-            </Panel>
-          </InfoPanel>
-          <Content>
-            <FormGroup
-              label="Agent ID"
-              actions={<CopyAgentId onClick={() => copyToClipboard(String(agentId))} />}
-            >
-              <Field name="id" component={Fields.Input} disabled />
-            </FormGroup>
-            <FormGroup label="Service Group">
-              <Field name="serviceGroup" component={Fields.Input} placeholder="n/a" disabled />
-            </FormGroup>
-            <FormGroup label="Environment" optional>
-              <Field
-                name="environment"
-                component={Fields.Input}
-                placeholder="Specify an environment"
-              />
-            </FormGroup>
-            <AgentName label="Agent name">
-              <Field name="name" component={Fields.Input} placeholder="Enter agent's name" />
-            </AgentName>
-            <Description label="Description">
-              <Field
-                name="description"
-                component={Fields.Textarea}
-                placeholder="Add agent's description"
-              />
-            </Description>
-          </Content>
-        </div>
-      );
-    },
+          </Panel>
+        </InfoPanel>
+        <Content>
+          <FormGroup
+            label="Agent ID"
+            actions={<CopyAgentId onClick={() => copyToClipboard(String(agentId))} />}
+          >
+            <Field name="id" component={Fields.Input} disabled />
+          </FormGroup>
+          <FormGroup label="Service Group">
+            <Field name="serviceGroup" component={Fields.Input} placeholder="n/a" disabled />
+          </FormGroup>
+          <FormGroup label="Environment" optional>
+            <Field
+              name="environment"
+              component={Fields.Input}
+              placeholder="Specify an environment"
+            />
+          </FormGroup>
+          <AgentName label="Agent name">
+            <Field name="name" component={Fields.Input} placeholder="Enter agent's name" />
+          </AgentName>
+          <Description label="Description">
+            <Field
+              name="description"
+              component={Fields.Textarea}
+              placeholder="Add agent's description"
+            />
+          </Description>
+        </Content>
+      </div>
+    ),
   ),
 );
 

@@ -2,11 +2,11 @@ import * as React from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 
 import { TabsPanel, Tab } from 'components';
+import { Agent } from 'types/agent';
+import { Message } from 'types/message';
 import { GeneralSettingsForm } from './general-settings-form';
 import { SystemSettingsForm } from './system-setting-form';
 import { PluginsSettings } from './plugins-settings';
-import { Agent } from 'types/agent';
-import { Message } from 'types/message';
 
 import styles from './agent-settings.module.scss';
 

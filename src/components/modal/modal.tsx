@@ -15,23 +15,23 @@ interface Props {
 
 const modal = BEM(styles);
 
-export const Modal = modal(({ className, children, onToggle, isOpen }: Props) => {
-  return (
-    <Portal>
-      {isOpen && (
-        <div className={className}>
-          <ModalCard>
-            <CloseButton onClick={() => onToggle(!isOpen)}>
-              <Icons.Close />
-            </CloseButton>
-            {children}
-          </ModalCard>
-          <Fade onClick={() => onToggle(!isOpen)} />
-        </div>
-      )}
-    </Portal>
-  );
-});
+export const Modal = modal(({
+  className, children, onToggle, isOpen,
+}: Props) => (
+  <Portal>
+    {isOpen && (
+      <div className={className}>
+        <ModalCard>
+          <CloseButton onClick={() => onToggle(!isOpen)}>
+            <Icons.Close />
+          </CloseButton>
+          {children}
+        </ModalCard>
+        <Fade onClick={() => onToggle(!isOpen)} />
+      </div>
+    )}
+  </Portal>
+));
 
 const ModalCard = modal.modalCard('div');
 const CloseButton = modal.closeButton('div');

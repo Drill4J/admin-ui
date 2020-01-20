@@ -22,7 +22,9 @@ interface Props {
 const coverageDetails = BEM(styles);
 
 export const CoverageDetails = coverageDetails(
-  ({ className, coverageByPackages, header, associatedTestsTopic }: Props) => {
+  ({
+    className, coverageByPackages, header, associatedTestsTopic,
+  }: Props) => {
     const [selectedId, setSelectedId] = React.useState('');
     return (
       <div className={className}>

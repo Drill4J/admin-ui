@@ -6,9 +6,9 @@ import { Button, CancelButton } from 'forms';
 import { useWsConnection } from 'hooks';
 import { defaultAdminSocket } from 'common/connection';
 import { NotificationManagerContext } from 'notification-manager';
+import { Plugin } from 'types/plugin';
 import { SelectableList } from './selectable-list';
 import { loadPlugins } from './load-plugins';
-import { Plugin } from 'types/plugin';
 
 import styles from './add-plugins-modal.module.scss';
 
@@ -21,7 +21,9 @@ interface Props {
 
 const addPluginModal = BEM(styles);
 
-export const AddPluginsModal = addPluginModal(({ className, isOpen, onToggle, agentId }: Props) => {
+export const AddPluginsModal = addPluginModal(({
+  className, isOpen, onToggle, agentId,
+}: Props) => {
   const [selectedPlugins, setSelectedPlugins] = React.useState<string[]>([]);
   const { showMessage } = React.useContext(NotificationManagerContext);
   const plugins = useWsConnection<Plugin[]>(defaultAdminSocket, `/${agentId}/get-plugin-info`);

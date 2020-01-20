@@ -6,11 +6,11 @@ import { Panel } from 'layouts';
 import { Button, Inputs, CancelButton } from 'forms';
 import { Popup, Icons, OverflowText } from 'components';
 import { NotificationManagerContext } from 'notification-manager';
+import { ScopeSummary as ScopeSummaryType } from 'types/scope-summary';
 import { finishScope } from '../../api';
 import { ScopeSummary } from './scope-summary';
 import { ActiveSessionsPanel } from '../active-sessions-panel';
 import { usePluginState } from '../../../store';
-import { ScopeSummary as ScopeSummaryType } from 'types/scope-summary';
 
 import styles from './finish-scope-modal.module.scss';
 
@@ -25,7 +25,9 @@ const finishScopeModal = BEM(styles);
 
 export const FinishScopeModal = withRouter(
   finishScopeModal(
-    ({ className, isOpen, onToggle, scope, history: { push }, location: { pathname } }: Props) => {
+    ({
+      className, isOpen, onToggle, scope, history: { push }, location: { pathname },
+    }: Props) => {
       const { showMessage } = React.useContext(NotificationManagerContext);
       const {
         agentId,
@@ -38,10 +40,9 @@ export const FinishScopeModal = withRouter(
       const testsCount = scope
         ? Object.values(scope.coveragesByType).reduce((acc, { testCount }) => acc + testCount, 0)
         : 0;
-      const { params: { scopeId = '' } = {} } =
-        matchPath<{ scopeId: string }>(pathname, {
-          path: '/:page/:agentId/:pluginId/:tab/:scopeId',
-        }) || {};
+      const { params: { scopeId = '' } = {} } = matchPath<{ scopeId: string }>(pathname, {
+        path: '/:page/:agentId/:pluginId/:tab/:scopeId',
+      }) || {};
 
       return (
         <Popup
@@ -49,7 +50,7 @@ export const FinishScopeModal = withRouter(
           onToggle={onToggle}
           header={<OverflowText>{`Finish scope ${scope && scope.name}`}</OverflowText>}
           type="info"
-          closeOnFadeClick={true}
+          closeOnFadeClick
         >
           <div className={className}>
             {errorMessage && (
@@ -71,7 +72,7 @@ export const FinishScopeModal = withRouter(
                 checked={ignoreScope}
                 onChange={() => setIgnoreScope(!ignoreScope)}
                 label="Ignore scope in build stats"
-                disabled={!Boolean(testsCount)}
+                disabled={!testsCount}
               />
               <ActionsPanel>
                 <Button
@@ -85,9 +86,9 @@ export const FinishScopeModal = withRouter(
                       },
                       onError: setErrorMessage,
                     })({ prevScopeEnabled: !ignoreScope, savePrevScope: true });
-                    !testsCount &&
-                      scopeId &&
-                      push(`/full-page/${agentId}/${buildVersion}/${pluginId}/dashboard`);
+                    !testsCount
+                      && scopeId
+                      && push(`/full-page/${agentId}/${buildVersion}/${pluginId}/dashboard`);
                   }}
                 >
                   {testsCount ? 'Finish Scope' : 'Finish and Delete'}

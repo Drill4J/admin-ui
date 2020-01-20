@@ -14,23 +14,21 @@ interface Props {
 
 const sectionTooltip = BEM(styles);
 
-export const SectionTooltip = sectionTooltip(({ className, data, hideValue }: Props) => {
-  return (
-    <div className={className}>
-      {Object.keys(data).map((label) => (
-        <TooltipItem align="space-between" key={label}>
-          <Panel>
-            <TooltipItemIcon style={{ backgroundColor: data[label].color }} />
-            {`${camelToTitle(label)} (${data[label].count || 0})`}
-          </Panel>
-          {!hideValue && (
-            <TooltipItemValue>{`${percentFormatter(data[label].value || 0)}%`}</TooltipItemValue>
-          )}
-        </TooltipItem>
-      ))}
-    </div>
-  );
-});
+export const SectionTooltip = sectionTooltip(({ className, data, hideValue }: Props) => (
+  <div className={className}>
+    {Object.keys(data).map((label) => (
+      <TooltipItem align="space-between" key={label}>
+        <Panel>
+          <TooltipItemIcon style={{ backgroundColor: data[label].color }} />
+          {`${camelToTitle(label)} (${data[label].count || 0})`}
+        </Panel>
+        {!hideValue && (
+          <TooltipItemValue>{`${percentFormatter(data[label].value || 0)}%`}</TooltipItemValue>
+        )}
+      </TooltipItem>
+    ))}
+  </div>
+));
 
 const TooltipItem = sectionTooltip.tooltipItem(Panel);
 const TooltipItemIcon = sectionTooltip.tooltipItemIcon(

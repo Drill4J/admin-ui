@@ -15,7 +15,9 @@ export interface TooltipStyle {
 }
 const tooltip = BEM(styles);
 
-export const Tooltip = tooltip(({ className, position = 'top', message, children }: Props) => {
+export const Tooltip = tooltip(({
+  className, position = 'top', message, children,
+}: Props) => {
   const [isVisible, setIsVisible] = React.useState<boolean>(false);
   const toggle = () => setIsVisible(!isVisible);
   const node = React.useRef<HTMLDivElement>(null);
@@ -31,7 +33,7 @@ export const Tooltip = tooltip(({ className, position = 'top', message, children
 
   return (
     <div className={className}>
-      <div onMouseOverCapture={toggle} onMouseOut={toggle} ref={node}>
+      <div onMouseOverCapture={toggle} onMouseOut={toggle} onBlur={toggle} ref={node}>
         {children}
       </div>
       {isVisible && message && (
