@@ -6,10 +6,10 @@ import { Panel } from 'layouts';
 import { Button, CancelButton } from 'forms';
 import { Popup, Icons, OverflowText } from 'components';
 import { NotificationManagerContext } from 'notification-manager';
+import { ScopeSummary } from 'types/scope-summary';
 import { deleteScope } from '../../api';
 import { ActiveSessionsPanel } from '../active-sessions-panel';
 import { usePluginState } from '../../../store';
-import { ScopeSummary } from 'types/scope-summary';
 
 import styles from './delete-scope-modal.module.scss';
 
@@ -24,7 +24,9 @@ const deleteScopeModal = BEM(styles);
 
 export const DeleteScopeModal = withRouter(
   deleteScopeModal(
-    ({ className, isOpen, onToggle, scope, location: { pathname }, history: { push } }: Props) => {
+    ({
+      className, isOpen, onToggle, scope, location: { pathname }, history: { push },
+    }: Props) => {
       const {
         agentId,
         pluginId,
@@ -37,21 +39,22 @@ export const DeleteScopeModal = withRouter(
         ? Object.values(scope.coveragesByType).reduce((acc, { testCount }) => acc + testCount, 0)
         : 0;
 
-      const { params: { scopeId = '' } = {} } =
-        matchPath<{ scopeId: string }>(pathname, {
-          path: '/:page/:agentId/:buildVersion/:pluginId/:tab/:scopeId',
-        }) || {};
+      const { params: { scopeId = '' } = {} } = matchPath<{ scopeId: string }>(pathname, {
+        path: '/:page/:agentId/:buildVersion/:pluginId/:tab/:scopeId',
+      }) || {};
 
       return (
         <Popup
           isOpen={isOpen}
           onToggle={onToggle}
-          header={
-            <OverflowText>{`${testsCount ? 'Delete' : 'Cancel'} scope ${scope &&
-              scope.name}`}</OverflowText>
-          }
+          header={(
+            <OverflowText>
+              {`${testsCount ? 'Delete' : 'Cancel'} scope ${scope
+              && scope.name}`}
+            </OverflowText>
+          )}
           type="info"
-          closeOnFadeClick={true}
+          closeOnFadeClick
         >
           <div className={className}>
             {errorMessage && (
@@ -76,8 +79,8 @@ export const DeleteScopeModal = withRouter(
                       onSuccess: () => {
                         showMessage({ type: 'SUCCESS', text: 'Scope has been deleted' });
                         onToggle(false);
-                        scopeId &&
-                          push(`/full-page/${agentId}/${buildVersion}/${pluginId}/dashboard`);
+                        scopeId
+                          && push(`/full-page/${agentId}/${buildVersion}/${pluginId}/dashboard`);
                       },
                       onError: setErrorMessage,
                     })(scope as ScopeSummary);

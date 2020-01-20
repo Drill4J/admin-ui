@@ -27,18 +27,21 @@ export const Breadcrumbs = withRouter(
         buildVersion: { id, name },
       } = usePluginState();
 
-      const { params: { pluginId = '', page = '', scopeId = '', urlBuildVersion = '' } = {} } =
-        matchPath<{ pluginId: string; page: string; scopeId: string; urlBuildVersion: string }>(
-          pathname,
-          {
-            path: [
-              '/full-page/:agentId/:urlBuildVersion/:pluginId/',
-              '/full-page/:agentId/:urlBuildVersion/:pluginId/:page/',
-              '/full-page/:agentId/:urlBuildVersion/:pluginId/:page/:scopeId',
-            ],
-            exact: true,
-          },
-        ) || {};
+      const {
+        params: {
+          pluginId = '', page = '', scopeId = '', urlBuildVersion = '',
+        } = {},
+      } = matchPath<{ pluginId: string; page: string; scopeId: string; urlBuildVersion: string }>(
+        pathname,
+        {
+          path: [
+            '/full-page/:agentId/:urlBuildVersion/:pluginId/',
+            '/full-page/:agentId/:urlBuildVersion/:pluginId/:page/',
+            '/full-page/:agentId/:urlBuildVersion/:pluginId/:page/:scopeId',
+          ],
+          exact: true,
+        },
+      ) || {};
 
       return (
         <div className={className}>
@@ -56,15 +59,17 @@ export const Breadcrumbs = withRouter(
                 <Item
                   onClick={() => push(`/full-page/${agentId}/${id}/${pluginId}/dashboard`)}
                   active={pluginId !== 'build-list' && page !== 'scopes' && !scopeId}
-                  data-test={`breadcrumbs:build`}
-                >{`Build ${name || id}: ${camelToTitle(kebabToPascalCase(pluginId))}`}</Item>
+                  data-test="breadcrumbs:build"
+                >
+                  {`Build ${name || id}: ${camelToTitle(kebabToPascalCase(pluginId))}`}
+                </Item>
               </>
             )}
             {page === 'scopes' && (
               <>
                 <Divider>/</Divider>
                 <Item
-                  active={page === 'scopes' && !Boolean(scopeId)}
+                  active={page === 'scopes' && !scopeId}
                   onClick={() => push(`/full-page/${agentId}/${id}/${pluginId}/scopes`)}
                   data-test="breadcrumbs:scopes-list"
                 >

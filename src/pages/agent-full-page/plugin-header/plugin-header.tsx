@@ -5,9 +5,9 @@ import { Panel } from 'layouts';
 import { Spinner } from 'components';
 import { AGENT_STATUS } from 'common/constants';
 import { capitalize } from 'utils';
+import { AgentStatus } from 'types/agent-status';
 import { usePluginState } from '../store';
 import { ReactComponent as LogoSvg } from './logo.svg';
-import { AgentStatus } from 'types/agent-status';
 
 import styles from './plugin-header.module.scss';
 

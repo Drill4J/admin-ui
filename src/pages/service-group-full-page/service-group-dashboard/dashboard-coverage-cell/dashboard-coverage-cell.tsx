@@ -15,25 +15,24 @@ interface Props {
 
 const dashboardCoverageCell = BEM(styles);
 
-export const DashboardCoverageCell = dashboardCoverageCell(({ className, value, arrow }: Props) => {
-  return (
-    <div className={className}>
-      <Content>
-        <Value>
-          {arrow && (
-            <ArrowIcon
-              rotate={arrow === 'INCREASE' ? 180 : 0}
-              type={arrow}
-              width={12}
-              heigth={14}
-            />
-          )}
-          {percentFormatter(value)}%
-        </Value>
-      </Content>
-    </div>
-  );
-});
+export const DashboardCoverageCell = dashboardCoverageCell(({ className, value, arrow }: Props) => (
+  <div className={className}>
+    <Content>
+      <Value>
+        {arrow && (
+          <ArrowIcon
+            rotate={arrow === 'INCREASE' ? 180 : 0}
+            type={arrow}
+            width={12}
+            heigth={14}
+          />
+        )}
+        {`${percentFormatter(value)}%`}
+
+      </Value>
+    </Content>
+  </div>
+));
 
 const Content = dashboardCoverageCell.content('div');
 const Value = dashboardCoverageCell.value(Panel);

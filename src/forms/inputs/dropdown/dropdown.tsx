@@ -21,7 +21,9 @@ interface Props {
 
 const dropdown = BEM(styles);
 
-export const Dropdown = dropdown(({ className, items, value, onChange }: Props) => {
+export const Dropdown = dropdown(({
+  className, items, value, onChange,
+}: Props) => {
   const [isExpanded, setIsExpanded] = React.useState(false);
   const node = useClickOutside(() => setIsExpanded(false));
   const selectedValue = items.find((item) => value === item.value);

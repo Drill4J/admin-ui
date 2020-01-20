@@ -22,7 +22,6 @@ export const SelectableTable = ({
   idKey,
   selectedRows,
   checkboxDescriptor,
-  // tslint:disable-next-line
   ...restProps
 }: Props) => {
   const isAllSelected = selectedRows.length === data.length;
@@ -50,11 +49,11 @@ export const SelectableTable = ({
               onSelect(
                 !isAllSelected
                   ? data.reduce((acc, item: any) => {
-                      if (!checkboxDescriptor) {
-                        return [...acc, String(item[idKey])];
-                      }
-                      return checkboxDescriptor(item) ? [...acc, String(item[idKey])] : acc;
-                    }, [])
+                    if (!checkboxDescriptor) {
+                      return [...acc, String(item[idKey])];
+                    }
+                    return checkboxDescriptor(item) ? [...acc, String(item[idKey])] : acc;
+                  }, [])
                   : [],
               );
             }}

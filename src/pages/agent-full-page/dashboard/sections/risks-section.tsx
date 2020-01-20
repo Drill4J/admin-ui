@@ -2,21 +2,21 @@ import * as React from 'react';
 
 import { Panel } from 'layouts';
 import { Icons, Tooltip } from 'components';
+import { Risks } from 'types/risks';
 import { useBuildVersion } from '../../coverage-plugin/use-build-version';
 import { SingleBar } from '../single-bar';
 import { Section } from './section';
 import { SectionTooltip } from './section-tooltip';
-import { Risks } from 'types/risks';
 
 export const RisksSection = () => {
-  const { newMethods = [], modifiedMethods = [] } = useBuildVersion<Risks>(`/build/risks`) || {};
+  const { newMethods = [], modifiedMethods = [] } = useBuildVersion<Risks>('/build/risks') || {};
   const risksCount = newMethods.length + modifiedMethods.length;
 
   return (
     <Section
       label="Risks"
       info={risksCount}
-      graph={
+      graph={(
         <Tooltip
           message={
             risksCount > 0 && (
@@ -47,7 +47,7 @@ export const RisksSection = () => {
             />
           </Panel>
         </Tooltip>
-      }
+      )}
     />
   );
 };

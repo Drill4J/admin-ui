@@ -27,7 +27,9 @@ export const ActiveSessionsPanel = activeSessionsPanel(({ className }: Props) =>
           </Panel>
           <ActiveSessionTypesList>
             {testTypes.map((type) => (
-              <ActiveSessionType key={type}>• {type.toLowerCase()}</ActiveSessionType>
+              <ActiveSessionType key={type}>
+                {type.toLowerCase()}
+              </ActiveSessionType>
             ))}
           </ActiveSessionTypesList>
           <Instructions>

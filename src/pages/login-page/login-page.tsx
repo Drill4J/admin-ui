@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
-import axios from 'axios';
-import { AxiosError } from 'axios';
+import axios, { AxiosError } from 'axios';
+
 import { withRouter, RouteComponentProps } from 'react-router-dom';
 
 import { LoginLayout } from 'layouts';
@@ -43,13 +43,15 @@ export const LoginPage = withRouter(
         <div className={className}>
           <Logo />
           <Title>Welcome to Drill4J</Title>
-          <SubTitle>Click "Continue as a guest" to entry Admin Panel with admin privilege</SubTitle>
+          <SubTitle>Click &quot;Continue as a guest&quot; to entry Admin Panel with admin privilege</SubTitle>
           {error && <Error>{`${error.message}`}</Error>}
           <SignInForm>
             <Inputs.Text placeholder="User ID" disabled rounded icon={<Icons.Account />} />
             <Inputs.Text placeholder="Password" disabled rounded icon={<Icons.Lock />} />
             <SignInButton disabled type="primary">
-              Sign in <Icons.Arrow />
+              Sign in
+              {' '}
+              <Icons.Arrow />
             </SignInButton>
           </SignInForm>
           <ForgotPasswordLink>Forgot your password?</ForgotPasswordLink>

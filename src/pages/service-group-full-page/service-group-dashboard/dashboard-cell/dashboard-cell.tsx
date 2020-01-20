@@ -12,18 +12,18 @@ interface Props {
 
 const dashboardCell = BEM(styles);
 
-export const DashboardCell = dashboardCell(({ className, label, value, onClick }: Props) => {
-  return (
-    <div className={className}>
-      <Content>
-        <Label>{label}</Label>
-        <Value onClick={onClick} clickable={Boolean(onClick)}>
-          {value}
-        </Value>
-      </Content>
-    </div>
-  );
-});
+export const DashboardCell = dashboardCell(({
+  className, label, value, onClick,
+}: Props) => (
+  <div className={className}>
+    <Content>
+      <Label>{label}</Label>
+      <Value onClick={onClick} clickable={Boolean(onClick)}>
+        {value}
+      </Value>
+    </Content>
+  </div>
+));
 
 const Content = dashboardCell.content('div');
 const Label = dashboardCell.label('div');

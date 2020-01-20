@@ -51,7 +51,11 @@ export const RisksModal = risksModal(
             <h2>{count}</h2>
           </Header>
           <NotificationPanel>
-            Risks are not covered <Bold>New</Bold> and <Bold>Modified</Bold> methods.
+            Risks are not covered
+            <Bold>New</Bold>
+            and
+            <Bold>Modified</Bold>
+            methods.
           </NotificationPanel>
           <Content>
             <Filter

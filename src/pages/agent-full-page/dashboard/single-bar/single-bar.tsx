@@ -14,8 +14,12 @@ interface Props {
 
 const singleBar = BEM(styles);
 
-export const SingleBar = singleBar(({ className, width, height, color, percent, icon }: Props) => {
-  const y = isNaN(percent) ? height : height - (height * percent) / 100;
+const isNumber = (value: string | number) => !Number.isNaN(parseFloat(String(value)));
+
+export const SingleBar = singleBar(({
+  className, width, height, color, percent, icon,
+}: Props) => {
+  const y = isNumber(percent) ? height : height - (height * percent) / 100;
 
   return (
     <div className={className}>

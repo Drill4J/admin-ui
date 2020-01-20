@@ -23,14 +23,12 @@ const input = BEM(styles);
 
 const INPUT_PROPS_OBJ = Object.assign({}, ...INPUT_PROPS.map((key) => ({ [key]: undefined })));
 
-export const Input = input(({ className, icon, ...restProps }: Props) => {
-  return (
-    <div className={className}>
-      {icon && <IconWrapper>{icon}</IconWrapper>}
-      <InputElement {...restProps} />
-    </div>
-  );
-});
+export const Input = input(({ className, icon, ...restProps }: Props) => (
+  <div className={className}>
+    {icon && <IconWrapper>{icon}</IconWrapper>}
+    <InputElement {...restProps} />
+  </div>
+));
 
 const InputElement = input.inputElement(
   bemInput({

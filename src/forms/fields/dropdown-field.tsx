@@ -14,7 +14,6 @@ export const dropdownField = (props: Props) => {
     input: { onChange, ...input },
     meta,
     options = [],
-    // tslint:disable-next-line
     ...rest
   } = props;
   return (

@@ -8,10 +8,12 @@ interface Props {
   children?: React.ReactNode;
 }
 
-export const NotificationManagerContext = React.createContext<{
+type ContextType = {
   showMessage: (message: Message) => void;
   closeMessage: () => void;
-}>({ showMessage: () => {}, closeMessage: () => {} });
+};
+
+export const NotificationManagerContext = React.createContext<ContextType>({ showMessage: () => {}, closeMessage: () => {} });
 
 export const NotificationManager = ({ children }: Props) => {
   const [message, setMessage] = React.useState<Message | null>();

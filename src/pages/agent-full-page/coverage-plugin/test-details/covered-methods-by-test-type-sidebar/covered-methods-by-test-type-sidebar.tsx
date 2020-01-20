@@ -3,8 +3,8 @@ import { BEM, capitalize } from '@redneckz/react-bem-helper';
 
 import { Panel } from 'layouts';
 import { Icons, Modal } from 'components';
-import { MethodsList } from '../methods-list';
 import { MethodCoveredByTest } from 'types/method-covered-by-test';
+import { MethodsList } from '../methods-list';
 
 import styles from './covered-methods-by-test-type-sidebar.module.scss';
 
@@ -19,7 +19,9 @@ interface Props {
 const coveredMethodsByTestTypeSidebar = BEM(styles);
 
 export const CoveredMethodsByTestTypeSidebar = coveredMethodsByTestTypeSidebar(
-  ({ className, isOpen, onToggle, testType, coveredMethods = [] }: Props) => {
+  ({
+    className, isOpen, onToggle, testType, coveredMethods = [],
+  }: Props) => {
     const filtredMethods = coveredMethods.find(({ testType: type }) => type === testType) || {};
     const {
       newMethods = [],

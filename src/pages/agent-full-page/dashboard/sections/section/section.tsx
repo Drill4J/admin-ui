@@ -13,18 +13,18 @@ interface Props {
 
 const section = BEM(styles);
 
-export const Section = section(({ className, graph, info, label, additionalInfo }: Props) => {
-  return (
-    <div className={className}>
-      <Info>
-        <Label>{label}</Label>
-        <MainInfo>{info}</MainInfo>
-        <AdditionalInfo>{additionalInfo}</AdditionalInfo>
-      </Info>
-      <Graph>{graph}</Graph>
-    </div>
-  );
-});
+export const Section = section(({
+  className, graph, info, label, additionalInfo,
+}: Props) => (
+  <div className={className}>
+    <Info>
+      <Label>{label}</Label>
+      <MainInfo>{info}</MainInfo>
+      <AdditionalInfo>{additionalInfo}</AdditionalInfo>
+    </Info>
+    <Graph>{graph}</Graph>
+  </div>
+));
 
 const Label = section.label('div');
 const Info = section.info('div');

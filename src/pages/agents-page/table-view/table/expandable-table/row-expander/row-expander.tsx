@@ -14,7 +14,9 @@ interface Props {
 
 const rowExpander = BEM(styles);
 
-export const RowExpander = rowExpander(({ className, expanded, onClick, withMargin }: Props) => (
+export const RowExpander = rowExpander(({
+  className, expanded, onClick, withMargin,
+}: Props) => (
   <div className={className} onClick={onClick}>
     <IconWrapper expanded={expanded} withMargin={withMargin}>
       <Icons.Expander />

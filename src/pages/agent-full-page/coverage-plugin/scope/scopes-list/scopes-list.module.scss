@@ -77,6 +77,13 @@
     line-height: 24px;
     color: $slate-gray;
     font-family: $regular-font;
+
+    & > *:first-child {
+      &::before {
+        content: '·';
+        margin: 0 4px;
+      }
+    }
   }
 
   &__active-badge {

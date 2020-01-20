@@ -1,14 +1,16 @@
 import * as React from 'react';
 import { BEM, span, div } from '@redneckz/react-bem-helper';
 
-import { Column, ExpandableTable, Icons, OverflowText } from 'components';
+import {
+  Column, ExpandableTable, Icons, OverflowText,
+} from 'components';
 import { Panel } from 'layouts';
 import { percentFormatter } from 'utils';
+import { AssociatedTests } from 'types/associated-tests';
+import { MethodCoveredByTest } from 'types/method-covered-by-test';
 import { NoTestsStub } from './no-tests-stub';
 import { CoveredMethodsByTestSidebar } from './covered-methods-by-test-sidebar';
 import { CoveredMethodsByTestTypeSidebar } from './covered-methods-by-test-type-sidebar';
-import { AssociatedTests } from 'types/associated-tests';
-import { MethodCoveredByTest } from 'types/method-covered-by-test';
 
 import styles from './test-details.module.scss';
 
@@ -22,7 +24,9 @@ interface Props {
 const testDetails = BEM(styles);
 
 export const TestDetails = testDetails(
-  ({ className, testsUsages, coveredMethodsByTest, coveredMethodsByTestType }: Props) => {
+  ({
+    className, testsUsages, coveredMethodsByTest, coveredMethodsByTestType,
+  }: Props) => {
     const [selectedTest, setSelectedTest] = React.useState('');
     const [selectedTestType, setSelectedTestType] = React.useState('');
 
@@ -51,7 +55,11 @@ export const TestDetails = testDetails(
                 />,
                 <Column
                   name="coverage"
-                  Cell={({ value }) => <CoverageCell>{percentFormatter(value)}%</CoverageCell>}
+                  Cell={({ value }) => (
+                    <CoverageCell>
+                      {`${percentFormatter(value)}%`}
+                    </CoverageCell>
+                  )}
                 />,
                 <Column
                   name="methodCalls"
@@ -60,7 +68,7 @@ export const TestDetails = testDetails(
                       onClick={() => {
                         setSelectedTest(id);
                       }}
-                      data-test={`test-actions:view-curl:id`}
+                      data-test="test-actions:view-curl:id"
                       clickable={Boolean(value)}
                     >
                       {value}
@@ -76,16 +84,22 @@ export const TestDetails = testDetails(
                 Cell={({ value, item: { tests = [] } = {} }) => (
                   <TableCell type="primary">
                     <Icons.Test height={16} width={16} />
-                    <TableCellContent>{`${value.toLowerCase()} (${
-                      tests.length
-                    })`}</TableCellContent>
+                    <TableCellContent>
+                      {`${value.toLowerCase()} (${
+                        tests.length
+                      })`}
+                    </TableCellContent>
                   </TableCell>
                 )}
               />
               <Column
                 name="coverage"
                 label="Coverage"
-                Cell={({ value }) => <CoverageCell>{percentFormatter(value)}%</CoverageCell>}
+                Cell={({ value }) => (
+                  <CoverageCell>
+                    {`${percentFormatter(value)}%`}
+                  </CoverageCell>
+                )}
               />
               <Column
                 name="methodsCount"
@@ -95,7 +109,7 @@ export const TestDetails = testDetails(
                     onClick={() => {
                       setSelectedTestType(testType);
                     }}
-                    data-test={`test-actions:view-curl:id`}
+                    data-test="test-actions:view-curl:id"
                     clickable={Boolean(value)}
                   >
                     {value}

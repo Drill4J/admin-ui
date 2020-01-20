@@ -15,7 +15,9 @@ interface Props {
 const associatedTestColumn = BEM(styles);
 
 export const AssociatedTestColumn = associatedTestColumn(
-  ({ className, value, item: { id }, onClick }: Props) => (
+  ({
+    className, value, item: { id }, onClick,
+  }: Props) => (
     <span className={className}>
       {value ? <Value onClick={() => onClick(id)}>{value}</Value> : 'n/a'}
     </span>

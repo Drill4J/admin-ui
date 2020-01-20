@@ -20,7 +20,9 @@ interface Props extends RouteComponentProps {
 const unregisterAgentModal = BEM(styles);
 
 export const UnregisterAgentModal = withRouter(
-  unregisterAgentModal(({ className, isOpen, onToggle, agentId, history: { push } }: Props) => {
+  unregisterAgentModal(({
+    className, isOpen, onToggle, agentId, history: { push },
+  }: Props) => {
     const { showMessage } = React.useContext(NotificationManagerContext);
     const [errorMessage, setErrorMessage] = React.useState('');
 
@@ -28,14 +30,14 @@ export const UnregisterAgentModal = withRouter(
       <Popup
         isOpen={isOpen}
         onToggle={onToggle}
-        header={
+        header={(
           <Panel>
             <HeaderIcon height={20} width={20} />
             Unregister the agent
           </Panel>
-        }
+        )}
         type="error"
-        closeOnFadeClick={true}
+        closeOnFadeClick
       >
         <div className={className}>
           {errorMessage && (
@@ -52,15 +54,13 @@ export const UnregisterAgentModal = withRouter(
             <Panel>
               <UnregisterButton
                 type="primary"
-                onClick={() =>
-                  unregisterAgent(agentId, {
-                    onSuccess: () => {
-                      showMessage({ type: 'SUCCESS', text: 'Agent has been deactivated' });
-                      push('/agents');
-                    },
-                    onError: setErrorMessage,
-                  })
-                }
+                onClick={() => unregisterAgent(agentId, {
+                  onSuccess: () => {
+                    showMessage({ type: 'SUCCESS', text: 'Agent has been deactivated' });
+                    push('/agents');
+                  },
+                  onError: setErrorMessage,
+                })}
               >
                 Yes, unregister this agent
               </UnregisterButton>

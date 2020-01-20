@@ -15,7 +15,9 @@ interface Props {
 
 const formGroup = BEM(styles);
 
-export const FormGroup = formGroup(({ className, children, label, optional, actions }: Props) => (
+export const FormGroup = formGroup(({
+  className, children, label, optional, actions,
+}: Props) => (
   <div className={className}>
     <Panel align="space-between">
       <Label>{label || null}</Label>

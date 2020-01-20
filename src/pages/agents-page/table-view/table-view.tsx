@@ -4,10 +4,10 @@ import axios from 'axios';
 
 import { OverflowText } from 'components';
 import { AGENT_STATUS } from 'common/constants';
+import { Agent } from 'types/agent';
 import { NameColumn } from './name-column';
 import { ActionsColumn } from './actions-column';
 import { ExpandableTable, Column } from './table';
-import { Agent } from 'types/agent';
 
 import styles from './table-view.module.scss';
 import { AgentStatusToggler } from '../agent-status-toggler';
@@ -64,7 +64,8 @@ export const TableView = tableView(({ className, agents }: Props) => (
         label="Description"
         Cell={({ value }) => <OverflowText>{value.substr(0, 150)}</OverflowText>}
       />
-      <Column name="agentType" label="Type" />,
+      <Column name="agentType" label="Type" />
+,
       <Column
         name="environment"
         label="Environment"
@@ -75,11 +76,9 @@ export const TableView = tableView(({ className, agents }: Props) => (
       <Column
         name="status"
         label="Status"
-        Cell={({ value, item }) =>
-          item.agentType !== 'ServiceGroup' ? (
-            <AgentStatusToggler status={value} onChange={() => toggleStandby(item.id)} />
-          ) : null
-        }
+        Cell={({ value, item }) => (item.agentType !== 'ServiceGroup' ? (
+          <AgentStatusToggler status={value} onChange={() => toggleStandby(item.id)} />
+        ) : null)}
       />
       <Column name="actions" Cell={({ item }: { item: Agent }) => <ActionsColumn agent={item} />} />
     </ExpandableTable>

@@ -7,12 +7,12 @@ import { useCommonEntity } from 'hooks';
 import { PageHeader, Icons, Menu } from 'components';
 import { AGENT_STATUS } from 'common/constants';
 import { NotificationManagerContext } from 'notification-manager';
+import { Agent } from 'types/agent';
 import { UnregisterAgentModal } from './unregister-agent-modal';
 import { toggleStandby } from './toggle-standby';
 import { AgentStatusToggler } from '../agents-page/agent-status-toggler';
 import { AgentSettings } from './agent-settings';
 import { ServiceGroupSettings } from './service-group-settings';
-import { Agent } from 'types/agent';
 
 import styles from './settings-page.module.scss';
 
@@ -37,11 +37,11 @@ export const SettingsPage = withRouter(
       return (
         <div className={className}>
           <PageHeader
-            title={
+            title={(
               <Panel>
                 <HeaderIcon height={24} width={24} />
                 {type === 'service-group' ? (
-                  `Service Group Agent settings`
+                  'Service Group Agent settings'
                 ) : (
                   <>
                     Agent settings
@@ -52,7 +52,7 @@ export const SettingsPage = withRouter(
                   </>
                 )}
               </Panel>
-            }
+            )}
             actions={
               type !== 'service-group' && (
                 <Panel align="end">

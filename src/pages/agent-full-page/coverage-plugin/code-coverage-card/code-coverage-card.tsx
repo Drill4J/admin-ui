@@ -4,9 +4,9 @@ import { BEM } from '@redneckz/react-bem-helper';
 import { Panel } from 'layouts';
 import { Icons } from 'components';
 import { percentFormatter } from 'utils';
+import { Coverage } from 'types/coverage';
 import { Card, CardSection } from '../card';
 import { CoveragesByType } from './coverages-by-type';
-import { Coverage } from 'types/coverage';
 
 import styles from './code-coverage-card.module.scss';
 
@@ -29,30 +29,28 @@ export const CodeCoverageCard = codeCoverageCard(
     additionalInfo,
     showRecording,
     testContext,
-  }: Props) => {
-    return (
-      <div className={className}>
-        <Card header={header}>
-          <CardSection>
-            <TotalCoverage>
-              <Panel data-test={`code-coverage-card:${testContext}`}>
-                {`${percentFormatter(coverage)}%`}
-                {arrow && <ArrowIcon rotate={arrow === 'INCREASE' ? 180 : 0} type={arrow} />}
-              </Panel>
-            </TotalCoverage>
-            <AdditionalInfo>{additionalInfo}</AdditionalInfo>
-          </CardSection>
-          <CardSection>
-            <CoveragesByType
-              testContext={testContext}
-              coverageByType={coverageByType}
-              showRecording={showRecording}
-            />
-          </CardSection>
-        </Card>
-      </div>
-    );
-  },
+  }: Props) => (
+    <div className={className}>
+      <Card header={header}>
+        <CardSection>
+          <TotalCoverage>
+            <Panel data-test={`code-coverage-card:${testContext}`}>
+              {`${percentFormatter(coverage)}%`}
+              {arrow && <ArrowIcon rotate={arrow === 'INCREASE' ? 180 : 0} type={arrow} />}
+            </Panel>
+          </TotalCoverage>
+          <AdditionalInfo>{additionalInfo}</AdditionalInfo>
+        </CardSection>
+        <CardSection>
+          <CoveragesByType
+            testContext={testContext}
+            coverageByType={coverageByType}
+            showRecording={showRecording}
+          />
+        </CardSection>
+      </Card>
+    </div>
+  ),
 );
 
 const TotalCoverage = codeCoverageCard.totalCoverage('div');

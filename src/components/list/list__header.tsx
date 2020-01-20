@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
+import nanoid from 'nanoid';
 
 import { ColumnProps } from './list-types';
 
@@ -18,7 +19,7 @@ export const ListHeader = BEM(styles).header(({ className, columns, style }: Pro
         <div>{label}</div>
       );
       const HeaderCell = column.HeaderCell || DefaultHeaderCell;
-      return <HeaderCell column={column} key={`header-cell${index}`} />;
+      return <HeaderCell column={column} key={nanoid()} />;
     })}
   </div>
 ));

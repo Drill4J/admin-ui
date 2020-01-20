@@ -18,7 +18,9 @@ interface Props {
 const pluginsLayout = BEM(styles);
 
 export const PluginsLayout = pluginsLayout(
-  ({ className, toolbar, header, breadcrumbs, children, footer, sidebar }: Props) => (
+  ({
+    className, toolbar, header, breadcrumbs, children, footer, sidebar,
+  }: Props) => (
     <div className={className}>
       <ToolbarWrapper>{toolbar}</ToolbarWrapper>
       <HeaderWrapper>{header}</HeaderWrapper>

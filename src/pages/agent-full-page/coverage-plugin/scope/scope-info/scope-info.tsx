@@ -4,7 +4,16 @@ import { withRouter, RouteComponentProps } from 'react-router-dom';
 
 import { Panel } from 'layouts';
 import { Button } from 'forms';
-import { TabsPanel, Tab, Icons, Menu } from 'components';
+import {
+  TabsPanel, Tab, Icons, Menu,
+} from 'components';
+import { ScopeSummary } from 'types/scope-summary';
+import { Coverage } from 'types/coverage';
+import { Methods } from 'types/methods';
+import { ClassCoverage } from 'types/class-coverage';
+import { AssociatedTests } from 'types/associated-tests';
+import { NotificationManagerContext } from 'notification-manager';
+import { MethodCoveredByTest } from 'types/method-covered-by-test';
 import { useBuildVersion } from '../../use-build-version';
 import { DetailedCodeCoverageCard } from '../../code-coverage-card';
 import { ProjectMethodsCard } from '../../project-methods-card';
@@ -14,13 +23,6 @@ import { toggleScope } from '../../api';
 import { usePluginState } from '../../../store';
 import { useCoveragePluginDispatch, openModal } from '../../store';
 import { ScopeTimer } from '../scope-timer';
-import { ScopeSummary } from 'types/scope-summary';
-import { Coverage } from 'types/coverage';
-import { Methods } from 'types/methods';
-import { ClassCoverage } from 'types/class-coverage';
-import { AssociatedTests } from 'types/associated-tests';
-import { NotificationManagerContext } from 'notification-manager';
-import { MethodCoveredByTest } from 'types/method-covered-by-test';
 
 import styles from './scope-info.module.scss';
 
@@ -47,37 +49,34 @@ export const ScopeInfo = withRouter(
       const dispatch = useCoveragePluginDispatch();
       const coverage = useBuildVersion<Coverage>(`/scope/${scopeId}/coverage`) || {};
       const scopeMethods = useBuildVersion<Methods>(`/scope/${scopeId}/methods`) || {};
-      const coverageByPackages =
-        useBuildVersion<ClassCoverage[]>(`/scope/${scopeId}/coverage-by-packages`) || [];
+      const coverageByPackages = useBuildVersion<ClassCoverage[]>(`/scope/${scopeId}/coverage-by-packages`) || [];
 
-      const testsUsages =
-        useBuildVersion<AssociatedTests[]>(`/scope/${scopeId}/tests-usages`) || [];
+      const testsUsages = useBuildVersion<AssociatedTests[]>(`/scope/${scopeId}/tests-usages`) || [];
 
-      const coveredMethodsByTest =
-        useBuildVersion<MethodCoveredByTest[]>(`/scope/${scopeId}/tests/covered-methods`) || [];
+      const coveredMethodsByTest = useBuildVersion<MethodCoveredByTest[]>(`/scope/${scopeId}/tests/covered-methods`) || [];
 
-      const coveredMethodsByTestType =
-        useBuildVersion<MethodCoveredByTest[]>(`/scope/${scopeId}/test-types/covered-methods`) ||
-        [];
+      const coveredMethodsByTestType = useBuildVersion<MethodCoveredByTest[]>(`/scope/${scopeId}/test-types/covered-methods`)
+        || [];
 
       const scope = useBuildVersion<ScopeSummary>(`/scope/${scopeId}`);
-      const { name = '', active = false, enabled = false, started = 0, finished = 0 } = scope || {};
+      const {
+        name = '', active = false, enabled = false, started = 0, finished = 0,
+      } = scope || {};
       const [selectedTab, setSelectedTab] = React.useState('coverage');
       const menuActions = [
         !active && {
           label: `${enabled ? 'Ignore in build stats' : 'Show in build stats'}`,
           icon: enabled ? 'EyeCrossed' : 'Eye',
-          onClick: () =>
-            toggleScope(agentId, {
-              onSuccess: () => {
-                showMessage({
-                  type: 'SUCCESS',
-                  text: `${name} has been ${
-                    enabled ? 'excluded from' : 'included in'
-                  } the build stats.`,
-                });
-              },
-            })(scopeId),
+          onClick: () => toggleScope(agentId, {
+            onSuccess: () => {
+              showMessage({
+                type: 'SUCCESS',
+                text: `${name} has been ${
+                  enabled ? 'excluded from' : 'included in'
+                } the build stats.`,
+              });
+            },
+          })(scopeId),
         },
         active && {
           label: 'Manage sessions',
@@ -91,23 +90,21 @@ export const ScopeInfo = withRouter(
         },
         active
           ? {
-              label: 'Cancel',
-              icon: 'Delete',
-              onClick: () => dispatch(openModal('DeleteScopeModal', scope)),
-            }
+            label: 'Cancel',
+            icon: 'Delete',
+            onClick: () => dispatch(openModal('DeleteScopeModal', scope)),
+          }
           : {
-              label: 'Delete',
-              icon: 'Delete',
-              onClick: () => dispatch(openModal('DeleteScopeModal', scope)),
-            },
+            label: 'Delete',
+            icon: 'Delete',
+            onClick: () => dispatch(openModal('DeleteScopeModal', scope)),
+          },
       ].filter(Boolean);
 
       return (
         <div className={className}>
           <BackToScopesList
-            onClick={() =>
-              push(`/full-page/${agentId}/${buildVersion}/test-to-code-mapping/scopes`)
-            }
+            onClick={() => push(`/full-page/${agentId}/${buildVersion}/test-to-code-mapping/scopes`)}
           >
             &lt; Scopes list
           </BackToScopesList>
@@ -130,7 +127,7 @@ export const ScopeInfo = withRouter(
                   disabled={!active}
                 >
                   <Icons.Check height={12} width={16} />
-                  {` Finish scope`}
+                  {' Finish scope'}
                 </FinishScopeButton>
                 <Menu items={menuActions as any} />
               </Panel>

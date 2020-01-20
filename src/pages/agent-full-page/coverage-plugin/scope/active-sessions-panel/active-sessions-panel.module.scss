@@ -30,6 +30,11 @@
     line-height: 24px;
     font-family: $semibold-font;
     text-transform: capitalize;
+
+    &::before {
+      content: '•';
+      margin-right: 8px;
+    }
   }
 
   &__instructions {
