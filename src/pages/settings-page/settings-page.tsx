@@ -32,7 +32,6 @@ export const SettingsPage = withRouter(
     }: Props) => {
       const data = useCommonEntity(id, type) || {};
       const { showMessage } = React.useContext(NotificationManagerContext);
-      const [errorMessage, setErrorMessage] = React.useState('');
       const [isUnregisterModalOpen, setIsUnregisterModalOpen] = React.useState(false);
       return (
         <div className={className}>
@@ -47,7 +46,7 @@ export const SettingsPage = withRouter(
                     Agent settings
                     <AgentStatus
                       status={(data as Agent).status}
-                      onChange={() => toggleStandby((data as Agent).id || '', setErrorMessage)}
+                      onChange={() => toggleStandby((data as Agent).id || '', showMessage)}
                     />
                   </>
                 )}
@@ -74,12 +73,6 @@ export const SettingsPage = withRouter(
               )
             }
           />
-          {errorMessage && (
-            <ErrorMessage>
-              <ErrorMessageIcon />
-              {errorMessage}
-            </ErrorMessage>
-          )}
           {type === 'service-group' ? (
             <ServiceGroupSettings showMessage={showMessage} serviceGroup={data} />
           ) : (
