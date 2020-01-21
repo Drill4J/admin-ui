@@ -71,7 +71,7 @@
       "eslint . --ext .ts,.tsx --fix",
       "git add"
     ],
-    "*.{sass,md}": [
+    "*.{scss,md}": [
       "prettier --write",
       "git add"
     ]
