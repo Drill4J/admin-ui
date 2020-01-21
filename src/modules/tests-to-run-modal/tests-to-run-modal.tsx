@@ -6,7 +6,6 @@ import { Icons, Modal } from 'components';
 import { Inputs } from 'forms';
 import { Panel } from 'layouts';
 import { copyToClipboard } from 'utils';
-import { usePluginState } from '../../store';
 
 import styles from './tests-to-run-modal.module.scss';
 
@@ -16,17 +15,18 @@ interface Props {
   onToggle: (value: boolean) => void;
   testsToRun: { [testType: string]: string[] };
   count: number;
+  agentId: string;
+  pluginId: string;
 }
 
 const testsToRunModal = BEM(styles);
 
 export const TestsToRunModal = testsToRunModal(
   ({
-    className, isOpen, onToggle, testsToRun, count,
+    className, isOpen, onToggle, testsToRun, count, agentId, pluginId,
   }: Props) => {
     const allTests = Object.values(testsToRun).reduce((acc, tests) => [...acc, ...tests], []);
     const [selectedFilter, setSelectedFilter] = React.useState('all');
-    const { agentId, pluginId } = usePluginState();
 
     // TODO: should be removed after SSL certificate impl
     const adminUrl = new URL(

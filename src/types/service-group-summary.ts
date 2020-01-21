@@ -17,7 +17,7 @@ export interface ServiceGroupSummary {
   aggregatedData?: {
     coverage?: number;
     risks?: number;
-    testsToRun?: number;
     arrow?: 'INCREASE' | 'DECREASE';
+    testsToRun?: { groupedTets?: { [testType: string]: string[] }; count?: number};
   };
 }

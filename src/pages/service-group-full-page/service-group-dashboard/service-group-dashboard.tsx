@@ -3,7 +3,7 @@ import { BEM } from '@redneckz/react-bem-helper';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
 
 import { Menu, List, ListColumn } from 'components';
-import { ManageSessionsModal } from 'modules';
+import { ManageSessionsModal, TestsToRunModal } from 'modules';
 import { percentFormatter } from 'utils';
 import { Summary } from 'types/service-group-summary';
 import { DashboardNameCell } from './dashboard-name-cell';
@@ -14,14 +14,16 @@ import { FinishAllScopesModal } from './finish-all-scopes-modal';
 
 import styles from './service-group-dashboard.module.scss';
 
+type TestToRun = { groupedTests?: { [testType: string]: string[] }; count?: number };
+
 interface Props extends RouteComponentProps<{ serviceGroupId: string }> {
   className?: string;
   summaries?: Summary[];
   aggregatedData?: {
     coverage?: number;
     risks?: number;
-    testsToRun?: number;
     arrow?: 'INCREASE' | 'DECREASE';
+    testsToRun?: TestToRun;
   };
 }
 
@@ -40,7 +42,7 @@ export const ServiceGroupDashboard = withRouter(
     }: Props) => {
       const [isManageSessionsModalOpen, setIsManageSessionsModalOpen] = React.useState(false);
       const [isFinishScopesModalOpen, setIsFinishScopesModalOpen] = React.useState(false);
-
+      const [selectedTestsToRun, setSelectedTestsToRun] = React.useState<TestToRun>({});
       const serviceGroupSummaries = summaries
         .filter((summary) => summary.data)
         .map((summary) => ({ ...summary, ...summary.data }));
@@ -58,7 +60,7 @@ export const ServiceGroupDashboard = withRouter(
                     agentId,
                   },
                 }: {
-                  value: any;
+                  value: string;
                   item: any;
                 }) => (
                   <DashboardNameCell
@@ -91,11 +93,17 @@ export const ServiceGroupDashboard = withRouter(
               />
               <ListColumn
                 name="testsToRun"
-                Cell={DashboardCell}
+                Cell={({ value }) => (
+                  <DashboardCell
+                    value={value?.count}
+                    onClick={() => setSelectedTestsToRun(value)}
+                  />
+                )}
                 HeaderCell={() => (
                   <DashboardHeaderCell
-                    value={aggregatedData?.testsToRun || 0}
+                    value={aggregatedData?.testsToRun?.count}
                     label="tests to run"
+                    onClick={() => setSelectedTestsToRun(aggregatedData?.testsToRun || {})}
                   />
                 )}
               />
@@ -148,6 +156,16 @@ export const ServiceGroupDashboard = withRouter(
                 onToggle={setIsFinishScopesModalOpen}
                 serviceGroupId={serviceGroupId}
                 agentsCount={serviceGroupSummaries.length}
+              />
+            )}
+            {selectedTestsToRun.count && (
+              <TestsToRunModal
+                isOpen={Boolean(selectedTestsToRun)}
+                onToggle={() => setSelectedTestsToRun({})}
+                agentId={serviceGroupId}
+                pluginId="test-to-code-mapping"
+                testsToRun={selectedTestsToRun?.groupedTests || {}}
+                count={selectedTestsToRun?.count}
               />
             )}
           </div>
