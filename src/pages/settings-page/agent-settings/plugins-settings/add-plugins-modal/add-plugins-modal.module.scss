@@ -46,7 +46,7 @@
     }
 
     &--selected {
-      background-color: rgba(248, 231, 28, 0.1);
+      background-color: rgba(0, 127, 255, 0.15);
       color: map-get($color-palette, white);
     }
   }

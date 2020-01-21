@@ -9,7 +9,7 @@
   }
 
   &:hover {
-    background-color: rgba(248, 231, 28, 0.1);
+    background-color: rgba(104, 116, 129, 0.05);
   }
 
   &__plugin-elements {
@@ -17,7 +17,7 @@
     align-items: center;
 
     &--selected {
-      background-color: rgba(248, 231, 28, 0.1);
+      background-color: rgba(0, 127, 255, 0.15);
       color: map-get($color-palette, white);
     }
   }

@@ -67,6 +67,11 @@
     opacity: 0.25;
   }
 
+  &__continue-button {
+    height: $common-element-height;
+    width: 320px;
+  }
+
   &__copyright {
     margin-top: 130px;
     color: $slate-gray;
