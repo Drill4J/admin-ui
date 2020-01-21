@@ -50,14 +50,13 @@ export const LoginPage = withRouter(
             <Inputs.Text placeholder="Password" disabled rounded icon={<Icons.Lock />} />
             <SignInButton disabled type="primary">
               Sign in
-              {' '}
               <Icons.Arrow />
             </SignInButton>
           </SignInForm>
           <ForgotPasswordLink>Forgot your password?</ForgotPasswordLink>
-          <Button type="secondary" size="large" onClick={handleLogin}>
+          <ContinueButton type="secondary" onClick={handleLogin}>
             Continue as a guest (read only)
-          </Button>
+          </ContinueButton>
           <Copyright>{`© ${new Date().getFullYear()} Drill4J. All rights reserved.`}</Copyright>
         </div>
       </LoginLayout>
@@ -72,4 +71,5 @@ const Error = loginPage.error(ErrorPanel);
 const SignInForm = loginPage.signInForm('div');
 const SignInButton = loginPage.signInButton(Button);
 const ForgotPasswordLink = loginPage.forgotPassword('div');
+const ContinueButton = loginPage.continueButton(Button);
 const Copyright = loginPage.copyright('div');

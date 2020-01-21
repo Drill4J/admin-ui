@@ -93,5 +93,3 @@ export const SettingsPage = withRouter(
 
 const HeaderIcon = settingsPage.headerIcon(Icons.Settings);
 const AgentStatus = settingsPage.agentStatus(AgentStatusToggler);
-const ErrorMessage = settingsPage.errorMessage(Panel);
-const ErrorMessageIcon = settingsPage.errorMessageIcon(Icons.Warning);
