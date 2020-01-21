@@ -11,16 +11,16 @@ import { Section } from './section';
 import { SectionTooltip } from './section-tooltip';
 
 export const TestsToRunSection = () => {
-  const { testsToRun = {} } = useBuildVersion<TestsToRun>('/build/tests-to-run') || {};
-  const totalCoveredMethodCount = Object.values(testsToRun).reduce(
+  const { testTypeToNames = {} } = useBuildVersion<TestsToRun>('/build/tests-to-run') || {};
+  const totalCoveredMethodCount = Object.values(testTypeToNames).reduce(
     (acc, tests) => acc + tests.length,
     0,
   );
-  const tooltipData = Object.keys(testsToRun).reduce(
+  const tooltipData = Object.keys(testTypeToNames).reduce(
     (acc, testType) => ({
       ...acc,
       [testType.toLowerCase()]: {
-        count: testsToRun[testType].length,
+        count: testTypeToNames[testType].length,
         color: TEST_TYPES_COLOR[testType as TestTypes],
       },
     }),
@@ -40,7 +40,7 @@ export const TestsToRunSection = () => {
               width={48}
               height={128}
               color="#9600FF"
-              percent={(testsToRun.AUTO && testsToRun.AUTO.length / totalCoveredMethodCount) * 100}
+              percent={(testTypeToNames.AUTO && testTypeToNames.AUTO.length / totalCoveredMethodCount) * 100}
               icon="Auto"
             />
             <SingleBar
@@ -48,7 +48,7 @@ export const TestsToRunSection = () => {
               height={128}
               color="#00D5FF"
               percent={
-                (testsToRun.MANUAL && testsToRun.MANUAL.length / totalCoveredMethodCount) * 100
+                (testTypeToNames.MANUAL && testTypeToNames.MANUAL.length / totalCoveredMethodCount) * 100
               }
               icon="Manual"
             />
@@ -57,8 +57,8 @@ export const TestsToRunSection = () => {
               height={128}
               color="#E78E00"
               percent={
-                (testsToRun.PERFORMANCE
-                  && testsToRun.PERFORMANCE.length / totalCoveredMethodCount) * 100
+                (testTypeToNames.PERFORMANCE
+                  && testTypeToNames.PERFORMANCE.length / totalCoveredMethodCount) * 100
               }
               icon="Perf"
             />

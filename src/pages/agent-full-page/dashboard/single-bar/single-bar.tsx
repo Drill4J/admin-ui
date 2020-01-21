@@ -19,7 +19,7 @@ const isNumber = (value: string | number) => !Number.isNaN(parseFloat(String(val
 export const SingleBar = singleBar(({
   className, width, height, color, percent, icon,
 }: Props) => {
-  const y = isNumber(percent) ? height : height - (height * percent) / 100;
+  const y = !isNumber(percent) ? height : height - (height * percent) / 100;
 
   return (
     <div className={className}>

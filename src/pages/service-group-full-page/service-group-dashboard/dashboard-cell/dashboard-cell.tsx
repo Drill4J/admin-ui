@@ -18,7 +18,7 @@ export const DashboardCell = dashboardCell(({
   <div className={className}>
     <Content>
       <Label>{label}</Label>
-      <Value onClick={onClick} clickable={Boolean(onClick)}>
+      <Value onClick={onClick} clickable={Boolean(value && onClick)}>
         {value}
       </Value>
     </Content>
