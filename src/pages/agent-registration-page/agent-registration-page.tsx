@@ -34,7 +34,7 @@ export const AgentRegistrationPage = withRouter(
       },
       history: { push },
     }: Props) => {
-      // eslint-disable-next-line
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { buildVersion = '', plugins = [], ...agent } = useAgent(agentId) || {};
       const [isCancelModalOpened, setIsCancelModalOpened] = React.useState(false);
       const { showMessage } = React.useContext(NotificationManagerContext);
@@ -44,8 +44,7 @@ export const AgentRegistrationPage = withRouter(
             title={(
               <Panel>
                 <HeaderIcon height={20} width={20} />
-                {' '}
-Register new agent
+                Register new agent
               </Panel>
             )}
             actions={(

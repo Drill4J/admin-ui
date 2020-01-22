@@ -29,20 +29,32 @@
   }
 
   &__row {
+    &:hover {
+      background-color: rgba(104, 116, 129, 0.05);
+    }
+
     &--color {
       &--blue {
         background-color: rgba(0, 127, 255, 0.15);
+
+        &:hover {
+          background-color: darken(rgba(0, 127, 255, 0.15), 5%);
+        }
       }
       &--gray {
         background-color: rgba(143, 157, 168, 0.15);
+
+        &:hover {
+          background-color: darken(rgba(143, 157, 168, 0.15), 5%);
+        }
       }
       &--yellow {
         background-color: rgba(248, 231, 28, 0.1);
-      }
-    }
 
-    &:hover {
-      background-color: rgba(104, 116, 129, 0.05);
+        &:hover {
+          background-color: darken(rgba(248, 231, 28, 0.1), 5%);
+        }
+      }
     }
   }
 
