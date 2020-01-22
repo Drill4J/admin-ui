@@ -47,12 +47,24 @@
         border-left: 2px solid map-get($color-palette, blue15);
         border-right: 2px solid map-get($color-palette, blue15);
         background-color: rgba(0, 127, 255, 0.15);
+
+        &:hover {
+          background-color: darken(rgba(0, 127, 255, 0.15), 5%);
+        }
       }
       &--gray {
         background-color: rgba(143, 157, 168, 0.15);
+
+        &:hover {
+          background-color: darken(rgba(143, 157, 168, 0.15), 5%);
+        }
       }
       &--yellow {
         background-color: rgba(248, 231, 28, 0.1);
+
+        &:hover {
+          background-color: darken(rgba(248, 231, 28, 0.1), 5%);
+        }
       }
     }
   }
