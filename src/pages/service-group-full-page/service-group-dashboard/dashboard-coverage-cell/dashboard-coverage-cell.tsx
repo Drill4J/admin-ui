@@ -18,7 +18,7 @@ const dashboardCoverageCell = BEM(styles);
 export const DashboardCoverageCell = dashboardCoverageCell(({ className, value, arrow }: Props) => (
   <div className={className}>
     <Content>
-      <Value>
+      <Value data-test="dashboard-coverage-cell:value">
         {arrow && (
           <ArrowIcon
             rotate={arrow === 'INCREASE' ? 180 : 0}
@@ -28,7 +28,6 @@ export const DashboardCoverageCell = dashboardCoverageCell(({ className, value, 
           />
         )}
         {`${percentFormatter(value)}%`}
-
       </Value>
     </Content>
   </div>

@@ -34,7 +34,10 @@ export const ServiceGroupHeader = withRouter(
               {`${count} agents`}
             </AgentsCount>
           </AgentInfo>
-          <SettingsButton onClick={() => push(`/agents/service-group/${id}/settings`)}>
+          <SettingsButton
+            onClick={() => push(`/agents/service-group/${id}/settings`)}
+            data-test="service-group-header:settings-button"
+          >
             <Icons.Settings />
           </SettingsButton>
         </Content>
