@@ -111,6 +111,7 @@ export const ServiceGroupDashboard = withRouter(
                 name="actions"
                 Cell={({ item: { agentId } }) => (
                   <Actions
+                    testContext="service-group-dashboard:actions:cell"
                     items={[
                       {
                         label: 'Builds list',
@@ -127,6 +128,7 @@ export const ServiceGroupDashboard = withRouter(
                 )}
                 HeaderCell={() => (
                   <Actions
+                    testContext="service-group-dashboard:header-cell:actions"
                     items={[
                       {
                         label: 'Finish all scopes',
