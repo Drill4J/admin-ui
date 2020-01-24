@@ -17,11 +17,13 @@ export const DashboardNameCell = dashboardNameCell(
     className, name, additionalInformation, onClick,
   }: Props) => (
     <div className={className}>
-      <NameCell onClick={onClick}>{name}</NameCell>
-      <AdditionalInformation>{additionalInformation}</AdditionalInformation>
+      <NameCell onClick={onClick} data-test="dashboard-name-cell:name-cell">{name}</NameCell>
+      <AdditionalInformation data-test="dashboard-name-cell:additional-information">
+        {additionalInformation}
+      </AdditionalInformation>
     </div>
   ),
 );
 
-const NameCell = dashboardNameCell.nameCell(div({ onClick: () => {} } as { onClick?: () => void }));
-const AdditionalInformation = dashboardNameCell.additionalInformation('div');
+const NameCell = dashboardNameCell.nameCell(div({ onClick: () => {}, 'data-test': '' } as { onClick?: () => void; 'data-test'?: string }));
+const AdditionalInformation = dashboardNameCell.additionalInformation(div({ 'data-test': '' } as {'data-test'?: string}));

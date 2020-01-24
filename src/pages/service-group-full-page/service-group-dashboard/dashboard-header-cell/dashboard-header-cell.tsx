@@ -1,11 +1,13 @@
 import * as React from 'react';
 import { BEM, div } from '@redneckz/react-bem-helper';
 
+import { spacesToDashes } from 'utils';
+
 import styles from './dashboard-header-cell.module.scss';
 
 interface Props {
   className?: string;
-  label?: string;
+  label: string;
   value?: string | number;
   onClick?: () => void;
 }
@@ -18,7 +20,13 @@ export const DashboardHeaderCell = dashboardHeaderCell(({
   <div className={className}>
     <Content>
       <Label>{label}</Label>
-      <Value onClick={onClick} clickable={Boolean(value && onClick)}>{value}</Value>
+      <Value
+        onClick={onClick}
+        clickable={Boolean(value && onClick)}
+        data-test={`dashboard-header-cell:${spacesToDashes(label)}:value`}
+      >
+        {value}
+      </Value>
     </Content>
   </div>
 ));
@@ -26,5 +34,5 @@ export const DashboardHeaderCell = dashboardHeaderCell(({
 const Content = dashboardHeaderCell.content('div');
 const Label = dashboardHeaderCell.label('div');
 const Value = dashboardHeaderCell.value(
-  div({ onClick: () => {} } as { onClick?: () => void; clickable?: boolean }),
+  div({ onClick: () => {}, 'data-test': '' } as { onClick?: () => void; clickable?: boolean;'data-test'?: string }),
 );

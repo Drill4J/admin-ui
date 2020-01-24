@@ -5,7 +5,6 @@ import styles from './dashboard-cell.module.scss';
 
 interface Props {
   className?: string;
-  label?: string;
   value: number;
   onClick?: () => void;
 }
@@ -13,12 +12,11 @@ interface Props {
 const dashboardCell = BEM(styles);
 
 export const DashboardCell = dashboardCell(({
-  className, label, value, onClick,
+  className, value, onClick,
 }: Props) => (
   <div className={className}>
     <Content>
-      <Label>{label}</Label>
-      <Value onClick={onClick} clickable={Boolean(value && onClick)}>
+      <Value onClick={onClick} clickable={Boolean(onClick)} data-test="dashboard-cell:value">
         {value}
       </Value>
     </Content>
@@ -26,7 +24,6 @@ export const DashboardCell = dashboardCell(({
 ));
 
 const Content = dashboardCell.content('div');
-const Label = dashboardCell.label('div');
 const Value = dashboardCell.value(
-  span({ onClick: () => {} } as { onClick?: () => void; clickable?: boolean }),
+  span({ onClick: () => {}, 'data-test': '' } as { onClick?: () => void; clickable?: boolean; 'data-test'?: string }),
 );
