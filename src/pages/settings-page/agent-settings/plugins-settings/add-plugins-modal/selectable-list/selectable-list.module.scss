@@ -1,14 +1,14 @@
 @import '~common/style-guide/index';
 
 .selectable-list {
+  &:hover {
+    background-color: rgba(104, 116, 129, 0.05);
+  }
+
   &__element {
     display: flex;
     flex-direction: column;
     align-items: flex-end;
-
-    &:hover {
-      background-color: rgba(104, 116, 129, 0.05);
-    }
 
     &--selected {
       background-color: rgba(0, 127, 255, 0.15);
@@ -45,6 +45,10 @@
     &--selectable {
       padding-left: 0;
     }
+  }
+
+  &__checkbox {
+    margin-right: 8px;
   }
 
   &__plugins-icon-wrapper {

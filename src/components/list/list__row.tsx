@@ -12,12 +12,13 @@ interface Props {
   columns: ColumnProps[];
   index: number;
   style: { [key: string]: string };
+  testContext?: string;
 }
 
 export const ListRow = BEM(styles).row(({
-  className, item, columns, style,
+  className, item, columns, style, testContext,
 }: Props) => (
-  <div className={className} style={style}>
+  <div className={className} style={style} data-test={`${testContext}:list-row`}>
     {columns.map((column) => {
       const DefaultCell = ({ value }: { value: unknown; item: { [key: string]: unknown } }) => (
         <div>{String(value)}</div>

@@ -50,7 +50,7 @@ export const ServiceGroupDashboard = withRouter(
       return (
         <>
           <div className={className}>
-            <List data={serviceGroupSummaries} gridTemplateColumns="3fr repeat(3, 1fr) 50px">
+            <List data={serviceGroupSummaries} gridTemplateColumns="3fr repeat(3, 1fr) 50px" testContext="service-group-dashboard">
               <ListColumn
                 name="agentName"
                 Cell={({
