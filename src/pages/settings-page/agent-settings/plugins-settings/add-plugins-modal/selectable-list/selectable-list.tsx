@@ -30,7 +30,7 @@ export const SelectableList = selectableList(
             selectable={plugin.relation !== 'Installed'}
           >
             {plugin.relation !== 'Installed' && (
-              <Inputs.Checkbox
+              <Checkbox
                 onChange={() => {
                   selectedRows.includes(plugin[idKey])
                     ? onSelect(
@@ -57,5 +57,6 @@ const PluginRelation = selectableList.pluginRelation(
   span({ relation: 'Installed' } as { relation?: 'Installed' | 'New' }),
 );
 const Plugin = selectableList.plugin(div({} as { selected?: boolean; selectable?: boolean }));
+const Checkbox = selectableList.checkbox(Inputs.Checkbox);
 const PluginsIconWrapper = selectableList.pluginsIconWrapper(div({} as { selected?: boolean }));
 const PluginName = selectableList.pluginName('div');

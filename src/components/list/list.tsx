@@ -18,12 +18,13 @@ interface Props {
   }>
   >;
   gridTemplateColumns?: string;
+  testContext?: string;
 }
 
 const list = BEM(styles);
 
 export const List = list(({
-  className, data = [], children, gridTemplateColumns,
+  className, data = [], children, gridTemplateColumns, testContext,
 }: Props) => {
   const columns = React.Children.map(children, (column) => column && column.props);
   return (
@@ -48,6 +49,7 @@ export const List = list(({
           style={{
             gridTemplateColumns: gridTemplateColumns || `repeat(${columns.length}, 1fr)`,
           }}
+          testContext={testContext}
         />
       ))}
     </div>
