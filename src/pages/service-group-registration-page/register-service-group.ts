@@ -8,7 +8,7 @@ export function registerAgent({ onSuccess, onError }: { onSuccess?: () => void; 
       id,
       plugins,
       name = '',
-      packagesPrefixes = [],
+      packagesPrefixes = ['org/springframework/samples/petclinic'],
     }: Agent,
   ) => {
     try {

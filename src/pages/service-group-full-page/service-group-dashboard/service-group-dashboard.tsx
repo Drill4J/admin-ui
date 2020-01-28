@@ -42,9 +42,9 @@ export const ServiceGroupDashboard = withRouter(
     }: Props) => {
       const [isManageSessionsModalOpen, setIsManageSessionsModalOpen] = React.useState(false);
       const [isFinishScopesModalOpen, setIsFinishScopesModalOpen] = React.useState(false);
-      const [selectedTestsToRun, setSelectedTestsToRun] = React.useState<TestToRun>({});
+      const [{ groupedTests = {}, count = 0 }, setSelectedTestsToRun] = React.useState<TestToRun>({});
       const serviceGroupSummaries = summaries
-        .filter((summary) => summary.data)
+        .filter((summary) => summary.data && summary.agentName)
         .map((summary) => ({ ...summary, ...summary.data }));
 
       return (
@@ -160,14 +160,14 @@ export const ServiceGroupDashboard = withRouter(
                 agentsCount={serviceGroupSummaries.length}
               />
             )}
-            {selectedTestsToRun.count && (
+            {count > 0 && (
               <TestsToRunModal
-                isOpen={Boolean(selectedTestsToRun)}
+                isOpen={Boolean(count)}
                 onToggle={() => setSelectedTestsToRun({})}
                 agentId={serviceGroupId}
                 pluginId="test-to-code-mapping"
-                testsToRun={selectedTestsToRun?.groupedTests || {}}
-                count={selectedTestsToRun?.count}
+                testsToRun={groupedTests}
+                count={count}
               />
             )}
           </div>
