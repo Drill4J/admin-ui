@@ -13,6 +13,7 @@ import {
   SettingsPage,
   AgentRegistrationPage,
   ServiceGroupFullPage,
+  ServiceGroupRegistrationPage,
 } from 'pages';
 import {
   PrivateRoute, Icons, Sidebar, Toolbar, Footer,
@@ -43,6 +44,7 @@ export const PageSwitcher = () => (
         <PrivateRoute exact path="/logs" component={LogsPage} />
         <PrivateRoute exact path="/settings" component={ApplicationSettingsPage} />
         <PrivateRoute exact path="/registration/:agentId" component={AgentRegistrationPage} />
+        <PrivateRoute path="/bulk-registration/:serviceGroupId" component={ServiceGroupRegistrationPage} />
         <PrivateRoute component={NotFoundPage} />
       </Switch>
     </AppLayout>

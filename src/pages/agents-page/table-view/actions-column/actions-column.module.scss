@@ -1,15 +1,15 @@
 @import '~common/style-guide/index';
 
 .actions-column {
-  display: flex;
-  justify-content: flex-end;
   color: map-get($color-palette, blue100);
 
   &__content {
-    margin-right: 16px;
+    & > *:not(:first-child) {
+      margin-left: 16px;
+    }
 
-    :not(:first-child) {
-      margin-left: 24px;
+    & > *:last-child {
+      margin-right: 16px;
     }
 
     & > * {
@@ -18,17 +18,15 @@
   }
 
   &__register-button {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    min-height: 28px;
-    width: 96px;
-    font-family: $semibold-font;
+    line-height: 22px;
+    padding: 2px 12px;
     font-size: 12px;
-    line-height: 18px;
+  }
 
-    & > * {
-      margin-right: 8px;
+  &__settings-button {
+    &--disabled {
+      opacity: 0.25;
+      pointer-events: none;
     }
   }
 }

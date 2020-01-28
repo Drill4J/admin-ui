@@ -16,7 +16,7 @@ export const DashboardCell = dashboardCell(({
 }: Props) => (
   <div className={className}>
     <Content>
-      <Value onClick={onClick} clickable={Boolean(onClick)} data-test="dashboard-cell:value">
+      <Value onClick={onClick} clickable={Boolean(onClick && value)} data-test="dashboard-cell:value">
         {value}
       </Value>
     </Content>
