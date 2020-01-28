@@ -1,11 +1,23 @@
 @import '~common/style-guide/index';
 
-.install-plugins-step {
+.service-group-registration-page {
   min-width: 850px;
 
-  &__info-panel {
-    height: 48px;
+  &__header {
+    height: 80px;
     padding: 0 24px;
+    border-bottom: 1px solid map-get($color-palette, light-blue);
+    font-size: 24px;
+
+    :not(:last-child) {
+      margin-right: 16px;
+    }
+  }
+
+  &__info-panel {
+    display: flex;
+    height: 104px;
+    padding: 12px 24px;
     font-size: 14px;
     line-height: 24px;
     background-color: map-get($color-palette, ultra-light-blue);
@@ -13,6 +25,11 @@
   }
 
   &__info-icon {
+    margin-top: 4px;
+    margin-right: 8px;
+  }
+
+  &__info-panel-text {
     margin-right: 8px;
   }
 

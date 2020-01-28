@@ -28,7 +28,7 @@ export const CancelAgentRegistrationModal = withRouter(
           <HeaderIcon>
             <Icons.Warning height={20} width={20} />
           </HeaderIcon>
-            &nbsp; Cancel agent registration
+            &nbsp; Cancel registration
         </Panel>
       )}
       type="error"
@@ -37,7 +37,7 @@ export const CancelAgentRegistrationModal = withRouter(
       <div className={className}>
         <Content>
           <Message>
-              Are you sure you want to cancel agent registration? All your progress will be lost.
+              Are you sure you want to cancel registration? All your progress will be lost.
           </Message>
           <ActionsPanel>
             <AcceptButton type="primary" onClick={() => push('/agents')}>
