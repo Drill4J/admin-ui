@@ -7,16 +7,17 @@ interface Props {
   className?: string;
   value: number;
   onClick?: () => void;
+  testContext?: string;
 }
 
 const dashboardCell = BEM(styles);
 
 export const DashboardCell = dashboardCell(({
-  className, value, onClick,
+  className, value, onClick, testContext,
 }: Props) => (
   <div className={className}>
     <Content>
-      <Value onClick={onClick} clickable={Boolean(onClick && value)} data-test="dashboard-cell:value">
+      <Value onClick={onClick} clickable={Boolean(onClick && value)} data-test={`dashboard-cell:value:${testContext}`}>
         {value}
       </Value>
     </Content>
