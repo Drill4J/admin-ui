@@ -14,7 +14,7 @@ interface Props {
   React.ReactElement<{
     name: string;
     label: string;
-    HeaderCell?: React.ComponentType<any>;
+    HeaderCell?: React.ComponentType<unknown>;
   }>
   >;
   gridTemplateColumns?: string;
