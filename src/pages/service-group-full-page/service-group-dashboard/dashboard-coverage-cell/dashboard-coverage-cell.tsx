@@ -25,6 +25,7 @@ export const DashboardCoverageCell = dashboardCoverageCell(({ className, value, 
             type={arrow}
             width={12}
             heigth={14}
+            data-test="dashboard-coverage-cell:arrow-icon"
           />
         )}
         {`${percentFormatter(value)}%`}

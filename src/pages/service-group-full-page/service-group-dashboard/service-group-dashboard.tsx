@@ -86,7 +86,12 @@ export const ServiceGroupDashboard = withRouter(
               />
               <ListColumn
                 name="risks"
-                Cell={DashboardCell}
+                Cell={({ value }) => (
+                  <DashboardCell
+                    value={value}
+                    testContext="risks"
+                  />
+                )}
                 HeaderCell={() => (
                   <DashboardHeaderCell value={aggregatedData?.risks || 0} label="risks" />
                 )}
@@ -97,6 +102,7 @@ export const ServiceGroupDashboard = withRouter(
                   <DashboardCell
                     value={value?.count}
                     onClick={() => setSelectedTestsToRun(value)}
+                    testContext="tests-to-run"
                   />
                 )}
                 HeaderCell={() => (
