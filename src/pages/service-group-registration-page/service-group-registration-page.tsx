@@ -76,10 +76,12 @@ export const ServiceGroupRegistrationPage = withRouter(
                     Selected plugins will be installed on all agents.
                     <br />
                     You will be able to change configuration of any agent separately on Agent Settings page.
-                    <br />
-                    <strong>Agents to register:</strong> {unregisteredAgentsCount}. <strong>Service Group:</strong> {serviceGroupName}.
+                    <div>
+                      <strong>Agents to register:</strong> {unregisteredAgentsCount}. <strong>Service Group:</strong> {serviceGroupName}.
+                    </div>
                   </InfoPanelText>
                 </InfoPanel>
+                <ActionName>Choose plugins to install</ActionName>
                 <SelectedPluginsInfo>
                   {plugins.length}&nbsp;of&nbsp;{availiblePlugins.length} selected
                 </SelectedPluginsInfo>
@@ -126,6 +128,7 @@ export const ServiceGroupRegistrationPage = withRouter(
 
 const Header = serviceGroupRegistrationPage.header(Panel);
 const InfoPanel = serviceGroupRegistrationPage.infoPanel('div');
+const ActionName = serviceGroupRegistrationPage.actionName('div');
 const InfoPanelText = serviceGroupRegistrationPage.infoPanelText('div');
 const InfoIcon = serviceGroupRegistrationPage.infoIcon(Icons.Info);
 const SelectedPluginsInfo = serviceGroupRegistrationPage.selectedPluginsInfo('div');
