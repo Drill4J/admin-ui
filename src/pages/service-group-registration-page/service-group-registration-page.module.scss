@@ -30,11 +30,19 @@
   }
 
   &__info-panel-text {
-    margin-right: 8px;
+    :last-child {
+      margin-top: 8px;
+    }
+  }
+
+  &__action-name {
+    margin: 16px 24px;
+    font-family: $light-font;
+    font-size: 20px;
   }
 
   &__selected-plugins-info {
-    margin: 28px 0px 16px 24px;
+    margin: 0px 0px 16px 24px;
     font-family: $light-font;
     font-size: 16px;
     color: $gravel-color;
