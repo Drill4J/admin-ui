@@ -11,9 +11,9 @@ import {
 } from 'forms';
 import { useAgent } from 'hooks';
 import { NotificationManagerContext } from 'notification-manager';
+import { CancelAgentRegistrationModal } from 'modules';
 import { GeneralSettingsForm } from './general-settings-form';
 import { SystemSettingsForm } from './system-setting-form';
-import { CancelAgentRegistrationModal } from './cancel-agent-registration-modal';
 import { InstallPluginsStep } from './install-plugins-step';
 import { registerAgent } from './register-agent';
 

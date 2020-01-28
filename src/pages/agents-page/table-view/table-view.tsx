@@ -65,7 +65,6 @@ export const TableView = tableView(({ className, agents }: Props) => (
         Cell={({ value }) => <OverflowText>{value.substr(0, 150)}</OverflowText>}
       />
       <Column name="agentType" label="Type" />
-,
       <Column
         name="environment"
         label="Environment"

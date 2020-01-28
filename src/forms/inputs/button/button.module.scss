@@ -4,6 +4,7 @@
   border-radius: 20px;
   outline: 0;
   cursor: pointer;
+  box-sizing: border-box;
 
   & > :not(:last-child) {
     margin-right: 8px;
@@ -44,13 +45,13 @@
 
   &--size {
     &--large {
-      height: 32px;
+      line-height: 20px;
       padding: 6px 16px;
       font-size: 14px;
     }
 
     &--small {
-      height: 24px;
+      line-height: 20px;
       padding: 1px 12px;
       font-size: 12px;
     }
