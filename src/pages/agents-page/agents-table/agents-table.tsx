@@ -17,9 +17,9 @@ interface Props {
   agents: Agent[];
 }
 
-const tableView = BEM(styles);
+const agentsTable = BEM(styles);
 
-export const TableView = tableView(({ className, agents }: Props) => (
+export const AgentsTable = agentsTable(({ className, agents }: Props) => (
   <div className={className}>
     <ExpandableTable
       data={agents}
