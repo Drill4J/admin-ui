@@ -6,7 +6,7 @@ import { useWsConnection } from 'hooks';
 import { defaultAdminSocket } from 'common/connection';
 import { Agent } from 'types/agent';
 import { ServiceGroup } from 'types/service-group';
-import { TableView } from './table-view';
+import { AgentsTable } from './agents-table';
 import { NoAgentsStub } from './no-agents-stub';
 
 import styles from './agents-page.module.scss';
@@ -40,7 +40,7 @@ export const AgentsPage = agentsPage(({ className }: Props) => {
   return (
     <div className={className}>
       <PageHeader title="Agents" itemsCount={agentsCount} />
-      <Content>{agentsCount > 0 ? <TableView agents={agents} /> : <NoAgentsStub />}</Content>
+      <Content>{agentsCount > 0 ? <AgentsTable agents={agents} /> : <NoAgentsStub />}</Content>
     </div>
   );
 });
