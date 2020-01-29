@@ -74,7 +74,7 @@ export const AgentFullPage = withRouter(
                   breadcrumbs={(
                     <Panel>
                       <ArrowBackLabel onClick={() => history.push('/agents')}>
-                        {'<  Back to Admin'}
+                        &lt;&nbsp;Back to Admin
                       </ArrowBackLabel>
                     </Panel>
                   )}
