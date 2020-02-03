@@ -6,6 +6,7 @@ import { Icons, Modal } from 'components';
 import { Inputs } from 'forms';
 import { Panel } from 'layouts';
 import { copyToClipboard } from 'utils';
+import { getTestToRunURL } from './get-test-to-run-url';
 
 import styles from './tests-to-run-modal.module.scss';
 
@@ -17,27 +18,17 @@ interface Props {
   count: number;
   agentId: string;
   pluginId: string;
+  agentType?: string;
 }
 
 const testsToRunModal = BEM(styles);
 
 export const TestsToRunModal = testsToRunModal(
   ({
-    className, isOpen, onToggle, testsToRun, count, agentId, pluginId,
+    className, isOpen, onToggle, testsToRun, count, agentId, pluginId, agentType,
   }: Props) => {
     const allTests = Object.values(testsToRun).reduce((acc, tests) => [...acc, ...tests], []);
     const [selectedFilter, setSelectedFilter] = React.useState('all');
-
-    // TODO: should be removed after SSL certificate impl
-    const adminUrl = new URL(
-      process.env.REACT_APP_ENV
-        ? `http://${window.location.host}`
-        : 'http://ecse005002af.epam.com:8443',
-    );
-    adminUrl.port = '8090';
-
-    const openApiUrl = 'curl -i -H "Accept: application/json" -H "Content-Type: application/json" '
-      + `-X GET ${adminUrl}api/agents/${agentId}/${pluginId}/get-data?type=tests-to-run`;
 
     const getSelectedTests = () => {
       switch (selectedFilter) {
@@ -62,8 +53,8 @@ export const TestsToRunModal = testsToRunModal(
             <span>These are recommendations for this build updates only.</span>
             <Bold>Use this Curl in your command line to get JSON:</Bold>
             <CommandWrapper align="space-between">
-              <CurlCommand>{openApiUrl}</CurlCommand>
-              <CopyIcon onClick={() => copyToClipboard(openApiUrl)} />
+              <CurlCommand>{getTestToRunURL(agentId, pluginId, agentType)}</CurlCommand>
+              <CopyIcon onClick={() => copyToClipboard(getTestToRunURL(agentId, pluginId, agentType))} />
             </CommandWrapper>
           </NotificaitonPanel>
           <Content>

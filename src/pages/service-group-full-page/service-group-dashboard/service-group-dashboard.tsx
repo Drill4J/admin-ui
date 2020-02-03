@@ -174,6 +174,7 @@ export const ServiceGroupDashboard = withRouter(
                 pluginId="test-to-code-mapping"
                 testsToRun={groupedTests}
                 count={count}
+                agentType="ServiceGroup"
               />
             )}
           </div>
