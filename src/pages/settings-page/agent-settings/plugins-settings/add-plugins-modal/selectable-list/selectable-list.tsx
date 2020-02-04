@@ -2,7 +2,7 @@ import * as React from 'react';
 import { BEM, div, span } from '@redneckz/react-bem-helper';
 
 import { Icons } from 'components';
-import { Inputs } from '../../../../../../forms';
+import { Inputs } from 'forms';
 
 import styles from './selectable-list.module.scss';
 
@@ -42,7 +42,7 @@ export const SelectableList = selectableList(
               />
             )}
             <PluginsIconWrapper selected={selectedRows.includes(plugin[idKey])}>
-              <Icons.TestToCodeMapping />
+              <Icons.Test2Code />
             </PluginsIconWrapper>
             <PluginName>{plugin.name}</PluginName>
           </Plugin>

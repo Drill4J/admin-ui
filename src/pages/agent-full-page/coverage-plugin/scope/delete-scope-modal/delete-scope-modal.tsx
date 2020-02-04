@@ -75,7 +75,7 @@ export const DeleteScopeModal = withRouter(
                 <DeleteScopeButton
                   type="primary"
                   onClick={async () => {
-                    await deleteScope(agentId, {
+                    await deleteScope(agentId, pluginId, {
                       onSuccess: () => {
                         showMessage({ type: 'SUCCESS', text: 'Scope has been deleted' });
                         onToggle(false);

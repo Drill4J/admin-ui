@@ -10,7 +10,7 @@ interface Props extends RouteComponentProps {
 }
 
 export const InitialConfigController = withRouter(({ children, location: { pathname } }: Props) => {
-  const { params: { agentId = '', buildVersion = '' } = {} } = matchPath<{
+  const { params: { agentId = '', buildVersion = '', pluginId = '' } = {} } = matchPath<{
     agentId: string;
     pluginId: string;
     buildVersion: string;
@@ -29,12 +29,12 @@ export const InitialConfigController = withRouter(({ children, location: { pathn
     dispatch(
       setInitialConfig({
         agentId,
-        pluginId: 'test-to-code-mapping',
+        pluginId,
         buildVersion: { id: buildVersion, name: alias },
       }),
     );
     dispatch(setAgent(agent));
     // eslint-disable-next-line
   }, [buildVersion, alias]);
-  return children as React.ReactElement<any>;
+  return children as React.ReactElement<unknown>;
 });

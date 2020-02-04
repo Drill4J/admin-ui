@@ -47,7 +47,7 @@ export const InstallPluginsStep = installPluginsStep(
                   description={description}
                   input={input}
                   meta={meta}
-                  icon={id === 'test-to-code-mapping' ? 'TestToCodeMapping' : 'Plugins'}
+                  icon={name as keyof typeof Icons}
                   onClick={() => input.onChange({
                     target: {
                       type: 'checkbox',

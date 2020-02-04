@@ -15,7 +15,7 @@ const modals = {
 };
 
 export const CoveragePluginModals = () => {
-  const { agentId } = usePluginState();
+  const { agentId, pluginId } = usePluginState();
   const { openedModalName, scope } = useCoveragePluginState();
   const dispatch = useCoveragePluginDispatch();
 
@@ -28,6 +28,7 @@ export const CoveragePluginModals = () => {
           onToggle={() => dispatch(openModal(undefined, null))}
           scope={scope}
           agentId={agentId}
+          pluginId={pluginId}
         />
       )}
     </>

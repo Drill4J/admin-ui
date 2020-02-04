@@ -9,24 +9,39 @@ import { defaultAdminSocket } from 'common/connection';
 import { PluginsLayout, Panel } from 'layouts';
 import { useWsConnection } from 'hooks';
 import { ServiceGroupSummary } from 'types/service-group-summary';
-import { ServiceGroupDashboard } from './service-group-dashboard';
+import { Plugin } from 'types/plugin';
+import { TestToCodePlugin } from './test-to-code-plugin';
 import { Sidebar } from '../agent-full-page/sidebar';
 import { ServiceGroupHeader } from './service-group-header';
+import { usePluginData } from './use-plugin-data';
+import { Dashboard } from './dashboard';
 
 import styles from './service-group-full-page.module.scss';
 
-interface Props extends RouteComponentProps<{ id: string }> {
+interface Props extends RouteComponentProps<{ id: string; pluginId: string }> {
   className?: string;
+}
+
+interface Link {
+  id: string;
+  link: string;
+  icon: keyof typeof Icons;
+  computed?: boolean;
 }
 
 const serviceGroupFullPage = BEM(styles);
 
-const getPluginsList = (serviceGroupId: string) => [
+const getPluginsList = (serviceGroupId: string, plugins: Plugin[]): Link[] => [
   {
     id: 'service-group-dashboard',
     link: `service-group-full-page/${serviceGroupId}/service-group-dashboard`,
-    icon: Icons.Dashboard,
+    icon: 'Dashboard',
   },
+  ...plugins.map(({ id = '', name = '' }) => ({
+    id,
+    link: `service-group-full-page/${serviceGroupId}/${id}`,
+    icon: name as keyof typeof Icons,
+  })),
 ];
 
 export const ServiceGroupFullPage = withRouter(
@@ -34,15 +49,16 @@ export const ServiceGroupFullPage = withRouter(
     ({
       className,
       match: {
-        params: { id },
+        params: { id, pluginId },
       },
       history,
       location: { pathname },
     }: Props) => {
-      const serviceGroup = useWsConnection<ServiceGroupSummary>(
+      const plugins = useWsConnection<Plugin[]>(
         defaultAdminSocket,
-        `/service-group/${id}/plugin/test-to-code-mapping`,
-      ) || {};
+        `/service-group/${id}/plugins`,
+      ) || [];
+      const serviceGroup = usePluginData<ServiceGroupSummary>(id, pluginId) || {};
       const path = '/:page/:serviceGroupId/:activeLink';
       const { params: { activeLink = '' } = {} } = matchPath<{ activeLink: string }>(pathname, {
         path,
@@ -50,7 +66,7 @@ export const ServiceGroupFullPage = withRouter(
 
       return (
         <PluginsLayout
-          sidebar={activeLink && <Sidebar links={getPluginsList(id)} matchParams={{ path }} />}
+          sidebar={activeLink && <Sidebar links={getPluginsList(id, plugins)} matchParams={{ path }} />}
           toolbar={(
             <Toolbar
               breadcrumbs={(
@@ -71,7 +87,13 @@ export const ServiceGroupFullPage = withRouter(
                 <Route
                   path="/service-group-full-page/:serviceGroupId/service-group-dashboard"
                   render={() => (
-                    <ServiceGroupDashboard
+                    <Dashboard serviceGroupId={id} plugins={plugins} />
+                  )}
+                />
+                <Route
+                  path="/service-group-full-page/:serviceGroupId/:pluginId"
+                  render={() => (
+                    <TestToCodePlugin
                       summaries={serviceGroup.summaries}
                       aggregatedData={serviceGroup.aggregatedData}
                     />

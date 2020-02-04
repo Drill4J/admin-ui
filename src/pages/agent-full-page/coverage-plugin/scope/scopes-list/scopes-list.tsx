@@ -28,6 +28,7 @@ export const ScopesList = withRouter(
     } = useCoveragePluginState();
     const {
       agentId,
+      pluginId,
       buildVersion: { id: buildVersion },
     } = usePluginState();
     const dispatch = useCoveragePluginDispatch();
@@ -55,7 +56,7 @@ export const ScopesList = withRouter(
                 },
               }) => (
                 <NameCell
-                  onClick={() => push(`/full-page/${agentId}/${buildVersion}/test-to-code-mapping/scopes/${id}`)}
+                  onClick={() => push(`/full-page/${agentId}/${buildVersion}/${pluginId}/scopes/${id}`)}
                   data-test="scopes-list:scope-name"
                 >
                   {value}
@@ -148,7 +149,7 @@ export const ScopesList = withRouter(
                   !item.active && {
                     label: `${item.enabled ? 'Ignore in build stats' : 'Show in build stats'}`,
                     icon: item.enabled ? 'EyeCrossed' : 'Eye',
-                    onClick: () => toggleScope(agentId, {
+                    onClick: () => toggleScope(agentId, pluginId, {
                       onSuccess: () => {
                         showMessage({
                           type: 'SUCCESS',

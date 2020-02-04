@@ -2,6 +2,7 @@ import axios from 'axios';
 
 export function manageSession(
   agentId: string,
+  pluginId: string,
   {
     onSuccess,
     onError,
@@ -12,7 +13,7 @@ export function manageSession(
 ) {
   return async ({ sessionId, type }: { sessionId?: string; type?: 'START' | 'STOP' }) => {
     try {
-      await axios.post(`/agents/${agentId}/test-to-code-mapping/dispatch-action`, {
+      await axios.post(`/agents/${agentId}/${pluginId}/dispatch-action`, {
         type,
         payload: { sessionId },
       });

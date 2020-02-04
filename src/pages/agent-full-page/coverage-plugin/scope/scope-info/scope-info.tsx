@@ -44,6 +44,7 @@ export const ScopeInfo = withRouter(
       const { showMessage } = React.useContext(NotificationManagerContext);
       const {
         agentId,
+        pluginId,
         buildVersion: { id: buildVersion },
       } = usePluginState();
       const dispatch = useCoveragePluginDispatch();
@@ -67,7 +68,7 @@ export const ScopeInfo = withRouter(
         !active && {
           label: `${enabled ? 'Ignore in build stats' : 'Show in build stats'}`,
           icon: enabled ? 'EyeCrossed' : 'Eye',
-          onClick: () => toggleScope(agentId, {
+          onClick: () => toggleScope(agentId, pluginId, {
             onSuccess: () => {
               showMessage({
                 type: 'SUCCESS',
@@ -104,7 +105,7 @@ export const ScopeInfo = withRouter(
       return (
         <div className={className}>
           <BackToScopesList
-            onClick={() => push(`/full-page/${agentId}/${buildVersion}/test-to-code-mapping/scopes`)}
+            onClick={() => push(`/full-page/${agentId}/${buildVersion}/${pluginId}/scopes`)}
           >
             &lt; Scopes list
           </BackToScopesList>
