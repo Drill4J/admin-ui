@@ -7,6 +7,7 @@ import {
 import { Toolbar, Icons, Footer } from 'components';
 import { PluginsLayout, Panel } from 'layouts';
 import { useAgent } from 'hooks';
+import { Plugin } from 'types/plugin';
 import { CoveragePlugin } from './coverage-plugin';
 import { PluginProvider } from './store';
 import { PluginHeader } from './plugin-header';
@@ -24,22 +25,26 @@ interface Props extends RouteComponentProps<{ agentId: string }> {
   className?: string;
 }
 
+interface Link {
+  id: string;
+  link: string;
+  icon: keyof typeof Icons;
+  computed: boolean;
+}
+
 const agentFullPage = BEM(styles);
 
-const pluginsLinks = [
+const getPluginsLinks = (plugins: Plugin[] = []): Link[] => ([
   {
     id: 'dashboard',
     link: 'dashboard',
-    icon: Icons.Dashboard,
+    icon: 'Dashboard',
     computed: true,
   },
-  {
-    id: 'test-to-code-mapping',
-    link: 'test-to-code-mapping/dashboard',
-    icon: Icons.Coverage,
-    computed: true,
-  },
-];
+  ...plugins.map(({ id = '', name }) => ({
+    id, link: `${id}/dashboard`, icon: name as keyof typeof Icons, computed: true,
+  })),
+]);
 
 export const AgentFullPage = withRouter(
   agentFullPage(
@@ -68,7 +73,7 @@ export const AgentFullPage = withRouter(
         <PluginProvider>
           <InitialConfigController>
             <PluginsLayout
-              sidebar={activeLink && <Sidebar links={pluginsLinks} matchParams={{ path }} />}
+              sidebar={activeLink && <Sidebar links={getPluginsLinks(agent.plugins)} matchParams={{ path }} />}
               toolbar={(
                 <Toolbar
                   breadcrumbs={(
@@ -92,7 +97,7 @@ export const AgentFullPage = withRouter(
                   />
                   <Route path="/full-page/:agentId/build-list" component={BuildList} />
                   <Route
-                    path="/full-page/:agentId/:buildVersion/test-to-code-mapping/:tab"
+                    path="/full-page/:agentId/:buildVersion/:pluginId/:tab"
                     component={CoveragePlugin}
                   />
                 </Switch>

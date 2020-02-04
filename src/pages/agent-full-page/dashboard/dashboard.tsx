@@ -30,15 +30,18 @@ export const Dashboard = dashboard(({ className, agent }: Props) => {
       <Content>
         {plugins.length > 0 ? (
           <>
-            <PluginCard
-              label="TEST-TO-CODE MAPPING"
-              pluginLink={`/full-page/${agentId}/${buildVersion}/test-to-code-mapping/dashboard`}
-            >
-              <CoverageSection />
-              <TestsSection />
-              <RisksSection />
-              <TestsToRunSection />
-            </PluginCard>
+            {plugins.map(({ id, name }) => (
+              <PluginCard
+                label={name}
+                pluginLink={`/full-page/${agentId}/${buildVersion}/${id}/dashboard`}
+              >
+                <CoverageSection />
+                <TestsSection />
+                <RisksSection />
+                <TestsToRunSection />
+              </PluginCard>
+            ))}
+
           </>
         ) : (
           <NoPluginsStub agent={agent} />

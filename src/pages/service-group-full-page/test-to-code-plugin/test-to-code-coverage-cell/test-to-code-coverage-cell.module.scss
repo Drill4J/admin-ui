@@ -1,0 +1,25 @@
+@import '~common/style-guide/index';
+
+.test-to-code-coverage-cell {
+  &__content {
+    padding-left: 16px;
+  }
+
+  &__value {
+    font-size: 20px;
+    color: map-get($color-palette, black100);
+  }
+
+  &__arrow-icon {
+    margin-right: 8px;
+
+    &--type {
+      &--increase {
+        color: map-get($color-palette, green100);
+      }
+      &--decrease {
+        color: map-get($color-palette, red100);
+      }
+    }
+  }
+}

@@ -13,7 +13,6 @@ import styles from './coverage-plugin-header.module.scss';
 
 interface Props {
   className?: string;
-  agentName?: string;
 }
 
 const coveragePluginHeader = BEM(styles);
@@ -33,7 +32,7 @@ export const CoveragePluginHeader = coveragePluginHeader(({ className }: Props) 
 
   return (
     <div className={className}>
-      <PluginName>Test-to-code Mapping</PluginName>
+      <PluginName>Test2Code</PluginName>
       <Actions>
         <ActionSection
           label="Risks"

@@ -2,11 +2,12 @@ import axios from 'axios';
 
 export function toggleScope(
   agentId: string,
+  pluginId: string,
   { onSuccess, onError }: { onSuccess?: () => void; onError?: (message: string) => void } = {},
 ) {
   return async (scopeId: string) => {
     try {
-      await axios.post(`/agents/${agentId}/test-to-code-mapping/dispatch-action`, {
+      await axios.post(`/agents/${agentId}/${pluginId}/dispatch-action`, {
         type: 'TOGGLE_SCOPE',
         payload: { scopeId },
       });
