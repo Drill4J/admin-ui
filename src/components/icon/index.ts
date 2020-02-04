@@ -40,7 +40,7 @@ import { path as totalPath } from './path/total.path';
 import { path as manageSessionsPath } from './path/manage-sessions.path';
 import { path as startPath } from './path/start.path';
 import { path as infoPath } from './path/info.path';
-import { path as testToCodeMappingPath } from './path/test-to-code-mapping.path';
+import { path as testToCodePath } from './path/test-to-code.path';
 import { path as lockedPath } from './path/locked.path';
 import { path as unlockedPath } from './path/unlocked.path';
 import { path as unregisterPath } from './path/unregister.path';
@@ -94,7 +94,7 @@ export const Icons = {
   ManageSessions: declareIcon(manageSessionsPath, { defaultWidth: 17, defaultHeight: 19 }),
   Start: declareIcon(startPath, { defaultWidth: 18, defaultHeight: 18 }),
   Info: declareIcon(infoPath, { viewBox: '0 0 20 20' }),
-  TestToCodeMapping: declareIcon(testToCodeMappingPath, {
+  Test2Code: declareIcon(testToCodePath, {
     defaultWidth: 32,
     defaultHeight: 32,
     viewBox: '0 0 32 32',

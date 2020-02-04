@@ -2,6 +2,8 @@ import * as React from 'react';
 import { BEM, div } from '@redneckz/react-bem-helper';
 import { withRouter, RouteComponentProps, matchPath } from 'react-router-dom';
 
+import { Icons } from 'components';
+
 import styles from './sidebar.module.scss';
 
 interface Props extends RouteComponentProps<{ agentId: string }> {
@@ -9,7 +11,7 @@ interface Props extends RouteComponentProps<{ agentId: string }> {
   active?: 'active';
   links: Array<{
     id: string;
-    icon: React.ComponentType<any>;
+    icon: keyof typeof Icons;
     link: string;
     computed?: boolean;
   }>;
@@ -35,10 +37,11 @@ export const Sidebar = withRouter(
 
       return (
         <div className={className}>
-          {links.length > 0
-            && links.map(({
-              id, icon: Icon, link, computed,
-            }) => (
+          {links.map(({
+            id, icon, link, computed,
+          }) => {
+            const Icon = Icons[icon] || Icons.Plugins;
+            return (
               <SidebarLink
                 key={link}
                 type={id === activeLink ? 'active' : ''}
@@ -46,7 +49,8 @@ export const Sidebar = withRouter(
               >
                 <Icon />
               </SidebarLink>
-            ))}
+            );
+          })}
         </div>
       );
     },

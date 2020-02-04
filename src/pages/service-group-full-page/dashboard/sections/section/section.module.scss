@@ -1,0 +1,38 @@
+@import '~common/style-guide/index';
+
+.dashboard-section {
+  display: flex;
+  width: 100%;
+
+  &__info {
+    width: 50%;
+  }
+
+  &__label {
+    margin-bottom: 16px;
+    font-size: 13px;
+    line-height: 20px;
+    color: $slate-gray;
+    font-family: $semibold-font;
+  }
+
+  &__main-info {
+    margin-bottom: 16px;
+    font-size: 48px;
+    line-height: 48px;
+    font-family: $light-font;
+  }
+
+  &__additional-info {
+    font-size: 13px;
+    line-height: 20px;
+    color: $slate-gray;
+  }
+
+  &__graph {
+    display: flex;
+    justify-content: flex-end;
+    width: 50%;
+    cursor: pointer;
+  }
+}

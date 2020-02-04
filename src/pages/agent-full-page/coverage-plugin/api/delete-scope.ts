@@ -5,17 +5,18 @@ import { finishScope } from './finish-scope';
 
 export function deleteScope(
   agentId: string,
+  pluginId: string,
   { onSuccess, onError }: { onSuccess?: () => void; onError?: (message: string) => void } = {},
 ) {
   return async ({ id, active }: ScopeSummary) => {
     if (active) {
-      await finishScope(agentId, { onSuccess, onError })({
+      await finishScope(agentId, pluginId, { onSuccess, onError })({
         prevScopeEnabled: false,
         savePrevScope: false,
       });
     } else {
       try {
-        await axios.post(`/agents/${agentId}/test-to-code-mapping/dispatch-action`, {
+        await axios.post(`/agents/${agentId}/${pluginId}/dispatch-action`, {
           type: 'DROP_SCOPE',
           payload: { scopeId: id },
         });

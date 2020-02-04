@@ -55,7 +55,7 @@ export const PluginsSettings = withRouter(
                   key={id}
                   description={description}
                   onClick={() => push(`/full-page/${agentId}/${buildVersion}/${id}/dashboard`)}
-                  icon={id === 'test-to-code-mapping' ? 'TestToCodeMapping' : 'Plugins'}
+                  icon={name as keyof typeof Icons}
                 >
                   <PluginName>{name}</PluginName>
                 </PluginListEntry>

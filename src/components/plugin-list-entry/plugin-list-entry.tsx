@@ -23,7 +23,7 @@ export const PluginListEntry = pluginListEntry(
   ({
     className, input, meta, description, onClick, icon, children,
   }: Props) => {
-    const PluginIcon = Icons[icon];
+    const PluginIcon = Icons[icon] || Icons.Plugins;
     return (
       <div className={className}>
         <PluginElements onClick={onClick} selected={input && input.checked}>

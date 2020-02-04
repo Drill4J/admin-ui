@@ -1,0 +1,22 @@
+@import '~common/style-guide/index';
+
+.test-to-code-name-cell {
+  font-family: $light-font;
+  font-size: 24px;
+
+  &__name-cell {
+    font-family: $light-font;
+    font-size: 24px;
+
+    &--on-click {
+      font-family: $semibold-font;
+      font-size: 14px;
+      color: map-get($color-palette, blue100);
+      cursor: pointer;
+    }
+  }
+
+  &__additional-information {
+    font-size: 12px;
+  }
+}

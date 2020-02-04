@@ -38,7 +38,7 @@ export const RenameScopeModal = renameScopeModal(
   ({
     className, isOpen, onToggle, scope,
   }: Props) => {
-    const { agentId } = usePluginState();
+    const { agentId, pluginId } = usePluginState();
     const { showMessage } = React.useContext(NotificationManagerContext);
     const [errorMessage, setErrorMessage] = React.useState('');
 
@@ -58,7 +58,7 @@ export const RenameScopeModal = renameScopeModal(
             </ErrorMessage>
           )}
           <Form
-            onSubmit={(values) => renameScope(agentId, {
+            onSubmit={(values) => renameScope(agentId, pluginId, {
               onSuccess: () => {
                 showMessage({ type: 'SUCCESS', text: 'Scope name has been changed' });
                 onToggle(false);
