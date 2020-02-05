@@ -14,7 +14,7 @@ import { FinishAllScopesModal } from './finish-all-scopes-modal';
 
 import styles from './service-group-dashboard.module.scss';
 
-type TestToRun = { groupedTests?: { [testType: string]: string[] }; count?: number };
+type TestToRun = { groupedTests?: { [testType: string]: string[] }; count?: number; agentType?: string; id?: string };
 
 interface Props extends RouteComponentProps<{ serviceGroupId: string }> {
   className?: string;
@@ -42,7 +42,9 @@ export const ServiceGroupDashboard = withRouter(
     }: Props) => {
       const [isManageSessionsModalOpen, setIsManageSessionsModalOpen] = React.useState(false);
       const [isFinishScopesModalOpen, setIsFinishScopesModalOpen] = React.useState(false);
-      const [{ groupedTests = {}, count = 0 }, setSelectedTestsToRun] = React.useState<TestToRun>({});
+      const [{
+        groupedTests = {}, count = 0, agentType, id = '',
+      }, setSelectedTestsToRun] = React.useState<TestToRun>({});
       const serviceGroupSummaries = summaries
         .filter((summary) => summary.data && summary.agentName)
         .map((summary) => ({ ...summary, ...summary.data }));
@@ -98,10 +100,10 @@ export const ServiceGroupDashboard = withRouter(
               />
               <ListColumn
                 name="testsToRun"
-                Cell={({ value }) => (
+                Cell={({ value, item: { agentId = '' } = {} }) => (
                   <DashboardCell
                     value={value?.count}
-                    onClick={() => setSelectedTestsToRun(value)}
+                    onClick={() => setSelectedTestsToRun({ ...value, agentType: 'Agent', id: agentId })}
                     testContext="tests-to-run"
                   />
                 )}
@@ -109,7 +111,7 @@ export const ServiceGroupDashboard = withRouter(
                   <DashboardHeaderCell
                     value={aggregatedData?.testsToRun?.count}
                     label="tests to run"
-                    onClick={() => setSelectedTestsToRun(aggregatedData?.testsToRun || {})}
+                    onClick={() => setSelectedTestsToRun({ ...aggregatedData?.testsToRun, agentType: 'ServiceGroup', id: serviceGroupId })}
                   />
                 )}
               />
@@ -170,11 +172,11 @@ export const ServiceGroupDashboard = withRouter(
               <TestsToRunModal
                 isOpen={Boolean(count)}
                 onToggle={() => setSelectedTestsToRun({})}
-                agentId={serviceGroupId}
+                agentId={id}
                 pluginId="test-to-code-mapping"
                 testsToRun={groupedTests}
                 count={count}
-                agentType="ServiceGroup"
+                agentType={agentType}
               />
             )}
           </div>
