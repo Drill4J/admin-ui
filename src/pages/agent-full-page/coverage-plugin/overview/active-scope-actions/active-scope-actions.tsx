@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
-import { withRouter, RouteComponentProps } from 'react-router-dom';
+import { withRouter, RouteComponentProps, useParams } from 'react-router-dom';
 
 import { Panel } from 'layouts';
 import { Icons, Menu } from 'components';
@@ -22,11 +22,11 @@ export const ActiveScopeActions = withRouter(
   activeScopeActions(({ className, history: { push } }: Props) => {
     const {
       agentId,
-      pluginId,
       buildVersion: { id: buildVersion },
     } = usePluginState();
     const scope = useBuildVersion<ScopeSummary>('/active-scope');
     const dispatch = useCoveragePluginDispatch();
+    const { pluginId } = useParams();
 
     return (
       <div className={className}>

@@ -1,6 +1,8 @@
 import * as React from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
-import { withRouter, RouteComponentProps, matchPath } from 'react-router-dom';
+import {
+  withRouter, RouteComponentProps, matchPath, useParams,
+} from 'react-router-dom';
 
 import { Panel } from 'layouts';
 import { Button, CancelButton } from 'forms';
@@ -29,9 +31,9 @@ export const DeleteScopeModal = withRouter(
     }: Props) => {
       const {
         agentId,
-        pluginId,
         buildVersion: { id: buildVersion },
       } = usePluginState();
+      const { pluginId = '' } = useParams();
       const { showMessage } = React.useContext(NotificationManagerContext);
       const [errorMessage, setErrorMessage] = React.useState('');
 

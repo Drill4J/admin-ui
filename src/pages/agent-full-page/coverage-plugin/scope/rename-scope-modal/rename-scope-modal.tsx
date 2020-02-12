@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 import { Form, Field } from 'react-final-form';
+import { useParams } from 'react-router-dom';
 
 import { Panel } from 'layouts';
 import {
@@ -38,7 +39,8 @@ export const RenameScopeModal = renameScopeModal(
   ({
     className, isOpen, onToggle, scope,
   }: Props) => {
-    const { agentId, pluginId } = usePluginState();
+    const { agentId } = usePluginState();
+    const { pluginId = '' } = useParams();
     const { showMessage } = React.useContext(NotificationManagerContext);
     const [errorMessage, setErrorMessage] = React.useState('');
 
