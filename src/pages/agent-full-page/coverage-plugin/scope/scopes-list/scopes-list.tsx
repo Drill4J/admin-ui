@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
-import { withRouter, RouteComponentProps } from 'react-router-dom';
+import { withRouter, RouteComponentProps, useParams } from 'react-router-dom';
 
 import { Table, Column, Menu } from 'components';
 import { percentFormatter } from 'utils';
@@ -28,9 +28,9 @@ export const ScopesList = withRouter(
     } = useCoveragePluginState();
     const {
       agentId,
-      pluginId,
       buildVersion: { id: buildVersion },
     } = usePluginState();
+    const { pluginId = '' } = useParams();
     const dispatch = useCoveragePluginDispatch();
     const activeScope = useBuildVersion<ScopeSummary>('/active-scope');
     const scopes = useBuildVersion<ScopeSummary[]>('/scopes') || [];

@@ -1,0 +1,17 @@
+@import '~common/style-guide/index';
+
+.breadcrumbs {
+  :not(:last-child) {
+    &:after {
+      content: ' > ';
+    }
+  }
+
+  &__crumb {
+    color: map-get($color-palette, blue100);
+    font-size: 12px;
+    font-family: $semibold-font;
+    cursor: pointer;
+    text-decoration: none;
+  }
+}

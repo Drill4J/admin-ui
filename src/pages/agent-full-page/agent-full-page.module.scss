@@ -3,31 +3,4 @@
 .agent-full-page {
   height: 100%;
   width: 100%;
-
-  &__arrow-back-icon {
-    font-size: 14px;
-    line-height: 20px;
-    font-family: $semibold-font;
-    color: map-get($color-palette, blue100);
-    cursor: pointer;
-  }
-
-  &__agent-status {
-    &--status {
-      &--online {
-        color: map-get($color-palette, green100);
-      }
-      &--offline {
-        color: map-get($color-palette, red100);
-      }
-    }
-  }
-
-  &__agent-name {
-    color: map-get($color-palette, dark-blue);
-    font-size: 14px;
-    font-family: $semibold-font;
-    line-height: 20px;
-    margin-left: 16px;
-  }
 }

@@ -18,6 +18,7 @@ import {
 import {
   PrivateRoute, Icons, Sidebar, Toolbar, Footer,
 } from 'components';
+import { Breadcrumbs } from 'modules';
 
 const sidebarLinks = [
   { link: 'agents', icon: Icons.Agents },
@@ -34,7 +35,7 @@ export const PageSwitcher = () => (
     <Route path="/service-group-full-page/:id/:pluginId" component={ServiceGroupFullPage} />
     <AppLayout
       sidebar={<Sidebar links={sidebarLinks} matchParams={{ path: '/:activeLink' }} />}
-      toolbar={<Toolbar />}
+      toolbar={<Toolbar breadcrumbs={<Breadcrumbs />} />}
       footer={<Footer />}
     >
       <Switch>

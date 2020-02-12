@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
+import { useParams } from 'react-router-dom';
 
 import { TestsToRunModal } from 'modules';
 import { Risks } from 'types/risks';
@@ -18,7 +19,8 @@ interface Props {
 const coveragePluginHeader = BEM(styles);
 
 export const CoveragePluginHeader = coveragePluginHeader(({ className }: Props) => {
-  const { agentId, pluginId } = usePluginState();
+  const { agentId } = usePluginState();
+  const { pluginId = '' } = useParams();
   const risks = useBuildVersion<Risks>('/build/risks') || {};
   const { testTypeToNames = {} } = useBuildVersion<TestsToRun>('/build/tests-to-run') || {};
   const [isRisksModalOpen, setIsRisksModalOpen] = React.useState(false);

@@ -1,6 +1,8 @@
 import * as React from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
-import { withRouter, RouteComponentProps, matchPath } from 'react-router-dom';
+import {
+  withRouter, RouteComponentProps, useParams,
+} from 'react-router-dom';
 
 import { Panel } from 'layouts';
 import { Button, Inputs, CancelButton } from 'forms';
@@ -26,12 +28,11 @@ const finishScopeModal = BEM(styles);
 export const FinishScopeModal = withRouter(
   finishScopeModal(
     ({
-      className, isOpen, onToggle, scope, history: { push }, location: { pathname },
+      className, isOpen, onToggle, scope, history: { push },
     }: Props) => {
       const { showMessage } = React.useContext(NotificationManagerContext);
       const {
         agentId,
-        pluginId,
         buildVersion: { id: buildVersion },
       } = usePluginState();
       const [errorMessage, setErrorMessage] = React.useState('');
@@ -40,9 +41,7 @@ export const FinishScopeModal = withRouter(
       const testsCount = scope
         ? Object.values(scope.coveragesByType).reduce((acc, { testCount }) => acc + testCount, 0)
         : 0;
-      const { params: { scopeId = '' } = {} } = matchPath<{ scopeId: string }>(pathname, {
-        path: '/:page/:agentId/:pluginId/:tab/:scopeId',
-      }) || {};
+      const { pluginId = '', scopeId = '' } = useParams();
 
       return (
         <Popup

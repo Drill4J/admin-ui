@@ -6,7 +6,8 @@ import {
 
 import { Toolbar, Icons, Footer } from 'components';
 import { defaultAdminSocket } from 'common/connection';
-import { PluginsLayout, Panel } from 'layouts';
+import { PluginsLayout } from 'layouts';
+import { Breadcrumbs } from 'modules';
 import { useWsConnection } from 'hooks';
 import { ServiceGroupSummary } from 'types/service-group-summary';
 import { Plugin } from 'types/plugin';
@@ -51,7 +52,6 @@ export const ServiceGroupFullPage = withRouter(
       match: {
         params: { id, pluginId },
       },
-      history,
       location: { pathname },
     }: Props) => {
       const plugins = useWsConnection<Plugin[]>(
@@ -69,13 +69,7 @@ export const ServiceGroupFullPage = withRouter(
           sidebar={activeLink && <Sidebar links={getPluginsList(id, plugins)} matchParams={{ path }} />}
           toolbar={(
             <Toolbar
-              breadcrumbs={(
-                <Panel>
-                  <ArrowBackLabel onClick={() => history.push('/agents')}>
-                    {'<  Back to Admin'}
-                  </ArrowBackLabel>
-                </Panel>
-              )}
+              breadcrumbs={<Breadcrumbs />}
             />
           )}
           header={<ServiceGroupHeader serviceGroup={serviceGroup} />}
@@ -108,5 +102,4 @@ export const ServiceGroupFullPage = withRouter(
   ),
 );
 
-const ArrowBackLabel = serviceGroupFullPage.arrowBackIcon('span');
 const Content = serviceGroupFullPage.content('div');
