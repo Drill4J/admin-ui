@@ -45,7 +45,6 @@ export const TestToCodePlugin = withRouter(
         groupedTests = {}, count = 0, agentType, id = '',
       }, setSelectedTestsToRun] = React.useState<TestToRun>({});
       const serviceGroupSummaries = summaries
-        .filter((summary) => summary.data)
         .map((summary) => ({ ...summary, ...summary.data }));
 
       return (
