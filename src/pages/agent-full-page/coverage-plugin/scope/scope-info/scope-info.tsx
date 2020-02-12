@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
-import { withRouter, RouteComponentProps } from 'react-router-dom';
+import { withRouter, RouteComponentProps, useParams } from 'react-router-dom';
 
 import { Panel } from 'layouts';
 import { Button } from 'forms';
@@ -44,9 +44,9 @@ export const ScopeInfo = withRouter(
       const { showMessage } = React.useContext(NotificationManagerContext);
       const {
         agentId,
-        pluginId,
         buildVersion: { id: buildVersion },
       } = usePluginState();
+      const { pluginId = '' } = useParams();
       const dispatch = useCoveragePluginDispatch();
       const coverage = useBuildVersion<Coverage>(`/scope/${scopeId}/coverage`) || {};
       const scopeMethods = useBuildVersion<Methods>(`/scope/${scopeId}/methods`) || {};

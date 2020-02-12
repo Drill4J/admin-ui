@@ -5,13 +5,13 @@ import {
 } from 'react-router-dom';
 
 import { Toolbar, Icons, Footer } from 'components';
-import { PluginsLayout, Panel } from 'layouts';
+import { PluginsLayout } from 'layouts';
+import { Breadcrumbs } from 'modules';
 import { useAgent } from 'hooks';
 import { Plugin } from 'types/plugin';
 import { CoveragePlugin } from './coverage-plugin';
 import { PluginProvider } from './store';
 import { PluginHeader } from './plugin-header';
-import { Breadcrumbs } from './breadcrumbs';
 import { Dashboard } from './dashboard';
 import { BuildList } from './build-list';
 import { Sidebar } from './sidebar';
@@ -53,7 +53,6 @@ export const AgentFullPage = withRouter(
       match: {
         params: { agentId },
       },
-      history,
       location: { pathname },
     }: Props) => {
       const agent = useAgent(agentId) || {};
@@ -76,17 +75,10 @@ export const AgentFullPage = withRouter(
               sidebar={activeLink && <Sidebar links={getPluginsLinks(agent.plugins)} matchParams={{ path }} />}
               toolbar={(
                 <Toolbar
-                  breadcrumbs={(
-                    <Panel>
-                      <ArrowBackLabel onClick={() => history.push('/agents')}>
-                        &lt;&nbsp;Back to Admin
-                      </ArrowBackLabel>
-                    </Panel>
-                  )}
+                  breadcrumbs={<Breadcrumbs />}
                 />
               )}
               header={<PluginHeader agentName={agent.name} agentStatus={agent.status} />}
-              breadcrumbs={<Breadcrumbs />}
               footer={<Footer />}
             >
               <div className={className}>
@@ -94,6 +86,7 @@ export const AgentFullPage = withRouter(
                   <Route
                     path="/full-page/:agentId/:buildVersion/dashboard"
                     render={() => <Dashboard agent={agent} />}
+                    exact
                   />
                   <Route path="/full-page/:agentId/build-list" component={BuildList} />
                   <Route
@@ -116,5 +109,3 @@ export const AgentFullPage = withRouter(
     },
   ),
 );
-
-const ArrowBackLabel = agentFullPage.arrowBackIcon('span');

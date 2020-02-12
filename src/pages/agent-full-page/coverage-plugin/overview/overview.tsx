@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 
 import { Panel } from 'layouts';
 import { Icons, TabsPanel, Tab } from 'components';
@@ -29,7 +29,6 @@ const overview = BEM(styles);
 export const Overview = overview(({ className }: Props) => {
   const {
     agentId,
-    pluginId,
     buildVersion: { id: buildVersion },
   } = usePluginState();
   const buildCoverage = useBuildVersion<Coverage>('/build/coverage') || {};
@@ -45,6 +44,7 @@ export const Overview = overview(({ className }: Props) => {
   const coverageByPackages = useBuildVersion<ClassCoverage[]>('/build/coverage-by-packages') || [];
   const [selectedTab, setSelectedTab] = React.useState('methods');
   const buildMethods = useBuildVersion<Methods>('/build/methods') || {};
+  const { pluginId } = useParams();
 
   return (
     <div className={className}>
