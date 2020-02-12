@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { BEM, span } from '@redneckz/react-bem-helper';
 
+import { Tooltip } from 'components';
 import styles from './test-to-code-cell.module.scss';
 
 interface Props {
@@ -18,7 +19,7 @@ export const TestToCodeCell = testToCodeCell(({
   <div className={className}>
     <Content>
       <Value onClick={onClick} clickable={Boolean(onClick && value)} data-test={`dashboard-cell:value:${testContext}`}>
-        {value}
+        {value === undefined ? <Tooltip message="Test2Code plugin is not installed">n/a</Tooltip> : value}
       </Value>
     </Content>
   </div>

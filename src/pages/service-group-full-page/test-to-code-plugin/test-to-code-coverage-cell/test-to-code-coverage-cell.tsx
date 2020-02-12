@@ -2,14 +2,14 @@ import * as React from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 
 import { Panel } from 'layouts';
-import { Icons } from 'components';
+import { Icons, Tooltip } from 'components';
 import { percentFormatter } from 'utils';
 
 import styles from './test-to-code-coverage-cell.module.scss';
 
 interface Props {
   className?: string;
-  value: number;
+  value?: number;
   arrow: string;
 }
 
@@ -28,7 +28,7 @@ export const TestToCodeCoverageCell = testToCodeCoverageCell(({ className, value
             data-test="dashboard-coverage-cell:arrow-icon"
           />
         )}
-        {`${percentFormatter(value)}%`}
+        {value === undefined ? <Tooltip message="Test2Code plugin is not installed">n/a</Tooltip> : `${percentFormatter(value)}%`}
       </Value>
     </Content>
   </div>
