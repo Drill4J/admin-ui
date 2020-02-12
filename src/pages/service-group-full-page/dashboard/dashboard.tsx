@@ -33,8 +33,9 @@ export const Dashboard = dashboard(({
           <PluginCard
             label={name}
             pluginLink={`/service-group-full-page/${serviceGroupId}/${pluginId}/dashboard`}
+            key={pluginId}
           >
-            <CoverageSection />
+            <CoverageSection coverage={serviceGroup?.aggregatedData?.coverage} arrow={serviceGroup?.aggregatedData?.arrow} />
             <RisksSection risks={serviceGroup?.aggregatedData?.risks} />
             <TestsToRunSection testsToRun={serviceGroup?.aggregatedData?.testsToRun} />
           </PluginCard>
