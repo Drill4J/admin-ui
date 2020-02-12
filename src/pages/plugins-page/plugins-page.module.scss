@@ -12,24 +12,4 @@
     align-items: center;
     justify-content: center;
   }
-
-  &__icon {
-    color: map-get($color-palette, light-blue);
-  }
-
-  &__title {
-    color: map-get($color-palette, middle-blue);
-    font-size: 24px;
-    line-height: 32px;
-    text-align: center;
-    margin-top: 38px;
-  }
-
-  &__sub-title {
-    color: $slate-gray;
-    font-size: 14px;
-    line-height: 24px;
-    text-align: center;
-    margin-top: 8px;
-  }
 }
