@@ -1,15 +1,16 @@
 import * as React from 'react';
-import { withRouter, RouteComponentProps, matchPath } from 'react-router-dom';
+import { useLocation, matchPath } from 'react-router-dom';
 
 import { defaultAdminSocket } from 'common/connection';
 import { useAgent, useWsConnection } from '../../hooks';
 import { usePluginDispatch, setInitialConfig, setAgent } from './store';
 
-interface Props extends RouteComponentProps {
+interface Props {
   children?: React.ReactElement;
 }
 
-export const InitialConfigController = withRouter(({ children, location: { pathname } }: Props) => {
+export const InitialConfigController = ({ children }: Props) => {
+  const { pathname } = useLocation();
   const { params: { agentId = '', buildVersion = '', pluginId = '' } = {} } = matchPath<{
     agentId: string;
     pluginId: string;
@@ -37,4 +38,4 @@ export const InitialConfigController = withRouter(({ children, location: { pathn
     // eslint-disable-next-line
   }, [buildVersion, alias]);
   return children as React.ReactElement<unknown>;
-});
+};

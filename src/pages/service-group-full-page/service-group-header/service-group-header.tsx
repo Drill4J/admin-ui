@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
-import { withRouter, RouteComponentProps } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
 
 import { Icons } from 'components';
 import { ServiceGroupSummary } from 'types/service-group-summary';
@@ -8,23 +8,22 @@ import { ReactComponent as LogoSvg } from './service-group-logo.svg';
 
 import styles from './service-group-header.module.scss';
 
-interface Props extends RouteComponentProps<{ id: string }> {
+interface Props {
   className?: string;
   serviceGroup?: ServiceGroupSummary;
 }
 
 const serviceGroupHeader = BEM(styles);
 
-export const ServiceGroupHeader = withRouter(
-  serviceGroupHeader(
-    ({
-      className,
-      serviceGroup: { name, count } = {},
-      history: { push },
-      match: {
-        params: { id },
-      },
-    }: Props) => (
+export const ServiceGroupHeader = serviceGroupHeader(
+  ({
+    className,
+    serviceGroup: { name, count } = {},
+  }: Props) => {
+    const { id = '' } = useParams();
+    const { push } = useHistory();
+
+    return (
       <div className={className}>
         <Logo />
         <Content>
@@ -42,8 +41,8 @@ export const ServiceGroupHeader = withRouter(
           </SettingsButton>
         </Content>
       </div>
-    ),
-  ),
+    );
+  },
 );
 
 const Logo = serviceGroupHeader.logo(LogoSvg);

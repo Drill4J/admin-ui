@@ -1,12 +1,14 @@
 import * as React from 'react';
 import { BEM, div } from '@redneckz/react-bem-helper';
-import { withRouter, RouteComponentProps, matchPath } from 'react-router-dom';
+import {
+  useParams, useHistory, useLocation, matchPath,
+} from 'react-router-dom';
 
 import { Icons } from 'components';
 
 import styles from './sidebar.module.scss';
 
-interface Props extends RouteComponentProps<{ agentId: string }> {
+interface Props {
   className?: string;
   active?: 'active';
   links: Array<{
@@ -20,41 +22,37 @@ interface Props extends RouteComponentProps<{ agentId: string }> {
 
 const sidebar = BEM(styles);
 
-export const Sidebar = withRouter(
-  sidebar(
-    ({
-      className,
-      links,
-      history: { push },
-      location: { pathname },
-      matchParams,
-      match: {
-        params: { agentId },
-      },
-    }: Props) => {
-      const { params: { buildVersion = '', activeLink = '' } = {} } =
+export const Sidebar = sidebar(
+  ({
+    className,
+    links,
+    matchParams,
+  }: Props) => {
+    const { agentId } = useParams();
+    const { pathname } = useLocation();
+    const { push } = useHistory();
+    const { params: { buildVersion = '', activeLink = '' } = {} } =
         matchPath<{ buildVersion: string; activeLink: string }>(pathname, matchParams) || {};
 
-      return (
-        <div className={className}>
-          {links.map(({
-            id, icon, link, computed,
-          }) => {
-            const Icon = Icons[icon] || Icons.Plugins;
-            return (
-              <SidebarLink
-                key={link}
-                type={id === activeLink ? 'active' : ''}
-                onClick={() => push(`/${computed ? `full-page/${agentId}/${buildVersion}/${link}` : link}`)}
-              >
-                <Icon />
-              </SidebarLink>
-            );
-          })}
-        </div>
-      );
-    },
-  ),
+    return (
+      <div className={className}>
+        {links.map(({
+          id, icon, link, computed,
+        }) => {
+          const Icon = Icons[icon] || Icons.Plugins;
+          return (
+            <SidebarLink
+              key={link}
+              type={id === activeLink ? 'active' : ''}
+              onClick={() => push(`/${computed ? `full-page/${agentId}/${buildVersion}/${link}` : link}`)}
+            >
+              <Icon />
+            </SidebarLink>
+          );
+        })}
+      </div>
+    );
+  },
 );
 
 export const SidebarLink = sidebar.link(
