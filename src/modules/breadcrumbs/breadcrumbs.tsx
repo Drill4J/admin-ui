@@ -1,12 +1,12 @@
 import * as React from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 import {
-  withRouter, matchPath, RouteComponentProps, Link,
+  useLocation, matchPath, Link,
 } from 'react-router-dom';
 
 import styles from './breadcrumbs.module.scss';
 
-interface Props extends RouteComponentProps {
+interface Props {
   className?: string;
 }
 
@@ -24,7 +24,8 @@ type MatchType = {
   scopeId: string;
 };
 
-export const Breadcrumbs = withRouter(breadcrumbs(({ className, location: { pathname } }: Props) => {
+export const Breadcrumbs = breadcrumbs(({ className }: Props) => {
+  const { pathname } = useLocation();
   const {
     params: {
       agentId = '',
@@ -73,6 +74,6 @@ export const Breadcrumbs = withRouter(breadcrumbs(({ className, location: { path
       {scopeId && <Crumb to={`/full-page/${agentId}/${buildVersion}/${pluginId}/scopes/${scopeId}`}>{scopeId}</Crumb>}
     </div>
   );
-}));
+});
 
 const Crumb = breadcrumbs.crumb(Link);

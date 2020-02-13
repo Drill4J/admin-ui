@@ -1,8 +1,6 @@
 import * as React from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
-import {
-  withRouter, RouteComponentProps, useParams,
-} from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
 
 import { Panel } from 'layouts';
 import { Button, Inputs, CancelButton } from 'forms';
@@ -16,7 +14,7 @@ import { usePluginState } from '../../../store';
 
 import styles from './finish-scope-modal.module.scss';
 
-interface Props extends RouteComponentProps {
+interface Props {
   className?: string;
   isOpen: boolean;
   onToggle: (value: boolean) => void;
@@ -25,83 +23,82 @@ interface Props extends RouteComponentProps {
 
 const finishScopeModal = BEM(styles);
 
-export const FinishScopeModal = withRouter(
-  finishScopeModal(
-    ({
-      className, isOpen, onToggle, scope, history: { push },
-    }: Props) => {
-      const { showMessage } = React.useContext(NotificationManagerContext);
-      const {
-        agentId,
-        buildVersion: { id: buildVersion },
-      } = usePluginState();
-      const [errorMessage, setErrorMessage] = React.useState('');
-      const [ignoreScope, setIgnoreScope] = React.useState(false);
+export const FinishScopeModal = finishScopeModal(
+  ({
+    className, isOpen, onToggle, scope,
+  }: Props) => {
+    const { showMessage } = React.useContext(NotificationManagerContext);
+    const {
+      agentId,
+      buildVersion: { id: buildVersion },
+    } = usePluginState();
+    const [errorMessage, setErrorMessage] = React.useState('');
+    const [ignoreScope, setIgnoreScope] = React.useState(false);
 
-      const testsCount = scope
-        ? Object.values(scope.coveragesByType).reduce((acc, { testCount }) => acc + testCount, 0)
-        : 0;
-      const { pluginId = '', scopeId = '' } = useParams();
+    const testsCount = scope
+      ? Object.values(scope.coveragesByType).reduce((acc, { testCount }) => acc + testCount, 0)
+      : 0;
+    const { pluginId = '', scopeId = '' } = useParams();
+    const { push } = useHistory();
 
-      return (
-        <Popup
-          isOpen={isOpen}
-          onToggle={onToggle}
-          header={<OverflowText>{`Finish scope ${scope && scope.name}`}</OverflowText>}
-          type="info"
-          closeOnFadeClick
-        >
-          <div className={className}>
-            {errorMessage && (
-              <ErrorMessage>
-                <ErrorMessageIcon />
-                {errorMessage}
-              </ErrorMessage>
-            )}
-            <ActiveSessionsPanel />
-            {!testsCount && (
-              <EmptyScopeWarning>
-                <EmptyScopeWarningIcon />
+    return (
+      <Popup
+        isOpen={isOpen}
+        onToggle={onToggle}
+        header={<OverflowText>{`Finish scope ${scope && scope.name}`}</OverflowText>}
+        type="info"
+        closeOnFadeClick
+      >
+        <div className={className}>
+          {errorMessage && (
+            <ErrorMessage>
+              <ErrorMessageIcon />
+              {errorMessage}
+            </ErrorMessage>
+          )}
+          <ActiveSessionsPanel />
+          {!testsCount && (
+            <EmptyScopeWarning>
+              <EmptyScopeWarningIcon />
                 Scope is empty and will be deleted after finishing.
-              </EmptyScopeWarning>
-            )}
-            <Content>
-              <ScopeSummary scope={scope} testsCount={testsCount} />
-              <IgnoreScope
-                checked={ignoreScope}
-                onChange={() => setIgnoreScope(!ignoreScope)}
-                label="Ignore scope in build stats"
-                disabled={!testsCount}
-              />
-              <ActionsPanel>
-                <Button
-                  type="primary"
-                  size="large"
-                  onClick={async () => {
-                    await finishScope(agentId, pluginId, {
-                      onSuccess: () => {
-                        showMessage({ type: 'SUCCESS', text: 'Scope has been finished' });
-                        onToggle(false);
-                      },
-                      onError: setErrorMessage,
-                    })({ prevScopeEnabled: !ignoreScope, savePrevScope: true });
-                    !testsCount
+            </EmptyScopeWarning>
+          )}
+          <Content>
+            <ScopeSummary scope={scope} testsCount={testsCount} />
+            <IgnoreScope
+              checked={ignoreScope}
+              onChange={() => setIgnoreScope(!ignoreScope)}
+              label="Ignore scope in build stats"
+              disabled={!testsCount}
+            />
+            <ActionsPanel>
+              <Button
+                type="primary"
+                size="large"
+                onClick={async () => {
+                  await finishScope(agentId, pluginId, {
+                    onSuccess: () => {
+                      showMessage({ type: 'SUCCESS', text: 'Scope has been finished' });
+                      onToggle(false);
+                    },
+                    onError: setErrorMessage,
+                  })({ prevScopeEnabled: !ignoreScope, savePrevScope: true });
+                  !testsCount
                       && scopeId
                       && push(`/full-page/${agentId}/${buildVersion}/${pluginId}/dashboard`);
-                  }}
-                >
-                  {testsCount ? 'Finish Scope' : 'Finish and Delete'}
-                </Button>
-                <CancelButton size="large" onClick={() => onToggle(false)}>
+                }}
+              >
+                {testsCount ? 'Finish Scope' : 'Finish and Delete'}
+              </Button>
+              <CancelButton size="large" onClick={() => onToggle(false)}>
                   Cancel
-                </CancelButton>
-              </ActionsPanel>
-            </Content>
-          </div>
-        </Popup>
-      );
-    },
-  ),
+              </CancelButton>
+            </ActionsPanel>
+          </Content>
+        </div>
+      </Popup>
+    );
+  },
 );
 
 const ErrorMessage = finishScopeModal.errorMessage(Panel);

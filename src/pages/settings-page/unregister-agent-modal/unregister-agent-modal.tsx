@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
-import { withRouter, RouteComponentProps } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import axios from 'axios';
 
 import { Panel } from 'layouts';
@@ -10,7 +10,7 @@ import { NotificationManagerContext } from 'notification-manager';
 
 import styles from './unregister-agent-modal.module.scss';
 
-interface Props extends RouteComponentProps {
+interface Props {
   className?: string;
   isOpen: boolean;
   onToggle: (value: boolean) => void;
@@ -19,61 +19,60 @@ interface Props extends RouteComponentProps {
 
 const unregisterAgentModal = BEM(styles);
 
-export const UnregisterAgentModal = withRouter(
-  unregisterAgentModal(({
-    className, isOpen, onToggle, agentId, history: { push },
-  }: Props) => {
-    const { showMessage } = React.useContext(NotificationManagerContext);
-    const [errorMessage, setErrorMessage] = React.useState('');
+export const UnregisterAgentModal = unregisterAgentModal(({
+  className, isOpen, onToggle, agentId,
+}: Props) => {
+  const { showMessage } = React.useContext(NotificationManagerContext);
+  const [errorMessage, setErrorMessage] = React.useState('');
+  const { push } = useHistory();
 
-    return (
-      <Popup
-        isOpen={isOpen}
-        onToggle={onToggle}
-        header={(
-          <Panel>
-            <HeaderIcon height={20} width={20} />
+  return (
+    <Popup
+      isOpen={isOpen}
+      onToggle={onToggle}
+      header={(
+        <Panel>
+          <HeaderIcon height={20} width={20} />
             Unregister the agent
-          </Panel>
+        </Panel>
+      )}
+      type="error"
+      closeOnFadeClick
+    >
+      <div className={className}>
+        {errorMessage && (
+          <ErrorMessage>
+            <ErrorMessageIcon />
+            {errorMessage}
+          </ErrorMessage>
         )}
-        type="error"
-        closeOnFadeClick
-      >
-        <div className={className}>
-          {errorMessage && (
-            <ErrorMessage>
-              <ErrorMessageIcon />
-              {errorMessage}
-            </ErrorMessage>
-          )}
-          <Content>
-            <Notification>
+        <Content>
+          <Notification>
               Are you sure you want to unregister the agent? All gathered data and settings will be
               lost.
-            </Notification>
-            <Panel>
-              <UnregisterButton
-                type="primary"
-                onClick={() => unregisterAgent(agentId, {
-                  onSuccess: () => {
-                    showMessage({ type: 'SUCCESS', text: 'Agent has been deactivated' });
-                    push('/agents');
-                  },
-                  onError: setErrorMessage,
-                })}
-              >
+          </Notification>
+          <Panel>
+            <UnregisterButton
+              type="primary"
+              onClick={() => unregisterAgent(agentId, {
+                onSuccess: () => {
+                  showMessage({ type: 'SUCCESS', text: 'Agent has been deactivated' });
+                  push('/agents');
+                },
+                onError: setErrorMessage,
+              })}
+            >
                 Yes, unregister this agent
-              </UnregisterButton>
-              <CancelButton size="large" onClick={() => onToggle(false)}>
+            </UnregisterButton>
+            <CancelButton size="large" onClick={() => onToggle(false)}>
                 Cancel
-              </CancelButton>
-            </Panel>
-          </Content>
-        </div>
-      </Popup>
-    );
-  }),
-);
+            </CancelButton>
+          </Panel>
+        </Content>
+      </div>
+    </Popup>
+  );
+});
 
 const HeaderIcon = unregisterAgentModal.headerIcon(Icons.Warning);
 const ErrorMessage = unregisterAgentModal.errorMessage(Panel);

@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
-import { withRouter, RouteComponentProps, useParams } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
 
 import { Panel } from 'layouts';
 import { Icons, Menu } from 'components';
@@ -12,62 +12,61 @@ import { useCoveragePluginDispatch, openModal } from '../../store';
 
 import styles from './active-scope-actions.module.scss';
 
-interface Props extends RouteComponentProps {
+interface Props {
   className?: string;
 }
 
 const activeScopeActions = BEM(styles);
 
-export const ActiveScopeActions = withRouter(
-  activeScopeActions(({ className, history: { push } }: Props) => {
-    const {
-      agentId,
-      buildVersion: { id: buildVersion },
-    } = usePluginState();
-    const scope = useBuildVersion<ScopeSummary>('/active-scope');
-    const dispatch = useCoveragePluginDispatch();
-    const { pluginId } = useParams();
+export const ActiveScopeActions = activeScopeActions(({ className }: Props) => {
+  const {
+    agentId,
+    buildVersion: { id: buildVersion },
+  } = usePluginState();
+  const { push } = useHistory();
+  const scope = useBuildVersion<ScopeSummary>('/active-scope');
+  const dispatch = useCoveragePluginDispatch();
+  const { pluginId } = useParams();
 
-    return (
-      <div className={className}>
-        <Panel>
-          <ScopeDetails
-            onClick={() => push(`/full-page/${agentId}/${buildVersion}/${pluginId}/scopes/${scope && scope.id}`)}
-          >
+  return (
+    <div className={className}>
+      <Panel>
+        <ScopeDetails
+          onClick={() => push(`/full-page/${agentId}/${buildVersion}/${pluginId}/scopes/${scope && scope.id}`)}
+        >
             Scope details &gt;
-          </ScopeDetails>
-          <FinishScopeButton
-            type="primary"
-            onClick={() => dispatch(openModal('FinishScopeModal', scope))}
-            data-test="active-scope-actions:finish-scope-button"
-          >
-            <Icons.Check height={10} width={14} />
+        </ScopeDetails>
+        <FinishScopeButton
+          type="primary"
+          onClick={() => dispatch(openModal('FinishScopeModal', scope))}
+          data-test="active-scope-actions:finish-scope-button"
+        >
+          <Icons.Check height={10} width={14} />
             Finish scope
-          </FinishScopeButton>
-          <Menu
-            items={[
-              {
-                label: 'Manage sessions',
-                icon: 'ManageSessions',
-                onClick: () => dispatch(openModal('ManageSessionsModal', null)),
-              },
-              {
-                label: 'Rename',
-                icon: 'Edit',
-                onClick: () => dispatch(openModal('RenameScopeModal', scope)),
-              },
-              {
-                label: 'Cancel',
-                icon: 'Delete',
-                onClick: () => dispatch(openModal('DeleteScopeModal', scope)),
-              },
-            ]}
-          />
-        </Panel>
-      </div>
-    );
-  }),
-);
+        </FinishScopeButton>
+        <Menu
+          items={[
+            {
+              label: 'Manage sessions',
+              icon: 'ManageSessions',
+              onClick: () => dispatch(openModal('ManageSessionsModal', null)),
+            },
+            {
+              label: 'Rename',
+              icon: 'Edit',
+              onClick: () => dispatch(openModal('RenameScopeModal', scope)),
+            },
+            {
+              label: 'Cancel',
+              icon: 'Delete',
+              onClick: () => dispatch(openModal('DeleteScopeModal', scope)),
+            },
+          ]}
+        />
+      </Panel>
+    </div>
+  );
+});
 
 const ScopeDetails = activeScopeActions.scopeDetails('span');
 const FinishScopeButton = activeScopeActions.finishScopeButton(Button);

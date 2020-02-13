@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 import {
-  Switch, withRouter, RouteComponentProps, Route, matchPath,
+  Switch, useParams, useLocation, Route, matchPath,
 } from 'react-router-dom';
 
 import { Toolbar, Icons, Footer } from 'components';
@@ -19,7 +19,7 @@ import { Dashboard } from './dashboard';
 
 import styles from './service-group-full-page.module.scss';
 
-interface Props extends RouteComponentProps<{ id: string; pluginId: string }> {
+interface Props {
   className?: string;
 }
 
@@ -45,61 +45,57 @@ const getPluginsList = (serviceGroupId: string, plugins: Plugin[]): Link[] => [
   })),
 ];
 
-export const ServiceGroupFullPage = withRouter(
-  serviceGroupFullPage(
-    ({
-      className,
-      match: {
-        params: { id, pluginId },
-      },
-      location: { pathname },
-    }: Props) => {
-      const plugins = useWsConnection<Plugin[]>(
-        defaultAdminSocket,
-        `/service-group/${id}/plugins`,
-      ) || [];
-      const serviceGroup = usePluginData<ServiceGroupSummary>(id, pluginId) || {};
-      const path = '/:page/:serviceGroupId/:activeLink';
-      const { params: { activeLink = '' } = {} } = matchPath<{ activeLink: string }>(pathname, {
-        path,
-      }) || {};
+export const ServiceGroupFullPage = serviceGroupFullPage(
+  ({
+    className,
+  }: Props) => {
+    const { id = '', pluginId = '' } = useParams();
+    const { pathname } = useLocation();
+    const plugins = useWsConnection<Plugin[]>(
+      defaultAdminSocket,
+      `/service-group/${id}/plugins`,
+    ) || [];
+    const serviceGroup = usePluginData<ServiceGroupSummary>(id, pluginId) || {};
+    const path = '/:page/:serviceGroupId/:activeLink';
+    const { params: { activeLink = '' } = {} } = matchPath<{ activeLink: string }>(pathname, {
+      path,
+    }) || {};
 
-      return (
-        <PluginsLayout
-          sidebar={activeLink && <Sidebar links={getPluginsList(id, plugins)} matchParams={{ path }} />}
-          toolbar={(
-            <Toolbar
-              breadcrumbs={<Breadcrumbs />}
-            />
-          )}
-          header={<ServiceGroupHeader serviceGroup={serviceGroup} />}
-          footer={<Footer />}
-        >
-          <div className={className}>
-            <Content>
-              <Switch>
-                <Route
-                  path="/service-group-full-page/:serviceGroupId/service-group-dashboard"
-                  render={() => (
-                    <Dashboard serviceGroupId={id} plugins={plugins} />
-                  )}
-                />
-                <Route
-                  path="/service-group-full-page/:serviceGroupId/:pluginId"
-                  render={() => (
-                    <TestToCodePlugin
-                      summaries={serviceGroup.summaries}
-                      aggregatedData={serviceGroup.aggregatedData}
-                    />
-                  )}
-                />
-              </Switch>
-            </Content>
-          </div>
-        </PluginsLayout>
-      );
-    },
-  ),
+    return (
+      <PluginsLayout
+        sidebar={activeLink && <Sidebar links={getPluginsList(id, plugins)} matchParams={{ path }} />}
+        toolbar={(
+          <Toolbar
+            breadcrumbs={<Breadcrumbs />}
+          />
+        )}
+        header={<ServiceGroupHeader serviceGroup={serviceGroup} />}
+        footer={<Footer />}
+      >
+        <div className={className}>
+          <Content>
+            <Switch>
+              <Route
+                path="/service-group-full-page/:serviceGroupId/service-group-dashboard"
+                render={() => (
+                  <Dashboard serviceGroupId={id} plugins={plugins} />
+                )}
+              />
+              <Route
+                path="/service-group-full-page/:serviceGroupId/:pluginId"
+                render={() => (
+                  <TestToCodePlugin
+                    summaries={serviceGroup.summaries}
+                    aggregatedData={serviceGroup.aggregatedData}
+                  />
+                )}
+              />
+            </Switch>
+          </Content>
+        </div>
+      </PluginsLayout>
+    );
+  },
 );
 
 const Content = serviceGroupFullPage.content('div');
