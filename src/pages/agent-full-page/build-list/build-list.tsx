@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
-import { withRouter, RouteComponentProps } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 
 import { Panel } from 'layouts';
 import { Table, Column, Menu } from 'components';
@@ -13,21 +13,19 @@ import { RenameBuildVersionModal } from './rename-build-version-modal';
 
 import styles from './build-list.module.scss';
 
-interface Props extends RouteComponentProps<{ agentId: string }> {
+interface Props {
   className?: string;
 }
 
 const buildList = BEM(styles);
 
-export const BuildList = withRouter(
+export const BuildList =
   buildList(
     ({
       className,
-      match: {
-        params: { agentId },
-      },
-      history: { push },
     }: Props) => {
+      const { agentId = '' } = useParams();
+      const { push } = useHistory();
       const buildVersions = useWsConnection<BuildVersion[]>(defaultAdminSocket, `/${agentId}/builds`) || [];
       const dispatch = usePluginDispatch();
       const [isModalOpened, setIsModalOpened] = React.useState(false);
@@ -144,8 +142,7 @@ export const BuildList = withRouter(
         </div>
       );
     },
-  ),
-);
+  );
 
 const Content = buildList.content('div');
 const Title = buildList.title(Panel);

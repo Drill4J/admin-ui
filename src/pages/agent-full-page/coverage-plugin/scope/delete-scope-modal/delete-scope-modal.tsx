@@ -1,8 +1,6 @@
 import * as React from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
-import {
-  withRouter, RouteComponentProps, matchPath, useParams,
-} from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 
 import { Panel } from 'layouts';
 import { Button, CancelButton } from 'forms';
@@ -15,7 +13,7 @@ import { usePluginState } from '../../../store';
 
 import styles from './delete-scope-modal.module.scss';
 
-interface Props extends RouteComponentProps {
+interface Props {
   className?: string;
   isOpen: boolean;
   onToggle: (value: boolean) => void;
@@ -24,82 +22,77 @@ interface Props extends RouteComponentProps {
 
 const deleteScopeModal = BEM(styles);
 
-export const DeleteScopeModal = withRouter(
-  deleteScopeModal(
-    ({
-      className, isOpen, onToggle, scope, location: { pathname }, history: { push },
-    }: Props) => {
-      const {
-        agentId,
-        buildVersion: { id: buildVersion },
-      } = usePluginState();
-      const { pluginId = '' } = useParams();
-      const { showMessage } = React.useContext(NotificationManagerContext);
-      const [errorMessage, setErrorMessage] = React.useState('');
+export const DeleteScopeModal = deleteScopeModal(
+  ({
+    className, isOpen, onToggle, scope,
+  }: Props) => {
+    const {
+      agentId,
+      buildVersion: { id: buildVersion },
+    } = usePluginState();
+    const { pluginId = '', scopeId = '' } = useParams();
+    const { push } = useHistory();
+    const { showMessage } = React.useContext(NotificationManagerContext);
+    const [errorMessage, setErrorMessage] = React.useState('');
 
-      const testsCount = scope
-        ? Object.values(scope.coveragesByType).reduce((acc, { testCount }) => acc + testCount, 0)
-        : 0;
+    const testsCount = scope
+      ? Object.values(scope.coveragesByType).reduce((acc, { testCount }) => acc + testCount, 0)
+      : 0;
 
-      const { params: { scopeId = '' } = {} } = matchPath<{ scopeId: string }>(pathname, {
-        path: '/:page/:agentId/:buildVersion/:pluginId/:tab/:scopeId',
-      }) || {};
-
-      return (
-        <Popup
-          isOpen={isOpen}
-          onToggle={onToggle}
-          header={(
-            <OverflowText>
-              {`${testsCount ? 'Delete' : 'Cancel'} scope ${scope
+    return (
+      <Popup
+        isOpen={isOpen}
+        onToggle={onToggle}
+        header={(
+          <OverflowText>
+            {`${testsCount ? 'Delete' : 'Cancel'} scope ${scope
               && scope.name}`}
-            </OverflowText>
+          </OverflowText>
+        )}
+        type="info"
+        closeOnFadeClick
+      >
+        <div className={className}>
+          {errorMessage && (
+            <ErrorMessage>
+              <ErrorMessageIcon />
+              {errorMessage}
+            </ErrorMessage>
           )}
-          type="info"
-          closeOnFadeClick
-        >
-          <div className={className}>
-            {errorMessage && (
-              <ErrorMessage>
-                <ErrorMessageIcon />
-                {errorMessage}
-              </ErrorMessage>
-            )}
-            {scope && scope.active && <ActiveSessionsPanel />}
-            <Content>
-              <Message>
-                {`You are about to ${
-                  scope && scope.active ? 'cancel an active scope' : 'delete a non-empty scope'
-                }. Are you sure you want to proceed? All scope
+          {scope && scope.active && <ActiveSessionsPanel />}
+          <Content>
+            <Message>
+              {`You are about to ${
+                scope && scope.active ? 'cancel an active scope' : 'delete a non-empty scope'
+              }. Are you sure you want to proceed? All scope
               data will be lost.`}
-              </Message>
-              <ActionsPanel>
-                <DeleteScopeButton
-                  type="primary"
-                  onClick={async () => {
-                    await deleteScope(agentId, pluginId, {
-                      onSuccess: () => {
-                        showMessage({ type: 'SUCCESS', text: 'Scope has been deleted' });
-                        onToggle(false);
-                        scopeId
+            </Message>
+            <ActionsPanel>
+              <DeleteScopeButton
+                type="primary"
+                onClick={async () => {
+                  await deleteScope(agentId, pluginId, {
+                    onSuccess: () => {
+                      showMessage({ type: 'SUCCESS', text: 'Scope has been deleted' });
+                      onToggle(false);
+                      scopeId
                           && push(`/full-page/${agentId}/${buildVersion}/${pluginId}/dashboard`);
-                      },
-                      onError: setErrorMessage,
-                    })(scope as ScopeSummary);
-                  }}
-                >
-                  {scope && scope.active ? 'Yes, Cancel Scope' : 'Yes, Delete Scope'}
-                </DeleteScopeButton>
-                <CancelButton size="large" onClick={() => onToggle(false)}>
+                    },
+                    onError: setErrorMessage,
+                  })(scope as ScopeSummary);
+                }}
+              >
+                {scope && scope.active ? 'Yes, Cancel Scope' : 'Yes, Delete Scope'}
+              </DeleteScopeButton>
+              <CancelButton size="large" onClick={() => onToggle(false)}>
                   Cancel
-                </CancelButton>
-              </ActionsPanel>
-            </Content>
-          </div>
-        </Popup>
-      );
-    },
-  ),
+              </CancelButton>
+            </ActionsPanel>
+          </Content>
+        </div>
+      </Popup>
+    );
+  },
 );
 
 const ErrorMessage = deleteScopeModal.errorMessage(Panel);

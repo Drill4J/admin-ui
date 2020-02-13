@@ -1,12 +1,12 @@
 import * as React from 'react';
 import { BEM, div } from '@redneckz/react-bem-helper';
-import { withRouter, RouteComponentProps, matchPath } from 'react-router-dom';
+import { useHistory, useLocation, matchPath } from 'react-router-dom';
 
 import { ReactComponent as LogoSvg } from './logo.svg';
 
 import styles from './sidebar.module.scss';
 
-interface Props extends RouteComponentProps {
+interface Props {
   className?: string;
   active?: 'active';
   links: Array<{ icon: React.ComponentType<any>; link: string; computedLink?: string }>;
@@ -15,18 +15,19 @@ interface Props extends RouteComponentProps {
 
 const sidebar = BEM(styles);
 
-export const Sidebar = withRouter(
-  sidebar(({
-    className, links, history: { push }, location: { pathname }, matchParams,
-  }: Props) => {
-    const { params: { activeLink = '' } = {} } = matchPath<{ activeLink: string }>(pathname, matchParams) || {};
+export const Sidebar = sidebar(({
+  className, links, matchParams,
+}: Props) => {
+  const { push } = useHistory();
+  const { pathname } = useLocation();
+  const { params: { activeLink = '' } = {} } = matchPath<{ activeLink: string }>(pathname, matchParams) || {};
 
-    return (
-      <div className={className}>
-        <Logo onClick={() => push('/')}>
-          <LogoSvg />
-        </Logo>
-        {links.length > 0
+  return (
+    <div className={className}>
+      <Logo onClick={() => push('/')}>
+        <LogoSvg />
+      </Logo>
+      {links.length > 0
           && links.map(({ icon: Icon, link, computedLink }) => (
             <SidebarLink
               key={link}
@@ -36,10 +37,9 @@ export const Sidebar = withRouter(
               <Icon />
             </SidebarLink>
           ))}
-      </div>
-    );
-  }),
-);
+    </div>
+  );
+});
 
 const Logo = sidebar.logo('div');
 export const SidebarLink = sidebar.link(
