@@ -6,6 +6,7 @@ import { Icons, Modal } from 'components';
 import { Inputs } from 'forms';
 import { Panel } from 'layouts';
 import { copyToClipboard } from 'utils';
+import { TestsToRunUrl } from './test-to-run-url';
 import { getTestToRunURL } from './get-test-to-run-url';
 
 import styles from './tests-to-run-modal.module.scss';
@@ -50,10 +51,12 @@ export const TestsToRunModal = testsToRunModal(
             <h2>{count}</h2>
           </Header>
           <NotificaitonPanel>
-            <span>These are recommendations for this build updates only.</span>
-            <Bold>Use this Curl in your command line to get JSON:</Bold>
-            <CommandWrapper align="space-between">
-              <CurlCommand>{getTestToRunURL(agentId, pluginId, agentType)}</CurlCommand>
+            <span>
+              These are recommendations for this build updates only.
+              Use this Curl in your command line to get JSON:
+            </span>
+            <CommandWrapper verticalAlign="end">
+              <TestsToRunUrl agentId={agentId} pluginId={pluginId} agentType={agentType} />
               <CopyIcon onClick={() => copyToClipboard(getTestToRunURL(agentId, pluginId, agentType))} />
             </CommandWrapper>
           </NotificaitonPanel>
@@ -89,7 +92,6 @@ export const TestsToRunModal = testsToRunModal(
 
 const Header = testsToRunModal.header('div');
 const NotificaitonPanel = testsToRunModal.notificationPanel('div');
-const Bold = testsToRunModal.bold('span');
 const Content = testsToRunModal.content('div');
 const Filter = testsToRunModal.filter(Inputs.Dropdown);
 const MethodsList = testsToRunModal.methodsList('div');
@@ -98,4 +100,3 @@ const MethodInfo = testsToRunModal.methodsInfo('div');
 const MethodsListItemIcon = testsToRunModal.methodsListItemIcon('div');
 const CommandWrapper = testsToRunModal.commandWrapper(Panel);
 const CopyIcon = testsToRunModal.copyIcon(Icons.Copy);
-const CurlCommand = testsToRunModal.curlCommand('span');
