@@ -24,7 +24,7 @@ export const NoTestsStub = noTestsStub(({ className }: Props) => {
       <Message>
         {status === AGENT_STATUS.BUSY
           ? 'It may take a few seconds.'
-          : 'Information about project tests will appear after the first launch of autotests.'}
+          : 'Information about project tests will appear after the first launch of tests.'}
       </Message>
     </div>
   );
