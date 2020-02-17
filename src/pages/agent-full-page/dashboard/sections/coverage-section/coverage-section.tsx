@@ -1,11 +1,13 @@
 import * as React from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
+import { useParams } from 'react-router-dom';
 
 import { Panel } from 'layouts';
 import { Icons, Tooltip } from 'components';
 import { percentFormatter } from 'utils';
 import { Coverage } from 'types/coverage';
 import { Methods } from 'types/methods';
+import { isActiveBuild } from 'pages/agent-full-page/is-active-build';
 import { useBuildVersion } from '../../../coverage-plugin/use-build-version';
 import { SingleBar } from '../../single-bar';
 import { Section } from '../section';
@@ -13,13 +15,18 @@ import { SectionTooltip } from '../section-tooltip';
 
 import styles from './coverage-section.module.scss';
 
+interface Props {
+  className?: string;
+  activeBuildVersion?: string;
+}
+
 const coverageSection = BEM(styles);
 
-export const CoverageSection = coverageSection(({ className }) => {
+export const CoverageSection = coverageSection(({ className, activeBuildVersion }: Props) => {
   const {
     coverage = 0,
     diff = 0,
-    previousBuildInfo: { first = '', second = '' } = {},
+    prevBuildVersion = '',
     arrow = '',
   } = useBuildVersion<Coverage>('/build/coverage') || {};
   const {
@@ -36,6 +43,7 @@ export const CoverageSection = coverageSection(({ className }) => {
       coveredCount: unaffectedCoveredCount = 0,
     } = {},
   } = useBuildVersion<Methods>('/build/methods') || {};
+  const { buildVersion = '' } = useParams();
 
   return (
     <div className={className}>
@@ -106,10 +114,10 @@ export const CoverageSection = coverageSection(({ className }) => {
         additionalInfo={(
           <Panel>
             {Boolean(diff)
-              && first
-              && `${diff > 0 ? '+' : '-'}${percentFormatter(Math.abs(diff))}% vs Build: ${second
-                || first}`}
-            {!coverage && !first && 'Will change when at least 1 scope is done.'}
+              && prevBuildVersion
+              && `${diff > 0 ? '+' : '-'}${percentFormatter(Math.abs(diff))}% vs Build: ${prevBuildVersion}`}
+            {!coverage && !prevBuildVersion && isActiveBuild(activeBuildVersion, buildVersion)
+              && 'Will change when at least 1 scope is done.'}
           </Panel>
         )}
       />

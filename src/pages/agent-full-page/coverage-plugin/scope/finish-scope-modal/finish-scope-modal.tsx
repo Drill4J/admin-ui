@@ -28,10 +28,7 @@ export const FinishScopeModal = finishScopeModal(
     className, isOpen, onToggle, scope,
   }: Props) => {
     const { showMessage } = React.useContext(NotificationManagerContext);
-    const {
-      agentId,
-      buildVersion: { id: buildVersion },
-    } = usePluginState();
+    const { agentId, buildVersion } = usePluginState();
     const [errorMessage, setErrorMessage] = React.useState('');
     const [ignoreScope, setIgnoreScope] = React.useState(false);
 

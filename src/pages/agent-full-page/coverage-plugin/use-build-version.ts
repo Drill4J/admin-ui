@@ -4,10 +4,7 @@ import { defaultPluginSocket } from 'common/connection';
 import { usePluginState } from '../store';
 
 export function useBuildVersion<Data>(topic: string) {
-  const {
-    agentId,
-    buildVersion: { id: buildVersion },
-  } = usePluginState();
+  const { agentId, buildVersion } = usePluginState();
   const [data, setData] = useState<Data | null>(null);
 
   useEffect(() => {

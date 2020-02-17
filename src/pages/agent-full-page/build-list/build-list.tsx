@@ -3,13 +3,11 @@ import { BEM } from '@redneckz/react-bem-helper';
 import { useHistory, useParams } from 'react-router-dom';
 
 import { Panel } from 'layouts';
-import { Table, Column, Menu } from 'components';
+import { Table, Column } from 'components';
 import { defaultAdminSocket } from 'common/connection';
 import { useWsConnection, useElementSize } from 'hooks';
-import { dateFormatter } from 'utils';
 import { BuildVersion } from 'types/build-version';
 import { setBuildVersion, usePluginDispatch } from '../store';
-import { RenameBuildVersionModal } from './rename-build-version-modal';
 
 import styles from './build-list.module.scss';
 
@@ -28,8 +26,6 @@ export const BuildList =
       const { push } = useHistory();
       const buildVersions = useWsConnection<BuildVersion[]>(defaultAdminSocket, `/${agentId}/builds`) || [];
       const dispatch = usePluginDispatch();
-      const [isModalOpened, setIsModalOpened] = React.useState(false);
-      const [selectedItem, setSelectedItem] = React.useState<BuildVersion>({});
       const node = React.useRef<HTMLDivElement>(null);
       const { width: contentWidth } = useElementSize(node);
       const columnWidth = `${(contentWidth - 48) / 10}px`;
@@ -42,25 +38,21 @@ export const BuildList =
                 <span>Builds list </span>
                 <BuildCount>{buildVersions.length}</BuildCount>
               </Title>
-              <Table data={buildVersions as any}>
+              <Table data={buildVersions}>
                 <Column
-                  name="alias"
+                  name="buildVersion"
                   label="Name"
-                  Cell={({ value, item: { buildVersion } }) => (
+                  Cell={({ value: buildVersion }) => (
                     <NameCell
                       onClick={() => {
-                        dispatch(setBuildVersion({ id: buildVersion, name: value }));
+                        dispatch(setBuildVersion(buildVersion));
                         push(`/full-page/${agentId}/${buildVersion}/dashboard`);
                       }}
                     >
-                      {value || buildVersion}
+                      {buildVersion}
                     </NameCell>
                   )}
-                />
-                <Column
-                  name="addedDate"
-                  label="Added"
-                  Cell={({ value }) => <span>{dateFormatter(value)}</span>}
+                  width={columnWidth}
                 />
                 <Column
                   name="totalMethods"
@@ -108,37 +100,9 @@ export const BuildList =
                   )}
                   width={columnWidth}
                 />
-                <Column
-                  name="actions"
-                  HeaderCell={() => null}
-                  Cell={({ item: { buildVersion, alias } }) => (
-                    <ActionCell>
-                      <Menu
-                        items={[
-                          {
-                            label: 'Rename',
-                            icon: 'Edit',
-                            onClick: () => {
-                              setSelectedItem({ id: buildVersion, name: alias });
-                              setIsModalOpened(true);
-                            },
-                          },
-                        ]}
-                      />
-                    </ActionCell>
-                  )}
-                />
               </Table>
             </div>
           </Content>
-          {isModalOpened && (
-            <RenameBuildVersionModal
-              agentId={agentId}
-              isOpen={isModalOpened}
-              onToggle={setIsModalOpened}
-              buildVersion={selectedItem}
-            />
-          )}
         </div>
       );
     },
@@ -150,4 +114,3 @@ const BuildCount = buildList.itemsCount('span');
 const NameCell = buildList.nameCell('div');
 const HeaderCell = buildList.headerCell('div');
 const HeaderLabel = buildList.headerLabel('div');
-const ActionCell = buildList.actionCell('div');

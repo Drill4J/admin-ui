@@ -9,6 +9,8 @@ import { Coverage } from 'types/coverage';
 import { ClassCoverage } from 'types/class-coverage';
 import { ScopeSummary } from 'types/scope-summary';
 import { Methods } from 'types/methods';
+import { useAgent } from 'hooks';
+import { isActiveBuild } from 'pages/agent-full-page/is-active-build';
 import { useBuildVersion } from '../use-build-version';
 import { CoverageDetails } from '../coverage-details';
 import { CodeCoverageCard, DetailedCodeCoverageCard } from '../code-coverage-card';
@@ -27,13 +29,11 @@ interface Props {
 const overview = BEM(styles);
 
 export const Overview = overview(({ className }: Props) => {
-  const {
-    agentId,
-    buildVersion: { id: buildVersion },
-  } = usePluginState();
+  const { agentId, buildVersion } = usePluginState();
+  const { buildVersion: activeBuildVersion } = useAgent(agentId) || {};
   const buildCoverage = useBuildVersion<Coverage>('/build/coverage') || {};
   const {
-    previousBuildInfo: { first = '', second = '' } = {},
+    prevBuildVersion = '',
     diff = 0,
     coverage: buildCodeCoverage = 0,
     finishedScopesCount = 0,
@@ -45,7 +45,6 @@ export const Overview = overview(({ className }: Props) => {
   const [selectedTab, setSelectedTab] = React.useState('methods');
   const buildMethods = useBuildVersion<Methods>('/build/methods') || {};
   const { pluginId } = useParams();
-
   return (
     <div className={className}>
       <SummaryPanel align="space-between">
@@ -62,13 +61,12 @@ export const Overview = overview(({ className }: Props) => {
             coverage={buildCoverage}
             additionalInfo={(
               <Panel>
-                {Boolean(diff)
-                  && first
-                  && `${diff > 0 ? '+ ' : '- '} ${percentFormatter(
+                {prevBuildVersion
+                  && `${diff >= 0 ? '+ ' : '- '} ${percentFormatter(
                     Math.abs(diff),
-                  )}% comparing to Build: ${second || first}`}
+                  )}% comparing to Build: ${prevBuildVersion}`}
                 {!buildCodeCoverage
-                  && !first
+                  && !prevBuildVersion && isActiveBuild(activeBuildVersion, buildVersion)
                   && 'Will change when at least 1 scope is done.'}
               </Panel>
             )}
@@ -87,11 +85,10 @@ export const Overview = overview(({ className }: Props) => {
             coverage={buildCoverage}
             additionalInfo={(
               <Panel>
-                {Boolean(diff)
-                  && first
-                  && `${diff > 0 ? '+ ' : '- '} ${percentFormatter(
+                {prevBuildVersion
+                  && `${diff >= 0 ? '+ ' : '- '} ${percentFormatter(
                     Math.abs(diff),
-                  )}% comparing to Build: ${second || first}`}
+                  )}% comparing to Build: ${prevBuildVersion}`}
               </Panel>
             )}
           />

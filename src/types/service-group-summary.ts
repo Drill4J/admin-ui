@@ -1,7 +1,7 @@
 export interface Summary {
   agentName?: string;
   agentId?: string;
-  lastBuild?: { version?: string; alias?: string };
+  buildVersion?: string;
   data?: {
     coverage?: number;
     risks?: number;

@@ -26,10 +26,7 @@ export const DeleteScopeModal = deleteScopeModal(
   ({
     className, isOpen, onToggle, scope,
   }: Props) => {
-    const {
-      agentId,
-      buildVersion: { id: buildVersion },
-    } = usePluginState();
+    const { agentId, buildVersion } = usePluginState();
     const { pluginId = '', scopeId = '' } = useParams();
     const { push } = useHistory();
     const { showMessage } = React.useContext(NotificationManagerContext);

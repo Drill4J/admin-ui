@@ -3,9 +3,10 @@ import { BEM } from '@redneckz/react-bem-helper';
 import { useParams, useHistory } from 'react-router-dom';
 
 import { Table, Column, Menu } from 'components';
+import { MenuItemType } from 'components/menu/menu-item-type';
 import { percentFormatter } from 'utils';
-import { ScopeSummary } from 'types/scope-summary';
 import { NotificationManagerContext } from 'notification-manager';
+import { ScopeSummary } from 'types/scope-summary';
 import { useBuildVersion } from '../../use-build-version';
 import { toggleScope } from '../../api';
 import { usePluginState } from '../../../store';
@@ -25,10 +26,7 @@ export const ScopesList = scopesList(({ className }: Props) => {
   const {
     activeSessions: { testTypes = [] },
   } = useCoveragePluginState();
-  const {
-    agentId,
-    buildVersion: { id: buildVersion },
-  } = usePluginState();
+  const { agentId, buildVersion } = usePluginState();
   const { pluginId = '' } = useParams();
   const { push } = useHistory();
   const dispatch = useCoveragePluginDispatch();
@@ -46,7 +44,7 @@ export const ScopesList = scopesList(({ className }: Props) => {
           <span>Scopes</span>
           <ScopesCount>{scopesData.length}</ScopesCount>
         </Title>
-        <Table data={scopesData as any} idKey="name" columnsSize="wide">
+        <Table data={scopesData} idKey="name" columnsSize="wide">
           <Column
             name="name"
             HeaderCell={() => <HeaderCell>Name</HeaderCell>}
@@ -173,7 +171,7 @@ export const ScopesList = scopesList(({ className }: Props) => {
               ].filter(Boolean);
               return (
                 <ActionCell>
-                  <Menu items={menuActions as any} />
+                  <Menu items={menuActions as MenuItemType[]} />
                 </ActionCell>
               );
             }}
