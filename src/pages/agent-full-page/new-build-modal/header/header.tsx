@@ -9,13 +9,13 @@ import styles from './header.module.scss';
 
 interface Props {
   className?: string;
-  prevBuildVersion?: { prevId?: string; prevAlias?: string };
+  prevBuildVersion?: string;
 }
 
 const header = BEM(styles);
 
 export const Header = header(
-  ({ className, prevBuildVersion: { prevId = '', prevAlias = '' } = {} }: Props) => (
+  ({ className, prevBuildVersion }: Props) => (
     <div className={className}>
       <LogoWrapper>
         <Logo />
@@ -25,7 +25,7 @@ export const Header = header(
         <PrevBuildInfo>
           <PrevBuildIcon />
             Previous build:
-          <PrevBuildVersion>{prevAlias || prevId}</PrevBuildVersion>
+          <PrevBuildVersion>{prevBuildVersion}</PrevBuildVersion>
         </PrevBuildInfo>
       </Content>
     </div>

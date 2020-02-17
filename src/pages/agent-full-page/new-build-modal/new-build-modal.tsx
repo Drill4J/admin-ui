@@ -6,7 +6,6 @@ import { Popup } from 'components';
 import { NewBuildNotification } from 'types/new-build-notification';
 import { readNotification } from '../api';
 import { BuildUpdates } from './build-updates';
-import { BuildAlias } from './build-alias';
 import { RecommendedActions } from './recommended-actions';
 import { Header } from './header';
 
@@ -28,13 +27,11 @@ export const NewBuildModal = newBuildModal(
     onToggle,
     notification: {
       id = '',
-      agentId = '',
       additionalInfo: {
-        currentId, prevId, prevAlias, buildDiff = {}, recommendations = [],
+        prevId, buildDiff = {}, recommendations = [],
       } = {},
     },
   }: Props) => {
-    const [currentAlias, setCurrentAlias] = React.useState('');
     React.useEffect(() => {
       id && readNotification(id);
     }, [id]);
@@ -43,25 +40,12 @@ export const NewBuildModal = newBuildModal(
       <Popup
         isOpen={isOpen}
         onToggle={onToggle}
-        header={(
-          <Header
-            prevBuildVersion={{
-              prevAlias,
-              prevId,
-            }}
-          />
-        )}
+        header={<Header prevBuildVersion={prevId} />}
         type="info"
         closeOnFadeClick
       >
         <div className={className}>
           <Content>
-            <BuildAliasField
-              agentId={agentId}
-              currentId={currentId}
-              currentAlias={currentAlias}
-              setCurrentAlias={setCurrentAlias}
-            />
             <Section>
               <BuildUpdates
                 buildDiff={{
@@ -87,6 +71,5 @@ export const NewBuildModal = newBuildModal(
 );
 
 const Content = newBuildModal.content('div');
-const BuildAliasField = newBuildModal.buildAlias(BuildAlias);
 const Section = newBuildModal.section('div');
 const OkButton = newBuildModal.okButton(Button);

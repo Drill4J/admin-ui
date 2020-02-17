@@ -7,12 +7,13 @@ import { Button } from 'forms';
 import {
   TabsPanel, Tab, Icons, Menu,
 } from 'components';
+import { MenuItemType } from 'components/menu/menu-item-type';
+import { NotificationManagerContext } from 'notification-manager';
 import { ScopeSummary } from 'types/scope-summary';
 import { Coverage } from 'types/coverage';
 import { Methods } from 'types/methods';
 import { ClassCoverage } from 'types/class-coverage';
 import { AssociatedTests } from 'types/associated-tests';
-import { NotificationManagerContext } from 'notification-manager';
 import { MethodCoveredByTest } from 'types/method-covered-by-test';
 import { useBuildVersion } from '../../use-build-version';
 import { DetailedCodeCoverageCard } from '../../code-coverage-card';
@@ -37,10 +38,7 @@ export const ScopeInfo = scopeInfo(
     className,
   }: Props) => {
     const { showMessage } = React.useContext(NotificationManagerContext);
-    const {
-      agentId,
-      buildVersion: { id: buildVersion },
-    } = usePluginState();
+    const { agentId, buildVersion } = usePluginState();
     const { pluginId = '', scopeId = '' } = useParams();
     const { push } = useHistory();
     const dispatch = useCoveragePluginDispatch();
@@ -126,7 +124,7 @@ export const ScopeInfo = scopeInfo(
                 <Icons.Check height={12} width={16} />
                 {' Finish scope'}
               </FinishScopeButton>
-              <Menu items={menuActions as any} />
+              <Menu items={menuActions as MenuItemType[]} />
             </Panel>
           </Panel>
         </Header>

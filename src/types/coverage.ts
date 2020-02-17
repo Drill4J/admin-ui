@@ -8,6 +8,6 @@ export interface Coverage {
   arrow?: 'INCREASE' | 'DECREASE';
   coverageByType?: CoverageByType;
   diff?: number;
-  previousBuildInfo?: { first: string; second: string };
+  prevBuildVersion?: string;
   finishedScopesCount?: number;
 }

@@ -19,10 +19,8 @@ interface Props {
 const dashboard = BEM(styles);
 
 export const Dashboard = dashboard(({ className, agent }: Props) => {
-  const { id: agentId, plugins = [] } = agent;
-  const {
-    buildVersion: { id: buildVersion },
-  } = usePluginState();
+  const { id: agentId, plugins = [], buildVersion: activeBuildVersion } = agent;
+  const { buildVersion } = usePluginState();
 
   return (
     <div className={className}>
@@ -35,7 +33,7 @@ export const Dashboard = dashboard(({ className, agent }: Props) => {
                 label={name}
                 pluginLink={`/full-page/${agentId}/${buildVersion}/${id}/dashboard`}
               >
-                <CoverageSection />
+                <CoverageSection activeBuildVersion={activeBuildVersion} />
                 <TestsSection />
                 <RisksSection />
                 <TestsToRunSection />
