@@ -6,12 +6,13 @@ import nanoid from 'nanoid';
 import { Icons } from 'components';
 import { useClickOutside } from 'hooks';
 import { spacesToDashes } from 'utils';
+import { MenuItemType } from './menu-item-type';
 
 import styles from './menu.module.scss';
 
 interface Props {
   className?: string;
-  items: Array<{ label: string; icon: keyof typeof Icons; onClick: () => void }>;
+  items: MenuItemType[];
   bordered?: boolean;
   testContext?: string;
 }

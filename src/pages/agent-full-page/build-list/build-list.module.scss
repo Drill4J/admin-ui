@@ -38,12 +38,4 @@
     font-size: 12px;
     line-height: 24px;
   }
-
-  &__action-cell {
-    margin-right: 24px;
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-    color: map-get($color-palette, blue100);
-  }
 }

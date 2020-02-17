@@ -9,4 +9,5 @@ export interface ScopeSummary {
   enabled: boolean;
   active: boolean;
   coveragesByType: { [key: string]: TestTypeSummary };
+  [key: string]: string | number | boolean | { [key: string]: TestTypeSummary };
 }

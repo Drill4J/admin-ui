@@ -19,10 +19,7 @@ interface Props {
 const activeScopeActions = BEM(styles);
 
 export const ActiveScopeActions = activeScopeActions(({ className }: Props) => {
-  const {
-    agentId,
-    buildVersion: { id: buildVersion },
-  } = usePluginState();
+  const { agentId, buildVersion } = usePluginState();
   const { push } = useHistory();
   const scope = useBuildVersion<ScopeSummary>('/active-scope');
   const dispatch = useCoveragePluginDispatch();

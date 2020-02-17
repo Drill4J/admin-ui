@@ -6,7 +6,7 @@ import { Action } from './reducer';
 export const defaultState = {
   agentId: '',
   pluginId: '',
-  buildVersion: {},
+  buildVersion: '',
   loading: false,
   agent: {},
 };
