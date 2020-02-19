@@ -1,7 +1,7 @@
 import * as React from 'react';
+import { useParams } from 'react-router-dom';
 
 import { ManageSessionsModal } from 'modules';
-import { usePluginState } from '../store';
 import { useCoveragePluginState, useCoveragePluginDispatch, openModal } from './store';
 import { RenameScopeModal } from './scope/rename-scope-modal';
 import { FinishScopeModal } from './scope/finish-scope-modal';
@@ -15,7 +15,7 @@ const modals = {
 };
 
 export const CoveragePluginModals = () => {
-  const { agentId, pluginId } = usePluginState();
+  const { agentId = '', pluginId = '' } = useParams();
   const { openedModalName, scope } = useCoveragePluginState();
   const dispatch = useCoveragePluginDispatch();
 
