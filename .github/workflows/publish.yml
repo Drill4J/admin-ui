@@ -3,7 +3,7 @@ name: Publish docker image
 on:
   push:
     tags:
-      - '*'
+      - 'v*'
 
 jobs:
   publish:
@@ -12,12 +12,14 @@ jobs:
       - uses: actions/checkout@master
       - name: Get the version
         id: get_version
-        run: echo ::set-output name=VERSION::$(echo $GITHUB_REF | cut -d / -f 3)
+        uses: actions/github-script@master
+        script: |
+            return context.payload.ref.replace(/\/refs\/tags\/v/, '');
       - name: Publish to Registry
         uses: elgohr/Publish-Docker-Github-Action@master
         env:
           ENV: development
-          VERSION: ${{ steps.get_version.outputs.VERSION }}
+          VERSION: ${{ steps.get_version.outputs.result }}
         with:
           name: drill4j/admin-ui
           username: ${{ secrets.DOCKER_USERNAME }}
