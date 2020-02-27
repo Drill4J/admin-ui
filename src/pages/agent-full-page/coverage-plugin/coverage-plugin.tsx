@@ -2,7 +2,6 @@ import * as React from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 import { Switch, Route } from 'react-router-dom';
 
-import { CoveragePluginHeader } from './coverage-plugin-header';
 import { Overview } from './overview';
 import { ScopesList, ScopeInfo } from './scope';
 import { Tests } from './tests';
@@ -23,9 +22,6 @@ export const CoveragePlugin = coveragePlugin(({ className }: Props) => (
     <CoveragePluginProvider>
       <InitialDataController>
         <>
-          <HeaderWrapper>
-            <CoveragePluginHeader />
-          </HeaderWrapper>
           <Content>
             <Switch>
               <Route
@@ -57,5 +53,4 @@ export const CoveragePlugin = coveragePlugin(({ className }: Props) => (
   </div>
 ));
 
-const HeaderWrapper = coveragePlugin.header('div');
 const Content = coveragePlugin.content('div');

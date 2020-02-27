@@ -11,6 +11,7 @@ import { ScopeSummary } from 'types/scope-summary';
 import { Methods } from 'types/methods';
 import { useAgent } from 'hooks';
 import { isActiveBuild } from 'pages/agent-full-page/is-active-build';
+import { CoveragePluginHeader } from '../coverage-plugin-header';
 import { useBuildVersion } from '../use-build-version';
 import { CoverageDetails } from '../coverage-details';
 import { CodeCoverageCard, DetailedCodeCoverageCard } from '../code-coverage-card';
@@ -47,6 +48,7 @@ export const Overview = overview(({ className }: Props) => {
   const { pluginId } = useParams();
   return (
     <div className={className}>
+      <CoveragePluginHeader />
       <SummaryPanel align="space-between">
         {active ? (
           <CodeCoverageCard

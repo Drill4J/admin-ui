@@ -7,6 +7,7 @@ import { MenuItemType } from 'components/menu/menu-item-type';
 import { percentFormatter } from 'utils';
 import { NotificationManagerContext } from 'notification-manager';
 import { ScopeSummary } from 'types/scope-summary';
+import { CoveragePluginHeader } from '../../coverage-plugin-header';
 import { useBuildVersion } from '../../use-build-version';
 import { toggleScope } from '../../api';
 import { usePluginState } from '../../../store';
@@ -39,6 +40,7 @@ export const ScopesList = scopesList(({ className }: Props) => {
   const scopesData = activeScope && activeScope.name ? [activeScope, ...scopes] : scopes;
   return (
     <div className={className}>
+      <CoveragePluginHeader />
       <Content>
         <Title>
           <span>Scopes</span>
