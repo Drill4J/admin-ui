@@ -1,9 +1,8 @@
 import * as React from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
-import { useParams, useHistory } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 
 import { Panel } from 'layouts';
-import { Button } from 'forms';
 import {
   TabsPanel, Tab, Icons, Menu,
 } from 'components';
@@ -15,6 +14,7 @@ import { Methods } from 'types/methods';
 import { ClassCoverage } from 'types/class-coverage';
 import { AssociatedTests } from 'types/associated-tests';
 import { MethodCoveredByTest } from 'types/method-covered-by-test';
+import { Button } from 'forms';
 import { useBuildVersion } from '../../use-build-version';
 import { DetailedCodeCoverageCard } from '../../code-coverage-card';
 import { ProjectMethodsCard } from '../../project-methods-card';
@@ -38,9 +38,8 @@ export const ScopeInfo = scopeInfo(
     className,
   }: Props) => {
     const { showMessage } = React.useContext(NotificationManagerContext);
-    const { agentId, buildVersion } = usePluginState();
+    const { agentId } = usePluginState();
     const { pluginId = '', scopeId = '' } = useParams();
-    const { push } = useHistory();
     const dispatch = useCoveragePluginDispatch();
     const coverage = useBuildVersion<Coverage>(`/scope/${scopeId}/coverage`) || {};
     const scopeMethods = useBuildVersion<Methods>(`/scope/${scopeId}/methods`) || {};
@@ -98,34 +97,27 @@ export const ScopeInfo = scopeInfo(
 
     return (
       <div className={className}>
-        <BackToScopesList
-          onClick={() => push(`/full-page/${agentId}/${buildVersion}/${pluginId}/scopes`)}
-        >
-            &lt; Scopes list
-        </BackToScopesList>
-        <Header>
-          <Panel align="space-between">
-            <Panel>
-              {name}
-              {active ? <ActiveBadge>Active</ActiveBadge> : <FinisedBadge>Finished</FinisedBadge>}
-              {Boolean(started) && (
-                <ScopeDuration>
-                  <ScopeTimer started={started} finised={finished} active={active} />
-                </ScopeDuration>
-              )}
-            </Panel>
-            <Panel align="end">
-              <FinishScopeButton
-                type="secondary"
-                size="large"
-                onClick={() => dispatch(openModal('FinishScopeModal', scope))}
-                disabled={!active}
-              >
-                <Icons.Check height={12} width={16} />
-                {' Finish scope'}
-              </FinishScopeButton>
-              <Menu items={menuActions as MenuItemType[]} />
-            </Panel>
+        <Header align="space-between">
+          <Panel verticalAlign="center">
+            <ScopeName>{name}</ScopeName>
+            {active ? <ActiveBadge>Active</ActiveBadge> : <FinisedBadge>Finished</FinisedBadge>}
+            {Boolean(started) && (
+              <ScopeDuration>
+                <ScopeTimer started={started} finised={finished} active={active} />
+              </ScopeDuration>
+            )}
+          </Panel>
+          <Panel align="end">
+            <FinishScopeButton
+              type="secondary"
+              size="large"
+              onClick={() => dispatch(openModal('FinishScopeModal', scope))}
+              disabled={!active}
+            >
+              <Icons.Check height={12} width={16} />
+              &nbsp;Finish scope
+            </FinishScopeButton>
+            <Menu items={menuActions as MenuItemType[]} />
           </Panel>
         </Header>
         <DetailedCodeCoverageCard
@@ -167,8 +159,8 @@ export const ScopeInfo = scopeInfo(
   },
 );
 
-const BackToScopesList = scopeInfo.backToScopesList('span');
-const Header = scopeInfo.header('div');
+const Header = scopeInfo.header(Panel);
+const ScopeName = scopeInfo.scopeName('div');
 const ActiveBadge = scopeInfo.activeBadge('span');
 const FinisedBadge = scopeInfo.finishedBadge('span');
 const ScopeDuration = scopeInfo.scopeDuration('span');
