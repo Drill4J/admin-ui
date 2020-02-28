@@ -24,7 +24,7 @@ To launch the development environment, follow these steps:
 
 1.  open console from the project root
 2.  run the command `npm install`
-3.  run the command `npm start`
+3.  run the command `npm run start`
 4.  enjoy the development.
 
 ## Production version installation
@@ -35,16 +35,16 @@ To get production bundle, follow these steps:
 
 1.  open console from the project root
 2.  run the command `npm install`
-3.  run the command `npm build`
+3.  run the command `npm run build`
 4.  in project root will be created 'build' folder with UI bundle, witch can be used on production server.
 
 ## All npm commands
 
-`npm start` - launch the development environment
+`npm run start` - launch the development environment
 
-`npm build` - build the product version in the `build` folder
+`npm run build` - build the product version in the `build` folder
 
-`npm test` - run tests when changing files
+`npm run test` - run tests when changing files
 
 ## Technology
 
