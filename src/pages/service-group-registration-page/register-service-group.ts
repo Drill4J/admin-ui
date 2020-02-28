@@ -12,7 +12,7 @@ export function registerAgent({ onSuccess, onError }: { onSuccess?: () => void; 
     }: Agent,
   ) => {
     try {
-      axios.post(`/service-group/${id}/register`, {
+      axios.post(`/service-groups/${id}`, {
         plugins,
         name,
         packagesPrefixes,

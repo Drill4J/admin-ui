@@ -7,7 +7,7 @@ export function toggleScope(
 ) {
   return async (scopeId: string) => {
     try {
-      await axios.post(`/agents/${agentId}/${pluginId}/dispatch-action`, {
+      await axios.post(`/agents/${agentId}/plugins/${pluginId}/dispatch-action`, {
         type: 'TOGGLE_SCOPE',
         payload: { scopeId },
       });
