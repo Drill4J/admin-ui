@@ -178,7 +178,7 @@ function saveChanges({
 }) {
   return async ({ id, packagesPrefixes = [], sessionIdHeaderName }: Agent) => {
     try {
-      await axios.post(`/agents/${id}/system-settings`, {
+      await axios.put(`/agents/${id}/system-settings`, {
         packagesPrefixes: packagesPrefixes.filter(Boolean),
         sessionIdHeaderName,
       });

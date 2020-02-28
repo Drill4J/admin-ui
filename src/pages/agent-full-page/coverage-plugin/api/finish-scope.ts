@@ -7,7 +7,7 @@ export function finishScope(
 ) {
   return async (params: { prevScopeEnabled: boolean; savePrevScope: boolean }) => {
     try {
-      await axios.post(`/agents/${agentId}/${pluginId}/dispatch-action`, {
+      await axios.post(`/agents/${agentId}/plugins/${pluginId}/dispatch-action`, {
         type: 'SWITCH_ACTIVE_SCOPE',
         payload: { scopeName: '', ...params },
       });

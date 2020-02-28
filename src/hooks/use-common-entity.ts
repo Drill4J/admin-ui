@@ -12,7 +12,7 @@ export function useCommonEntity(id: string, type: string) {
     }
 
     const unsubscribe = defaultAdminSocket.subscribe(
-      `/${type === 'service-group' ? 'service-group' : 'get-agent'}/${id}`,
+      `/${type === 'service-group' ? 'service-groups' : 'agents'}/${id}`,
       handleDataChange,
     );
 

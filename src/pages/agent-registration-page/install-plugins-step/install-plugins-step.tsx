@@ -19,7 +19,7 @@ const installPluginsStep = BEM(styles);
 
 export const InstallPluginsStep = installPluginsStep(
   ({ className, formValues: { plugins: pluginsFormValue = [] } = {} }: Props) => {
-    const plugins = useWsConnection<Plugin[]>(defaultAdminSocket, '/get-all-plugins') || [];
+    const plugins = useWsConnection<Plugin[]>(defaultAdminSocket, '/plugins') || [];
     return (
       <div className={className}>
         <InfoPanel align="space-between">

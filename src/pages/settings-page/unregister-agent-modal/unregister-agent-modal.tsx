@@ -86,7 +86,7 @@ async function unregisterAgent(
   { onSuccess, onError }: { onSuccess?: () => void; onError?: (error: string) => void },
 ) {
   try {
-    await axios.post(`/agents/${agentId}/unregister`);
+    await axios.delete(`/agents/${agentId}`);
     onSuccess && onSuccess();
   } catch ({ response: { data: { message } = {} } = {} }) {
     onError && onError(message || 'Internal service error');

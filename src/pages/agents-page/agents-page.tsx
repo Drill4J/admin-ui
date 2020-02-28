@@ -20,7 +20,7 @@ const agentsPage = BEM(styles);
 export const AgentsPage = agentsPage(({ className }: Props) => {
   const { single = [], grouped = [] } = useWsConnection<{ single: Agent[]; grouped: ServiceGroup[] }>(
     defaultAdminSocket,
-    '/get-all-agents',
+    '/agents',
   ) || {};
   const agents = [
     ...grouped

@@ -130,7 +130,7 @@ function saveChanges({
 }) {
   return async (agent: Agent) => {
     try {
-      await axios.post(`/agent/${agent.id}`, agent);
+      await axios.put(`/agents/${agent.id}`, agent);
       onSuccess && onSuccess();
     } catch ({ response: { data: { message } = {} } = {} }) {
       onError && onError(message || 'Internal service error');

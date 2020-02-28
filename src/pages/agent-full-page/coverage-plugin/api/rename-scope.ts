@@ -9,7 +9,7 @@ export function renameScope(
 ) {
   return async ({ id, name }: ScopeSummary) => {
     try {
-      await axios.post(`/agents/${agentId}/${pluginId}/dispatch-action`, {
+      await axios.post(`/agents/${agentId}/plugins/${pluginId}/dispatch-action`, {
         type: 'RENAME_SCOPE',
         payload: { scopeId: id, scopeName: name },
       });

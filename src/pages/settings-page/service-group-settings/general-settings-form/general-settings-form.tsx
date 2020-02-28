@@ -134,7 +134,7 @@ async function saveChanges(
   },
 ) {
   try {
-    await axios.put(`/service-group/${serviceGroup.id}`, serviceGroup);
+    await axios.put(`/service-groups/${serviceGroup.id}`, serviceGroup);
     onSuccess && onSuccess({ type: 'SUCCESS', text: 'New settings have been saved' });
   } catch ({ response: { data: { message } = {} } = {} }) {
     onError && onError(message || 'Internal service error');
