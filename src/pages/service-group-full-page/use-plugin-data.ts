@@ -10,7 +10,7 @@ export function usePluginData<Data>(serviceGroupId: string, pluginId: string) {
       setData(newData);
     }
 
-    const unsubscribe = defaultAdminSocket.subscribe(`/service-group/${serviceGroupId}/plugin/${pluginId}`, handleDataChange);
+    const unsubscribe = defaultAdminSocket.subscribe(`/service-groups/${serviceGroupId}/plugins/${pluginId}`, handleDataChange);
 
     return () => {
       unsubscribe();

@@ -48,7 +48,7 @@ export const AgentsTable = agentsTable(({ className, agents }: Props) => (
           name="status"
           label="Status"
           Cell={({ value, item }) => (
-            <AgentStatusToggler status={value} onChange={() => toggleStandby(item.id)} />
+            <AgentStatusToggler status={value} onChange={() => toggleAgent(item.id)} />
           )}
         />,
         <Column
@@ -76,7 +76,7 @@ export const AgentsTable = agentsTable(({ className, agents }: Props) => (
         name="status"
         label="Status"
         Cell={({ value, item }) => (item.agentType !== 'ServiceGroup' ? (
-          <AgentStatusToggler status={value} onChange={() => toggleStandby(item.id)} />
+          <AgentStatusToggler status={value} onChange={() => toggleAgent(item.id)} />
         ) : null)}
       />
       <Column name="actions" Cell={({ item }: { item: Agent }) => <ActionsColumn agent={item} />} />
@@ -84,6 +84,6 @@ export const AgentsTable = agentsTable(({ className, agents }: Props) => (
   </div>
 ));
 
-const toggleStandby = (agentId: string) => {
-  axios.post(`/agents/${agentId}/toggle-standby`);
+const toggleAgent = (agentId: string) => {
+  axios.post(`/agents/${agentId}/toggle`);
 };

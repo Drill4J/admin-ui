@@ -9,7 +9,7 @@ import { AGENT_STATUS } from 'common/constants';
 import { NotificationManagerContext } from 'notification-manager';
 import { Agent } from 'types/agent';
 import { UnregisterAgentModal } from './unregister-agent-modal';
-import { toggleStandby } from './toggle-standby';
+import { toggleAgent } from './toggle-agent';
 import { AgentStatusToggler } from '../agents-page/agent-status-toggler';
 import { AgentSettings } from './agent-settings';
 import { ServiceGroupSettings } from './service-group-settings';
@@ -43,7 +43,7 @@ export const SettingsPage = settingsPage(
                     Agent settings
                   <AgentStatus
                     status={(data as Agent).status}
-                    onChange={() => toggleStandby((data as Agent).id || '', showMessage)}
+                    onChange={() => toggleAgent((data as Agent).id || '', showMessage)}
                   />
                 </>
               )}

@@ -15,7 +15,7 @@ export function registerAgent(onSuccess?: () => void) {
     onError: (message: string) => void,
   ) => {
     try {
-      axios.post(`/agents/${id}/register`, {
+      axios.post(`/agents/${id}`, {
         name,
         environment,
         packagesPrefixes: packagesPrefixes.filter(Boolean),

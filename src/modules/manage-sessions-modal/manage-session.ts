@@ -13,7 +13,7 @@ export function manageSession(
 ) {
   return async ({ sessionId, type }: { sessionId?: string; type?: 'START' | 'STOP' }) => {
     try {
-      await axios.post(`/agents/${agentId}/${pluginId}/dispatch-action`, {
+      await axios.post(`/agents/${agentId}/plugins/${pluginId}/dispatch-action`, {
         type,
         payload: { sessionId },
       });

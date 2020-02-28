@@ -16,7 +16,7 @@ export function deleteScope(
       });
     } else {
       try {
-        await axios.post(`/agents/${agentId}/${pluginId}/dispatch-action`, {
+        await axios.post(`/agents/${agentId}/plugins/${pluginId}/dispatch-action`, {
           type: 'DROP_SCOPE',
           payload: { scopeId: id },
         });

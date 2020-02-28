@@ -24,7 +24,7 @@ export const BuildList =
     }: Props) => {
       const { agentId = '' } = useParams();
       const { push } = useHistory();
-      const buildVersions = useWsConnection<BuildVersion[]>(defaultAdminSocket, `/${agentId}/builds`) || [];
+      const buildVersions = useWsConnection<BuildVersion[]>(defaultAdminSocket, `/agents/${agentId}/builds`) || [];
       const dispatch = usePluginDispatch();
       const node = React.useRef<HTMLDivElement>(null);
       const { width: contentWidth } = useElementSize(node);

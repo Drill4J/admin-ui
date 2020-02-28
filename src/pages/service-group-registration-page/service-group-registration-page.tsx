@@ -31,7 +31,7 @@ export const ServiceGroupRegistrationPage = serviceGroupRegistrationPage(
     const { search } = useLocation();
     const [isCancelModalOpened, setIsCancelModalOpened] = React.useState(false);
     const { showMessage } = React.useContext(NotificationManagerContext);
-    const availiblePlugins = useWsConnection<Plugin[]>(defaultAdminSocket, '/get-all-plugins') || [];
+    const availiblePlugins = useWsConnection<Plugin[]>(defaultAdminSocket, '/plugins') || [];
     const handeRegisterAgent = registerAgent({
       onSuccess: () => {
         showMessage({ type: 'SUCCESS', text: 'Multiple agents registration has been finished.' });
