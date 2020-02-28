@@ -12,6 +12,7 @@ RUN npm run build
 
 # production environment
 FROM nginx:1.17.6-alpine-perl
+ENV UPSTREAM "drill-admin:8090"
 COPY --from=build /app/build /usr/share/nginx/html
 RUN rm -v /etc/nginx/nginx.conf
 COPY nginx /etc/nginx/
