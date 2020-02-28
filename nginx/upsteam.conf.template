@@ -1,0 +1,3 @@
+upstream drill-admin {
+    server ${UPSTREAM};
+}

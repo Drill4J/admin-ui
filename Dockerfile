@@ -12,14 +12,20 @@ RUN npm run build
 
 # production environment
 FROM nginx:1.17.6-alpine-perl
-# support running as arbitrary user which belogs to the root group
-RUN chmod g+rwx /var/cache/nginx /var/run /var/log/nginx /usr/share/nginx/ /etc/nginx/
-RUN addgroup nginx root
-USER nginx
-
 COPY --from=build /app/build /usr/share/nginx/html
 RUN rm -v /etc/nginx/nginx.conf
 COPY nginx /etc/nginx/
+# support running as arbitrary user which belogs to the root group
+RUN touch /var/run/nginx.pid && \
+  chown -R nginx /var/run/nginx.pid && \
+  chown -R nginx /var/cache/nginx && \
+  chown -R nginx /var/log/nginx && \
+  chown -R nginx /usr/share/nginx/ && \
+  chown -R nginx /etc/nginx/
+RUN addgroup nginx root
+USER nginx
+
 EXPOSE 8080
-CMD ["nginx", "-g", "daemon off;"]
+CMD /bin/sh -c "envsubst < /etc/nginx/upsteam.conf.template > /etc/nginx/upstream.conf && exec nginx -g 'daemon off;'"
+
 

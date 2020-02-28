@@ -8,7 +8,7 @@ jobs:
   bump:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@master
+      - uses: actions/checkout@v1
       - name: Next Prerelease SemVer
         id: next_semver
         uses: Drill4J/semver-tag-action@v0.1.0
