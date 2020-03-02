@@ -18,6 +18,7 @@
   &__active-badge {
     height: 22px;
     padding: 1px 8px;
+    margin: 0px 16px;
     border: 1px solid map-get($color-palette, green100);
     border-radius: 11px;
     font-size: 12px;
@@ -39,7 +40,6 @@
   }
 
   &__scope-duration {
-    margin-left: 8px;
     font-size: 14px;
     line-height: 24px;
   }
