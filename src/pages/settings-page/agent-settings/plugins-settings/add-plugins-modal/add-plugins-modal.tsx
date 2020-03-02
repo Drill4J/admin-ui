@@ -26,7 +26,7 @@ export const AddPluginsModal = addPluginModal(({
 }: Props) => {
   const [selectedPlugins, setSelectedPlugins] = React.useState<string[]>([]);
   const { showMessage } = React.useContext(NotificationManagerContext);
-  const plugins = useWsConnection<Plugin[]>(defaultAdminSocket, `/${agentId}/get-plugin-info`);
+  const plugins = useWsConnection<Plugin[]>(defaultAdminSocket, `/agents/${agentId}/plugins`);
   const handleLoadPlugins = loadPlugins(agentId, {
     onSuccess: () => {
       onToggle(false);
