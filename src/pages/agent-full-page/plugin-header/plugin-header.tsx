@@ -1,8 +1,9 @@
 import * as React from 'react';
 import { BEM, div } from '@redneckz/react-bem-helper';
+import { useParams, useHistory } from 'react-router-dom';
 
 import { Panel } from 'layouts';
-import { Spinner } from 'components';
+import { Spinner, Icons } from 'components';
 import { AGENT_STATUS } from 'common/constants';
 import { capitalize } from 'utils';
 import { AgentStatus } from 'types/agent-status';
@@ -21,19 +22,29 @@ const pluginHeader = BEM(styles);
 
 export const PluginHeader = pluginHeader(({ className, agentName, agentStatus }: Props) => {
   const { loading } = usePluginState();
+  const { agentId = '' } = useParams();
+  const { push } = useHistory();
   return (
     <div className={className}>
       <Content>
-        <LogoWrapper recording={loading}>
-          <Logo />
-        </LogoWrapper>
-        <AgentInfo>
-          <AgentName>{agentName}</AgentName>
-          <Panel>
-            <AgentStatusWrapper status={agentStatus}>{capitalize(agentStatus)}</AgentStatusWrapper>
-            <SpinnerWrapper>{agentStatus === AGENT_STATUS.BUSY && <Spinner />}</SpinnerWrapper>
-          </Panel>
-        </AgentInfo>
+        <Panel>
+          <LogoWrapper recording={loading}>
+            <Logo />
+          </LogoWrapper>
+          <AgentInfo>
+            <AgentName>{agentName}</AgentName>
+            <Panel>
+              <AgentStatusWrapper status={agentStatus}>{capitalize(agentStatus)}</AgentStatusWrapper>
+              <SpinnerWrapper>{agentStatus === AGENT_STATUS.BUSY && <Spinner />}</SpinnerWrapper>
+            </Panel>
+          </AgentInfo>
+        </Panel>
+        <SettingsButton
+          onClick={() => push(`/agents/agent/${agentId}/settings`)}
+          data-test="plugin-header:settings-button"
+        >
+          <Icons.Settings />
+        </SettingsButton>
       </Content>
     </div>
   );
@@ -52,3 +63,4 @@ const AgentStatusWrapper = pluginHeader.agentStatusWrapper(
   ),
 );
 const SpinnerWrapper = pluginHeader.spinnerWrapper(Panel);
+const SettingsButton = pluginHeader.settingsButton('div');
