@@ -119,15 +119,15 @@ export const Overview = overview(({ className }: Props) => {
         <TabsPanel activeTab={selectedTab} onSelect={setSelectedTab}>
           <Tab name="methods">
             <TabIconWrapper>
-              <Icons.Function height={20} width={20} />
+              <Icons.Function />
             </TabIconWrapper>
             Build methods
           </Tab>
           <Tab name="tests">
             <TabIconWrapper>
-              <Icons.Test height={20} width={20} />
+              <Icons.Test width={16} />
             </TabIconWrapper>
-            Build Tests
+            Build tests
           </Tab>
         </TabsPanel>
       </RoutingTabsPanel>

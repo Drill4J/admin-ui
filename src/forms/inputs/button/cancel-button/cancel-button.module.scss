@@ -8,11 +8,11 @@
 
   &:hover {
     border: 1px solid map-get($color-palette, black10);
-    color: $shade-gray;
+    color: $slate-gray;
   }
 
   &:active {
-    border: 1px solid $shade-gray;
-    color: $shade-gray;
+    border: 1px solid $slate-gray;
+    color: $slate-gray;
   }
 }
