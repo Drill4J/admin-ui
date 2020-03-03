@@ -125,28 +125,30 @@ export const ScopeInfo = scopeInfo(
           coverage={coverage}
           showRecording={active}
         />
-        <ProjectMethods methods={scopeMethods} />
         <RoutingTabsPanel>
           <TabsPanel activeTab={selectedTab} onSelect={setSelectedTab}>
             <Tab name="coverage">
               <TabIconWrapper>
-                <Icons.Coverage height={20} width={20} />
+                <Icons.Function />
               </TabIconWrapper>
-                Code Coverage
+              Scope methods
             </Tab>
             <Tab name="tests">
               <TabIconWrapper>
-                <Icons.Test />
+                <Icons.Test width={16} />
               </TabIconWrapper>
-                Tests
+              Scope tests
             </Tab>
           </TabsPanel>
         </RoutingTabsPanel>
         {selectedTab === 'coverage' ? (
-          <CoverageDetails
-            coverageByPackages={coverageByPackages}
-            associatedTestsTopic={`/scope/${scopeId}/associated-tests`}
-          />
+          <>
+            <ProjectMethods methods={scopeMethods} />
+            <CoverageDetails
+              coverageByPackages={coverageByPackages}
+              associatedTestsTopic={`/scope/${scopeId}/associated-tests`}
+            />
+          </>
         ) : (
           <TestDetails
             testsUsages={testsUsages}
