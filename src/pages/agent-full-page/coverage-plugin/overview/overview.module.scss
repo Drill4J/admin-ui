@@ -28,6 +28,7 @@
     display: flex;
     align-items: center;
     margin-right: 8px;
+    color: map-get($color-palette, black100);
   }
 
   &__scope-duration-icon {
