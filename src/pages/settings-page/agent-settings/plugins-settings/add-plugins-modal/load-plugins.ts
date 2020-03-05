@@ -6,7 +6,7 @@ export const loadPlugins = (
 ) => async (selectedPlugins: string[]) => {
   try {
     await Promise.all(
-      selectedPlugins.map((pluginId) => axios.post(`/agents/${agentId}/load-plugin`, { pluginId })),
+      selectedPlugins.map((pluginId) => axios.post(`/agents/${agentId}/plugins`, { pluginId })),
     );
     onSuccess && onSuccess();
   } catch ({ response: { data: { message } = {} } = {} }) {
