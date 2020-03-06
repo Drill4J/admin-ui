@@ -1,7 +1,9 @@
 import * as React from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 
-import { ExpandableTable, Column, Icons } from 'components';
+import {
+  ExpandableTable, Column, Icons, SortArrows,
+} from 'components';
 import { Panel } from 'layouts';
 import { ClassCoverage } from 'types/class-coverage';
 import { CompoundCell } from './compound-cell';

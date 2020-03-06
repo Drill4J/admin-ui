@@ -1,0 +1,27 @@
+@import '~common/style-guide/index';
+
+.sort-arrows {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 24px;
+  width: 24px;
+
+  &__sort-button {
+    &--type {
+      &--asc {
+        svg:last-child {
+          color: map-get($color-palette, black75);
+        }
+      }
+      &--desc {
+        svg:first-child {
+          color: map-get($color-palette, black75);
+        }
+      }
+      &--unsorted {
+        color: $slate-gray;
+      }
+    }
+  }
+}

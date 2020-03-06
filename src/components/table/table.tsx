@@ -1,8 +1,11 @@
 import * as React from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 
+import { SortArrows } from 'components/sort-arrow';
+import { Panel } from 'layouts';
+import { useSorter } from 'hooks';
 import { TableRow } from './table__row';
-import { TableHeader } from './table__header';
+import { DefaultHeaderCell } from './default-header-cell';
 
 import styles from './table.module.scss';
 
@@ -48,12 +51,35 @@ export const Table = table(
       secondLevelExpand,
       (column) => column && column.props,
     );
-
+    const [sortableColumnName, setSortableColumnName] = React.useState('name');
+    const [order, setOrder] = React.useState<any>('asc');
+    const sortData = useSorter(data, sortableColumnName, order);
     return (
       <table className={className}>
-        {!withoutHeader && <TableHeader columns={columns} />}
+        {!withoutHeader && (
+          <thead className={className}>
+            <tr>
+              {columns.map((column, index) => {
+                const HeaderCell = column.HeaderCell || DefaultHeaderCell;
+                return (
+                  <th key={column.name} style={{ width: column.width }}>
+                    <Panel>
+                      <HeaderCell column={column} />
+                      {index > 0 && (
+                        <SortArrows
+                          sort={column.name === sortableColumnName ? order : 'unsorted'}
+                          onClick={() => { (order === 'asc' ? setOrder('desc') : setOrder('asc')); setSortableColumnName(column.name); }}
+                        />
+                      )}
+                    </Panel>
+                  </th>
+                );
+              })}
+            </tr>
+          </thead>
+        )}
         <tbody>
-          {data.map((item, index) => (
+          {sortData.map((item, index) => (
             <TableRow
               key={idKey ? String(item[idKey]) : index}
               item={item}

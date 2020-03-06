@@ -8,4 +8,5 @@ export interface ClassCoverage {
   totalMethodsCount?: number;
   coveredMethodsCount?: number;
   methods?: MethodCoverage[];
+  [key: string]: unknown;
 }
