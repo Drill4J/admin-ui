@@ -70,7 +70,7 @@ export const Breadcrumbs = breadcrumbs(({ className }: Props) => {
       {buildVersion && <Crumb to={`/full-page/${agentId}/build-list`}>All builds</Crumb>}
       {buildVersion && buildVersion !== 'build-list'
         && <Crumb to={`/full-page/${agentId}/${buildVersion}/${pluginId}/dashboard`}>{buildVersion}</Crumb>}
-      {page === 'scopes' && <Crumb to={`/full-page/${agentId}/${buildVersion}/${pluginId}/scopes`}>Scopes</Crumb>}
+      {page === 'scopes' && <Crumb to={`/full-page/${agentId}/${buildVersion}/${pluginId}/scopes`}>All scopes</Crumb>}
       {scopeId && <Crumb to={`/full-page/${agentId}/${buildVersion}/${pluginId}/scopes/${scopeId}`}>{scopeId}</Crumb>}
     </div>
   );
