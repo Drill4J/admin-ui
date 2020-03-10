@@ -24,6 +24,7 @@ interface Props {
   onToggle: (value: boolean) => void;
   agentId: string;
   pluginId: string;
+  agentType?: string;
 }
 
 const manageSessionsModal = BEM(styles);
@@ -35,7 +36,7 @@ const validateScope = composeValidators(
 
 export const ManageSessionsModal = manageSessionsModal(
   ({
-    className, isOpen, onToggle, agentId, pluginId,
+    className, isOpen, onToggle, agentId, pluginId, agentType = 'agent',
   }: Props) => {
     const { showMessage } = React.useContext(NotificationManagerContext);
     const [errorMessage, setErrorMessage] = React.useState('');
@@ -64,7 +65,10 @@ export const ManageSessionsModal = manageSessionsModal(
           </ManageSessionsWarning>
 
           <Form
-            onSubmit={(values: { sessionId?: string; type?: 'START' | 'STOP' }) => manageSession(agentId, pluginId, {
+            onSubmit={(values: { sessionId?: string; type?: 'START' | 'STOP' }) => manageSession({
+              agentType,
+              agentId,
+              pluginId,
               onSuccess: () => {
                 showMessage({
                   type: 'SUCCESS',
