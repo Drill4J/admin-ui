@@ -2,6 +2,7 @@ import * as React from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 import { useParams, useHistory } from 'react-router-dom';
 
+import { Panel } from 'layouts';
 import { Table, Column, Menu } from 'components';
 import { MenuItemType } from 'components/menu/menu-item-type';
 import { percentFormatter } from 'utils';
@@ -43,7 +44,7 @@ export const ScopesList = scopesList(({ className }: Props) => {
       <CoveragePluginHeader />
       <Content>
         <Title>
-          <span>Scopes</span>
+          <span>All scopes</span>
           <ScopesCount>{scopesData.length}</ScopesCount>
         </Title>
         <Table data={scopesData} idKey="name" columnsSize="wide">
@@ -185,7 +186,7 @@ export const ScopesList = scopesList(({ className }: Props) => {
 });
 
 const Content = scopesList.content('div');
-const Title = scopesList.title('div');
+const Title = scopesList.title(Panel);
 const ScopesCount = scopesList.scopesCount('span');
 const HeaderCell = scopesList.headerCell('div');
 const TestTypeLabel = scopesList.testTypeLabel('div');
