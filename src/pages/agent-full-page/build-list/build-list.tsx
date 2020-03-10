@@ -35,7 +35,7 @@ export const BuildList =
           <Content>
             <div ref={node}>
               <Title>
-                <span>Builds list </span>
+                <span>All builds </span>
                 <BuildCount>{buildVersions.length}</BuildCount>
               </Title>
               <Table data={buildVersions}>
