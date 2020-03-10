@@ -39,7 +39,7 @@ export const TestToCodePlugin = testToCodePlugin(
     const [isManageSessionsModalOpen, setIsManageSessionsModalOpen] = React.useState(false);
     const [isFinishScopesModalOpen, setIsFinishScopesModalOpen] = React.useState(false);
     const [{
-      groupedTests = {}, count = 0, agentType, id = '',
+      groupedTests = {}, count = 0, agentType = '', id = '',
     }, setSelectedTestsToRun] = React.useState<TestToRun>({});
     const serviceGroupSummaries = summaries
       .map((summary) => ({ ...summary, ...summary.data }));
@@ -141,7 +141,10 @@ export const TestToCodePlugin = testToCodePlugin(
                     {
                       label: 'Manage sessions',
                       icon: 'ManageSessions',
-                      onClick: () => setIsManageSessionsModalOpen(true),
+                      onClick: () => {
+                        setIsManageSessionsModalOpen(true);
+                        setSelectedTestsToRun({ agentType: 'ServiceGroup' });
+                      },
                     },
                   ]}
                 />
@@ -154,6 +157,7 @@ export const TestToCodePlugin = testToCodePlugin(
               onToggle={setIsManageSessionsModalOpen}
               agentId={serviceGroupId}
               pluginId={pluginId}
+              agentType={agentType}
             />
           )}
           {isFinishScopesModalOpen && (
