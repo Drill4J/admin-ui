@@ -4,8 +4,8 @@
   border-collapse: collapse;
   width: 100%;
   font-size: 14px;
-  color: $slate-gray;
   white-space: nowrap;
+  color: map-get($color-palette, black100);
 
   tbody {
     tr {
@@ -17,14 +17,23 @@
   }
 
   &__header {
-    th {
-      line-height: 20px;
-      color: map-get($color-palette, dark-blue);
-      text-align: left;
-      font-family: $semibold-font;
-      border-bottom: 1px solid map-get($color-palette, dark-blue);
-      border-top: 1px solid map-get($color-palette, dark-blue);
-      height: 48px;
+    border-bottom: 1px solid map-get($color-palette, dark-blue);
+    border-top: 1px solid map-get($color-palette, dark-blue);
+
+    tr {
+      &:first-child th {
+        padding-top: 16px;
+        text-align: left;
+        line-height: 20px;
+        font-family: $semibold-font;
+        font-size: 14px;
+      }
+
+      &:last-child th {
+        padding-bottom: 16px;
+        font-family: $regular-font;
+        font-size: 12px;
+      }
     }
   }
 

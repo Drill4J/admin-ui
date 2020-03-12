@@ -7,7 +7,7 @@ interface Attrs {
   className?: string;
   align?: 'space-between' | 'end' | 'center';
   verticalAlign?: 'center' | 'stretch' | 'start' | 'end';
-  direction?: 'row' | 'column';
+  direction?: 'row' | 'row-reverse' |'column';
   'data-test'?: string;
 }
 

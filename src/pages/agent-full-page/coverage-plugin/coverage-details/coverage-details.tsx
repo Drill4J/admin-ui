@@ -73,6 +73,7 @@ export const CoverageDetails = coverageDetails(
               ]}
               expandedContentKey="classes"
               hasSecondLevelExpand
+              defaultSortField="name"
             >
               <Column
                 name="name"

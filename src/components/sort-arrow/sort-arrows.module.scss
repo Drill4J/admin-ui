@@ -1,0 +1,25 @@
+@import '~common/style-guide/index';
+
+.sort-arrows {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 24px;
+  width: 24px;
+  color: $medium-tint;
+  cursor: pointer;
+
+  &__sort-arrow-wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 16px;
+    width: 16px;
+  }
+
+  &__sort-arrow {
+    &--active {
+      color: $monochrome-default;
+    }
+  }
+}

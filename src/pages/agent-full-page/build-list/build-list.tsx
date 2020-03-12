@@ -39,7 +39,22 @@ export const BuildList =
                 <span>All builds </span>
                 <BuildCount>{buildVersions.length}</BuildCount>
               </Title>
-              <Table data={buildVersions}>
+              <Table
+                data={buildVersions}
+                defaultSortField="buildVersion"
+                combinedColumn={
+                  {
+                    name: 'Methods',
+                    columns: [
+                      <Column name="totalMethods" label="Total" />,
+                      <Column name="newMethods" label="New" />,
+                      <Column name="modifiedMethods" label="Modified" />,
+                      <Column name="unaffectedMethods" label="Unaffected" />,
+                      <Column name="deletedMethods" label="Deleted" />,
+                    ],
+                  }
+                }
+              >
                 <Column
                   name="buildVersion"
                   label="Name"
@@ -61,52 +76,6 @@ export const BuildList =
                   Cell={({ value }) => <span>{dateFormatter(value)}</span>}
                   width={columnWidth}
                 />
-                <Column
-                  name="totalMethods"
-                  HeaderCell={() => (
-                    <HeaderCell>
-                      <HeaderLabel>Total</HeaderLabel>
-                      <div>Methods</div>
-                    </HeaderCell>
-                  )}
-                  width={columnWidth}
-                />
-                <Column
-                  name="newMethods"
-                  HeaderCell={() => (
-                    <HeaderCell>
-                      <HeaderLabel>New</HeaderLabel>
-                    </HeaderCell>
-                  )}
-                  width={columnWidth}
-                />
-                <Column
-                  name="modifiedMethods"
-                  HeaderCell={() => (
-                    <HeaderCell>
-                      <HeaderLabel>Modified</HeaderLabel>
-                    </HeaderCell>
-                  )}
-                  width={columnWidth}
-                />
-                <Column
-                  name="unaffectedMethods"
-                  HeaderCell={() => (
-                    <HeaderCell>
-                      <HeaderLabel>Unaffected</HeaderLabel>
-                    </HeaderCell>
-                  )}
-                  width={columnWidth}
-                />
-                <Column
-                  name="deletedMethods"
-                  HeaderCell={() => (
-                    <HeaderCell>
-                      <HeaderLabel>Deleted</HeaderLabel>
-                    </HeaderCell>
-                  )}
-                  width={columnWidth}
-                />
               </Table>
             </div>
           </Content>
@@ -119,5 +88,3 @@ const Content = buildList.content('div');
 const Title = buildList.title(Panel);
 const BuildCount = buildList.itemsCount('span');
 const NameCell = buildList.nameCell('div');
-const HeaderCell = buildList.headerCell('div');
-const HeaderLabel = buildList.headerLabel('div');

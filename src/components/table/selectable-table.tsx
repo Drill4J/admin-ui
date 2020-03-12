@@ -13,6 +13,7 @@ interface Props {
   onSelect: (selectedItems: string[]) => any;
   columnsSize?: 'wide' | 'medium';
   checkboxDescriptor?: <O>(item: O) => boolean;
+  defaultSortField?: string;
 }
 
 export const SelectableTable = ({
@@ -22,12 +23,13 @@ export const SelectableTable = ({
   idKey,
   selectedRows,
   checkboxDescriptor,
+  defaultSortField,
   ...restProps
 }: Props) => {
   const isAllSelected = selectedRows.length === data.length;
 
   return (
-    <Table data={data} selectedRows={selectedRows} idKey={idKey} {...restProps}>
+    <Table data={data} selectedRows={selectedRows} idKey={idKey} defaultSortField={defaultSortField} {...restProps}>
       <Column
         name="selector"
         Cell={({ item }) => {

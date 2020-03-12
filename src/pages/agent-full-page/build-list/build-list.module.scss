@@ -26,16 +26,4 @@
     cursor: pointer;
     font-family: $semibold-font;
   }
-
-  &__header-cell {
-    display: flex;
-    flex-direction: column-reverse;
-    height: 52px;
-    margin-top: 14px;
-  }
-
-  &__header-label {
-    font-size: 12px;
-    line-height: 24px;
-  }
 }
