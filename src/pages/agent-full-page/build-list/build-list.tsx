@@ -6,6 +6,7 @@ import { Panel } from 'layouts';
 import { Table, Column } from 'components';
 import { defaultAdminSocket } from 'common/connection';
 import { useWsConnection, useElementSize } from 'hooks';
+import { dateFormatter } from 'utils';
 import { BuildVersion } from 'types/build-version';
 import { setBuildVersion, usePluginDispatch } from '../store';
 
@@ -52,6 +53,12 @@ export const BuildList =
                       {buildVersion}
                     </NameCell>
                   )}
+                  width={columnWidth}
+                />
+                <Column
+                  name="detectedAt"
+                  label="Added"
+                  Cell={({ value }) => <span>{dateFormatter(value)}</span>}
                   width={columnWidth}
                 />
                 <Column
