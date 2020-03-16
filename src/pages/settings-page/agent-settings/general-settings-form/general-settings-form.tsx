@@ -128,9 +128,11 @@ function saveChanges({
   onSuccess: () => void;
   onError: (message: string) => void;
 }) {
-  return async (agent: Agent) => {
+  return async ({
+    id, name, description, environment,
+  }: Agent) => {
     try {
-      await axios.put(`/agents/${agent.id}`, agent);
+      await axios.patch(`/agents/${id}/info`, { name, description, environment });
       onSuccess && onSuccess();
     } catch ({ response: { data: { message } = {} } = {} }) {
       onError && onError(message || 'Internal service error');
