@@ -22,11 +22,11 @@ export const TestsToRunUrl = testsToRunUrl(
     <span className={className}>
       <div>
         <CurlFlag>curl <CurlFlag color="red">-</CurlFlag>i <CurlFlag color="red">-</CurlFlag>H </CurlFlag>
-          &quot;accept: application/json&quot;<CurlFlag> \</CurlFlag>
+        &quot;accept: application/json&quot;<CurlFlag> \</CurlFlag>
       </div>
       <div>
         <CurlFlag> <CurlFlag color="red">-</CurlFlag>H </CurlFlag>
-          &quot;content-type: application/json&quot;<CurlFlag> \</CurlFlag>
+        &quot;content-type: application/json&quot;<CurlFlag> \</CurlFlag>
       </div>
       <Panel verticalAlign="start">
         <CurlFlag> <CurlFlag color="red">-</CurlFlag>X <CurlFlag invisible>\</CurlFlag></CurlFlag>

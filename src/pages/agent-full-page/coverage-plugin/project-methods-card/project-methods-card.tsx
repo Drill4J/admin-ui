@@ -33,7 +33,7 @@ export const ProjectMethodsCard = projectMethodsCard(
         header={(
           <CardHeader>
             <Icons.Total />
-              Total
+            Total
           </CardHeader>
         )}
       >
@@ -43,7 +43,7 @@ export const ProjectMethodsCard = projectMethodsCard(
         header={(
           <CardHeader>
             <Icons.Add />
-              New
+            New
           </CardHeader>
         )}
       >
@@ -53,7 +53,7 @@ export const ProjectMethodsCard = projectMethodsCard(
         header={(
           <CardHeader>
             <Icons.Edit />
-              Modified
+            Modified
           </CardHeader>
         )}
       >
@@ -63,7 +63,7 @@ export const ProjectMethodsCard = projectMethodsCard(
         header={(
           <CardHeader>
             <Icons.Delete />
-              Deleted
+            Deleted
           </CardHeader>
         )}
       >

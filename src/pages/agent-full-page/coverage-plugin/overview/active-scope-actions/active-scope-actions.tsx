@@ -31,7 +31,7 @@ export const ActiveScopeActions = activeScopeActions(({ className }: Props) => {
         <ScopeDetails
           onClick={() => push(`/full-page/${agentId}/${buildVersion}/${pluginId}/scopes/${scope && scope.id}`)}
         >
-            Scope details &gt;
+          Scope details &gt;
         </ScopeDetails>
         <FinishScopeButton
           type="primary"
@@ -39,7 +39,7 @@ export const ActiveScopeActions = activeScopeActions(({ className }: Props) => {
           data-test="active-scope-actions:finish-scope-button"
         >
           <Icons.Check height={10} width={14} />
-            Finish scope
+          Finish scope
         </FinishScopeButton>
         <Menu
           items={[

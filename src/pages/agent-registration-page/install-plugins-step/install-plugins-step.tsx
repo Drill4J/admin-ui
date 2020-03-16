@@ -33,7 +33,7 @@ export const InstallPluginsStep = installPluginsStep(
           {pluginsFormValue.length}
           &nbsp;of&nbsp;
           {plugins.length}
-           selected
+          selected
         </SelectedPluginsInfo>
         <PluginsList>
           {plugins.map(({ id = '', name, description }) => (

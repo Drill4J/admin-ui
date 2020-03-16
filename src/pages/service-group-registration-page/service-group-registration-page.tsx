@@ -53,7 +53,7 @@ export const ServiceGroupRegistrationPage = serviceGroupRegistrationPage(
               <Header align="space-between">
                 <div>
                   <Icons.Register />
-                    &nbsp;Register new agents
+                  &nbsp;Register new agents
                 </div>
                 <div>
                   <CancelButton size="large" onClick={() => setIsCancelModalOpened(true)}>Cancel</CancelButton>
@@ -69,10 +69,10 @@ export const ServiceGroupRegistrationPage = serviceGroupRegistrationPage(
               <InfoPanel>
                 <InfoIcon />
                 <InfoPanelText>
-                    In bulk registration basic and system settings will be set up automatically.
-                    Selected plugins will be installed on all agents.
+                  In bulk registration basic and system settings will be set up automatically.
+                  Selected plugins will be installed on all agents.
                   <br />
-                    You will be able to change configuration of any agent separately on Agent Settings page.
+                  You will be able to change configuration of any agent separately on Agent Settings page.
                   <div>
                     <strong>Agents to register:</strong> {unregisteredAgentsCount}. <strong>Service Group:</strong> {serviceGroupName}.
                   </div>

@@ -20,7 +20,7 @@ export const SystemSettingsForm = systemSettingsForm(({ className }: Props) => (
     <InfoPanel align="space-between">
       <Panel>
         <InfoIcon />
-          Information related to your application / project
+        Information related to your application / project
       </Panel>
     </InfoPanel>
     <Content>
@@ -36,8 +36,8 @@ export const SystemSettingsForm = systemSettingsForm(({ className }: Props) => (
           />
         </PackagesTextarea>
         <Instruction>
-            Make sure you add application packages only, otherwise agent&apos;s performance will be
-            affected. Use new line as a separator.
+          Make sure you add application packages only, otherwise agent&apos;s performance will be
+          affected. Use new line as a separator.
         </Instruction>
       </Panel>
       <HeaderMapping label="Header Mapping" optional>

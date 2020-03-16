@@ -33,7 +33,7 @@ export const UnregisterAgentModal = unregisterAgentModal(({
       header={(
         <Panel>
           <HeaderIcon height={20} width={20} />
-            Unregister the agent
+          Unregister the agent
         </Panel>
       )}
       type="error"
@@ -48,8 +48,8 @@ export const UnregisterAgentModal = unregisterAgentModal(({
         )}
         <Content>
           <Notification>
-              Are you sure you want to unregister the agent? All gathered data and settings will be
-              lost.
+            Are you sure you want to unregister the agent? All gathered data and settings will be
+            lost.
           </Notification>
           <Panel>
             <UnregisterButton
@@ -62,10 +62,10 @@ export const UnregisterAgentModal = unregisterAgentModal(({
                 onError: setErrorMessage,
               })}
             >
-                Yes, unregister this agent
+              Yes, unregister this agent
             </UnregisterButton>
             <CancelButton size="large" onClick={() => onToggle(false)}>
-                Cancel
+              Cancel
             </CancelButton>
           </Panel>
         </Content>

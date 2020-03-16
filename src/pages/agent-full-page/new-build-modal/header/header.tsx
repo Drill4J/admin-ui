@@ -24,7 +24,7 @@ export const Header = header(
         <Title>New build has arrived!</Title>
         <PrevBuildInfo>
           <PrevBuildIcon />
-            Previous build:
+          Previous build:
           <PrevBuildVersion>{prevBuildVersion}</PrevBuildVersion>
         </PrevBuildInfo>
       </Content>
