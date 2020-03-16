@@ -28,7 +28,7 @@ export const UnlockingSystemSettingsFormModal = unlockingSystemSettingsFormModal
           <HeaderIcon>
             <Icons.Warning />
           </HeaderIcon>
-            &nbsp; Unlocking secured field
+          &nbsp; Unlocking secured field
         </Panel>
       )}
       type="error"
@@ -48,10 +48,10 @@ export const UnlockingSystemSettingsFormModal = unlockingSystemSettingsFormModal
                 onToggle(false);
               }}
             >
-                Unlock and proceed
+              Unlock and proceed
             </AcceptButton>
             <CancelUnlockingButton type="secondary" size="large" onClick={() => onToggle(false)}>
-                Cancel
+              Cancel
             </CancelUnlockingButton>
           </ActionsPanel>
         </Content>

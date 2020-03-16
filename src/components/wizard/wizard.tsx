@@ -21,7 +21,7 @@ interface Props {
   className?: string;
   initialValues: object;
   onSubmit: (val: any, onError: (message: string) => void) => any;
-  children: React.ReactElement[];
+  children: React.ReactElement<StepProps>[];
 }
 
 const wizard = BEM(styles);
@@ -34,14 +34,14 @@ export const Wizard = wizard(({
   const [{ currentStepIndex }, dispatch] = React.useReducer(wizardReducer, state);
   const [errorMessage, setErrorMessage] = React.useState('');
   const steps = React.Children.toArray(children);
-  const StepComponent = steps[currentStepIndex].props.component;
+  const { name, validate, component: StepComponent } = (steps[currentStepIndex] as React.Component<StepProps>).props;
 
   return (
     <div className={className}>
       <Form
         initialValues={initialValues}
         onSubmit={(values) => onSubmit(values, setErrorMessage)}
-        validate={steps[currentStepIndex].props.validate}
+        validate={validate}
         render={({
           handleSubmit,
           submitting,
@@ -56,9 +56,7 @@ export const Wizard = wizard(({
           <>
             <Header>
               <StepName>
-                {`${currentStepIndex + 1} of ${React.Children.count(children)}. ${
-                  steps[currentStepIndex].props.name
-                } `}
+                {`${currentStepIndex + 1} of ${React.Children.count(children)}. ${name} `}
               </StepName>
               <Panel align="end">
                 {currentStepIndex > 0 && (

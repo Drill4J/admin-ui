@@ -57,7 +57,7 @@ export const FinishScopeModal = finishScopeModal(
           {!testsCount && (
             <EmptyScopeWarning>
               <EmptyScopeWarningIcon />
-                Scope is empty and will be deleted after finishing.
+              Scope is empty and will be deleted after finishing.
             </EmptyScopeWarning>
           )}
           <Content>
@@ -88,7 +88,7 @@ export const FinishScopeModal = finishScopeModal(
                 {testsCount ? 'Finish Scope' : 'Finish and Delete'}
               </Button>
               <CancelButton size="large" onClick={() => onToggle(false)}>
-                  Cancel
+                Cancel
               </CancelButton>
             </ActionsPanel>
           </Content>

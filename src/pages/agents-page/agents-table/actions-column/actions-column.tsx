@@ -50,7 +50,7 @@ export const ActionsColumn = actionsColumn(
             >
               <Panel>
                 <Icons.Register />
-                  &nbsp;Register {unregisteredAgentsCount ? `(${unregisteredAgentsCount})` : ''}
+                &nbsp;Register {unregisteredAgentsCount ? `(${unregisteredAgentsCount})` : ''}
               </Panel>
             </RegisterButton>
           )}
