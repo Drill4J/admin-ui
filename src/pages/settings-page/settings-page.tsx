@@ -40,7 +40,7 @@ export const SettingsPage = settingsPage(
                 'Service Group Agent settings'
               ) : (
                 <>
-                    Agent settings
+                  Agent settings
                   <AgentStatus
                     status={(data as Agent).status}
                     onChange={() => toggleAgent((data as Agent).id || '', showMessage)}

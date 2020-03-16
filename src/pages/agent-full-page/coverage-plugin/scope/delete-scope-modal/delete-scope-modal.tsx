@@ -82,7 +82,7 @@ export const DeleteScopeModal = deleteScopeModal(
                 {scope && scope.active ? 'Yes, Cancel Scope' : 'Yes, Delete Scope'}
               </DeleteScopeButton>
               <CancelButton size="large" onClick={() => onToggle(false)}>
-                  Cancel
+                Cancel
               </CancelButton>
             </ActionsPanel>
           </Content>

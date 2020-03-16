@@ -24,7 +24,7 @@ export const GeneralSettingsForm = generalSettingsForm(({ className }: Props) =>
       <InfoPanel align="space-between">
         <Panel>
           <InfoIcon />
-              Set up basic agent settings
+          Set up basic agent settings
         </Panel>
       </InfoPanel>
       <Content>

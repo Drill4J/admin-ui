@@ -61,7 +61,7 @@ export const NewBuildModal = newBuildModal(
               </Section>
             )}
             <OkButton type="primary" onClick={() => onToggle(false)}>
-                Ok, Got it!
+              Ok, Got it!
             </OkButton>
           </Content>
         </div>

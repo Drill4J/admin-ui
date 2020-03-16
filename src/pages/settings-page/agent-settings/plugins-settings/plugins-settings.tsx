@@ -31,12 +31,12 @@ export const PluginsSettings = pluginsSettings(
         <InfoPanel align="space-between">
           <Panel>
             <InfoIcon />
-              Plugins installed on your agent.
+            Plugins installed on your agent.
           </Panel>
         </InfoPanel>
         <Header align="space-between">
           <span>
-              Plugins
+            Plugins
             <PluginsCount>{(plugins || []).length}</PluginsCount>
           </span>
           <AddPluginButton

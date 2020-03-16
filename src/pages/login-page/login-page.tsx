@@ -48,13 +48,13 @@ export const LoginPage = loginPage(({ className }: Props) => {
           <Inputs.Text placeholder="User ID" disabled rounded icon={<Icons.Account />} />
           <Inputs.Text placeholder="Password" disabled rounded icon={<Icons.Lock />} />
           <SignInButton disabled type="primary">
-              Sign in
+            Sign in
             <Icons.Arrow />
           </SignInButton>
         </SignInForm>
         <ForgotPasswordLink>Forgot your password?</ForgotPasswordLink>
         <ContinueButton type="secondary" onClick={handleLogin}>
-            Continue as a guest (read only)
+          Continue as a guest (read only)
         </ContinueButton>
         <Copyright>{`© ${new Date().getFullYear()} Drill4J. All rights reserved.`}</Copyright>
       </div>

@@ -41,13 +41,13 @@ export const AgentRegistrationPage = agentRegistrationPage(
           title={(
             <Panel>
               <HeaderIcon height={20} width={20} />
-                Register new agent
+              Register new agent
             </Panel>
           )}
           actions={(
             <Panel align="end">
               <CancelButton size="large" onClick={() => setIsCancelModalOpened(true)}>
-                  Cancel
+                Cancel
               </CancelButton>
             </Panel>
           )}
