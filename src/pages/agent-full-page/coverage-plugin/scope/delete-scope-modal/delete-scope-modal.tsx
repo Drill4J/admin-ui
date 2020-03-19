@@ -33,7 +33,7 @@ export const DeleteScopeModal = deleteScopeModal(
     const [errorMessage, setErrorMessage] = React.useState('');
 
     const testsCount = scope
-      ? Object.values(scope.coveragesByType).reduce((acc, { testCount }) => acc + testCount, 0)
+      ? Object.values(scope.coverage.coverageByType).reduce((acc, { testCount }) => acc + testCount, 0)
       : 0;
 
     return (
