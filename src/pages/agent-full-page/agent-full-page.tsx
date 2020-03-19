@@ -60,7 +60,7 @@ export const AgentFullPage = agentFullPage(
     const notification = useNotification() || {};
     const [isNewBuildModalOpened, setIsNewBuildModalOpened] = React.useState(false);
     React.useEffect(() => {
-      if (notification.status === 'UNREAD' && notification.agentId === agentId) {
+      if (!notification.read && notification.agentId === agentId) {
         setIsNewBuildModalOpened(true);
       }
     }, [notification, agentId]);
