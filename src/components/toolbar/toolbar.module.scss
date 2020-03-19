@@ -34,6 +34,30 @@
     color: $slate-gray;
   }
 
+  &__icon-notification {
+    color: map-get($color-palette, blue100);
+    cursor: pointer;
+  }
+
+  &__notification-count {
+    display: flex;
+    justify-content: center;
+    min-width: 20px;
+    height: 20px;
+    margin: 0px 16px 0px 5px;
+    padding: 0px 4px;
+    border-radius: 10px;
+    font-family: $semibold-font;
+    color: map-get($color-palette, middle-blue);
+    background-color: map-get($color-palette, light-blue);
+
+    &--unread {
+      font-size: 11px;
+      color: map-get($color-palette, white);
+      background-color: map-get($color-palette, red100);
+    }
+  }
+
   &__sign-out {
     margin-left: 8px;
     font-size: 12px;
