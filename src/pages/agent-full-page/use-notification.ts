@@ -14,7 +14,7 @@ export function useNotification() {
       setNewBuildNotification(newBuildNotificaiton);
     }
 
-    if (notification.type === 'BUILD' && notification.status === 'UNREAD') {
+    if (notification.type === 'BUILD' && !notification.read) {
       const additionalInfo = notification.message ? JSON.parse(notification.message) : {};
       handleSetNotification({ ...notification, additionalInfo } as NewBuildNotification);
     }
