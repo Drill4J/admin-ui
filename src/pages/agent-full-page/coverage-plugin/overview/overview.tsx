@@ -40,7 +40,7 @@ export const Overview = overview(({ className }: Props) => {
     finishedScopesCount = 0,
   } = buildCoverage;
   const {
-    started = 0, finished = 0, active = false, coverage: { ratio = 0, coverageByType = {} } = {},
+    started = 0, finished = 0, active = false, coverage: { coverage = 0, coverageByType = {} } = {},
   } = useBuildVersion<ScopeSummary>('/active-scope') || {};
   const coverageByPackages = useBuildVersion<ClassCoverage[]>('/build/coverage-by-packages') || [];
   const [selectedTab, setSelectedTab] = React.useState('methods');
@@ -103,7 +103,7 @@ export const Overview = overview(({ className }: Props) => {
                 <ActiveScopeActions />
               </Panel>
             )}
-            coverage={{ coverage: ratio, coverageByType }}
+            coverage={{ coverage, coverageByType }}
             additionalInfo={(
               <Panel>
                 <ScopeDurationIcon />
