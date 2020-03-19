@@ -20,7 +20,7 @@ export const ScopeSummary = scopeSummary(({ className, scope, testsCount }: Prop
     <Element>
       Code coverage
       <ElementValue>
-        {scope && `${percentFormatter(scope.coverage)}%`}
+        {scope && `${percentFormatter(scope.coverage.ratio)}%`}
       </ElementValue>
     </Element>
     <Element>

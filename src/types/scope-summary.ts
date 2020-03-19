@@ -1,13 +1,19 @@
 import { TestTypeSummary } from './test-type-summary';
 
+interface ScopeCoverage {
+  ratio: number;
+  methodCount: number;
+  riskCount: number;
+  coverageByType: { [key: string]: TestTypeSummary };
+}
+
 export interface ScopeSummary {
   name: string;
   id: string;
   started: number;
   finished: number;
-  coverage: number;
+  coverage: ScopeCoverage;
   enabled: boolean;
   active: boolean;
-  coveragesByType: { [key: string]: TestTypeSummary };
-  [key: string]: string | number | boolean | { [key: string]: TestTypeSummary };
+  [key: string]: string | number | boolean | { [key: string]: TestTypeSummary } | ScopeCoverage;
 }
