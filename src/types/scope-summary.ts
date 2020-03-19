@@ -1,7 +1,7 @@
 import { TestTypeSummary } from './test-type-summary';
 
 interface ScopeCoverage {
-  ratio: number;
+  coverage: number;
   methodCount: number;
   riskCount: number;
   coverageByType: { [key: string]: TestTypeSummary };
