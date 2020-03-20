@@ -1,6 +1,5 @@
 import axios from 'axios';
 
-import { ScopeSummary } from 'types/scope-summary';
 import { finishScope } from './finish-scope';
 
 export function deleteScope(
@@ -8,7 +7,7 @@ export function deleteScope(
   pluginId: string,
   { onSuccess, onError }: { onSuccess?: () => void; onError?: (message: string) => void } = {},
 ) {
-  return async ({ id, active }: ScopeSummary) => {
+  return async ({ id, active }: { id?: string; active?: boolean }) => {
     if (active) {
       await finishScope(agentId, pluginId, { onSuccess, onError })({
         prevScopeEnabled: false,

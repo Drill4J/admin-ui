@@ -5,7 +5,7 @@ import { useParams, useHistory } from 'react-router-dom';
 import { Panel } from 'layouts';
 import { Icons, Menu } from 'components';
 import { Button } from 'forms';
-import { ScopeSummary } from 'types/scope-summary';
+import { ActiveScope } from 'types/active-scope';
 import { useBuildVersion } from '../../use-build-version';
 import { usePluginState } from '../../../store';
 import { useCoveragePluginDispatch, openModal } from '../../store';
@@ -21,7 +21,7 @@ const activeScopeActions = BEM(styles);
 export const ActiveScopeActions = activeScopeActions(({ className }: Props) => {
   const { agentId, buildVersion } = usePluginState();
   const { push } = useHistory();
-  const scope = useBuildVersion<ScopeSummary>('/active-scope');
+  const scope = useBuildVersion<ActiveScope>('/active-scope');
   const dispatch = useCoveragePluginDispatch();
   const { pluginId } = useParams();
 

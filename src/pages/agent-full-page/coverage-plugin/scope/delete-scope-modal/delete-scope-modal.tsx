@@ -6,7 +6,7 @@ import { Panel } from 'layouts';
 import { Button, CancelButton } from 'forms';
 import { Popup, Icons, OverflowText } from 'components';
 import { NotificationManagerContext } from 'notification-manager';
-import { ScopeSummary } from 'types/scope-summary';
+import { ActiveScope } from 'types/active-scope';
 import { deleteScope } from '../../api';
 import { ActiveSessionsPanel } from '../active-sessions-panel';
 import { usePluginState } from '../../../store';
@@ -17,7 +17,7 @@ interface Props {
   className?: string;
   isOpen: boolean;
   onToggle: (value: boolean) => void;
-  scope: ScopeSummary | null;
+  scope: ActiveScope | null;
 }
 
 const deleteScopeModal = BEM(styles);
@@ -33,7 +33,7 @@ export const DeleteScopeModal = deleteScopeModal(
     const [errorMessage, setErrorMessage] = React.useState('');
 
     const testsCount = scope
-      ? Object.values(scope.coverage.coverageByType).reduce((acc, { testCount }) => acc + testCount, 0)
+      ? Object.values(scope.coverage.byTestType || {}).reduce((acc, { testCount }) => acc + testCount, 0)
       : 0;
 
     return (
@@ -76,7 +76,7 @@ export const DeleteScopeModal = deleteScopeModal(
                           && push(`/full-page/${agentId}/${buildVersion}/${pluginId}/dashboard`);
                     },
                     onError: setErrorMessage,
-                  })(scope as ScopeSummary);
+                  })(scope as ActiveScope);
                 }}
               >
                 {scope && scope.active ? 'Yes, Cancel Scope' : 'Yes, Delete Scope'}
