@@ -5,7 +5,7 @@ import { useParams } from 'react-router-dom';
 import { Panel } from 'layouts';
 import { Icons, Tooltip } from 'components';
 import { percentFormatter } from 'utils';
-import { Coverage } from 'types/coverage';
+import { BuildCoverage } from 'types/build-coverage';
 import { Methods } from 'types/methods';
 import { isActiveBuild } from 'pages/agent-full-page/is-active-build';
 import { useBuildVersion } from '../../../coverage-plugin/use-build-version';
@@ -24,11 +24,11 @@ const coverageSection = BEM(styles);
 
 export const CoverageSection = coverageSection(({ className, activeBuildVersion }: Props) => {
   const {
-    coverage = 0,
+    ratio = 0,
     diff = 0,
     prevBuildVersion = '',
     arrow = '',
-  } = useBuildVersion<Coverage>('/build/coverage') || {};
+  } = useBuildVersion<BuildCoverage>('/build/coverage') || {};
   const {
     newMethods: {
       totalCount: newMethodsTotalCount = 0,
@@ -51,7 +51,7 @@ export const CoverageSection = coverageSection(({ className, activeBuildVersion 
         label="Build Coverage"
         info={(
           <>
-            {`${percentFormatter(coverage)}%`}
+            {`${percentFormatter(ratio)}%`}
             {arrow && (
               <CoverageArrow
                 rotate={arrow === 'INCREASE' ? 180 : 0}
@@ -116,7 +116,7 @@ export const CoverageSection = coverageSection(({ className, activeBuildVersion 
             {Boolean(diff)
               && prevBuildVersion
               && `${diff > 0 ? '+' : '-'}${percentFormatter(Math.abs(diff))}% vs Build: ${prevBuildVersion}`}
-            {!coverage && !prevBuildVersion && isActiveBuild(activeBuildVersion, buildVersion)
+            {!ratio && !prevBuildVersion && isActiveBuild(activeBuildVersion, buildVersion)
               && 'Will change when at least 1 scope is done.'}
           </Panel>
         )}

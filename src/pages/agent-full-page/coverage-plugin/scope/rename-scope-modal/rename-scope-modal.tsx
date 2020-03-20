@@ -16,6 +16,7 @@ import {
 import { Popup, Icons } from 'components';
 import { NotificationManagerContext } from 'notification-manager';
 import { ScopeSummary } from 'types/scope-summary';
+import { ActiveScope } from 'types/active-scope';
 import { renameScope } from '../../api';
 import { usePluginState } from '../../../store';
 
@@ -25,7 +26,7 @@ interface Props {
   className?: string;
   isOpen: boolean;
   onToggle: (value: boolean) => void;
-  scope: ScopeSummary | null;
+  scope: ActiveScope | null;
 }
 
 const renameScopeModal = BEM(styles);

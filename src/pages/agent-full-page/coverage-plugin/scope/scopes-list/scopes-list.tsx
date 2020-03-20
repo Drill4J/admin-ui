@@ -73,9 +73,9 @@ export const ScopesList = scopesList(({ className }: Props) => {
           <Column
             name="coverage"
             HeaderCell={() => <HeaderCell>Coverage</HeaderCell>}
-            Cell={({ value: { coverage } }) => (
+            Cell={({ value: { ratio } }) => (
               <Coverage data-test="scopes-list:coverage">
-                {`${percentFormatter(coverage)}%`}
+                {`${percentFormatter(ratio)}%`}
               </Coverage>
             )}
           />
@@ -87,10 +87,10 @@ export const ScopesList = scopesList(({ className }: Props) => {
                 <TestTypeLabel>Auto Tests</TestTypeLabel>
               </HeaderCell>
             )}
-            Cell={({ item: { coverage: { coverageByType }, active } }) => (
+            Cell={({ item: { coverage: { byTestType }, active } }) => (
               <TestTypeCoverage>
-                {coverageByType.AUTO && (
-                  <span>{`${percentFormatter(coverageByType.AUTO.coverage)}%`}</span>
+                {byTestType.AUTO && (
+                  <span>{`${percentFormatter(byTestType.AUTO.coverage)}%`}</span>
                 )}
                 {active && testTypes.includes('AUTO') && (
                   <>
@@ -99,9 +99,9 @@ export const ScopesList = scopesList(({ className }: Props) => {
                   </>
                 )}
                 <TestTypeTestCount>
-                  {coverageByType.AUTO
-                      && coverageByType.AUTO.testCount
-                      && `${coverageByType.AUTO.testCount} tests`}
+                  {byTestType.AUTO
+                      && byTestType.AUTO.testCount
+                      && `${byTestType.AUTO.testCount} tests`}
                 </TestTypeTestCount>
               </TestTypeCoverage>
             )}
@@ -113,10 +113,10 @@ export const ScopesList = scopesList(({ className }: Props) => {
                 <TestTypeLabel>Manual</TestTypeLabel>
               </HeaderCell>
             )}
-            Cell={({ item: { coverage: { coverageByType }, active } }) => (
+            Cell={({ item: { coverage: { byTestType }, active } }) => (
               <TestTypeCoverage>
-                {coverageByType.MANUAL && (
-                  <span>{`${percentFormatter(coverageByType.MANUAL.coverage)}%`}</span>
+                {byTestType.MANUAL && (
+                  <span>{`${percentFormatter(byTestType.MANUAL.coverage)}%`}</span>
                 )}
                 {active && testTypes.includes('MANUAL') && (
                   <>
@@ -125,9 +125,9 @@ export const ScopesList = scopesList(({ className }: Props) => {
                   </>
                 )}
                 <TestTypeTestCount>
-                  {coverageByType.MANUAL
-                      && coverageByType.MANUAL.testCount
-                      && `${coverageByType.MANUAL.testCount} tests`}
+                  {byTestType.MANUAL
+                      && byTestType.MANUAL.testCount
+                      && `${byTestType.MANUAL.testCount} tests`}
                 </TestTypeTestCount>
               </TestTypeCoverage>
             )}
