@@ -5,9 +5,9 @@ import { Link, useParams } from 'react-router-dom';
 import { Panel } from 'layouts';
 import { Icons, TabsPanel, Tab } from 'components';
 import { percentFormatter } from 'utils';
-import { Coverage } from 'types/coverage';
+import { BuildCoverage } from 'types/build-coverage';
 import { ClassCoverage } from 'types/class-coverage';
-import { ScopeSummary } from 'types/scope-summary';
+import { ActiveScope } from 'types/active-scope';
 import { Methods } from 'types/methods';
 import { useAgent } from 'hooks';
 import { isActiveBuild } from 'pages/agent-full-page/is-active-build';
@@ -32,16 +32,16 @@ const overview = BEM(styles);
 export const Overview = overview(({ className }: Props) => {
   const { agentId, buildVersion } = usePluginState();
   const { buildVersion: activeBuildVersion } = useAgent(agentId) || {};
-  const buildCoverage = useBuildVersion<Coverage>('/build/coverage') || {};
+  const buildCoverage = useBuildVersion<BuildCoverage>('/build/coverage') || {};
   const {
     prevBuildVersion = '',
     diff = 0,
-    coverage: buildCodeCoverage = 0,
+    ratio: buildCodeCoverage = 0,
     finishedScopesCount = 0,
   } = buildCoverage;
   const {
-    started = 0, finished = 0, active = false, coverage: { coverage = 0, coverageByType = {} } = {},
-  } = useBuildVersion<ScopeSummary>('/active-scope') || {};
+    started = 0, finished = 0, active = false, coverage = {},
+  } = useBuildVersion<ActiveScope>('/active-scope') || {};
   const coverageByPackages = useBuildVersion<ClassCoverage[]>('/build/coverage-by-packages') || [];
   const [selectedTab, setSelectedTab] = React.useState('methods');
   const buildMethods = useBuildVersion<Methods>('/build/methods') || {};
@@ -103,7 +103,7 @@ export const Overview = overview(({ className }: Props) => {
                 <ActiveScopeActions />
               </Panel>
             )}
-            coverage={{ coverage, coverageByType }}
+            coverage={coverage}
             additionalInfo={(
               <Panel>
                 <ScopeDurationIcon />

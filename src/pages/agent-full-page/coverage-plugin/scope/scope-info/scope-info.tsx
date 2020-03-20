@@ -9,7 +9,8 @@ import {
 import { MenuItemType } from 'components/menu/menu-item-type';
 import { NotificationManagerContext } from 'notification-manager';
 import { ScopeSummary } from 'types/scope-summary';
-import { Coverage } from 'types/coverage';
+import { BuildCoverage } from 'types/build-coverage';
+import { ActiveScope } from 'types/active-scope';
 import { Methods } from 'types/methods';
 import { ClassCoverage } from 'types/class-coverage';
 import { AssociatedTests } from 'types/associated-tests';
@@ -41,7 +42,7 @@ export const ScopeInfo = scopeInfo(
     const { agentId } = usePluginState();
     const { pluginId = '', scopeId = '' } = useParams();
     const dispatch = useCoveragePluginDispatch();
-    const coverage = useBuildVersion<Coverage>(`/scope/${scopeId}/coverage`) || {};
+    const coverage = useBuildVersion<BuildCoverage>(`/scope/${scopeId}/coverage`) || {};
     const scopeMethods = useBuildVersion<Methods>(`/scope/${scopeId}/methods`) || {};
     const coverageByPackages = useBuildVersion<ClassCoverage[]>(`/scope/${scopeId}/coverage-by-packages`) || [];
 
@@ -56,6 +57,10 @@ export const ScopeInfo = scopeInfo(
     const {
       name = '', active = false, enabled = false, started = 0, finished = 0,
     } = scope || {};
+    const formattedScope = {
+      ...scope,
+      coverage: { ratio: scope?.ratio, byTestType: scope?.byTestType, methodCount: scope?.methodCount },
+    } as ActiveScope;
     const [selectedTab, setSelectedTab] = React.useState('coverage');
     const menuActions = [
       !active && {
@@ -80,18 +85,18 @@ export const ScopeInfo = scopeInfo(
       {
         label: 'Rename',
         icon: 'Edit',
-        onClick: () => dispatch(openModal('RenameScopeModal', scope)),
+        onClick: () => dispatch(openModal('RenameScopeModal', formattedScope)),
       },
       active
         ? {
           label: 'Cancel',
           icon: 'Delete',
-          onClick: () => dispatch(openModal('DeleteScopeModal', scope)),
+          onClick: () => dispatch(openModal('DeleteScopeModal', formattedScope)),
         }
         : {
           label: 'Delete',
           icon: 'Delete',
-          onClick: () => dispatch(openModal('DeleteScopeModal', scope)),
+          onClick: () => dispatch(openModal('DeleteScopeModal', formattedScope)),
         },
     ].filter(Boolean);
 
@@ -111,7 +116,7 @@ export const ScopeInfo = scopeInfo(
             <FinishScopeButton
               type="secondary"
               size="large"
-              onClick={() => dispatch(openModal('FinishScopeModal', scope))}
+              onClick={() => dispatch(openModal('FinishScopeModal', formattedScope))}
               disabled={!active}
             >
               <Icons.Check height={12} width={16} />

@@ -1,12 +1,13 @@
 import { CoverageByType } from './coverage-by-type';
 
-export interface Coverage {
-  coverage?: number;
+export interface BuildCoverage {
+  ratio?: number;
+  methodCount?: number;
+  riskCount?: number;
+  byTestType?: CoverageByType;
   uncoveredMethodsCount?: number;
   classesCount?: number;
-  methodsCount?: number;
   arrow?: 'INCREASE' | 'DECREASE';
-  coverageByType?: CoverageByType;
   diff?: number;
   prevBuildVersion?: string;
   finishedScopesCount?: number;

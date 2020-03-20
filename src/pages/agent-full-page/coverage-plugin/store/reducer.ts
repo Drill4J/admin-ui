@@ -1,4 +1,4 @@
-import { ScopeSummary } from 'types/scope-summary';
+import { ActiveScope } from 'types/active-scope';
 import { ActiveSessions } from 'types/active-sessions';
 import { PluginState, ModalName } from './store-types';
 
@@ -7,7 +7,7 @@ const SET_ACTIVE_SESSIONS = 'SET_ACTIVE_SESSIONS';
 
 export type Action = ReturnType<typeof openModal | typeof setActiveSessions>;
 
-export const openModal = (modalName: ModalName | undefined, scope: ScopeSummary | null) =>
+export const openModal = (modalName: ModalName | undefined, scope: ActiveScope | null) =>
   ({ type: OPEN_MODAL, payload: { openedModalName: modalName, scope } } as const);
 
 export const setActiveSessions = (activeSessions: ActiveSessions) => ({ type: SET_ACTIVE_SESSIONS, payload: activeSessions } as const);

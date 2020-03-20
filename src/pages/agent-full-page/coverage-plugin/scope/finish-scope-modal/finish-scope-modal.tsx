@@ -6,7 +6,7 @@ import { Panel } from 'layouts';
 import { Button, Inputs, CancelButton } from 'forms';
 import { Popup, Icons, OverflowText } from 'components';
 import { NotificationManagerContext } from 'notification-manager';
-import { ScopeSummary as ScopeSummaryType } from 'types/scope-summary';
+import { ActiveScope } from 'types/active-scope';
 import { finishScope } from '../../api';
 import { ScopeSummary } from './scope-summary';
 import { ActiveSessionsPanel } from '../active-sessions-panel';
@@ -18,7 +18,7 @@ interface Props {
   className?: string;
   isOpen: boolean;
   onToggle: (value: boolean) => void;
-  scope: ScopeSummaryType | null;
+  scope: ActiveScope | null;
 }
 
 const finishScopeModal = BEM(styles);
@@ -33,7 +33,7 @@ export const FinishScopeModal = finishScopeModal(
     const [ignoreScope, setIgnoreScope] = React.useState(false);
 
     const testsCount = scope
-      ? Object.values(scope.coverage.coverageByType).reduce((acc, { testCount }) => acc + testCount, 0)
+      ? Object.values(scope.coverage.byTestType || {}).reduce((acc, { testCount }) => acc + testCount, 0)
       : 0;
     const { pluginId = '', scopeId = '' } = useParams();
     const { push } = useHistory();
@@ -61,7 +61,7 @@ export const FinishScopeModal = finishScopeModal(
             </EmptyScopeWarning>
           )}
           <Content>
-            <ScopeSummary scope={scope} testsCount={testsCount} />
+            <ScopeSummary scope={scope as any} testsCount={testsCount} />
             <IgnoreScope
               checked={ignoreScope}
               onChange={() => setIgnoreScope(!ignoreScope)}

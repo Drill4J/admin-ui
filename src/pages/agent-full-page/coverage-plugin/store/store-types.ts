@@ -1,4 +1,4 @@
-import { ScopeSummary } from 'types/scope-summary';
+import { ActiveScope } from 'types/active-scope';
 import { ActiveSessions } from 'types/active-sessions';
 
 export type ModalName =
@@ -9,6 +9,6 @@ export type ModalName =
 
 export interface PluginState {
   openedModalName?: ModalName;
-  scope: ScopeSummary | null;
+  scope: ActiveScope | null;
   activeSessions: ActiveSessions;
 }

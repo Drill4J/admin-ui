@@ -4,7 +4,7 @@ import { BEM } from '@redneckz/react-bem-helper';
 import { Panel } from 'layouts';
 import { Icons } from 'components';
 import { percentFormatter } from 'utils';
-import { Coverage } from 'types/coverage';
+import { BuildCoverage } from 'types/build-coverage';
 import { Card, CardSection } from '../card';
 import { CoveragesByType } from './coverages-by-type';
 
@@ -13,7 +13,7 @@ import styles from './code-coverage-card.module.scss';
 interface Props {
   className?: string;
   header?: React.ReactNode;
-  coverage: Coverage;
+  coverage: BuildCoverage;
   additionalInfo?: React.ReactNode;
   showRecording?: boolean;
   testContext?: string;
@@ -25,7 +25,7 @@ export const CodeCoverageCard = codeCoverageCard(
   ({
     className,
     header,
-    coverage: { coverage = 0, arrow, coverageByType = {} },
+    coverage: { ratio = 0, byTestType = {}, arrow },
     additionalInfo,
     showRecording,
     testContext,
@@ -35,7 +35,7 @@ export const CodeCoverageCard = codeCoverageCard(
         <CardSection>
           <TotalCoverage>
             <Panel data-test={`code-coverage-card:${testContext}`}>
-              {`${percentFormatter(coverage)}%`}
+              {`${percentFormatter(ratio)}%`}
               {arrow && <ArrowIcon rotate={arrow === 'INCREASE' ? 180 : 0} type={arrow} />}
             </Panel>
           </TotalCoverage>
@@ -44,7 +44,7 @@ export const CodeCoverageCard = codeCoverageCard(
         <CardSection>
           <CoveragesByType
             testContext={testContext}
-            coverageByType={coverageByType}
+            coverageByType={byTestType}
             showRecording={showRecording}
           />
         </CardSection>
