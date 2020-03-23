@@ -61,7 +61,7 @@ export const FinishScopeModal = finishScopeModal(
             </EmptyScopeWarning>
           )}
           <Content>
-            <ScopeSummary scope={scope as any} testsCount={testsCount} />
+            <ScopeSummary scope={scope as ActiveScope} testsCount={testsCount} />
             <IgnoreScope
               checked={ignoreScope}
               onChange={() => setIgnoreScope(!ignoreScope)}
