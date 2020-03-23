@@ -1,26 +1,26 @@
 import * as React from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 
-import styles from './scope-summary.module.scss';
+import { ActiveScope } from 'types/active-scope';
+import { percentFormatter } from 'utils';
 
-import { percentFormatter } from '../../../../../../utils';
-import { ScopeSummary as ScopeSummaryType } from '../../../../../../types/scope-summary';
+import styles from './scope-summary.module.scss';
 
 interface Props {
   className?: string;
-  scope: ScopeSummaryType | null;
+  scope: ActiveScope;
   testsCount: number;
 }
 
 const scopeSummary = BEM(styles);
 
-export const ScopeSummary = scopeSummary(({ className, scope, testsCount }: Props) => (
+export const ScopeSummary = scopeSummary(({ className, scope: { coverage: { ratio = 0 }, started }, testsCount }: Props) => (
   <div className={className}>
     <Title>Scope Summary</Title>
     <Element>
       Code coverage
       <ElementValue>
-        {scope && `${percentFormatter(scope.ratio)}%`}
+        {`${percentFormatter(ratio)}%`}
       </ElementValue>
     </Element>
     <Element>
@@ -29,7 +29,7 @@ export const ScopeSummary = scopeSummary(({ className, scope, testsCount }: Prop
     </Element>
     <Element>
       Duration
-      <ElementValue>{scope && getTimeString(scope.started)}</ElementValue>
+      <ElementValue>{getTimeString(started)}</ElementValue>
     </Element>
   </div>
 ));
