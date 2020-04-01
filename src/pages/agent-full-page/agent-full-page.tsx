@@ -7,8 +7,10 @@ import {
 import { Toolbar, Icons, Footer } from 'components';
 import { PluginsLayout } from 'layouts';
 import { Breadcrumbs } from 'modules';
-import { useAgent } from 'hooks';
+import { useAgent, useWsConnection } from 'hooks';
 import { Plugin } from 'types/plugin';
+import { Notification } from 'types/notificaiton';
+import { defaultAdminSocket } from 'common/connection';
 import { CoveragePlugin } from './coverage-plugin';
 import { PluginProvider } from './store';
 import { PluginHeader } from './plugin-header';
@@ -17,7 +19,6 @@ import { BuildList } from './build-list';
 import { Sidebar } from './sidebar';
 import { InitialConfigController } from './initial-config-controller';
 import { NewBuildModal } from './new-build-modal';
-import { useNotification } from './use-notification';
 
 import styles from './agent-full-page.module.scss';
 
@@ -57,7 +58,7 @@ export const AgentFullPage = agentFullPage(
     const { params: { activeLink = '' } = {} } = matchPath<{ activeLink: string }>(pathname, {
       path,
     }) || {};
-    const notification = useNotification() || {};
+    const [notification = {}] = useWsConnection<Notification[]>(defaultAdminSocket, '/notifications') || [];
     const [isNewBuildModalOpened, setIsNewBuildModalOpened] = React.useState(false);
     React.useEffect(() => {
       if (!notification.read && notification.agentId === agentId) {
