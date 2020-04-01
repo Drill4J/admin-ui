@@ -4,21 +4,21 @@ import { format } from 'timeago.js';
 
 import { Panel } from 'layouts';
 import { Icons } from 'components';
-import { NewBuildNotification } from 'types/new-build-notification';
-import { readNotification } from '../api/read-notification';
+import { Notification as NotificationType } from 'types/notificaiton';
+import { readNotification, deleteNotification } from '../api';
 
 import styles from './notification.module.scss';
 
 interface Props {
   className?: string;
-  notification: NewBuildNotification;
+  notification: NotificationType;
 }
 
 const notification = BEM(styles);
 
 export const Notification = notification(({
   className, notification: {
-    agentId, createdAt, read, id = '', additionalInfo: { currentId: buildVersion } = {},
+    agentId, createdAt, read, id = '', message: { currentId: buildVersion } = {},
   },
 }: Props) => (
   <div className={className}>
@@ -41,7 +41,7 @@ export const Notification = notification(({
             <Icons.Success />
           </MarkAsReadButton>
           <DeleteNotificationButton
-            onClick={() => {}}
+            onClick={() => deleteNotification(id)}
             read={read}
             data-test="notification:delete-notification-button"
           >

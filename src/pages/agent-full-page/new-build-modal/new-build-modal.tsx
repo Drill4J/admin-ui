@@ -3,7 +3,7 @@ import { BEM } from '@redneckz/react-bem-helper';
 
 import { Button } from 'forms';
 import { Popup } from 'components';
-import { NewBuildNotification } from 'types/new-build-notification';
+import { Notification } from 'types/notificaiton';
 import { readNotification } from '../api';
 import { BuildUpdates } from './build-updates';
 import { RecommendedActions } from './recommended-actions';
@@ -15,7 +15,7 @@ interface Props {
   className?: string;
   isOpen: boolean;
   onToggle: (value: boolean) => void;
-  notification: NewBuildNotification;
+  notification: Notification;
 }
 
 const newBuildModal = BEM(styles);
@@ -27,7 +27,7 @@ export const NewBuildModal = newBuildModal(
     onToggle,
     notification: {
       id = '',
-      additionalInfo: {
+      message: {
         prevId, buildDiff = {}, recommendations = [],
       } = {},
     },
