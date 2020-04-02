@@ -8,6 +8,7 @@
   width: 100%;
   margin-bottom: 8px;
   border-bottom: 1px solid map-get($color-palette, light-blue);
+  color: map-get($color-palette, black100);
 
   &__plugin-name {
     font-family: $light-font;

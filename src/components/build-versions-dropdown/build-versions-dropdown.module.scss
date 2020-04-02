@@ -1,0 +1,77 @@
+@import '~common/style-guide/index';
+
+.build-versions-dropdown {
+  position: relative;
+  cursor: pointer;
+
+  &__current-build-version {
+    font-size: 14px;
+    line-height: 32px;
+  }
+
+  &__baseline-build-version {
+    font-family: $semibold-font;
+    font-size: 14px;
+    color: map-get($color-palette, blue100);
+  }
+
+  &__filled-star {
+    position: absolute;
+    top: 3px;
+  }
+
+  &__expander {
+    margin-left: 8px;
+  }
+
+  &__build-versions-list-wrapper {
+    position: absolute;
+    z-index: 150;
+  }
+
+  &__build-versions-list {
+    display: flex;
+    flex-direction: column;
+    min-width: 200px;
+    max-height: 230px;
+    overflow-y: auto;
+    background-color: map-get($color-palette, white);
+    box-shadow: 0 0 24px 0 rgba(0, 0, 0, 0.15);
+  }
+
+  &__build-version {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    min-height: 32px;
+    padding: 0 8px;
+    font-size: 12px;
+    color: map-get($color-palette, black100);
+    cursor: pointer;
+
+    &:hover {
+      background-color: rgba(104, 116, 129, 0.05);
+
+      .build-versions-dropdown__baseline-star {
+        color: map-get($color-palette, blue100);
+      }
+    }
+  }
+
+  &__default-baseline {
+    display: flex;
+    flex-direction: row-reverse;
+    color: map-get($color-palette, blue100);
+    margin-right: 8px;
+  }
+
+  &__baseline-star {
+    display: flex;
+    color: map-get($color-palette, white);
+    margin-right: 8px;
+
+    &--selected {
+      color: map-get($color-palette, blue100);
+    }
+  }
+}

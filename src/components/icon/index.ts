@@ -50,6 +50,7 @@ import { path as serviceGroupPath } from './path/service-group.path';
 import { path as buildListPath } from './path/build-list.path';
 import { path as cancelPath } from './path/cancel.path';
 import { path as successPath } from './path/success.path';
+import { path as starFilledPath } from './path/star-filled.path';
 import { declareIcon } from './declare-icon';
 import { ReactComponent as SettingsSvg } from './settings.svg';
 
@@ -114,5 +115,6 @@ export const Icons = {
   BuildList: declareIcon(buildListPath, { defaultWidth: 18, defaultHeight: 16 }),
   Cancel: declareIcon(cancelPath),
   Success: declareIcon(successPath),
+  StarFilled: declareIcon(starFilledPath),
   NewSettings: SettingsSvg,
 };

@@ -5,6 +5,7 @@ import { useParams } from 'react-router-dom';
 import { TestsToRunModal } from 'modules';
 import { Risks } from 'types/risks';
 import { TestsToRun } from 'types/tests-to-run';
+import { BuildVersionsDropdown } from 'components';
 import { usePluginState } from '../../store';
 import { useBuildVersion } from '../use-build-version';
 import { ActionSection } from './action-section';
@@ -34,7 +35,10 @@ export const CoveragePluginHeader = coveragePluginHeader(({ className }: Props) 
 
   return (
     <div className={className}>
-      <PluginName>Test2Code</PluginName>
+      <div>
+        <PluginName>Test2Code</PluginName>
+        <BuildVersionsDropdown />
+      </div>
       <Actions>
         <ActionSection
           label="Risks"
