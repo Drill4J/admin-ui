@@ -16,6 +16,7 @@ export function useBuildVersion<Data>(topic: string) {
       ? defaultPluginSocket.subscribe(topic, handleDataChange, {
         agentId,
         buildVersion,
+        type: 'AGENT',
       })
       : null;
 
