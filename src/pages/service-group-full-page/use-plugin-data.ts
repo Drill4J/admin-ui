@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-import { defaultAdminSocket } from 'common/connection';
+import { defaultPluginSocket } from 'common/connection';
 
 export function usePluginData<Data>(serviceGroupId: string, pluginId: string) {
   const [data, setData] = useState<Data | null>(null);
@@ -10,7 +10,9 @@ export function usePluginData<Data>(serviceGroupId: string, pluginId: string) {
       setData(newData);
     }
 
-    const unsubscribe = defaultAdminSocket.subscribe(`/service-groups/${serviceGroupId}/plugins/${pluginId}`, handleDataChange);
+    const unsubscribe = defaultPluginSocket.subscribe(
+      '/service-group/summary', handleDataChange, { type: 'GROUP', groupId: serviceGroupId },
+    );
 
     return () => {
       unsubscribe();

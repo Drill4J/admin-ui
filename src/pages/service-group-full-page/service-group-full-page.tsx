@@ -86,7 +86,7 @@ export const ServiceGroupFullPage = serviceGroupFullPage(
                 render={() => (
                   <TestToCodePlugin
                     summaries={serviceGroup.summaries}
-                    aggregatedData={serviceGroup.aggregatedData}
+                    aggregated={serviceGroup.aggregated}
                   />
                 )}
               />

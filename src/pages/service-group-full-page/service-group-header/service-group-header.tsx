@@ -18,7 +18,7 @@ const serviceGroupHeader = BEM(styles);
 export const ServiceGroupHeader = serviceGroupHeader(
   ({
     className,
-    serviceGroup: { name, count } = {},
+    serviceGroup: { name, summaries = [] } = {},
   }: Props) => {
     const { id = '' } = useParams();
     const { push } = useHistory();
@@ -30,7 +30,7 @@ export const ServiceGroupHeader = serviceGroupHeader(
           <AgentInfo>
             <ServiceGroupName>{name}</ServiceGroupName>
             <AgentsCount>
-              {`${count} agents`}
+              {`${summaries.length} agents`}
             </AgentsCount>
           </AgentInfo>
           <SettingsButton
