@@ -64,7 +64,6 @@ export const FinishAllScopesModal = finishAllScopesModal(
                         text: 'All scopes have been successfully finished',
                       });
                       onToggle(false);
-                      window.location.href = `/service-group-full-page/${serviceGroupId}/service-group-dashboard`;
                     },
                     onError: setErrorMessage,
                   })({ prevScopeEnabled: true, savePrevScope: true });
