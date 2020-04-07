@@ -19,7 +19,7 @@ type TestToRun = { groupedTests?: { [testType: string]: string[] }; count?: numb
 interface Props {
   className?: string;
   summaries?: Summary[];
-  aggregatedData?: {
+  aggregated?: {
     coverage?: number;
     risks?: number;
     arrow?: 'INCREASE' | 'DECREASE';
@@ -32,7 +32,7 @@ export const TestToCodePlugin = testToCodePlugin(
   ({
     className,
     summaries = [],
-    aggregatedData,
+    aggregated,
   }: Props) => {
     const { serviceGroupId = '', pluginId = '' } = useParams();
     const { push } = useHistory();
@@ -42,19 +42,19 @@ export const TestToCodePlugin = testToCodePlugin(
       groupedTests = {}, count = 0, agentType = '', id = '',
     }, setSelectedTestsToRun] = React.useState<TestToRun>({});
     const serviceGroupSummaries = summaries
-      .map((summary) => ({ ...summary, ...summary.data }));
+      .map((agentSummary) => ({ ...agentSummary, ...agentSummary.summary }));
 
     return (
       <>
         <div className={className}>
           <List data={serviceGroupSummaries} gridTemplateColumns="3fr repeat(3, 1fr) 50px" testContext="test-to-code-plugin">
             <ListColumn
-              name="agentName"
+              name="name"
               Cell={({
                 value,
                 item: {
                   buildVersion,
-                  agentId,
+                  id: agentId,
                 },
               }: {
                 value: string;
@@ -76,7 +76,7 @@ export const TestToCodePlugin = testToCodePlugin(
               )}
               HeaderCell={() => (
                 <TestToCodeHeaderCell
-                  value={`${percentFormatter(aggregatedData?.coverage || 0)}%`}
+                  value={`${percentFormatter(aggregated?.coverage || 0)}%`}
                   label="coverage"
                 />
               )}
@@ -90,12 +90,12 @@ export const TestToCodePlugin = testToCodePlugin(
                 />
               )}
               HeaderCell={() => (
-                <TestToCodeHeaderCell value={aggregatedData?.risks || 0} label="risks" />
+                <TestToCodeHeaderCell value={aggregated?.risks || 0} label="risks" />
               )}
             />
             <ListColumn
               name="testsToRun"
-              Cell={({ value, item: { agentId = '' } = {} }) => (
+              Cell={({ value, item: { id: agentId = '' } = {} }) => (
                 <TestToCodeCell
                   value={value?.count}
                   onClick={() => setSelectedTestsToRun({ ...value, agentType: 'Agent', id: agentId })}
@@ -104,15 +104,19 @@ export const TestToCodePlugin = testToCodePlugin(
               )}
               HeaderCell={() => (
                 <TestToCodeHeaderCell
-                  value={aggregatedData?.testsToRun?.count}
+                  value={aggregated?.testsToRun?.count}
                   label="tests to run"
-                  onClick={() => setSelectedTestsToRun({ ...aggregatedData?.testsToRun, agentType: 'ServiceGroup', id: serviceGroupId })}
+                  onClick={() => setSelectedTestsToRun({ ...aggregated?.testsToRun, agentType: 'ServiceGroup', id: serviceGroupId })}
                 />
               )}
             />
             <ListColumn
               name="actions"
-              Cell={({ item: { agentId } }) => (
+              Cell={({
+                item: {
+                  id: agentId = '',
+                },
+              }) => (
                 <Actions
                   testContext="test-to-code-plugin:actions:cell"
                   items={[
