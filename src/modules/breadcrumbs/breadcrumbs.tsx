@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 import {
-  useLocation, matchPath, Link,
+  Link, useHistory, useLocation, matchPath,
 } from 'react-router-dom';
 
 import styles from './breadcrumbs.module.scss';
@@ -10,7 +10,11 @@ interface Props {
   className?: string;
 }
 
-const breadcrumbs = BEM(styles);
+interface Crumb {
+  label: string;
+  link: string;
+  state?: { label: string; buildVersion: string; pluginId: string };
+}
 
 type MatchType = {
   agentId: string;
@@ -24,7 +28,10 @@ type MatchType = {
   scopeId: string;
 };
 
+const breadcrumbs = BEM(styles);
+
 export const Breadcrumbs = breadcrumbs(({ className }: Props) => {
+  const { location } = useHistory();
   const { pathname } = useLocation();
   const {
     params: {
@@ -51,27 +58,70 @@ export const Breadcrumbs = breadcrumbs(({ className }: Props) => {
     exact: true,
   }) || {};
 
+  const crumbs: Crumb[] = [
+    { label: 'Agents', link: agentId || serviceGroupId ? '/' : '' },
+    {
+      label: `${agentType === 'service-group' ? 'Service Group' : 'Agent'} Settings`,
+      link: settings ? `/agents/${agentType}/${agentId}/settings` : '',
+    },
+    {
+      label: 'Agent registration',
+      link: registrationType ? '/' : '',
+    },
+    {
+      label: 'Agent: Dashboard',
+      link: buildVersion && pluginId === 'dashboard' ? `/full-page/${agentId}/${buildVersion}/dashboard` : '',
+    },
+    {
+      label: 'Agent: Test2Code',
+      link: buildVersion && buildVersion !== 'build-list' && pluginId !== 'dashboard'
+        ? `/full-page/${agentId}/${buildVersion}/${pluginId}/dashboard`
+        : '',
+    },
+    {
+      label: 'Service Group: Dashboard',
+      link: serviceGroupId &&
+      pluginId === 'service-group-dashboard' ? `/service-group-full-page/${serviceGroupId}/serice-group-dashboard` : '',
+    },
+    {
+      label: 'Service Group: Test2Code',
+      link: serviceGroupId &&
+      pluginId !== 'service-group-dashboard' ? `/service-group-full-page/${serviceGroupId}/serice-group-dashboard` : '',
+    },
+    {
+      label: 'All builds',
+      link: buildVersion ? `/full-page/${agentId}/build-list` : '',
+      state: { label: pluginId && pluginId !== 'dashboard' ? 'Agent: Test2Code' : 'Agent: Dashboard', buildVersion, pluginId },
+    },
+    {
+      label: `${buildVersion}`,
+      link: buildVersion && buildVersion !== 'build-list' ? `/full-page/${agentId}/${buildVersion}/${pluginId}/dashboard` : '',
+    },
+    {
+      label: 'All scopes',
+      link: page === 'scopes' ? `/full-page/${agentId}/${buildVersion}/${pluginId}/scopes` : '',
+    },
+    {
+      label: `${scopeId}`,
+      link: scopeId ? `/full-page/${agentId}/${buildVersion}/${pluginId}/scopes/${scopeId}` : '',
+    },
+  ];
+  const currentPageCrumbs = crumbs.filter(({ link, label }) => link
+  || label === location.state?.label)
+    .map((currentPageCrumb) => {
+      if (currentPageCrumb.link === '') {
+        return {
+          ...currentPageCrumb,
+          link: location.state?.label === 'Agent: Dashboard'
+            ? `/full-page/${agentId}/${location.state.buildVersion}/dashboard`
+            : `/full-page/${agentId}/${location.state.buildVersion}/${location.state.pluginId}/dashboard`,
+        };
+      }
+      return currentPageCrumb;
+    });
   return (
     <div className={className}>
-      {(agentId || serviceGroupId) && <Crumb to="/">Agents</Crumb>}
-      {settings &&
-        <Crumb to={`/agents/${agentType}/${agentId}/settings`}>{agentType === 'service-group' ? 'Service Group' : 'Agent'} Settings</Crumb>}
-      {registrationType === 'registration' && <Crumb to="/">Agent registration</Crumb>}
-      {registrationType === 'bulk-registration' && <Crumb to="/">Agents registration</Crumb>}
-      {buildVersion && pluginId === 'dashboard' && <Crumb to={`/full-page/${agentId}/${buildVersion}/dashboard`}>Agent: Dashboard</Crumb>}
-      {buildVersion && pluginId !== 'dashboard'
-        && <Crumb to={`/full-page/${agentId}/${buildVersion}/${pluginId}/dashboard`}>Agent: Test2Code</Crumb>}
-      {serviceGroupId &&
-        pluginId === 'service-group-dashboard' &&
-          <Crumb to={`/service-group-full-page/${serviceGroupId}/serice-group-dashboard`}>Service Group: Dashboard</Crumb>}
-      {serviceGroupId &&
-        pluginId !== 'service-group-dashboard'
-          && <Crumb to={`/service-group-full-page/${serviceGroupId}/serice-group-dashboard`}>Service Group: Test2Code</Crumb>}
-      {buildVersion && <Crumb to={`/full-page/${agentId}/build-list`}>All builds</Crumb>}
-      {buildVersion && buildVersion !== 'build-list'
-        && <Crumb to={`/full-page/${agentId}/${buildVersion}/${pluginId}/dashboard`}>{buildVersion}</Crumb>}
-      {page === 'scopes' && <Crumb to={`/full-page/${agentId}/${buildVersion}/${pluginId}/scopes`}>All scopes</Crumb>}
-      {scopeId && <Crumb to={`/full-page/${agentId}/${buildVersion}/${pluginId}/scopes/${scopeId}`}>{scopeId}</Crumb>}
+      {currentPageCrumbs.map(({ label, link, state }) => link && <Crumb to={{ pathname: link, state }}>{label}</Crumb>)}
     </div>
   );
 });
