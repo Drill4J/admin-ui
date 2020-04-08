@@ -3,7 +3,9 @@
 .breadcrumbs {
   :not(:last-child) {
     &:after {
-      content: ' > ';
+      padding: 0 8px;
+      color: map-get($color-palette, black100);
+      content: '/';
     }
   }
 
