@@ -4,7 +4,7 @@
   "license": "Apache-2.0",
   "private": true,
   "dependencies": {
-    "@drill4j/socket": "0.1.4",
+    "@drill4j/socket": "0.1.5",
     "@redneckz/react-bem-helper": "2.0.4",
     "@redneckz/react-devirt": "0.0.6",
     "@types/jest": "25.1.4",
