@@ -31,7 +31,7 @@ type MatchType = {
 const breadcrumbs = BEM(styles);
 
 export const Breadcrumbs = breadcrumbs(({ className }: Props) => {
-  const { location } = useHistory();
+  const { location } = useHistory<{ label: string; buildVersion: string; pluginId: string }>();
   const { pathname } = useLocation();
   const {
     params: {
