@@ -15,10 +15,10 @@ export function useAgent(agentId: string, callback?: () => void) {
       setData(newData);
     }
 
-    const unsubscribe = defaultAdminSocket.subscribe(`/agents/${agentId}`, handleDataChange);
+    const unsubscribe = agentId && defaultAdminSocket.subscribe(`/agents/${agentId}`, handleDataChange);
 
     return () => {
-      unsubscribe();
+      unsubscribe && unsubscribe();
     };
     // eslint-disable-next-line
   }, [agentId]);
