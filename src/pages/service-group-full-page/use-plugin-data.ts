@@ -11,7 +11,7 @@ export function usePluginData<Data>(serviceGroupId: string, pluginId: string) {
     }
 
     const unsubscribe = defaultPluginSocket.subscribe(
-      '/service-group/summary', handleDataChange, { type: 'GROUP', groupId: serviceGroupId },
+      '/service-group/summary', handleDataChange, { groupId: serviceGroupId },
     );
 
     return () => {

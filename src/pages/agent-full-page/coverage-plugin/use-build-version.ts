@@ -12,11 +12,10 @@ export function useBuildVersion<Data>(topic: string) {
       setData(newData);
     }
 
-    const unsubscribe = buildVersion
+    const unsubscribe = agentId && buildVersion
       ? defaultPluginSocket.subscribe(topic, handleDataChange, {
         agentId,
         buildVersion,
-        type: 'AGENT',
       })
       : null;
 
