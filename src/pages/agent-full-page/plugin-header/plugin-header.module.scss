@@ -89,7 +89,7 @@
         color: map-get($color-palette, green100);
       }
       &--offline {
-        color: map-get($color-palette, red100);
+        color: $shade-gray;
       }
       &--not-registered {
         color: map-get($color-palette, red100);
