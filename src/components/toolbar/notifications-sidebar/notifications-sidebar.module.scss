@@ -49,6 +49,21 @@
     }
   }
 
+  &__error-message {
+    width: 100%;
+    height: 40px;
+    background-color: rgba(255, 2, 2, 0.1);
+    font-size: 13px;
+    line-height: 24px;
+    color: map-get($color-palette, red100);
+  }
+
+  &__error-message-icon {
+    margin-left: 24px;
+    margin-right: 8px;
+    flex-shrink: 0;
+  }
+
   &__notifications-list {
     overflow: hidden;
     overflow-y: auto;

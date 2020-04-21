@@ -24,39 +24,51 @@ export const NotificationsSidebar = notificationsSidebar(
     isOpen,
     onToggle,
     notifications,
-  }: Props) => (
-    <Modal isOpen={isOpen} onToggle={onToggle}>
-      <div className={className}>
-        <Header>
-          <Icons.Notification />
-          <span>Notifications</span>
-        </Header>
-        {notifications.length > 0 ? (
-          <Content>
-            <ActionsPanel align="end">
-              <span onClick={() => {}} data-test="notification-sidebar:mark-all-as-read">Mark all as read</span>
-              <span onClick={() => {}} data-test="notification-sidebar:clear-all">Clear all</span>
-            </ActionsPanel>
-            <NotificationsList>
-              {notifications.map((notification) =>
-                <Notification notification={notification} key={nanoid()} />)}
-            </NotificationsList>
-          </Content>
-        ) : (
-          <EmptyNotificationPanel>
-            <Icons.Notification width={120} height={130} />
-            <Title>There are no notifications</Title>
-            <SubTitle>No worries, we’ll keep you posted!</SubTitle>
-          </EmptyNotificationPanel>
-        )}
-      </div>
-    </Modal>
-  ),
+  }: Props) => {
+    const [errorMessage, setErrorMessage] = React.useState('');
+
+    return (
+      <Modal isOpen={isOpen} onToggle={onToggle}>
+        <div className={className}>
+          <Header>
+            <Icons.Notification />
+            <span>Notifications</span>
+          </Header>
+          {notifications.length > 0 ? (
+            <Content>
+              <ActionsPanel align="end">
+                <span onClick={() => {}} data-test="notification-sidebar:mark-all-as-read">Mark all as read</span>
+                <span onClick={() => {}} data-test="notification-sidebar:clear-all">Clear all</span>
+              </ActionsPanel>
+              {errorMessage && (
+                <ErrorMessage>
+                  <ErrorMessageIcon />
+                  {errorMessage}
+                </ErrorMessage>
+              )}
+              <NotificationsList>
+                {notifications.map((notification) =>
+                  <Notification notification={notification} key={nanoid()} onError={setErrorMessage} />)}
+              </NotificationsList>
+            </Content>
+          ) : (
+            <EmptyNotificationPanel>
+              <Icons.Notification width={120} height={130} />
+              <Title>There are no notifications</Title>
+              <SubTitle>No worries, we’ll keep you posted!</SubTitle>
+            </EmptyNotificationPanel>
+          )}
+        </div>
+      </Modal>
+    );
+  },
 );
 
 const Header = notificationsSidebar.header('div');
 const Content = notificationsSidebar.content('div');
 const ActionsPanel = notificationsSidebar.actionsPanel(Panel);
+const ErrorMessage = notificationsSidebar.errorMessage(Panel);
+const ErrorMessageIcon = notificationsSidebar.errorMessageIcon(Icons.Warning);
 const NotificationsList = notificationsSidebar.notificationsList('div');
 const EmptyNotificationPanel = notificationsSidebar.emptyNotificationPanel('div');
 const Title = notificationsSidebar.title('div');

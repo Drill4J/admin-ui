@@ -12,6 +12,7 @@ import styles from './notification.module.scss';
 interface Props {
   className?: string;
   notification: NotificationType;
+  onError?: (message: string) => void;
 }
 
 const notification = BEM(styles);
@@ -20,6 +21,7 @@ export const Notification = notification(({
   className, notification: {
     agentId, createdAt, read, id = '', message: { currentId: buildVersion } = {},
   },
+  onError,
 }: Props) => (
   <div className={className}>
     <Content>
@@ -34,14 +36,14 @@ export const Notification = notification(({
         </Panel>
         <ButtonGroup align="space-between">
           <MarkAsReadButton
-            onClick={() => readNotification(id)}
+            onClick={() => readNotification(id, { onError })}
             read={read}
             data-test="notification:mark-as-read-button"
           >
             <Icons.Success />
           </MarkAsReadButton>
           <DeleteNotificationButton
-            onClick={() => deleteNotification(id)}
+            onClick={() => deleteNotification(id, { onError })}
             read={read}
             data-test="notification:delete-notification-button"
           >
