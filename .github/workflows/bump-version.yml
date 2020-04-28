@@ -9,6 +9,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+        with:
+          fetch-depth: 10
+      - run: git fetch
       - name: Next Prerelease SemVer
         id: next_semver
         uses: Drill4J/semver-tag-action@v0.1.0
