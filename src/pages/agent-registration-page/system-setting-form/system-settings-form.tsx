@@ -32,12 +32,12 @@ export const SystemSettingsForm = systemSettingsForm(({ className }: Props) => (
             component={ProjectPackages}
             parse={parsePackges}
             format={formatPackages}
-            placeholder="Package name 1&#10;Package name 2&#10;Package name 3&#10;and so on."
+            placeholder="e.g. com/example/mypackage&#10;foo/bar/baz&#10;and so on."
           />
         </PackagesTextarea>
         <Instruction>
-          Make sure you add application packages only, otherwise agent&apos;s performance will be
-          affected. Use new line as a separator.
+          Make sure you add application packages only, otherwise agent&apos;s performance will be affected.
+          Use new line as a separator and use &quot;/&quot; in a package path.
         </Instruction>
       </Panel>
       <HeaderMapping label="Header Mapping" optional>
