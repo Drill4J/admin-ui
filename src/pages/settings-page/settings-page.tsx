@@ -36,7 +36,7 @@ export const SettingsPage = settingsPage(
           title={(
             <Panel>
               <HeaderIcon height={24} width={24} />
-              {type === 'service-group' ? (
+              {(type as string) === 'service-group' ? (
                 'Service Group Agent settings'
               ) : (
                 <>
@@ -50,7 +50,7 @@ export const SettingsPage = settingsPage(
             </Panel>
           )}
           actions={
-            type !== 'service-group' && (
+            (type as string) !== 'service-group' && (
               <Panel align="end">
                 {(data as Agent).status !== AGENT_STATUS.NOT_REGISTERED && (
                   <Menu
@@ -70,7 +70,7 @@ export const SettingsPage = settingsPage(
             )
           }
         />
-        {type === 'service-group' ? (
+        {(type as string) === 'service-group' ? (
           <ServiceGroupSettings showMessage={showMessage} serviceGroup={data} />
         ) : (
           <AgentSettings showMessage={showMessage} agent={data} />
