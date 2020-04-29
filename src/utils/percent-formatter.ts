@@ -1,1 +1,1 @@
-export const percentFormatter = (value: number) => new Intl.NumberFormat('ru-RU', { maximumFractionDigits: 1 }).format(value);
+export const percentFormatter = (value: number) => new Intl.NumberFormat('en-US', { maximumFractionDigits: 1 }).format(value);
