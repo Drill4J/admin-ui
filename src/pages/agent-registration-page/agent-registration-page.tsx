@@ -73,7 +73,7 @@ export const AgentRegistrationPage = agentRegistrationPage(
             name="System settings"
             component={SystemSettingsForm}
             validate={composeValidators(
-              requiredArray('packagesPrefixes'),
+              requiredArray('packagesPrefixes', 'Package prefixes'),
               sizeLimit({
                 name: 'sessionIdHeaderName',
                 alias: 'Session header name',

@@ -37,7 +37,7 @@ export const SettingsPage = settingsPage(
             <Panel>
               <HeaderIcon height={24} width={24} />
               {(type as string) === 'service-group' ? (
-                'Service Group Agent settings'
+                'Service Group settings'
               ) : (
                 <>
                   Agent settings
