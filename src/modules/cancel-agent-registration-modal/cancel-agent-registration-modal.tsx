@@ -46,7 +46,7 @@ export const CancelAgentRegistrationModal =
                 Yes, cancel registration
               </AcceptButton>
               <CancelButton size="large" onClick={() => onToggle(false)}>
-                Cancel
+                No, take me back
               </CancelButton>
             </ActionsPanel>
           </Content>

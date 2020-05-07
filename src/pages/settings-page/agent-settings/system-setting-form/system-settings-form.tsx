@@ -24,7 +24,7 @@ interface Props {
 const systemSettingsForm = BEM(styles);
 
 const validateSettings = composeValidators(
-  requiredArray('packagesPrefixes'),
+  requiredArray('packagesPrefixes', 'Package prefixes'),
   sizeLimit({
     name: 'sessionIdHeaderName',
     alias: 'Session header name',
