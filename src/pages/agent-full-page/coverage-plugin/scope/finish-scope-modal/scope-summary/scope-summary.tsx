@@ -14,25 +14,28 @@ interface Props {
 
 const scopeSummary = BEM(styles);
 
-export const ScopeSummary = scopeSummary(({ className, scope: { coverage: { ratio = 0 }, started }, testsCount }: Props) => (
-  <div className={className}>
-    <Title>Scope Summary</Title>
-    <Element>
-      Code coverage
-      <ElementValue>
-        {`${percentFormatter(ratio)}%`}
-      </ElementValue>
-    </Element>
-    <Element>
-      Tests
-      <ElementValue>{testsCount}</ElementValue>
-    </Element>
-    <Element>
-      Duration
-      <ElementValue>{getTimeString(started)}</ElementValue>
-    </Element>
-  </div>
-));
+export const ScopeSummary = scopeSummary(({ className, scope, testsCount }: Props) => {
+  const { coverage: { ratio = 0 } = {}, started } = scope || {};
+  return (
+    <div className={className}>
+      <Title>Scope Summary</Title>
+      <Element>
+        Code coverage
+        <ElementValue>
+          {`${percentFormatter(ratio)}%`}
+        </ElementValue>
+      </Element>
+      <Element>
+        Tests
+        <ElementValue>{testsCount}</ElementValue>
+      </Element>
+      <Element>
+        Duration
+        <ElementValue>{getTimeString(started)}</ElementValue>
+      </Element>
+    </div>
+  );
+});
 
 const Title = scopeSummary.title('div');
 const Element = scopeSummary.element('div');
