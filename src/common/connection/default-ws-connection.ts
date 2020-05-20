@@ -6,7 +6,7 @@ export const getSocketUrl = (socket: string) => {
   const token = localStorage.getItem(TOKEN_KEY);
 
   return `${window.location.href.startsWith('https') ? 'wss' : 'ws'}://${
-    process.env.REACT_APP_ENV ? window.location.host : '194.67.92.202:8090'
+    process.env.REACT_APP_API_HOST || window.location.host
   }/ws/${socket}?token=${token}`;
 };
 
