@@ -2,17 +2,8 @@ import axios from 'axios';
 
 import { TOKEN_HEADER, TOKEN_KEY } from '../constants';
 
-const hosts: { [env: string]: string } = {
-  local: 'http://194.67.92.202:8090/api',
-  development: '/api',
-  qa: '',
-  prod: '',
-};
-
 export function configureAxios() {
-  axios.defaults.baseURL = process.env.REACT_APP_ENV
-    ? hosts[process.env.REACT_APP_ENV]
-    : hosts.local;
+  axios.defaults.baseURL = process.env.REACT_APP_API_HOST ? `http://${process.env.REACT_APP_API_HOST}/api` : '/api';
 
   axios.interceptors.request.use(
     (config) => {
