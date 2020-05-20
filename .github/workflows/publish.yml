@@ -20,4 +20,4 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
           repository: drill4j/admin-ui
           tags: latest,${{ steps.get_version.outputs.VERSION }}
-          build_args: ENV=production,VERSION=${{ steps.get_version.outputs.VERSION }}
+          build_args: ENV=development,VERSION=${{ steps.get_version.outputs.VERSION }}
