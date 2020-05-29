@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { BEM, span } from '@redneckz/react-bem-helper';
 
-import { MethodsInfo } from 'types/methods-info';
 import { MethodsSidebar } from '../../methods-sidebar';
 
 import styles from './methods-section.module.scss';
@@ -9,8 +8,9 @@ import styles from './methods-section.module.scss';
 interface Props {
   className?: string;
   title: string;
-  methodsInfo?: MethodsInfo;
+  methodsCount?: { total?: number; covered?: number};
   additionalInfo?: React.ReactNode;
+  type: 'all' | 'modified' | 'new' | 'deleted';
 }
 
 const methodsSection = BEM(styles);
@@ -19,8 +19,9 @@ export const MethodsSection = methodsSection(
   ({
     className,
     title,
-    methodsInfo: { totalCount = 0, coveredCount = 0, methods } = {},
+    methodsCount: { total = 0, covered = 0 } = {},
     additionalInfo,
+    type,
   }: Props) => {
     const [isSidebarOpen, setIsSidebarOpen] = React.useState(false);
 
@@ -28,10 +29,10 @@ export const MethodsSection = methodsSection(
       <div className={className}>
         <Total
           data-test={`methods-section:total:${title.toLowerCase()}`}
-          onClick={() => totalCount && setIsSidebarOpen(true)}
-          clickable={Boolean(totalCount)}
+          onClick={() => total && setIsSidebarOpen(true)}
+          clickable={Boolean(total)}
         >
-          {totalCount}
+          {total}
         </Total>
         <AdditionalInfo>
           {!additionalInfo ? (
@@ -41,7 +42,7 @@ export const MethodsSection = methodsSection(
                 <AdditionalInfoItemValue
                   data-test={`methods-section:covered:${title.toLowerCase()}`}
                 >
-                  {coveredCount}
+                  {covered}
                 </AdditionalInfoItemValue>
               </AdditionalInfoItem>
               <AdditionalInfoItem>
@@ -49,7 +50,7 @@ export const MethodsSection = methodsSection(
                 <AdditionalInfoItemValue
                   data-test={`methods-section:not-covered:${title.toLowerCase()}`}
                 >
-                  {totalCount - coveredCount}
+                  {total - covered}
                 </AdditionalInfoItemValue>
               </AdditionalInfoItem>
               <AdditionalInfoItem>
@@ -70,7 +71,7 @@ export const MethodsSection = methodsSection(
             isOpen={isSidebarOpen}
             onToggle={setIsSidebarOpen}
             title={`${title.toLowerCase()} methods`}
-            methodsDetails={methods}
+            type={type}
           />
         )}
       </div>

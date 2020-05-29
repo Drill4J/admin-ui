@@ -21,11 +21,7 @@ export const ProjectMethodsCard = projectMethodsCard(
   ({
     className,
     methods: {
-      totalMethods = {},
-      newMethods = {},
-      deletedMethods = {},
-      allModifiedMethods = {},
-      deletedCoveredMethodsCount = 0,
+      all, new: newMethods, modified, deleted,
     },
   }: Props) => (
     <div className={className}>
@@ -37,7 +33,7 @@ export const ProjectMethodsCard = projectMethodsCard(
           </CardHeader>
         )}
       >
-        <MethodsSection title="TOTAL" methodsInfo={totalMethods} />
+        <MethodsSection title="TOTAL" methodsCount={all} type="all" />
       </Card>
       <Card
         header={(
@@ -47,7 +43,7 @@ export const ProjectMethodsCard = projectMethodsCard(
           </CardHeader>
         )}
       >
-        <MethodsSection title="NEW" methodsInfo={newMethods} />
+        <MethodsSection title="NEW" methodsCount={newMethods} type="new" />
       </Card>
       <Card
         header={(
@@ -57,7 +53,7 @@ export const ProjectMethodsCard = projectMethodsCard(
           </CardHeader>
         )}
       >
-        <MethodsSection title="MODIFIED" methodsInfo={allModifiedMethods} />
+        <MethodsSection title="MODIFIED" methodsCount={modified} type="modified" />
       </Card>
       <Card
         header={(
@@ -69,13 +65,14 @@ export const ProjectMethodsCard = projectMethodsCard(
       >
         <MethodsSection
           title="DELETED"
-          methodsInfo={deletedMethods}
+          methodsCount={deleted}
           additionalInfo={(
             <DeletedMethodsAdditionalInfo>
-              {`${deletedCoveredMethodsCount} of ${deletedMethods.totalCount
+              {`${deleted?.covered} of ${deleted?.total
                   || 0} deleted methods were covered in previous build.`}
             </DeletedMethodsAdditionalInfo>
           )}
+          type="deleted"
         />
       </Card>
     </div>
