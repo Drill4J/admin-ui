@@ -30,17 +30,17 @@ export const CoverageSection = coverageSection(({ className, activeBuildVersion 
     arrow = '',
   } = useBuildVersion<BuildCoverage>('/build/coverage') || {};
   const {
-    newMethods: {
-      totalCount: newMethodsTotalCount = 0,
-      coveredCount: newMethodsCoveredCount = 0,
+    new: {
+      total: newMethodsTotalCount = 0,
+      covered: newMethodsCoveredCount = 0,
     } = {},
-    allModifiedMethods: {
-      totalCount: modifiedMethodsTotalCount = 0,
-      coveredCount: modifiedMethodsCoveredCount = 0,
+    all: {
+      total: modifiedMethodsTotalCount = 0,
+      covered: modifiedMethodsCoveredCount = 0,
     } = {},
-    unaffectedMethods: {
-      totalCount: unaffectedTotalCount = 0,
-      coveredCount: unaffectedCoveredCount = 0,
+    unaffected: {
+      total: unaffectedTotalCount = 0,
+      covered: unaffectedCoveredCount = 0,
     } = {},
   } = useBuildVersion<Methods>('/build/methods') || {};
   const { buildVersion = '' } = useParams();

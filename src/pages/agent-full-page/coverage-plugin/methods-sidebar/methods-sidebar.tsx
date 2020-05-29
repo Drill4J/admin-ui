@@ -5,6 +5,7 @@ import VirtualList from 'react-tiny-virtual-list';
 import { Modal, Icons, OverflowText } from 'components';
 import { useElementSize } from 'hooks';
 import { MethodsDetails } from 'types/methods-details';
+import { useBuildVersion } from '../use-build-version';
 import { CoverageRateIcon } from '../coverage-rate-icon';
 
 import styles from './methods-sidebar.module.scss';
@@ -14,15 +15,16 @@ interface Props {
   title: string;
   isOpen: boolean;
   onToggle: (arg: boolean) => void;
-  methodsDetails?: MethodsDetails[];
+  type: 'all' | 'modified' | 'new' | 'deleted';
 }
 
 const methodsSidebar = BEM(styles);
 
 export const MethodsSidebar = methodsSidebar(
   ({
-    className, isOpen, onToggle, title, methodsDetails = [],
+    className, isOpen, onToggle, title, type,
   }: Props) => {
+    const { methods = [] } = useBuildVersion<{ methods: MethodsDetails[] }>(`/build/methods/${type}`) || {};
     const node = React.useRef<HTMLDivElement>(null);
     const { height: methodsListHeight } = useElementSize(node);
     return (
@@ -31,7 +33,7 @@ export const MethodsSidebar = methodsSidebar(
           <Header>
             <Icons.Function height={18} width={18} />
             <span data-test="method-modal:total-methods:title">{title}</span>
-            <h2 data-test="method-modal:total-methods:count">{methodsDetails.length}</h2>
+            <h2 data-test="method-modal:total-methods:count">{methods.length}</h2>
           </Header>
           <Content>
             <MethodsList>
@@ -39,7 +41,7 @@ export const MethodsSidebar = methodsSidebar(
                 <VirtualList
                   itemSize={60}
                   height={methodsListHeight}
-                  itemCount={methodsDetails.length}
+                  itemCount={methods.length}
                   renderItem={({ index, style }) => (
                     <MethodsListItem key={index} style={style as any}>
                       <MethodsListIcon>
@@ -47,13 +49,13 @@ export const MethodsSidebar = methodsSidebar(
                       </MethodsListIcon>
                       <MethodSignature>
                         <OverflowText data-test="method-modal:method-name">
-                          {methodsDetails[index].name}
+                          {methods[index].name}
                         </OverflowText>
                         <MethodDescriptor data-test="method-modal:method-descriptor">
-                          {methodsDetails[index].desc}
+                          {methods[index].desc}
                         </MethodDescriptor>
                       </MethodSignature>
-                      <CoverageRateIcon coverageRate={methodsDetails[index].coverageRate} />
+                      <CoverageRateIcon coverageRate={methods[index].coverageRate} />
                     </MethodsListItem>
                   )}
                 />
