@@ -43,7 +43,7 @@ export const ScopeInfo = scopeInfo(
     const dispatch = useCoveragePluginDispatch();
     const coverage = useBuildVersion<BuildCoverage>(`/scope/${scopeId}/coverage`) || {};
     const scopeMethods = useBuildVersion<Methods>(`/scope/${scopeId}/methods`) || {};
-    const coverageByPackages = useBuildVersion<ClassCoverage[]>(`/scope/${scopeId}/coverage-by-packages`) || [];
+    const coverageByPackages = useBuildVersion<ClassCoverage[]>(`/scope/${scopeId}/coverage/packages`) || [];
 
     const testsUsages = useBuildVersion<AssociatedTests[]>(`/scope/${scopeId}/tests-usages`) || [];
 
