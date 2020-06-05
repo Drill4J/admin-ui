@@ -148,6 +148,7 @@ export const ScopeInfo = scopeInfo(
             <CoverageDetails
               coverageByPackages={coverageByPackages}
               associatedTestsTopic={`/scope/${scopeId}/associated-tests`}
+              classesTopicPrefix={`scope/${scopeId}`}
             />
           </>
         ) : (

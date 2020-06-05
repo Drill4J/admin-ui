@@ -3,7 +3,6 @@ import { BEM } from '@redneckz/react-bem-helper';
 
 import { get } from 'utils';
 import { DefaultCell } from './default-cell';
-// eslint-disable-next-line import/no-cycle
 import { ExpandedRowContent } from './expanded-row-content';
 
 import styles from './table.module.scss';
@@ -15,10 +14,10 @@ interface Props {
   index: number;
   color?: 'blue' | 'gray' | 'yellow';
   expandedColumns?: any[];
+  secondLevelExpand?: any[];
   expandedContentKey?: string;
   expandedRows?: string[];
-  nested?: boolean;
-  nestedLast?: boolean;
+  classesTopicPrefix: string;
 }
 
 export const TableRow = BEM(styles).row(
@@ -30,7 +29,9 @@ export const TableRow = BEM(styles).row(
     expandedContentKey = '',
     color,
     expandedColumns = [],
-    expandedRows,
+    secondLevelExpand = [],
+    expandedRows = [],
+    classesTopicPrefix,
   }: Props) => (
     <>
       <tr className={className}>
@@ -45,9 +46,12 @@ export const TableRow = BEM(styles).row(
       </tr>
       {color && (
         <ExpandedRowContent
-          data={item[expandedContentKey]}
+          key={String(item[expandedContentKey])}
+          item={item[expandedContentKey]}
           expandedColumns={expandedColumns}
+          secondLevelExpand={secondLevelExpand}
           expandedRows={expandedRows}
+          classesTopicPrefix={classesTopicPrefix}
         />
       )}
     </>

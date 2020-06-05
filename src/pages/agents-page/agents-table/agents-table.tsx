@@ -2,12 +2,11 @@ import * as React from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 import axios from 'axios';
 
-import { OverflowText } from 'components';
+import { OverflowText, ExpandableTable, Column } from 'components';
 import { AGENT_STATUS } from 'common/constants';
 import { Agent } from 'types/agent';
 import { NameColumn } from './name-column';
 import { ActionsColumn } from './actions-column';
-import { ExpandableTable, Column } from './table';
 
 import styles from './table-view.module.scss';
 import { AgentStatusToggler } from '../agent-status-toggler';

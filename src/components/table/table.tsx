@@ -17,7 +17,6 @@ interface Props {
   columnsSize?: 'wide' | 'medium';
   expandedRows?: string[];
   expandedColumns?: any[];
-  secondLevelExpand?: any[];
   expandedContentKey?: string;
   withoutHeader?: boolean;
   selectedRows?: string[];
@@ -35,17 +34,12 @@ export const Table = table(
     expandedRows = [],
     expandedColumns,
     expandedContentKey,
-    secondLevelExpand,
     withoutHeader,
     selectedRows = [],
   }: Props) => {
     const columns = React.Children.map(children, (column) => column && column.props);
     const expandedColumnsComponents = React.Children.map(
       expandedColumns,
-      (column) => column && column.props,
-    );
-    const expandedColumnsSecondLevel = React.Children.map(
-      secondLevelExpand,
       (column) => column && column.props,
     );
 
@@ -63,7 +57,6 @@ export const Table = table(
               color={getRowColor({ expandedRows, selectedRows, itemId: String(item[idKey]) })}
               expandedContentKey={expandedContentKey}
               expandedRows={expandedRows}
-              secondLevelExpand={expandedColumnsSecondLevel}
             />
           ))}
         </tbody>
