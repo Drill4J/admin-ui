@@ -4,7 +4,7 @@ export { Sidebar, SidebarLink } from './sidebar';
 export { Toolbar } from './toolbar';
 export { PageHeader } from './page-header';
 export {
-  Table, Column, SelectableTable, ExpandableTable,
+  Table, Column, ExpandableTable,
 } from './table';
 export { OverflowText } from './overflow-text';
 export { ItemsActions } from './items-actions';

@@ -43,6 +43,7 @@ export const TestDetails = testDetails(
               idKey="testType"
               columnsSize="medium"
               expandedColumns={[
+                <Column name="expander" Cell={() => null} />,
                 <Column
                   name="testName"
                   Cell={({ value }) => (
@@ -51,7 +52,6 @@ export const TestDetails = testDetails(
                       <TableCellContent>{value}</TableCellContent>
                     </TableCell>
                   )}
-                  colSpan={2}
                 />,
                 <Column
                   name="coverage"

@@ -7,23 +7,15 @@ interface Props {
   expandedColumns?: any[];
   idKey?: string;
   expandedRows?: string[];
-  secondLevelExpand?: any[];
 }
 
-export const ExpandedRowContent = ({
-  data = [],
-  expandedColumns = [],
-  idKey = 'name',
-  expandedRows = [],
-  secondLevelExpand = [],
-}: Props) => data.map((item: any, index: number) => (
+export const ExpandedRowContent = ({ data = [], expandedColumns = [], idKey = 'name' }: Props) => data.map((item: any, index: number) => (
   <TableRow
     key={idKey ? String(item[idKey]) : index}
     item={item}
     columns={expandedColumns}
     index={index}
-    expandedColumns={secondLevelExpand}
-    color={expandedRows.includes(String(item[idKey])) ? 'gray' : undefined}
-    expandedContentKey="methods"
+    nested
+    nestedLast={index === data.length - 1}
   />
 ));

@@ -1,6 +1,6 @@
 @import '~common/style-guide/index';
 
-.agents-table {
+.packages-tree {
   border-collapse: collapse;
   width: 100%;
   font-size: 14px;
@@ -33,19 +33,8 @@
       background-color: rgba(104, 116, 129, 0.05);
     }
 
-    &--nested {
-      border-left: 2px solid map-get($color-palette, blue15);
-      border-right: 2px solid map-get($color-palette, blue15);
-    }
-
-    &--nested-last {
-      border-bottom: 2px solid map-get($color-palette, blue15);
-    }
-
     &--color {
       &--blue {
-        border-left: 2px solid map-get($color-palette, blue15);
-        border-right: 2px solid map-get($color-palette, blue15);
         background-color: rgba(0, 127, 255, 0.15);
 
         &:hover {

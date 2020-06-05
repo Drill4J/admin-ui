@@ -1,7 +1,8 @@
 import * as React from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 
-import { Table, Column } from 'components';
+import { Table } from '../table';
+import { Column } from '../column';
 import { RowExpander } from './row-expander';
 
 import styles from './expandable-table.module.scss';
@@ -27,7 +28,7 @@ export const ExpandableTable = expandableTable(
     idKey,
     expandedColumns,
     className,
-    hasSecondLevelExpand,
+    expandedContentKey,
     ...restProps
   }: Props) => {
     const [expandedRows, setExpandedRows] = React.useState<string[]>([]);
@@ -37,26 +38,14 @@ export const ExpandableTable = expandableTable(
         data={data as any}
         expandedRows={expandedRows}
         idKey={idKey}
-        expandedColumns={
-          expandedColumns
-            ? [
-              hasSecondLevelExpand
-                ? getExpanderColumn({
-                  idKey,
-                  expandedRows,
-                  setExpandedRows,
-                  withMargin: true,
-                })
-                : null,
-              ...expandedColumns,
-            ]
-            : undefined
-        }
-        secondLevelExpand={expandedColumns}
+        expandedColumns={expandedColumns}
+        expandedContentKey={expandedContentKey}
         {...restProps}
       >
         {[
-          getExpanderColumn({ idKey, expandedRows, setExpandedRows }),
+          getExpanderColumn({
+            idKey, expandedRows, setExpandedRows, expandedContentKey,
+          }),
           ...React.Children.toArray(children),
         ]}
       </Table>
@@ -69,16 +58,18 @@ const getExpanderColumn = ({
   setExpandedRows,
   idKey,
   withMargin,
+  expandedContentKey,
 }: {
   idKey: string;
   expandedRows: string[];
   setExpandedRows: (arg: string[]) => void;
   withMargin?: boolean;
+  expandedContentKey: string;
 }) => (
   <Column
     name="selector"
     key={idKey}
-    Cell={({ item }) => (
+    Cell={({ item }) => (item[expandedContentKey] ? (
       <RowExpander
         onClick={() => {
           expandedRows.includes(item[idKey])
@@ -89,6 +80,6 @@ const getExpanderColumn = ({
         key={item[idKey]}
         withMargin={withMargin}
       />
-    )}
+    ) : null)}
   />
 );
