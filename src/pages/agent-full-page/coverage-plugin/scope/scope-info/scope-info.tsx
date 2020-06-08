@@ -41,6 +41,7 @@ export const ScopeInfo = scopeInfo(
     const { agentId } = usePluginState();
     const { pluginId = '', scopeId = '' } = useParams();
     const dispatch = useCoveragePluginDispatch();
+    const scope = useBuildVersion<ActiveScope>(`/scope/${scopeId}`);
     const coverage = useBuildVersion<BuildCoverage>(`/scope/${scopeId}/coverage`) || {};
     const scopeMethods = useBuildVersion<Methods>(`/scope/${scopeId}/methods`) || {};
     const coverageByPackages = useBuildVersion<ClassCoverage[]>(`/scope/${scopeId}/coverage/packages`) || [];
@@ -52,7 +53,6 @@ export const ScopeInfo = scopeInfo(
     const coveredMethodsByTestType = useBuildVersion<MethodCoveredByTest[]>(`/scope/${scopeId}/test-types/covered-methods`)
         || [];
 
-    const scope = useBuildVersion<ActiveScope>(`/scope/${scopeId}`);
     const {
       name = '', active = false, enabled = false, started = 0, finished = 0,
     } = scope || {};
