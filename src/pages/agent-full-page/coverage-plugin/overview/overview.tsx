@@ -42,9 +42,9 @@ export const Overview = overview(({ className }: Props) => {
   const {
     started = 0, finished = 0, active = false, coverage = {},
   } = useBuildVersion<ActiveScope>('/active-scope') || {};
+  const buildMethods = useBuildVersion<Methods>('/build/methods') || {};
   const coverageByPackages = useBuildVersion<ClassCoverage[]>('/build/coverage/packages') || [];
   const [selectedTab, setSelectedTab] = React.useState('methods');
-  const buildMethods = useBuildVersion<Methods>('/build/methods') || {};
   const { pluginId } = useParams();
   return (
     <div className={className}>
