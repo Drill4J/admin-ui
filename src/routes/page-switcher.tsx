@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
+import { Icons } from '@drill4j/ui-kit';
 
 import { AppLayout } from 'layouts';
 import {
@@ -16,7 +17,7 @@ import {
   ServiceGroupRegistrationPage,
 } from 'pages';
 import {
-  PrivateRoute, Icons, Sidebar, Toolbar, Footer,
+  PrivateRoute, Sidebar, Toolbar, Footer,
 } from 'components';
 import { Breadcrumbs } from 'modules';
 
@@ -24,7 +25,7 @@ const sidebarLinks = [
   { link: 'agents', icon: Icons.Agents },
   { link: 'plugins', icon: Icons.Plugins },
   { link: 'logs', icon: Icons.Logs },
-  { link: 'settings', icon: Icons.NewSettings },
+  { link: 'settings', icon: Icons.Settings },
 ];
 
 export const PageSwitcher = () => (

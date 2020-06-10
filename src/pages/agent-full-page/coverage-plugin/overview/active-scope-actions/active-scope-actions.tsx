@@ -1,10 +1,10 @@
 import * as React from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 import { useParams, useHistory } from 'react-router-dom';
+import {
+  Panel, Icons, Menu, Button,
+} from '@drill4j/ui-kit';
 
-import { Panel } from 'layouts';
-import { Icons, Menu } from 'components';
-import { Button } from 'forms';
 import { ActiveScope } from 'types/active-scope';
 import { useBuildVersion } from '../../use-build-version';
 import { usePluginState } from '../../../store';

@@ -1,9 +1,8 @@
 import * as React from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
-
-import { Panel } from 'layouts';
-import { Button, CancelButton } from 'forms';
-import { Popup, Icons } from 'components';
+import {
+  Panel, Button, CancelButton, Popup, Icons,
+} from '@drill4j/ui-kit';
 
 import styles from './unlocking-system-settings-form-modal.module.scss';
 

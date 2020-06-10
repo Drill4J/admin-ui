@@ -1,10 +1,9 @@
 import * as React from 'react';
 import { BEM, span, div } from '@redneckz/react-bem-helper';
-
 import {
-  Column, ExpandableTable, Icons, OverflowText,
-} from 'components';
-import { Panel } from 'layouts';
+  Icons, OverflowText, Panel, Column, ExpandableTable,
+} from '@drill4j/ui-kit';
+
 import { percentFormatter } from 'utils';
 import { AssociatedTests } from 'types/associated-tests';
 import { MethodCoveredByTest } from 'types/method-covered-by-test';

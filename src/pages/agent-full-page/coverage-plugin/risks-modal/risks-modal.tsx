@@ -1,11 +1,11 @@
 import * as React from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 import VirtualList from 'react-tiny-virtual-list';
+import {
+  Panel, Icons, Modal, OverflowText, Inputs,
+} from '@drill4j/ui-kit';
 
-import { Panel } from 'layouts';
-import { Icons, Modal, OverflowText } from 'components';
 import { useElementSize } from 'hooks';
-import { Inputs } from 'forms';
 import { Risks } from 'types/risks';
 
 import styles from './risks-modal.module.scss';

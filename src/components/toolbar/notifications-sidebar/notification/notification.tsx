@@ -1,9 +1,8 @@
 import * as React from 'react';
 import { BEM, tag, div } from '@redneckz/react-bem-helper';
 import { format } from 'timeago.js';
+import { Panel, Icons } from '@drill4j/ui-kit';
 
-import { Panel } from 'layouts';
-import { Icons } from 'components';
 import { Notification as NotificationType } from 'types/notificaiton';
 import { readNotification, deleteNotification } from '../api';
 

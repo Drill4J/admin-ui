@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
-
-import { Icons } from 'components';
+import { Icons } from '@drill4j/ui-kit';
 
 import styles from './no-plugins-stub.module.scss';
 

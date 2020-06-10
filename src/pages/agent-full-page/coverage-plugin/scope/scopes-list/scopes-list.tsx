@@ -1,10 +1,10 @@
 import * as React from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 import { useParams, useHistory } from 'react-router-dom';
+import {
+  Panel, Menu, Icons, Table, Column,
+} from '@drill4j/ui-kit';
 
-import { Panel } from 'layouts';
-import { Table, Column, Menu } from 'components';
-import { MenuItemType } from 'components/menu/menu-item-type';
 import { percentFormatter } from 'utils';
 import { NotificationManagerContext } from 'notification-manager';
 import { ScopeSummary } from 'types/scope-summary';
@@ -19,6 +19,12 @@ import styles from './scopes-list.module.scss';
 
 interface Props {
   className?: string;
+}
+
+interface MenuItemType {
+  label: string;
+  icon: keyof typeof Icons;
+  onClick: () => void;
 }
 
 const scopesList = BEM(styles);

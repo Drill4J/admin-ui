@@ -1,9 +1,8 @@
 import * as React from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 import nanoid from 'nanoid';
+import { Panel, Icons, Modal } from '@drill4j/ui-kit';
 
-import { Panel } from 'layouts';
-import { Icons, Modal } from 'components';
 import { Notification as NotificationType } from 'types/notificaiton';
 import { Notification } from './notification/notification';
 

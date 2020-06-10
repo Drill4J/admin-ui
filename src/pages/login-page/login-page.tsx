@@ -2,10 +2,9 @@ import * as React from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 import { useHistory } from 'react-router-dom';
 import axios, { AxiosError } from 'axios';
+import { Icons, Inputs, Button } from '@drill4j/ui-kit';
 
 import { LoginLayout } from 'layouts';
-import { Icons } from 'components';
-import { Inputs, Button } from 'forms';
 import { defaultAdminSocket, defaultPluginSocket, getSocketUrl } from 'common/connection';
 import { TOKEN_HEADER, TOKEN_KEY } from 'common/constants';
 import { ErrorPanel } from './error-panel';

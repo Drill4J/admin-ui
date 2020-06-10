@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { BEM, div } from '@redneckz/react-bem-helper';
+import { Icons } from '@drill4j/ui-kit';
 
 import { TOKEN_KEY } from 'common/constants';
-import { Icons } from 'components';
 import { useWsConnection } from 'hooks';
 import { defaultAdminSocket } from 'common/connection';
 import { Notification } from 'types/notificaiton';

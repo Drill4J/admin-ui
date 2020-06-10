@@ -1,9 +1,8 @@
 import * as React from 'react';
 import { BEM, div } from '@redneckz/react-bem-helper';
 import { useHistory } from 'react-router-dom';
+import { Panel, Icons, FilledBadge } from '@drill4j/ui-kit';
 
-import { Panel } from 'layouts';
-import { Icons, FilledBadge } from 'components';
 import { AGENT_STATUS } from 'common/constants';
 import { Agent } from 'types/agent';
 import { ServiceGroup } from 'types/service-group';

@@ -1,8 +1,9 @@
 import * as React from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 import { useHistory, useParams } from 'react-router-dom';
+import { Menu } from '@drill4j/ui-kit';
 
-import { Menu, List, ListColumn } from 'components';
+import { List, ListColumn } from 'components';
 import { ManageSessionsModal, TestsToRunModal } from 'modules';
 import { percentFormatter } from 'utils';
 import { Summary } from 'types/service-group-summary';

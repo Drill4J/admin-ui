@@ -1,10 +1,8 @@
 import * as React from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 import { Form } from 'react-final-form';
+import { Panel, Icons, Button } from '@drill4j/ui-kit';
 
-import { Panel } from 'layouts';
-import { Button } from 'forms';
-import { Icons } from 'components';
 import { Agent } from 'types/agent';
 import {
   wizardReducer, previousStep, nextStep, state,

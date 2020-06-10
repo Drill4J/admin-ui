@@ -1,10 +1,10 @@
 import * as React from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 import { useParams, useHistory } from 'react-router-dom';
+import {
+  Panel, Button, Inputs, CancelButton, Popup, Icons, OverflowText,
+} from '@drill4j/ui-kit';
 
-import { Panel } from 'layouts';
-import { Button, Inputs, CancelButton } from 'forms';
-import { Popup, Icons, OverflowText } from 'components';
 import { NotificationManagerContext } from 'notification-manager';
 import { ActiveScope } from 'types/active-scope';
 import { finishScope } from '../../api';

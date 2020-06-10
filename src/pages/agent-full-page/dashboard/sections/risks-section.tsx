@@ -1,7 +1,6 @@
 import * as React from 'react';
+import { Panel, Icons, Tooltip } from '@drill4j/ui-kit';
 
-import { Panel } from 'layouts';
-import { Icons, Tooltip } from 'components';
 import { Risks } from 'types/risks';
 import { useBuildVersion } from '../../coverage-plugin/use-build-version';
 import { SingleBar } from '../single-bar';

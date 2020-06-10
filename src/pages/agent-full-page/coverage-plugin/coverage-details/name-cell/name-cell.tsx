@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
-
-import { OverflowText } from 'components';
+import { OverflowText } from '@drill4j/ui-kit';
 
 import styles from './name-cell.module.scss';
 

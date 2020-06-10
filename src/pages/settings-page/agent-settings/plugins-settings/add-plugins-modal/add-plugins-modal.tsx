@@ -1,8 +1,7 @@
 import * as React from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
+import { Modal, Button, CancelButton } from '@drill4j/ui-kit';
 
-import { Modal } from 'components';
-import { Button, CancelButton } from 'forms';
 import { useWsConnection } from 'hooks';
 import { defaultAdminSocket } from 'common/connection';
 import { NotificationManagerContext } from 'notification-manager';

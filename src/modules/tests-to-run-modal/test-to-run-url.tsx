@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { BEM, span } from '@redneckz/react-bem-helper';
+import { Panel } from '@drill4j/ui-kit';
 
-import { Panel } from 'layouts';
 import { adminUrl } from './admin-url';
 
 import styles from './test-to-run-url.module.scss';

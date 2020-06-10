@@ -1,9 +1,9 @@
 import * as React from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 import { Link, useParams } from 'react-router-dom';
+import { Panel, Icons } from '@drill4j/ui-kit';
 
-import { Panel } from 'layouts';
-import { Icons, TabsPanel, Tab } from 'components';
+import { TabsPanel, Tab } from 'components';
 import { percentFormatter } from 'utils';
 import { BuildCoverage } from 'types/build-coverage';
 import { ClassCoverage } from 'types/class-coverage';

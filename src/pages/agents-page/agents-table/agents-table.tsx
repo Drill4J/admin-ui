@@ -1,15 +1,15 @@
 import * as React from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 import axios from 'axios';
+import { OverflowText, ExpandableTable, Column } from '@drill4j/ui-kit';
 
-import { OverflowText, ExpandableTable, Column } from 'components';
 import { AGENT_STATUS } from 'common/constants';
 import { Agent } from 'types/agent';
 import { NameColumn } from './name-column';
 import { ActionsColumn } from './actions-column';
+import { AgentStatusToggler } from '../agent-status-toggler';
 
 import styles from './table-view.module.scss';
-import { AgentStatusToggler } from '../agent-status-toggler';
 
 interface Props {
   className?: string;

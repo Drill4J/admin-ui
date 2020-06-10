@@ -1,10 +1,10 @@
 import * as React from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 import nanoid from 'nanoid';
+import {
+  Icons, Inputs, Modal, Panel,
+} from '@drill4j/ui-kit';
 
-import { Icons, Modal } from 'components';
-import { Inputs } from 'forms';
-import { Panel } from 'layouts';
 import { copyToClipboard } from 'utils';
 import { TestsToRunUrl } from './test-to-run-url';
 import { getTestToRunURL } from './get-test-to-run-url';

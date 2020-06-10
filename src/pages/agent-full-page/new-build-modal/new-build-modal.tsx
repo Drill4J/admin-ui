@@ -1,8 +1,7 @@
 import * as React from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
+import { Button, Popup } from '@drill4j/ui-kit';
 
-import { Button } from 'forms';
-import { Popup } from 'components';
 import { Notification } from 'types/notificaiton';
 import { readNotification } from '../api';
 import { BuildUpdates } from './build-updates';

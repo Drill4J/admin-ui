@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { BEM, div } from '@redneckz/react-bem-helper';
+import { Panel } from '@drill4j/ui-kit';
 
-import { Panel } from 'layouts';
 import { percentFormatter } from 'utils';
 import { TestTypeSummary } from 'types/test-type-summary';
 import { TestTypes } from 'types/test-types';

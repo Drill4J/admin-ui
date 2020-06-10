@@ -1,7 +1,6 @@
 import * as React from 'react';
+import { Panel, Tooltip } from '@drill4j/ui-kit';
 
-import { Panel } from 'layouts';
-import { Tooltip } from 'components';
 import { TEST_TYPES_COLOR } from 'common/constants';
 import { TestsToRun } from 'types/tests-to-run';
 import { TestTypes } from 'types/test-types';

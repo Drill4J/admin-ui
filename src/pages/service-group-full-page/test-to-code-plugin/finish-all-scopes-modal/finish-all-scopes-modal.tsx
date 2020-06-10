@@ -1,9 +1,9 @@
 import * as React from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
+import {
+  Panel, Button, CancelButton, Popup, Icons, OverflowText,
+} from '@drill4j/ui-kit';
 
-import { Panel } from 'layouts';
-import { Button, CancelButton } from 'forms';
-import { Popup, Icons, OverflowText } from 'components';
 import { NotificationManagerContext } from 'notification-manager';
 import { finishAllScopes } from './finish-all-scopes';
 

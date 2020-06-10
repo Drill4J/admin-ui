@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { BEM, span } from '@redneckz/react-bem-helper';
+import { Tooltip } from '@drill4j/ui-kit';
 
-import { Tooltip } from 'components';
 import styles from './test-to-code-cell.module.scss';
 
 interface Props {

@@ -9,7 +9,6 @@ import {
   CoverageSection, RisksSection, TestsToRunSection,
 } from './sections';
 
-
 import styles from './dashboard.module.scss';
 
 interface Props {

@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 import { useParams, useHistory } from 'react-router-dom';
+import { Icons } from '@drill4j/ui-kit';
 
-import { Icons } from 'components';
 import { ServiceGroupSummary } from 'types/service-group-summary';
 import { ReactComponent as LogoSvg } from './service-group-logo.svg';
 

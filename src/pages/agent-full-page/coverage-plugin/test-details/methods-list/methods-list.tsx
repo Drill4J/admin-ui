@@ -1,9 +1,8 @@
 import * as React from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 import VirtualList from 'react-tiny-virtual-list';
+import { Inputs, OverflowText, Icons } from '@drill4j/ui-kit';
 
-import { Inputs } from 'forms';
-import { OverflowText, Icons } from 'components';
 import { useElementSize } from 'hooks';
 import { MethodCoveredByTest } from 'types/method-covered-by-test';
 import { CoverageRateIcon } from '../../coverage-rate-icon';

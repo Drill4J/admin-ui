@@ -1,9 +1,8 @@
 import * as React from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 import { useHistory, useParams } from 'react-router-dom';
+import { Panel, Table, Column } from '@drill4j/ui-kit';
 
-import { Panel } from 'layouts';
-import { Table, Column } from 'components';
 import { defaultAdminSocket } from 'common/connection';
 import { useWsConnection, useElementSize } from 'hooks';
 import { dateFormatter } from 'utils';

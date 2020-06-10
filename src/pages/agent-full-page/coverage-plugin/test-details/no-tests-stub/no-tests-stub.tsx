@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
+import { Icons } from '@drill4j/ui-kit';
 
-import { Icons } from 'components';
 import { AGENT_STATUS } from 'common/constants';
 import { usePluginState } from '../../../store';
 

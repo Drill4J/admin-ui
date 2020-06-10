@@ -1,9 +1,13 @@
 import * as React from 'react';
 import { FieldRenderProps } from 'react-final-form';
+import { DropdownInput } from '@drill4j/ui-kit';
 
-import { DropdownInput } from '../inputs';
 import { ErrorMessage } from './error-message';
-import { DropdownItem } from '../inputs/dropdown-input/dropdown-item';
+
+export interface DropdownItem {
+  value: string;
+  label: string;
+}
 
 interface Props extends FieldRenderProps<any> {
   options?: DropdownItem[];

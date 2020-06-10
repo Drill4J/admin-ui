@@ -1,8 +1,7 @@
 import * as React from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
+import { Panel, Icons } from '@drill4j/ui-kit';
 
-import { Icons } from 'components';
-import { Panel } from 'layouts';
 import { Methods } from 'types/methods';
 import { Card } from '../card';
 import { MethodsSection } from './methods-section';

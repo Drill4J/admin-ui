@@ -1,9 +1,7 @@
 import * as React from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 import nanoid from 'nanoid';
-
-import { Panel } from 'layouts';
-import { Icons } from 'components';
+import { Panel, Icons } from '@drill4j/ui-kit';
 
 import styles from './build-updates.module.scss';
 

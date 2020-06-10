@@ -1,10 +1,10 @@
 import * as React from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 import { useParams } from 'react-router-dom';
+import { Panel, Icons, Menu } from '@drill4j/ui-kit';
 
-import { Panel } from 'layouts';
 import { useCommonEntity } from 'hooks';
-import { PageHeader, Icons, Menu } from 'components';
+import { PageHeader } from 'components';
 import { AGENT_STATUS } from 'common/constants';
 import { NotificationManagerContext } from 'notification-manager';
 import { Agent } from 'types/agent';
