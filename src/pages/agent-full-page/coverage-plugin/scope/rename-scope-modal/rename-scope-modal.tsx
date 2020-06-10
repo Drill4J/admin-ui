@@ -2,18 +2,16 @@ import * as React from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 import { Form, Field } from 'react-final-form';
 import { useParams } from 'react-router-dom';
-
-import { Panel } from 'layouts';
 import {
-  Button,
+  Panel, Button, FormGroup, CancelButton, Popup, Icons,
+} from '@drill4j/ui-kit';
+
+import {
   Fields,
-  FormGroup,
   composeValidators,
   sizeLimit,
   required,
-  CancelButton,
 } from 'forms';
-import { Popup, Icons } from 'components';
 import { NotificationManagerContext } from 'notification-manager';
 import { ScopeSummary } from 'types/scope-summary';
 import { ActiveScope } from 'types/active-scope';

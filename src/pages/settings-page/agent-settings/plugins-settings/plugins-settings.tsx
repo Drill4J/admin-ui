@@ -1,10 +1,9 @@
 import * as React from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 import { useHistory } from 'react-router-dom';
+import { Panel, Icons, Button } from '@drill4j/ui-kit';
 
-import { Panel } from 'layouts';
-import { Icons, PluginListEntry } from 'components';
-import { Button } from 'forms';
+import { PluginListEntry } from 'components';
 import { Agent } from 'types/agent';
 import { AddPluginsModal } from './add-plugins-modal';
 import { NoPluginsStub } from './no-plugins-stub';

@@ -1,12 +1,13 @@
 import * as React from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 import { useParams } from 'react-router-dom';
-
-import { Panel } from 'layouts';
 import {
-  TabsPanel, Tab, Icons, Menu,
+  Panel, Icons, Menu, Button,
+} from '@drill4j/ui-kit';
+
+import {
+  TabsPanel, Tab,
 } from 'components';
-import { MenuItemType } from 'components/menu/menu-item-type';
 import { NotificationManagerContext } from 'notification-manager';
 import { BuildCoverage } from 'types/build-coverage';
 import { ActiveScope } from 'types/active-scope';
@@ -14,7 +15,7 @@ import { Methods } from 'types/methods';
 import { ClassCoverage } from 'types/class-coverage';
 import { AssociatedTests } from 'types/associated-tests';
 import { MethodCoveredByTest } from 'types/method-covered-by-test';
-import { Button } from 'forms';
+import { } from 'forms';
 import { useBuildVersion } from '../../use-build-version';
 import { DetailedCodeCoverageCard } from '../../code-coverage-card';
 import { ProjectMethodsCard } from '../../project-methods-card';
@@ -29,6 +30,12 @@ import styles from './scope-info.module.scss';
 
 interface Props {
   className?: string;
+}
+
+interface MenuItemType {
+  label: string;
+  icon: keyof typeof Icons;
+  onClick: () => void;
 }
 
 const scopeInfo = BEM(styles);

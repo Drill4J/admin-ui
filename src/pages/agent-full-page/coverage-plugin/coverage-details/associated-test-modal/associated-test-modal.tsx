@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { BEM, div } from '@redneckz/react-bem-helper';
+import { Modal, Icons } from '@drill4j/ui-kit';
 
-import { Modal, Icons } from 'components';
 import { AssociatedTests } from 'types/associated-tests';
 import { useBuildVersion } from '../../use-build-version';
 import { ItemInfo } from './item-info';

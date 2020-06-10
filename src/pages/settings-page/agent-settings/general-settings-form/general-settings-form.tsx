@@ -2,11 +2,12 @@ import * as React from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 import { Form, Field } from 'react-final-form';
 import axios from 'axios';
-
-import { Panel } from 'layouts';
-import { Icons } from 'components';
 import {
-  Fields, FormGroup, composeValidators, required, sizeLimit, Button,
+  Panel, Icons, FormGroup, Button,
+} from '@drill4j/ui-kit';
+
+import {
+  Fields, composeValidators, required, sizeLimit,
 } from 'forms';
 import { copyToClipboard } from 'utils';
 import { Message } from 'types/message';

@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
+import { Icons } from '@drill4j/ui-kit';
 
-import { Icons } from 'components';
 import { percentFormatter } from 'utils';
 import { Section } from '../section';
 

@@ -1,6 +1,6 @@
 import * as React from 'react';
+import { MessagePanel } from '@drill4j/ui-kit';
 
-import { MessagePanel } from 'components';
 import { Message } from 'types/message';
 
 interface Props {

@@ -1,10 +1,9 @@
 import * as React from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 import { useHistory } from 'react-router-dom';
-
-import { Panel } from 'layouts';
-import { Button, CancelButton } from 'forms';
-import { Popup, Icons } from 'components';
+import {
+  Panel, Button, CancelButton, Popup, Icons,
+} from '@drill4j/ui-kit';
 
 import styles from './cancel-agent-registration-modal.module.scss';
 

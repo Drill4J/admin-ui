@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { BEM, div } from '@redneckz/react-bem-helper';
-
-import { Icons } from 'components';
+import { Icons } from '@drill4j/ui-kit';
 
 import styles from './row-expander.module.scss';
 

@@ -3,8 +3,9 @@ import { BEM } from '@redneckz/react-bem-helper';
 import {
   Switch, useParams, useLocation, Route, matchPath,
 } from 'react-router-dom';
+import { Icons } from '@drill4j/ui-kit';
 
-import { Toolbar, Icons, Footer } from 'components';
+import { Toolbar, Footer } from 'components';
 import { defaultAdminSocket } from 'common/connection';
 import { PluginsLayout } from 'layouts';
 import { Breadcrumbs } from 'modules';

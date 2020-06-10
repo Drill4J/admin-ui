@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 import VirtualList from 'react-tiny-virtual-list';
+import { Modal, Icons, OverflowText } from '@drill4j/ui-kit';
 
-import { Modal, Icons, OverflowText } from 'components';
 import { useElementSize } from 'hooks';
 import { MethodsDetails } from 'types/methods-details';
 import { useBuildVersion } from '../use-build-version';

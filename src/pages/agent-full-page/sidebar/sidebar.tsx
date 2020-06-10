@@ -3,8 +3,7 @@ import { BEM, div } from '@redneckz/react-bem-helper';
 import {
   useParams, useHistory, useLocation, matchPath,
 } from 'react-router-dom';
-
-import { Icons } from 'components';
+import { Icons } from '@drill4j/ui-kit';
 
 import styles from './sidebar.module.scss';
 

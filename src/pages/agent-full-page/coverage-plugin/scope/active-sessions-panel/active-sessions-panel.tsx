@@ -1,9 +1,9 @@
 import * as React from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
+import { Panel, Icons } from '@drill4j/ui-kit';
 
-import { Panel } from 'layouts';
-import { Icons } from 'components';
 import { useCoveragePluginState } from '../../store';
+
 import styles from './active-sessions-panel.module.scss';
 
 interface Props {

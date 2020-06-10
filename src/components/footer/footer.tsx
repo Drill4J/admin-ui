@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { BEM, tag } from '@redneckz/react-bem-helper';
 import nanoid from 'nanoid';
+import { Panel } from '@drill4j/ui-kit';
 
-import { Panel } from 'layouts';
 import { useWsConnection } from 'hooks';
 import { defaultAdminSocket } from 'common/connection';
 import { DrillVersion } from 'types/drill-version';

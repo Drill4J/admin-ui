@@ -3,10 +3,11 @@ import { BEM } from '@redneckz/react-bem-helper';
 import { useParams, useLocation, useHistory } from 'react-router-dom';
 import { Form, Field } from 'react-final-form';
 import queryString from 'query-string';
+import {
+  Panel, Icons, Button, CancelButton,
+} from '@drill4j/ui-kit';
 
-import { Panel } from 'layouts';
-import { Icons, PluginListEntry } from 'components';
-import { Button, CancelButton } from 'forms';
+import { PluginListEntry } from 'components';
 import { useWsConnection } from 'hooks';
 import { CancelAgentRegistrationModal } from 'modules';
 import { defaultAdminSocket } from 'common/connection';
@@ -39,7 +40,6 @@ export const ServiceGroupRegistrationPage = serviceGroupRegistrationPage(
       },
     });
     const { unregisteredAgentsCount, serviceGroupName } = queryString.parse(search);
-
 
     return (
       <div className={className}>

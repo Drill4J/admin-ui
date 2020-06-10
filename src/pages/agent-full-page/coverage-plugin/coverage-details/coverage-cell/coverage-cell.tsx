@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { BEM, div } from '@redneckz/react-bem-helper';
+import { Icons } from '@drill4j/ui-kit';
 
-import { Icons } from 'components';
 import { percentFormatter } from 'utils';
 
 import styles from './coverage-cell.module.scss';

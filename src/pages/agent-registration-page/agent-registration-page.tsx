@@ -1,13 +1,13 @@
 import * as React from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 import { useParams, useHistory } from 'react-router-dom';
+import { Panel, Icons, CancelButton } from '@drill4j/ui-kit';
 
 import {
-  PageHeader, Icons, Wizard, Step,
+  PageHeader, Wizard, Step,
 } from 'components';
-import { Panel } from 'layouts';
 import {
-  requiredArray, composeValidators, required, sizeLimit, CancelButton,
+  requiredArray, composeValidators, required, sizeLimit,
 } from 'forms';
 import { useAgent } from 'hooks';
 import { NotificationManagerContext } from 'notification-manager';

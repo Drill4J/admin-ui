@@ -1,9 +1,8 @@
 import * as React from 'react';
 import { BEM, div } from '@redneckz/react-bem-helper';
 import { useParams, useHistory } from 'react-router-dom';
+import { Panel, Spinner, Icons } from '@drill4j/ui-kit';
 
-import { Panel } from 'layouts';
-import { Spinner, Icons } from 'components';
 import { AGENT_STATUS } from 'common/constants';
 import { capitalize } from 'utils';
 import { AgentStatus } from 'types/agent-status';

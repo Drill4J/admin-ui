@@ -1,9 +1,9 @@
 import * as React from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 import { Field } from 'react-final-form';
+import { Panel, Icons } from '@drill4j/ui-kit';
 
-import { Panel } from 'layouts';
-import { Icons, PluginListEntry } from 'components';
+import { PluginListEntry } from 'components';
 import { useWsConnection } from 'hooks';
 import { defaultAdminSocket } from 'common/connection';
 import { Plugin } from 'types/plugin';

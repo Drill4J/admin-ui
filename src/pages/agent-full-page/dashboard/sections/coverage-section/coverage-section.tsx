@@ -1,9 +1,8 @@
 import * as React from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 import { useParams } from 'react-router-dom';
+import { Panel, Icons, Tooltip } from '@drill4j/ui-kit';
 
-import { Panel } from 'layouts';
-import { Icons, Tooltip } from 'components';
 import { percentFormatter } from 'utils';
 import { BuildCoverage } from 'types/build-coverage';
 import { Methods } from 'types/methods';

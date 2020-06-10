@@ -1,9 +1,6 @@
 import * as React from 'react';
 import { BEM, div, span } from '@redneckz/react-bem-helper';
-
-import { Icons } from 'components';
-import { Inputs } from 'forms';
-import { Panel } from 'layouts';
+import { Icons, Inputs, Panel } from '@drill4j/ui-kit';
 
 import styles from './selectable-list.module.scss';
 

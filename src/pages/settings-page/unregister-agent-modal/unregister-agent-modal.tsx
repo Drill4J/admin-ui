@@ -2,10 +2,10 @@ import * as React from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 import { useHistory } from 'react-router-dom';
 import axios from 'axios';
+import {
+  Panel, Popup, Icons, Button, CancelButton,
+} from '@drill4j/ui-kit';
 
-import { Panel } from 'layouts';
-import { Popup, Icons } from 'components';
-import { Button, CancelButton } from 'forms';
 import { NotificationManagerContext } from 'notification-manager';
 
 import styles from './unregister-agent-modal.module.scss';

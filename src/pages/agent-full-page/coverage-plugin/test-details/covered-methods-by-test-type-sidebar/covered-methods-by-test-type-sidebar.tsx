@@ -1,8 +1,7 @@
 import * as React from 'react';
 import { BEM, capitalize } from '@redneckz/react-bem-helper';
+import { Panel, Icons, Modal } from '@drill4j/ui-kit';
 
-import { Panel } from 'layouts';
-import { Icons, Modal } from 'components';
 import { MethodCoveredByTest } from 'types/method-covered-by-test';
 import { MethodsList } from '../methods-list';
 

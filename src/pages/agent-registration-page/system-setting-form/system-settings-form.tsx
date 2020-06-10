@@ -1,10 +1,9 @@
 import * as React from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 import { Field } from 'react-final-form';
+import { Panel, Icons, FormGroup } from '@drill4j/ui-kit';
 
-import { Panel } from '../../../layouts';
-import { Icons } from '../../../components';
-import { Fields, FormGroup } from '../../../forms';
+import { Fields } from 'forms';
 import { parsePackges, formatPackages } from '../../../utils';
 
 import styles from './system-settings-form.module.scss';
