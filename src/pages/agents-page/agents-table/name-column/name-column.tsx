@@ -31,12 +31,13 @@ export const NameColumn = nameColumn(
       (acc, item) => (item.status === AGENT_STATUS.NOT_REGISTERED ? acc + 1 : acc),
       0,
     );
+    const isServiceGroup = agentType === 'ServiceGroup';
 
     return (
       <div className={className}>
         <Panel>
           <AgentTypeIcon>
-            {agentType === 'ServiceGroup' ? <Icons.ServiceGroup /> : <Icons.Agent />}
+            {isServiceGroup ? <Icons.ServiceGroup /> : <Icons.Agent />}
           </AgentTypeIcon>
           {status === AGENT_STATUS.NOT_REGISTERED && <NewAgentBadge>New</NewAgentBadge>}
           {unregisteredAgentsCount > 0 && (
@@ -44,7 +45,7 @@ export const NameColumn = nameColumn(
           )}
           <AgentName
             onClick={() => push(
-              agentType === 'ServiceGroup'
+              isServiceGroup
                 ? `/service-group-full-page/${id}/service-group-dashboard`
                 : `/full-page/${id}/${buildVersion}/dashboard`,
             )}
@@ -54,7 +55,7 @@ export const NameColumn = nameColumn(
             }
             data-test="name-column"
           >
-            {name || id}
+            {isServiceGroup ? `${name || id} (${agents.length})` : name || id}
           </AgentName>
         </Panel>
       </div>
