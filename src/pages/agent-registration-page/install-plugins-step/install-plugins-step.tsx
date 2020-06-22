@@ -59,7 +59,7 @@ export const InstallPluginsStep = installPluginsStep(
                 >
                   <Panel>
                     <PluginName>{name}&nbsp;</PluginName>
-                    {version && <PluginVersion>{version}</PluginVersion>}
+                    {version && <PluginVersion>({version})</PluginVersion>}
                   </Panel>
                 </PluginListEntry>
               )}

@@ -106,7 +106,7 @@ export const ServiceGroupRegistrationPage = serviceGroupRegistrationPage(
                       >
                         <Panel>
                           <PluginName>{name}&nbsp;</PluginName>
-                          {version && <PluginVersion>{version}</PluginVersion>}
+                          {version && <PluginVersion>({version})</PluginVersion>}
                         </Panel>
                       </PluginListEntry>
                     )}
