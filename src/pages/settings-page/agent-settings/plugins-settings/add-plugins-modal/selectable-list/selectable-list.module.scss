@@ -73,4 +73,10 @@
     font-family: $semibold-font;
     color: $gravel-color;
   }
+
+  &__plugin-version {
+    margin-right: 8px;
+    font-size: 12px;
+    color: map-get($color-palette, black100);
+  }
 }

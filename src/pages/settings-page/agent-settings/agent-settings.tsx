@@ -46,7 +46,7 @@ export const AgentSettings = agentSettings(({ className, showMessage, agent }: P
         <Tab name="system">System</Tab>
         <Tab name="plugins">Plugins</Tab>
       </Tabs>
-      {tabsComponents.find(({ name }) => name === selectedTab)!.component}
+      {tabsComponents.find(({ name }) => name === selectedTab)?.component}
     </div>
   );
 });

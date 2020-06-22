@@ -80,7 +80,7 @@
 
     & > *:first-child {
       &::before {
-        content: '·';
+        content: '\2022';
         margin: 0 4px;
       }
     }

@@ -3,6 +3,7 @@ import { BEM, div, span } from '@redneckz/react-bem-helper';
 
 import { Icons } from 'components';
 import { Inputs } from 'forms';
+import { Panel } from 'layouts';
 
 import styles from './selectable-list.module.scss';
 
@@ -44,7 +45,10 @@ export const SelectableList = selectableList(
             <PluginsIconWrapper selected={selectedRows.includes(plugin[idKey])}>
               <Icons.Test2Code />
             </PluginsIconWrapper>
-            <PluginName>{plugin.name}</PluginName>
+            <Panel align="space-between">
+              <PluginName>{plugin.name}</PluginName>
+              {plugin.version && <PluginVersion>{plugin.version}</PluginVersion>}
+            </Panel>
           </Plugin>
         </Element>
       ))}
@@ -60,3 +64,4 @@ const Plugin = selectableList.plugin(div({} as { selected?: boolean; selectable?
 const Checkbox = selectableList.checkbox(Inputs.Checkbox);
 const PluginsIconWrapper = selectableList.pluginsIconWrapper(div({} as { selected?: boolean }));
 const PluginName = selectableList.pluginName('div');
+const PluginVersion = selectableList.pluginVersion('div');

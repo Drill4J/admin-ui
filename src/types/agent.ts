@@ -14,4 +14,5 @@ export interface Agent extends CommonEntity {
   sessionIdHeaderName?: string;
   serviceGroup?: string;
   agentType?: string;
+  agentVersion?: string;
 }

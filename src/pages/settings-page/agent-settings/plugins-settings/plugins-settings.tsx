@@ -50,14 +50,19 @@ export const PluginsSettings = pluginsSettings(
         </Header>
         <Content>
           {(plugins || []).length > 0 ? (
-            plugins.map(({ id, name, description }) => (
+            plugins.map(({
+              id, name, description, version,
+            }) => (
               <PluginListEntry
                 key={id}
                 description={description}
                 onClick={() => push(`/full-page/${agentId}/${buildVersion}/${id}/dashboard`)}
                 icon={name as keyof typeof Icons}
               >
-                <PluginName>{name}</PluginName>
+                <Panel>
+                  <PluginName>{name}&nbsp;</PluginName>
+                  {version && <PluginVersion>{version}</PluginVersion>}
+                </Panel>
               </PluginListEntry>
             ))
           ) : (
@@ -83,3 +88,4 @@ const Header = pluginsSettings.header(Panel);
 const PluginsCount = pluginsSettings.pluginsCount('span');
 const AddPluginButton = pluginsSettings.addPlugin(Button);
 const PluginName = pluginsSettings.pluginName('div');
+const PluginVersion = pluginsSettings.pluginVersion('div');
