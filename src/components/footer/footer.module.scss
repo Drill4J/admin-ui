@@ -17,7 +17,8 @@
 
   &__admin-info {
     & > *:not(:last-child)::after {
-      content: '  ·  ';
+      content: '\2022';
+      margin: 0 8px;
     }
   }
 
@@ -25,7 +26,8 @@
     text-decoration: none;
     color: $slate-gray;
     &:not(:last-child)::after {
-      content: '  ·  ';
+      content: '\2022';
+      margin: 0 8px;
     }
   }
 }

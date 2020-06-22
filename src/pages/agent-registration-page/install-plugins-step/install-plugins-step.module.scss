@@ -33,4 +33,10 @@
     line-height: 22px;
     color: $gravel-color;
   }
+
+  &__plugin-version {
+    font-size: 14px;
+    line-height: 22px;
+    color: map-get($color-palette, black75);
+  }
 }

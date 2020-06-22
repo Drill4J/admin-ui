@@ -36,7 +36,9 @@ export const InstallPluginsStep = installPluginsStep(
           selected
         </SelectedPluginsInfo>
         <PluginsList>
-          {plugins.map(({ id = '', name, description }) => (
+          {plugins.map(({
+            id = '', name, description, version,
+          }) => (
             <Field
               name="plugins"
               type="checkbox"
@@ -55,7 +57,10 @@ export const InstallPluginsStep = installPluginsStep(
                     },
                   })}
                 >
-                  <PluginName>{name}</PluginName>
+                  <Panel>
+                    <PluginName>{name}&nbsp;</PluginName>
+                    {version && <PluginVersion>{version}</PluginVersion>}
+                  </Panel>
                 </PluginListEntry>
               )}
             />
@@ -71,3 +76,4 @@ const InfoIcon = installPluginsStep.infoIcon(Icons.Info);
 const SelectedPluginsInfo = installPluginsStep.selectedPluginsInfo('div');
 const PluginsList = installPluginsStep.pluginsList('div');
 const PluginName = installPluginsStep.pluginName('div');
+const PluginVersion = installPluginsStep.pluginVersion('div');

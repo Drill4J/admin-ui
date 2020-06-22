@@ -5,6 +5,7 @@ import { Form } from 'react-final-form';
 import { Panel } from 'layouts';
 import { Button } from 'forms';
 import { Icons } from 'components';
+import { Agent } from 'types/agent';
 import {
   wizardReducer, previousStep, nextStep, state,
 } from './wizard-reducer';
@@ -19,7 +20,7 @@ export interface StepProps {
 
 interface Props {
   className?: string;
-  initialValues: object;
+  initialValues: Agent;
   onSubmit: (val: any, onError: (message: string) => void) => any;
   children: React.ReactElement<StepProps>[];
 }

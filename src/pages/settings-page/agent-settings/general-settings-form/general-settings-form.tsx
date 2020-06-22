@@ -78,13 +78,22 @@ export const GeneralSettingsForm = generalSettingsForm(
               <Content>
                 <FormGroup
                   label="Agent ID"
-                  actions={<CopyAgentId onClick={() => copyToClipboard(String(agent.id))} />}
+                  actions={<CopyAgentId onClick={() => copyToClipboard(agent.id || '')} />}
                 >
                   <Field name="id" component={Fields.Input} disabled />
+                </FormGroup>
+                <FormGroup
+                  label="Agent version"
+                  actions={<CopyAgentId onClick={() => copyToClipboard(agent.agentVersion || '')} />}
+                >
+                  <Field name="agentVersion" component={Fields.Input} disabled />
                 </FormGroup>
                 <FormGroup label="Service Group">
                   <Field name="serviceGroup" component={Fields.Input} placeholder="n/a" disabled />
                 </FormGroup>
+                <AgentName label="Agent name">
+                  <Field name="name" component={Fields.Input} placeholder="Give agent a name" />
+                </AgentName>
                 <FormGroup label="Environment" optional>
                   <Field
                     name="environment"
@@ -92,9 +101,6 @@ export const GeneralSettingsForm = generalSettingsForm(
                     placeholder="Specify an environment"
                   />
                 </FormGroup>
-                <AgentName label="Agent name">
-                  <Field name="name" component={Fields.Input} placeholder="Give agent a name" />
-                </AgentName>
                 <Description label="Description">
                   <Field
                     name="description"

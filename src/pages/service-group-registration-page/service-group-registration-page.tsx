@@ -83,7 +83,9 @@ export const ServiceGroupRegistrationPage = serviceGroupRegistrationPage(
                 {plugins.length}&nbsp;of&nbsp;{availiblePlugins.length} selected
               </SelectedPluginsInfo>
               <PluginsList>
-                {availiblePlugins.map(({ id = '', name, description }) => (
+                {availiblePlugins.map(({
+                  id = '', name, description, version,
+                }) => (
                   <Field
                     name="plugins"
                     type="checkbox"
@@ -102,7 +104,10 @@ export const ServiceGroupRegistrationPage = serviceGroupRegistrationPage(
                           },
                         })}
                       >
-                        <PluginName>{name}</PluginName>
+                        <Panel>
+                          <PluginName>{name}&nbsp;</PluginName>
+                          {version && <PluginVersion>{version}</PluginVersion>}
+                        </Panel>
                       </PluginListEntry>
                     )}
                   />
@@ -130,3 +135,4 @@ const InfoIcon = serviceGroupRegistrationPage.infoIcon(Icons.Info);
 const SelectedPluginsInfo = serviceGroupRegistrationPage.selectedPluginsInfo('div');
 const PluginsList = serviceGroupRegistrationPage.pluginsList('div');
 const PluginName = serviceGroupRegistrationPage.pluginName('div');
+const PluginVersion = serviceGroupRegistrationPage.pluginVersion('div');

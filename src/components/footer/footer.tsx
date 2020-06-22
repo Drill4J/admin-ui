@@ -3,6 +3,9 @@ import { BEM, tag } from '@redneckz/react-bem-helper';
 import nanoid from 'nanoid';
 
 import { Panel } from 'layouts';
+import { useWsConnection } from 'hooks';
+import { defaultAdminSocket } from 'common/connection';
+import { DrillVersion } from 'types/drill-version';
 import packageJson from '../../../package.json';
 
 import styles from './footer.module.scss';
@@ -25,6 +28,7 @@ const FooterLink = ({ name, link }: FooterLinkProps) => (
 const footer = BEM(styles);
 
 export const Footer = footer(({ className }: Props) => {
+  const { admin: backendVersion } = useWsConnection<DrillVersion>(defaultAdminSocket, '/version') || {};
   const socialLinks = [
     {
       name: 'Fork us on GitHub',
@@ -47,6 +51,7 @@ export const Footer = footer(({ className }: Props) => {
       link: 'https://drill4j.github.io/Wiki/',
     },
   ];
+
   return (
     <div className={className}>
       <ContentWrapper>
@@ -56,8 +61,13 @@ export const Footer = footer(({ className }: Props) => {
               {`© Drill4J ${new Date().getFullYear()}`}
             </span>
             <span>
-              {`Build ${process.env.REACT_APP_VERSION || packageJson.version}`}
+              {`Admin UI: ${process.env.REACT_APP_VERSION || packageJson.version}`}
             </span>
+            {backendVersion && (
+              <span>
+                {`Admin: ${backendVersion}`}
+              </span>
+            )}
             <span>All rights reserved.</span>
           </AdminInfo>
           <span>
