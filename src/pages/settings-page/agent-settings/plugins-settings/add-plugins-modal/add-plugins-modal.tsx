@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
-import { Modal, Button, CancelButton } from '@drill4j/ui-kit';
+import { Modal, Button } from '@drill4j/ui-kit';
 
 import { useWsConnection } from 'hooks';
 import { defaultAdminSocket } from 'common/connection';
@@ -50,16 +50,17 @@ export const AddPluginsModal = addPluginModal(({
           </PluginsList>
         </Content>
         <Actions>
-          <AddPluginButton
+          <Button
             type="primary"
+            size="large"
             onClick={() => handleLoadPlugins(selectedPlugins)}
             disabled={selectedPlugins.length === 0}
           >
             Add plugin
-          </AddPluginButton>
-          <CancelButton size="large" onClick={() => onToggle(!isOpen)}>
+          </Button>
+          <Button type="secondary" size="large" onClick={() => onToggle(!isOpen)}>
             Cancel
-          </CancelButton>
+          </Button>
         </Actions>
       </div>
     </Modal>
@@ -71,4 +72,3 @@ const Content = addPluginModal.content('div');
 const Title = addPluginModal.title('div');
 const PluginsList = addPluginModal.pluginsList('div');
 const Actions = addPluginModal.actions('div');
-const AddPluginButton = addPluginModal.addPluginButton(Button);

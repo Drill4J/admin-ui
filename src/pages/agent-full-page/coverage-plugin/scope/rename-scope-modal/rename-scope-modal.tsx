@@ -3,7 +3,7 @@ import { BEM } from '@redneckz/react-bem-helper';
 import { Form, Field } from 'react-final-form';
 import { useParams } from 'react-router-dom';
 import {
-  Panel, Button, FormGroup, CancelButton, Popup, Icons,
+  Panel, Button, FormGroup, Popup, GeneralAlerts,
 } from '@drill4j/ui-kit';
 
 import {
@@ -47,16 +47,15 @@ export const RenameScopeModal = renameScopeModal(
       <Popup
         isOpen={isOpen}
         onToggle={onToggle}
-        header={<Panel>Rename scope</Panel>}
+        header={<Panel>Rename Scope</Panel>}
         type="info"
         closeOnFadeClick
       >
         <div className={className}>
           {errorMessage && (
-            <ErrorMessage>
-              <ErrorMessageIcon />
+            <GeneralAlerts type="ERROR">
               {errorMessage}
-            </ErrorMessage>
+            </GeneralAlerts>
           )}
           <Form
             onSubmit={(values) => renameScope(agentId, pluginId, {
@@ -74,12 +73,12 @@ export const RenameScopeModal = renameScopeModal(
                   <Field name="name" component={Fields.Input} placeholder="e.g. Automation Tests" />
                 </FormGroup>
                 <ActionsPanel>
-                  <RenameScopeButton type="primary" onClick={handleSubmit as any}>
+                  <Button type="primary" size="large" onClick={handleSubmit as any}>
                     Save
-                  </RenameScopeButton>
-                  <CancelButton size="large" onClick={() => onToggle(false)}>
+                  </Button>
+                  <Button type="secondary" size="large" onClick={() => onToggle(false)}>
                     Cancel
-                  </CancelButton>
+                  </Button>
                 </ActionsPanel>
               </Content>
             )}
@@ -90,8 +89,5 @@ export const RenameScopeModal = renameScopeModal(
   },
 );
 
-const ErrorMessage = renameScopeModal.errorMessage(Panel);
-const ErrorMessageIcon = renameScopeModal.errorMessageIcon(Icons.Warning);
 const Content = renameScopeModal.content('div');
 const ActionsPanel = renameScopeModal.actionsPanel(Panel);
-const RenameScopeButton = renameScopeModal.renameScopeButton(Button);

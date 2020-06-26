@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 import {
-  Panel, Button, CancelButton, Popup, Icons, OverflowText,
+  Panel, Button, Popup, OverflowText, GeneralAlerts,
 } from '@drill4j/ui-kit';
 
 import { NotificationManagerContext } from 'notification-manager';
@@ -31,16 +31,15 @@ export const FinishAllScopesModal = finishAllScopesModal(
       <Popup
         isOpen={isOpen}
         onToggle={onToggle}
-        header={<OverflowText>Finish all scopes</OverflowText>}
+        header={<OverflowText>Finish All Scopes</OverflowText>}
         type="info"
         closeOnFadeClick
       >
         <div className={className}>
           {errorMessage && (
-            <ErrorMessage>
-              <ErrorMessageIcon />
+            <GeneralAlerts type="ERROR">
               {errorMessage}
-            </ErrorMessage>
+            </GeneralAlerts>
           )}
           <Content>
             <span>
@@ -71,9 +70,9 @@ export const FinishAllScopesModal = finishAllScopesModal(
               >
                 Finish all scopes
               </FinishScopeButton>
-              <CancelButton size="large" onClick={() => onToggle(false)}>
+              <Button type="secondary" size="large" onClick={() => onToggle(false)}>
                 Cancel
-              </CancelButton>
+              </Button>
             </ActionsPanel>
           </Content>
         </div>
@@ -82,8 +81,6 @@ export const FinishAllScopesModal = finishAllScopesModal(
   },
 );
 
-const ErrorMessage = finishAllScopesModal.errorMessage(Panel);
-const ErrorMessageIcon = finishAllScopesModal.errorMessageIcon(Icons.Warning);
 const Content = finishAllScopesModal.content('div');
 const Instructions = finishAllScopesModal.instructions('div');
 const ActionsPanel = finishAllScopesModal.actionsPanel(Panel);

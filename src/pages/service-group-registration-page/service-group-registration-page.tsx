@@ -3,9 +3,7 @@ import { BEM } from '@redneckz/react-bem-helper';
 import { useParams, useLocation, useHistory } from 'react-router-dom';
 import { Form, Field } from 'react-final-form';
 import queryString from 'query-string';
-import {
-  Panel, Icons, Button, CancelButton,
-} from '@drill4j/ui-kit';
+import { Panel, Icons, Button } from '@drill4j/ui-kit';
 
 import { PluginListEntry } from 'components';
 import { useWsConnection } from 'hooks';
@@ -56,7 +54,7 @@ export const ServiceGroupRegistrationPage = serviceGroupRegistrationPage(
                   &nbsp;Register new agents
                 </div>
                 <div>
-                  <CancelButton size="large" onClick={() => setIsCancelModalOpened(true)}>Cancel</CancelButton>
+                  <Button type="secondary" size="large" onClick={() => setIsCancelModalOpened(true)}>Cancel</Button>
                   <Button
                     type="primary"
                     size="large"

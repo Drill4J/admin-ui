@@ -1,9 +1,10 @@
 import * as React from 'react';
 import { Panel, Tooltip } from '@drill4j/ui-kit';
 
-import { TEST_TYPES_COLOR } from 'common/constants';
+import { TESTS_TO_RUN_TYPES_COLOR } from 'common/constants';
 import { TestsToRun } from 'types/tests-to-run';
 import { TestTypes } from 'types/test-types';
+import { capitalize } from 'utils';
 import { useBuildVersion } from '../../coverage-plugin/use-build-version';
 import { SingleBar } from '../single-bar';
 import { Section } from './section';
@@ -20,7 +21,7 @@ export const TestsToRunSection = () => {
       ...acc,
       [testType.toLowerCase()]: {
         count: testTypeToNames[testType].length,
-        color: TEST_TYPES_COLOR[testType as TestTypes],
+        color: TESTS_TO_RUN_TYPES_COLOR[testType as TestTypes],
       },
     }),
     {},
@@ -35,32 +36,16 @@ export const TestsToRunSection = () => {
           message={totalCoveredMethodCount > 0 && <SectionTooltip data={tooltipData} hideValue />}
         >
           <Panel>
-            <SingleBar
-              width={48}
-              height={128}
-              color="#9600FF"
-              percent={(testTypeToNames.AUTO && testTypeToNames.AUTO.length / totalCoveredMethodCount) * 100}
-              icon="Auto"
-            />
-            <SingleBar
-              width={48}
-              height={128}
-              color="#00D5FF"
-              percent={
-                (testTypeToNames.MANUAL && testTypeToNames.MANUAL.length / totalCoveredMethodCount) * 100
-              }
-              icon="Manual"
-            />
-            <SingleBar
-              width={48}
-              height={128}
-              color="#E78E00"
-              percent={
-                (testTypeToNames.PERFORMANCE
-                  && testTypeToNames.PERFORMANCE.length / totalCoveredMethodCount) * 100
-              }
-              icon="Perf"
-            />
+            {Object.keys(TESTS_TO_RUN_TYPES_COLOR).map((testType) => (
+              <SingleBar
+                key={testType}
+                width={48}
+                height={128}
+                color={TESTS_TO_RUN_TYPES_COLOR[testType as TestTypes]}
+                percent={(testTypeToNames[testType] && testTypeToNames[testType].length / totalCoveredMethodCount) * 100}
+                icon={testType === 'PERFORMANCE' ? 'Perf' : capitalize(testType)}
+              />
+            ))}
           </Panel>
         </Tooltip>
       )}

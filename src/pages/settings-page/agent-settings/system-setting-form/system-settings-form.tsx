@@ -3,7 +3,7 @@ import { BEM, div } from '@redneckz/react-bem-helper';
 import { Field, Form } from 'react-final-form';
 import axios from 'axios';
 import {
-  Panel, Icons, Tooltip, Button, FormGroup,
+  Panel, Icons, Tooltip, Button, FormGroup, GeneralAlerts,
 } from '@drill4j/ui-kit';
 
 import {
@@ -25,7 +25,7 @@ interface Props {
 const systemSettingsForm = BEM(styles);
 
 const validateSettings = composeValidators(
-  requiredArray('packagesPrefixes', 'Package prefixes'),
+  requiredArray('packagesPrefixes', 'Package prefixes are required.'),
   sizeLimit({
     name: 'sessionIdHeaderName',
     alias: 'Session header name',
@@ -83,10 +83,9 @@ export const SystemSettingsForm = systemSettingsForm(
                 </SaveChangesButton>
               </InfoPanel>
               {errorMessage && (
-                <ErrorMessage>
-                  <ErrorMessageIcon />
+                <GeneralAlerts type="ERROR">
                   {errorMessage}
-                </ErrorMessage>
+                </GeneralAlerts>
               )}
               <Content>
                 <FieldName>
@@ -157,8 +156,6 @@ export const SystemSettingsForm = systemSettingsForm(
 const InfoPanel = systemSettingsForm.infoPanel(Panel);
 const InfoIcon = systemSettingsForm.infoIcon(Icons.Info);
 const SaveChangesButton = systemSettingsForm.saveChangesButton(Button);
-const ErrorMessage = systemSettingsForm.errorMessage(Panel);
-const ErrorMessageIcon = systemSettingsForm.errorMessageIcon(Icons.Warning);
 const Content = systemSettingsForm.content('div');
 const FieldName = systemSettingsForm.fieldName(Panel);
 const BlockerStatus = systemSettingsForm.blockerStatus(

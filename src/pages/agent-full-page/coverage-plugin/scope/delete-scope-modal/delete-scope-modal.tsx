@@ -2,7 +2,7 @@ import * as React from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 import { useHistory, useParams } from 'react-router-dom';
 import {
-  Panel, Button, CancelButton, Popup, Icons, OverflowText,
+  Panel, Button, Popup, OverflowText, GeneralAlerts,
 } from '@drill4j/ui-kit';
 
 import { NotificationManagerContext } from 'notification-manager';
@@ -42,7 +42,7 @@ export const DeleteScopeModal = deleteScopeModal(
         onToggle={onToggle}
         header={(
           <OverflowText>
-            {`${testsCount ? 'Delete' : 'Cancel'} scope ${scope
+            {`${testsCount ? 'Delete' : 'Cancel'} Scope ${scope
               && scope.name}`}
           </OverflowText>
         )}
@@ -51,10 +51,9 @@ export const DeleteScopeModal = deleteScopeModal(
       >
         <div className={className}>
           {errorMessage && (
-            <ErrorMessage>
-              <ErrorMessageIcon />
+            <GeneralAlerts type="ERROR">
               {errorMessage}
-            </ErrorMessage>
+            </GeneralAlerts>
           )}
           {scope && scope.active && <ActiveSessionsPanel />}
           <Content>
@@ -81,9 +80,9 @@ export const DeleteScopeModal = deleteScopeModal(
               >
                 {scope && scope.active ? 'Yes, Cancel Scope' : 'Yes, Delete Scope'}
               </DeleteScopeButton>
-              <CancelButton size="large" onClick={() => onToggle(false)}>
+              <Button type="secondary" size="large" onClick={() => onToggle(false)}>
                 Cancel
-              </CancelButton>
+              </Button>
             </ActionsPanel>
           </Content>
         </div>
@@ -92,8 +91,6 @@ export const DeleteScopeModal = deleteScopeModal(
   },
 );
 
-const ErrorMessage = deleteScopeModal.errorMessage(Panel);
-const ErrorMessageIcon = deleteScopeModal.errorMessageIcon(Icons.Warning);
 const Content = deleteScopeModal.content('div');
 const Message = deleteScopeModal.message('div');
 const ActionsPanel = deleteScopeModal.actionsPanel(Panel);

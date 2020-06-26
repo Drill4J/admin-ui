@@ -30,6 +30,7 @@ export const Dashboard = dashboard(({ className, agent }: Props) => {
           <>
             {plugins.map(({ id, name }) => (
               <PluginCard
+                key={id}
                 label={name}
                 pluginLink={`/full-page/${agentId}/${buildVersion}/${id}/dashboard`}
               >

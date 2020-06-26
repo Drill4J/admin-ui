@@ -44,8 +44,8 @@ export const LoginPage = loginPage(({ className }: Props) => {
         <SubTitle>Click &quot;Continue as a guest&quot; to entry Admin Panel with admin privilege</SubTitle>
         {error && <Error>{`${error.message}`}</Error>}
         <SignInForm>
-          <Inputs.Text placeholder="User ID" disabled rounded icon={<Icons.Account />} />
-          <Inputs.Text placeholder="Password" disabled rounded icon={<Icons.Lock />} />
+          <Inputs.Text placeholder="User ID" disabled />
+          <Inputs.Text placeholder="Password" disabled />
           <SignInButton disabled type="primary">
             Sign in
             <Icons.Arrow />

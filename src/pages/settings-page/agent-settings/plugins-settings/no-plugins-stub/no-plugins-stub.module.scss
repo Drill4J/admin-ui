@@ -8,17 +8,18 @@
   justify-content: center;
 
   &__icon {
-    color: map-get($color-palette, light-blue);
+    color: map-get($monochrome, medium-tint);
   }
 
   &__title {
-    color: map-get($color-palette, middle-blue);
+    margin: 40px 0 8px 0;
+    color: map-get($monochrome, default);
     font-size: 24px;
     line-height: 32px;
   }
 
   &__sub-title {
-    color: $slate-gray;
+    color: map-get($monochrome, default);
     font-size: 14px;
     line-height: 24px;
   }

@@ -2,7 +2,7 @@ import * as React from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 import { Form, Field } from 'react-final-form';
 import {
-  Panel, Popup, Icons, Button, CancelButton, FormGroup,
+  Panel, Popup, Icons, Button, FormGroup, GeneralAlerts, LinkButton,
 } from '@drill4j/ui-kit';
 
 import {
@@ -43,25 +43,20 @@ export const ManageSessionsModal = manageSessionsModal(
       <Popup
         isOpen={isOpen}
         onToggle={onToggle}
-        header={<Panel>Manage sessions</Panel>}
+        header={<Panel>Manage Sessions</Panel>}
         type="info"
         closeOnFadeClick
       >
         <div className={className}>
           {errorMessage && (
-            <ErrorMessage>
-              <ErrorMessageIcon />
+            <GeneralAlerts type="ERROR">
               {errorMessage}
-            </ErrorMessage>
+            </GeneralAlerts>
           )}
-          <ManageSessionsWarning>
-            <ManageSessionsWarningIcon>
-              <Icons.Warning />
-            </ManageSessionsWarningIcon>
+          <GeneralAlerts type="WARNING">
             IMPORTANT: Use this option only if there is no way to test your app manually via Drill4J
             browser extension.
-          </ManageSessionsWarning>
-
+          </GeneralAlerts>
           <Form
             onSubmit={(values: { sessionId?: string; type?: 'START' | 'STOP' }) => manageSession({
               agentType,
@@ -105,9 +100,9 @@ export const ManageSessionsModal = manageSessionsModal(
                     <Icons.Check height={12} width={16} />
                     Finish session
                   </ActionButton>
-                  <CancelButton size="large" onClick={() => onToggle(false)}>
+                  <LinkButton size="large" onClick={() => onToggle(false)}>
                     Cancel
-                  </CancelButton>
+                  </LinkButton>
                 </ActionsPanel>
               </Content>
             )}
@@ -118,10 +113,6 @@ export const ManageSessionsModal = manageSessionsModal(
   },
 );
 
-const ManageSessionsWarning = manageSessionsModal.manageSessionsWarning(Panel);
-const ManageSessionsWarningIcon = manageSessionsModal.manageSessionsWarningIcon('div');
-const ErrorMessage = manageSessionsModal.errorMessage(Panel);
-const ErrorMessageIcon = manageSessionsModal.errorMessageIcon(Icons.Warning);
 const Content = manageSessionsModal.content('div');
 const Info = manageSessionsModal.info('div');
 const ActionsPanel = manageSessionsModal.actionsPanel(Panel);

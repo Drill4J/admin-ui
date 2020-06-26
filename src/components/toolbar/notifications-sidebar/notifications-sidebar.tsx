@@ -1,7 +1,9 @@
 import * as React from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 import nanoid from 'nanoid';
-import { Panel, Icons, Modal } from '@drill4j/ui-kit';
+import {
+  Panel, Icons, Modal, GeneralAlerts,
+} from '@drill4j/ui-kit';
 
 import { Notification as NotificationType } from 'types/notificaiton';
 import { Notification } from './notification/notification';
@@ -40,10 +42,9 @@ export const NotificationsSidebar = notificationsSidebar(
                 <span onClick={() => {}} data-test="notification-sidebar:clear-all">Clear all</span>
               </ActionsPanel>
               {errorMessage && (
-                <ErrorMessage>
-                  <ErrorMessageIcon />
+                <GeneralAlerts type="ERROR">
                   {errorMessage}
-                </ErrorMessage>
+                </GeneralAlerts>
               )}
               <NotificationsList>
                 {notifications.map((notification) =>
@@ -66,8 +67,6 @@ export const NotificationsSidebar = notificationsSidebar(
 const Header = notificationsSidebar.header('div');
 const Content = notificationsSidebar.content('div');
 const ActionsPanel = notificationsSidebar.actionsPanel(Panel);
-const ErrorMessage = notificationsSidebar.errorMessage(Panel);
-const ErrorMessageIcon = notificationsSidebar.errorMessageIcon(Icons.Warning);
 const NotificationsList = notificationsSidebar.notificationsList('div');
 const EmptyNotificationPanel = notificationsSidebar.emptyNotificationPanel('div');
 const Title = notificationsSidebar.title('div');

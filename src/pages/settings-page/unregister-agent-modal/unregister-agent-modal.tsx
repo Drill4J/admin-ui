@@ -2,9 +2,7 @@ import * as React from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 import { useHistory } from 'react-router-dom';
 import axios from 'axios';
-import {
-  Panel, Popup, Icons, Button, CancelButton,
-} from '@drill4j/ui-kit';
+import { Popup, Button, GeneralAlerts } from '@drill4j/ui-kit';
 
 import { NotificationManagerContext } from 'notification-manager';
 
@@ -30,30 +28,24 @@ export const UnregisterAgentModal = unregisterAgentModal(({
     <Popup
       isOpen={isOpen}
       onToggle={onToggle}
-      header={(
-        <Panel>
-          <HeaderIcon height={20} width={20} />
-          Unregister the agent
-        </Panel>
-      )}
-      type="error"
+      header="Unregister The Agent"
       closeOnFadeClick
     >
       <div className={className}>
         {errorMessage && (
-          <ErrorMessage>
-            <ErrorMessageIcon />
+          <GeneralAlerts type="ERROR">
             {errorMessage}
-          </ErrorMessage>
+          </GeneralAlerts>
         )}
         <Content>
           <Notification>
             Are you sure you want to unregister the agent? All gathered data and settings will be
             lost.
           </Notification>
-          <Panel>
-            <UnregisterButton
+          <ActionsPanel>
+            <Button
               type="primary"
+              size="large"
               onClick={() => unregisterAgent(agentId, {
                 onSuccess: () => {
                   showMessage({ type: 'SUCCESS', text: 'Agent has been deactivated' });
@@ -62,24 +54,21 @@ export const UnregisterAgentModal = unregisterAgentModal(({
                 onError: setErrorMessage,
               })}
             >
-              Yes, unregister this agent
-            </UnregisterButton>
-            <CancelButton size="large" onClick={() => onToggle(false)}>
+              Unregister
+            </Button>
+            <Button type="secondary" size="large" onClick={() => onToggle(false)}>
               Cancel
-            </CancelButton>
-          </Panel>
+            </Button>
+          </ActionsPanel>
         </Content>
       </div>
     </Popup>
   );
 });
 
-const HeaderIcon = unregisterAgentModal.headerIcon(Icons.Warning);
-const ErrorMessage = unregisterAgentModal.errorMessage(Panel);
-const ErrorMessageIcon = unregisterAgentModal.errorMessageIcon(Icons.Warning);
 const Content = unregisterAgentModal.content('div');
 const Notification = unregisterAgentModal.notification('div');
-const UnregisterButton = unregisterAgentModal.unregisterButton(Button);
+const ActionsPanel = unregisterAgentModal.actionsPanel('div');
 
 async function unregisterAgent(
   agentId: string,

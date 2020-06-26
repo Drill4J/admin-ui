@@ -2,7 +2,7 @@ import * as React from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 import { useParams, useHistory } from 'react-router-dom';
 import {
-  Panel, Button, Inputs, CancelButton, Popup, Icons, OverflowText,
+  Panel, Button, Inputs, Popup, OverflowText, GeneralAlerts,
 } from '@drill4j/ui-kit';
 
 import { NotificationManagerContext } from 'notification-manager';
@@ -42,23 +42,21 @@ export const FinishScopeModal = finishScopeModal(
       <Popup
         isOpen={isOpen}
         onToggle={onToggle}
-        header={<OverflowText>{`Finish scope ${scope && scope.name}`}</OverflowText>}
+        header={<OverflowText>{`Finish Scope ${scope && scope.name}`}</OverflowText>}
         type="info"
         closeOnFadeClick
       >
         <div className={className}>
           {errorMessage && (
-            <ErrorMessage>
-              <ErrorMessageIcon />
+            <GeneralAlerts type="ERROR">
               {errorMessage}
-            </ErrorMessage>
+            </GeneralAlerts>
           )}
           <ActiveSessionsPanel />
           {!testsCount && (
-            <EmptyScopeWarning>
-              <EmptyScopeWarningIcon />
+            <GeneralAlerts type="WARNING">
               Scope is empty and will be deleted after finishing.
-            </EmptyScopeWarning>
+            </GeneralAlerts>
           )}
           <Content>
             <ScopeSummary scope={scope as ActiveScope} testsCount={testsCount} />
@@ -87,9 +85,9 @@ export const FinishScopeModal = finishScopeModal(
               >
                 {testsCount ? 'Finish Scope' : 'Finish and Delete'}
               </Button>
-              <CancelButton size="large" onClick={() => onToggle(false)}>
+              <Button type="secondary" size="large" onClick={() => onToggle(false)}>
                 Cancel
-              </CancelButton>
+              </Button>
             </ActionsPanel>
           </Content>
         </div>
@@ -98,10 +96,6 @@ export const FinishScopeModal = finishScopeModal(
   },
 );
 
-const ErrorMessage = finishScopeModal.errorMessage(Panel);
-const ErrorMessageIcon = finishScopeModal.errorMessageIcon(Icons.Warning);
-const EmptyScopeWarning = finishScopeModal.emptyScopeWarning(Panel);
-const EmptyScopeWarningIcon = finishScopeModal.emptyScopeWarningIcon(Icons.Warning);
 const Content = finishScopeModal.content('div');
 const IgnoreScope = finishScopeModal.ignoreScope(Inputs.Checkbox);
 const ActionsPanel = finishScopeModal.actionsPanel(Panel);

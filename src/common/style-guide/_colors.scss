@@ -31,3 +31,50 @@ $color-palette: (
   green100: #00b602,
   green10: #e5f7e5,
 );
+
+$primary-blue: (
+  default: #007fff,
+  shade: #006cd8,
+  medium-tint: #3399ff,
+  light-tint: #e5f2ff,
+  ultralight-tint: #e5f2ff,
+);
+
+$monochrome: (
+  black: #1b191b,
+  white: #ffffff,
+  default: #687481,
+  shade: #58626d,
+  dark-tint: #a4acb3,
+  medium-tint: #e3e6e8,
+  light-tint: #f8f9fb,
+);
+
+$green: (
+  default: #00b602,
+  shade: #009402,
+  medium-tint: #33c535,
+  light-tint: #e5f7e5,
+);
+
+$red: (
+  default: #ee0000,
+  shade: #cc0000,
+  medium-tint: #f13333,
+  light-tint: #fccccc,
+  ultralight-tint: #fde5e5,
+);
+
+$yellow: (
+  default: #ffdd00,
+  shade: #ebcb00,
+  medium-tint: #ffe74c,
+  light-tint: #fffbe5,
+);
+
+$orange: (
+  default: #f5a623,
+  shade: #dc931b,
+  medium-tint: #f7b84f,
+  light-tint: #fef6e9,
+);

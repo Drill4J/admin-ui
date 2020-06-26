@@ -18,13 +18,9 @@
 
   &__actions-panel {
     margin-top: 24px;
-  }
 
-  &__accept-button {
-    min-height: 32px;
-    width: 192px;
-    margin-right: 16px;
-    font-family: $semibold-font;
-    font-size: 14px;
+    :first-child {
+      margin-right: 16px;
+    }
   }
 }

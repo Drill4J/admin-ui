@@ -1,7 +1,9 @@
 import * as React from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 import { Form } from 'react-final-form';
-import { Panel, Icons, Button } from '@drill4j/ui-kit';
+import {
+  Panel, Icons, Button, GeneralAlerts,
+} from '@drill4j/ui-kit';
 
 import { Agent } from 'types/agent';
 import {
@@ -94,10 +96,9 @@ export const Wizard = wizard(({
               </Panel>
             </Header>
             {errorMessage && (
-              <ErrorMessage>
-                <ErrorMessageIcon />
+              <GeneralAlerts type="ERROR">
                 {errorMessage}
-              </ErrorMessage>
+              </GeneralAlerts>
             )}
             <StepComponent formValues={values} />
           </>
@@ -112,5 +113,3 @@ const StepName = wizard.stepName('span');
 const PreviousButton = wizard.previousButton(Button);
 const ContinueButton = wizard.continueButton(Button);
 const FinishRegistrationButton = wizard.finishRegistrationButton(Button);
-const ErrorMessage = wizard.errorMessage(Panel);
-const ErrorMessageIcon = wizard.errorMessageIcon(Icons.Warning);

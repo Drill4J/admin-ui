@@ -3,7 +3,7 @@ import { BEM } from '@redneckz/react-bem-helper';
 import { Form, Field } from 'react-final-form';
 import axios from 'axios';
 import {
-  Panel, Icons, FormGroup, Button,
+  Panel, Icons, FormGroup, Button, GeneralAlerts,
 } from '@drill4j/ui-kit';
 
 import {
@@ -72,10 +72,9 @@ export const GeneralSettingsForm = generalSettingsForm(
                 </SaveChangesButton>
               </InfoPanel>
               {errorMessage && (
-                <ErrorMessage>
-                  <ErrorMessageIcon />
+                <GeneralAlerts type="ERROR">
                   {errorMessage}
-                </ErrorMessage>
+                </GeneralAlerts>
               )}
               <Content>
                 <FormGroup
@@ -117,8 +116,6 @@ export const GeneralSettingsForm = generalSettingsForm(
 const InfoPanel = generalSettingsForm.infoPanel(Panel);
 const InfoIcon = generalSettingsForm.infoIcon(Icons.Info);
 const SaveChangesButton = generalSettingsForm.saveChangesButton(Button);
-const ErrorMessage = generalSettingsForm.errorMessage(Panel);
-const ErrorMessageIcon = generalSettingsForm.errorMessageIcon(Icons.Warning);
 const Content = generalSettingsForm.content('div');
 const CopyAgentId = generalSettingsForm.copyButton(Icons.Copy);
 const ServiceGroupName = generalSettingsForm.serviceGroupName(FormGroup);

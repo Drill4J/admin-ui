@@ -74,39 +74,25 @@
 
   &__start-date {
     font-size: 12px;
-    line-height: 24px;
+    line-height: 20px;
+    color: map-get($monochrome, black);
+    font-family: $semibold-font;
+  }
+
+  &__start-time {
+    font-size: 12px;
+    line-height: 20px;
     color: $slate-gray;
     font-family: $regular-font;
-
-    & > *:first-child {
-      &::before {
-        content: '\2022';
-        margin: 0 4px;
-      }
-    }
   }
 
   &__active-badge {
-    border-radius: 10px;
-    background-color: map-get($color-palette, green100);
-    font-size: 11px;
-    font-family: $semibold-font;
-    color: map-get($color-palette, white);
-    padding: 2px 6px;
-    margin-left: 12px;
+    margin-left: 8px;
   }
 
   &__ignore-badge {
-    margin-left: 12px;
-    background-color: #c6c5c6;
-    color: map-get($color-palette, white);
-    height: 20px;
-    width: 60px;
-    border-radius: 10px;
-    font-size: 11px;
-    line-height: 12px;
-    padding: 2px 6px;
-    font-family: $semibold-font;
+    margin-left: 8px;
+    color: map-get($monochrome, default);
   }
 
   &__coverage {

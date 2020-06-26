@@ -2,10 +2,10 @@ import * as React from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 import { useParams, useHistory } from 'react-router-dom';
 import {
-  Panel, Menu, Icons, Table, Column,
+  Panel, Menu, Icons, Table, Column, Badge,
 } from '@drill4j/ui-kit';
 
-import { percentFormatter } from 'utils';
+import { percentFormatter, dateFormatter, timeFormatter } from 'utils';
 import { NotificationManagerContext } from 'notification-manager';
 import { ScopeSummary } from 'types/scope-summary';
 import { CoveragePluginHeader } from '../../coverage-plugin-header';
@@ -43,8 +43,8 @@ export const ScopesList = scopesList(({ className }: Props) => {
   scopes.sort(
     ({ started: firstStartedDate }, { started: secondStartedDate }) => secondStartedDate - firstStartedDate,
   );
-
   const scopesData = activeScope && activeScope.name ? [activeScope, ...scopes] : scopes;
+
   return (
     <div className={className}>
       <CoveragePluginHeader />
@@ -67,13 +67,26 @@ export const ScopesList = scopesList(({ className }: Props) => {
                 data-test="scopes-list:scope-name"
               >
                 {value}
-                {active && <ActiveBadge>Active</ActiveBadge>}
+                {active && <ActiveBadge color="green">Active</ActiveBadge>}
                 {!enabled && <IgnoreBadge>Ignored</IgnoreBadge>}
-                <StartDate>
-                  {new Date(started).toDateString()}
-                  <ScopeTimer started={started} finised={finished} active={active} />
-                </StartDate>
+                <div>
+                  <ScopeTimer started={started} finised={finished} active={active} size="small" />
+                </div>
               </NameCell>
+            )}
+          />
+          <Column
+            name="started"
+            HeaderCell={() => <HeaderCell>Started</HeaderCell>}
+            Cell={({ value }) => (
+              <>
+                <StartDate>
+                  {dateFormatter(value)}
+                </StartDate>
+                <StartTime>
+                  at {timeFormatter(value)}
+                </StartTime>
+              </>
             )}
           />
           <Column
@@ -202,7 +215,8 @@ const RecordingIcon = scopesList.recordingIcon('span');
 const RecordingText = scopesList.recordingText('span');
 const NameCell = scopesList.nameCell('span');
 const StartDate = scopesList.startDate('div');
-const ActiveBadge = scopesList.activeBadge('span');
-const IgnoreBadge = scopesList.ignoreBadge('span');
+const StartTime = scopesList.startTime('div');
+const ActiveBadge = scopesList.activeBadge(Badge);
+const IgnoreBadge = scopesList.ignoreBadge(Badge);
 const Coverage = scopesList.coverage('div');
 const ActionCell = scopesList.actionCell('div');

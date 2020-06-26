@@ -1,8 +1,6 @@
 import * as React from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
-import {
-  Panel, Button, CancelButton, Popup, Icons,
-} from '@drill4j/ui-kit';
+import { Button, Popup, NegativeActionButton } from '@drill4j/ui-kit';
 
 import styles from './unlocking-system-settings-form-modal.module.scss';
 
@@ -22,14 +20,7 @@ export const UnlockingSystemSettingsFormModal = unlockingSystemSettingsFormModal
     <Popup
       isOpen={isOpen}
       onToggle={onToggle}
-      header={(
-        <Panel>
-          <HeaderIcon>
-            <Icons.Warning />
-          </HeaderIcon>
-          &nbsp; Unlocking secured field
-        </Panel>
-      )}
+      header="Unlocking Secured Field"
       type="error"
       closeOnFadeClick
     >
@@ -41,17 +32,18 @@ export const UnlockingSystemSettingsFormModal = unlockingSystemSettingsFormModal
             in plugins that have been using these packages.
           </Message>
           <ActionsPanel>
-            <AcceptButton
+            <NegativeActionButton
+              size="large"
               onClick={() => {
                 setUnlocked(true);
                 onToggle(false);
               }}
             >
-              Unlock and proceed
-            </AcceptButton>
-            <CancelUnlockingButton type="secondary" size="large" onClick={() => onToggle(false)}>
+              Unlock And Proceed
+            </NegativeActionButton>
+            <Button type="secondary" size="large" onClick={() => onToggle(false)}>
               Cancel
-            </CancelUnlockingButton>
+            </Button>
           </ActionsPanel>
         </Content>
       </div>
@@ -59,9 +51,6 @@ export const UnlockingSystemSettingsFormModal = unlockingSystemSettingsFormModal
   ),
 );
 
-const HeaderIcon = unlockingSystemSettingsFormModal.headerIcon('div');
 const Content = unlockingSystemSettingsFormModal.content('div');
 const Message = unlockingSystemSettingsFormModal.message('span');
-const ActionsPanel = unlockingSystemSettingsFormModal.actionsPanel(Panel);
-const AcceptButton = unlockingSystemSettingsFormModal.acceptButton(CancelButton);
-const CancelUnlockingButton = unlockingSystemSettingsFormModal.cancelUnlockingButton(Button);
+const ActionsPanel = unlockingSystemSettingsFormModal.actionsPanel('div');

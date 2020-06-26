@@ -1,6 +1,10 @@
 @import '~common/style-guide/index';
 
 .breadcrumbs {
+  :last-child {
+    color: map-get($monochrome, default);
+  }
+
   :not(:last-child) {
     &:after {
       padding: 0 8px;

@@ -37,10 +37,10 @@ export const SettingsPage = settingsPage(
             <Panel>
               <HeaderIcon height={24} width={24} />
               {(type as string) === 'service-group' ? (
-                'Service Group settings'
+                'Service Group Settings'
               ) : (
                 <>
-                  Agent settings
+                  Agent Settings
                   <AgentStatus
                     status={(data as Agent).status}
                     onChange={() => toggleAgent((data as Agent).id || '', showMessage)}

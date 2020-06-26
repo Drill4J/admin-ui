@@ -121,7 +121,7 @@ export const Breadcrumbs = breadcrumbs(({ className }: Props) => {
     });
   return (
     <div className={className}>
-      {currentPageCrumbs.map(({ label, link, state }) => link && <Crumb to={{ pathname: link, state }}>{label}</Crumb>)}
+      {currentPageCrumbs.map(({ label, link, state }) => link && <Crumb key={label} to={{ pathname: link, state }}>{label}</Crumb>)}
     </div>
   );
 });

@@ -21,7 +21,7 @@ export function requiredArray(fieldName: string, fieldAlias?: string) {
   return ({ [fieldName]: value = [] }: { [key: string]: string | string[] | null | undefined }) =>
     (!value || (typeof value === 'object' && value.filter(Boolean).length === 0)
       ? {
-        [fieldName]: `${fieldAlias || camelToSpaces(fieldName)} is required.`,
+        [fieldName]: fieldAlias || `${camelToSpaces(fieldName)} is required.`,
       }
       : undefined);
 }

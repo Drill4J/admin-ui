@@ -7,6 +7,7 @@ import { percentFormatter } from 'utils';
 import { BuildCoverage } from 'types/build-coverage';
 import { Methods } from 'types/methods';
 import { isActiveBuild } from 'pages/agent-full-page/is-active-build';
+import { COVERAGE_TYPES_COLOR } from 'common/constants';
 import { useBuildVersion } from '../../../coverage-plugin/use-build-version';
 import { SingleBar } from '../../single-bar';
 import { Section } from '../section';
@@ -69,17 +70,17 @@ export const CoverageSection = coverageSection(({ className, activeBuildVersion 
                   new: {
                     count: newMethodsTotalCount,
                     value: (newMethodsCoveredCount / newMethodsTotalCount) * 100,
-                    color: '#FA6400',
+                    color: COVERAGE_TYPES_COLOR.NEW,
                   },
                   modified: {
                     count: modifiedMethodsTotalCount,
                     value: (modifiedMethodsCoveredCount / modifiedMethodsTotalCount) * 100,
-                    color: '#F7B500',
+                    color: COVERAGE_TYPES_COLOR.MODIFIED,
                   },
                   unaffected: {
                     count: unaffectedTotalCount,
                     value: (unaffectedCoveredCount / unaffectedTotalCount) * 100,
-                    color: '#6DD400',
+                    color: COVERAGE_TYPES_COLOR.UNAFFECTED,
                   },
                 }}
               />
@@ -89,21 +90,21 @@ export const CoverageSection = coverageSection(({ className, activeBuildVersion 
               <SingleBar
                 width={32}
                 height={128}
-                color="#FA6400"
+                color={COVERAGE_TYPES_COLOR.NEW}
                 percent={(newMethodsCoveredCount / newMethodsTotalCount) * 100}
                 icon={<Icons.Add />}
               />
               <SingleBar
                 width={32}
                 height={128}
-                color="#F7B500"
+                color={COVERAGE_TYPES_COLOR.MODIFIED}
                 percent={(modifiedMethodsCoveredCount / modifiedMethodsTotalCount) * 100}
                 icon={<Icons.Edit height={16} width={16} viewBox="0 0 16 15" />}
               />
               <SingleBar
                 width={32}
                 height={128}
-                color="#6DD400"
+                color={COVERAGE_TYPES_COLOR.UNAFFECTED}
                 percent={(unaffectedCoveredCount / unaffectedTotalCount) * 100}
                 icon={<Icons.Check />}
               />

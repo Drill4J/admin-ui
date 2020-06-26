@@ -8,7 +8,7 @@ interface Props {
   started: number;
   finised?: number;
   active?: boolean;
-  type?: 'primary' | 'small';
+  size?: 'normal' | 'small';
 }
 
 interface State {

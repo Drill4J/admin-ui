@@ -3,25 +3,6 @@
 .unregister-agent-modal {
   width: 480px;
 
-  &__header-icon {
-    margin-right: 8px;
-    color: map-get($color-palette, red100);
-  }
-
-  &__error-message {
-    height: 40px;
-    width: 100%;
-    background-color: rgba(255, 2, 2, 0.1);
-    font-size: 14px;
-    line-height: 24px;
-    color: map-get($color-palette, red100);
-  }
-
-  &__error-message-icon {
-    margin-left: 24px;
-    margin-right: 8px;
-  }
-
   &__content {
     display: flex;
     flex-direction: column;
@@ -29,16 +10,15 @@
   }
 
   &__notification {
-    margin-bottom: 24px;
     font-size: 14px;
     line-height: 24px;
   }
 
-  &__unregister-button {
-    min-height: 32px;
-    width: 208px;
-    margin-right: 16px;
-    font-family: $semibold-font;
-    font-size: 14px;
+  &__actions-panel {
+    margin-top: 24px;
+
+    :first-child {
+      margin-right: 16px;
+    }
   }
 }

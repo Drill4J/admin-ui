@@ -5,7 +5,7 @@ import { Panel, Table, Column } from '@drill4j/ui-kit';
 
 import { defaultAdminSocket } from 'common/connection';
 import { useWsConnection, useElementSize } from 'hooks';
-import { dateFormatter } from 'utils';
+import { dateTimeFormatter } from 'utils';
 import { BuildVersion } from 'types/build-version';
 import { setBuildVersion, usePluginDispatch } from '../store';
 
@@ -57,7 +57,7 @@ export const BuildList =
                 <Column
                   name="detectedAt"
                   label="Added"
-                  Cell={({ value }) => <span>{dateFormatter(value)}</span>}
+                  Cell={({ value }) => <span>{dateTimeFormatter(value)}</span>}
                   width={columnWidth}
                 />
                 <Column

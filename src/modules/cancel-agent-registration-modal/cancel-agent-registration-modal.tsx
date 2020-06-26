@@ -1,9 +1,7 @@
 import * as React from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 import { useHistory } from 'react-router-dom';
-import {
-  Panel, Button, CancelButton, Popup, Icons,
-} from '@drill4j/ui-kit';
+import { Button, Popup } from '@drill4j/ui-kit';
 
 import styles from './cancel-agent-registration-modal.module.scss';
 
@@ -24,29 +22,21 @@ export const CancelAgentRegistrationModal =
       <Popup
         isOpen={isOpen}
         onToggle={onToggle}
-        header={(
-          <Panel>
-            <HeaderIcon>
-              <Icons.Warning height={20} width={20} />
-            </HeaderIcon>
-            &nbsp; Cancel registration
-          </Panel>
-        )}
-        type="error"
+        header="Abort Registration"
         closeOnFadeClick
       >
         <div className={className}>
           <Content>
             <Message>
-              Are you sure you want to cancel registration? All your progress will be lost.
+              Are you sure you want to abort agent registration? All your progress will be lost.
             </Message>
             <ActionsPanel>
-              <AcceptButton type="primary" onClick={() => push('/agents')}>
-                Yes, cancel registration
-              </AcceptButton>
-              <CancelButton size="large" onClick={() => onToggle(false)}>
-                No, take me back
-              </CancelButton>
+              <Button type="primary" size="large" onClick={() => push('/agents')}>
+                Abort
+              </Button>
+              <Button type="secondary" size="large" onClick={() => onToggle(false)}>
+                Cancel
+              </Button>
             </ActionsPanel>
           </Content>
         </div>
@@ -54,8 +44,6 @@ export const CancelAgentRegistrationModal =
     );
   });
 
-const HeaderIcon = cancelAgentRegistrationModal.headerIcon('div');
 const Content = cancelAgentRegistrationModal.content('div');
 const Message = cancelAgentRegistrationModal.message('span');
-const ActionsPanel = cancelAgentRegistrationModal.actionsPanel(Panel);
-const AcceptButton = cancelAgentRegistrationModal.acceptButton(Button);
+const ActionsPanel = cancelAgentRegistrationModal.actionsPanel('div');

@@ -18,21 +18,9 @@
 
   &__actions-panel {
     margin-top: 24px;
-  }
 
-  &__accept-button {
-    min-height: 32px;
-    width: 168px;
-    font-size: 14px;
-    border: 1px solid $loblolly-color;
-    color: $slate-gray;
-  }
-
-  &__cancel-unlocking-button {
-    min-height: 32px;
-    width: 78px;
-    margin-left: 16px;
-    font-family: $semibold-font;
-    font-size: 14px;
+    :first-child {
+      margin-right: 16px;
+    }
   }
 }

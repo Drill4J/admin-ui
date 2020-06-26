@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 import { useParams, useHistory } from 'react-router-dom';
-import { Panel, Icons, CancelButton } from '@drill4j/ui-kit';
+import { Panel, Icons, Button } from '@drill4j/ui-kit';
 
 import {
   PageHeader, Wizard, Step,
@@ -41,14 +41,14 @@ export const AgentRegistrationPage = agentRegistrationPage(
           title={(
             <Panel>
               <HeaderIcon height={20} width={20} />
-              Register new agent
+              Register New Agent
             </Panel>
           )}
           actions={(
             <Panel align="end">
-              <CancelButton size="large" onClick={() => setIsCancelModalOpened(true)}>
-                Cancel
-              </CancelButton>
+              <Button type="secondary" size="large" onClick={() => setIsCancelModalOpened(true)}>
+                Abort Registration
+              </Button>
             </Panel>
           )}
         />
@@ -60,7 +60,7 @@ export const AgentRegistrationPage = agentRegistrationPage(
           })}
         >
           <Step
-            name="General settings"
+            name="General Settings"
             component={GeneralSettingsForm}
             validate={composeValidators(
               required('name'),
@@ -70,10 +70,10 @@ export const AgentRegistrationPage = agentRegistrationPage(
             )}
           />
           <Step
-            name="System settings"
+            name="System Settings"
             component={SystemSettingsForm}
             validate={composeValidators(
-              requiredArray('packagesPrefixes', 'Package prefixes'),
+              requiredArray('packagesPrefixes', 'Package prefixes are required.'),
               sizeLimit({
                 name: 'sessionIdHeaderName',
                 alias: 'Session header name',

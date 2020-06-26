@@ -5,11 +5,11 @@
 
   &__duration {
     color: $slate-gray;
+    font-family: $regular-font;
   }
 
   &__timer {
     margin-left: 4px;
-    font-family: $semibold-font;
     color: map-get($color-palette, green100);
   }
 

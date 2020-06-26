@@ -1,0 +1,1 @@
+export const RISKS_TYPES_COLOR = { NEW: '#F9AE7D', MODIFIED: '#F7D77C' };
