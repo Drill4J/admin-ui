@@ -34,7 +34,7 @@ export const CoverageSection = coverageSection(({ className, activeBuildVersion 
       total: newMethodsTotalCount = 0,
       covered: newMethodsCoveredCount = 0,
     } = {},
-    all: {
+    modified: {
       total: modifiedMethodsTotalCount = 0,
       covered: modifiedMethodsCoveredCount = 0,
     } = {},
