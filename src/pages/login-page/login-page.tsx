@@ -2,7 +2,7 @@ import * as React from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 import { useHistory } from 'react-router-dom';
 import axios, { AxiosError } from 'axios';
-import { Icons, Inputs, Button } from '@drill4j/ui-kit';
+import { Inputs, Button } from '@drill4j/ui-kit';
 
 import { LoginLayout } from 'layouts';
 import { defaultAdminSocket, defaultPluginSocket, getSocketUrl } from 'common/connection';
@@ -46,15 +46,14 @@ export const LoginPage = loginPage(({ className }: Props) => {
         <SignInForm>
           <Inputs.Text placeholder="User ID" disabled />
           <Inputs.Text placeholder="Password" disabled />
-          <SignInButton disabled type="primary">
-            Sign in
-            <Icons.Arrow />
-          </SignInButton>
         </SignInForm>
+        <LoginPageButtonWrapepr type="primary" size="large" disabled>
+          Sign in
+        </LoginPageButtonWrapepr>
         <ForgotPasswordLink>Forgot your password?</ForgotPasswordLink>
-        <ContinueButton type="secondary" onClick={handleLogin}>
+        <LoginPageButtonWrapepr type="secondary" size="large" onClick={handleLogin}>
           Continue as a guest (read only)
-        </ContinueButton>
+        </LoginPageButtonWrapepr>
         <Copyright>{`© ${new Date().getFullYear()} Drill4J. All rights reserved.`}</Copyright>
       </div>
     </LoginLayout>
@@ -66,7 +65,6 @@ const Title = loginPage.title('div');
 const SubTitle = loginPage.subTitle('div');
 const Error = loginPage.error(ErrorPanel);
 const SignInForm = loginPage.signInForm('div');
-const SignInButton = loginPage.signInButton(Button);
 const ForgotPasswordLink = loginPage.forgotPassword('div');
-const ContinueButton = loginPage.continueButton(Button);
+const LoginPageButtonWrapepr = loginPage.loginPageButtonWrapepr(Button);
 const Copyright = loginPage.copyright('div');

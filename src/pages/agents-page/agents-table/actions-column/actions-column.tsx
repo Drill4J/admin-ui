@@ -42,7 +42,7 @@ export const ActionsColumn = actionsColumn(
             <RegisterButton
               onClick={() => push(`/${
                 agentType === 'ServiceGroup' ? 'bulk-registration' : 'registration'
-              }/${agentId}`)}
+              }/${agentId}?unregisteredAgentsCount=${unregisteredAgentsCount}`)}
               data-test="action-column:icons-register"
               type="primary"
             >

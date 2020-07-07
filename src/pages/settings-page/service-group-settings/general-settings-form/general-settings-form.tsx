@@ -60,16 +60,17 @@ export const GeneralSettingsForm = generalSettingsForm(
               <InfoPanel align="space-between">
                 <Panel>
                   <InfoIcon />
-                  Basic service group settings
+                  Basic service group settings.
                 </Panel>
-                <Button
+                <SaveChangesButton
                   type="primary"
+                  size="large"
                   onClick={handleSubmit}
                   disabled={submitting || pristine || invalid}
                   data-test="general-settings-form:save-changes-button"
                 >
-                  Save changes
-                </Button>
+                  Save Changes
+                </SaveChangesButton>
               </InfoPanel>
               {errorMessage && (
                 <GeneralAlerts type="ERROR">
@@ -115,6 +116,7 @@ export const GeneralSettingsForm = generalSettingsForm(
 
 const InfoPanel = generalSettingsForm.infoPanel(Panel);
 const InfoIcon = generalSettingsForm.infoIcon(Icons.Info);
+const SaveChangesButton = generalSettingsForm.saveChangesButton(Button);
 const Content = generalSettingsForm.content('div');
 const CopyAgentId = generalSettingsForm.copyButton(Icons.Copy);
 const ServiceGroupName = generalSettingsForm.serviceGroupName(FormGroup);

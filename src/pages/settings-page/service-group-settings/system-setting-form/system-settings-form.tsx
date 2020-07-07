@@ -75,15 +75,16 @@ export const SystemSettingsForm = systemSettingsForm(
               <InfoPanel align="space-between">
                 <Panel>
                   <InfoIcon />
-                  Information related to your application / project
+                  Information related to your application / project.
                 </Panel>
                 <SaveChangesButton
                   type="primary"
+                  size="large"
                   onClick={handleSubmit}
                   disabled={submitting || pristine || invalid}
                   data-test="system-settings-form:save-changes-button"
                 >
-                  Save changes
+                  Save Changes
                 </SaveChangesButton>
               </InfoPanel>
               {errorMessage && (

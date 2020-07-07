@@ -28,7 +28,7 @@ export const UnregisterAgentModal = unregisterAgentModal(({
     <Popup
       isOpen={isOpen}
       onToggle={onToggle}
-      header="Unregister The Agent"
+      header="Unregister the Agent"
       closeOnFadeClick
     >
       <div className={className}>

@@ -1,9 +1,7 @@
 import React from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 import { Field } from 'react-final-form';
-import {
-  Icons, FormGroup, GeneralAlerts,
-} from '@drill4j/ui-kit';
+import { Icons, FormGroup, GeneralAlerts } from '@drill4j/ui-kit';
 
 import { Fields } from 'forms';
 import { copyToClipboard } from 'utils';
@@ -21,7 +19,7 @@ const generalSettingsForm = BEM(styles);
 export const GeneralSettingsForm = generalSettingsForm(({ className, formValues: { id = '', agentVersion = '' } }: Props) => (
   <div className={className}>
     <GeneralAlerts type="INFO">
-      Set up basic agent settings
+      Set up basic agent settings.
     </GeneralAlerts>
     <Content>
       <FormGroup

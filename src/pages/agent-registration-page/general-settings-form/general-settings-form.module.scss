@@ -1,29 +1,16 @@
 @import '~common/style-guide/index';
 
 .general-registration-settings-form {
-  &__error-message {
-    height: 40px;
-    width: 100%;
-    font-size: 14px;
-    line-height: 24px;
-    background-color: rgba(255, 2, 2, 0.1);
-    color: map-get($color-palette, red100);
-  }
-
-  &__error-message-icon {
-    margin-left: 24px;
-    margin-right: 8px;
-  }
-
   &__content {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     grid-column-gap: 24px;
-    margin: 16px 24px 0 24px;
+    grid-row-gap: 16px;
+    margin: 24px;
   }
 
   &__copy-button {
-    color: map-get($color-palette, blue100);
+    color: map-get($primary-blue, default);
     cursor: pointer;
   }
 

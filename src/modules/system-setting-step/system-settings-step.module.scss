@@ -2,28 +2,29 @@
 
 .system-registration-settings-step {
   &__content {
-    margin: 16px 24px;
+    margin: 24px;
   }
 
   &__field-name {
+    margin-bottom: 8px;
     font-family: $semibold-font;
     font-size: 14px;
-    line-height: 24px;
-    color: map-get($color-palette, dark-blue);
+    line-height: 20px;
+    color: map-get($monochrome, black);
   }
 
   &__packages-textarea {
     display: flex;
     flex-direction: column;
-    max-width: 728px;
     flex-grow: 1;
+    max-width: 728px;
+    height: 80px;
   }
 
   &__project-packages {
-    height: 120px;
     font-size: 14px;
     line-height: 24px;
-    color: map-get($color-palette, dark-blue);
+    color: map-get($monochrome, black);
   }
 
   &__instructions {
@@ -35,6 +36,7 @@
   }
 
   &__header-mapping {
+    margin-top: 16px;
     max-width: 728px;
   }
 }

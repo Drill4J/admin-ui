@@ -3,11 +3,6 @@
 .cancel-agent-registration-modal {
   width: 480px;
 
-  &__header-icon {
-    display: flex;
-    color: map-get($color-palette, red100);
-  }
-
   &__content {
     margin: 24px;
   }
@@ -17,6 +12,7 @@
   }
 
   &__actions-panel {
+    display: flex;
     margin-top: 24px;
 
     :first-child {

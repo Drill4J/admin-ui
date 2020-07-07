@@ -7,50 +7,12 @@
 
   &__step-name {
     width: 100%;
-    font-family: $light-font;
     font-size: 20px;
     line-height: 32px;
-    color: map-get($color-palette, black100);
+    color: map-get($monochrome, black);
   }
 
   &__previous-button {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 90px;
     margin-right: 16px;
-    font-family: $semibold-font;
-    font-size: 14px;
-  }
-
-  &__continue-button {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 116px;
-    font-family: $semibold-font;
-    font-size: 14px;
-  }
-
-  &__finish-registration-button {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-family: $semibold-font;
-    font-size: 14px;
-  }
-
-  &__error-message {
-    height: 40px;
-    width: 100%;
-    background-color: rgba(255, 2, 2, 0.1);
-    font-size: 14px;
-    line-height: 24px;
-    color: map-get($color-palette, red100);
-  }
-
-  &__error-message-icon {
-    margin-left: 24px;
-    margin-right: 8px;
   }
 }

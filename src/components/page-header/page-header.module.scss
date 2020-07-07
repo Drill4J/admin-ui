@@ -3,9 +3,9 @@
 .page-header {
   display: flex;
   align-items: center;
-  height: 78px;
+  min-height: 78px;
   width: 100%;
-  border-bottom: 1px solid map-get($color-palette, light-blue);
+  border-bottom: 1px solid map-get($monochrome, medium-tint);
 
   &__content {
     display: flex;
@@ -15,13 +15,14 @@
   }
 
   &__title {
-    color: map-get($color-palette, black100);
     font-size: 24px;
     line-height: 32px;
+    font-family: $light-font;
+    color: map-get($monochrome, black);
   }
 
   &__items-count {
-    color: map-get($color-palette, middle-blue);
+    color: map-get($monochrome, dark-tint);
     font-size: 18px;
     font-family: $light-font;
     line-height: 24px;

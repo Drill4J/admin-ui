@@ -14,11 +14,17 @@
     margin-right: 8px;
   }
 
+  &__save-changes-button {
+    max-height: 32px;
+    width: 142px;
+  }
+
   &__content {
     margin: 16px 24px;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     grid-column-gap: 24px;
+    grid-row-gap: 16px;
   }
 
   &__copy-button {

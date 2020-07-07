@@ -4,10 +4,10 @@
   min-width: 850px;
 
   &__selected-plugins-info {
-    margin: 28px 0px 16px 24px;
-    font-family: $light-font;
-    font-size: 16px;
-    color: $gravel-color;
+    margin: 16px 40px;
+    font-size: 20px;
+    line-height: 32px;
+    color: map-get($monochrome, default);
   }
 
   &__plugins-list {
@@ -16,14 +16,16 @@
 
   &__plugin-name {
     font-family: $semibold-font;
-    font-size: 14px;
-    line-height: 22px;
-    color: $gravel-color;
+    color: map-get($monochrome, black);
   }
 
   &__plugin-version {
+    color: map-get($monochrome, default);
+  }
+
+  &__plugin-info {
+    margin-bottom: 12px;
     font-size: 14px;
-    line-height: 22px;
-    color: map-get($color-palette, black75);
+    line-height: 20px;
   }
 }

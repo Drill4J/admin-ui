@@ -67,12 +67,12 @@ export const Wizard = wizard(({
                     onClick={() => dispatch(previousStep())}
                     data-test="wizard:previous-button"
                   >
-                    <Icons.Arrow rotate={180} />
+                    <Icons.Expander width={8} height={14} rotate={180} />
                     <span>Back</span>
                   </PreviousButton>
                 )}
                 {currentStepIndex < steps.length - 1 ? (
-                  <ContinueButton
+                  <Button
                     type="primary"
                     size="large"
                     onClick={() => dispatch(nextStep())}
@@ -80,18 +80,18 @@ export const Wizard = wizard(({
                     data-test="wizard:continue-button"
                   >
                     <span>Continue</span>
-                    <Icons.Arrow />
-                  </ContinueButton>
+                    <Icons.Expander width={8} height={14} />
+                  </Button>
                 ) : (
-                  <FinishRegistrationButton
+                  <Button
                     type="primary"
                     size="large"
                     onClick={handleSubmit}
                     data-test="wizard:finish-registration-button"
                   >
-                    <Icons.Check height={11} width={17} />
+                    <Icons.Check height={10} width={14} viewBox="0 0 14 10" />
                     <span>Finish registration</span>
-                  </FinishRegistrationButton>
+                  </Button>
                 )}
               </Panel>
             </Header>
@@ -111,5 +111,3 @@ export const Wizard = wizard(({
 const Header = wizard.header(Panel);
 const StepName = wizard.stepName('span');
 const PreviousButton = wizard.previousButton(Button);
-const ContinueButton = wizard.continueButton(Button);
-const FinishRegistrationButton = wizard.finishRegistrationButton(Button);

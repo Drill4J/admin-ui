@@ -1,13 +1,12 @@
 import * as React from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
-import { useParams, useHistory } from 'react-router-dom';
+import { useParams, useHistory, useLocation } from 'react-router-dom';
 import {
-  Panel, Icons, CancelButton, GeneralAlerts,
+  Panel, Icons, Button, GeneralAlerts,
 } from '@drill4j/ui-kit';
+import queryString from 'query-string';
 
-import {
-  PageHeader, Wizard, Step,
-} from 'components';
+import { PageHeader, Wizard, Step } from 'components';
 import { useWsConnection } from 'hooks';
 import { CancelAgentRegistrationModal, SystemSettingsStep, InstallPluginsStep } from 'modules';
 import { composeValidators, requiredArray, sizeLimit } from 'forms';
@@ -25,11 +24,10 @@ interface Props {
 const serviceGroupRegistrationPage = BEM(styles);
 
 export const ServiceGroupRegistrationPage = serviceGroupRegistrationPage(
-  ({
-    className,
-  }: Props) => {
+  ({ className }: Props) => {
     const { push } = useHistory();
     const { serviceGroupId = '' } = useParams();
+    const { search } = useLocation();
     const [isCancelModalOpened, setIsCancelModalOpened] = React.useState(false);
     const { showMessage } = React.useContext(NotificationManagerContext);
     const serviceGroup = useWsConnection<Agent>(defaultAdminSocket, `/service-groups/${serviceGroupId}`) || {};
@@ -39,6 +37,7 @@ export const ServiceGroupRegistrationPage = serviceGroupRegistrationPage(
         push(`/service-group-full-page/${serviceGroupId}/service-group-dashboard`);
       },
     });
+    const { unregisteredAgentsCount } = queryString.parse(search);
 
     return (
       <div className={className}>
@@ -46,14 +45,14 @@ export const ServiceGroupRegistrationPage = serviceGroupRegistrationPage(
           title={(
             <Panel>
               <HeaderIcon height={20} width={20} />
-              Register new agent
+              Register New Agents
             </Panel>
           )}
           actions={(
             <Panel align="end">
-              <CancelButton size="large" onClick={() => setIsCancelModalOpened(true)}>
+              <Button type="secondary" size="large" onClick={() => setIsCancelModalOpened(true)}>
                 Cancel
-              </CancelButton>
+              </Button>
             </Panel>
           )}
         />
@@ -66,7 +65,7 @@ export const ServiceGroupRegistrationPage = serviceGroupRegistrationPage(
             component={() => (
               <SystemSettingsStep infoPanel={(
                 <GeneralAlerts type="INFO">
-                  Provide information related to your application / project
+                  Provide information related to your application / project.
                 </GeneralAlerts>
               )}
               />
@@ -83,13 +82,27 @@ export const ServiceGroupRegistrationPage = serviceGroupRegistrationPage(
           />
           <Step
             name="Plugins"
-            component={() => (
-              <InstallPluginsStep infoPanel={(
-                <GeneralAlerts type="INFO">
-                  Choose plugins to install on your agents.
-                  You will be able to change configuration of any agent separately on Agent Settings page.
-                </GeneralAlerts>
-              )}
+            component={({ formValues }) => (
+              <InstallPluginsStep
+                formValues={formValues}
+                infoPanel={(
+                  <GeneralAlerts type="INFO">
+                    <div>
+                      <div>
+                        Choose plugins to install on your agents.
+                        You will be able to change configuration of any agent separately on Agent Settings page.
+                      </div>
+                      <AgentsInfo>
+                        Agents to register:&nbsp;
+                      </AgentsInfo>
+                      {unregisteredAgentsCount}.&nbsp;
+                      <AgentsInfo>
+                        Service Group:&nbsp;
+                      </AgentsInfo>
+                      {serviceGroup.name}.
+                    </div>
+                  </GeneralAlerts>
+                )}
               />
             )}
           />
@@ -106,3 +119,4 @@ export const ServiceGroupRegistrationPage = serviceGroupRegistrationPage(
 );
 
 const HeaderIcon = serviceGroupRegistrationPage.headerIcon(Icons.Register);
+const AgentsInfo = serviceGroupRegistrationPage.agentsInfo('span');

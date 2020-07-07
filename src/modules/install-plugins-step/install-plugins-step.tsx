@@ -52,10 +52,10 @@ export const InstallPluginsStep = installPluginsStep(
                     },
                   })}
                 >
-                  <Panel>
+                  <PluginInfo>
                     <PluginName>{name}&nbsp;</PluginName>
                     {version && <PluginVersion>({version})</PluginVersion>}
-                  </Panel>
+                  </PluginInfo>
                 </PluginListEntry>
               )}
             />
@@ -68,5 +68,6 @@ export const InstallPluginsStep = installPluginsStep(
 
 const SelectedPluginsInfo = installPluginsStep.selectedPluginsInfo('div');
 const PluginsList = installPluginsStep.pluginsList('div');
+const PluginInfo = installPluginsStep.pluginInfo(Panel);
 const PluginName = installPluginsStep.pluginName('div');
 const PluginVersion = installPluginsStep.pluginVersion('div');

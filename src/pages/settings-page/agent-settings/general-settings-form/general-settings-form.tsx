@@ -59,15 +59,16 @@ export const GeneralSettingsForm = generalSettingsForm(
               <InfoPanel align="space-between">
                 <Panel>
                   <InfoIcon />
-                  Basic agent settings
+                  Basic agent settings.
                 </Panel>
                 <SaveChangesButton
                   type="primary"
+                  size="large"
                   onClick={handleSubmit}
                   disabled={submitting || pristine || invalid}
                   data-test="general-settings-form:save-changes-button"
                 >
-                  Save changes
+                  Save Changes
                 </SaveChangesButton>
               </InfoPanel>
               {errorMessage && (

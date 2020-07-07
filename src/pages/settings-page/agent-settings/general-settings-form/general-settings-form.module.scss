@@ -15,12 +15,8 @@
   }
 
   &__save-changes-button {
-    min-height: 32px;
-    width: 122px;
-    min-width: 122px;
-    border-radius: 16px;
-    font-size: 14px;
-    font-family: $semibold-font;
+    max-height: 32px;
+    width: 142px;
   }
 
   &__content {
@@ -28,6 +24,7 @@
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     grid-column-gap: 24px;
+    grid-row-gap: 16px;
   }
 
   &__copy-button {
