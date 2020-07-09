@@ -10,26 +10,30 @@ interface Props {
   count?: number;
   onClick?: () => void;
   type?: 'error';
+  children?: React.ReactNode;
 }
 
 const actionSection = BEM(styles);
 
 export const ActionSection = actionSection(
   ({
-    className, label, count = 0, onClick, type,
+    className, label, count, onClick, type, children,
   }: Props) => (
     <div className={className}>
       <Action>
         <ActionName>{label}</ActionName>
-        <Count
-          onClick={onClick}
-          type={count ? type : ''}
-          clickable={Boolean(count)}
-          data-test={`action-section:count:${label}`}
-        >
-          {`${count} `}
-          {count > 0 && type === 'error' && <Icons.Warning />}
-        </Count>
+        {count && (
+          <Count
+            onClick={onClick}
+            type={count ? type : ''}
+            clickable={Boolean(count)}
+            data-test={`action-section:count:${label}`}
+          >
+            {`${count} `}
+            {count > 0 && type === 'error' && <Icons.Warning />}
+          </Count>
+        )}
+        {children}
       </Action>
     </div>
   ),

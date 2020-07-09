@@ -1,0 +1,24 @@
+@import '~common/style-guide/index';
+
+.condition {
+  display: flex;
+  align-items: center;
+
+  &__passed {
+    color: map-get($green, default);
+  }
+
+  &__failed {
+    color: map-get($red, default);
+  }
+
+  &__content {
+    margin: 0 auto 0 16px;
+    font-size: 14px;
+    line-height: 16px;
+  }
+
+  &__threshold-value {
+    font-family: $semibold-font;
+  }
+}

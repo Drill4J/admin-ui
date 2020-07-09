@@ -8,3 +8,4 @@ export { Wizard, Step } from './wizard';
 export { PluginListEntry } from './plugin-list-entry';
 export { List, Column as ListColumn } from './list';
 export { Footer } from './footer';
+export { QualityGatePane } from './quality-gate-pane';
