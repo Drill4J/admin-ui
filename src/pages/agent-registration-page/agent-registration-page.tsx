@@ -1,7 +1,9 @@
 import * as React from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 import { useParams, useHistory } from 'react-router-dom';
-import { Panel, Icons, Button } from '@drill4j/ui-kit';
+import {
+  Panel, Icons, Button, GeneralAlerts,
+} from '@drill4j/ui-kit';
 
 import {
   PageHeader, Wizard, Step,
@@ -11,10 +13,9 @@ import {
 } from 'forms';
 import { useAgent } from 'hooks';
 import { NotificationManagerContext } from 'notification-manager';
-import { CancelAgentRegistrationModal } from 'modules';
+import { CancelAgentRegistrationModal, InstallPluginsStep, SystemSettingsStep } from 'modules';
 import { GeneralSettingsForm } from './general-settings-form';
-import { SystemSettingsForm } from './system-setting-form';
-import { InstallPluginsStep } from './install-plugins-step';
+
 import { registerAgent } from './register-agent';
 
 import styles from './agent-registration-page.module.scss';
@@ -70,8 +71,15 @@ export const AgentRegistrationPage = agentRegistrationPage(
             )}
           />
           <Step
-            name="System Settings"
-            component={SystemSettingsForm}
+            name="System settings"
+            component={() => (
+              <SystemSettingsStep infoPanel={(
+                <GeneralAlerts type="INFO">
+                  Information related to your application / project
+                </GeneralAlerts>
+              )}
+              />
+            )}
             validate={composeValidators(
               requiredArray('packagesPrefixes', 'Package prefixes are required.'),
               sizeLimit({
@@ -82,7 +90,18 @@ export const AgentRegistrationPage = agentRegistrationPage(
               }),
             )}
           />
-          <Step name="Plugins" component={InstallPluginsStep} />
+          <Step
+            name="Plugins"
+            component={() => (
+              <InstallPluginsStep infoPanel={(
+                <GeneralAlerts type="INFO">
+                  Choose plugins to install on your agent. You will also be able to add them later on
+                  Agent’s page or Plugins Library.
+                </GeneralAlerts>
+              )}
+              />
+            )}
+          />
         </Wizard>
         {isCancelModalOpened && (
           <CancelAgentRegistrationModal

@@ -1,10 +1,10 @@
 import * as React from 'react';
 import { BEM, div } from '@redneckz/react-bem-helper';
+import {
+  Panel, Icons, Tooltip, Button, FormGroup,
+} from '@drill4j/ui-kit';
 import { Field, Form } from 'react-final-form';
 import axios from 'axios';
-import {
-  Panel, Icons, Tooltip, Button, FormGroup, GeneralAlerts,
-} from '@drill4j/ui-kit';
 
 import {
   Fields, requiredArray, composeValidators, sizeLimit,
@@ -18,14 +18,14 @@ import styles from './system-settings-form.module.scss';
 
 interface Props {
   className?: string;
-  agent: Agent;
+  serviceGroup: Agent;
   showMessage: (message: Message) => void;
 }
 
 const systemSettingsForm = BEM(styles);
 
 const validateSettings = composeValidators(
-  requiredArray('packagesPrefixes', 'Package prefixes are required.'),
+  requiredArray('packages'),
   sizeLimit({
     name: 'sessionIdHeaderName',
     alias: 'Session header name',
@@ -37,7 +37,9 @@ const validateSettings = composeValidators(
 export const SystemSettingsForm = systemSettingsForm(
   ({
     className,
-    agent: { id, packagesPrefixes = [], sessionIdHeaderName },
+    serviceGroup: {
+      id, sessionIdHeaderName, packages,
+    },
     showMessage,
   }: Props) => {
     const [errorMessage, setErrorMessage] = React.useState('');
@@ -54,7 +56,9 @@ export const SystemSettingsForm = systemSettingsForm(
             },
             onError: setErrorMessage,
           })}
-          initialValues={{ id, packagesPrefixes, sessionIdHeaderName }}
+          initialValues={{
+            id, sessionIdHeaderName, packages,
+          }}
           validate={validateSettings as any}
           render={({
             handleSubmit,
@@ -83,9 +87,10 @@ export const SystemSettingsForm = systemSettingsForm(
                 </SaveChangesButton>
               </InfoPanel>
               {errorMessage && (
-                <GeneralAlerts type="ERROR">
+                <ErrorMessage>
+                  <ErrorMessageIcon />
                   {errorMessage}
-                </GeneralAlerts>
+                </ErrorMessage>
               )}
               <Content>
                 <FieldName>
@@ -115,7 +120,7 @@ export const SystemSettingsForm = systemSettingsForm(
                 <Panel verticalAlign="start">
                   <PackagesTextarea>
                     <Field
-                      name="packagesPrefixes"
+                      name="packages"
                       component={ProjectPackages}
                       parse={parsePackges}
                       format={formatPackages}
@@ -156,6 +161,8 @@ export const SystemSettingsForm = systemSettingsForm(
 const InfoPanel = systemSettingsForm.infoPanel(Panel);
 const InfoIcon = systemSettingsForm.infoIcon(Icons.Info);
 const SaveChangesButton = systemSettingsForm.saveChangesButton(Button);
+const ErrorMessage = systemSettingsForm.errorMessage(Panel);
+const ErrorMessageIcon = systemSettingsForm.errorMessageIcon(Icons.Warning);
 const Content = systemSettingsForm.content('div');
 const FieldName = systemSettingsForm.fieldName(Panel);
 const BlockerStatus = systemSettingsForm.blockerStatus(
@@ -174,11 +181,10 @@ function saveChanges({
   onSuccess: () => void;
   onError: (message: string) => void;
 }) {
-  return async ({ id, packagesPrefixes = [], sessionIdHeaderName }: Agent) => {
+  return async ({ id, packages = [] }: Agent) => {
     try {
-      await axios.put(`/agents/${id}/system-settings`, {
-        packagesPrefixes: packagesPrefixes.filter(Boolean),
-        sessionIdHeaderName,
+      await axios.put(`/service-groups/${id}/system-settings`, {
+        packages: packages.filter(Boolean),
       });
       onSuccess && onSuccess();
     } catch ({ response: { data: { message } = {} } = {} }) {

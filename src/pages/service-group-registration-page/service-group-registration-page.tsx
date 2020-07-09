@@ -1,16 +1,19 @@
 import * as React from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
-import { useParams, useLocation, useHistory } from 'react-router-dom';
-import { Form, Field } from 'react-final-form';
-import queryString from 'query-string';
-import { Panel, Icons, Button } from '@drill4j/ui-kit';
+import { useParams, useHistory } from 'react-router-dom';
+import {
+  Panel, Icons, CancelButton, GeneralAlerts,
+} from '@drill4j/ui-kit';
 
-import { PluginListEntry } from 'components';
+import {
+  PageHeader, Wizard, Step,
+} from 'components';
 import { useWsConnection } from 'hooks';
-import { CancelAgentRegistrationModal } from 'modules';
+import { CancelAgentRegistrationModal, SystemSettingsStep, InstallPluginsStep } from 'modules';
+import { composeValidators, requiredArray, sizeLimit } from 'forms';
 import { defaultAdminSocket } from 'common/connection';
 import { NotificationManagerContext } from 'notification-manager';
-import { Plugin } from 'types/plugin';
+import { Agent } from 'types/agent';
 import { registerAgent } from './register-service-group';
 
 import styles from './service-group-registration-page.module.scss';
@@ -27,93 +30,70 @@ export const ServiceGroupRegistrationPage = serviceGroupRegistrationPage(
   }: Props) => {
     const { push } = useHistory();
     const { serviceGroupId = '' } = useParams();
-    const { search } = useLocation();
     const [isCancelModalOpened, setIsCancelModalOpened] = React.useState(false);
     const { showMessage } = React.useContext(NotificationManagerContext);
-    const availiblePlugins = useWsConnection<Plugin[]>(defaultAdminSocket, '/plugins') || [];
-    const handeRegisterAgent = registerAgent({
+    const serviceGroup = useWsConnection<Agent>(defaultAdminSocket, `/service-groups/${serviceGroupId}`) || {};
+    const handleRegisterAgent = registerAgent({
       onSuccess: () => {
         showMessage({ type: 'SUCCESS', text: 'Multiple agents registration has been finished.' });
         push(`/service-group-full-page/${serviceGroupId}/service-group-dashboard`);
       },
     });
-    const { unregisteredAgentsCount, serviceGroupName } = queryString.parse(search);
 
     return (
       <div className={className}>
-        <Form
-          onSubmit={handeRegisterAgent}
-          initialValues={{
-            id: serviceGroupId, plugins: [],
-          }}
-          render={({ handleSubmit, values: { plugins = [] } }) => (
-            <>
-              <Header align="space-between">
-                <div>
-                  <Icons.Register />
-                  &nbsp;Register new agents
-                </div>
-                <div>
-                  <Button type="secondary" size="large" onClick={() => setIsCancelModalOpened(true)}>Cancel</Button>
-                  <Button
-                    type="primary"
-                    size="large"
-                    onClick={() => handleSubmit()}
-                  >
-                    <Icons.Check /> Finish registration
-                  </Button>
-                </div>
-              </Header>
-              <InfoPanel>
-                <InfoIcon />
-                <InfoPanelText>
-                  In bulk registration basic and system settings will be set up automatically.
-                  Selected plugins will be installed on all agents.
-                  <br />
-                  You will be able to change configuration of any agent separately on Agent Settings page.
-                  <div>
-                    <strong>Agents to register:</strong> {unregisteredAgentsCount}. <strong>Service Group:</strong> {serviceGroupName}.
-                  </div>
-                </InfoPanelText>
-              </InfoPanel>
-              <ActionName>Choose plugins to install</ActionName>
-              <SelectedPluginsInfo>
-                {plugins.length}&nbsp;of&nbsp;{availiblePlugins.length} selected
-              </SelectedPluginsInfo>
-              <PluginsList>
-                {availiblePlugins.map(({
-                  id = '', name, description, version,
-                }) => (
-                  <Field
-                    name="plugins"
-                    type="checkbox"
-                    value={id}
-                    key={id}
-                    render={({ input, meta }) => (
-                      <PluginListEntry
-                        description={description}
-                        input={input}
-                        meta={meta}
-                        icon={name as keyof typeof Icons}
-                        onClick={() => input.onChange({
-                          target: {
-                            type: 'checkbox',
-                            checked: !input.checked,
-                          },
-                        })}
-                      >
-                        <Panel>
-                          <PluginName>{name}&nbsp;</PluginName>
-                          {version && <PluginVersion>({version})</PluginVersion>}
-                        </Panel>
-                      </PluginListEntry>
-                    )}
-                  />
-                ))}
-              </PluginsList>
-            </>
+        <PageHeader
+          title={(
+            <Panel>
+              <HeaderIcon height={20} width={20} />
+              Register new agent
+            </Panel>
+          )}
+          actions={(
+            <Panel align="end">
+              <CancelButton size="large" onClick={() => setIsCancelModalOpened(true)}>
+                Cancel
+              </CancelButton>
+            </Panel>
           )}
         />
+        <Wizard
+          initialValues={serviceGroup}
+          onSubmit={handleRegisterAgent}
+        >
+          <Step
+            name="System settings"
+            component={() => (
+              <SystemSettingsStep infoPanel={(
+                <GeneralAlerts type="INFO">
+                  Provide information related to your application / project
+                </GeneralAlerts>
+              )}
+              />
+            )}
+            validate={composeValidators(
+              requiredArray('packages', 'Package prefixes'),
+              sizeLimit({
+                name: 'sessionIdHeaderName',
+                alias: 'Session header name',
+                min: 1,
+                max: 256,
+              }),
+            )}
+          />
+          <Step
+            name="Plugins"
+            component={() => (
+              <InstallPluginsStep infoPanel={(
+                <GeneralAlerts type="INFO">
+                  Choose plugins to install on your agents.
+                  You will be able to change configuration of any agent separately on Agent Settings page.
+                </GeneralAlerts>
+              )}
+              />
+            )}
+          />
+        </Wizard>
         {isCancelModalOpened && (
           <CancelAgentRegistrationModal
             isOpen={isCancelModalOpened}
@@ -125,12 +105,4 @@ export const ServiceGroupRegistrationPage = serviceGroupRegistrationPage(
   },
 );
 
-const Header = serviceGroupRegistrationPage.header(Panel);
-const InfoPanel = serviceGroupRegistrationPage.infoPanel('div');
-const ActionName = serviceGroupRegistrationPage.actionName('div');
-const InfoPanelText = serviceGroupRegistrationPage.infoPanelText('div');
-const InfoIcon = serviceGroupRegistrationPage.infoIcon(Icons.Info);
-const SelectedPluginsInfo = serviceGroupRegistrationPage.selectedPluginsInfo('div');
-const PluginsList = serviceGroupRegistrationPage.pluginsList('div');
-const PluginName = serviceGroupRegistrationPage.pluginName('div');
-const PluginVersion = serviceGroupRegistrationPage.pluginVersion('div');
+const HeaderIcon = serviceGroupRegistrationPage.headerIcon(Icons.Register);

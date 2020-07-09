@@ -13,22 +13,17 @@ import styles from './install-plugins-step.module.scss';
 interface Props {
   className?: string;
   formValues?: { plugins?: string[] };
+  infoPanel?: React.ReactNode;
 }
 
 const installPluginsStep = BEM(styles);
 
 export const InstallPluginsStep = installPluginsStep(
-  ({ className, formValues: { plugins: pluginsFormValue = [] } = {} }: Props) => {
+  ({ className, infoPanel, formValues: { plugins: pluginsFormValue = [] } = {} }: Props) => {
     const plugins = useWsConnection<Plugin[]>(defaultAdminSocket, '/plugins') || [];
     return (
       <div className={className}>
-        <InfoPanel align="space-between">
-          <Panel>
-            <InfoIcon />
-            Choose plugins to install on your agent. You will also be able to add them later on
-            Agent’s page or Plugins Library.
-          </Panel>
-        </InfoPanel>
+        {infoPanel}
         <SelectedPluginsInfo>
           {pluginsFormValue.length}
           &nbsp;of&nbsp;
@@ -71,8 +66,6 @@ export const InstallPluginsStep = installPluginsStep(
   },
 );
 
-const InfoPanel = installPluginsStep.infoPanel(Panel);
-const InfoIcon = installPluginsStep.infoIcon(Icons.Info);
 const SelectedPluginsInfo = installPluginsStep.selectedPluginsInfo('div');
 const PluginsList = installPluginsStep.pluginsList('div');
 const PluginName = installPluginsStep.pluginName('div');

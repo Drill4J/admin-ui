@@ -15,4 +15,5 @@ export interface Agent extends CommonEntity {
   serviceGroup?: string;
   agentType?: string;
   agentVersion?: string;
+  packages?: string[];
 }

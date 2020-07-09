@@ -3,19 +3,6 @@
 .install-plugins-step {
   min-width: 850px;
 
-  &__info-panel {
-    height: 48px;
-    padding: 0 24px;
-    font-size: 14px;
-    line-height: 24px;
-    background-color: map-get($color-palette, ultra-light-blue);
-    color: $slate-gray;
-  }
-
-  &__info-icon {
-    margin-right: 8px;
-  }
-
   &__selected-plugins-info {
     margin: 28px 0px 16px 24px;
     font-family: $light-font;

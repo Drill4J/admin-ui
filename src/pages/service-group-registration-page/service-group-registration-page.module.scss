@@ -4,65 +4,7 @@
   width: 100%;
   min-width: 850px;
 
-  &__header {
-    height: 80px;
-    padding: 0 24px;
-    border-bottom: 1px solid map-get($color-palette, light-blue);
-    font-size: 24px;
-
-    :not(:last-child) {
-      margin-right: 16px;
-    }
-  }
-
-  &__info-panel {
-    display: flex;
-    height: 104px;
-    padding: 12px 24px;
-    font-size: 14px;
-    line-height: 24px;
-    background-color: map-get($color-palette, ultra-light-blue);
-    color: $slate-gray;
-  }
-
-  &__info-icon {
-    margin-top: 4px;
-    margin-right: 8px;
-  }
-
-  &__info-panel-text {
-    :last-child {
-      margin-top: 8px;
-    }
-  }
-
-  &__action-name {
-    margin: 16px 24px;
-    font-family: $light-font;
-    font-size: 20px;
-  }
-
-  &__selected-plugins-info {
-    margin: 0px 0px 16px 24px;
-    font-family: $light-font;
-    font-size: 16px;
-    color: $gravel-color;
-  }
-
-  &__plugins-list {
-    margin: 0 24px;
-  }
-
-  &__plugin-name {
-    font-family: $semibold-font;
-    font-size: 14px;
-    line-height: 22px;
-    color: $gravel-color;
-  }
-
-  &__plugin-version {
-    font-size: 14px;
-    line-height: 22px;
-    color: map-get($color-palette, black75);
+  &__header-icon {
+    margin-right: 16px;
   }
 }

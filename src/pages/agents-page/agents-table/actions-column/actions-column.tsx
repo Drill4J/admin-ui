@@ -31,7 +31,7 @@ export const ActionsColumn = actionsColumn(
       id: agentId = '', status, agentType = '',
     } = agent as Agent;
     const { push } = useHistory();
-    const { name: serviceGroupName, agents = [] } = agent as ServiceGroup;
+    const { agents = [] } = agent as ServiceGroup;
     const unregisteredAgentsCount = agents.reduce(
       (acc, { status: agentStatus }) => (agentStatus === AGENT_STATUS.NOT_REGISTERED ? acc + 1 : acc), 0,
     );
@@ -42,7 +42,7 @@ export const ActionsColumn = actionsColumn(
             <RegisterButton
               onClick={() => push(`/${
                 agentType === 'ServiceGroup' ? 'bulk-registration' : 'registration'
-              }/${agentId}?unregisteredAgentsCount=${unregisteredAgentsCount}&serviceGroupName=${serviceGroupName}`)}
+              }/${agentId}`)}
               data-test="action-column:icons-register"
               type="primary"
             >

@@ -1,7 +1,9 @@
 import React from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 import { Field } from 'react-final-form';
-import { Panel, Icons, FormGroup } from '@drill4j/ui-kit';
+import {
+  Icons, FormGroup, GeneralAlerts,
+} from '@drill4j/ui-kit';
 
 import { Fields } from 'forms';
 import { copyToClipboard } from 'utils';
@@ -18,12 +20,9 @@ const generalSettingsForm = BEM(styles);
 
 export const GeneralSettingsForm = generalSettingsForm(({ className, formValues: { id = '', agentVersion = '' } }: Props) => (
   <div className={className}>
-    <InfoPanel align="space-between">
-      <Panel>
-        <InfoIcon />
-        Set up basic agent settings
-      </Panel>
-    </InfoPanel>
+    <GeneralAlerts type="INFO">
+      Set up basic agent settings
+    </GeneralAlerts>
     <Content>
       <FormGroup
         label="Agent ID"
@@ -61,8 +60,6 @@ export const GeneralSettingsForm = generalSettingsForm(({ className, formValues:
   </div>
 ));
 
-const InfoPanel = generalSettingsForm.infoPanel(Panel);
-const InfoIcon = generalSettingsForm.infoIcon(Icons.Info);
 const Content = generalSettingsForm.content('div');
 const CopyAgentId = generalSettingsForm.copyButton(Icons.Copy);
 const Description = generalSettingsForm.description(FormGroup);
