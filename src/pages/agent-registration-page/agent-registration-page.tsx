@@ -81,7 +81,7 @@ export const AgentRegistrationPage = agentRegistrationPage(
               />
             )}
             validate={composeValidators(
-              requiredArray('packagesPrefixes', 'Package prefixes are required.'),
+              requiredArray('packages', 'Package prefixes are required.'),
               sizeLimit({
                 name: 'sessionIdHeaderName',
                 alias: 'Session header name',

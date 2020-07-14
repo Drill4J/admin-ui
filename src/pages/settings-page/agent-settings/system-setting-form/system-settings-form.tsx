@@ -25,7 +25,7 @@ interface Props {
 const systemSettingsForm = BEM(styles);
 
 const validateSettings = composeValidators(
-  requiredArray('packagesPrefixes', 'Package prefixes are required.'),
+  requiredArray('packages', 'Package prefixes are required.'),
   sizeLimit({
     name: 'sessionIdHeaderName',
     alias: 'Session header name',
@@ -37,7 +37,7 @@ const validateSettings = composeValidators(
 export const SystemSettingsForm = systemSettingsForm(
   ({
     className,
-    agent: { id, packagesPrefixes = [], sessionIdHeaderName },
+    agent: { id, packages = [], sessionIdHeaderName },
     showMessage,
   }: Props) => {
     const [errorMessage, setErrorMessage] = React.useState('');
@@ -54,7 +54,7 @@ export const SystemSettingsForm = systemSettingsForm(
             },
             onError: setErrorMessage,
           })}
-          initialValues={{ id, packagesPrefixes, sessionIdHeaderName }}
+          initialValues={{ id, packages, sessionIdHeaderName }}
           validate={validateSettings as any}
           render={({
             handleSubmit,
@@ -116,7 +116,7 @@ export const SystemSettingsForm = systemSettingsForm(
                 <Panel verticalAlign="start">
                   <PackagesTextarea>
                     <Field
-                      name="packagesPrefixes"
+                      name="packages"
                       component={ProjectPackages}
                       parse={parsePackges}
                       format={formatPackages}
@@ -175,10 +175,10 @@ function saveChanges({
   onSuccess: () => void;
   onError: (message: string) => void;
 }) {
-  return async ({ id, packagesPrefixes = [], sessionIdHeaderName }: Agent) => {
+  return async ({ id, packages = [], sessionIdHeaderName }: Agent) => {
     try {
       await axios.put(`/agents/${id}/system-settings`, {
-        packagesPrefixes: packagesPrefixes.filter(Boolean),
+        packages: packages.filter(Boolean),
         sessionIdHeaderName,
       });
       onSuccess && onSuccess();

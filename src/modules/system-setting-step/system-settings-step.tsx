@@ -23,7 +23,7 @@ export const SystemSettingsStep = systemSettingsStep(({ className, infoPanel }: 
       <Panel verticalAlign="start">
         <PackagesTextarea>
           <Field
-            name="packagesPrefixes"
+            name="packages"
             component={ProjectPackages}
             parse={parsePackges}
             format={formatPackages}

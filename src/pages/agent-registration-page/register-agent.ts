@@ -7,7 +7,7 @@ export function registerAgent(onSuccess?: () => void) {
       id,
       name,
       environment,
-      packagesPrefixes = [],
+      packages = [],
       description,
       plugins,
       sessionIdHeaderName,
@@ -18,7 +18,7 @@ export function registerAgent(onSuccess?: () => void) {
       axios.patch(`/agents/${id}`, {
         name,
         environment,
-        packagesPrefixes: packagesPrefixes.filter(Boolean),
+        packages: packages.filter(Boolean),
         description,
         plugins,
         sessionIdHeaderName,
