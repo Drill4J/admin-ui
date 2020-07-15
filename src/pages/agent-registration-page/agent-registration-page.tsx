@@ -75,7 +75,7 @@ export const AgentRegistrationPage = agentRegistrationPage(
             component={() => (
               <SystemSettingsStep infoPanel={(
                 <GeneralAlerts type="INFO">
-                  Information related to your application / project.
+                  Provide information related to your application / project.
                 </GeneralAlerts>
               )}
               />
@@ -97,8 +97,7 @@ export const AgentRegistrationPage = agentRegistrationPage(
                 formValues={formValues}
                 infoPanel={(
                   <GeneralAlerts type="INFO">
-                    Choose plugins to install on your agent. You will also be able to add them later on
-                    Agent’s page or Plugins Library.
+                    Choose plugins to install on your agent. You will also be able to add them later on Agent’s page.
                   </GeneralAlerts>
                 )}
               />

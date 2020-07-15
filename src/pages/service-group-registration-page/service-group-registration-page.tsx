@@ -51,7 +51,7 @@ export const ServiceGroupRegistrationPage = serviceGroupRegistrationPage(
           actions={(
             <Panel align="end">
               <Button type="secondary" size="large" onClick={() => setIsCancelModalOpened(true)}>
-                Cancel
+                Abort Registration
               </Button>
             </Panel>
           )}
