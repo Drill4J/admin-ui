@@ -59,9 +59,9 @@ export const NewBuildModal = newBuildModal(
                 <RecommendedActions recommendations={recommendations} />
               </Section>
             )}
-            <OkButton type="primary" onClick={() => onToggle(false)}>
+            <Button type="primary" size="large" onClick={() => onToggle(false)}>
               Ok, Got it!
-            </OkButton>
+            </Button>
           </Content>
         </div>
       </Popup>
@@ -71,4 +71,3 @@ export const NewBuildModal = newBuildModal(
 
 const Content = newBuildModal.content('div');
 const Section = newBuildModal.section('div');
-const OkButton = newBuildModal.okButton(Button);

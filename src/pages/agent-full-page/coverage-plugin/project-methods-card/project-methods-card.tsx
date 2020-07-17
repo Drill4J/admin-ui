@@ -1,17 +1,16 @@
 import * as React from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
-import { Panel, Icons } from '@drill4j/ui-kit';
+import { LinkButton } from '@drill4j/ui-kit';
 
 import { Methods } from 'types/methods';
-import { Card } from '../card';
-import { MethodsSection } from './methods-section';
+import { InfoCard } from 'components';
+import { RisksModal } from '../risks-modal';
 
 import styles from './project-methods-card.module.scss';
 
 interface Props {
   className?: string;
   methods: Methods;
-  showDeletedMethods?: boolean;
 }
 
 const projectMethodsCard = BEM(styles);
@@ -20,63 +19,52 @@ export const ProjectMethodsCard = projectMethodsCard(
   ({
     className,
     methods: {
-      all, new: newMethods, modified, deleted,
+      all, new: newMethods, modified, deleted, risks,
     },
-  }: Props) => (
-    <div className={className}>
-      <Card
-        header={(
-          <CardHeader>
-            <Icons.Total />
-            Total
-          </CardHeader>
-        )}
-      >
-        <MethodsSection title="TOTAL" methodsCount={all} type="all" />
-      </Card>
-      <Card
-        header={(
-          <CardHeader>
-            <Icons.Add />
-            New
-          </CardHeader>
-        )}
-      >
-        <MethodsSection title="NEW" methodsCount={newMethods} type="new" />
-      </Card>
-      <Card
-        header={(
-          <CardHeader>
-            <Icons.Edit />
-            Modified
-          </CardHeader>
-        )}
-      >
-        <MethodsSection title="MODIFIED" methodsCount={modified} type="modified" />
-      </Card>
-      <Card
-        header={(
-          <CardHeader>
-            <Icons.Delete />
-            Deleted
-          </CardHeader>
-        )}
-      >
-        <MethodsSection
-          title="DELETED"
-          methodsCount={deleted}
-          additionalInfo={(
-            <DeletedMethodsAdditionalInfo>
-              {`${deleted?.covered} of ${deleted?.total
-                  || 0} deleted methods were covered in previous build.`}
-            </DeletedMethodsAdditionalInfo>
-          )}
-          type="deleted"
+  }: Props) => {
+    const [risksFilter, setRisksFilter] = React.useState<string>('');
+    return (
+      <div className={className}>
+        <InfoCard
+          label="ALL METHODS"
+          covered={all?.covered}
+          totalCount={all?.total}
         />
-      </Card>
-    </div>
-  ),
+        <InfoCard
+          label="NEW"
+          covered={newMethods?.covered}
+          totalCount={newMethods?.total}
+        >
+          {Boolean(risks?.new) && (
+            <LinkButton size="small" onClick={() => setRisksFilter('new')} data-test="info-card:link-button:new:risks">
+              {risks?.new} risks
+            </LinkButton>
+          )}
+        </InfoCard>
+        <InfoCard
+          label="MODIFIED"
+          covered={modified?.covered}
+          totalCount={modified?.total}
+        >
+          {Boolean(risks?.modified) && (
+            <LinkButton size="small" onClick={() => setRisksFilter('modified')} data-test="info-card:link-button:modified:risks">
+              {risks?.modified} risks
+            </LinkButton>
+          )}
+        </InfoCard>
+        <InfoCard
+          label="DELETED"
+          covered={deleted?.covered}
+          totalCount={deleted?.total}
+        />
+        {risksFilter && (
+          <RisksModal
+            isOpen={Boolean(risksFilter)}
+            onToggle={() => setRisksFilter('')}
+            filter={risksFilter}
+          />
+        )}
+      </div>
+    );
+  },
 );
-
-const CardHeader = projectMethodsCard.cardHeader(Panel);
-const DeletedMethodsAdditionalInfo = projectMethodsCard.deletedMethodsAdditionalInfo('span');

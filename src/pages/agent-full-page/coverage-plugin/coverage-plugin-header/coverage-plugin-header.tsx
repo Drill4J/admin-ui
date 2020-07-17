@@ -8,7 +8,6 @@ import { QualityGatePane } from 'components';
 import {
   ConditionSetting, ConditionSettingByType, QualityGate, QualityGateSettings,
 } from 'types/quality-gate-type';
-import { Risks } from 'types/risks';
 import { TestsToRun } from 'types/tests-to-run';
 import { Metrics } from 'types/metrics';
 import { useAgent } from 'hooks';
@@ -35,7 +34,6 @@ export const CoveragePluginHeader = coveragePluginHeader(({ className }: Props) 
   const { agentId, buildVersion } = usePluginState();
   const { buildVersion: activeBuildVersion } = useAgent(agentId) || {};
 
-  const risks = useBuildVersion<Risks>('/build/risks') || {};
   const { testTypeToNames = {} } = useBuildVersion<TestsToRun>('/build/tests-to-run') || {};
   const conditionSettings = useBuildVersion<ConditionSetting[]>('/data/quality-gate-settings') || [];
   const {
@@ -96,10 +94,8 @@ export const CoveragePluginHeader = coveragePluginHeader(({ className }: Props) 
       </Actions>
       {isRisksModalOpen && (
         <RisksModal
-          risks={risks}
           isOpen={isRisksModalOpen}
           onToggle={setIsRisksModalOpen}
-          count={risksCount}
         />
       )}
       {isTestsToRunModalOpen && (

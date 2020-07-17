@@ -1,5 +1,7 @@
+import { RisksSummary } from './risks-summary';
+
 interface Count {
-  covered?: number;
+  covered: number;
   total: number;
 }
 
@@ -9,4 +11,5 @@ export interface Methods {
   modified?: Count;
   new?: Count;
   unaffected?: Count;
+  risks?: RisksSummary;
 }

@@ -7,6 +7,7 @@ import {
 
 import { useElementSize } from 'hooks';
 import { Risks } from 'types/risks';
+import { useBuildVersion } from '../use-build-version';
 
 import styles from './risks-modal.module.scss';
 
@@ -14,8 +15,7 @@ interface Props {
   className?: string;
   isOpen: boolean;
   onToggle: (value: boolean) => void;
-  risks: Risks;
-  count: number;
+  filter?: string;
 }
 
 const risksModal = BEM(styles);
@@ -25,10 +25,10 @@ export const RisksModal = risksModal(
     className,
     isOpen,
     onToggle,
-    risks: { newMethods = [], modifiedMethods = [] },
-    count,
+    filter = 'all',
   }: Props) => {
-    const [selectedSection, setSelectedSection] = React.useState('all');
+    const { newMethods = [], modifiedMethods = [] } = useBuildVersion<Risks>('/build/risks') || {};
+    const [selectedSection, setSelectedSection] = React.useState<string>(filter);
     const allMethods = newMethods.concat(modifiedMethods);
     const node = React.useRef<HTMLDivElement>(null);
     const { height: methodsListHeight } = useElementSize(node);
@@ -48,7 +48,7 @@ export const RisksModal = risksModal(
           <Header>
             <Icons.Test height={20} width={18} viewBox="0 0 18 20" />
             <span>Risks</span>
-            <h2>{count}</h2>
+            <h2>{allMethods.length}</h2>
           </Header>
           <NotificationPanel>
             Risks are not covered
