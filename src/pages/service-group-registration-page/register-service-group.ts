@@ -8,14 +8,18 @@ export function registerAgent({ onSuccess, onError }: { onSuccess?: () => void; 
       id,
       plugins,
       name = '',
-      packages = ['org/springframework/samples/petclinic'],
+      systemSettings: {
+        packages = ['org/springframework/samples/petclinic'],
+      } = {},
     }: Agent,
   ) => {
     try {
       axios.patch(`/service-groups/${id}`, {
         plugins,
         name,
-        packages,
+        systemSettings: {
+          packages,
+        },
       });
       onSuccess && onSuccess();
     } catch ({ response: { data: { message } = {} } = {} }) {

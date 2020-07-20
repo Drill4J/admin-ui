@@ -7,10 +7,9 @@ export function registerAgent(onSuccess?: () => void) {
       id,
       name,
       environment,
-      packages = [],
       description,
       plugins,
-      sessionIdHeaderName,
+      systemSettings,
     }: Agent,
     onError: (message: string) => void,
   ) => {
@@ -18,10 +17,12 @@ export function registerAgent(onSuccess?: () => void) {
       axios.patch(`/agents/${id}`, {
         name,
         environment,
-        packages: packages.filter(Boolean),
         description,
         plugins,
-        sessionIdHeaderName,
+        systemSettings: {
+          ...systemSettings,
+          packages: systemSettings?.packages?.filter(Boolean),
+        },
       });
       onSuccess && onSuccess();
     } catch ({ response: { data: { message } = {} } = {} }) {

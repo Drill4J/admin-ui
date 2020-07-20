@@ -14,6 +14,7 @@ import { parsePackges, formatPackages } from 'utils';
 import { Agent } from 'types/agent';
 import { Message } from 'types/message';
 
+import { SystemSettings } from 'types/system-settings';
 import styles from './system-settings-form.module.scss';
 
 interface Props {
@@ -38,7 +39,7 @@ export const SystemSettingsForm = systemSettingsForm(
   ({
     className,
     serviceGroup: {
-      id, sessionIdHeaderName, packages,
+      id, systemSettings,
     },
     showMessage,
   }: Props) => {
@@ -57,7 +58,7 @@ export const SystemSettingsForm = systemSettingsForm(
             onError: setErrorMessage,
           })}
           initialValues={{
-            id, sessionIdHeaderName, packages,
+            id, ...systemSettings,
           }}
           validate={validateSettings as any}
           render={({
@@ -182,10 +183,11 @@ function saveChanges({
   onSuccess: () => void;
   onError: (message: string) => void;
 }) {
-  return async ({ id, packages = [] }: Agent) => {
+  return async ({ id, packages = [], sessionIdHeaderName }: { id?: string } & SystemSettings) => {
     try {
       await axios.put(`/service-groups/${id}/system-settings`, {
         packages: packages.filter(Boolean),
+        sessionIdHeaderName,
       });
       onSuccess && onSuccess();
     } catch ({ response: { data: { message } = {} } = {} }) {

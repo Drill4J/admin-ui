@@ -13,6 +13,7 @@ import { UnlockingSystemSettingsFormModal } from 'modules';
 import { parsePackges, formatPackages } from 'utils';
 import { Agent } from 'types/agent';
 import { Message } from 'types/message';
+import { SystemSettings } from 'types/system-settings';
 
 import styles from './system-settings-form.module.scss';
 
@@ -37,7 +38,7 @@ const validateSettings = composeValidators(
 export const SystemSettingsForm = systemSettingsForm(
   ({
     className,
-    agent: { id, packages = [], sessionIdHeaderName },
+    agent: { id, systemSettings },
     showMessage,
   }: Props) => {
     const [errorMessage, setErrorMessage] = React.useState('');
@@ -54,7 +55,7 @@ export const SystemSettingsForm = systemSettingsForm(
             },
             onError: setErrorMessage,
           })}
-          initialValues={{ id, packages, sessionIdHeaderName }}
+          initialValues={{ id, ...systemSettings }}
           validate={validateSettings as any}
           render={({
             handleSubmit,
@@ -138,6 +139,13 @@ export const SystemSettingsForm = systemSettingsForm(
                     placeholder="Enter session header name"
                   />
                 </HeaderMapping>
+                <TargetHost label="Target Host" optional>
+                  <Field
+                    name="targetHost"
+                    component={Fields.Input}
+                    placeholder="Specify your target application host"
+                  />
+                </TargetHost>
                 {isUnlockingModalOpened && (
                   <UnlockingSystemSettingsFormModal
                     isOpen={isUnlockingModalOpened}
@@ -167,6 +175,7 @@ const PackagesTextarea = systemSettingsForm.packagesTextarea('div');
 const Instruction = systemSettingsForm.instructions('div');
 const ProjectPackages = systemSettingsForm.projectPackages(Fields.Textarea);
 const HeaderMapping = systemSettingsForm.headerMapping(FormGroup);
+const TargetHost = systemSettingsForm.targetHost(FormGroup);
 
 function saveChanges({
   onSuccess,
@@ -175,7 +184,7 @@ function saveChanges({
   onSuccess: () => void;
   onError: (message: string) => void;
 }) {
-  return async ({ id, packages = [], sessionIdHeaderName }: Agent) => {
+  return async ({ id, packages = [], sessionIdHeaderName }: { id?: string} & SystemSettings) => {
     try {
       await axios.put(`/agents/${id}/system-settings`, {
         packages: packages.filter(Boolean),

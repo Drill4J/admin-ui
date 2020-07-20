@@ -23,7 +23,7 @@ export const SystemSettingsStep = systemSettingsStep(({ className, infoPanel }: 
       <Panel verticalAlign="start">
         <PackagesTextarea>
           <Field
-            name="packages"
+            name="systemSettings.packages"
             component={ProjectPackages}
             parse={parsePackges}
             format={formatPackages}
@@ -37,12 +37,19 @@ export const SystemSettingsStep = systemSettingsStep(({ className, infoPanel }: 
       </Panel>
       <HeaderMapping label="Header Mapping" optional>
         <Field
-          name="sessionIdHeaderName"
+          name="systemSettings.sessionIdHeaderName"
           component={Fields.Input}
           placeholder="Enter session header name"
           label="Session header name"
         />
       </HeaderMapping>
+      <TargetHost label="Target host" optional>
+        <Field
+          name="systemSettings.targetHost"
+          component={Fields.Input}
+          placeholder="Specify your target application host"
+        />
+      </TargetHost>
     </Content>
   </div>
 ));
@@ -53,3 +60,4 @@ const PackagesTextarea = systemSettingsStep.packagesTextarea('div');
 const ProjectPackages = systemSettingsStep.projectPackages(Fields.Textarea);
 const Instruction = systemSettingsStep.instructions('div');
 const HeaderMapping = systemSettingsStep.headerMapping(FormGroup);
+const TargetHost = systemSettingsStep.targetHost(FormGroup);

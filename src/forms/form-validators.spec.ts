@@ -1,4 +1,12 @@
-import { required, sizeLimit, composeValidators } from './form-validators';
+import { required, sizeLimit, composeValidators, toError } from './form-validators';
+
+describe('toError', () => {
+  it('should return final form error format by provided fieldname and erorr', () => {
+    expect(toError('foo.bar.buz', 'error')).toEqual({ foo: { bar: { buz: 'error' } }});
+
+    expect(toError('foo', 'error')).toEqual({ foo: 'error' });
+  });
+})
 
 describe('required', () => {
   const validator = required('username');

@@ -1,5 +1,6 @@
 import { CommonEntity } from 'types/common-entity';
 import { Plugin } from './plugin';
+import { SystemSettings } from './system-settings';
 
 export interface Agent extends CommonEntity {
   status?: 'ONLINE' | 'NOT_REGISTERED' | 'BUSY';
@@ -10,9 +11,8 @@ export interface Agent extends CommonEntity {
   buildVersion?: string;
   buildVersions?: string[];
   buildAlias?: string;
-  sessionIdHeaderName?: string;
   serviceGroup?: string;
   agentType?: string;
   agentVersion?: string;
-  packages?: string[];
+  systemSettings?: SystemSettings;
 }

@@ -23,9 +23,6 @@ import { Breadcrumbs } from 'modules';
 
 const sidebarLinks = [
   { link: 'agents', icon: Icons.Agents },
-  { link: 'plugins', icon: Icons.Plugins },
-  { link: 'logs', icon: Icons.Logs },
-  { link: 'settings', icon: Icons.Settings },
 ];
 
 export const PageSwitcher = () => (
