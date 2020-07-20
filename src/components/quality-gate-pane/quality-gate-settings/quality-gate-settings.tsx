@@ -5,6 +5,7 @@ import { Field } from 'react-final-form';
 
 import { Fields } from 'forms/fields';
 import { ConditionSettingByType } from 'types/quality-gate-type';
+import { parseCoverage } from 'utils';
 import { ThresholdValueField } from './threshold-value-field';
 
 import styles from './quality-gate-settings.module.scss';
@@ -30,6 +31,7 @@ export const QualityGateSettings = qualityGateSettings(
             name="coverage.condition.value"
             component={ThresholdValueField}
             disabled={!conditionSettingByType.coverage?.enabled}
+            parse={parseCoverage}
           >
             <Condtion data-test="quality-gate-settings:condtion:coverage">
               Build coverage

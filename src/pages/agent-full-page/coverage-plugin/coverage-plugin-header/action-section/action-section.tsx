@@ -20,19 +20,21 @@ export const ActionSection = actionSection(
     className, label, count, onClick, type, children,
   }: Props) => (
     <div className={className}>
-      <Action>
+      <Action data-test={`action-section:action:${label}`}>
         <ActionName>{label}</ActionName>
-        {count && (
-          <Count
-            onClick={onClick}
-            type={count ? type : ''}
-            clickable={Boolean(count)}
-            data-test={`action-section:count:${label}`}
-          >
-            {`${count} `}
-            {count > 0 && type === 'error' && <Icons.Warning />}
-          </Count>
-        )}
+        <span data-test={`action-section:count:${label}`}>
+          {count && (
+            <Count
+              onClick={onClick}
+              type={count ? type : ''}
+              clickable={Boolean(count)}
+
+            >
+              {`${count}`}
+              {count > 0 && type === 'error' && <Icons.Warning />}
+            </Count>
+          )}
+        </span>
         {children}
       </Action>
     </div>
@@ -42,8 +44,7 @@ export const ActionSection = actionSection(
 const Action = actionSection.action('div');
 const ActionName = actionSection.actionName('div');
 const Count = actionSection.count(
-  span({ 'data-test': '', onClick: () => {} } as {
-    'data-test'?: string;
+  span({ onClick: () => {} } as {
     clickable?: boolean;
     onClick?: () => void;
   }),

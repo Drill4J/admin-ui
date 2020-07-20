@@ -108,7 +108,7 @@ export const QualityGatePane = qualityGatePane(
                     onClick={() => onToggle(false)}
                     data-test="quality-gate-pane:close-button"
                   >
-                    Close
+                    {values.configured ? 'Close' : 'Cancel'}
                   </Button>
                 </ActionsPanel>
               </>

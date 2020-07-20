@@ -2,6 +2,8 @@ import * as React from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 import { Icons } from '@drill4j/ui-kit';
 
+import { percentFormatter } from 'utils';
+
 import styles from './condition.module.scss';
 
 interface Props {
@@ -31,7 +33,7 @@ export const Condition = condition(
           {children}
         </Content>
         <ThresholdValue data-test={`quality-gate-status:condition:${type}`}>
-          {type === 'coverage' ? `${thresholdValue}%` : thresholdValue }
+          {type === 'coverage' ? `${percentFormatter(thresholdValue)}%` : thresholdValue }
         </ThresholdValue>
       </div>
     );
