@@ -144,6 +144,13 @@ export const SystemSettingsForm = systemSettingsForm(
                     placeholder="Enter session header name"
                   />
                 </HeaderMapping>
+                <TargetHost label="Target Host" optional>
+                  <Field
+                    name="targetHost"
+                    component={Fields.Input}
+                    placeholder="Specify your target application host"
+                  />
+                </TargetHost>
                 {isUnlockingModalOpened && (
                   <UnlockingSystemSettingsFormModal
                     isOpen={isUnlockingModalOpened}
@@ -175,6 +182,7 @@ const PackagesTextarea = systemSettingsForm.packagesTextarea('div');
 const Instruction = systemSettingsForm.instructions('div');
 const ProjectPackages = systemSettingsForm.projectPackages(Fields.Textarea);
 const HeaderMapping = systemSettingsForm.headerMapping(FormGroup);
+const TargetHost = systemSettingsForm.targetHost(FormGroup);
 
 function saveChanges({
   onSuccess,
@@ -183,11 +191,14 @@ function saveChanges({
   onSuccess: () => void;
   onError: (message: string) => void;
 }) {
-  return async ({ id, packages = [], sessionIdHeaderName }: { id?: string } & SystemSettings) => {
+  return async ({
+    id, packages = [], sessionIdHeaderName, targetHost,
+  }: { id?: string } & SystemSettings) => {
     try {
       await axios.put(`/service-groups/${id}/system-settings`, {
         packages: packages.filter(Boolean),
         sessionIdHeaderName,
+        targetHost,
       });
       onSuccess && onSuccess();
     } catch ({ response: { data: { message } = {} } = {} }) {
