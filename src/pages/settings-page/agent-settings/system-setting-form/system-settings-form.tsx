@@ -184,11 +184,14 @@ function saveChanges({
   onSuccess: () => void;
   onError: (message: string) => void;
 }) {
-  return async ({ id, packages = [], sessionIdHeaderName }: { id?: string} & SystemSettings) => {
+  return async ({
+    id, packages = [], sessionIdHeaderName, targetHost,
+  }: { id?: string} & SystemSettings) => {
     try {
       await axios.put(`/agents/${id}/system-settings`, {
         packages: packages.filter(Boolean),
         sessionIdHeaderName,
+        targetHost,
       });
       onSuccess && onSuccess();
     } catch ({ response: { data: { message } = {} } = {} }) {

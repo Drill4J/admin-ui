@@ -61,7 +61,7 @@ export const BuildList =
                   width={columnWidth}
                 />
                 <Column
-                  name="totalMethods"
+                  name="summary.total"
                   HeaderCell={() => (
                     <HeaderCell>
                       <HeaderLabel>Total</HeaderLabel>
@@ -71,7 +71,7 @@ export const BuildList =
                   width={columnWidth}
                 />
                 <Column
-                  name="newMethods"
+                  name="summary.new"
                   HeaderCell={() => (
                     <HeaderCell>
                       <HeaderLabel>New</HeaderLabel>
@@ -80,7 +80,7 @@ export const BuildList =
                   width={columnWidth}
                 />
                 <Column
-                  name="modifiedMethods"
+                  name="summary.modified"
                   HeaderCell={() => (
                     <HeaderCell>
                       <HeaderLabel>Modified</HeaderLabel>
@@ -89,7 +89,7 @@ export const BuildList =
                   width={columnWidth}
                 />
                 <Column
-                  name="unaffectedMethods"
+                  name="summary.unaffected"
                   HeaderCell={() => (
                     <HeaderCell>
                       <HeaderLabel>Unaffected</HeaderLabel>
@@ -98,7 +98,7 @@ export const BuildList =
                   width={columnWidth}
                 />
                 <Column
-                  name="deletedMethods"
+                  name="summary.deleted"
                   HeaderCell={() => (
                     <HeaderCell>
                       <HeaderLabel>Deleted</HeaderLabel>
