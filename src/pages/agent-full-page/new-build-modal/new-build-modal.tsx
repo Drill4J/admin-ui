@@ -48,9 +48,9 @@ export const NewBuildModal = newBuildModal(
             <Section>
               <BuildUpdates
                 buildDiff={{
-                  new: buildDiff.new,
-                  modified: buildDiff.modified,
-                  deleted: buildDiff.deleted,
+                  new: buildDiff?.new,
+                  modified: buildDiff?.modified,
+                  deleted: buildDiff?.deleted,
                 }}
               />
             </Section>
