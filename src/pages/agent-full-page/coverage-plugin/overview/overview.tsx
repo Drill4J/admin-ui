@@ -10,16 +10,16 @@ import { ClassCoverage } from 'types/class-coverage';
 import { ActiveScope } from 'types/active-scope';
 import { Methods } from 'types/methods';
 import { useAgent } from 'hooks';
-import { isActiveBuild } from 'pages/agent-full-page/is-active-build';
 import { CoveragePluginHeader } from '../coverage-plugin-header';
 import { useBuildVersion } from '../use-build-version';
 import { CoverageDetails } from '../coverage-details';
-import { CodeCoverageCard, DetailedCodeCoverageCard } from '../code-coverage-card';
+import { DetailedCodeCoverageCard } from '../code-coverage-card';
 import { ProjectMethodsCard } from '../project-methods-card';
-import { ScopeTimer } from '../scope';
 import { usePluginState } from '../../store';
 import { Tests } from '../tests';
-import { ActiveScopeActions } from './active-scope-actions';
+import { BuildCoverageInfo } from './build-coverage-info';
+import { MultiProgressBar } from './multi-progress-bar';
+import { ActiveScopeInfo } from './active-scope-info';
 
 import styles from './overview.module.scss';
 
@@ -30,8 +30,9 @@ interface Props {
 const overview = BEM(styles);
 
 export const Overview = overview(({ className }: Props) => {
-  const { agentId, buildVersion } = usePluginState();
-  const { buildVersion: activeBuildVersion } = useAgent(agentId) || {};
+  const [selectedTab, setSelectedTab] = React.useState('methods');
+  const { agentId, buildVersion, loading } = usePluginState();
+  const { status } = useAgent(agentId) || {};
   const buildCoverage = useBuildVersion<BuildCoverage>('/build/coverage') || {};
   const {
     prevBuildVersion = '',
@@ -39,80 +40,67 @@ export const Overview = overview(({ className }: Props) => {
     ratio: buildCodeCoverage = 0,
     finishedScopesCount = 0,
   } = buildCoverage;
+  const scope = useBuildVersion<ActiveScope>('/active-scope');
   const {
-    started = 0, finished = 0, active = false, coverage = {},
-  } = useBuildVersion<ActiveScope>('/active-scope') || {};
+    active = false, coverage = {},
+  } = scope || {};
   const buildMethods = useBuildVersion<Methods>('/build/methods') || {};
   const coverageByPackages = useBuildVersion<ClassCoverage[]>('/build/coverage/packages') || [];
-  const [selectedTab, setSelectedTab] = React.useState('methods');
   const { pluginId } = useParams();
+  const uniqueCodeCoverage = typeof coverage.ratio === 'number' && coverage.ratio > buildCodeCoverage
+    ? coverage.ratio - buildCodeCoverage
+    : 0;
+
   return (
     <div className={className}>
       <CoveragePluginHeader />
       <SummaryPanel align="space-between">
         {active ? (
-          <CodeCoverageCard
-            header={(
-              <Panel align="space-between">
-                Build Coverage
-                <ScopesListLink to={`/full-page/${agentId}/${buildVersion}/${pluginId}/scopes`}>
-                  {`All Scopes (${finishedScopesCount + 1}) >`}
-                </ScopesListLink>
-              </Panel>
+          <BuildCoverageInfo
+            multiProgressBar={(
+              <MultiProgressBar
+                buildCodeCoverage={buildCodeCoverage}
+                uniqueCodeCoverage={uniqueCodeCoverage}
+                overlappingCode={coverage.overlap?.percentage}
+                active={loading}
+              />
             )}
-            coverage={buildCoverage}
-            additionalInfo={(
-              <Panel>
-                {prevBuildVersion
+          >
+            <BuildCoveragePercentage>{percentFormatter(buildCodeCoverage)}%</BuildCoveragePercentage>
+            {finishedScopesCount > 0 && Boolean(coverage.ratio) && (
+              <>
+                <UniqueCoveragePercentage>+{percentFormatter(uniqueCodeCoverage)}%</UniqueCoveragePercentage>
+                &nbsp;in active scope
+              </>
+            )}
+            {status === 'BUSY' && 'Loading...'}
+            {(finishedScopesCount === 0 && status === 'ONLINE') &&
+            'Press “Complete active scope” button to add your scope coverage to the build.'}
+          </BuildCoverageInfo>
+        )
+          : (
+            <DetailedCodeCoverageCard
+              header={(
+                <Panel align="space-between">
+                  Build Coverage
+                  <ScopesListLink to={`/full-page/${agentId}/${buildVersion}/${pluginId}/scopes`}>
+                    {`All Scopes (${finishedScopesCount}) >`}
+                  </ScopesListLink>
+                </Panel>
+              )}
+              coverage={buildCoverage}
+              additionalInfo={(
+                <Panel>
+                  {prevBuildVersion
                   && `${diff >= 0 ? '+ ' : '- '} ${percentFormatter(
                     Math.abs(diff),
                   )}% comparing to Build: ${prevBuildVersion}`}
-                {!buildCodeCoverage
-                  && !prevBuildVersion && isActiveBuild(activeBuildVersion, buildVersion)
-                  && 'Will change when at least 1 scope is done.'}
-              </Panel>
-            )}
-            testContext="build-coverage"
-          />
-        ) : (
-          <DetailedCodeCoverageCard
-            header={(
-              <Panel align="space-between">
-                Build Coverage
-                <ScopesListLink to={`/full-page/${agentId}/${buildVersion}/${pluginId}/scopes`}>
-                  {`All Scopes (${finishedScopesCount}) >`}
-                </ScopesListLink>
-              </Panel>
-            )}
-            coverage={buildCoverage}
-            additionalInfo={(
-              <Panel>
-                {prevBuildVersion
-                  && `${diff >= 0 ? '+ ' : '- '} ${percentFormatter(
-                    Math.abs(diff),
-                  )}% comparing to Build: ${prevBuildVersion}`}
-              </Panel>
-            )}
-          />
-        )}
+                </Panel>
+              )}
+            />
+          )}
         {active && (
-          <CodeCoverageCard
-            header={(
-              <Panel align="space-between">
-                Active Scope Coverage
-                <ActiveScopeActions />
-              </Panel>
-            )}
-            coverage={coverage}
-            additionalInfo={(
-              <Panel>
-                <ScopeDurationIcon />
-                <ScopeTimer started={started} finised={finished} active={active} />
-              </Panel>
-            )}
-            testContext="active-scope-coverage"
-            showRecording
-          />
+          <ActiveScopeInfo scope={scope} />
         )}
       </SummaryPanel>
       <RoutingTabsPanel>
@@ -150,8 +138,9 @@ export const Overview = overview(({ className }: Props) => {
 });
 
 const SummaryPanel = overview.summaryPanel(Panel);
+const BuildCoveragePercentage = overview.buildCoveragePercentage('div');
+const UniqueCoveragePercentage = overview.uniqueCoveragePercentage('div');
 const ScopesListLink = overview.scopesListLink(Link);
 const RoutingTabsPanel = overview.routingTabsPanel('div');
 const TabContent = overview.tabContent('div');
 const TabIconWrapper = overview.tabIconWrapper('div');
-const ScopeDurationIcon = overview.scopeDurationIcon(Icons.Clock);

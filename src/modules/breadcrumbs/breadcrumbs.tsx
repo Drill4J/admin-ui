@@ -65,7 +65,7 @@ export const Breadcrumbs = breadcrumbs(({ className }: Props) => {
       link: settings ? `/agents/${agentType}/${agentId}/settings` : '',
     },
     {
-      label: registrationType.startsWith('bulk') ? 'Agetns registration' : 'Agent registration',
+      label: registrationType.startsWith('bulk') ? 'Agents registration' : 'Agent registration',
       link: registrationType ? '/' : '',
     },
     {

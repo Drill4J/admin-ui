@@ -2,9 +2,24 @@
 
 .overview {
   &__summary-panel {
+    margin-top: 14px;
+    height: 160px;
+
     & > :first-child {
-      margin-right: 8px;
+      margin-right: 52px;
     }
+  }
+
+  &__build-coverage-percentage {
+    margin-right: 8px;
+    font-size: 32px;
+    line-height: 40px;
+    color: map-get($monochrome, black);
+  }
+
+  &__unique-coverage-percentage {
+    line-height: 24px;
+    color: map-get($data-visualization, build-cover);
   }
 
   &__scopes-list-link {
@@ -16,7 +31,6 @@
 
   &__routing-tabs-panel {
     height: 49px;
-    margin-top: 24px;
     border-bottom: 1px solid map-get($color-palette, light-blue);
   }
 
@@ -29,9 +43,5 @@
     align-items: center;
     margin-right: 8px;
     color: map-get($color-palette, black100);
-  }
-
-  &__scope-duration-icon {
-    margin-right: 8px;
   }
 }

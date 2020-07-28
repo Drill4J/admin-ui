@@ -1,0 +1,42 @@
+@import '~common/style-guide/index';
+
+.active-scope-info {
+  width: 258px;
+  height: 100%;
+  font-size: 12px;
+  line-height: 16px;
+  color: map-get($monochrome, default);
+
+  &__title {
+    font-family: $semibold-font;
+  }
+
+  &__link {
+    font-family: $semibold-font;
+    color: map-get($primary-blue, default);
+    letter-spacing: 0;
+    line-height: 16px;
+    text-decoration: none;
+  }
+
+  &__coverage-info {
+    display: flex;
+    align-items: baseline;
+    margin-top: 24px;
+  }
+
+  &__scope-coverage {
+    margin-bottom: 12px;
+    color: map-get($monochrome, black);
+    font-size: 32px;
+    letter-spacing: 0;
+    line-height: 40px;
+  }
+
+  &__overlappedCoverage {
+    margin-left: 8px;
+    color: map-get($monochrome, default);
+    letter-spacing: 0;
+    line-height: 16px;
+  }
+}

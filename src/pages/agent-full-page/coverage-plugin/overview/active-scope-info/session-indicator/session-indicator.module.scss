@@ -1,0 +1,41 @@
+@import '~common/style-guide/index';
+
+.session-indicator {
+  width: 32px;
+  height: 32px;
+
+  &__circle-path {
+    fill: map-get($green, default);
+    transform-origin: 50% 50%;
+    animation: rotation 2s linear infinite;
+  }
+
+  &__eye-path {
+    stroke: map-get($green, default);
+    stroke-width: 1.3;
+
+    &--active {
+      stroke: none;
+      fill: map-get($red, default);
+      animation: blinker 1.5s infinite cubic-bezier(1, 0, 0, 1);
+    }
+  }
+}
+
+@keyframes rotation {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes blinker {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
