@@ -1,7 +1,9 @@
 import * as React from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 import { useParams } from 'react-router-dom';
-import { Button, Icons } from '@drill4j/ui-kit';
+import {
+  Button, Icons, Tooltip, Panel,
+} from '@drill4j/ui-kit';
 
 import { TestsToRunModal } from 'modules';
 import { QualityGatePane } from 'components';
@@ -57,21 +59,42 @@ export const CoveragePluginHeader = coveragePluginHeader(({ className }: Props) 
 
   return (
     <div className={className}>
-      <PluginName>Test2Code</PluginName>
+      <div>
+        <PluginName data-test="coverage-plugin-header:plugin-name">Test2Code</PluginName>
+        <CurrentBuild>
+          Build:
+          <Version data-test="coverage-plugin-header:build-version">{buildVersion}</Version>
+        </CurrentBuild>
+      </div>
       <Actions>
         {isActiveBuild(activeBuildVersion, buildVersion) && (
-          <ActionSection
-            label="Quality gate"
-          >
-            {!configured ? (
-              <Button
-                data-test="coverage-plugin-header:configured-button"
-                type="primary"
-                size="small"
-                onClick={() => setIsOpenQualityGatesPane(true)}
+          <QualityGateSection>
+            <Panel>
+              <QualityGateLabel data-test="coverage-plugin-header:quality-gate-label">QUALITY GATE</QualityGateLabel>
+              <Tooltip
+                position="top"
+                customStyle={{ bottom: '24px', left: '16px' }}
+                message={(
+                  <>
+                    <div>Configure quality gate conditions to</div>
+                    <div>define whether your build passes or not.</div>
+                  </>
+                )}
               >
-                {configured ? `${status}` : 'Configure'}
-              </Button>
+                <InfoIcon />
+              </Tooltip>
+            </Panel>
+            {!configured ? (
+              <StatusWrapper>
+                <Button
+                  data-test="coverage-plugin-header:configure-button"
+                  type="primary"
+                  size="small"
+                  onClick={() => setIsOpenQualityGatesPane(true)}
+                >
+                  Configure
+                </Button>
+              </StatusWrapper>
             )
               : (
                 <StatusWrapper type={status} onClick={() => setIsOpenQualityGatesPane(true)}>
@@ -79,7 +102,7 @@ export const CoveragePluginHeader = coveragePluginHeader(({ className }: Props) 
                   <StatusTitle data-test="coverage-plugin-header:quality-gate-status">{status}</StatusTitle>
                 </StatusWrapper>
               )}
-          </ActionSection>
+          </QualityGateSection>
         )}
         <ActionSection
           label="Risks"
@@ -119,6 +142,11 @@ export const CoveragePluginHeader = coveragePluginHeader(({ className }: Props) 
 });
 
 const PluginName = coveragePluginHeader.pluginName('span');
+const CurrentBuild = coveragePluginHeader.currentBuild('div');
+const Version = coveragePluginHeader.version('div');
+const QualityGateLabel = coveragePluginHeader.qualityGateLabel('div');
+const InfoIcon = coveragePluginHeader.infoIcon(Icons.Info);
 const Actions = coveragePluginHeader.actions('div');
+const QualityGateSection = coveragePluginHeader.qualityGateSection('div');
 const StatusWrapper = coveragePluginHeader.statusWrapper('div');
 const StatusTitle = coveragePluginHeader.statusTitle('div');

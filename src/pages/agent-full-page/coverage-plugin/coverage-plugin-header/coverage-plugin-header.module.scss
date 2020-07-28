@@ -8,28 +8,62 @@
   width: 100%;
   border-bottom: 1px solid map-get($color-palette, light-blue);
 
+  &__actions {
+    display: flex;
+    align-items: center;
+  }
+
+  &__quality-gate-section {
+    padding-left: 16px;
+    padding-right: 40px;
+    border-left: 1px solid map-get($monochrome, medium-tint);
+    color: map-get($monochrome, default);
+  }
+
   &__plugin-name {
     font-family: $light-font;
     font-size: 24px;
     line-height: 32px;
   }
 
-  &__actions {
+  &__current-build {
     display: flex;
-    align-items: center;
+    margin-top: 4px;
+    font-family: $semibold-font;
+    font-size: 12px;
+    line-height: 16px;
+    color: map-get($monochrome, default);
+  }
+
+  &__version {
+    margin-left: 4px;
+    color: map-get($monochrome, black);
+  }
+
+  &__quality-gate-label {
+    font-size: 12px;
+    line-height: 16px;
+    font-family: $semibold-font;
+  }
+
+  &__info-icon {
+    display: flex;
+    margin-left: 8px;
   }
 
   &__status-wrapper {
     display: flex;
     align-items: center;
+    height: 32px;
     font-size: 14px;
-    cursor: pointer;
-
-    &:hover {
-      text-decoration: underline;
-    }
 
     &--type {
+      cursor: pointer;
+
+      &:hover {
+        text-decoration: underline;
+      }
+
       &--passed {
         color: map-get($green, default);
       }
