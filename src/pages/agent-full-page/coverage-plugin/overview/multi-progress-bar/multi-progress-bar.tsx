@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 import {
-  MainProgressBar, AuxiliaryProgressBar, StripedProgressBar, Tooltip, useElementSize,
+  MainProgressBar, AdditionalProgressBar, StripedProgressBar, Tooltip, useElementSize,
 } from '@drill4j/ui-kit';
 
 import { percentFormatter } from 'utils';
@@ -38,9 +38,10 @@ export const MultiProgressBar = multiProgressBar(({
           </Message>
         )}
       >
-        <MainProgressBar value={`${buildCodeCoverage * (width / 100)}px`} />
+        <MainProgressBar value={`${buildCodeCoverage * (width / 100)}px`} testContext="build-coverage" />
       </Tooltip>
       <OverlappingCodeProgressBar
+        data-test="multi-progress-bar:overlapping-code-progress-bar"
         style={{ left: `${buildCodeCoverage - overlappingCode}%`, width: `${overlappingCode * (width / 100)}px` }}
       >
         <Tooltip
@@ -56,11 +57,14 @@ export const MultiProgressBar = multiProgressBar(({
           )}
         >
           {active
-            ? <StripedProgressBar type="OVERLAPPING" value={`${overlappingCode * (width / 100)}px`} />
-            : <AuxiliaryProgressBar type="secondary" value={`${overlappingCode * (width / 100)}px`} />}
+            ? <StripedProgressBar type="secondary" value={`${overlappingCode * (width / 100)}px`} />
+            : <AdditionalProgressBar type="secondary" value={`${overlappingCode * (width / 100)}px`} />}
         </Tooltip>
       </OverlappingCodeProgressBar>
-      <UniqueCodeCoverageProgressBar style={{ left: `${buildCodeCoverage}%` }}>
+      <UniqueCodeCoverageProgressBar
+        data-test="multi-progress-bar:unique-code-coverage-progress-bar"
+        style={{ left: `${buildCodeCoverage}%` }}
+      >
         <Tooltip
           customStyle={{ bottom: '30px', left: '50%' }}
           position="top"
@@ -74,8 +78,8 @@ export const MultiProgressBar = multiProgressBar(({
           )}
         >
           {active
-            ? <StripedProgressBar type="SCOPE" value={`${uniqueCodeCoverage * (width / 100)}px`} />
-            : <AuxiliaryProgressBar type="primary" value={`${uniqueCodeCoverage * (width / 100)}px`} />}
+            ? <StripedProgressBar type="primary" value={`${uniqueCodeCoverage * (width / 100)}px`} />
+            : <AdditionalProgressBar type="primary" value={`${uniqueCodeCoverage * (width / 100)}px`} />}
         </Tooltip>
       </UniqueCodeCoverageProgressBar>
     </div>

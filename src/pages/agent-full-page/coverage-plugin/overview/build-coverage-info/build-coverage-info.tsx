@@ -15,14 +15,14 @@ const buildCoverageInfo = BEM(styles);
 export const BuildCoverageInfo = buildCoverageInfo(({ className, children, multiProgressBar }: Props) => (
   <div className={className}>
     <Panel align="space-between">
-      <Title>BUILD COVERAGE</Title>
+      <Title data-test="build-coverage-info:title">BUILD COVERAGE</Title>
       <span>
         <BuildCoverageType type="build">Build</BuildCoverageType>
         <BuildCoverageType type="overlapping">Build / Scope overlap</BuildCoverageType>
         <BuildCoverageType type="scope">Scope</BuildCoverageType>
       </span>
     </Panel>
-    <BuildCoverageStatus>
+    <BuildCoverageStatus data-test="build-coverage-info:status">
       {children}
     </BuildCoverageStatus>
     {multiProgressBar}

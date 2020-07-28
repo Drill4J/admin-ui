@@ -42,14 +42,11 @@ export const Overview = overview(({ className }: Props) => {
   } = buildCoverage;
   const scope = useBuildVersion<ActiveScope>('/active-scope');
   const {
-    active = false, coverage = {},
+    active = false, coverage: { ratio = 0, overlap: { percentage = 0 } = {} } = {},
   } = scope || {};
   const buildMethods = useBuildVersion<Methods>('/build/methods') || {};
   const coverageByPackages = useBuildVersion<ClassCoverage[]>('/build/coverage/packages') || [];
   const { pluginId } = useParams();
-  const uniqueCodeCoverage = typeof coverage.ratio === 'number' && coverage.ratio > buildCodeCoverage
-    ? coverage.ratio - buildCodeCoverage
-    : 0;
 
   return (
     <div className={className}>
@@ -60,16 +57,20 @@ export const Overview = overview(({ className }: Props) => {
             multiProgressBar={(
               <MultiProgressBar
                 buildCodeCoverage={buildCodeCoverage}
-                uniqueCodeCoverage={uniqueCodeCoverage}
-                overlappingCode={coverage.overlap?.percentage}
+                uniqueCodeCoverage={ratio - percentage}
+                overlappingCode={percentage}
                 active={loading}
               />
             )}
           >
-            <BuildCoveragePercentage>{percentFormatter(buildCodeCoverage)}%</BuildCoveragePercentage>
-            {finishedScopesCount > 0 && Boolean(coverage.ratio) && (
+            <BuildCoveragePercentage data-test="overview:build-coverage-percentage">
+              {percentFormatter(buildCodeCoverage)}%
+            </BuildCoveragePercentage>
+            {finishedScopesCount > 0 && Boolean(ratio) && (
               <>
-                <UniqueCoveragePercentage>+{percentFormatter(uniqueCodeCoverage)}%</UniqueCoveragePercentage>
+                <UniqueCoveragePercentage data-test="overview:unique-coverage-percentage">
+                  +{percentFormatter(ratio - percentage)}%
+                </UniqueCoveragePercentage>
                 &nbsp;in active scope
               </>
             )}

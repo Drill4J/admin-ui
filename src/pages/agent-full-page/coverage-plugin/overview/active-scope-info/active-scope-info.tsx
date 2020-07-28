@@ -1,13 +1,14 @@
 import * as React from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 import { NavLink, useParams } from 'react-router-dom';
-import { Panel, Button, Icons } from '@drill4j/ui-kit';
+import {
+  Panel, Button, Icons, SessionIndicator,
+} from '@drill4j/ui-kit';
 
 import { percentFormatter } from 'utils';
 import { ActiveScope } from 'types/active-scope';
 import { useCoveragePluginDispatch, openModal } from '../../store';
 import { usePluginState } from '../../../store';
-import { SessionIndicator } from './session-indicator';
 
 import styles from './active-scope-info.module.scss';
 
@@ -63,7 +64,8 @@ export const ActiveScopeInfo = activeScopeInfo(({
           onClick={() => dispatch(openModal('FinishScopeModal', scope))}
           data-test="active-scope-info:finish-scope-button"
         >
-          <Icons.Complete />&nbsp;Complete Active Scope
+          <Icons.Complete />
+          <span>Complete Active Scope</span>
         </Button>
         <SessionIndicator active={loading} />
       </Panel>

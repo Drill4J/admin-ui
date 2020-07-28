@@ -1,0 +1,25 @@
+@import '~common/style-guide/index';
+
+.scope-coverage-info {
+  &__title {
+    font-family: $semibold-font;
+    font-size: 12px;
+    line-height: 16px;
+    color: map-get($monochrome, default);
+  }
+
+  &__scope-coverage {
+    margin: 0 12px 12px 0;
+    font-size: 32px;
+    line-height: 40px;
+    color: map-get($monochrome, black);
+  }
+
+  &__coverage-info {
+    display: flex;
+    align-items: baseline;
+    margin-top: 24px;
+    font-size: 12px;
+    color: map-get($monochrome, default);
+  }
+}

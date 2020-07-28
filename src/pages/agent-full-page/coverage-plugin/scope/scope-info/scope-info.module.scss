@@ -3,49 +3,30 @@
 .scope-info {
   &__header {
     height: 80px;
-    margin-bottom: 8px;
-    border-bottom: 1px solid map-get($color-palette, light-blue);
+    margin-bottom: 14px;
+    border-bottom: 1px solid map-get($monochrome, medium-tint);
     font-size: 24px;
-    color: map-get($color-palette, black100);
+    color: map-get($monochrome, black);
   }
 
   &__scope-name {
-    font-size: 24px;
-    font-family: $light-font;
-    color: map-get($color-palette, black100);
+    width: 100%;
+    font-size: 20px;
+    color: map-get($monochrome, black);
   }
 
-  &__active-badge {
-    height: 22px;
-    padding: 1px 8px;
-    margin: 0px 16px;
-    border: 1px solid map-get($color-palette, green100);
-    border-radius: 11px;
-    font-size: 12px;
-    color: map-get($color-palette, green100);
-  }
-
-  &__finished-badge {
+  &__scope-status {
     display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-left: 16px;
-    height: 20px;
-    width: 64px;
-    border-radius: 10px;
-    border: 1px solid map-get($color-palette, middle-blue);
-    font-size: 11px;
+    flex-direction: column;
+    margin-left: 8px;
     font-family: $semibold-font;
-    color: map-get($color-palette, middle-blue);
+    font-size: 12px;
+    line-height: 16px;
+    color: map-get($green, default);
   }
 
-  &__scope-duration {
-    font-size: 14px;
-    line-height: 24px;
-  }
-
-  &__finish-scope-button {
-    margin-right: 8px;
+  &__complete-scope-button {
+    margin: 0 16px;
   }
 
   &__project-methods {
@@ -57,13 +38,13 @@
     width: 100%;
     height: 49px;
     margin-top: 24px;
-    border-bottom: 1px solid map-get($color-palette, light-blue);
+    border-bottom: 1px solid map-get($monochrome, medium-tint);
   }
 
   &__tab-icon-wrapper {
     display: flex;
     align-items: center;
     margin-right: 8px;
-    color: map-get($color-palette, black100);
+    color: map-get($monochrome, black);
   }
 }

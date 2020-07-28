@@ -6,7 +6,7 @@ import styles from './scope-timer.module.scss';
 interface Props {
   className?: string;
   started: number;
-  finised?: number;
+  finished?: number;
   active?: boolean;
   size?: 'normal' | 'small';
 }
@@ -21,17 +21,17 @@ interface State {
 const scopeTimer = BEM(styles);
 
 export const ScopeTimer = scopeTimer(({
-  className, started, finised, active,
+  className, started, finished, active,
 }: Props) => {
   const [{
     days, hours, minutes, seconds,
   }, setDuration] = React.useState<State>(
-    getTimeDifference(started, finised),
+    getTimeDifference(started, finished),
   );
 
   React.useEffect(() => {
     function updateTimer() {
-      setDuration(getTimeDifference(started, finised));
+      setDuration(getTimeDifference(started, finished));
     }
 
     updateTimer();
@@ -40,14 +40,14 @@ export const ScopeTimer = scopeTimer(({
     return () => {
       clearInterval(timer);
     };
-  }, [started, finised]);
+  }, [started, finished]);
 
   return (
     <span className={className}>
       <Duration>{`${days}d ${hours}h ${minutes}m`}</Duration>
       {active && (
         <Timer>
-          {seconds < 10 ? ` :0${seconds}` : `: ${seconds}`}
+          {seconds < 10 ? `:0${seconds}` : `:${seconds}`}
         </Timer>
       )}
     </span>

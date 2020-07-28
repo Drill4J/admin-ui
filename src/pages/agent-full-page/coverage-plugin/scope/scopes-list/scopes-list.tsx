@@ -70,7 +70,7 @@ export const ScopesList = scopesList(({ className }: Props) => {
                 {active && <ActiveBadge color="green">Active</ActiveBadge>}
                 {!enabled && <IgnoreBadge>Ignored</IgnoreBadge>}
                 <div>
-                  <ScopeTimer started={started} finised={finished} active={active} size="small" />
+                  <ScopeTimer started={started} finished={finished} active={active} size="small" />
                 </div>
               </NameCell>
             )}
