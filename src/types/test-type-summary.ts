@@ -1,7 +1,6 @@
-import { TestTypes } from './test-types';
+import { TestSummary } from './test-summary';
 
 export interface TestTypeSummary {
-  testType: TestTypes;
-  coverage: number;
-  testCount: number;
+  type: string;
+  summary: TestSummary;
 }

@@ -181,7 +181,6 @@ export const TestToCodePlugin = testToCodePlugin(
               agentId={id}
               pluginId={pluginId}
               testsToRun={groupedTests}
-              count={count}
               agentType={agentType}
             />
           )}

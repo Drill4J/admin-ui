@@ -1,5 +1,5 @@
-import { CoverageByType } from './coverage-by-type';
 import { RisksSummary } from './risks-summary';
+import { TestTypeSummary } from './test-type-summary';
 
 interface Count {
   covered?: number;
@@ -8,11 +8,11 @@ interface Count {
 
 export interface BuildCoverage {
   ratio?: number;
+  count?: Count;
   methodCount?: Count;
   riskCount?: Count;
-  byTestType?: CoverageByType;
+  byTestType?: TestTypeSummary[];
   uncoveredMethodsCount?: number;
-  classesCount?: number;
   arrow?: 'INCREASE' | 'DECREASE';
   diff?: number;
   prevBuildVersion?: string;

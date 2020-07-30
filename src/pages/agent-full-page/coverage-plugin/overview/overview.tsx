@@ -14,7 +14,7 @@ import { CoveragePluginHeader } from '../coverage-plugin-header';
 import { useBuildVersion } from '../use-build-version';
 import { CoverageDetails } from '../coverage-details';
 import { DetailedCodeCoverageCard } from '../code-coverage-card';
-import { ProjectMethodsCard } from '../project-methods-card';
+import { ProjectMethodsCards } from '../project-methods-cards';
 import { usePluginState } from '../../store';
 import { Tests } from '../tests';
 import { BuildCoverageInfo } from './build-coverage-info';
@@ -123,7 +123,7 @@ export const Overview = overview(({ className }: Props) => {
       <TabContent>
         {selectedTab === 'methods' ? (
           <>
-            <ProjectMethodsCard methods={buildMethods} />
+            <ProjectMethodsCards methods={buildMethods} />
             <CoverageDetails
               coverageByPackages={coverageByPackages}
               associatedTestsTopic="/build/associated-tests"

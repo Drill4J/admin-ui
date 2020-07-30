@@ -5,23 +5,22 @@ import { TESTS_TYPES_COLOR } from 'common/constants';
 import { BuildCoverage } from 'types/build-coverage';
 import { TestTypes } from 'types/test-types';
 import { capitalize } from 'utils';
+import { TestsInfo } from 'types/tests-info';
 import { useBuildVersion } from '../../coverage-plugin/use-build-version';
 import { SingleBar } from '../single-bar';
 import { Section } from './section';
 import { SectionTooltip } from './section-tooltip';
 
 export const TestsSection = () => {
-  const { byTestType = {}, finishedScopesCount = 0 } = useBuildVersion<BuildCoverage>('/build/coverage') || {};
-  const totalCoveredMethodCount = Object.values(byTestType).reduce(
-    (acc, { testCount }) => acc + testCount,
-    0,
-  );
-  const tooltipData = Object.keys(byTestType).reduce(
+  const { byTestType = [], finishedScopesCount = 0 } = useBuildVersion<BuildCoverage>('/build/coverage') || {};
+  const totalCoveredMethodCount = byTestType.reduce((acc, { summary: { testCount = 0 } }) => acc + testCount, 0);
+  const testsInfo: TestsInfo = byTestType.reduce((test, testType) => ({ ...test, [testType.type]: testType }), {});
+  const tooltipData = Object.keys(testsInfo).reduce(
     (acc, testType) => ({
       ...acc,
       [testType.toLowerCase()]: {
-        value: byTestType[testType].coverage,
-        count: byTestType[testType].testCount,
+        value: testsInfo[testType].summary.coverage?.percentage,
+        count: testsInfo[testType].summary.testCount,
         color: TESTS_TYPES_COLOR[testType as TestTypes],
       },
     }),
@@ -42,7 +41,7 @@ export const TestsSection = () => {
                 width={48}
                 height={128}
                 color={TESTS_TYPES_COLOR[testType as TestTypes]}
-                percent={(byTestType[testType] && byTestType[testType].testCount / totalCoveredMethodCount) * 100}
+                percent={(testsInfo[testType] && (testsInfo[testType].summary.testCount || 0) / totalCoveredMethodCount) * 100}
                 icon={testType === 'PERFORMANCE' ? 'Perf' : capitalize(testType)}
               />
             ))}

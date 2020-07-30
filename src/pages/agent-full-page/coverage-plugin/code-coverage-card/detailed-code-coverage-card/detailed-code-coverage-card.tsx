@@ -21,7 +21,7 @@ const detailedCodeCoverageCard = BEM(styles);
 export const DetailedCodeCoverageCard = detailedCodeCoverageCard(
   ({
     className,
-    coverage: { ratio = 0, byTestType = {}, arrow },
+    coverage: { ratio = 0, byTestType = [], arrow },
     additionalInfo,
     header,
     showRecording,
@@ -39,7 +39,7 @@ export const DetailedCodeCoverageCard = detailedCodeCoverageCard(
           <AdditionalInfo>{additionalInfo}</AdditionalInfo>
         </TotalCoverageWrapper>
         <DistributionWrapper>
-          <CoverageDistribution coverageByType={byTestType} showRecording={showRecording} />
+          <CoverageDistribution coverageByTestType={byTestType} showRecording={showRecording} />
         </DistributionWrapper>
       </Content>
     </div>

@@ -16,20 +16,20 @@ interface Props {
   isOpen: boolean;
   onToggle: (value: boolean) => void;
   testsToRun: { [testType: string]: string[] };
-  count: number;
   agentId: string;
   pluginId: string;
   agentType?: string;
+  filter?: string;
 }
 
 const testsToRunModal = BEM(styles);
 
 export const TestsToRunModal = testsToRunModal(
   ({
-    className, isOpen, onToggle, testsToRun, count, agentId, pluginId, agentType,
+    className, isOpen, onToggle, testsToRun, agentId, pluginId, agentType, filter = 'all',
   }: Props) => {
     const allTests = Object.values(testsToRun).reduce((acc, tests) => [...acc, ...tests], []);
-    const [selectedFilter, setSelectedFilter] = React.useState('all');
+    const [selectedFilter, setSelectedFilter] = React.useState(filter);
 
     const getSelectedTests = () => {
       switch (selectedFilter) {
@@ -48,7 +48,7 @@ export const TestsToRunModal = testsToRunModal(
           <Header>
             <Icons.Test height={20} width={18} viewBox="0 0 18 20" />
             <span>Tests to run</span>
-            <h2>{count}</h2>
+            <h2>{allTests.length}</h2>
           </Header>
           <NotificaitonPanel>
             <span>

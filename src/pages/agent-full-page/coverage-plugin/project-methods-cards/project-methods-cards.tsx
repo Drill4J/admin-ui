@@ -6,16 +6,16 @@ import { Methods } from 'types/methods';
 import { InfoCard } from 'components';
 import { RisksModal } from '../risks-modal';
 
-import styles from './project-methods-card.module.scss';
+import styles from './project-methods-cards.module.scss';
 
 interface Props {
   className?: string;
   methods: Methods;
 }
 
-const projectMethodsCard = BEM(styles);
+const projectMethodsCards = BEM(styles);
 
-export const ProjectMethodsCard = projectMethodsCard(
+export const ProjectMethodsCards = projectMethodsCards(
   ({
     className,
     methods: {
@@ -26,7 +26,7 @@ export const ProjectMethodsCard = projectMethodsCard(
     return (
       <div className={className}>
         <InfoCard
-          label="ALL METHODS"
+          label="TOTAL"
           covered={all?.covered}
           totalCount={all?.total}
         />

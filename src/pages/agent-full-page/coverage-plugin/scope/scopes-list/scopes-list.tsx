@@ -5,7 +5,9 @@ import {
   Panel, Menu, Icons, Table, Column, Badge,
 } from '@drill4j/ui-kit';
 
-import { percentFormatter, dateFormatter, timeFormatter } from 'utils';
+import {
+  percentFormatter, dateFormatter, timeFormatter, transformObjectsArrayToObject,
+} from 'utils';
 import { NotificationManagerContext } from 'notification-manager';
 import { ScopeSummary } from 'types/scope-summary';
 import { CoveragePluginHeader } from '../../coverage-plugin-header';
@@ -53,7 +55,11 @@ export const ScopesList = scopesList(({ className }: Props) => {
           <span>All scopes</span>
           <ScopesCount>{scopesData.length}</ScopesCount>
         </Title>
-        <Table data={scopesData} idKey="name" columnsSize="wide">
+        <Table
+          data={scopesData}
+          idKey="name"
+          columnsSize="wide"
+        >
           <Column
             name="name"
             HeaderCell={() => <HeaderCell>Name</HeaderCell>}
@@ -92,7 +98,7 @@ export const ScopesList = scopesList(({ className }: Props) => {
           <Column
             name="coverage"
             HeaderCell={() => <HeaderCell>Coverage</HeaderCell>}
-            Cell={({ value: { ratio } }) => (
+            Cell={({ item: { coverage: { ratio } } }) => (
               <Coverage data-test="scopes-list:coverage">
                 {`${percentFormatter(ratio)}%`}
               </Coverage>
@@ -106,24 +112,29 @@ export const ScopesList = scopesList(({ className }: Props) => {
                 <TestTypeLabel>Auto Tests</TestTypeLabel>
               </HeaderCell>
             )}
-            Cell={({ item: { coverage: { byTestType }, active } }) => (
-              <TestTypeCoverage>
-                {byTestType.AUTO && (
-                  <span>{`${percentFormatter(byTestType.AUTO.coverage)}%`}</span>
-                )}
-                {active && testTypes.includes('AUTO') && (
-                  <>
-                    <RecordingIcon />
-                    <RecordingText>Rec</RecordingText>
-                  </>
-                )}
-                <TestTypeTestCount>
-                  {byTestType.AUTO
-                      && byTestType.AUTO.testCount
-                      && `${byTestType.AUTO.testCount} tests`}
-                </TestTypeTestCount>
-              </TestTypeCoverage>
-            )}
+            Cell={({ item: { coverage: { byTestType }, active } }) => {
+              const coverageByTestType = transformObjectsArrayToObject(byTestType, 'type');
+              return (
+                <TestTypeCoverage>
+                  {coverageByTestType?.AUTO && (
+                    <span>
+                      {`${percentFormatter(coverageByTestType?.AUTO?.summary?.coverage?.percentage)}%`}
+                    </span>
+                  )}
+                  {active && testTypes.includes('AUTO') && (
+                    <>
+                      <RecordingIcon />
+                      <RecordingText>Rec</RecordingText>
+                    </>
+                  )}
+                  <TestTypeTestCount>
+                    {coverageByTestType?.AUTO
+                      && coverageByTestType?.AUTO?.summary?.testCount
+                      && `${coverageByTestType?.AUTO?.summary?.testCount} tests`}
+                  </TestTypeTestCount>
+                </TestTypeCoverage>
+              );
+            }}
           />
           <Column
             name="manualTests"
@@ -132,24 +143,29 @@ export const ScopesList = scopesList(({ className }: Props) => {
                 <TestTypeLabel>Manual</TestTypeLabel>
               </HeaderCell>
             )}
-            Cell={({ item: { coverage: { byTestType }, active } }) => (
-              <TestTypeCoverage>
-                {byTestType.MANUAL && (
-                  <span>{`${percentFormatter(byTestType.MANUAL.coverage)}%`}</span>
-                )}
-                {active && testTypes.includes('MANUAL') && (
-                  <>
-                    <RecordingIcon />
-                    <RecordingText>Rec</RecordingText>
-                  </>
-                )}
-                <TestTypeTestCount>
-                  {byTestType.MANUAL
-                      && byTestType.MANUAL.testCount
-                      && `${byTestType.MANUAL.testCount} tests`}
-                </TestTypeTestCount>
-              </TestTypeCoverage>
-            )}
+            Cell={({ item: { coverage: { byTestType }, active } }) => {
+              const coverageByTestType = transformObjectsArrayToObject(byTestType, 'type');
+              return (
+                <TestTypeCoverage>
+                  {coverageByTestType?.MANUAL && (
+                    <span>
+                      {`${percentFormatter(coverageByTestType?.MANUAL?.summary?.coverage?.percentage)}%`}
+                    </span>
+                  )}
+                  {active && testTypes.includes('MANUAL') && (
+                    <>
+                      <RecordingIcon />
+                      <RecordingText>Rec</RecordingText>
+                    </>
+                  )}
+                  <TestTypeTestCount>
+                    {coverageByTestType?.MANUAL
+                      && coverageByTestType?.MANUAL?.summary?.testCount
+                      && `${coverageByTestType?.MANUAL?.summary?.testCount} tests`}
+                  </TestTypeTestCount>
+                </TestTypeCoverage>
+              );
+            }}
           />
           <Column
             name="actions"

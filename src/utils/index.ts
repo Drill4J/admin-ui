@@ -11,3 +11,4 @@ export { capitalize } from './capitalize';
 export { spacesToDashes } from './spaces-to-dashes';
 export { dateTimeFormatter, dateFormatter, timeFormatter } from './timestamp-formatters';
 export { parseCoverage } from './parse-coverage';
+export { transformObjectsArrayToObject } from './transform-objects-array-to-object';

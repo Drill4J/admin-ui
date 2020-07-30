@@ -33,7 +33,7 @@ export const FinishScopeModal = finishScopeModal(
     const [ignoreScope, setIgnoreScope] = React.useState(false);
 
     const testsCount = scope
-      ? Object.values(scope.coverage.byTestType || {}).reduce((acc, { testCount }) => acc + testCount, 0)
+      ? (scope.coverage.byTestType || []).reduce((acc, { summary: { testCount = 0 } }) => acc + testCount, 0)
       : 0;
     const { pluginId = '', scopeId = '' } = useParams();
     const { push } = useHistory();

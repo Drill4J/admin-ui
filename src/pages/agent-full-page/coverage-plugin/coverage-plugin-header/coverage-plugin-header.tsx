@@ -8,9 +8,9 @@ import { QualityGatePane } from 'components';
 import {
   ConditionSetting, ConditionSettingByType, QualityGate, QualityGateSettings,
 } from 'types/quality-gate-type';
-import { TestsToRun } from 'types/tests-to-run';
 import { Metrics } from 'types/metrics';
 import { useAgent } from 'hooks';
+import { TestsToRun } from 'types/tests-to-run';
 import { isActiveBuild } from '../../is-active-build';
 import { usePluginState } from '../../store';
 import { useBuildVersion } from '../use-build-version';
@@ -103,7 +103,6 @@ export const CoveragePluginHeader = coveragePluginHeader(({ className }: Props) 
           testsToRun={testTypeToNames}
           isOpen={isTestsToRunModalOpen}
           onToggle={setIsTestToRunModalOpen}
-          count={testToRunCount}
           agentId={agentId}
           pluginId={pluginId}
         />

@@ -1,10 +1,7 @@
 import { RisksSummary } from './risks-summary';
 import { TestTypeSummary } from './test-type-summary';
+import { Count } from './count';
 
-interface Count {
-  covered?: number;
-  total?: number;
-}
 interface Overlap {
   percentage?: number;
   count?: Count;
@@ -17,5 +14,5 @@ export interface ScopeCoverage {
   overlap?: Overlap;
   count?: Count;
   risks?: RisksSummary;
-  byTestType?: { [key: string]: TestTypeSummary };
+  byTestType?: TestTypeSummary[];
 }

@@ -14,8 +14,10 @@ import { Methods } from 'types/methods';
 import { ClassCoverage } from 'types/class-coverage';
 import { AssociatedTests } from 'types/associated-tests';
 import { MethodCoveredByTest } from 'types/method-covered-by-test';
+import { TestTypeSummary } from 'types/test-type-summary';
+import { TestSummary } from 'types/test-summary';
 import { useBuildVersion } from '../../use-build-version';
-import { ProjectMethodsCard } from '../../project-methods-card';
+import { ProjectMethodsCards } from '../../project-methods-cards';
 import { CoverageDetails } from '../../coverage-details';
 import { TestDetails } from '../../test-details';
 import { toggleScope } from '../../api';
@@ -23,6 +25,7 @@ import { usePluginState } from '../../../store';
 import { useCoveragePluginDispatch, openModal } from '../../store';
 import { ScopeCoverageInfo } from './scope-coverage-info';
 import { ScopeStatus } from './scope-status';
+import { ProjectTestsCards } from '../../project-tests-cards';
 
 import styles from './scope-info.module.scss';
 
@@ -51,6 +54,8 @@ export const ScopeInfo = scopeInfo(
     const coverageByPackages = useBuildVersion<ClassCoverage[]>(`/scope/${scopeId}/coverage/packages`) || [];
 
     const testsUsages = useBuildVersion<AssociatedTests[]>(`/scope/${scopeId}/tests-usages`) || [];
+    const allScopeTests = useBuildVersion<TestSummary>(`/scope/${scopeId}/summary/tests/all`) || {};
+    const scopeTestsByType = useBuildVersion<TestTypeSummary[]>(`/scope/${scopeId}/summary/tests/by-type`) || [];
 
     const coveredMethodsByTest = useBuildVersion<MethodCoveredByTest[]>(`/scope/${scopeId}/tests/covered-methods`) || [];
 
@@ -138,22 +143,27 @@ export const ScopeInfo = scopeInfo(
             </Tab>
           </TabsPanel>
         </RoutingTabsPanel>
-        {selectedTab === 'coverage' ? (
-          <>
-            <ProjectMethods methods={scopeMethods} />
-            <CoverageDetails
-              coverageByPackages={coverageByPackages}
-              associatedTestsTopic={`/scope/${scopeId}/associated-tests`}
-              classesTopicPrefix={`scope/${scopeId}`}
-            />
-          </>
-        ) : (
-          <TestDetails
-            testsUsages={testsUsages}
-            coveredMethodsByTest={coveredMethodsByTest}
-            coveredMethodsByTestType={coveredMethodsByTestType}
-          />
-        )}
+        <TabContent>
+          {selectedTab === 'coverage' ? (
+            <>
+              <ProjectMethodsCards methods={scopeMethods} />
+              <CoverageDetails
+                coverageByPackages={coverageByPackages}
+                associatedTestsTopic={`/scope/${scopeId}/associated-tests`}
+                classesTopicPrefix={`scope/${scopeId}`}
+              />
+            </>
+          ) : (
+            <>
+              <ProjectTestsCards allTests={allScopeTests} testsByType={scopeTestsByType} />
+              <TestDetails
+                testsUsages={testsUsages}
+                coveredMethodsByTest={coveredMethodsByTest}
+                coveredMethodsByTestType={coveredMethodsByTestType}
+              />
+            </>
+          )}
+        </TabContent>
       </div>
     );
   },
@@ -163,6 +173,6 @@ const Header = scopeInfo.header(Panel);
 const ScopeName = scopeInfo.scopeName('div');
 const Status = scopeInfo.status(ScopeStatus);
 const CompleteScopeButton = scopeInfo.completeScopeButton(Button);
-const ProjectMethods = scopeInfo.projectMethods(ProjectMethodsCard);
 const RoutingTabsPanel = scopeInfo.routingTabsPanel(Panel);
 const TabIconWrapper = scopeInfo.tabIconWrapper('div');
+const TabContent = scopeInfo.tabContent('div');
