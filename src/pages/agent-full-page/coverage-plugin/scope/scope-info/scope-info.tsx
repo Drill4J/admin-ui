@@ -22,7 +22,7 @@ import { toggleScope } from '../../api';
 import { usePluginState } from '../../../store';
 import { useCoveragePluginDispatch, openModal } from '../../store';
 import { ScopeCoverageInfo } from './scope-coverage-info';
-import { ScopeTimer } from '../scope-timer';
+import { ScopeStatus } from './scope-status';
 
 import styles from './scope-info.module.scss';
 
@@ -105,25 +105,19 @@ export const ScopeInfo = scopeInfo(
         <Header align="space-between">
           <ScopeName data-test="scope-info:scope-name">{name}</ScopeName>
           <Panel align="end">
+            {active && <SessionIndicator active={loading} />}
+            <Status active={active} loading={loading} enabled={enabled} started={started} finished={finished} />
             {active && (
-              <>
-                <SessionIndicator active={loading} />
-                <ScopeStatus data-test="scope-info:scope-status:active">
-                  Active
-                  <ScopeTimer started={started} finished={finished} active={loading} size="small" />
-                </ScopeStatus>
-              </>
+              <CompleteScopeButton
+                type="primary"
+                size="large"
+                onClick={() => dispatch(openModal('FinishScopeModal', scope))}
+                data-test="scope-info:complete-scope-button"
+              >
+                <Icons.Complete />
+                <span>Complete Scope</span>
+              </CompleteScopeButton>
             )}
-            <CompleteScopeButton
-              type="primary"
-              size="large"
-              onClick={() => dispatch(openModal('FinishScopeModal', scope))}
-              data-test="scope-info:complete-scope-button"
-              disabled={!active}
-            >
-              <Icons.Complete />
-              <span>Complete Scope</span>
-            </CompleteScopeButton>
             <Menu items={menuActions as MenuItemType[]} />
           </Panel>
         </Header>
@@ -167,7 +161,7 @@ export const ScopeInfo = scopeInfo(
 
 const Header = scopeInfo.header(Panel);
 const ScopeName = scopeInfo.scopeName('div');
-const ScopeStatus = scopeInfo.scopeStatus('div');
+const Status = scopeInfo.status(ScopeStatus);
 const CompleteScopeButton = scopeInfo.completeScopeButton(Button);
 const ProjectMethods = scopeInfo.projectMethods(ProjectMethodsCard);
 const RoutingTabsPanel = scopeInfo.routingTabsPanel(Panel);

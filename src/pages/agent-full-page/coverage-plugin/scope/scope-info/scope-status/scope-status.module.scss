@@ -1,0 +1,14 @@
+@import '~common/style-guide/index';
+
+.scope-status {
+  display: flex;
+  flex-direction: column;
+  font-family: $semibold-font;
+  font-size: 12px;
+  line-height: 16px;
+  color: map-get($monochrome, default);
+
+  &__active {
+    color: map-get($green, default);
+  }
+}

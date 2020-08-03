@@ -1,0 +1,33 @@
+import * as React from 'react';
+import { BEM } from '@redneckz/react-bem-helper';
+
+import styles from './scope-status.module.scss';
+import { ScopeTimer } from '../..';
+
+interface Props {
+  className?: string;
+  active: boolean;
+  loading: boolean;
+  enabled: boolean;
+  started: number;
+  finished: number;
+}
+
+const scopeStatus = BEM(styles);
+
+export const ScopeStatus = scopeStatus(({
+  className, active, enabled, started, finished,
+}: Props) => (
+  <div className={className}>
+    {active
+      ? <Active>Active</Active>
+      : (
+        <>
+          {enabled ? 'Finished' : 'Ignored'}
+        </>
+      )}
+    <ScopeTimer started={started} finished={finished} active={active} size="small" />
+  </div>
+));
+
+const Active = scopeStatus.active('div');

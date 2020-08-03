@@ -47,7 +47,7 @@ export const ScopeTimer = scopeTimer(({
       <Duration>{`${days}d ${hours}h ${minutes}m`}</Duration>
       {active && (
         <Timer>
-          {seconds < 10 ? `:0${seconds}` : `:${seconds}`}
+          {seconds < 10 ? ` : 0${seconds}` : ` : ${seconds}`}
         </Timer>
       )}
     </span>
