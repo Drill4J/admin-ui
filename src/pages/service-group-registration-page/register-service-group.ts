@@ -9,7 +9,7 @@ export function registerAgent({ onSuccess, onError }: { onSuccess?: () => void; 
       plugins,
       name = '',
       systemSettings: {
-        packages = ['org/springframework/samples/petclinic'],
+        packages = [],
       } = {},
     }: Agent,
   ) => {
