@@ -5,7 +5,7 @@ import axios, { AxiosError } from 'axios';
 import { Inputs, Button } from '@drill4j/ui-kit';
 
 import { LoginLayout } from 'layouts';
-import { defaultAdminSocket, defaultPluginSocket, getSocketUrl } from 'common/connection';
+import { defaultAdminSocket, defaultTest2CodePluginSocket, getSocketUrl } from 'common/connection';
 import { TOKEN_HEADER, TOKEN_KEY } from 'common/constants';
 import { ErrorPanel } from './error-panel';
 
@@ -30,7 +30,7 @@ export const LoginPage = loginPage(({ className }: Props) => {
           localStorage.setItem(TOKEN_KEY, authToken);
         }
         defaultAdminSocket.reconnect(getSocketUrl('drill-admin-socket'));
-        defaultPluginSocket.reconnect(getSocketUrl('drill-plugin-socket'));
+        defaultTest2CodePluginSocket.reconnect(getSocketUrl('/plugins/test2code'));
         push('/');
       })
       .catch((err: AxiosError) => setError(err));

@@ -12,4 +12,4 @@ export const getSocketUrl = (socket: string) => {
 
 export const defaultAdminSocket = new DrillSocket(getSocketUrl('drill-admin-socket'));
 
-export const defaultPluginSocket = new DrillSocket(getSocketUrl('drill-plugin-socket'));
+export const defaultTest2CodePluginSocket = new DrillSocket(getSocketUrl('plugins/test2code'));

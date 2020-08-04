@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-import { defaultPluginSocket } from 'common/connection';
+import { defaultTest2CodePluginSocket } from 'common/connection';
 
 export function usePluginData<Data>(serviceGroupId: string, pluginId: string) {
   const [data, setData] = useState<Data | null>(null);
@@ -10,7 +10,7 @@ export function usePluginData<Data>(serviceGroupId: string, pluginId: string) {
       setData(newData);
     }
 
-    const unsubscribe = defaultPluginSocket.subscribe(
+    const unsubscribe = defaultTest2CodePluginSocket.subscribe(
       '/service-group/summary', handleDataChange, { groupId: serviceGroupId, type: 'GROUP' },
     );
 
