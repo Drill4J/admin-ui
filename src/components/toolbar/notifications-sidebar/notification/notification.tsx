@@ -33,7 +33,7 @@ export const Notification = notification(({
           <NotificationStatusIndicator unread={!read} />
           Build {buildVersion} arrived
         </Panel>
-        <ButtonGroup align="space-between">
+        <ButtonGroup align="end">
           <MarkAsReadButton
             onClick={() => readNotification(id, { onError })}
             read={read}
