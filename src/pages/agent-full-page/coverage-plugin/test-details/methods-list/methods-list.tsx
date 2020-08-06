@@ -17,11 +17,12 @@ interface Props {
 const methodsList = BEM(styles);
 
 export const MethodsList = methodsList(({ className, coveredMethods }: Props) => {
-  const { newMethods = [], modifiedMethods = [], unaffectedMethods = [] } = coveredMethods;
+  const {
+    newMethods = [], modifiedMethods = [], unaffectedMethods = [], allMethods = [],
+  } = coveredMethods;
   const [selectedSection, setSelectedSection] = React.useState('all');
   const node = React.useRef<HTMLDivElement>(null);
   const { height: methodsListHeight } = useElementSize(node);
-  const allMethods = newMethods.concat(modifiedMethods, unaffectedMethods);
   const getMethods = () => {
     switch (selectedSection) {
       case 'new':

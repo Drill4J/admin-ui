@@ -5,6 +5,7 @@ export interface MethodCoveredByTest {
   testName?: string;
   testType?: string;
   testsCount?: number;
+  allMethods?: MethodsDetails[];
   newMethods?: MethodsDetails[];
   modifiedMethods?: MethodsDetails[];
   unaffectedMethods?: MethodsDetails[];

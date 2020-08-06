@@ -34,8 +34,7 @@ export const TestDetails = testDetails(
         {testsUsages.length > 0 ? (
           <>
             <Title>
-              <span>Tests</span>
-              <h2>{testsUsages.length}</h2>
+              Tests
             </Title>
             <ExpandableTable
               data={testsUsages}

@@ -25,12 +25,9 @@ export const CoveredMethodsByTestSidebar = coveredMethodsByTestSidebar(
     const {
       testName,
       testType = '',
-      newMethods = [],
-      modifiedMethods = [],
-      unaffectedMethods = [],
+      allMethods = [],
     } = filtredMethods;
-
-    const allMethods = newMethods.concat(modifiedMethods, unaffectedMethods);
+    console.log(allMethods);
 
     return (
       <Modal isOpen={isOpen} onToggle={onToggle}>

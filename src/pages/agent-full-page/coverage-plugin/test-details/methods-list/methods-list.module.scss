@@ -42,6 +42,7 @@
   &__method-info {
     display: flex;
     flex-direction: column;
+    width: calc(100% - 70px);
   }
 
   &__method-package {
