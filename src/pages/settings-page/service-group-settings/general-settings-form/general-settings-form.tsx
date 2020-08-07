@@ -123,7 +123,9 @@ const ServiceGroupName = generalSettingsForm.serviceGroupName(FormGroup);
 const Description = generalSettingsForm.description(FormGroup);
 
 async function saveChanges(
-  serviceGroup: CommonEntity,
+  {
+    id, name, description, environment,
+  }: CommonEntity,
   {
     onSuccess,
     onError,
@@ -133,7 +135,7 @@ async function saveChanges(
   },
 ) {
   try {
-    await axios.put(`/service-groups/${serviceGroup.id}`, serviceGroup);
+    await axios.put(`/service-groups/${id}`, { name, description, environment });
     onSuccess && onSuccess({ type: 'SUCCESS', text: 'New settings have been saved' });
   } catch ({ response: { data: { message } = {} } = {} }) {
     onError && onError(message || 'Internal service error');
