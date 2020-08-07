@@ -2,7 +2,7 @@ import * as React from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 import { NavLink, useParams } from 'react-router-dom';
 import {
-  Panel, Button, Icons, SessionIndicator,
+  Panel, Button, Icons, SessionIndicator, Menu,
 } from '@drill4j/ui-kit';
 
 import { percentFormatter } from 'utils';
@@ -15,6 +15,12 @@ import styles from './active-scope-info.module.scss';
 interface Props {
   className?: string;
   scope: ActiveScope | null;
+}
+
+interface MenuItemType {
+  label: string;
+  icon: keyof typeof Icons;
+  onClick: () => void;
 }
 
 const activeScopeInfo = BEM(styles);
@@ -30,6 +36,24 @@ export const ActiveScopeInfo = activeScopeInfo(({
   const { agentId, buildVersion, pluginId } = useParams();
   const dispatch = useCoveragePluginDispatch();
   const { loading } = usePluginState();
+
+  const menuActions = [
+    {
+      label: 'Manage sessions',
+      icon: 'ManageSessions',
+      onClick: () => dispatch(openModal('ManageSessionsModal', null)),
+    },
+    {
+      label: 'Rename',
+      icon: 'Edit',
+      onClick: () => dispatch(openModal('RenameScopeModal', scope)),
+    },
+    {
+      label: 'Cancel',
+      icon: 'Delete',
+      onClick: () => dispatch(openModal('DeleteScopeModal', scope)),
+    },
+  ];
 
   return (
     <div className={className}>
@@ -68,6 +92,7 @@ export const ActiveScopeInfo = activeScopeInfo(({
           <span>Complete Active Scope</span>
         </Button>
         <SessionIndicator active={loading} />
+        <Menu items={menuActions as MenuItemType[]} />
       </Panel>
     </div>
   );
