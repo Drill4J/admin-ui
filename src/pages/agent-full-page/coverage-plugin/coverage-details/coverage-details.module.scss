@@ -4,13 +4,36 @@
   display: flex;
   flex-direction: column;
 
-  &__title {
-    height: 56px;
-    font-size: 18px;
-    line-height: 24px;
+  &__not-found {
+    display: grid;
+    place-items: center;
+    margin-top: 48px;
+    color: map-get($monochrome, medium-tint);
+  }
 
-    & > * {
-      margin-right: 8px;
-    }
+  &__title {
+    margin: 16px 0 8px 0;
+    font-size: 20px;
+    line-height: 32px;
+    color: map-get($monochrome, default);
+  }
+
+  &__message {
+    font-size: 14px;
+    line-height: 20px;
+    color: map-get($monochrome, default);
+    text-align: center;
+  }
+
+  &__search-field {
+    margin: 24px 0 12px 0;
+  }
+
+  &__search-result {
+    padding-top: 16px;
+    margin-left: 16px;
+    font-size: 12px;
+    line-height: 20px;
+    color: map-get($monochrome, default);
   }
 }

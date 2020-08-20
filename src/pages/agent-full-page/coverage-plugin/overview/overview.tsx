@@ -1,15 +1,17 @@
 import * as React from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 import { Link, useParams } from 'react-router-dom';
-import { Panel, Icons } from '@drill4j/ui-kit';
+import {
+  Panel, Icons,
+} from '@drill4j/ui-kit';
 
 import { TabsPanel, Tab } from 'components';
 import { percentFormatter } from 'utils';
 import { BuildCoverage } from 'types/build-coverage';
-import { ClassCoverage } from 'types/class-coverage';
 import { ActiveScope } from 'types/active-scope';
 import { Methods } from 'types/methods';
 import { useAgent } from 'hooks';
+import { TableActionsProvider } from 'modules';
 import { CoveragePluginHeader } from '../coverage-plugin-header';
 import { useBuildVersion } from '../use-build-version';
 import { CoverageDetails } from '../coverage-details';
@@ -37,10 +39,10 @@ export const Overview = overview(({ className }: Props) => {
     prevBuildVersion = '',
     diff = 0,
     finishedScopesCount = 0,
+    packageCount: { total = 0 } = {},
   } = buildCoverage;
   const scope = useBuildVersion<ActiveScope>('/active-scope');
   const buildMethods = useBuildVersion<Methods>('/build/methods') || {};
-  const coverageByPackages = useBuildVersion<ClassCoverage[]>('/build/coverage/packages') || [];
   const { pluginId } = useParams<{ pluginId: string}>();
 
   return (
@@ -95,11 +97,14 @@ export const Overview = overview(({ className }: Props) => {
         {selectedTab === 'methods' ? (
           <>
             <ProjectMethodsCards methods={buildMethods} />
-            <CoverageDetails
-              coverageByPackages={coverageByPackages}
-              associatedTestsTopic="/build/associated-tests"
-              classesTopicPrefix="build"
-            />
+            <TableActionsProvider>
+              <CoverageDetails
+                topic="/build/coverage/packages"
+                associatedTestsTopic="/build/associated-tests"
+                classesTopicPrefix="build"
+                packageCount={total}
+              />
+            </TableActionsProvider>
           </>
         ) : (
           <Tests />

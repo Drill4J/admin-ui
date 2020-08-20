@@ -11,11 +11,12 @@ import {
 import { NotificationManagerContext } from 'notification-manager';
 import { ActiveScope } from 'types/active-scope';
 import { Methods } from 'types/methods';
-import { ClassCoverage } from 'types/class-coverage';
 import { AssociatedTests } from 'types/associated-tests';
 import { MethodCoveredByTest } from 'types/method-covered-by-test';
 import { TestTypeSummary } from 'types/test-type-summary';
 import { TestSummary } from 'types/test-summary';
+import { TableActionsProvider } from 'modules';
+import { ScopeCoverage } from 'types/scope-coverage';
 import { useBuildVersion } from '../../use-build-version';
 import { ProjectMethodsCards } from '../../project-methods-cards';
 import { CoverageDetails } from '../../coverage-details';
@@ -51,7 +52,7 @@ export const ScopeInfo = scopeInfo(
     const dispatch = useCoveragePluginDispatch();
     const scope = useBuildVersion<ActiveScope>(`/scope/${scopeId}`);
     const scopeMethods = useBuildVersion<Methods>(`/scope/${scopeId}/methods`) || {};
-    const coverageByPackages = useBuildVersion<ClassCoverage[]>(`/scope/${scopeId}/coverage/packages`) || [];
+    const { packageCount: { total = 0 } = {} } = useBuildVersion<ScopeCoverage>(`/scope/${scopeId}/coverage`) || {};
 
     const testsUsages = useBuildVersion<AssociatedTests[]>(`/scope/${scopeId}/tests-usages`) || [];
     const allScopeTests = useBuildVersion<TestSummary>(`/scope/${scopeId}/summary/tests/all`) || {};
@@ -149,11 +150,14 @@ export const ScopeInfo = scopeInfo(
           {selectedTab === 'coverage' ? (
             <>
               <ProjectMethodsCards methods={scopeMethods} />
-              <CoverageDetails
-                coverageByPackages={coverageByPackages}
-                associatedTestsTopic={`/scope/${scopeId}/associated-tests`}
-                classesTopicPrefix={`scope/${scopeId}`}
-              />
+              <TableActionsProvider>
+                <CoverageDetails
+                  topic={`/scope/${scopeId}/coverage/packages`}
+                  associatedTestsTopic={`/scope/${scopeId}/associated-tests`}
+                  classesTopicPrefix={`scope/${scopeId}`}
+                  packageCount={total}
+                />
+              </TableActionsProvider>
             </>
           ) : (
             <>

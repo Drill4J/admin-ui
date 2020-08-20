@@ -8,9 +8,6 @@ interface Count {
 
 export interface BuildCoverage {
   percentage?: number;
-  count?: Count;
-  methodCount?: Count;
-  riskCount?: Count;
   byTestType?: TestTypeSummary[];
   uncoveredMethodsCount?: number;
   arrow?: 'INCREASE' | 'DECREASE';
@@ -18,4 +15,9 @@ export interface BuildCoverage {
   prevBuildVersion?: string;
   finishedScopesCount?: number;
   risks?: RisksSummary;
+  count?: Count;
+  riskCount?: Count;
+  classCount?: Count;
+  methodCount?: Count;
+  packageCount?: Count;
 }

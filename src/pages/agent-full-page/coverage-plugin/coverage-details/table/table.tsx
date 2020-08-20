@@ -12,8 +12,6 @@ interface Props {
   children: any;
   idKey?: string;
   footer?: React.ReactNode;
-  sort?: Record<string, unknown>;
-  onSort?: (sortField: string) => void;
   columnsSize?: 'wide' | 'medium';
   expandedRows?: string[];
   expandedColumns?: any[];
@@ -22,6 +20,7 @@ interface Props {
   withoutHeader?: boolean;
   selectedRows?: string[];
   classesTopicPrefix: string;
+  tableContentStub?: React.ReactNode | null;
 }
 
 const table = BEM(styles);
@@ -40,6 +39,7 @@ export const Table = table(
     withoutHeader,
     selectedRows = [],
     classesTopicPrefix,
+    tableContentStub = null,
   }: Props) => {
     const columns = React.Children.map(children, (column) => column && column.props);
     const expandedColumnsComponents = React.Children.map(
@@ -52,26 +52,31 @@ export const Table = table(
     );
 
     return (
-      <table className={className}>
-        {!withoutHeader && <TableHeader columns={columns} />}
-        <tbody>
-          {data.map((item, index) => (
-            <TableRow
-              key={idKey ? String(item[idKey]) : index}
-              item={item}
-              columns={columns}
-              index={index}
-              expandedColumns={expandedColumnsComponents}
-              color={getRowColor({ expandedRows, selectedRows, itemId: String(item[idKey]) })}
-              expandedContentKey={expandedContentKey}
-              expandedRows={expandedRows}
-              secondLevelExpand={expandedColumnsSecondLevel}
-              classesTopicPrefix={classesTopicPrefix}
-            />
-          ))}
-        </tbody>
-        {footer}
-      </table>
+      <>
+        <table className={className}>
+          {!withoutHeader && <TableHeader columns={columns} />}
+          {data.length > 0 && (
+            <tbody>
+              {data.map((item, index) => (
+                <TableRow
+                  key={idKey ? String(item[idKey]) : index}
+                  item={item}
+                  columns={columns}
+                  index={index}
+                  expandedColumns={expandedColumnsComponents}
+                  color={getRowColor({ expandedRows, selectedRows, itemId: String(item[idKey]) })}
+                  expandedContentKey={expandedContentKey}
+                  expandedRows={expandedRows}
+                  secondLevelExpand={expandedColumnsSecondLevel}
+                  classesTopicPrefix={classesTopicPrefix}
+                />
+              ))}
+            </tbody>
+          ) }
+          {footer}
+        </table>
+        {tableContentStub}
+      </>
     );
   },
 );

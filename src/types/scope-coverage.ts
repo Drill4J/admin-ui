@@ -10,10 +10,12 @@ interface Overlap {
 
 export interface ScopeCoverage {
   percentage?: number;
-  methodCount?: Count;
-  riskCount?: Count;
   overlap?: Overlap;
-  count?: Count;
   risks?: RisksSummary;
   byTestType?: TestTypeSummary[];
+  methodCount?: Count;
+  count?: Count;
+  riskCount?: Count;
+  packageCount?: Count;
+  classCount?: Count;
 }

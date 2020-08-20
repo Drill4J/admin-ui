@@ -18,6 +18,7 @@ interface Props {
   className?: string;
   hasSecondLevelExpand?: boolean;
   classesTopicPrefix: string;
+  tableContentStub?: React.ReactNode | null;
 }
 
 const expandableTable = BEM(styles);
@@ -30,6 +31,7 @@ export const ExpandableTable = expandableTable(
     expandedColumns,
     className,
     hasSecondLevelExpand,
+    tableContentStub = null,
     ...restProps
   }: Props) => {
     const [expandedRows, setExpandedRows] = React.useState<string[]>([]);
@@ -39,6 +41,7 @@ export const ExpandableTable = expandableTable(
         data={data as any}
         expandedRows={expandedRows}
         idKey={idKey}
+        tableContentStub={tableContentStub}
         expandedColumns={
           expandedColumns
             ? [
