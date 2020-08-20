@@ -56,6 +56,7 @@ export const ProjectMethodsCards = projectMethodsCards(
           label="DELETED"
           covered={deleted?.covered}
           totalCount={deleted?.total}
+          additionalInformation="of deleted methods were covered in previous build"
         />
         {risksFilter && (
           <RisksModal

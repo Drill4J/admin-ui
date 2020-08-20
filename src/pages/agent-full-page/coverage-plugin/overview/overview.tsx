@@ -18,7 +18,6 @@ import { ProjectMethodsCards } from '../project-methods-cards';
 import { usePluginState } from '../../store';
 import { Tests } from '../tests';
 import { BuildCoverageInfo } from './build-coverage-info';
-import { MultiProgressBar } from './multi-progress-bar';
 import { ActiveScopeInfo } from './active-scope-info';
 
 import styles from './overview.module.scss';
@@ -37,13 +36,9 @@ export const Overview = overview(({ className }: Props) => {
   const {
     prevBuildVersion = '',
     diff = 0,
-    percentage: buildCodeCoverage = 0,
     finishedScopesCount = 0,
   } = buildCoverage;
   const scope = useBuildVersion<ActiveScope>('/active-scope');
-  const {
-    active = false, coverage: { percentage: coveragePercentage = 0, overlap: { percentage: overlapPercentage = 0 } = {} } = {},
-  } = scope || {};
   const buildMethods = useBuildVersion<Methods>('/build/methods') || {};
   const coverageByPackages = useBuildVersion<ClassCoverage[]>('/build/coverage/packages') || [];
   const { pluginId } = useParams();
@@ -52,32 +47,8 @@ export const Overview = overview(({ className }: Props) => {
     <div className={className}>
       <CoveragePluginHeader />
       <SummaryPanel align="space-between">
-        {active ? (
-          <BuildCoverageInfo
-            multiProgressBar={(
-              <MultiProgressBar
-                buildCodeCoverage={buildCodeCoverage}
-                uniqueCodeCoverage={coveragePercentage - overlapPercentage}
-                overlappingCode={overlapPercentage}
-                active={loading}
-              />
-            )}
-          >
-            <BuildCoveragePercentage data-test="overview:build-coverage-percentage">
-              {percentFormatter(buildCodeCoverage)}%
-            </BuildCoveragePercentage>
-            {finishedScopesCount > 0 && Boolean(coveragePercentage) && (
-              <>
-                <UniqueCoveragePercentage data-test="overview:unique-coverage-percentage">
-                  +{percentFormatter(coveragePercentage - overlapPercentage)}%
-                </UniqueCoveragePercentage>
-                &nbsp;in active scope
-              </>
-            )}
-            {status === 'BUSY' && 'Loading...'}
-            {(finishedScopesCount === 0 && status === 'ONLINE') &&
-            'Press “Complete active scope” button to add your scope coverage to the build.'}
-          </BuildCoverageInfo>
+        {scope?.active ? (
+          <BuildCoverageInfo buildCoverage={buildCoverage} scope={scope} status={status} loading={loading} />
         )
           : (
             <DetailedCodeCoverageCard
@@ -100,7 +71,7 @@ export const Overview = overview(({ className }: Props) => {
               )}
             />
           )}
-        {active && (
+        {scope?.active && (
           <ActiveScopeInfo scope={scope} />
         )}
       </SummaryPanel>
@@ -139,8 +110,6 @@ export const Overview = overview(({ className }: Props) => {
 });
 
 const SummaryPanel = overview.summaryPanel(Panel);
-const BuildCoveragePercentage = overview.buildCoveragePercentage('div');
-const UniqueCoveragePercentage = overview.uniqueCoveragePercentage('div');
 const ScopesListLink = overview.scopesListLink(Link);
 const RoutingTabsPanel = overview.routingTabsPanel('div');
 const TabContent = overview.tabContent('div');

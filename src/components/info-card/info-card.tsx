@@ -10,12 +10,13 @@ interface Props {
   children?: React.ReactNode;
   covered?: number | string;
   totalCount?: number;
+  additionalInformation?: React.ReactNode;
 }
 
 const infoCard = BEM(styles);
 
 export const InfoCard = infoCard(({
-  className, label, children, covered = 0, totalCount = 0,
+  className, label, children, covered = 0, totalCount = 0, additionalInformation = '',
 }: Props) => {
   const coverage = typeof covered === 'string' ? covered : `${convertToPercentage(covered, totalCount)}%`;
   return (
@@ -26,7 +27,14 @@ export const InfoCard = infoCard(({
       </Panel>
       <div>
         <Methods align="space-between">
-          <Covered data-test={`info-card:covered-count:${label}`}>{covered}</Covered>
+          <div>
+            <Covered data-test={`info-card:covered-count:${label}`}>{covered}</Covered>
+            {additionalInformation && (
+              <AdditionalInformation data-test={`info-card:additional-information:${label}`}>
+                {additionalInformation}
+              </AdditionalInformation>
+            )}
+          </div>
           <TotalCount data-test={`info-card:total-methods:${label}`}>{totalCount}</TotalCount>
         </Methods>
         <CoverageBar>
@@ -45,6 +53,7 @@ const Covered = infoCard.covered('span');
 const TotalCount = infoCard.totalCount('span');
 const CoverageBar = infoCard.coverageBar('div');
 const Progress = infoCard.progress('div');
+const AdditionalInformation = infoCard.additionalInformation('span');
 
 function convertToPercentage(numerator: number, denominator: number) {
   return denominator !== 0 ? (numerator / denominator) * 100 : 0;

@@ -10,18 +10,6 @@
     }
   }
 
-  &__build-coverage-percentage {
-    margin-right: 8px;
-    font-size: 32px;
-    line-height: 40px;
-    color: map-get($monochrome, black);
-  }
-
-  &__unique-coverage-percentage {
-    line-height: 24px;
-    color: map-get($data-visualization, build-cover);
-  }
-
   &__scopes-list-link {
     color: map-get($color-palette, blue100);
     text-transform: capitalize;

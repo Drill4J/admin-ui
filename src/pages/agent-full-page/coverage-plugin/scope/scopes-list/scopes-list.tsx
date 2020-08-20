@@ -2,7 +2,7 @@ import * as React from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 import { useParams, useHistory } from 'react-router-dom';
 import {
-  Panel, Menu, Icons, Table, Column, Badge,
+  Panel, Menu, Icons, Table, Column, Status,
 } from '@drill4j/ui-kit';
 
 import {
@@ -10,7 +10,6 @@ import {
 } from 'utils';
 import { NotificationManagerContext } from 'notification-manager';
 import { ScopeSummary } from 'types/scope-summary';
-import { CoveragePluginHeader } from '../../coverage-plugin-header';
 import { useBuildVersion } from '../../use-build-version';
 import { toggleScope } from '../../api';
 import { usePluginState } from '../../../store';
@@ -49,10 +48,9 @@ export const ScopesList = scopesList(({ className }: Props) => {
 
   return (
     <div className={className}>
-      <CoveragePluginHeader />
       <Content>
         <Title>
-          <span>All scopes</span>
+          All scopes
           <ScopesCount>{scopesData.length}</ScopesCount>
         </Title>
         <Table
@@ -73,11 +71,11 @@ export const ScopesList = scopesList(({ className }: Props) => {
                 data-test="scopes-list:scope-name"
               >
                 {value}
-                {active && <ActiveBadge color="green">Active</ActiveBadge>}
-                {!enabled && <IgnoreBadge>Ignored</IgnoreBadge>}
-                <div>
+                <Panel>
                   <ScopeTimer started={started} finished={finished} active={active} size="small" />
-                </div>
+                  {active && <ActiveBadge>Active</ActiveBadge>}
+                  {!enabled && <IgnoreBadge>Ignored</IgnoreBadge>}
+                </Panel>
               </NameCell>
             )}
           />
@@ -232,7 +230,7 @@ const RecordingText = scopesList.recordingText('span');
 const NameCell = scopesList.nameCell('span');
 const StartDate = scopesList.startDate('div');
 const StartTime = scopesList.startTime('div');
-const ActiveBadge = scopesList.activeBadge(Badge);
-const IgnoreBadge = scopesList.ignoreBadge(Badge);
+const ActiveBadge = scopesList.activeBadge(Status);
+const IgnoreBadge = scopesList.ignoreBadge(Status);
 const Coverage = scopesList.coverage('div');
 const ActionCell = scopesList.actionCell('div');

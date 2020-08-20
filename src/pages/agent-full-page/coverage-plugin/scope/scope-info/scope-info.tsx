@@ -108,10 +108,12 @@ export const ScopeInfo = scopeInfo(
     return (
       <div className={className}>
         <Header align="space-between">
-          <ScopeName data-test="scope-info:scope-name">{name}</ScopeName>
+          <Panel>
+            <ScopeName data-test="scope-info:scope-name">{name}</ScopeName>
+            {active && <ScopeSessionIndicator active={loading} />}
+            <ScopeStatus active={active} loading={loading} enabled={enabled} started={started} finished={finished} />
+          </Panel>
           <Panel align="end">
-            {active && <SessionIndicator active={loading} />}
-            <Status active={active} loading={loading} enabled={enabled} started={started} finished={finished} />
             {active && (
               <CompleteScopeButton
                 type="primary"
@@ -171,7 +173,7 @@ export const ScopeInfo = scopeInfo(
 
 const Header = scopeInfo.header(Panel);
 const ScopeName = scopeInfo.scopeName('div');
-const Status = scopeInfo.status(ScopeStatus);
+const ScopeSessionIndicator = scopeInfo.scopeSessionIndicator(SessionIndicator);
 const CompleteScopeButton = scopeInfo.completeScopeButton(Button);
 const RoutingTabsPanel = scopeInfo.routingTabsPanel(Panel);
 const TabIconWrapper = scopeInfo.tabIconWrapper('div');
