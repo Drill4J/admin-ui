@@ -18,17 +18,17 @@ const scopeCoverageInfo = BEM(styles);
 
 export const ScopeCoverageInfo = scopeCoverageInfo(({ className, scope }: Props) => {
   const {
-    coverage: { ratio = 0, overlap: { percentage: overlapCoverage = 0 } = {} } = {},
+    coverage: { percentage: coveragePercentage = 0, overlap: { percentage: overlapCoverage = 0 } = {} } = {},
   } = scope || {};
   return (
     <div className={className}>
       <Title>SCOPE COVERAGE</Title>
       <CoverageInfo>
-        <ScopeCoverage data-test="active-scope-info:scope-coverage">{`${percentFormatter((ratio))}%`}</ScopeCoverage>
+        <ScopeCoverage data-test="active-scope-info:scope-coverage">{`${percentFormatter((coveragePercentage))}%`}</ScopeCoverage>
         <b>{`${percentFormatter(overlapCoverage)}%`}</b>&nbsp;overlapped with build.&nbsp;
-        <b>{`${percentFormatter(ratio - overlapCoverage)}%`}</b>&nbsp;of new coverage
+        <b>{`${percentFormatter(coveragePercentage - overlapCoverage)}%`}</b>&nbsp;of new coverage
       </CoverageInfo>
-      <MainProgressBar type="primary" value={`${ratio}%`} />
+      <MainProgressBar type="primary" value={`${coveragePercentage}%`} />
       <Legends />
     </div>
   );

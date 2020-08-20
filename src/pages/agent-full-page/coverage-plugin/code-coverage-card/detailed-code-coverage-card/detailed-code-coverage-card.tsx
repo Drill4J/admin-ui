@@ -21,7 +21,7 @@ const detailedCodeCoverageCard = BEM(styles);
 export const DetailedCodeCoverageCard = detailedCodeCoverageCard(
   ({
     className,
-    coverage: { ratio = 0, byTestType = [], arrow },
+    coverage: { percentage = 0, byTestType = [], arrow },
     additionalInfo,
     header,
     showRecording,
@@ -32,7 +32,7 @@ export const DetailedCodeCoverageCard = detailedCodeCoverageCard(
         <TotalCoverageWrapper>
           <TotalCoverage>
             <Panel>
-              {`${percentFormatter(ratio)}%`}
+              {`${percentFormatter(percentage)}%`}
               {arrow && <ArrowIcon rotate={arrow === 'INCREASE' ? 180 : 0} type={arrow} />}
             </Panel>
           </TotalCoverage>

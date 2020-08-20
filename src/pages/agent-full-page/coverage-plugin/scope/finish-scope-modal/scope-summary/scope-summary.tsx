@@ -15,14 +15,14 @@ interface Props {
 const scopeSummary = BEM(styles);
 
 export const ScopeSummary = scopeSummary(({ className, scope, testsCount }: Props) => {
-  const { coverage: { ratio = 0 } = {}, started } = scope || {};
+  const { coverage: { percentage = 0 } = {}, started } = scope || {};
   return (
     <div className={className}>
       <Title>Scope Summary</Title>
       <Element>
         Code coverage
         <ElementValue>
-          {`${percentFormatter(ratio)}%`}
+          {`${percentFormatter(percentage)}%`}
         </ElementValue>
       </Element>
       <Element>

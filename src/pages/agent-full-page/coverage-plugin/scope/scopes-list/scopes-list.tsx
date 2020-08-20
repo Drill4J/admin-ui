@@ -98,9 +98,9 @@ export const ScopesList = scopesList(({ className }: Props) => {
           <Column
             name="coverage"
             HeaderCell={() => <HeaderCell>Coverage</HeaderCell>}
-            Cell={({ item: { coverage: { ratio } } }) => (
+            Cell={({ item: { coverage: { percentage } } }) => (
               <Coverage data-test="scopes-list:coverage">
-                {`${percentFormatter(ratio)}%`}
+                {`${percentFormatter(percentage)}%`}
               </Coverage>
             )}
           />

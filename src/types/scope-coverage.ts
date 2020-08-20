@@ -8,7 +8,7 @@ interface Overlap {
 }
 
 export interface ScopeCoverage {
-  ratio?: number;
+  percentage?: number;
   methodCount?: Count;
   riskCount?: Count;
   overlap?: Overlap;

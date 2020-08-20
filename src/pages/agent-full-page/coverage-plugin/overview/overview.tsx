@@ -37,12 +37,12 @@ export const Overview = overview(({ className }: Props) => {
   const {
     prevBuildVersion = '',
     diff = 0,
-    ratio: buildCodeCoverage = 0,
+    percentage: buildCodeCoverage = 0,
     finishedScopesCount = 0,
   } = buildCoverage;
   const scope = useBuildVersion<ActiveScope>('/active-scope');
   const {
-    active = false, coverage: { ratio = 0, overlap: { percentage = 0 } = {} } = {},
+    active = false, coverage: { percentage: coveragePercentage = 0, overlap: { percentage: overlapPercentage = 0 } = {} } = {},
   } = scope || {};
   const buildMethods = useBuildVersion<Methods>('/build/methods') || {};
   const coverageByPackages = useBuildVersion<ClassCoverage[]>('/build/coverage/packages') || [];
@@ -57,8 +57,8 @@ export const Overview = overview(({ className }: Props) => {
             multiProgressBar={(
               <MultiProgressBar
                 buildCodeCoverage={buildCodeCoverage}
-                uniqueCodeCoverage={ratio - percentage}
-                overlappingCode={percentage}
+                uniqueCodeCoverage={coveragePercentage - overlapPercentage}
+                overlappingCode={overlapPercentage}
                 active={loading}
               />
             )}
@@ -66,10 +66,10 @@ export const Overview = overview(({ className }: Props) => {
             <BuildCoveragePercentage data-test="overview:build-coverage-percentage">
               {percentFormatter(buildCodeCoverage)}%
             </BuildCoveragePercentage>
-            {finishedScopesCount > 0 && Boolean(ratio) && (
+            {finishedScopesCount > 0 && Boolean(coveragePercentage) && (
               <>
                 <UniqueCoveragePercentage data-test="overview:unique-coverage-percentage">
-                  +{percentFormatter(ratio - percentage)}%
+                  +{percentFormatter(coveragePercentage - overlapPercentage)}%
                 </UniqueCoveragePercentage>
                 &nbsp;in active scope
               </>

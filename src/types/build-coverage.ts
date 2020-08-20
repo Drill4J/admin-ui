@@ -7,7 +7,7 @@ interface Count {
 }
 
 export interface BuildCoverage {
-  ratio?: number;
+  percentage?: number;
   count?: Count;
   methodCount?: Count;
   riskCount?: Count;

@@ -31,7 +31,7 @@ export const ActiveScopeInfo = activeScopeInfo(({
 }: Props) => {
   const {
     id: scopeId,
-    coverage: { ratio = 0, overlap: { percentage: overlapCoverage = 0 } = {} } = {},
+    coverage: { percentage = 0, overlap: { percentage: overlapCoverage = 0 } = {} } = {},
   } = scope || {};
   const { agentId, buildVersion, pluginId } = useParams();
   const dispatch = useCoveragePluginDispatch();
@@ -74,7 +74,7 @@ export const ActiveScopeInfo = activeScopeInfo(({
         </div>
       </Panel>
       <CoverageInfo>
-        <ScopeCoverage data-test="active-scope-info:scope-coverage">{`${percentFormatter(ratio)}%`}</ScopeCoverage>
+        <ScopeCoverage data-test="active-scope-info:scope-coverage">{`${percentFormatter(percentage)}%`}</ScopeCoverage>
         <OverlappedCoverage
           data-test="active-scope-info:overlapped-coverage"
         >

@@ -24,7 +24,7 @@ const coverageSection = BEM(styles);
 
 export const CoverageSection = coverageSection(({ className, activeBuildVersion }: Props) => {
   const {
-    ratio = 0,
+    percentage = 0,
     diff = 0,
     prevBuildVersion = '',
     arrow = '',
@@ -51,7 +51,7 @@ export const CoverageSection = coverageSection(({ className, activeBuildVersion 
         label="Build Coverage"
         info={(
           <>
-            {`${percentFormatter(ratio)}%`}
+            {`${percentFormatter(percentage)}%`}
             {arrow && (
               <CoverageArrow
                 rotate={arrow === 'INCREASE' ? 180 : 0}
@@ -116,7 +116,7 @@ export const CoverageSection = coverageSection(({ className, activeBuildVersion 
             {Boolean(diff)
               && prevBuildVersion
               && `${diff > 0 ? '+' : '-'}${percentFormatter(Math.abs(diff))}% vs Build: ${prevBuildVersion}`}
-            {!ratio && !prevBuildVersion && isActiveBuild(activeBuildVersion, buildVersion)
+            {!percentage && !prevBuildVersion && isActiveBuild(activeBuildVersion, buildVersion)
               && 'Will change when at least 1 scope is done.'}
           </Panel>
         )}
