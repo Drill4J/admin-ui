@@ -27,7 +27,7 @@ export const DeleteScopeModal = deleteScopeModal(
     className, isOpen, onToggle, scope,
   }: Props) => {
     const { agentId, buildVersion } = usePluginState();
-    const { pluginId = '', scopeId = '' } = useParams();
+    const { pluginId = '' } = useParams();
     const { push } = useHistory();
     const { showMessage } = React.useContext(NotificationManagerContext);
     const [errorMessage, setErrorMessage] = React.useState('');
@@ -71,7 +71,7 @@ export const DeleteScopeModal = deleteScopeModal(
                     onSuccess: () => {
                       showMessage({ type: 'SUCCESS', text: 'Scope has been deleted' });
                       onToggle(false);
-                      scopeId
+                      scope?.id
                           && push(`/full-page/${agentId}/${buildVersion}/${pluginId}/dashboard`);
                     },
                     onError: setErrorMessage,

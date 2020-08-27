@@ -35,7 +35,7 @@ export const FinishScopeModal = finishScopeModal(
     const testsCount = scope
       ? (scope.coverage.byTestType || []).reduce((acc, { summary: { testCount = 0 } }) => acc + testCount, 0)
       : 0;
-    const { pluginId = '', scopeId = '' } = useParams();
+    const { pluginId = '' } = useParams();
     const { push } = useHistory();
 
     return (
@@ -79,7 +79,7 @@ export const FinishScopeModal = finishScopeModal(
                     onError: setErrorMessage,
                   })({ prevScopeEnabled: !ignoreScope, savePrevScope: true });
                   !testsCount
-                      && scopeId
+                      && scope?.id
                       && push(`/full-page/${agentId}/${buildVersion}/${pluginId}/dashboard`);
                 }}
               >
