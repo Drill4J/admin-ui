@@ -11,14 +11,15 @@
     text-align: center;
   }
 
-  &__overlapping-code-progress-bar {
+  &__scope-coverage {
+    display: flex;
     position: absolute;
-    transform: scale(-1);
-    bottom: 10px;
+    bottom: 50%;
+    transform: translateY(50%);
   }
 
-  &__unique-code-coverage-progress-bar {
-    position: absolute;
-    bottom: 6px;
+  &__overlapping-code-progress-bar {
+    display: flex;
+    transform: scale(-1);
   }
 }

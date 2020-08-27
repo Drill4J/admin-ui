@@ -40,15 +40,12 @@ export const MultiProgressBar = multiProgressBar(({
       >
         <MainProgressBar value={`${buildCodeCoverage * (width / 100)}px`} testContext="build-coverage" />
       </Tooltip>
-      <OverlappingCodeProgressBar
-        data-test="multi-progress-bar:overlapping-code-progress-bar"
-        style={{ left: `${buildCodeCoverage - overlappingCode}%`, width: `${overlappingCode * (width / 100)}px` }}
-      >
+      <ScopeCoverage style={{ left: `${buildCodeCoverage - overlappingCode}%` }}>
         <Tooltip
-          customStyle={{ top: '30px', left: '50%', height: '50px' }}
-          position="bottom"
+          customStyle={{ bottom: '30px', left: '50%' }}
+          position="top"
           message={(
-            <Message style={{ transform: 'scale(-1)' }}>
+            <Message>
               <div>
                 {`${percentFormatter(overlappingCode)}% of current build`}
               </div>
@@ -56,15 +53,15 @@ export const MultiProgressBar = multiProgressBar(({
             </Message>
           )}
         >
-          {active
-            ? <StripedProgressBar type="secondary" value={`${overlappingCode * (width / 100)}px`} />
-            : <AdditionalProgressBar type="secondary" value={`${overlappingCode * (width / 100)}px`} />}
+          <OverlappingCodeProgressBar
+            data-test="multi-progress-bar:overlapping-code-progress-bar"
+            style={{ width: `${overlappingCode * (width / 100)}px` }}
+          >
+            {active
+              ? <StripedProgressBar type="secondary" value={`${overlappingCode * (width / 100)}px`} />
+              : <AdditionalProgressBar type="secondary" value={`${overlappingCode * (width / 100)}px`} />}
+          </OverlappingCodeProgressBar>
         </Tooltip>
-      </OverlappingCodeProgressBar>
-      <UniqueCodeCoverageProgressBar
-        data-test="multi-progress-bar:unique-code-coverage-progress-bar"
-        style={{ left: `${buildCodeCoverage}%` }}
-      >
         <Tooltip
           customStyle={{ bottom: '30px', left: '50%' }}
           position="top"
@@ -81,11 +78,11 @@ export const MultiProgressBar = multiProgressBar(({
             ? <StripedProgressBar type="primary" value={`${uniqueCodeCoverage * (width / 100)}px`} />
             : <AdditionalProgressBar type="primary" value={`${uniqueCodeCoverage * (width / 100)}px`} />}
         </Tooltip>
-      </UniqueCodeCoverageProgressBar>
+      </ScopeCoverage>
     </div>
   );
 });
 
 const Message = multiProgressBar.message('div');
+const ScopeCoverage = multiProgressBar.scopeCoverage('div');
 const OverlappingCodeProgressBar = multiProgressBar.overlappingCodeProgressBar('div');
-const UniqueCodeCoverageProgressBar = multiProgressBar.uniqueCodeCoverageProgressBar('div');
