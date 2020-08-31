@@ -84,7 +84,7 @@ export const ScopeInfo = scopeInfo(
         })(scopeId),
       },
       active && {
-        label: 'Manage sessions',
+        label: 'Manage Sessions',
         icon: 'ManageSessions',
         onClick: () => dispatch(openModal('ManageSessionsModal', null)),
       },

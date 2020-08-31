@@ -39,7 +39,7 @@ export const ActiveScopeInfo = activeScopeInfo(({
 
   const menuActions = [
     {
-      label: 'Manage sessions',
+      label: 'Manage Sessions',
       icon: 'ManageSessions',
       onClick: () => dispatch(openModal('ManageSessionsModal', null)),
     },

@@ -1,0 +1,19 @@
+@import '~common/style-guide/index';
+
+.manage-new-session {
+  &__settings-link {
+    font-family: $semibold-font;
+    color: map-get($primary-blue, default);
+    letter-spacing: 0;
+    line-height: 16px;
+    text-decoration: none;
+
+    &:hover {
+      color: map-get($primary-blue, medium-tint);
+    }
+  }
+
+  &__new-session-form {
+    padding: 16px 24px;
+  }
+}

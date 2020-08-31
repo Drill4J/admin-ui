@@ -181,7 +181,7 @@ export const ScopesList = scopesList(({ className }: Props) => {
                   onClick: () => dispatch(openModal('FinishScopeModal', item)),
                 },
                 item.active && {
-                  label: 'Manage sessions',
+                  label: 'Manage Sessions',
                   icon: 'ManageSessions',
                   onClick: () => dispatch(openModal('ManageSessionsModal', null)),
                 },

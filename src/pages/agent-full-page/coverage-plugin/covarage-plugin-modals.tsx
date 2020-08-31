@@ -1,7 +1,6 @@
 import * as React from 'react';
-import { useParams } from 'react-router-dom';
 
-import { ManageSessionsModal } from 'modules';
+import { ManageSessionsPane as ManageSessionsModal } from 'modules';
 import { useCoveragePluginState, useCoveragePluginDispatch, openModal } from './store';
 import { RenameScopeModal } from './scope/rename-scope-modal';
 import { FinishScopeModal } from './scope/finish-scope-modal';
@@ -15,7 +14,6 @@ const modals = {
 };
 
 export const CoveragePluginModals = () => {
-  const { agentId = '', pluginId = '' } = useParams<{ agentId: string, pluginId: string }>();
   const { openedModalName, scope } = useCoveragePluginState();
   const dispatch = useCoveragePluginDispatch();
 
@@ -27,8 +25,6 @@ export const CoveragePluginModals = () => {
           isOpen={Boolean(openedModalName)}
           onToggle={() => dispatch(openModal(undefined, null))}
           scope={scope}
-          agentId={agentId}
-          pluginId={pluginId}
         />
       )}
     </>

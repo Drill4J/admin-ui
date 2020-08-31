@@ -1,0 +1,44 @@
+@import '~common/style-guide/index';
+
+.session-info {
+  height: 64px;
+  padding: 12px 24px;
+  border-bottom: 1px solid map-get($monochrome, medium-tint);
+  font-size: 12px;
+  line-height: 16px;
+  color: map-get($monochrome, black);
+
+  &__session-abort {
+    height: 100%;
+  }
+
+  &__session-id {
+    font-family: $semibold-font;
+    font-size: 14px;
+    line-height: 20px;
+
+    &[disabled] {
+      opacity: 25%;
+    }
+  }
+
+  &__actions-panel {
+    display: flex;
+    margin-left: 16px;
+
+    :first-child {
+      margin-right: 16px;
+    }
+  }
+
+  &__test-type {
+    margin-top: 4px;
+    font-size: 12px;
+    line-height: 16px;
+    color: map-get($monochrome, default);
+
+    &[disabled] {
+      opacity: 25%;
+    }
+  }
+}

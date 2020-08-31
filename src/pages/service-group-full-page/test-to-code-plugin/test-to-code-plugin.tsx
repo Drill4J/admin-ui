@@ -4,7 +4,7 @@ import { useHistory, useParams } from 'react-router-dom';
 import { Menu } from '@drill4j/ui-kit';
 
 import { List, ListColumn } from 'components';
-import { ManageSessionsModal, TestsToRunModal } from 'modules';
+import { ManageSessionsPane, TestsToRunModal } from 'modules';
 import { percentFormatter } from 'utils';
 import { Summary } from 'types/service-group-summary';
 import { TestToCodeNameCell } from './test-to-code-name-cell';
@@ -157,12 +157,9 @@ export const TestToCodePlugin = testToCodePlugin(
             />
           </List>
           {isManageSessionsModalOpen && (
-            <ManageSessionsModal
+            <ManageSessionsPane
               isOpen={isManageSessionsModalOpen}
               onToggle={setIsManageSessionsModalOpen}
-              agentId={serviceGroupId}
-              pluginId={pluginId}
-              agentType={agentType}
             />
           )}
           {isFinishScopesModalOpen && (
