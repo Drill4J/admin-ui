@@ -8,18 +8,25 @@ import { percentFormatter } from 'utils';
 
 import styles from './multi-progress-bar.module.scss';
 
+interface Methods {
+  overlapCoveredMethods: number;
+  buildCoveredMethods: number;
+  uniqueMethods: number;
+}
 interface Props {
   className?: string;
-  buildCodeCoverage?: number;
-  uniqueCodeCoverage?: number;
-  overlappingCode?: number;
-  active?: boolean;
+  buildCodeCoverage: number;
+  uniqueCodeCoverage: number;
+  overlappingCode: number;
+  methods: Methods ;
+  active: boolean;
 }
 
 const multiProgressBar = BEM(styles);
 
 export const MultiProgressBar = multiProgressBar(({
   className, buildCodeCoverage = 0, uniqueCodeCoverage = 0, overlappingCode = 0, active,
+  methods: { overlapCoveredMethods = 0, buildCoveredMethods = 0, uniqueMethods = 0 },
 }: Props) => {
   const node = React.useRef<HTMLDivElement>(null);
   const { width } = useElementSize(node);
@@ -32,7 +39,7 @@ export const MultiProgressBar = multiProgressBar(({
         message={(
           <Message>
             <div>
-              {`${percentFormatter(buildCodeCoverage)}% of current build`}
+              {`${percentFormatter(buildCodeCoverage)}% (${buildCoveredMethods} methods) of current build`}
             </div>
             <div>have been already covered by tests.</div>
           </Message>
@@ -47,7 +54,7 @@ export const MultiProgressBar = multiProgressBar(({
           message={(
             <Message>
               <div>
-                {`${percentFormatter(overlappingCode)}% of current build`}
+                {`${percentFormatter(overlappingCode)}% (${overlapCoveredMethods} methods) of current build`}
               </div>
               <div>were overlapped in active scope.</div>
             </Message>
@@ -68,7 +75,7 @@ export const MultiProgressBar = multiProgressBar(({
           message={(
             <Message>
               <div>
-                {`Active scope has covered +${percentFormatter(uniqueCodeCoverage)}%.`}
+                {`Active scope has covered +${percentFormatter(uniqueCodeCoverage)}% (${uniqueMethods} unique methods).`}
               </div>
               <div>Finish your scope to add it to your total build coverage.</div>
             </Message>

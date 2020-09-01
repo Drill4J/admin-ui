@@ -5,7 +5,7 @@ import { Panel, Legends } from '@drill4j/ui-kit';
 import { percentFormatter } from 'utils';
 import { ActiveScope } from 'types/active-scope';
 import { BuildCoverage } from 'types/build-coverage';
-import { MultiProgressBar } from '../multi-progress-bar';
+import { MultiProgressBar } from './multi-progress-bar';
 
 import styles from './build-coverage-info.module.scss';
 
@@ -23,14 +23,19 @@ export const BuildCoverageInfo = buildCoverageInfo(({
   className, buildCoverage, scope, status = 'BUSY', loading,
 }: Props) => {
   const {
-    coverage: { percentage: coveragePercentage = 0, overlap: { percentage: overlapPercentage = 0 } = {} } = {},
+    coverage: {
+      percentage: coveragePercentage = 0,
+      overlap: { percentage: overlapPercentage = 0, methodCount: { covered: overlapCoveredMethods = 0 } = {} } = {},
+    } = {},
   } = scope || {};
   const {
     prevBuildVersion = '',
     diff = 0,
     percentage: buildCodeCoverage = 0,
     finishedScopesCount = 0,
+    methodCount: { covered: buildCoveredMethods = 0 } = {},
   } = buildCoverage;
+  const uniqueMethods = buildCoveredMethods - overlapCoveredMethods;
   return (
     <div className={className}>
       <Panel align="space-between">
@@ -76,6 +81,7 @@ export const BuildCoverageInfo = buildCoverageInfo(({
         buildCodeCoverage={buildCodeCoverage}
         uniqueCodeCoverage={coveragePercentage - overlapPercentage}
         overlappingCode={overlapPercentage}
+        methods={{ overlapCoveredMethods, buildCoveredMethods, uniqueMethods }}
         active={loading}
       />
       <Legends />

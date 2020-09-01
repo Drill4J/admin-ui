@@ -5,6 +5,7 @@ import { Count } from './count';
 interface Overlap {
   percentage?: number;
   count?: Count;
+  methodCount?: Count;
 }
 
 export interface ScopeCoverage {
