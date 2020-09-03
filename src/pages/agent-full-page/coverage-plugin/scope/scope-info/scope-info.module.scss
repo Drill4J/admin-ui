@@ -10,12 +10,13 @@
   }
 
   &__scope-name {
+    margin-right: 16px;
     font-size: 20px;
     color: map-get($monochrome, black);
   }
 
   &__scope-session-indicator {
-    margin: 0 8px 0 22px;
+    margin-right: 8px;
   }
 
   &__complete-scope-button {
