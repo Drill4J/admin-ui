@@ -53,7 +53,7 @@ export const BuildCoverageInfo = buildCoverageInfo(({
         {finishedScopesCount > 0 && (
           <Panel align="space-between">
             {prevBuildVersion && (
-              <span>
+              <span data-test="build-coverage-info:comparing">
                 <b>
                   {diff >= 0 ? '+ ' : '- '}
                   {percentFormatter(Math.abs(diff))}%

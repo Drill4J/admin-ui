@@ -83,7 +83,13 @@ export const MultiProgressBar = multiProgressBar(({
         >
           {active
             ? <StripedProgressBar type="primary" value={`${uniqueCodeCoverage * (width / 100)}px`} />
-            : <AdditionalProgressBar type="primary" value={`${uniqueCodeCoverage * (width / 100)}px`} />}
+            : (
+              <AdditionalProgressBar
+                type="primary"
+                value={`${uniqueCodeCoverage * (width / 100)}px`}
+                testContext="unique-code-progress-bar"
+              />
+            )}
         </Tooltip>
       </ScopeCoverage>
     </div>

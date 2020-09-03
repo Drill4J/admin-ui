@@ -22,11 +22,13 @@ export const ScopeCoverageInfo = scopeCoverageInfo(({ className, scope }: Props)
   } = scope || {};
   return (
     <div className={className}>
-      <Title>SCOPE COVERAGE</Title>
+      <Title data-test="active-scope-info:title">SCOPE COVERAGE</Title>
       <CoverageInfo>
         <ScopeCoverage data-test="active-scope-info:scope-coverage">{`${percentFormatter((coveragePercentage))}%`}</ScopeCoverage>
-        <b>{`${percentFormatter(overlapCoverage)}%`}</b>&nbsp;overlapped with build.&nbsp;
-        <b>{`${percentFormatter(coveragePercentage - overlapCoverage)}%`}</b>&nbsp;of new coverage
+        <b data-test="active-scope-info:overlap-coverage">{`${percentFormatter(overlapCoverage)}%`}</b>&nbsp;overlapped with build.&nbsp;
+        <b data-test="active-scope-info:unique-coverage">
+          {`${percentFormatter(coveragePercentage - overlapCoverage)}%`}
+        </b>&nbsp;of new coverage
       </CoverageInfo>
       <MainProgressBar type="primary" value={`${coveragePercentage}%`} />
       <Legends />

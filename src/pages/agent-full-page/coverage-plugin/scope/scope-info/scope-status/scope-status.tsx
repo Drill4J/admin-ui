@@ -20,10 +20,12 @@ export const ScopeStatus = scopeStatus(({
 }: Props) => (
   <div className={className}>
     {active
-      ? <Active>Active</Active>
+      ? <Active data-test="scope-status:active">Active</Active>
       : (
         <>
-          {enabled ? 'Finished' : 'Ignored'}
+          {enabled
+            ? <span data-test="scope-status:finished">Finished</span>
+            : <span data-test="scope-status:ignored">Ignored</span>}
         </>
       )}
     <ScopeTimer started={started} finished={finished} active={active} size="small" />
