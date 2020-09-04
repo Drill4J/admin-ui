@@ -59,13 +59,14 @@ export const AgentFullPage = agentFullPage(
     const { params: { activeLink = '' } = {} } = matchPath<{ activeLink: string }>(pathname, {
       path,
     }) || {};
-    const [notification = {}] = useWsConnection<Notification[]>(defaultAdminSocket, '/notifications') || [];
+    const notifications = useWsConnection<Notification[]>(defaultAdminSocket, '/notifications') || [];
+    const newBuildNotification = notifications.find((notification) => notification.agentId === agentId) || {};
     const [isNewBuildModalOpened, setIsNewBuildModalOpened] = React.useState(false);
     React.useEffect(() => {
-      if (!notification.read && notification.agentId === agentId) {
+      if (!newBuildNotification?.read && newBuildNotification?.agentId === agentId) {
         setIsNewBuildModalOpened(true);
       }
-    }, [notification, agentId]);
+    }, [newBuildNotification, agentId]);
 
     return (
       <PluginProvider>
@@ -97,7 +98,7 @@ export const AgentFullPage = agentFullPage(
                 <NewBuildModal
                   isOpen={isNewBuildModalOpened}
                   onToggle={setIsNewBuildModalOpened}
-                  notification={notification}
+                  notification={newBuildNotification}
                 />
               )}
             </div>
