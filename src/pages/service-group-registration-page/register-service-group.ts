@@ -8,9 +8,7 @@ export function registerAgent({ onSuccess, onError }: { onSuccess?: () => void; 
       id,
       plugins,
       name = '',
-      systemSettings: {
-        packages = [],
-      } = {},
+      systemSettings,
     }: Agent,
   ) => {
     try {
@@ -18,7 +16,8 @@ export function registerAgent({ onSuccess, onError }: { onSuccess?: () => void; 
         plugins,
         name,
         systemSettings: {
-          packages,
+          ...systemSettings,
+          packages: systemSettings?.packages?.filter(Boolean),
         },
       });
       onSuccess && onSuccess();
