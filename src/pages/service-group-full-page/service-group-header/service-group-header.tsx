@@ -20,7 +20,7 @@ export const ServiceGroupHeader = serviceGroupHeader(
     className,
     serviceGroup: { name, summaries = [] } = {},
   }: Props) => {
-    const { id = '' } = useParams();
+    const { id = '' } = useParams<{ id: string }>();
     const { push } = useHistory();
 
     return (

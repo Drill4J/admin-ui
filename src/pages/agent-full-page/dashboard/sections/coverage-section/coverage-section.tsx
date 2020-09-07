@@ -43,7 +43,7 @@ export const CoverageSection = coverageSection(({ className, activeBuildVersion 
       covered: unaffectedCoveredCount = 0,
     } = {},
   } = useBuildVersion<Methods>('/build/methods') || {};
-  const { buildVersion = '' } = useParams();
+  const { buildVersion = '' } = useParams<{ buildVersion: string }>();
 
   return (
     <div className={className}>

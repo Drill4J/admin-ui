@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
-import nanoid from 'nanoid';
+import { nanoid } from 'nanoid';
 import {
   Icons, Inputs, Modal, Panel,
 } from '@drill4j/ui-kit';

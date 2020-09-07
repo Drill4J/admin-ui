@@ -1,1 +1,1 @@
-export type ComponentPropsType<F extends Function> = F extends (arg: infer A) => any ? A : never;
+export type ComponentPropsType<F extends (props: any) => JSX.Element> = F extends (arg: infer A) => any ? A : never;

@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/ban-ts-ignore */
 import { useState, useEffect } from 'react';
 
 export function useElementSize<E extends HTMLElement>(ref: React.RefObject<E>) {
@@ -13,12 +12,11 @@ export function useElementSize<E extends HTMLElement>(ref: React.RefObject<E>) {
       }
     }
     handleResize();
-    // @ts-ignore
     const resizeObserver = new ResizeObserver(() => handleResize());
-    resizeObserver.observe(element);
+    element && resizeObserver.observe(element);
 
     return () => {
-      resizeObserver.disconnect(element);
+      resizeObserver.disconnect();
     };
   }, [ref]);
 

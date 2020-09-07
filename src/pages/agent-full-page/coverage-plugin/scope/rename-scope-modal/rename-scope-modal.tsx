@@ -39,7 +39,7 @@ export const RenameScopeModal = renameScopeModal(
     className, isOpen, onToggle, scope,
   }: Props) => {
     const { agentId } = usePluginState();
-    const { pluginId = '' } = useParams();
+    const { pluginId = '' } = useParams<{ pluginId: string }>();
     const { showMessage } = React.useContext(NotificationManagerContext);
     const [errorMessage, setErrorMessage] = React.useState('');
 

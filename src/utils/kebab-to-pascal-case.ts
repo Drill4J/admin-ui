@@ -1,6 +1,6 @@
 import { capitalize } from './capitalize';
 
-export function kebabToPascalCase(str?: {}): string {
+export function kebabToPascalCase(str?: string): string {
   if (str === null || str === undefined || str === '') {
     return '';
   }

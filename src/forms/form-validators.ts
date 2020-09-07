@@ -19,7 +19,7 @@ export function required(fieldName: string, fieldAlias?: string): FormValidator 
 }
 
 export function requiredArray(fieldName: string, fieldAlias?: string) {
-  return (valitationItem: object) => {
+  return (valitationItem: Record<string, unknown>) => {
     const value = get<string[]>(valitationItem, fieldName);
     return (!value || (typeof value === 'object' && value?.filter(Boolean).length === 0)
       ? toError(fieldName, fieldAlias || `${camelToSpaces(fieldName)} is required.`)

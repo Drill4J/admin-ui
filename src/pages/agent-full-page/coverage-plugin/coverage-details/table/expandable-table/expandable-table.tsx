@@ -8,7 +8,7 @@ import { RowExpander } from './row-expander';
 import styles from './expandable-table.module.scss';
 
 interface Props {
-  data: object[];
+  data: Record<string, unknown>[];
   idKey: string;
   children: React.ReactNode;
   columnsSize?: 'wide' | 'medium';

@@ -50,7 +50,7 @@ export const ServiceGroupFullPage = serviceGroupFullPage(
   ({
     className,
   }: Props) => {
-    const { id = '', pluginId = '' } = useParams();
+    const { id = '', pluginId = '' } = useParams<{ id: string, pluginId: string }>();
     const { pathname } = useLocation();
     const plugins = useWsConnection<Plugin[]>(
       defaultAdminSocket,

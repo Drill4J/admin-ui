@@ -30,7 +30,7 @@ export const CoveragePluginHeader = coveragePluginHeader(({ className }: Props) 
   const [isTestsToRunModalOpen, setIsTestToRunModalOpen] = React.useState(false);
   const [isOpenQualityGatesPane, setIsOpenQualityGatesPane] = React.useState(false);
 
-  const { pluginId = '' } = useParams();
+  const { pluginId = '' } = useParams<{ pluginId: string }>();
   const { agentId, buildVersion } = usePluginState();
   const { buildVersion: activeBuildVersion } = useAgent(agentId) || {};
 

@@ -37,7 +37,7 @@ export const ScopesList = scopesList(({ className }: Props) => {
     activeSessions: { testTypes = [] },
   } = useCoveragePluginState();
   const { agentId, buildVersion } = usePluginState();
-  const { pluginId = '' } = useParams();
+  const { pluginId = '' } = useParams<{ pluginId: string }>();
   const { push } = useHistory();
   const dispatch = useCoveragePluginDispatch();
   const activeScope = useBuildVersion<ScopeSummary>('/active-scope');

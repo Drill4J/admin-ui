@@ -47,7 +47,7 @@ export const ScopeInfo = scopeInfo(
   }: Props) => {
     const { showMessage } = React.useContext(NotificationManagerContext);
     const { agentId, loading } = usePluginState();
-    const { pluginId = '', scopeId = '' } = useParams();
+    const { pluginId = '', scopeId = '' } = useParams<{ pluginId: string, scopeId: string }>();
     const dispatch = useCoveragePluginDispatch();
     const scope = useBuildVersion<ActiveScope>(`/scope/${scopeId}`);
     const scopeMethods = useBuildVersion<Methods>(`/scope/${scopeId}/methods`) || {};

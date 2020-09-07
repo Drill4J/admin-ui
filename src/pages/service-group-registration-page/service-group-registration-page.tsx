@@ -26,7 +26,7 @@ const serviceGroupRegistrationPage = BEM(styles);
 export const ServiceGroupRegistrationPage = serviceGroupRegistrationPage(
   ({ className }: Props) => {
     const { push } = useHistory();
-    const { serviceGroupId = '' } = useParams();
+    const { serviceGroupId = '' } = useParams<{ serviceGroupId: string }>();
     const { search } = useLocation();
     const [isCancelModalOpened, setIsCancelModalOpened] = React.useState(false);
     const { showMessage } = React.useContext(NotificationManagerContext);

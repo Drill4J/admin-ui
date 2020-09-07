@@ -52,7 +52,7 @@ export const AgentFullPage = agentFullPage(
   ({
     className,
   }: Props) => {
-    const { agentId = '' } = useParams();
+    const { agentId = '' } = useParams<{ agentId: string }>();
     const { pathname } = useLocation();
     const agent = useAgent(agentId) || {};
     const path = '/:page/:agentId/:buildVersion/:activeLink';

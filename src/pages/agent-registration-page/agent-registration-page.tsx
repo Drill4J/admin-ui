@@ -30,7 +30,7 @@ export const AgentRegistrationPage = agentRegistrationPage(
   ({
     className,
   }: Props) => {
-    const { agentId = '' } = useParams();
+    const { agentId = '' } = useParams<{ agentId: string }>();
     const { push } = useHistory();
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { buildVersion = '', plugins = [], ...agent } = useAgent(agentId) || {};

@@ -35,7 +35,7 @@ export const TestToCodePlugin = testToCodePlugin(
     summaries = [],
     aggregated,
   }: Props) => {
-    const { serviceGroupId = '', pluginId = '' } = useParams();
+    const { serviceGroupId = '', pluginId = '' } = useParams<{ serviceGroupId: string, pluginId: string}>();
     const { push } = useHistory();
     const [isManageSessionsModalOpen, setIsManageSessionsModalOpen] = React.useState(false);
     const [isFinishScopesModalOpen, setIsFinishScopesModalOpen] = React.useState(false);

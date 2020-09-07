@@ -15,7 +15,7 @@ const modals = {
 };
 
 export const CoveragePluginModals = () => {
-  const { agentId = '', pluginId = '' } = useParams();
+  const { agentId = '', pluginId = '' } = useParams<{ agentId: string, pluginId: string }>();
   const { openedModalName, scope } = useCoveragePluginState();
   const dispatch = useCoveragePluginDispatch();
 

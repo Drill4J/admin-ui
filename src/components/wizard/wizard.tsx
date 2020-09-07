@@ -52,7 +52,7 @@ export const Wizard = wizard(({
           handleSubmit: () => void;
           submitting: boolean;
           invalid: boolean;
-          values: {};
+          values: Agent;
         }) => (
           <>
             <Header>

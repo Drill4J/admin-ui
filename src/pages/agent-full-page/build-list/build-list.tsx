@@ -22,7 +22,7 @@ export const BuildList =
     ({
       className,
     }: Props) => {
-      const { agentId = '' } = useParams();
+      const { agentId = '' } = useParams<{ agentId: string }>();
       const { push } = useHistory();
       const buildVersions = useWsConnection<BuildVersion[]>(defaultAdminSocket, `/agents/${agentId}/builds`) || [];
       const dispatch = usePluginDispatch();

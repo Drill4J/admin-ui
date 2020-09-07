@@ -33,7 +33,7 @@ export const ActiveScopeInfo = activeScopeInfo(({
     id: scopeId,
     coverage: { percentage = 0, overlap: { percentage: overlapCoverage = 0 } = {} } = {},
   } = scope || {};
-  const { agentId, buildVersion, pluginId } = useParams();
+  const { agentId, buildVersion, pluginId } = useParams<{agentId: string, buildVersion: string, pluginId: string }>();
   const dispatch = useCoveragePluginDispatch();
   const { loading } = usePluginState();
 

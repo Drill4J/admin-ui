@@ -26,7 +26,7 @@ export const SettingsPage = settingsPage(
   ({
     className,
   }: Props) => {
-    const { id = '', type = '' } = useParams();
+    const { id = '', type = '' } = useParams<{ id: string, type: string}>();
     const data = useCommonEntity(id, type) || {};
     const { showMessage } = React.useContext(NotificationManagerContext);
     const [isUnregisterModalOpen, setIsUnregisterModalOpen] = React.useState(false);

@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
-import nanoid from 'nanoid';
+import { nanoid } from 'nanoid';
 import { Icons } from '@drill4j/ui-kit';
 
 import styles from './recommended-actions.module.scss';

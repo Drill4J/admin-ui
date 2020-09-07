@@ -27,7 +27,7 @@ export const Sidebar = sidebar(
     links,
     matchParams,
   }: Props) => {
-    const { agentId } = useParams();
+    const { agentId } = useParams<{ agentId: string }>();
     const { pathname } = useLocation();
     const { push } = useHistory();
     const { params: { buildVersion = '', activeLink = '' } = {} } =

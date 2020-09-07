@@ -12,7 +12,7 @@ interface Props {
   children: any;
   idKey?: string;
   footer?: React.ReactNode;
-  sort?: object;
+  sort?: Record<string, unknown>;
   onSort?: (sortField: string) => void;
   columnsSize?: 'wide' | 'medium';
   expandedRows?: string[];

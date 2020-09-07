@@ -41,7 +41,7 @@ export const Overview = overview(({ className }: Props) => {
   const scope = useBuildVersion<ActiveScope>('/active-scope');
   const buildMethods = useBuildVersion<Methods>('/build/methods') || {};
   const coverageByPackages = useBuildVersion<ClassCoverage[]>('/build/coverage/packages') || [];
-  const { pluginId } = useParams();
+  const { pluginId } = useParams<{ pluginId: string}>();
 
   return (
     <div className={className}>

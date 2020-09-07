@@ -33,7 +33,7 @@ export const ProjectTestsCards = projectTestsCards(
     className, allTests, testsByType, testsToRun = [],
   }: Props) => {
     const [testsFilter, setTestsFilter] = React.useState<string>('');
-    const { agentId = '', pluginId = '' } = useParams();
+    const { agentId = '', pluginId = '' } = useParams<{ agentId: string, pluginId: string }>();
     const testsInfo: TestsInfo = testsByType.reduce((test, testType) => ({ ...test, [testType.type]: testType }), {});
     const testsToRunByType: TestToRunByType = testsToRun.reduce((test, testType) => ({ ...test, [testType.type]: testType }), {});
     const { testTypeToNames = {} } = useBuildVersion<TestsToRun>('/build/tests-to-run') || {};

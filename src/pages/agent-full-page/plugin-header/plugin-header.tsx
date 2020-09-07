@@ -21,7 +21,7 @@ const pluginHeader = BEM(styles);
 
 export const PluginHeader = pluginHeader(({ className, agentName, agentStatus }: Props) => {
   const { loading } = usePluginState();
-  const { agentId = '' } = useParams();
+  const { agentId = '' } = useParams<{ agentId: string }>();
   const { push } = useHistory();
   return (
     <div className={className}>
