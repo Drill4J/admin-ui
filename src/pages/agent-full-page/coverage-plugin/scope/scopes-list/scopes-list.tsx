@@ -10,6 +10,7 @@ import {
 } from 'utils';
 import { NotificationManagerContext } from 'notification-manager';
 import { ScopeSummary } from 'types/scope-summary';
+import { TestTypeSummary } from 'types/test-type-summary';
 import { useBuildVersion } from '../../use-build-version';
 import { toggleScope } from '../../api';
 import { usePluginState } from '../../../store';
@@ -110,13 +111,15 @@ export const ScopesList = scopesList(({ className }: Props) => {
                 <TestTypeLabel>Auto Tests</TestTypeLabel>
               </HeaderCell>
             )}
-            Cell={({ item: { coverage: { byTestType }, active } }) => {
+            Cell={({
+              item: { coverage: { byTestType }, active },
+            }: { item: { coverage: { byTestType: TestTypeSummary[] }; active: boolean }}) => {
               const coverageByTestType = transformObjectsArrayToObject(byTestType, 'type');
               return (
                 <TestTypeCoverage>
                   {coverageByTestType?.AUTO && (
                     <span>
-                      {`${percentFormatter(coverageByTestType?.AUTO?.summary?.coverage?.percentage)}%`}
+                      {`${percentFormatter(coverageByTestType?.AUTO?.summary?.coverage?.percentage || 0)}%`}
                     </span>
                   )}
                   {active && testTypes.includes('AUTO') && (
@@ -141,13 +144,15 @@ export const ScopesList = scopesList(({ className }: Props) => {
                 <TestTypeLabel>Manual</TestTypeLabel>
               </HeaderCell>
             )}
-            Cell={({ item: { coverage: { byTestType }, active } }) => {
+            Cell={({
+              item: { coverage: { byTestType }, active },
+            }: { item: { coverage: { byTestType: TestTypeSummary[] }; active: boolean }}) => {
               const coverageByTestType = transformObjectsArrayToObject(byTestType, 'type');
               return (
                 <TestTypeCoverage>
                   {coverageByTestType?.MANUAL && (
                     <span>
-                      {`${percentFormatter(coverageByTestType?.MANUAL?.summary?.coverage?.percentage)}%`}
+                      {`${percentFormatter(coverageByTestType?.MANUAL?.summary?.coverage?.percentage || 0)}%`}
                     </span>
                   )}
                   {active && testTypes.includes('MANUAL') && (

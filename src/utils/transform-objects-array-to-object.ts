@@ -1,5 +1,2 @@
-interface Model {
-  [key: string]: any;
-}
-export const transformObjectsArrayToObject = (array: Model[], key: Extract<keyof Model, string>) =>
-  array.reduce((accumulator, currentValue) => ({ ...accumulator, [currentValue[key]]: currentValue }), {});
+export const transformObjectsArrayToObject = <T, K extends keyof T>(array: T[], key: K) =>
+  array.reduce((acc, value) => ({ ...acc, [value[key] as any]: value }), {} as { [key: string]: T});
