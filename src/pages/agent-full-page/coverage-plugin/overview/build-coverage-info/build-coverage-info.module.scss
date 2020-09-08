@@ -1,7 +1,7 @@
 @import '~common/style-guide/index';
 
 .build-coverage-info {
-  width: calc(100% - 258px - 52px);
+  width: 100%;
   height: 100%;
   font-size: 12px;
   line-height: 16px;
@@ -11,42 +11,11 @@
     font-family: $semibold-font;
   }
 
-  &__build-coverage-status {
+  &__detailed-code-coverage-info {
     display: flex;
     align-items: baseline;
     margin: 24px 0 12px 0;
     font-size: 12px;
-  }
-
-  &__build-coverage-type {
-    &::before {
-      content: '';
-      display: inline-block;
-      margin-right: 4px;
-      width: 8px;
-      height: 8px;
-      border-radius: 4px;
-    }
-
-    &:nth-child(1) {
-      &::before {
-        background-color: map-get($data-visualization, build-cover);
-      }
-    }
-
-    &:nth-child(2) {
-      margin-left: 16px;
-      &::before {
-        background-color: map-get($data-visualization, overlapping);
-      }
-    }
-
-    &:nth-child(3) {
-      margin-left: 16px;
-      &::before {
-        background-color: map-get($data-visualization, scope-cover);
-      }
-    }
   }
 
   &__build-coverage-percentage {
@@ -56,8 +25,15 @@
     color: map-get($monochrome, black);
   }
 
-  &__unique-coverage-percentage {
-    line-height: 24px;
-    color: map-get($data-visualization, build-cover);
+  &__link {
+    font-family: $semibold-font;
+    color: map-get($primary-blue, default);
+    letter-spacing: 0;
+    line-height: 16px;
+    text-decoration: none;
+
+    &:hover {
+      color: map-get($primary-blue, medium-tint);
+    }
   }
 }

@@ -4,17 +4,6 @@
   &__summary-panel {
     margin-top: 14px;
     height: 160px;
-
-    & > :first-child {
-      margin-right: 52px;
-    }
-  }
-
-  &__scopes-list-link {
-    color: map-get($color-palette, blue100);
-    text-transform: capitalize;
-    font-family: $regular-font;
-    text-decoration: none;
   }
 
   &__routing-tabs-panel {
