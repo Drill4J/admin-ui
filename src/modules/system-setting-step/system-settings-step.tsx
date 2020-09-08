@@ -32,7 +32,7 @@ export const SystemSettingsStep = systemSettingsStep(({ className, infoPanel }: 
         </PackagesTextarea>
         <Instruction>
           Make sure you add application packages only, otherwise agent&apos;s performance will be affected.
-          Use new line as a separator and use &quot;/&quot; in a package path.
+          Use new line as a separator, &quot;!&quot; before package/class for excluding and use &quot;/&quot; in a package path.
         </Instruction>
       </Panel>
       <HeaderMapping label="Header Mapping" optional>
