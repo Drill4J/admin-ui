@@ -2,7 +2,9 @@ import * as React from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 import { Panel, SortArrows } from '@drill4j/ui-kit';
 
-import { useTableActionsDispatch, setSortStatement, useTableActionsState } from 'modules';
+import {
+  useTableActionsDispatch, toggleOrder, useTableActionsState,
+} from 'modules';
 import { DefaultHeaderCell } from './default-header-cell';
 
 import styles from './table.module.scss';
@@ -14,7 +16,7 @@ interface Props {
 
 export const TableHeader = BEM(styles).header(({ columns, className }: Props) => {
   const dispatch = useTableActionsDispatch();
-  const { sortStatement: { fieldName, order } } = useTableActionsState();
+  const { sort: { fieldName, order } } = useTableActionsState();
   return (
     <thead className={className}>
       <tr>
@@ -26,7 +28,7 @@ export const TableHeader = BEM(styles).header(({ columns, className }: Props) =>
                 <HeaderCell column={column} />
                 {column.name !== 'selector' && (
                   <SortArrows
-                    onClick={() => dispatch(setSortStatement(column.name))}
+                    onClick={() => dispatch(toggleOrder(column.name))}
                     order={column.name === fieldName ? order : null}
                   />
                 )}

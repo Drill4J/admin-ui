@@ -1,16 +1,16 @@
 export type Order = 'ASC' | 'DESC';
 
-export interface SearchStatement {
+export interface Search {
   fieldName: string;
   value: string;
 }
 
-export interface SortStatement {
+export interface Sort {
   fieldName: string;
   order: Order;
 }
 
 export interface TableActionsState {
-  searchStatement: SearchStatement;
-  sortStatement: SortStatement;
+  search: Search;
+  sort: Sort;
 }

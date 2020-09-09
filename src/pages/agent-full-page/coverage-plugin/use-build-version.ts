@@ -1,10 +1,10 @@
 import { useState, useEffect } from 'react';
 
 import { defaultTest2CodePluginSocket } from 'common/connection';
-import { SearchStatement, SortStatement } from 'modules/table-actions/table-actions-types';
+import { Search, Sort } from 'modules/table-actions/table-actions-types';
 import { usePluginState } from '../store';
 
-export function useBuildVersion<Data>(topic: string, searchStatement?: SearchStatement, sortStatement?: SortStatement): Data | null {
+export function useBuildVersion<Data>(topic: string, search?: Search, sort?: Sort): Data | null {
   const { agentId, buildVersion } = usePluginState();
   const [data, setData] = useState<Data | null>(null);
 
@@ -18,15 +18,15 @@ export function useBuildVersion<Data>(topic: string, searchStatement?: SearchSta
         agentId,
         buildVersion,
         type: 'AGENT',
-        searchStatement,
-        sortStatement,
+        searchStatement: search,
+        sortStatement: sort,
       })
       : null;
 
     return () => {
       unsubscribe && unsubscribe();
     };
-  }, [agentId, buildVersion, topic, searchStatement, sortStatement]);
+  }, [agentId, buildVersion, topic, search, sort]);
 
   return data;
 }

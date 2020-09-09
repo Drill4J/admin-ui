@@ -7,7 +7,7 @@ import { Fields } from 'forms';
 
 import { ClassCoverage } from 'types/class-coverage';
 import { useVisibleElementsCount } from 'hooks';
-import { useTableActionsState, useTableActionsDispatch, setSearchStatement } from 'modules';
+import { useTableActionsState, useTableActionsDispatch, setSearch } from 'modules';
 import { CompoundCell } from './compound-cell';
 import { CoverageCell } from './coverage-cell';
 import { NameCell } from './name-cell';
@@ -34,8 +34,8 @@ export const CoverageDetails = coverageDetails(
   }: Props) => {
     const [selectedId, setSelectedId] = React.useState('');
     const dispatch = useTableActionsDispatch();
-    const { searchStatement, sortStatement } = useTableActionsState();
-    const coverageByPackages = useBuildVersion<ClassCoverage[]>(topic, searchStatement, sortStatement) || [];
+    const { search, sort } = useTableActionsState();
+    const coverageByPackages = useBuildVersion<ClassCoverage[]>(topic, search, sort) || [];
     const ref = React.useRef<HTMLDivElement>(null);
     const visibleElementsCount = useVisibleElementsCount(ref, 10, 10);
 
@@ -44,11 +44,11 @@ export const CoverageDetails = coverageDetails(
         <>
           <Panel>
             <Form
-              onSubmit={(values) => dispatch(setSearchStatement(values?.searchStatement ? values.searchStatement : ''))}
+              onSubmit={(values) => dispatch(setSearch(values?.search || ''))}
               render={({ handleSubmit, form }) => (
                 <form onSubmit={handleSubmit}>
                   <Field
-                    name="searchStatement"
+                    name="search"
                     component={SearchField}
                     placeholder="Search by packages"
                     reset={() => { form.reset(); handleSubmit(); }}
@@ -56,8 +56,8 @@ export const CoverageDetails = coverageDetails(
                 </form>
               )}
             />
-            <SearchResult align={searchStatement.value ? 'space-between' : 'end'}>
-              {searchStatement.value && <span data-test="coverage-details:search-result">{coverageByPackages.length} result</span>}
+            <SearchResult align={search.value ? 'space-between' : 'end'}>
+              {search.value && <span data-test="coverage-details:search-result">{coverageByPackages.length} result</span>}
               <span data-test="coverage-details:displaying-packages-count">
                 Displaying {coverageByPackages.slice(0, visibleElementsCount).length} of {packageCount} packages
               </span>

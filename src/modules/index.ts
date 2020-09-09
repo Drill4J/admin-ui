@@ -7,5 +7,6 @@ export { UnlockingSystemSettingsFormModal } from './unlocking-system-settings-fo
 export { InstallPluginsStep } from './install-plugins-step';
 export { SystemSettingsStep } from './system-setting-step';
 export {
-  TableActionsProvider, useTableActionsState, useTableActionsDispatch, setSearchStatement, setSortStatement,
+  TableActionsProvider, useTableActionsState, useTableActionsDispatch,
+  setSearch, toggleOrder,
 } from './table-actions';
