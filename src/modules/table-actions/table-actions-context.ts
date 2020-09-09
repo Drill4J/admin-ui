@@ -5,7 +5,7 @@ import { Action } from './reducer';
 
 export const defaultState: TableActionsState = {
   search: [{ field: 'name', value: '', op: 'CONTAINS' }],
-  sort: [{ field: '', order: 'ASC' }],
+  sort: [{ field: 'name', order: 'ASC' }],
 };
 
 export const TableActionsStateContext = React.createContext<TableActionsState>(defaultState);

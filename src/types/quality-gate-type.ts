@@ -3,9 +3,9 @@ import { Metrics } from './metrics';
 export type QualityGateStatus = 'PASSED' | 'FAILED';
 
 export interface QualityGateCondition {
+  value: string;
   measure: 'coverage' | 'risks' | 'tests';
   operator: 'LT' | 'GT' | 'LTE' | 'GTE';
-  value: number;
 }
 
 export interface ConditionSetting {
@@ -15,9 +15,11 @@ export interface ConditionSetting {
 }
 
 export interface ConditionSettingByType {
+  isEditing: boolean;
   coverage: ConditionSetting;
   risks: ConditionSetting;
   tests: ConditionSetting;
+  [key: string]: boolean | ConditionSetting;
 }
 
 export interface Results {

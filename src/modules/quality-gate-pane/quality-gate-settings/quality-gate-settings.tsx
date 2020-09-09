@@ -5,7 +5,7 @@ import { Field } from 'react-final-form';
 
 import { Fields } from 'forms/fields';
 import { ConditionSettingByType } from 'types/quality-gate-type';
-import { parseCoverage } from 'utils';
+import { parseCoverage, inputLengthRestriction } from 'utils';
 import { ThresholdValueField } from './threshold-value-field';
 
 import styles from './quality-gate-settings.module.scss';
@@ -52,6 +52,7 @@ export const QualityGateSettings = qualityGateSettings(
             name="risks.condition.value"
             component={ThresholdValueField}
             disabled={!conditionSettingByType.risks?.enabled}
+            parse={(value: string) => inputLengthRestriction(value, 7)}
           >
             <Condtion>
               <Panel data-test="quality-gate-settings:condtion:risks">
@@ -83,6 +84,7 @@ export const QualityGateSettings = qualityGateSettings(
             name="tests.condition.value"
             component={ThresholdValueField}
             disabled={!conditionSettingByType.tests?.enabled}
+            parse={(value: string) => inputLengthRestriction(value, 7)}
           >
             <Condtion data-test="quality-gate-settings:condtion:tests">
               Suggested “Tests to run” executed

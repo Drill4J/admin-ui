@@ -11,7 +11,7 @@ interface Props {
   passed: boolean;
   type: 'coverage' | 'risks' | 'testsToRun';
   children: React.ReactNode;
-  thresholdValue: number;
+  thresholdValue: string;
 }
 
 const condition = BEM(styles);
@@ -33,7 +33,7 @@ export const Condition = condition(
           {children}
         </Content>
         <ThresholdValue data-test={`quality-gate-status:condition:${type}`}>
-          {type === 'coverage' ? `${percentFormatter(thresholdValue)}%` : thresholdValue }
+          {type === 'coverage' ? `${percentFormatter(Number(thresholdValue))}%` : thresholdValue }
         </ThresholdValue>
       </div>
     );

@@ -13,7 +13,10 @@
   }
 
   &__content {
-    margin: 0 auto 0 16px;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    margin: 0 16px;
     font-size: 14px;
     line-height: 16px;
   }

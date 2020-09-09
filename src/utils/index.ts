@@ -12,3 +12,4 @@ export { dateTimeFormatter, dateFormatter, timeFormatter } from './timestamp-for
 export { parseCoverage } from './parse-coverage';
 export { transformObjectsArrayToObject } from './transform-objects-array-to-object';
 export { formatMsToDate } from './format-ms-to-date';
+export { inputLengthRestriction } from './input-length-restriction';

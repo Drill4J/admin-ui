@@ -5,7 +5,7 @@ import {
   Button, Icons, Tooltip, Panel,
 } from '@drill4j/ui-kit';
 
-import { QualityGatePane } from 'components';
+import { QualityGatePane } from 'modules';
 import {
   ConditionSetting, ConditionSettingByType, QualityGate, QualityGateSettings,
 } from 'types/quality-gate-type';
@@ -66,16 +66,18 @@ export const CoveragePluginHeader = coveragePluginHeader(({ className }: Props) 
           <QualityGateSection>
             <Panel>
               <QualityGateLabel data-test="coverage-plugin-header:quality-gate-label">QUALITY GATE</QualityGateLabel>
-              <Tooltip
-                message={(
-                  <>
-                    <div>Configure quality gate conditions to</div>
-                    <div>define whether your build passes or not.</div>
-                  </>
-                )}
-              >
-                <InfoIcon />
-              </Tooltip>
+              {!configured && (
+                <Tooltip
+                  message={(
+                    <>
+                      <div>Configure quality gate conditions to</div>
+                      <div>define whether your build passes or not.</div>
+                    </>
+                  )}
+                >
+                  <InfoIcon />
+                </Tooltip>
+              )}
             </Panel>
             {!configured ? (
               <StatusWrapper>
