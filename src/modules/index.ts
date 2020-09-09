@@ -11,3 +11,4 @@ export {
 } from './table-actions';
 export { TestsToRunList, TestsToRunModal } from './tests-to-run';
 export { CoveredMethodsByTestSidebar } from './covered-methods-by-test-sidebar';
+export { QualityGatePane } from './quality-gate-pane';

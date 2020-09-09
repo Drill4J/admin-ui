@@ -1,17 +1,36 @@
 import * as React from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 import {
-  Button, Modal, GeneralAlerts, Panel, Icons,
+  Button, Modal, Panel, Icons, GeneralAlerts,
 } from '@drill4j/ui-kit';
 import { Form } from 'react-final-form';
 
-import { QualityGateSettings as QualityGate, ConditionSettingByType } from 'types/quality-gate-type';
+import {
+  composeValidators,
+  numericLimits,
+  positiveInteger,
+} from 'forms';
+import {
+  QualityGateSettings as QualityGate, ConditionSetting, ConditionSettingByType,
+} from 'types/quality-gate-type';
+import { useGeneralAlertMessage } from 'hooks';
 import { QualityGateStatus } from './quality-gate-status';
 import { QualityGateSettings } from './quality-gate-settings';
-import { validateQualityGate } from './validate-quality-gate';
 import { updateQualityGateSettings } from './api';
 
 import styles from './quality-gate-pane.module.scss';
+
+const validateQualityGate = (formValues: ConditionSettingByType) => composeValidators(
+  formValues.coverage?.enabled ? numericLimits({
+    fieldName: 'coverage.condition.value',
+    fieldAlias: 'Build coverage',
+    unit: 'percentages',
+    min: 0.1,
+    max: 100,
+  }) : () => undefined,
+  formValues.risks?.enabled ? positiveInteger('risks.condition.value', 'Risks') : () => undefined,
+  formValues.tests?.enabled ? positiveInteger('tests.condition.value', 'Tests to run') : () => undefined,
+)(formValues);
 
 interface Props {
   className?: string;
@@ -35,41 +54,62 @@ export const QualityGatePane = qualityGatePane(
     agentId,
     pluginId,
   }: Props) => {
-    const [errorMessage, setErrorMessage] = React.useState('');
+    const { generalAlertMessage, showGeneralAlertMessage } = useGeneralAlertMessage();
     const StatusIcon = Icons[qualityGate.status];
-
+    const initialValues = {
+      isEditing: !configured,
+      coverage: {
+        enabled: conditionSettingByType.coverage?.enabled,
+        condition: {
+          ...conditionSettingByType.coverage?.condition,
+          value: conditionSettingByType.coverage?.enabled ? conditionSettingByType.coverage.condition.value : undefined,
+        },
+      } as ConditionSetting,
+      risks: {
+        enabled: conditionSettingByType.risks?.enabled,
+        condition: {
+          ...conditionSettingByType.risks?.condition,
+          value: conditionSettingByType.risks?.enabled ? conditionSettingByType.risks.condition.value : undefined,
+        },
+      } as ConditionSetting,
+      tests: {
+        enabled: conditionSettingByType.tests?.enabled,
+        condition: {
+          ...conditionSettingByType.tests?.condition,
+          value: conditionSettingByType.tests?.enabled ? conditionSettingByType.tests.condition.value : undefined,
+        },
+      } as ConditionSetting,
+    };
     return (
       <Modal isOpen={isOpen} onToggle={onToggle}>
         <div className={className}>
           <Form
-            onSubmit={(
-              values: ConditionSettingByType & { configured: boolean },
-            ) => updateQualityGateSettings(agentId, pluginId, setErrorMessage)(values)}
-            initialValues={{ configured, ...conditionSettingByType }}
+            onSubmit={(values) => updateQualityGateSettings(agentId, pluginId, showGeneralAlertMessage)(values)}
+            initialValues={initialValues}
             validate={validateQualityGate}
             render={({
-              values, handleSubmit, invalid, form,
+              values, handleSubmit, invalid, form, pristine,
             }) => (
               <>
                 <Header align="space-between">
                   <Title data-test="quality-gate-pane:header-title">Quality Gate</Title>
-                  {values.configured && (
+                  {configured && !values.isEditing && (
                     <StatusIconWrapper type={qualityGate.status}>
                       <StatusIcon width={24} height={24} data-test="quality-gate-pane:header-status-icon" />
                     </StatusIconWrapper>
                   )}
                 </Header>
                 <GeneralAlerts type="INFO" data-test="quality-gate-pane:general-alerts:info">
-                  {values.configured
-                    ? 'Meet all conditions to pass the quality gates.'
+                  {configured && !values.isEditing
+                    ? 'Meet all conditions to pass the quality gate.'
                     : 'Choose the metrics and define their threshold.'}
                 </GeneralAlerts>
-                {errorMessage && (
-                  <GeneralAlerts type="ERROR">
-                    {errorMessage}
+                {generalAlertMessage?.type && (
+                  <GeneralAlerts type={generalAlertMessage.type}>
+                    {generalAlertMessage.text}
                   </GeneralAlerts>
                 )}
-                {values.configured
+                {configured && !values.isEditing
                   ? (
                     <QualityGateStatus
                       qualityGateSettings={{
@@ -83,11 +123,11 @@ export const QualityGatePane = qualityGatePane(
                   )
                   : <QualityGateSettings conditionSettingByType={values} />}
                 <ActionsPanel>
-                  {values.configured ? (
+                  {configured && !values.isEditing ? (
                     <Button
                       type="primary"
                       size="large"
-                      onClick={() => form.change('configured', !values.configured)}
+                      onClick={() => form.change('isEditing', !values.isEditing)}
                       data-test="quality-gate-pane:edit-button"
                     >
                       Edit
@@ -97,20 +137,31 @@ export const QualityGatePane = qualityGatePane(
                       <Button
                         type="primary"
                         size="large"
-                        disabled={invalid}
+                        disabled={invalid || pristine}
                         onClick={handleSubmit}
                         data-test="quality-gate-pane:save-button"
                       >
                         Save
                       </Button>
                     )}
+                  {configured && values.isEditing && (
+                    <Button
+                      type="secondary"
+                      size="large"
+                      onClick={() => form.change('isEditing', !values.isEditing)}
+                      data-test="quality-gate-pane:back-button"
+                    >
+                      <Icons.Expander width={8} height={14} rotate={180} />
+                      <span>Back</span>
+                    </Button>
+                  )}
                   <Button
                     type="secondary"
                     size="large"
                     onClick={() => onToggle(false)}
-                    data-test="quality-gate-pane:close-button"
+                    data-test="quality-gate-pane:cancel-button"
                   >
-                    {values.configured ? 'Close' : 'Cancel'}
+                    Cancel
                   </Button>
                 </ActionsPanel>
               </>
