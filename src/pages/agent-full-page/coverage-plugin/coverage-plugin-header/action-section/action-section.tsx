@@ -26,7 +26,7 @@ export const ActionSection = actionSection(
             {count}
             <LinkIcon width={8} height={8} />
           </Count>
-        ) : <NotAvailable data-test={`action-section:not-available:${label}`}>n/a</NotAvailable>}
+        ) : <ZeroValue data-test={`action-section:count:${label}`}>{count}</ZeroValue>}
       </Action>
     </div>
   ),
@@ -36,4 +36,4 @@ const Action = actionSection.action('div');
 const ActionName = actionSection.actionName('div');
 const Count = actionSection.count(Panel);
 const LinkIcon = actionSection.linkIcon(Icons.Expander);
-const NotAvailable = actionSection.notAvailable('div');
+const ZeroValue = actionSection.zeroValue('div');
