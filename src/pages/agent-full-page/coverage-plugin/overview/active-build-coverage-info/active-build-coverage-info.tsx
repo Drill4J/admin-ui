@@ -25,6 +25,7 @@ export const ActiveBuildCoverageInfo = activeBuildCoverageInfo(({
   const {
     coverage: {
       percentage: coveragePercentage = 0,
+      methodCount: { covered: coveredMethods = 0 } = {},
       overlap: { percentage: overlapPercentage = 0, methodCount: { covered: overlapCoveredMethods = 0 } = {} } = {},
     } = {},
   } = scope || {};
@@ -35,7 +36,7 @@ export const ActiveBuildCoverageInfo = activeBuildCoverageInfo(({
     finishedScopesCount = 0,
     methodCount: { covered: buildCoveredMethods = 0 } = {},
   } = buildCoverage;
-  const uniqueMethods = buildCoveredMethods - overlapCoveredMethods;
+  const uniqueMethods = coveredMethods - overlapCoveredMethods;
   return (
     <div className={className}>
       <Panel align="space-between">
