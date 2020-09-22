@@ -5,7 +5,7 @@ import {
 } from '@drill4j/ui-kit';
 import { Form } from 'react-final-form';
 
-import { QualityGateSettings as QualityGate } from 'types/quality-gate-type';
+import { QualityGateSettings as QualityGate, ConditionSettingByType } from 'types/quality-gate-type';
 import { QualityGateStatus } from './quality-gate-status';
 import { QualityGateSettings } from './quality-gate-settings';
 import { validateQualityGate } from './validate-quality-gate';
@@ -42,7 +42,9 @@ export const QualityGatePane = qualityGatePane(
       <Modal isOpen={isOpen} onToggle={onToggle}>
         <div className={className}>
           <Form
-            onSubmit={(values) => updateQualityGateSettings(agentId, pluginId, setErrorMessage)(values)}
+            onSubmit={(
+              values: ConditionSettingByType & { configured: boolean },
+            ) => updateQualityGateSettings(agentId, pluginId, setErrorMessage)(values)}
             initialValues={{ configured, ...conditionSettingByType }}
             validate={validateQualityGate}
             render={({

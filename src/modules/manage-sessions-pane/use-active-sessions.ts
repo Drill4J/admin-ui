@@ -26,7 +26,7 @@ export function useActiveSessions(agentType: string, id: string, buildVersion?: 
     return () => {
       unsubscribe();
     };
-  }, [id, buildVersion]);
+  }, [id, buildVersion, message, topic]);
 
   return data;
 }

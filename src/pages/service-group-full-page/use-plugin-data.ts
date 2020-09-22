@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 
 import { defaultTest2CodePluginSocket } from 'common/connection';
 
-export function usePluginData<Data>(serviceGroupId: string, pluginId: string) {
+export function usePluginData<Data>(serviceGroupId: string, pluginId: string): Data | null {
   const [data, setData] = useState<Data | null>(null);
 
   useEffect(() => {

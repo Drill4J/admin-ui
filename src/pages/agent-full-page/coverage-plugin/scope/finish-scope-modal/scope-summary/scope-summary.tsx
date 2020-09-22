@@ -2,7 +2,7 @@ import * as React from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 
 import { ActiveScope } from 'types/active-scope';
-import { percentFormatter } from 'utils';
+import { formatMsToDate, percentFormatter } from 'utils';
 
 import styles from './scope-summary.module.scss';
 
@@ -43,10 +43,7 @@ const ElementValue = scopeSummary.elementValue('div');
 
 function getTimeString(started?: number) {
   const duration = started ? Date.now() - started : 0;
-
-  const days = Math.floor(duration / 86400000);
-  const hours = Math.floor((duration - days * 86400000) / 3600000);
-  const minutes = Math.floor((duration - days * 86400000 - hours * 3600000) / 60000);
+  const { days, hours, minutes } = formatMsToDate(duration);
 
   return `${days}d ${hours}h ${minutes}m`;
 }

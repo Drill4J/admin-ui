@@ -10,7 +10,7 @@ interface Props {
   className?: string;
 }
 
-interface Crumb {
+interface CrumbType {
   label: string;
   link: string;
   state?: { label: string; buildVersion: string; pluginId: string };
@@ -58,7 +58,7 @@ export const Breadcrumbs = breadcrumbs(({ className }: Props) => {
     exact: true,
   }) || {};
 
-  const crumbs: Crumb[] = [
+  const crumbs: CrumbType[] = [
     { label: 'Agents', link: agentId || serviceGroupId ? '/' : '' },
     {
       label: `${agentType === 'service-group' ? 'Service Group' : 'Agent'} Settings`,

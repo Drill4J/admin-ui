@@ -10,6 +10,7 @@ import { MethodCoveredByTest } from 'types/method-covered-by-test';
 import { NoTestsStub } from './no-tests-stub';
 import { CoveredMethodsByTestSidebar } from './covered-methods-by-test-sidebar';
 import { CoveredMethodsByTestTypeSidebar } from './covered-methods-by-test-type-sidebar';
+import { DurationCell } from './duration-cell';
 
 import styles from './test-details.module.scss';
 
@@ -73,6 +74,13 @@ export const TestDetails = testDetails(
                     </MethodCallsCell>
                   )}
                 />,
+                <Column
+                  name="stats"
+                  HeaderCell={() => <div style={{ textAlign: 'right', paddingRight: '8px' }}>Duration</div>}
+                  Cell={({ value }) => (
+                    <DurationCell value={value?.duration} />
+                  )}
+                />,
               ]}
               expandedContentKey="tests"
             >
@@ -114,6 +122,11 @@ export const TestDetails = testDetails(
                   </MethodCallsCell>
                 )}
               />
+              <Column
+                name="stats"
+                HeaderCell={() => <div style={{ textAlign: 'right', paddingRight: '8px' }}>Duration</div>}
+                Cell={() => null}
+              />,
             </ExpandableTable>
           </>
         ) : (
