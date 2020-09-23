@@ -10,9 +10,6 @@ export interface BuildCoverage {
   percentage?: number;
   byTestType?: TestTypeSummary[];
   uncoveredMethodsCount?: number;
-  arrow?: 'INCREASE' | 'DECREASE';
-  diff?: number;
-  prevBuildVersion?: string;
   finishedScopesCount?: number;
   risks?: RisksSummary;
   count?: Count;

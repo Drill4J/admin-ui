@@ -8,6 +8,7 @@ import { ActiveScope } from 'types/active-scope';
 import { Methods } from 'types/methods';
 import { useAgent } from 'hooks';
 import { TableActionsProvider } from 'modules';
+import { ParentBuild } from 'types/parent-build';
 import { CoveragePluginHeader } from '../coverage-plugin-header';
 import { useBuildVersion } from '../use-build-version';
 import { CoverageDetails } from '../coverage-details';
@@ -17,6 +18,7 @@ import { Tests } from '../tests';
 import { ActiveBuildCoverageInfo } from './active-build-coverage-info';
 import { BuildCoverageInfo } from './build-coverage-info';
 import { ActiveScopeInfo } from './active-scope-info';
+import { usePreviousBuildCoverage } from '../use-previous-build-coverage';
 
 import styles from './overview.module.scss';
 
@@ -30,7 +32,10 @@ export const Overview = overview(({ className }: Props) => {
   const [selectedTab, setSelectedTab] = React.useState('methods');
   const { agentId, loading } = usePluginState();
   const { status } = useAgent(agentId) || {};
+  const { version: previousBuildVersion = '' } = useBuildVersion<ParentBuild>('/data/parent') || {};
+  const { percentage: previousBuildCodeCoverage = 0 } = usePreviousBuildCoverage(previousBuildVersion) || {};
   const buildCoverage = useBuildVersion<BuildCoverage>('/build/coverage') || {};
+  const { percentage: buildCodeCoverage = 0 } = buildCoverage;
   const scope = useBuildVersion<ActiveScope>('/active-scope');
   const buildMethods = useBuildVersion<Methods>('/build/methods') || {};
 
@@ -40,12 +45,23 @@ export const Overview = overview(({ className }: Props) => {
       <SummaryPanel align="space-between">
         {scope?.active ? (
           <>
-            <ActiveBuildCoverageInfo buildCoverage={buildCoverage} scope={scope} status={status} loading={loading} />
+            <ActiveBuildCoverageInfo
+              buildCoverage={buildCoverage}
+              previousBuildVersion={previousBuildVersion}
+              previousBuildCodeCoverage={previousBuildCodeCoverage}
+              scope={scope}
+              status={status}
+              loading={loading}
+            />
             <ActiveScopeInfo scope={scope} />
           </>
         )
           : (
-            <BuildCoverageInfo buildCoverage={buildCoverage} />
+            <BuildCoverageInfo
+              buildCodeCoverage={buildCodeCoverage}
+              previousBuildVersion={previousBuildVersion}
+              previousBuildCodeCoverage={previousBuildCodeCoverage}
+            />
           )}
       </SummaryPanel>
       <RoutingTabsPanel>

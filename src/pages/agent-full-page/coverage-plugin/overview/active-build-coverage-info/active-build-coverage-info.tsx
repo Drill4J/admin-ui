@@ -12,6 +12,8 @@ import styles from './active-build-coverage-info.module.scss';
 interface Props {
   className?: string;
   buildCoverage: BuildCoverage;
+  previousBuildVersion: string;
+  previousBuildCodeCoverage: number;
   scope: ActiveScope | null;
   status?: 'ONLINE' | 'NOT_REGISTERED' | 'BUSY' | 'OFFLINE';
   loading: boolean;
@@ -20,7 +22,7 @@ interface Props {
 const activeBuildCoverageInfo = BEM(styles);
 
 export const ActiveBuildCoverageInfo = activeBuildCoverageInfo(({
-  className, buildCoverage, scope, status = 'BUSY', loading,
+  className, buildCoverage, previousBuildVersion, previousBuildCodeCoverage, scope, status = 'BUSY', loading,
 }: Props) => {
   const {
     coverage: {
@@ -30,13 +32,13 @@ export const ActiveBuildCoverageInfo = activeBuildCoverageInfo(({
     } = {},
   } = scope || {};
   const {
-    prevBuildVersion = '',
-    diff = 0,
     percentage: buildCodeCoverage = 0,
     finishedScopesCount = 0,
     methodCount: { covered: buildCoveredMethods = 0 } = {},
   } = buildCoverage;
   const uniqueMethods = coveredMethods - overlapCoveredMethods;
+  const uniqueCodeCoverage = percentFormatter(coveragePercentage) - percentFormatter(overlapPercentage);
+  const buildDiff = percentFormatter(buildCodeCoverage) - percentFormatter(previousBuildCodeCoverage);
   return (
     <div className={className}>
       <Panel align="space-between">
@@ -53,21 +55,21 @@ export const ActiveBuildCoverageInfo = activeBuildCoverageInfo(({
         </BuildCoveragePercentage>
         {finishedScopesCount > 0 && (
           <Panel align="space-between">
-            {prevBuildVersion && (
+            {previousBuildVersion && (
               <span data-test="active-build-coverage-info:comparing">
                 <b>
-                  {diff >= 0 ? '+ ' : '- '}
-                  {percentFormatter(Math.abs(diff))}%
+                  {buildDiff >= 0 ? '+' : '-'}
+                  {percentFormatter(Math.abs(buildDiff))}%
                   &nbsp;
                 </b>
                 сomparing to Build:&nbsp;
-                {prevBuildVersion}
+                {previousBuildVersion}
               </span>
             )}
             {Boolean(coveragePercentage) && (
               <span>
                 <UniqueCoveragePercentage data-test="active-build-coverage-info:unique-coverage-percentage">
-                  +{percentFormatter(coveragePercentage - overlapPercentage)}%
+                  +{percentFormatter(uniqueCodeCoverage)}%
                 </UniqueCoveragePercentage>
                 &nbsp;in active scope
               </span>
@@ -80,7 +82,7 @@ export const ActiveBuildCoverageInfo = activeBuildCoverageInfo(({
       </BuildCoverageStatus>
       <MultiProgressBar
         buildCodeCoverage={buildCodeCoverage}
-        uniqueCodeCoverage={coveragePercentage - overlapPercentage}
+        uniqueCodeCoverage={percentFormatter(uniqueCodeCoverage)}
         overlappingCode={overlapPercentage}
         methods={{ overlapCoveredMethods, buildCoveredMethods, uniqueMethods }}
         active={loading}

@@ -7,7 +7,9 @@ import { percentFormatter } from 'utils';
 import { BuildCoverage } from 'types/build-coverage';
 import { Methods } from 'types/methods';
 import { COVERAGE_TYPES_COLOR } from 'common/constants';
+import { ParentBuild } from 'types/parent-build';
 import { useBuildVersion } from '../../../coverage-plugin/use-build-version';
+import { usePreviousBuildCoverage } from '../../../coverage-plugin/use-previous-build-coverage';
 import { SingleBar } from '../../single-bar';
 import { Section } from '../section';
 import { SectionTooltip } from '../section-tooltip';
@@ -16,18 +18,14 @@ import styles from './coverage-section.module.scss';
 
 interface Props {
   className?: string;
-  activeBuildVersion?: string;
 }
 
 const coverageSection = BEM(styles);
 
-export const CoverageSection = coverageSection(({ className, activeBuildVersion = '' }: Props) => {
-  const {
-    percentage = 0,
-    diff = 0,
-    prevBuildVersion = '',
-    arrow = '',
-  } = useBuildVersion<BuildCoverage>('/build/coverage') || {};
+export const CoverageSection = coverageSection(({ className }: Props) => {
+  const { version: previousBuildVersion = '' } = useBuildVersion<ParentBuild>('/data/parent') || {};
+  const { percentage: previousBuildCodeCoverage = 0 } = usePreviousBuildCoverage(previousBuildVersion) || {};
+  const { percentage: buildCodeCoverage = 0, finishedScopesCount = 0 } = useBuildVersion<BuildCoverage>('/build/coverage') || {};
   const {
     new: {
       total: newMethodsTotalCount = 0,
@@ -43,18 +41,19 @@ export const CoverageSection = coverageSection(({ className, activeBuildVersion 
     } = {},
   } = useBuildVersion<Methods>('/build/methods') || {};
   const { buildVersion = '' } = useParams<{ buildVersion: string }>();
-
+  const buildDiff = percentFormatter(buildCodeCoverage) - percentFormatter(previousBuildCodeCoverage);
+  console.log(!buildCodeCoverage && buildVersion !== previousBuildVersion);
   return (
     <div className={className}>
       <Section
         label="Build Coverage"
         info={(
           <>
-            {`${percentFormatter(percentage)}%`}
-            {arrow && (
+            {`${percentFormatter(buildCodeCoverage)}%`}
+            {Boolean(buildDiff) && (
               <CoverageArrow
-                rotate={arrow === 'INCREASE' ? 180 : 0}
-                type={arrow}
+                rotate={buildDiff > 0 ? 180 : 0}
+                type={buildDiff > 0 ? 'INCREASE' : 'DECREASE'}
                 height={34}
                 width={24}
               />
@@ -112,11 +111,11 @@ export const CoverageSection = coverageSection(({ className, activeBuildVersion 
         )}
         additionalInfo={(
           <Panel>
-            {Boolean(diff)
-              && prevBuildVersion
-              && `${diff > 0 ? '+' : '-'}${percentFormatter(Math.abs(diff))}% vs Build: ${prevBuildVersion}`}
-            {!percentage && !prevBuildVersion && activeBuildVersion === buildVersion
-              && 'Will change when at least 1 scope is done.'}
+            {Boolean(buildDiff)
+              && (buildVersion === previousBuildVersion || finishedScopesCount > 0)
+              && `${buildDiff > 0 ? '+' : '-'}
+              ${percentFormatter(Math.abs(buildDiff))}% vs Build: ${previousBuildVersion}`}
+            {finishedScopesCount === 0 && 'Will change when at least 1 scope is done.'}
           </Panel>
         )}
       />

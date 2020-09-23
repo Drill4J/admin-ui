@@ -4,20 +4,23 @@ import { BEM } from '@redneckz/react-bem-helper';
 import { Panel, Legends, MainProgressBar } from '@drill4j/ui-kit';
 
 import { percentFormatter } from 'utils';
-import { BuildCoverage } from 'types/build-coverage';
 
 import styles from './build-coverage-info.module.scss';
 
 interface Props {
   className?: string;
-  buildCoverage: BuildCoverage;
+  buildCodeCoverage: number;
+  previousBuildCodeCoverage: number;
+  previousBuildVersion: string;
 }
 
 const buildCoverageInfo = BEM(styles);
 
-export const BuildCoverageInfo = buildCoverageInfo(({ className, buildCoverage }: Props) => {
-  const { prevBuildVersion = '', diff = 0, percentage: buildCodeCoverage = 0 } = buildCoverage;
+export const BuildCoverageInfo = buildCoverageInfo(({
+  className, buildCodeCoverage, previousBuildCodeCoverage, previousBuildVersion,
+}: Props) => {
   const { agentId, buildVersion, pluginId } = useParams<{agentId: string, buildVersion: string, pluginId: string }>();
+  const buildDiff = percentFormatter(buildCodeCoverage) - percentFormatter(previousBuildCodeCoverage);
   return (
     <div className={className}>
       <Panel align="space-between">
@@ -33,15 +36,15 @@ export const BuildCoverageInfo = buildCoverageInfo(({ className, buildCoverage }
         <BuildCoveragePercentage data-test="build-coverage-info:build-coverage-percentage">
           {percentFormatter(buildCodeCoverage)}%
         </BuildCoveragePercentage>
-        {prevBuildVersion && (
+        {previousBuildVersion && (
           <span data-test="build-coverage-info:comparing">
             <b>
-              {diff >= 0 ? '+ ' : '- '}
-              {percentFormatter(Math.abs(diff))}%
+              {buildDiff >= 0 ? '+ ' : '- '}
+              {percentFormatter(Math.abs(buildDiff))}%
               &nbsp;
             </b>
             сomparing to Build:&nbsp;
-            {prevBuildVersion}
+            {previousBuildVersion}
           </span>
         )}
       </DetailedCodeCoverageInfo>
