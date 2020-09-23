@@ -6,7 +6,6 @@ import { Panel, Icons, Tooltip } from '@drill4j/ui-kit';
 import { percentFormatter } from 'utils';
 import { BuildCoverage } from 'types/build-coverage';
 import { Methods } from 'types/methods';
-import { isActiveBuild } from 'pages/agent-full-page/is-active-build';
 import { COVERAGE_TYPES_COLOR } from 'common/constants';
 import { useBuildVersion } from '../../../coverage-plugin/use-build-version';
 import { SingleBar } from '../../single-bar';
@@ -22,7 +21,7 @@ interface Props {
 
 const coverageSection = BEM(styles);
 
-export const CoverageSection = coverageSection(({ className, activeBuildVersion }: Props) => {
+export const CoverageSection = coverageSection(({ className, activeBuildVersion = '' }: Props) => {
   const {
     percentage = 0,
     diff = 0,
@@ -116,7 +115,7 @@ export const CoverageSection = coverageSection(({ className, activeBuildVersion 
             {Boolean(diff)
               && prevBuildVersion
               && `${diff > 0 ? '+' : '-'}${percentFormatter(Math.abs(diff))}% vs Build: ${prevBuildVersion}`}
-            {!percentage && !prevBuildVersion && isActiveBuild(activeBuildVersion, buildVersion)
+            {!percentage && !prevBuildVersion && activeBuildVersion === buildVersion
               && 'Will change when at least 1 scope is done.'}
           </Panel>
         )}

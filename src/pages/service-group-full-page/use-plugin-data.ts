@@ -17,6 +17,7 @@ export function usePluginData<Data>(serviceGroupId: string, pluginId: string): D
     return () => {
       unsubscribe();
     };
+    // eslint-disable-next-line
   }, [serviceGroupId, pluginId]);
 
   return data;

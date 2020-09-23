@@ -11,6 +11,7 @@ import {
 import { NotificationManagerContext } from 'notification-manager';
 import { ScopeSummary } from 'types/scope-summary';
 import { TestTypeSummary } from 'types/test-type-summary';
+import { useAgent } from 'hooks';
 import { useBuildVersion } from '../../use-build-version';
 import { toggleScope } from '../../api';
 import { usePluginState } from '../../../store';
@@ -36,8 +37,9 @@ export const ScopesList = scopesList(({ className }: Props) => {
   const {
     activeSessions: { testTypes = [] },
   } = useCoveragePluginState();
-  const { agentId, buildVersion } = usePluginState();
-  const { pluginId = '' } = useParams<{ pluginId: string }>();
+  const { agentId } = usePluginState();
+  const { buildVersion: activeBuildVersion = '' } = useAgent(agentId) || {};
+  const { pluginId = '', buildVersion = '' } = useParams<{ pluginId: string; buildVersion: string }>();
   const { push } = useHistory();
   const dispatch = useCoveragePluginDispatch();
   const activeScope = useBuildVersion<ScopeSummary>('/active-scope');
@@ -170,53 +172,55 @@ export const ScopesList = scopesList(({ className }: Props) => {
               );
             }}
           />
-          <Column
-            name="actions"
-            HeaderCell={() => null}
-            Cell={({ item }) => {
-              const menuActions = [
-                item.active && {
-                  label: 'Finish Scope',
-                  icon: 'Check',
-                  onClick: () => dispatch(openModal('FinishScopeModal', item)),
-                },
-                item.active && {
-                  label: 'Manage Sessions',
-                  icon: 'ManageSessions',
-                  onClick: () => dispatch(openModal('ManageSessionsModal', null)),
-                },
-                !item.active && {
-                  label: `${item.enabled ? 'Ignore in build stats' : 'Show in build stats'}`,
-                  icon: item.enabled ? 'EyeCrossed' : 'Eye',
-                  onClick: () => toggleScope(agentId, pluginId, {
-                    onSuccess: () => {
-                      showMessage({
-                        type: 'SUCCESS',
-                        text: `${item.name} has been ${
-                          item.enabled ? 'excluded from' : 'included in'
-                        } the build stats.`,
-                      });
-                    },
-                  })(item.id),
-                },
-                {
-                  label: 'Rename',
-                  icon: 'Edit',
-                  onClick: () => dispatch(openModal('RenameScopeModal', item)),
-                },
-                {
-                  label: `${item.active ? 'Cancel' : 'Delete'}`,
-                  icon: 'Delete',
-                  onClick: () => dispatch(openModal('DeleteScopeModal', item)),
-                },
-              ].filter(Boolean);
-              return (
-                <ActionCell>
-                  <Menu items={menuActions as MenuItemType[]} />
-                </ActionCell>
-              );
-            }}
-          />
+          {activeBuildVersion === buildVersion && (
+            <Column
+              name="actions"
+              HeaderCell={() => null}
+              Cell={({ item }) => {
+                const menuActions = [
+                  item.active && {
+                    label: 'Finish Scope',
+                    icon: 'Check',
+                    onClick: () => dispatch(openModal('FinishScopeModal', item)),
+                  },
+                  item.active && {
+                    label: 'Manage Sessions',
+                    icon: 'ManageSessions',
+                    onClick: () => dispatch(openModal('ManageSessionsModal', null)),
+                  },
+                  !item.active && {
+                    label: `${item.enabled ? 'Ignore in build stats' : 'Show in build stats'}`,
+                    icon: item.enabled ? 'EyeCrossed' : 'Eye',
+                    onClick: () => toggleScope(agentId, pluginId, {
+                      onSuccess: () => {
+                        showMessage({
+                          type: 'SUCCESS',
+                          text: `${item.name} has been ${
+                            item.enabled ? 'excluded from' : 'included in'
+                          } the build stats.`,
+                        });
+                      },
+                    })(item.id),
+                  },
+                  {
+                    label: 'Rename',
+                    icon: 'Edit',
+                    onClick: () => dispatch(openModal('RenameScopeModal', item)),
+                  },
+                  {
+                    label: `${item.active ? 'Cancel' : 'Delete'}`,
+                    icon: 'Delete',
+                    onClick: () => dispatch(openModal('DeleteScopeModal', item)),
+                  },
+                ].filter(Boolean);
+                return (
+                  <ActionCell>
+                    <Menu items={menuActions as MenuItemType[]} />
+                  </ActionCell>
+                );
+              }}
+            />
+          )}
         </Table>
       </Content>
     </div>

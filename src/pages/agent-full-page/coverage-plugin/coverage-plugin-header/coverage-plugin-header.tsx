@@ -13,7 +13,6 @@ import {
 import { Metrics } from 'types/metrics';
 import { useAgent } from 'hooks';
 import { TestsToRun } from 'types/tests-to-run';
-import { isActiveBuild } from '../../is-active-build';
 import { usePluginState } from '../../store';
 import { useBuildVersion } from '../use-build-version';
 import { ActionSection } from './action-section';
@@ -34,7 +33,7 @@ export const CoveragePluginHeader = coveragePluginHeader(({ className }: Props) 
 
   const { pluginId = '' } = useParams<{ pluginId: string }>();
   const { agentId, buildVersion } = usePluginState();
-  const { buildVersion: activeBuildVersion } = useAgent(agentId) || {};
+  const { buildVersion: activeBuildVersion = '' } = useAgent(agentId) || {};
 
   const { testTypeToNames = {} } = useBuildVersion<TestsToRun>('/build/tests-to-run') || {};
   const conditionSettings = useBuildVersion<ConditionSetting[]>('/data/quality-gate-settings') || [];
@@ -67,7 +66,7 @@ export const CoveragePluginHeader = coveragePluginHeader(({ className }: Props) 
         </CurrentBuild>
       </div>
       <Actions>
-        {isActiveBuild(activeBuildVersion, buildVersion) && (
+        {activeBuildVersion === buildVersion && (
           <QualityGateSection>
             <Panel>
               <QualityGateLabel data-test="coverage-plugin-header:quality-gate-label">QUALITY GATE</QualityGateLabel>

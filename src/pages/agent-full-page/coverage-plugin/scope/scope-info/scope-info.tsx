@@ -17,6 +17,7 @@ import { TestTypeSummary } from 'types/test-type-summary';
 import { TestSummary } from 'types/test-summary';
 import { TableActionsProvider } from 'modules';
 import { ScopeCoverage } from 'types/scope-coverage';
+import { useAgent } from 'hooks';
 import { useBuildVersion } from '../../use-build-version';
 import { ProjectMethodsCards } from '../../project-methods-cards';
 import { CoverageDetails } from '../../coverage-details';
@@ -48,7 +49,8 @@ export const ScopeInfo = scopeInfo(
   }: Props) => {
     const { showMessage } = React.useContext(NotificationManagerContext);
     const { agentId, loading } = usePluginState();
-    const { pluginId = '', scopeId = '' } = useParams<{ pluginId: string, scopeId: string }>();
+    const { buildVersion: activeBuildVersion = '' } = useAgent(agentId) || {};
+    const { pluginId = '', scopeId = '', buildVersion } = useParams<{ pluginId: string, scopeId: string, buildVersion: string }>();
     const dispatch = useCoveragePluginDispatch();
     const scope = useBuildVersion<ActiveScope>(`/scope/${scopeId}`);
     const scopeMethods = useBuildVersion<Methods>(`/scope/${scopeId}/methods`) || {};
@@ -126,7 +128,7 @@ export const ScopeInfo = scopeInfo(
                 <span>Complete Scope</span>
               </CompleteScopeButton>
             )}
-            <Menu items={menuActions as MenuItemType[]} />
+            {activeBuildVersion === buildVersion && <Menu items={menuActions as MenuItemType[]} />}
           </Panel>
         </Header>
         <ScopeCoverageInfo scope={scope} />

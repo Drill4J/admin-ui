@@ -26,6 +26,7 @@ export function useBuildVersion<Data>(topic: string, search?: Search, sort?: Sor
     return () => {
       unsubscribe && unsubscribe();
     };
+    // eslint-disable-next-line
   }, [agentId, buildVersion, topic, search, sort]);
 
   return data;
