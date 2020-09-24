@@ -28,7 +28,7 @@ interface Props {
 const manageSessionsPane = BEM(styles);
 
 const validateManageSessionsPane = composeValidators(
-  required('sessionId'),
+  required('sessionId', 'Session ID'),
   sizeLimit({
     name: 'sessionId', alias: 'Session ID', min: 1, max: 256,
   }),
@@ -57,7 +57,7 @@ export const ManageSessionsPane = manageSessionsPane(
               ? startAgentSession(agentId, pluginId, showGeneralAlertMessage)(values)
               : startServiceGroupSessions(serviceGroupId, pluginId, showGeneralAlertMessage)(values))}
             validate={validateManageSessionsPane as any}
-            render={({ invalid, handleSubmit }) => (
+            render={({ invalid, handleSubmit, form }) => (
               <>
                 <Header data-test="manage-sessions-pane:header">
                   {isNewSession ? 'Start New Session' : 'Manage Sessions' }
@@ -82,7 +82,7 @@ export const ManageSessionsPane = manageSessionsPane(
                       type="primary"
                       size="large"
                       disabled={invalid}
-                      onClick={() => { handleSubmit(); setIsNewSession(false); }}
+                      onClick={() => { handleSubmit(); form.change('sessionId', ''); setIsNewSession(false); }}
                       data-test="manage-sessions-pane:start-session-button"
                     >
                       Start Session

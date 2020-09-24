@@ -26,7 +26,8 @@ export function useActiveSessions(agentType: string, id: string, buildVersion?: 
     return () => {
       unsubscribe();
     };
-  }, [id, buildVersion, message, topic]);
+    // eslint-disable-next-line
+  }, [id, buildVersion]);
 
   return data;
 }
