@@ -1,9 +1,9 @@
 @import '~common/style-guide/index';
 
 .empty-active-sessions-stub {
+  height: 100%;
   display: grid;
   place-items: center;
-  margin-top: calc(100% - 64px);
   color: map-get($monochrome, medium-tint);
 
   &__title {

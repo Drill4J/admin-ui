@@ -1,6 +1,7 @@
 @import '~common/style-guide/index';
 
 .manage-active-sessions {
+  height: 100%;
   overflow-y: auto;
 
   &__search-panel {
