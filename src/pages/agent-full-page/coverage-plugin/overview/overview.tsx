@@ -33,7 +33,6 @@ export const Overview = overview(({ className }: Props) => {
   const buildCoverage = useBuildVersion<BuildCoverage>('/build/coverage') || {};
   const scope = useBuildVersion<ActiveScope>('/active-scope');
   const buildMethods = useBuildVersion<Methods>('/build/methods') || {};
-
   return (
     <div className={className}>
       <CoveragePluginHeader />

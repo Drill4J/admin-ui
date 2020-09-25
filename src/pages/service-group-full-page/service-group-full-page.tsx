@@ -61,7 +61,6 @@ export const ServiceGroupFullPage = serviceGroupFullPage(
     const { params: { activeLink = '' } = {} } = matchPath<{ activeLink: string }>(pathname, {
       path,
     }) || {};
-
     return (
       <PluginsLayout
         sidebar={activeLink && <Sidebar links={getPluginsList(id, plugins)} matchParams={{ path }} />}

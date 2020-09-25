@@ -37,7 +37,7 @@
 
     & > * {
       margin-right: 16px;
-      cursor: not-allowed;
+      cursor: pointer;
 
       &:hover {
         color: map-get($color-palette, blue75);
