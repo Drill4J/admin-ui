@@ -6,7 +6,8 @@ import {
 } from '@drill4j/ui-kit';
 
 import { Notification as NotificationType } from 'types/notificaiton';
-import { Notification } from './notification/notification';
+import { Notification } from './notification';
+import { deleteAllNotifications, readAllNotifications } from './api';
 
 import styles from './notifications-sidebar.module.scss';
 
@@ -38,8 +39,18 @@ export const NotificationsSidebar = notificationsSidebar(
           {notifications.length > 0 ? (
             <Content>
               <ActionsPanel align="end">
-                <span onClick={() => {}} data-test="notification-sidebar:mark-all-as-read">Mark all as read</span>
-                <span onClick={() => {}} data-test="notification-sidebar:clear-all">Clear all</span>
+                <span
+                  onClick={() => readAllNotifications({ onError: setErrorMessage })}
+                  data-test="notification-sidebar:mark-all-as-read"
+                >
+                  Mark all as read
+                </span>
+                <span
+                  onClick={() => deleteAllNotifications({ onError: setErrorMessage })}
+                  data-test="notification-sidebar:clear-all"
+                >
+                  Clear all
+                </span>
               </ActionsPanel>
               {errorMessage && (
                 <GeneralAlerts type="ERROR">
