@@ -3,13 +3,13 @@ import { BEM } from '@redneckz/react-bem-helper';
 import { useParams } from 'react-router-dom';
 import { Panel, Icons, Menu } from '@drill4j/ui-kit';
 
+import { toggleAgent } from 'api';
 import { useCommonEntity } from 'hooks';
 import { PageHeader } from 'components';
 import { AGENT_STATUS } from 'common/constants';
 import { NotificationManagerContext } from 'notification-manager';
 import { Agent } from 'types/agent';
 import { UnregisterAgentModal } from './unregister-agent-modal';
-import { toggleAgent } from './toggle-agent';
 import { AgentStatusToggler } from '../agents-page/agent-status-toggler';
 import { AgentSettings } from './agent-settings';
 import { ServiceGroupSettings } from './service-group-settings';
@@ -30,6 +30,7 @@ export const SettingsPage = settingsPage(
     const data = useCommonEntity(id, type) || {};
     const { showMessage } = React.useContext(NotificationManagerContext);
     const [isUnregisterModalOpen, setIsUnregisterModalOpen] = React.useState(false);
+
     return (
       <div className={className}>
         <PageHeader
@@ -43,7 +44,7 @@ export const SettingsPage = settingsPage(
                   Agent Settings
                   <AgentStatus
                     status={(data as Agent).status}
-                    onChange={() => toggleAgent((data as Agent).id || '', showMessage)}
+                    onChange={() => toggleAgent(data.id, (data as Agent).status, showMessage)}
                   />
                 </>
               )}

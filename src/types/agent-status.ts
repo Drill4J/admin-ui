@@ -1,1 +1,1 @@
-export type AgentStatus = 'ONLINE' | 'OFLINE' | 'NOT_REGISTERED' | 'BUSY';
+export type AgentStatus = 'ONLINE' | 'OFFLINE' | 'NOT_REGISTERED' | 'BUSY';

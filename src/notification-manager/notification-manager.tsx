@@ -18,15 +18,15 @@ export const NotificationManagerContext = React.createContext<ContextType>({ sho
 export const NotificationManager = ({ children }: Props) => {
   const [message, setMessage] = React.useState<Message | null>();
 
-  function handleShowMessage(incommingMessage: Message) {
-    if (incommingMessage.type === 'SUCCESS') {
-      setMessage(incommingMessage);
+  function handleShowMessage(incomingMessage: Message) {
+    if (incomingMessage.type === 'SUCCESS') {
+      setMessage(incomingMessage);
       setTimeout(() => {
         setMessage(null);
       }, 7000);
     }
 
-    setMessage(incommingMessage);
+    setMessage(incomingMessage);
   }
   const contextValue = { showMessage: handleShowMessage, closeMessage: () => setMessage(null) };
   return (
