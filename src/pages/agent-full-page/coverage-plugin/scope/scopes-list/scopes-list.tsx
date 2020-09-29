@@ -177,6 +177,7 @@ export const ScopesList = scopesList(({ className }: Props) => {
               name="actions"
               HeaderCell={() => null}
               Cell={({ item }) => {
+                const { active, enabled, id } = item;
                 const menuActions = [
                   item.active && {
                     label: 'Finish Scope',
@@ -189,18 +190,22 @@ export const ScopesList = scopesList(({ className }: Props) => {
                     onClick: () => dispatch(openModal('ManageSessionsModal', null)),
                   },
                   !item.active && {
-                    label: `${item.enabled ? 'Ignore in build stats' : 'Show in build stats'}`,
-                    icon: item.enabled ? 'EyeCrossed' : 'Eye',
+                    label: `${enabled ? 'Ignore' : 'Show'} in stats`,
+                    icon: enabled ? 'EyeCrossed' : 'Eye',
                     onClick: () => toggleScope(agentId, pluginId, {
                       onSuccess: () => {
                         showMessage({
                           type: 'SUCCESS',
-                          text: `${item.name} has been ${
-                            item.enabled ? 'excluded from' : 'included in'
-                          } the build stats.`,
+                          text: `Scope has been ${enabled ? 'ignored' : 'included'} in build stats.`,
                         });
                       },
-                    })(item.id),
+                      onError: () => {
+                        showMessage({
+                          type: 'ERROR',
+                          text: 'There is some issue with your action. Please try again later',
+                        });
+                      },
+                    })(id),
                   },
                   {
                     label: 'Rename',

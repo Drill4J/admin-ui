@@ -72,15 +72,19 @@ export const ScopeInfo = scopeInfo(
     const [selectedTab, setSelectedTab] = React.useState('coverage');
     const menuActions = [
       !active && {
-        label: `${enabled ? 'Ignore in build stats' : 'Show in build stats'}`,
+        label: `${enabled ? 'Ignore' : 'Show'} in stats`,
         icon: enabled ? 'EyeCrossed' : 'Eye',
         onClick: () => toggleScope(agentId, pluginId, {
           onSuccess: () => {
             showMessage({
               type: 'SUCCESS',
-              text: `${name} has been ${
-                enabled ? 'excluded from' : 'included in'
-              } the build stats.`,
+              text: `Scope has been ${enabled ? 'ignored' : 'included'} in build stats.`,
+            });
+          },
+          onError: () => {
+            showMessage({
+              type: 'ERROR',
+              text: 'There is some issue with your action. Please try again later',
             });
           },
         })(scopeId),
