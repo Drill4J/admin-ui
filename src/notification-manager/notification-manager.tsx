@@ -23,7 +23,7 @@ export const NotificationManager = ({ children }: Props) => {
       setMessage(incommingMessage);
       setTimeout(() => {
         setMessage(null);
-      }, 1500);
+      }, 7000);
     }
 
     setMessage(incommingMessage);
