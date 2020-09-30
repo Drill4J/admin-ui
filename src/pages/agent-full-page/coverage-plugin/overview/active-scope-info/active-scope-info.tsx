@@ -89,7 +89,7 @@ export const ActiveScopeInfo = activeScopeInfo(({
           data-test="active-scope-info:finish-scope-button"
         >
           <Icons.Complete />
-          <span>Complete Active Scope</span>
+          <span>Finish Active Scope</span>
         </Button>
         <SessionIndicator active={loading} />
         <Menu items={menuActions as MenuItemType[]} />

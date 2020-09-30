@@ -118,15 +118,15 @@ export const ScopeInfo = scopeInfo(
           </Panel>
           <Panel align="end">
             {active && (
-              <CompleteScopeButton
+              <FinishScopeButton
                 type="primary"
                 size="large"
                 onClick={() => dispatch(openModal('FinishScopeModal', scope))}
-                data-test="scope-info:complete-scope-button"
+                data-test="scope-info:finish-scope-button"
               >
                 <Icons.Complete />
-                <span>Complete Scope</span>
-              </CompleteScopeButton>
+                <span>Finish Scope</span>
+              </FinishScopeButton>
             )}
             {activeBuildVersion === buildVersion && <Menu items={menuActions as MenuItemType[]} />}
           </Panel>
@@ -180,7 +180,7 @@ export const ScopeInfo = scopeInfo(
 const Header = scopeInfo.header(Panel);
 const ScopeName = scopeInfo.scopeName('div');
 const ScopeSessionIndicator = scopeInfo.scopeSessionIndicator(SessionIndicator);
-const CompleteScopeButton = scopeInfo.completeScopeButton(Button);
+const FinishScopeButton = scopeInfo.finishScopeButton(Button);
 const RoutingTabsPanel = scopeInfo.routingTabsPanel(Panel);
 const TabIconWrapper = scopeInfo.tabIconWrapper('div');
 const TabContent = scopeInfo.tabContent('div');

@@ -78,7 +78,7 @@ export const ActiveBuildCoverageInfo = activeBuildCoverageInfo(({
         )}
         {status === 'BUSY' && 'Loading...'}
         {(finishedScopesCount === 0 && status === 'ONLINE') &&
-            'Press “Complete active scope” button to add your scope coverage to the build.'}
+            'Press “Finish active scope” button to add your scope coverage to the build.'}
       </BuildCoverageStatus>
       <MultiProgressBar
         buildCodeCoverage={buildCodeCoverage}
