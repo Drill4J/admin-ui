@@ -42,7 +42,7 @@ export const CoverageSection = coverageSection(({ className }: Props) => {
   } = useBuildVersion<Methods>('/build/methods') || {};
   const { buildVersion = '' } = useParams<{ buildVersion: string }>();
   const buildDiff = percentFormatter(buildCodeCoverage) - percentFormatter(previousBuildCodeCoverage);
-  console.log(!buildCodeCoverage && buildVersion !== previousBuildVersion);
+
   return (
     <div className={className}>
       <Section

@@ -27,7 +27,6 @@ export const CoveredMethodsByTestSidebar = coveredMethodsByTestSidebar(
       testType = '',
       allMethods = [],
     } = filtredMethods;
-    console.log(allMethods);
 
     return (
       <Modal isOpen={isOpen} onToggle={onToggle}>
