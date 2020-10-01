@@ -208,7 +208,7 @@ export const ScopesList = scopesList(({ className }: Props) => {
                     onClick: () => dispatch(openModal('RenameScopeModal', item)),
                   },
                   {
-                    label: `${item.active ? 'Cancel' : 'Delete'}`,
+                    label: 'Delete',
                     icon: 'Delete',
                     onClick: () => dispatch(openModal('DeleteScopeModal', item)),
                   },

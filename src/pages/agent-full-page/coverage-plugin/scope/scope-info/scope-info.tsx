@@ -95,17 +95,11 @@ export const ScopeInfo = scopeInfo(
         icon: 'Edit',
         onClick: () => dispatch(openModal('RenameScopeModal', scope)),
       },
-      active
-        ? {
-          label: 'Cancel',
-          icon: 'Delete',
-          onClick: () => dispatch(openModal('DeleteScopeModal', scope)),
-        }
-        : {
-          label: 'Delete',
-          icon: 'Delete',
-          onClick: () => dispatch(openModal('DeleteScopeModal', scope)),
-        },
+      {
+        label: 'Delete',
+        icon: 'Delete',
+        onClick: () => dispatch(openModal('DeleteScopeModal', scope)),
+      },
     ].filter(Boolean);
 
     return (

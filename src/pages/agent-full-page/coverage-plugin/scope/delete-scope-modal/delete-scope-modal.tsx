@@ -28,13 +28,9 @@ export const DeleteScopeModal = deleteScopeModal(
   }: Props) => {
     const { agentId, buildVersion } = usePluginState();
     const { pluginId = '' } = useParams<{ pluginId: string }>();
-    const { push } = useHistory();
+    const { push, location: { pathname = '' } } = useHistory();
     const { showMessage } = React.useContext(NotificationManagerContext);
     const [errorMessage, setErrorMessage] = React.useState('');
-
-    const testsCount = scope
-      ? (scope.coverage.byTestType || []).reduce((acc, { summary: { testCount = 0 } }) => acc + testCount, 0)
-      : 0;
 
     return (
       <Popup
@@ -42,8 +38,7 @@ export const DeleteScopeModal = deleteScopeModal(
         onToggle={onToggle}
         header={(
           <OverflowText>
-            {`${testsCount ? 'Delete' : 'Cancel'} Scope ${scope
-              && scope.name}`}
+            {`Delete Scope ${scope?.name}`}
           </OverflowText>
         )}
         type="info"
@@ -59,7 +54,7 @@ export const DeleteScopeModal = deleteScopeModal(
           <Content>
             <Message>
               {`You are about to ${
-                scope && scope.active ? 'cancel an active scope' : 'delete a non-empty scope'
+                scope && scope.active ? 'delete an active scope' : 'delete a non-empty scope'
               }. Are you sure you want to proceed? All scope
               data will be lost.`}
             </Message>
@@ -71,16 +66,22 @@ export const DeleteScopeModal = deleteScopeModal(
                     onSuccess: () => {
                       showMessage({ type: 'SUCCESS', text: 'Scope has been deleted' });
                       onToggle(false);
-                      scope?.id
-                          && push(`/full-page/${agentId}/${buildVersion}/${pluginId}/dashboard`);
+                      scope?.id && pathname.includes(scope.id)
+                        && push(`/full-page/${agentId}/${buildVersion}/${pluginId}/dashboard`);
                     },
                     onError: setErrorMessage,
                   })(scope as ActiveScope);
                 }}
+                data-test="delete-scope-modal:confirm-delete-button"
               >
-                {scope && scope.active ? 'Yes, Cancel Scope' : 'Yes, Delete Scope'}
+                Yes, Delete Scope
               </DeleteScopeButton>
-              <Button type="secondary" size="large" onClick={() => onToggle(false)}>
+              <Button
+                type="secondary"
+                size="large"
+                onClick={() => onToggle(false)}
+                data-test="delete-scope-modal:cancel-modal-button"
+              >
                 Cancel
               </Button>
             </ActionsPanel>

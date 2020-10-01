@@ -49,7 +49,7 @@ export const ActiveScopeInfo = activeScopeInfo(({
       onClick: () => dispatch(openModal('RenameScopeModal', scope)),
     },
     {
-      label: 'Cancel',
+      label: 'Delete',
       icon: 'Delete',
       onClick: () => dispatch(openModal('DeleteScopeModal', scope)),
     },
