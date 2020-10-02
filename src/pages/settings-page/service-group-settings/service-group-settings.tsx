@@ -42,6 +42,7 @@ export const ServiceGroupSettings = agentSettings(
         <Tabs activeTab={selectedTab} onSelect={setSelectedTab}>
           <Tab name="general">General</Tab>
           <Tab name="system">System</Tab>
+          <Tab name="plugins">Plugins</Tab>
         </Tabs>
         {tabsComponents.find(({ name }) => name === selectedTab)?.component}
       </div>
