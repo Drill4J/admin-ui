@@ -179,17 +179,17 @@ export const ScopesList = scopesList(({ className }: Props) => {
               Cell={({ item }) => {
                 const { active, enabled, id } = item;
                 const menuActions = [
-                  item.active && {
+                  active && {
                     label: 'Finish Scope',
                     icon: 'Check',
                     onClick: () => dispatch(openModal('FinishScopeModal', item)),
                   },
-                  item.active && {
+                  active && {
                     label: 'Manage Sessions',
                     icon: 'ManageSessions',
                     onClick: () => dispatch(openModal('ManageSessionsModal', null)),
                   },
-                  !item.active && {
+                  !active && {
                     label: `${enabled ? 'Ignore' : 'Show'} in stats`,
                     icon: enabled ? 'EyeCrossed' : 'Eye',
                     onClick: () => toggleScope(agentId, pluginId, {
