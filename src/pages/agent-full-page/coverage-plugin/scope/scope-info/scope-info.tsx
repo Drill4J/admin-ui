@@ -72,7 +72,7 @@ export const ScopeInfo = scopeInfo(
     const [selectedTab, setSelectedTab] = React.useState('coverage');
     const menuActions = [
       !active && {
-        label: `${enabled ? 'Ignore' : 'Show'} in stats`,
+        label: `${enabled ? 'Ignore' : 'Include'} in stats`,
         icon: enabled ? 'EyeCrossed' : 'Eye',
         onClick: () => toggleScope(agentId, pluginId, {
           onSuccess: () => {

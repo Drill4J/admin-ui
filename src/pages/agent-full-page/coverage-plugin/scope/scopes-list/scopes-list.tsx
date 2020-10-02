@@ -190,7 +190,7 @@ export const ScopesList = scopesList(({ className }: Props) => {
                     onClick: () => dispatch(openModal('ManageSessionsModal', null)),
                   },
                   !active && {
-                    label: `${enabled ? 'Ignore' : 'Show'} in stats`,
+                    label: `${enabled ? 'Ignore' : 'Include'} in stats`,
                     icon: enabled ? 'EyeCrossed' : 'Eye',
                     onClick: () => toggleScope(agentId, pluginId, {
                       onSuccess: () => {
