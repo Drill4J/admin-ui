@@ -78,7 +78,7 @@ export const FinishScopeModal = finishScopeModal(
                     },
                     onError: setErrorMessage,
                   })({ prevScopeEnabled: !ignoreScope, savePrevScope: true });
-                  !testsCount && scope?.id && pathname.includes(scope.id)
+                  scope?.id && pathname.includes(scope.id)
                     && push(`/full-page/${agentId}/${buildVersion}/${pluginId}/dashboard`);
                 }}
               >
