@@ -1,6 +1,8 @@
 @import '~common/style-guide/index';
 
 .scopes-list {
+  height: 100%;
+
   &__content {
     height: 100%;
     width: 100%;
@@ -12,6 +14,7 @@
     line-height: 32px;
     font-family: $light-font;
     color: map-get($monochrome, black);
+    border-bottom: 1px solid map-get($monochrome, medium-tint);
   }
 
   &__scopes-count {

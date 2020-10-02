@@ -1,21 +1,25 @@
 @import '~common/style-guide/index';
 
 .no-scope-stub {
-  height: 100%;
+  display: grid;
+  place-items: center;
+  height: calc(100% - 80px);
   width: 100%;
-
-  &__content {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
+  color: map-get($monochrome, medium-tint);
 
   &__title {
     margin-top: 40px;
     margin-bottom: 8px;
-    font-size: 20px;
+    font-size: 24px;
     line-height: 32px;
     text-align: center;
-    color: map-get($color-palette, middle-blue);
+    color: map-get($monochrome, default);
+  }
+
+  &__message {
+    font-size: 14px;
+    line-height: 20px;
+    color: map-get($monochrome, default);
+    text-align: center;
   }
 }
