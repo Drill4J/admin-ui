@@ -21,7 +21,7 @@ export function deleteScope(
         });
         onSuccess && onSuccess();
       } catch ({ response: { data: { message } = {} } = {} }) {
-        onError && onError(message);
+        onError && onError(message || 'There is some issue with your action. Please try again later.');
       }
     }
   };
