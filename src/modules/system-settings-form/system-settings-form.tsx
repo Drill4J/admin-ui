@@ -5,6 +5,7 @@ import {
 } from '@drill4j/ui-kit';
 import { Field, Form } from 'react-final-form';
 import axios from 'axios';
+import { useParams } from 'react-router-dom';
 
 import {
   Fields, requiredArray, composeValidators, sizeLimit,
@@ -13,14 +14,14 @@ import { UnlockingSystemSettingsFormModal } from 'modules';
 import { parsePackges, formatPackages } from 'utils';
 import { Agent } from 'types/agent';
 import { Message } from 'types/message';
-
 import { SystemSettings } from 'types/system-settings';
+import { NotificationManagerContext } from 'notification-manager';
+
 import styles from './system-settings-form.module.scss';
 
 interface Props {
   className?: string;
-  serviceGroup: Agent;
-  showMessage: (message: Message) => void;
+  agent: Agent;
 }
 
 const systemSettingsForm = BEM(styles);
@@ -38,28 +39,27 @@ const validateSettings = composeValidators(
 export const SystemSettingsForm = systemSettingsForm(
   ({
     className,
-    serviceGroup: {
+    agent: {
       id, systemSettings,
     },
-    showMessage,
   }: Props) => {
-    const [errorMessage, setErrorMessage] = React.useState('');
     const [unlocked, setUnlocked] = React.useState(false);
     const [isUnlockingModalOpened, setIsUnlockingModalOpened] = React.useState(false);
+    const { showMessage } = React.useContext(NotificationManagerContext);
+    const { type: agentType } = useParams<{ type: 'service-group' | 'agent' }>();
+
     return (
       <div className={className}>
         <Form
           onSubmit={saveChanges({
-            onSuccess: () => {
-              setErrorMessage('');
-              showMessage({ type: 'SUCCESS', text: 'New settings have been saved' });
+            onSuccess: (message) => {
+              showMessage(message);
               setUnlocked(false);
             },
-            onError: setErrorMessage,
+            onError: (message) => showMessage(message),
+            agentType,
           })}
-          initialValues={{
-            id, ...systemSettings,
-          }}
+          initialValues={{ id, ...systemSettings }}
           validate={validateSettings as any}
           render={({
             handleSubmit,
@@ -88,12 +88,6 @@ export const SystemSettingsForm = systemSettingsForm(
                   Save Changes
                 </SaveChangesButton>
               </InfoPanel>
-              {errorMessage && (
-                <ErrorMessage>
-                  <ErrorMessageIcon />
-                  {errorMessage}
-                </ErrorMessage>
-              )}
               <Content>
                 <FieldName>
                   Project Package(s)
@@ -170,8 +164,6 @@ export const SystemSettingsForm = systemSettingsForm(
 const InfoPanel = systemSettingsForm.infoPanel(Panel);
 const InfoIcon = systemSettingsForm.infoIcon(Icons.Info);
 const SaveChangesButton = systemSettingsForm.saveChangesButton(Button);
-const ErrorMessage = systemSettingsForm.errorMessage(Panel);
-const ErrorMessageIcon = systemSettingsForm.errorMessageIcon(Icons.Warning);
 const Content = systemSettingsForm.content('div');
 const FieldName = systemSettingsForm.fieldName(Panel);
 const BlockerStatus = systemSettingsForm.blockerStatus(
@@ -187,22 +179,27 @@ const TargetHost = systemSettingsForm.targetHost(FormGroup);
 function saveChanges({
   onSuccess,
   onError,
+  agentType,
 }: {
-  onSuccess: () => void;
-  onError: (message: string) => void;
+  onSuccess: (message: Message) => void;
+  onError: (message: Message) => void;
+  agentType: 'service-group' | 'agent';
 }) {
   return async ({
     id, packages = [], sessionIdHeaderName, targetHost,
   }: { id?: string } & SystemSettings) => {
     try {
-      await axios.put(`/service-groups/${id}/system-settings`, {
+      await axios.put(`/${agentType === 'agent' ? 'agents' : 'service-groups'}/${id}/system-settings`, {
         packages: packages.filter(Boolean),
         sessionIdHeaderName,
         targetHost,
       });
-      onSuccess && onSuccess();
+      onSuccess({ type: 'SUCCESS', text: 'New settings have been saved' });
     } catch ({ response: { data: { message } = {} } = {} }) {
-      onError && onError(message || 'Internal service error');
+      onError({
+        type: 'ERROR',
+        text: 'On-submit error. Server problem or operation could not be processed in real-time',
+      });
     }
   };
 }

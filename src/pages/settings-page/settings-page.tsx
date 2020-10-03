@@ -71,11 +71,7 @@ export const SettingsPage = settingsPage(
             )
           }
         />
-        {(type as string) === 'service-group' ? (
-          <ServiceGroupSettings showMessage={showMessage} serviceGroup={data} />
-        ) : (
-          <AgentSettings showMessage={showMessage} agent={data} />
-        )}
+        {type === 'service-group' ? <ServiceGroupSettings serviceGroup={data} /> : <AgentSettings agent={data} />}
         {isUnregisterModalOpen && (
           <UnregisterAgentModal
             isOpen={isUnregisterModalOpen}

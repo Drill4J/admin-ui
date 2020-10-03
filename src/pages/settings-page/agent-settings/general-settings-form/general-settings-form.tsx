@@ -3,7 +3,7 @@ import { BEM } from '@redneckz/react-bem-helper';
 import { Form, Field } from 'react-final-form';
 import axios from 'axios';
 import {
-  Panel, Icons, FormGroup, Button, GeneralAlerts,
+  Panel, Icons, FormGroup, Button,
 } from '@drill4j/ui-kit';
 
 import {
@@ -12,13 +12,13 @@ import {
 import { copyToClipboard } from 'utils';
 import { Message } from 'types/message';
 import { Agent } from 'types/agent';
+import { NotificationManagerContext } from 'notification-manager';
 
 import styles from './general-settings-form.module.scss';
 
 interface Props {
   className?: string;
   agent: Agent;
-  showMessage: (message: Message) => void;
 }
 
 const generalSettingsForm = BEM(styles);
@@ -31,16 +31,15 @@ const validateSettings = composeValidators(
 );
 
 export const GeneralSettingsForm = generalSettingsForm(
-  ({ className, agent, showMessage }: Props) => {
-    const [errorMessage, setErrorMessage] = React.useState('');
+  ({ className, agent }: Props) => {
+    const { showMessage } = React.useContext(NotificationManagerContext);
+
     return (
       <div className={className}>
         <Form
           onSubmit={saveChanges({
-            onSuccess: () => {
-              showMessage({ type: 'SUCCESS', text: 'New settings have been saved' });
-            },
-            onError: setErrorMessage,
+            onSuccess: (message) => showMessage(message),
+            onError: (message) => showMessage(message),
           })}
           initialValues={agent}
           validate={validateSettings as any}
@@ -71,11 +70,6 @@ export const GeneralSettingsForm = generalSettingsForm(
                   Save Changes
                 </SaveChangesButton>
               </InfoPanel>
-              {errorMessage && (
-                <GeneralAlerts type="ERROR">
-                  {errorMessage}
-                </GeneralAlerts>
-              )}
               <Content>
                 <FormGroup
                   label="Agent ID"
@@ -130,17 +124,20 @@ function saveChanges({
   onSuccess,
   onError,
 }: {
-  onSuccess: () => void;
-  onError: (message: string) => void;
+  onSuccess: (message: Message) => void;
+  onError: (message: Message) => void;
 }) {
   return async ({
     id, name, description, environment,
   }: Agent) => {
     try {
       await axios.patch(`/agents/${id}/info`, { name, description, environment });
-      onSuccess && onSuccess();
+      onSuccess({ type: 'SUCCESS', text: 'New settings have been saved' });
     } catch ({ response: { data: { message } = {} } = {} }) {
-      onError && onError(message || 'Internal service error');
+      onError({
+        type: 'ERROR',
+        text: 'On-submit error. Server problem or operation could not be processed in real-time',
+      });
     }
   };
 }

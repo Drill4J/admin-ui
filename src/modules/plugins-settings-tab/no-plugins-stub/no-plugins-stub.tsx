@@ -6,15 +6,16 @@ import styles from './no-plugins-stub.module.scss';
 
 interface Props {
   className?: string;
+  children: string;
 }
 
 const noPluginsStub = BEM(styles);
 
-export const NoPluginsStub = noPluginsStub(({ className }: Props) => (
+export const NoPluginsStub = noPluginsStub(({ className, children }: Props) => (
   <div className={className}>
     <Icon height={160} width={160} />
     <Title>No plugins installed</Title>
-    <SubTitle>There are no plugins installed on this agent at the moment.</SubTitle>
+    <SubTitle>{children}</SubTitle>
   </div>
 ));
 

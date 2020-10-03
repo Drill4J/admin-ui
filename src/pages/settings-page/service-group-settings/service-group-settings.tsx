@@ -2,16 +2,14 @@ import * as React from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 
 import { TabsPanel, Tab } from 'components';
-import { Message } from 'types/message';
 import { CommonEntity } from 'types/common-entity';
+import { PluginsSettingsTab, SystemSettingsForm } from 'modules';
 import { GeneralSettingsForm } from './general-settings-form';
-import { SystemSettingsForm } from './system-setting-form';
 
 import styles from './service-group-settings.module.scss';
 
 interface Props {
   className?: string;
-  showMessage: (message: Message) => void;
   serviceGroup: CommonEntity;
   type?: string;
 }
@@ -24,16 +22,20 @@ interface TabsComponent {
 const agentSettings = BEM(styles);
 
 export const ServiceGroupSettings = agentSettings(
-  ({ className, showMessage, serviceGroup }: Props) => {
+  ({ className, serviceGroup }: Props) => {
     const [selectedTab, setSelectedTab] = React.useState('general');
     const tabsComponents: TabsComponent[] = [
       {
         name: 'general',
-        component: <GeneralSettingsForm serviceGroup={serviceGroup} showMessage={showMessage} />,
+        component: <GeneralSettingsForm serviceGroup={serviceGroup} />,
       },
       {
         name: 'system',
-        component: <SystemSettingsForm serviceGroup={serviceGroup} showMessage={showMessage} />,
+        component: <SystemSettingsForm agent={serviceGroup} />,
+      },
+      {
+        name: 'plugins',
+        component: <PluginsSettingsTab agent={serviceGroup} />,
       },
     ];
 
@@ -42,6 +44,7 @@ export const ServiceGroupSettings = agentSettings(
         <Tabs activeTab={selectedTab} onSelect={setSelectedTab}>
           <Tab name="general">General</Tab>
           <Tab name="system">System</Tab>
+          <Tab name="plugins">Plugins</Tab>
         </Tabs>
         {tabsComponents.find(({ name }) => name === selectedTab)?.component}
       </div>

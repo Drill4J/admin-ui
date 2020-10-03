@@ -4,7 +4,9 @@
   min-width: 850px;
 
   &__selected-plugins-info {
-    margin: 16px 40px;
+    padding: 16px 0;
+    margin: 0 40px;
+    border-bottom: 1px solid map-get($monochrome, medium-tint);
     font-size: 20px;
     line-height: 32px;
     color: map-get($monochrome, default);

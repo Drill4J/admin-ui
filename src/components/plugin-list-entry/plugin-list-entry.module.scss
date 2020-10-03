@@ -4,12 +4,8 @@
   border-bottom: 1px solid map-get($monochrome, medium-tint);
   cursor: pointer;
 
-  &:first-child {
-    border-top: 1px solid map-get($monochrome, medium-tint);
-  }
-
   &:hover {
-    background-color: rgba(104, 116, 129, 0.05);
+    background-color: map-get($monochrome, light-tint);
   }
 
   &__plugin-elements {
@@ -18,7 +14,7 @@
     padding: 0 16px;
 
     &--selected {
-      background-color: rgba(0, 127, 255, 0.15);
+      background-color: map-get($primary-blue, light-tint);
       color: map-get($monochrome, white);
     }
   }
@@ -32,7 +28,7 @@
     min-width: 80px;
     border-radius: 16px;
     background-color: map-get($monochrome, light-tint);
-    color: $slate-gray;
+    color: map-get($monochrome, default);
 
     &--selected {
       background-color: map-get($primary-blue, default);

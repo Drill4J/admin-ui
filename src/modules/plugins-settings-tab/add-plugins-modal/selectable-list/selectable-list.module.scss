@@ -1,0 +1,67 @@
+@import '~common/style-guide/index';
+
+.selectable-list {
+  &:hover {
+    background-color: map-get($monochrome, light-tint);
+  }
+
+  &__element {
+    &--selected {
+      background-color: map-get($primary-blue, ultralight-tint);
+    }
+  }
+
+  &__plugin-relation {
+    height: 20px;
+    margin-left: 8px;
+    font-size: 12px;
+    font-family: $semibold-font;
+  }
+
+  &__plugin {
+    gap: 16px;
+    width: 100%;
+    padding: 16px;
+    border-bottom: 1px solid map-get($monochrome, medium-tint);
+  }
+
+  &__plugins-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 48px;
+    min-width: 48px;
+    border-radius: 8px;
+    background-color: map-get($monochrome, light-tint);
+    color: map-get($monochrome, default);
+
+    &--selected {
+      background-color: map-get($primary-blue, default);
+      color: map-get($monochrome, white);
+    }
+  }
+
+  &__plugin-name {
+    font-size: 14px;
+    font-family: $semibold-font;
+    color: map-get($monochrome, black);
+  }
+
+  &__plugin-version {
+    flex-grow: 1;
+    font-family: $regular-font;
+    font-size: 12px;
+    text-align: right;
+    color: map-get($monochrome, black);
+  }
+  &__plugin-description {
+    height: 32px;
+    margin-top: 4px;
+    overflow: hidden;
+    font-family: $regular-font;
+    font-size: 12px;
+    letter-spacing: 0;
+    line-height: 16px;
+    color: map-get($monochrome, default);
+  }
+}

@@ -1,9 +1,8 @@
 import * as React from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 import { Modal, Button } from '@drill4j/ui-kit';
+import { useParams } from 'react-router-dom';
 
-import { useWsConnection } from 'hooks';
-import { defaultAdminSocket } from 'common/connection';
 import { NotificationManagerContext } from 'notification-manager';
 import { Plugin } from 'types/plugin';
 import { SelectableList } from './selectable-list';
@@ -15,24 +14,30 @@ interface Props {
   className?: string;
   isOpen: boolean;
   onToggle: (arg: boolean) => void;
+  plugins: Plugin[];
   agentId: string;
 }
 
 const addPluginModal = BEM(styles);
 
 export const AddPluginsModal = addPluginModal(({
-  className, isOpen, onToggle, agentId,
+  className, isOpen, onToggle, plugins, agentId,
 }: Props) => {
   const [selectedPlugins, setSelectedPlugins] = React.useState<string[]>([]);
   const { showMessage } = React.useContext(NotificationManagerContext);
-  const plugins = useWsConnection<Plugin[]>(defaultAdminSocket, `/agents/${agentId}/plugins`);
-  const handleLoadPlugins = loadPlugins(agentId, {
-    onSuccess: () => {
-      onToggle(false);
-      showMessage({ type: 'SUCCESS', text: 'Plugin has been added' });
+  const { type } = useParams<{ type: 'service-group' | 'agent' }>();
+  const handleLoadPlugins = loadPlugins(
+    `/${type === 'agent' ? 'agents' : 'service-groups'}/${agentId}/plugins`, {
+      onSuccess: () => {
+        onToggle(false);
+        showMessage({ type: 'SUCCESS', text: 'Plugin has been added' });
+      },
+      onError: () => showMessage({
+        type: 'ERROR',
+        text: 'On-submit error. Server problem or operation could not be processed in real-time',
+      }),
     },
-    onError: (message: string) => showMessage({ type: 'ERROR', text: message }),
-  });
+  );
 
   return (
     <Modal isOpen={isOpen} onToggle={onToggle}>
@@ -42,8 +47,7 @@ export const AddPluginsModal = addPluginModal(({
           <Title>Choose one or more plugins:</Title>
           <PluginsList>
             <SelectableList
-              data={plugins || []}
-              idKey="id"
+              plugins={plugins}
               selectedRows={selectedPlugins}
               onSelect={setSelectedPlugins}
             />

@@ -1,6 +1,6 @@
 @import '~common/style-guide/index';
 
-.system-settings-form {
+.service-group-system-settings-form {
   &__info-panel {
     height: 48px;
     padding: 0 24px;
@@ -17,20 +17,6 @@
   &__save-changes-button {
     max-height: 32px;
     width: 142px;
-  }
-
-  &__error-message {
-    height: 40px;
-    width: 100%;
-    background-color: rgba(255, 2, 2, 0.1);
-    font-size: 14px;
-    line-height: 24px;
-    color: map-get($color-palette, red100);
-  }
-
-  &__error-message-icon {
-    margin-left: 24px;
-    margin-right: 8px;
   }
 
   &__content {

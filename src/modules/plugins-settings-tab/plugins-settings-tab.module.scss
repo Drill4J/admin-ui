@@ -1,6 +1,6 @@
 @import '~common/style-guide/index';
 
-.plugins-settings {
+.plugins-settings-tab {
   display: flex;
   flex-direction: column;
   height: 100%;
@@ -9,8 +9,8 @@
   &__info-panel {
     height: 48px;
     padding: 0 24px;
-    background-color: map-get($color-palette, ultra-light-blue);
-    color: $slate-gray;
+    background-color: map-get($monochrome, light-tint);
+    color: map-get($monochrome, default);
     font-size: 14px;
     line-height: 24px;
   }
@@ -20,14 +20,18 @@
   }
 
   &__header {
-    padding: 24px;
-    font-size: 18px;
+    display: flex;
+    justify-content: space-between;
+    padding: 24px 0;
+    margin: 0 24px;
+    border-bottom: 1px solid map-get($monochrome, medium-tint);
+    font-size: 20px;
   }
 
   &__plugins-count {
     margin-left: 8px;
-    font-family: $light-font;
-    color: map-get($color-palette, middle-blue);
+    font-family: $regular-font;
+    color: map-get($monochrome, default);
   }
 
   &__add-plugin {
@@ -48,12 +52,12 @@
     font-family: $semibold-font;
     font-size: 14px;
     line-height: 22px;
-    color: map-get($color-palette, blue100);
+    color: map-get($primary-blue, default);
   }
 
   &__plugin-version {
     font-size: 14px;
     line-height: 22px;
-    color: map-get($color-palette, black75);
+    color: map-get($monochrome, default);
   }
 }
