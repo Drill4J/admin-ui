@@ -3,7 +3,7 @@ import { BEM } from '@redneckz/react-bem-helper';
 import { Form, Field } from 'react-final-form';
 import axios from 'axios';
 import {
-  Panel, Icons, FormGroup, Button, GeneralAlerts,
+  Panel, Icons, FormGroup, Button,
 } from '@drill4j/ui-kit';
 
 import {
@@ -12,13 +12,13 @@ import {
 import { copyToClipboard } from 'utils';
 import { Message } from 'types/message';
 import { CommonEntity } from 'types/common-entity';
+import { NotificationManagerContext } from 'notification-manager';
 
 import styles from './general-settings-form.module.scss';
 
 interface Props {
   className?: string;
   serviceGroup: CommonEntity;
-  showMessage: (message: Message) => void;
 }
 
 const generalSettingsForm = BEM(styles);
@@ -31,17 +31,15 @@ const validateSettings = composeValidators(
 );
 
 export const GeneralSettingsForm = generalSettingsForm(
-  ({ className, serviceGroup, showMessage }: Props) => {
-    const [errorMessage, setErrorMessage] = React.useState('');
+  ({ className, serviceGroup }: Props) => {
+    const { showMessage } = React.useContext(NotificationManagerContext);
 
     return (
       <div className={className}>
         <Form
           onSubmit={(values) => saveChanges(values, {
-            onSuccess: (message: Message) => {
-              showMessage(message);
-            },
-            onError: setErrorMessage,
+            onSuccess: (message: Message) => showMessage(message),
+            onError: (message: Message) => showMessage(message),
           })}
           initialValues={serviceGroup}
           validate={validateSettings as any}
@@ -72,11 +70,6 @@ export const GeneralSettingsForm = generalSettingsForm(
                   Save Changes
                 </SaveChangesButton>
               </InfoPanel>
-              {errorMessage && (
-                <GeneralAlerts type="ERROR">
-                  {errorMessage}
-                </GeneralAlerts>
-              )}
               <Content>
                 <FormGroup
                   label="Service Group ID"
@@ -131,13 +124,16 @@ async function saveChanges(
     onError,
   }: {
     onSuccess: (message: Message) => void;
-    onError: (message: string) => void;
+    onError: (message: Message) => void;
   },
 ) {
   try {
     await axios.put(`/service-groups/${id}`, { name, description, environment });
-    onSuccess && onSuccess({ type: 'SUCCESS', text: 'New settings have been saved' });
+    onSuccess({ type: 'SUCCESS', text: 'New settings have been saved' });
   } catch ({ response: { data: { message } = {} } = {} }) {
-    onError && onError(message || 'Internal service error');
+    onError({
+      type: 'ERROR',
+      text: 'On-submit error. Server problem or operation could not be processed in real-time',
+    });
   }
 }

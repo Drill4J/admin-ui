@@ -4,16 +4,16 @@ import { FieldInputProps, FieldMetaState } from 'react-final-form';
 import { Icons } from '@drill4j/ui-kit';
 
 import { Fields } from 'forms/fields';
-import { Plugin } from 'types/plugin';
 
 import styles from './plugin-list-entry.module.scss';
 
-interface Props extends Plugin {
+interface Props {
   className?: string;
   onClick?: () => void;
   input?: FieldInputProps<any>;
   meta?: FieldMetaState<any>;
   icon: keyof typeof Icons;
+  description?: string;
   children?: React.ReactNode;
 }
 

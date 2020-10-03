@@ -3,16 +3,13 @@ import { BEM } from '@redneckz/react-bem-helper';
 
 import { TabsPanel, Tab } from 'components';
 import { Agent } from 'types/agent';
-import { Message } from 'types/message';
+import { PluginsSettingsTab, SystemSettingsForm } from 'modules';
 import { GeneralSettingsForm } from './general-settings-form';
-import { SystemSettingsForm } from './system-setting-form';
-import { PluginsSettings } from './plugins-settings';
 
 import styles from './agent-settings.module.scss';
 
 interface Props {
   className?: string;
-  showMessage: (message: Message) => void;
   agent: Agent;
 }
 
@@ -23,20 +20,20 @@ interface TabsComponent {
 
 const agentSettings = BEM(styles);
 
-export const AgentSettings = agentSettings(({ className, showMessage, agent }: Props) => {
+export const AgentSettings = agentSettings(({ className, agent }: Props) => {
   const [selectedTab, setSelectedTab] = React.useState('general');
   const tabsComponents: TabsComponent[] = [
     {
       name: 'general',
-      component: <GeneralSettingsForm agent={agent} showMessage={showMessage} />,
+      component: <GeneralSettingsForm agent={agent} />,
     },
     {
       name: 'system',
-      component: <SystemSettingsForm agent={agent} showMessage={showMessage} />,
+      component: <SystemSettingsForm agent={agent} />,
     },
     {
       name: 'plugins',
-      component: <PluginsSettings agent={agent} />,
+      component: <PluginsSettingsTab agent={agent} />,
     },
   ];
   return (
