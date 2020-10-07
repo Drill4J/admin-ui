@@ -1152,10 +1152,10 @@
     rxjs "6.5.5"
     typescript "3.8.3"
 
-"@drill4j/ui-kit@0.1.26":
-  version "0.1.26"
-  resolved "https://registry.yarnpkg.com/@drill4j/ui-kit/-/ui-kit-0.1.26.tgz#846eb731f4523796bbe51355dc383f2ac6ffc41d"
-  integrity sha512-xBOo9XaTkwunE0Odli2r3nALxMWTbKqNQ3KHoBOuXtH4cOWgFfcLqED8bB5VDixfjxAdwk4tgkL/zlmNaCaK/Q==
+"@drill4j/ui-kit@0.1.30":
+  version "0.1.30"
+  resolved "https://registry.yarnpkg.com/@drill4j/ui-kit/-/ui-kit-0.1.30.tgz#84aad7f7d3c084acda5d58066fbfccc94052391a"
+  integrity sha512-h1m0EXyB75c14OTt3w7YdnLLAMyi3LybEV+Hlo8Eo/00IQSdsJR5PKORZN6C2Ay99HsTiWVkgnJKFTQcIt1SeA==
   dependencies:
     "@redneckz/react-bem-helper" "^2.0.4"
     "@types/nanoid" "^2.1.0"

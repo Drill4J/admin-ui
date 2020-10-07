@@ -1,16 +1,17 @@
 import * as React from 'react';
-import { BEM, span, div } from '@redneckz/react-bem-helper';
+import { BEM, div } from '@redneckz/react-bem-helper';
 import {
-  Icons, OverflowText, Panel, Column, ExpandableTable,
+  Icons, Panel, Column, Table,
 } from '@drill4j/ui-kit';
 
-import { percentFormatter } from 'utils';
+import { capitalize, percentFormatter } from 'utils';
 import { AssociatedTests } from 'types/associated-tests';
 import { MethodCoveredByTest } from 'types/method-covered-by-test';
 import { NoTestsStub } from './no-tests-stub';
 import { CoveredMethodsByTestSidebar } from './covered-methods-by-test-sidebar';
 import { CoveredMethodsByTestTypeSidebar } from './covered-methods-by-test-type-sidebar';
 import { DurationCell } from './duration-cell';
+import { CompoundCell } from '../compound-cell';
 
 import styles from './test-details.module.scss';
 
@@ -37,79 +38,56 @@ export const TestDetails = testDetails(
             <Title>
               Tests
             </Title>
-            <ExpandableTable
-              data={testsUsages}
+            <Table
+              data={testsUsages.map(({ tests = [], testType }) => tests.map((test) => ({ ...test, testType }))).flat()}
               idKey="testType"
               columnsSize="medium"
-              expandedColumns={[
-                <Column name="expander" Cell={() => null} />,
-                <Column
-                  name="testName"
-                  Cell={({ value }) => (
-                    <TableCell type="secondary">
-                      <Icons.Test />
-                      <TableCellContent>{value}</TableCellContent>
-                    </TableCell>
-                  )}
-                />,
-                <Column
-                  name="coverage"
-                  Cell={({ value }) => (
-                    <CoverageCell>
-                      {`${percentFormatter(value)}%`}
-                    </CoverageCell>
-                  )}
-                />,
-                <Column
-                  name="methodCalls"
-                  Cell={({ value, item: { id = '' } = {} }) => (
-                    <MethodCallsCell
-                      onClick={() => {
-                        setSelectedTest(id);
-                      }}
-                      data-test="test-actions:view-curl:id"
-                      clickable={Boolean(value)}
-                    >
-                      {value}
-                    </MethodCallsCell>
-                  )}
-                />,
-                <Column
-                  name="stats"
-                  HeaderCell={() => <div style={{ textAlign: 'right', paddingRight: '8px' }}>Duration</div>}
-                  Cell={({ value }) => (
-                    <DurationCell value={value?.duration} />
-                  )}
-                />,
-              ]}
               expandedContentKey="tests"
             >
               <Column
-                name="testType"
+                name="testName"
                 label="Name"
-                Cell={({ value, item: { tests = [] } = {} }) => (
-                  <TableCell type="primary">
-                    <Icons.Test height={16} width={16} />
-                    <TableCellContent>
-                      {`${value.toLowerCase()} (${
-                        tests.length
-                      })`}
-                    </TableCellContent>
+                Cell={({ item }) => (
+                  <CompoundCell pathKey="id" nameKey="testName" item={item} icon={<Icons.Test height={16} width={16} />} />
+                )}
+              />
+              <Column
+                name="testType"
+                label="Test type"
+                Cell={({ value }) => (
+                  <TableCell>
+                    {capitalize(value)}
                   </TableCell>
                 )}
               />
               <Column
+                name="stats"
+                label="Status"
+                Cell={({ value: testStatus }) => (
+                  <StatusCell type={testStatus?.result}>
+                    {capitalize(testStatus?.result)}
+                  </StatusCell>
+                )}
+              />
+              <Column
                 name="coverage"
-                label="Coverage"
+                HeaderCell={() => <div style={{ textAlign: 'right' }}>Coverage, %</div>}
                 Cell={({ value }) => (
                   <CoverageCell>
-                    {`${percentFormatter(value)}%`}
+                    {value === 0 && (
+                      <CoverageIcon
+                        title="Test didn't cover any methods. Make sure the test is actual or modify/delete it."
+                      >
+                        <Icons.UncoveredMethods />
+                      </CoverageIcon>
+                    )}
+                    {percentFormatter(value)}
                   </CoverageCell>
                 )}
               />
               <Column
-                name="methodsCount"
-                label="Methods covered"
+                name="methodCalls"
+                HeaderCell={() => <div style={{ textAlign: 'right' }}>Methods covered</div>}
                 Cell={({ value, item: { testType = '' } = {} }) => (
                   <MethodCallsCell
                     onClick={() => {
@@ -125,9 +103,11 @@ export const TestDetails = testDetails(
               <Column
                 name="stats"
                 HeaderCell={() => <div style={{ textAlign: 'right', paddingRight: '8px' }}>Duration</div>}
-                Cell={() => null}
+                Cell={({ value }) => (
+                  <DurationCell value={value?.duration} />
+                )}
               />,
-            </ExpandableTable>
+            </Table>
           </>
         ) : (
           <NoTestsStub />
@@ -154,9 +134,10 @@ export const TestDetails = testDetails(
 );
 
 const Title = testDetails.title(Panel);
-const TableCell = testDetails.tableCell(span({} as { type?: 'primary' | 'secondary' }));
-const TableCellContent = testDetails.tableCellContent(OverflowText);
+const TableCell = testDetails.tableCell('span');
 const CoverageCell = testDetails.coverageCell('span');
+const CoverageIcon = testDetails.coverageIcon('span');
+const StatusCell = testDetails.statusCell('span');
 const MethodCallsCell = testDetails.methodCallsCell(
   div({ onClick: () => {} } as { clickable?: boolean }),
 );

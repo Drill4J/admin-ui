@@ -13,7 +13,7 @@
   &__table-cell {
     display: flex;
     align-items: center;
-    color: map-get($color-palette, black100);
+    color: map-get($monochrome, black);
 
     & > * {
       margin-right: 16px;
@@ -31,15 +31,43 @@
   }
 
   &__coverage-cell {
-    color: map-get($color-palette, black100);
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    font-family: $semibold-font;
+    color: map-get($monochrome, black);
   }
 
-  &__table-cell-content {
-    width: 40vw;
+  &__coverage-icon {
+    display: flex;
+    align-items: center;
+    margin-right: 8px;
+    color: map-get($orange, default);
+  }
+
+  &__test-type-cell {
+    font-family: $regular-font;
+    text-align: left;
+  }
+
+  &__status-cell {
+    font-family: $semibold-font;
+
+    &--type {
+      &--passed {
+        color: map-get($green, default);
+      }
+
+      &--failed {
+        color: map-get($red, default);
+      }
+    }
   }
 
   &__method-calls-cell {
-    color: map-get($color-palette, black100);
+    font-family: $semibold-font;
+    color: map-get($monochrome, black);
+    text-align: right;
     cursor: pointer;
 
     &--clickable {

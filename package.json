@@ -5,7 +5,7 @@
   "private": true,
   "dependencies": {
     "@drill4j/socket": "0.1.8",
-    "@drill4j/ui-kit": "0.1.26",
+    "@drill4j/ui-kit": "0.1.30",
     "@redneckz/react-bem-helper": "2.0.4",
     "@redneckz/react-devirt": "0.0.6",
     "@types/jest": "26.0.14",

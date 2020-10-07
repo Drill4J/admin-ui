@@ -8,7 +8,7 @@ import { Fields } from 'forms';
 import { ClassCoverage } from 'types/class-coverage';
 import { useVisibleElementsCount } from 'hooks';
 import { useTableActionsState, useTableActionsDispatch, setSearch } from 'modules';
-import { CompoundCell } from './compound-cell';
+import { CompoundCell } from '../compound-cell';
 import { CoverageCell } from './coverage-cell';
 import { NameCell } from './name-cell';
 import { AssociatedTestModal } from './associated-test-modal';
@@ -79,7 +79,7 @@ export const CoverageDetails = coverageDetails(
               <Column
                 name="name"
                 Cell={(props) => (
-                  <CompoundCell type="primary" pathKey="path" icon={<Icons.Class />} {...props} />
+                  <CompoundCell type="primary" nameKey="name" pathKey="path" icon={<Icons.Class />} {...props} />
                 )}
               />,
               <Column name="coverage" Cell={CoverageCell} />,
@@ -97,6 +97,7 @@ export const CoverageDetails = coverageDetails(
                 Cell={(props) => (
                   <CompoundCell
                     type="secondary"
+                    nameKey="name"
                     pathKey="decl"
                     icon={<Icons.Function />}
                     {...props}

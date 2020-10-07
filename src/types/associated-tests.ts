@@ -9,4 +9,5 @@ export interface AssociatedTests {
   className?: string;
   methodName?: string;
   packageName?: string;
+  testType?: string;
 }
