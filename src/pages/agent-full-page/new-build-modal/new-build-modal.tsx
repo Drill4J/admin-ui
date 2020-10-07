@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 import { Button, Popup } from '@drill4j/ui-kit';
+import { useHistory } from 'react-router-dom';
 
 import { Notification } from 'types/notificaiton';
 import { readNotification } from '../api';
@@ -26,11 +27,13 @@ export const NewBuildModal = newBuildModal(
     onToggle,
     notification: {
       id = '',
+      agentId = '',
       message: {
-        prevId, buildDiff = {}, recommendations = [],
+        currentId: currentBuildVersionId, prevId, buildDiff = {}, recommendations = [],
       } = {},
     },
   }: Props) => {
+    const { push } = useHistory();
     React.useEffect(() => {
       id && readNotification(id);
     }, [id]);
@@ -40,7 +43,6 @@ export const NewBuildModal = newBuildModal(
         isOpen={isOpen}
         onToggle={onToggle}
         header={<Header prevBuildVersion={prevId} />}
-        type="info"
         closeOnFadeClick
       >
         <div className={className}>
@@ -59,9 +61,18 @@ export const NewBuildModal = newBuildModal(
                 <RecommendedActions recommendations={recommendations} />
               </Section>
             )}
-            <Button type="primary" size="large" onClick={() => onToggle(false)}>
-              Ok, Got it!
-            </Button>
+            <ActionsPanel>
+              <Button
+                type="primary"
+                size="large"
+                onClick={() => { onToggle(false); push(`/full-page/${agentId}/${currentBuildVersionId}/dashboard`); }}
+              >
+                Go to New Build
+              </Button>
+              <Button type="secondary" size="large" onClick={() => onToggle(false)}>
+                Ok, Got it
+              </Button>
+            </ActionsPanel>
           </Content>
         </div>
       </Popup>
@@ -71,3 +82,4 @@ export const NewBuildModal = newBuildModal(
 
 const Content = newBuildModal.content('div');
 const Section = newBuildModal.section('div');
+const ActionsPanel = newBuildModal.actionsPanel('div');

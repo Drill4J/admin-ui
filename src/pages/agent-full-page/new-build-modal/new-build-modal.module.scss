@@ -8,6 +8,12 @@
   }
 
   &__section {
-    margin-bottom: 24px;
+    margin-bottom: 16px;
+  }
+
+  &__actions-panel {
+    display: grid;
+    grid-template-columns: max-content max-content;
+    gap: 16px;
   }
 }

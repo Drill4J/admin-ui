@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
-import { Panel, Icons } from '@drill4j/ui-kit';
+import { Panel } from '@drill4j/ui-kit';
 
 import { ReactComponent as LogoSvg } from './logo.svg';
 
@@ -20,10 +20,9 @@ export const Header = header(
         <Logo />
       </LogoWrapper>
       <Content>
-        <Title>New build has arrived!</Title>
+        <Title>New Build has Arrived!</Title>
         <PrevBuildInfo>
-          <PrevBuildIcon />
-          Previous build:
+          Previous build:&nbsp;
           <PrevBuildVersion>{prevBuildVersion}</PrevBuildVersion>
         </PrevBuildInfo>
       </Content>
@@ -36,5 +35,4 @@ const Logo = header.logo(LogoSvg);
 const Content = header.content('div');
 const Title = header.title('div');
 const PrevBuildInfo = header.prevBuildInfo(Panel);
-const PrevBuildIcon = header.prevBuildIcon(Icons.Info);
 const PrevBuildVersion = header.prevBuildVersion('span');

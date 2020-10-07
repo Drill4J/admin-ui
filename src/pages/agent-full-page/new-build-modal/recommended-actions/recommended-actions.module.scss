@@ -14,7 +14,7 @@
 
   &__content {
     padding: 12px 16px;
-    border: 1px solid map-get($color-palette, green100);
+    border: 1px solid map-get($green, default);
     background-color: rgba(0, 182, 2, 0.05);
   }
 
@@ -23,13 +23,13 @@
     align-items: center;
     font-size: 14px;
     line-height: 32px;
-    color: map-get($color-palette, black100);
+    color: map-get($monochrome, black);
   }
 
   &__action-icon {
     margin-right: 8px;
     display: flex;
     align-items: center;
-    color: map-get($color-palette, green100);
+    color: map-get($green, default);
   }
 }
