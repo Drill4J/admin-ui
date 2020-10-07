@@ -21,17 +21,17 @@ export const ScopeSummary = scopeSummary(({ className, scope, testsCount }: Prop
       <Title>Scope Summary</Title>
       <Element>
         Code coverage
-        <ElementValue>
+        <ElementValue data-test="finish-scope-modal:scope-summary:code-coverage">
           {`${percentFormatter(percentage)}%`}
         </ElementValue>
       </Element>
       <Element>
         Tests
-        <ElementValue>{testsCount}</ElementValue>
+        <ElementValue data-test="finish-scope-modal:scope-summary:tests-count">{testsCount}</ElementValue>
       </Element>
       <Element>
         Duration
-        <ElementValue>{getTimeString(started)}</ElementValue>
+        <ElementValue data-test="finish-scope-modal:scope-summary:duration">{getTimeString(started)}</ElementValue>
       </Element>
     </div>
   );

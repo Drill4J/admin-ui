@@ -42,7 +42,7 @@ export const FinishScopeModal = finishScopeModal(
       <Popup
         isOpen={isOpen}
         onToggle={onToggle}
-        header={<OverflowText>{`Finish Scope ${scope && scope.name}`}</OverflowText>}
+        header={<OverflowText data-test="finish-scope-modal:header">{`Finish Scope ${scope && scope.name}`}</OverflowText>}
         type="info"
         closeOnFadeClick
       >
@@ -81,10 +81,16 @@ export const FinishScopeModal = finishScopeModal(
                   scope?.id && pathname.includes(scope.id)
                     && push(`/full-page/${agentId}/${buildVersion}/${pluginId}/dashboard`);
                 }}
+                data-test="finish-scope-modal:finish-scope-button"
               >
                 {testsCount ? 'Finish Scope' : 'Finish and Delete'}
               </Button>
-              <Button type="secondary" size="large" onClick={() => onToggle(false)}>
+              <Button
+                type="secondary"
+                size="large"
+                onClick={() => onToggle(false)}
+                data-test="finish-scope-modal:cancel-modal-button"
+              >
                 Cancel
               </Button>
             </ActionsPanel>
