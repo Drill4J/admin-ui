@@ -3,6 +3,7 @@ import { BEM } from '@redneckz/react-bem-helper';
 import { Icons } from '@drill4j/ui-kit';
 
 import { percentFormatter } from 'utils';
+import { ArrowType } from 'types/arrow-type';
 import { Section } from '../section';
 
 import styles from './coverage-section.module.scss';
@@ -10,7 +11,7 @@ import styles from './coverage-section.module.scss';
 interface Props {
   className?: string;
   coverage?: number;
-  arrow?: 'INCREASE' | 'DECREASE';
+  arrow?: ArrowType;
 }
 
 const coverageSection = BEM(styles);
@@ -38,7 +39,7 @@ export const CoverageSection = coverageSection(({ className, coverage = 0, arrow
 
 const CoverageArrow: React.FC<{
   rotate: number;
-  type: 'INCREASE' | 'DECREASE';
+  type: ArrowType;
   height: number;
   width: number;
 }> = coverageSection.coverageArrow(Icons.CoverageArrow);

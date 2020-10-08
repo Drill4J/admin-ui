@@ -1,3 +1,5 @@
+import { ArrowType } from 'types/arrow-type';
+
 export interface Summary {
   id?: string;
   name?: string;
@@ -10,7 +12,7 @@ export interface Summary {
     };
     risks?: number;
     testsToRun?: number;
-    arrow?: 'INCREASE' | 'DECREASE';
+    arrow?: ArrowType;
   };
 }
 
@@ -25,7 +27,7 @@ export interface ServiceGroupSummary {
       total?: number;
     };
     risks?: number;
-    arrow?: 'INCREASE' | 'DECREASE';
+    arrow?: ArrowType;
     testsToRun?: { groupedTets?: { [testType: string]: string[] }; count?: number};
   };
 }

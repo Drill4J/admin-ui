@@ -6,6 +6,7 @@ import { Menu } from '@drill4j/ui-kit';
 import { List, ListColumn } from 'components';
 import { ManageSessionsPane, TestsToRunModal } from 'modules';
 import { percentFormatter } from 'utils';
+import { ArrowType } from 'types/arrow-type';
 import { Summary } from 'types/service-group-summary';
 import { TestToCodeNameCell } from './test-to-code-name-cell';
 import { TestToCodeCoverageCell } from './test-to-code-coverage-cell';
@@ -23,7 +24,7 @@ interface Props {
   aggregated?: {
     coverage?: number;
     risks?: number;
-    arrow?: 'INCREASE' | 'DECREASE';
+    arrow?: ArrowType;
     testsToRun?: TestToRun;
   };
 }

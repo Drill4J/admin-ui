@@ -3,13 +3,14 @@ import { BEM } from '@redneckz/react-bem-helper';
 import { Panel, Icons, Tooltip } from '@drill4j/ui-kit';
 
 import { percentFormatter } from 'utils';
+import { ArrowType } from 'types/arrow-type';
 
 import styles from './test-to-code-coverage-cell.module.scss';
 
 interface Props {
   className?: string;
   value?: number;
-  arrow: string;
+  arrow: ArrowType;
 }
 
 const testToCodeCoverageCell = BEM(styles);
@@ -18,7 +19,7 @@ export const TestToCodeCoverageCell = testToCodeCoverageCell(({ className, value
   <div className={className}>
     <Content>
       <Value data-test="dashboard-coverage-cell:value">
-        {arrow && (
+        {(arrow === 'INCREASE' || arrow === 'DECREASE') && (
           <ArrowIcon
             rotate={arrow === 'INCREASE' ? 180 : 0}
             type={arrow}
