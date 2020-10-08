@@ -13,4 +13,18 @@
       }
     }
   }
+
+  &__link {
+    font-family: $semibold-font;
+    color: map-get($primary-blue, default);
+    letter-spacing: 0;
+    line-height: 16px;
+    text-decoration: none;
+  }
+
+  &__build-info {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+  }
 }

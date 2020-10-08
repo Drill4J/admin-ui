@@ -10,9 +10,9 @@
 
   &__label {
     margin-bottom: 16px;
-    font-size: 13px;
+    font-size: 14px;
     line-height: 20px;
-    color: $slate-gray;
+    color: map-get($monochrome, default);
     font-family: $semibold-font;
   }
 
@@ -24,9 +24,9 @@
   }
 
   &__additional-info {
-    font-size: 13px;
+    font-size: 12px;
     line-height: 20px;
-    color: $slate-gray;
+    color: map-get($monochrome, default);
   }
 
   &__graph {

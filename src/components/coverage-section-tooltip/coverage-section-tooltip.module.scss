@@ -1,0 +1,30 @@
+@import '~common/style-guide/index';
+
+.coverage-section-tooltip {
+  display: flex;
+  flex-direction: column;
+  font-family: $semibold-font;
+  font-size: 12px;
+
+  &__tooltip-item {
+    display: flex;
+  }
+
+  &__tooltip-item-value,
+  &__tooltip-item-total-value {
+    margin-left: 24px;
+    line-height: 20px;
+    text-align: right;
+    opacity: 0.5;
+  }
+
+  &__tooltip-item-value,
+  &__tooltip-item-details {
+    font-family: $regular-font;
+    line-height: 20px;
+  }
+
+  &__tooltip-item-total {
+    text-transform: uppercase;
+  }
+}

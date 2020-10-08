@@ -3,14 +3,24 @@ import { Panel, Icons, Tooltip } from '@drill4j/ui-kit';
 
 import { Risks } from 'types/risks';
 import { RISKS_TYPES_COLOR } from 'common/constants';
+import { SingleBar } from 'components';
 import { useBuildVersion } from '../../coverage-plugin/use-build-version';
-import { SingleBar } from '../single-bar';
 import { Section } from './section';
 import { SectionTooltip } from './section-tooltip';
 
 export const RisksSection = () => {
   const { newMethods = [], modifiedMethods = [] } = useBuildVersion<Risks>('/build/risks') || {};
   const risksCount = newMethods.length + modifiedMethods.length;
+  const tooltipData = {
+    new: {
+      count: newMethods.length,
+      color: RISKS_TYPES_COLOR.NEW,
+    },
+    modified: {
+      count: modifiedMethods.length,
+      color: RISKS_TYPES_COLOR.MODIFIED,
+    },
+  };
 
   return (
     <Section
@@ -18,17 +28,8 @@ export const RisksSection = () => {
       info={risksCount}
       graph={(
         <Tooltip
-          message={
-            risksCount > 0 && (
-              <SectionTooltip
-                data={{
-                  new: { count: newMethods.length, color: RISKS_TYPES_COLOR.NEW },
-                  modified: { count: modifiedMethods.length, color: RISKS_TYPES_COLOR.MODIFIED },
-                }}
-                hideValue
-              />
-            )
-          }
+          customStyle={{ left: 'calc(50% - 2px)', bottom: 'calc(100% + 12px)' }}
+          message={<SectionTooltip data={tooltipData} hideValue />}
         >
           <Panel>
             <SingleBar

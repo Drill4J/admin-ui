@@ -1,24 +1,30 @@
 @import '~common/style-guide/index';
 
 .plugin-card {
-  border: 1px solid map-get($color-palette, light-blue);
+  border: 1px solid map-get($monochrome, medium-tint);
   width: 100%;
   height: fit-content;
 
   &__header {
     height: 52px;
     padding: 16px;
-    font-size: 13px;
+    font-size: 14px;
     line-height: 20px;
     font-family: $semibold-font;
-    border-bottom: 1px solid map-get($color-palette, light-blue);
-    color: $slate-gray;
+    border-bottom: 1px solid map-get($monochrome, medium-tint);
+    color: map-get($monochrome, default);
+    text-transform: uppercase;
   }
 
   &__link {
     text-decoration: none;
-    color: map-get($color-palette, blue100);
+    color: map-get($primary-blue, default);
     font-family: $regular-font;
+    text-transform: lowercase;
+
+    &::first-letter {
+      text-transform: capitalize;
+    }
   }
 
   &__content {
@@ -26,7 +32,7 @@
     flex-direction: row;
 
     & > *:not(:last-child) {
-      border-right: 1px solid map-get($color-palette, light-blue);
+      border-right: 1px solid map-get($monochrome, medium-tint);
     }
   }
 

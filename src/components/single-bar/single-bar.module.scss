@@ -3,12 +3,8 @@
 .single-bar {
   &__content {
     position: relative;
-    background-color: #f8f9fb;
-    margin-right: 2px;
-
-    & > * {
-      opacity: 0.5;
-    }
+    background-color: map-get($monochrome, light-tint);
+    margin-right: 4px;
   }
 
   &__icon {
@@ -16,7 +12,7 @@
     top: 8px;
     left: 50%;
     transform: translateX(-50%);
-    color: $slate-gray;
+    color: map-get($monochrome, dark-tint);
     font-size: 12px;
     line-height: 16px;
     text-align: center;
