@@ -1,6 +1,8 @@
 import * as React from 'react';
 import { BEM, capitalize } from '@redneckz/react-bem-helper';
-import { Panel, Icons, Modal } from '@drill4j/ui-kit';
+import {
+  Panel, Icons, Modal, OverflowText,
+} from '@drill4j/ui-kit';
 
 import { MethodCoveredByTest } from 'types/method-covered-by-test';
 import { MethodsList } from '../methods-list';
@@ -23,7 +25,7 @@ export const CoveredMethodsByTestSidebar = coveredMethodsByTestSidebar(
   }: Props) => {
     const filtredMethods = coveredMethods.find(({ id }) => id === testId) || {};
     const {
-      testName,
+      testName = '',
       testType = '',
       allMethods = [],
     } = filtredMethods;
@@ -56,4 +58,4 @@ export const CoveredMethodsByTestSidebar = coveredMethodsByTestSidebar(
 const Header = coveredMethodsByTestSidebar.header('div');
 const Info = coveredMethodsByTestSidebar.info('div');
 const MethodInfoLabel = coveredMethodsByTestSidebar.methodInfoLabel('div');
-const MethodInfoValue = coveredMethodsByTestSidebar.methodInfoValue('div');
+const MethodInfoValue = coveredMethodsByTestSidebar.methodInfoValue(OverflowText);
