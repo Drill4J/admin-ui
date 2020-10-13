@@ -2,8 +2,9 @@ import * as React from 'react';
 import { Form } from 'react-final-form';
 import { BEM } from '@redneckz/react-bem-helper';
 import {
-  Modal, Button, Icons, GeneralAlerts,
+  Modal, GeneralAlerts,
 } from '@drill4j/ui-kit';
+import { useParams } from 'react-router-dom';
 
 import {
   composeValidators,
@@ -12,11 +13,17 @@ import {
   handleFieldErrors,
 } from 'forms';
 import { useGeneralAlertMessage } from 'hooks';
-import { useParams } from 'react-router-dom';
-import { ManageActiveSessions } from './manage-active-sessions';
 import { ManageNewSession } from './manage-new-session';
 import { useActiveSessions } from './use-active-sessions';
-import { startAgentSession, startServiceGroupSessions } from './manage-sessions-pane-api';
+import {
+  startServiceGroupSessions, startAgentSession,
+} from './manage-sessions-pane-api';
+import { ManageActiveSessions } from './manage-active-sessions';
+import { EmptyActiveSessionsStub } from './active-sessions-list/empty-active-sessions-stub';
+import { ActiveSessionsList } from './active-sessions-list';
+import { BulkOperationWarning } from './bulk-operation-warning';
+import { ActionsPanel } from './actions-panel';
+import { setIsNewSession, useSessionsPaneDispatch, useSessionsPaneState } from './store';
 
 import styles from './manage-sessions-pane.module.scss';
 
@@ -39,7 +46,8 @@ export const ManageSessionsPane = manageSessionsPane(
   ({
     className, isOpen, onToggle,
   }: Props) => {
-    const [isNewSession, setIsNewSession] = React.useState(false);
+    const dispatch = useSessionsPaneDispatch();
+    const { bulkOperation, isNewSession } = useSessionsPaneState();
     const { generalAlertMessage, showGeneralAlertMessage } = useGeneralAlertMessage();
     const {
       agentId = '', serviceGroupId = '', pluginId = '', buildVersion = '',
@@ -47,11 +55,9 @@ export const ManageSessionsPane = manageSessionsPane(
     const agentType = serviceGroupId ? 'ServiceGroup' : 'Agent';
     const id = agentId || serviceGroupId;
     const activeSessions = useActiveSessions(agentType, id, buildVersion) || [];
+
     return (
-      <Modal
-        isOpen={isOpen}
-        onToggle={onToggle}
-      >
+      <Modal isOpen={isOpen} onToggle={onToggle}>
         <div className={className}>
           <Form
             onSubmit={async (values: { sessionId: string; }, form): Promise<unknown> => {
@@ -61,7 +67,7 @@ export const ManageSessionsPane = manageSessionsPane(
                   : startServiceGroupSessions(serviceGroupId, pluginId)(values));
                 showGeneralAlertMessage({ type: 'SUCCESS', text: 'New session has been started successfully.' });
                 form.change('sessionId', '');
-                setIsNewSession(false);
+                dispatch(setIsNewSession(false));
                 return response;
               } catch (error) {
                 if (error?.response?.data?.code === 409) {
@@ -78,63 +84,41 @@ export const ManageSessionsPane = manageSessionsPane(
             }) => (
               <>
                 <Header data-test="manage-sessions-pane:header">
-                  {isNewSession ? 'Start New Session' : 'Manage Sessions' }
+                  {isNewSession ? 'Start New Session' : 'Manage Sessions'}
                 </Header>
                 {generalAlertMessage?.type && (
                   <GeneralAlerts type={generalAlertMessage.type}>
                     {generalAlertMessage.text}
                   </GeneralAlerts>
                 )}
-                {isNewSession
-                  ? <ManageNewSession agentId={agentId} serviceGroupId={serviceGroupId} />
-                  : (
-                    <ManageActiveSessions
+                {isNewSession && <ManageNewSession agentId={agentId} serviceGroupId={serviceGroupId} />}
+                {!isNewSession && activeSessions.length > 0 ? (
+                  <>
+                    <ManageActiveSessions activeSessions={activeSessions} />
+                    <ActiveSessionsList
                       agentType={agentType}
                       activeSessions={activeSessions}
                       showGeneralAlertMessage={showGeneralAlertMessage}
                     />
-                  )}
-                <ActionsPanel>
-                  {isNewSession ? (
-                    <Button
-                      type="primary"
-                      size="large"
-                      disabled={(invalid && !dirtySinceLastSubmit) || hasValidationErrors || submitting}
-                      onClick={handleSubmit}
-                      data-test="manage-sessions-pane:start-session-button"
-                    >
-                      Start Session
-                    </Button>
+                  </>
+                ) : <EmptyActiveSessionsStub />}
+                <Footer>
+                  {bulkOperation.isProcessing ? (
+                    <BulkOperationWarning
+                      agentId={id}
+                      agentType={agentType}
+                      pluginId={pluginId}
+                      showGeneralAlertMessage={showGeneralAlertMessage}
+                    />
                   ) : (
-                    <Button
-                      type="primary"
-                      size="large"
-                      onClick={() => setIsNewSession(true)}
-                      data-test="manage-sessions-pane:start-new-session-button"
-                    >
-                      Start New Session
-                    </Button>
+                    <ActionsPanel
+                      activeSessions={activeSessions}
+                      startSessionDisabled={(invalid && !dirtySinceLastSubmit) || hasValidationErrors || submitting}
+                      onToggle={onToggle}
+                      handleSubmit={handleSubmit}
+                    />
                   )}
-                  {activeSessions.length > 0 && isNewSession && (
-                    <Button
-                      type="secondary"
-                      size="large"
-                      onClick={() => setIsNewSession(false)}
-                      data-test="manage-sessions-pane:back-button"
-                    >
-                      <Icons.Expander width={8} height={14} rotate={180} />
-                      <span>Back</span>
-                    </Button>
-                  )}
-                  <Button
-                    type="secondary"
-                    size="large"
-                    onClick={() => onToggle(false)}
-                    data-test="manage-sessions-pane:cancel-button"
-                  >
-                    Cancel
-                  </Button>
-                </ActionsPanel>
+                </Footer>
               </>
             )}
           />
@@ -145,4 +129,4 @@ export const ManageSessionsPane = manageSessionsPane(
 );
 
 const Header = manageSessionsPane.header('div');
-const ActionsPanel = manageSessionsPane.actionsPanel('div');
+const Footer = manageSessionsPane.footer('div');

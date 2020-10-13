@@ -18,7 +18,7 @@
     line-height: 20px;
 
     &[disabled] {
-      opacity: 0.25;
+      opacity: 0.2;
     }
   }
 
@@ -38,7 +38,7 @@
     color: map-get($monochrome, default);
 
     &[disabled] {
-      opacity: 0.25;
+      opacity: 0.2;
     }
   }
 }

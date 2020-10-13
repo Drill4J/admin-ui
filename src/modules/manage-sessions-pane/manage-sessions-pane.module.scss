@@ -14,13 +14,9 @@
     color: map-get($monochrome, black);
   }
 
-  &__actions-panel {
-    display: grid;
-    grid-template-columns: max-content max-content max-content;
-    gap: 16px;
-    align-items: center;
+  &__footer {
     min-height: 80px;
-    padding: 0 24px;
+    padding: 12px 24px;
     margin-top: auto;
     background-color: map-get($monochrome, light-tint);
   }
