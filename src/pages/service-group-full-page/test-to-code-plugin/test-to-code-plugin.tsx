@@ -4,7 +4,7 @@ import { useHistory, useParams } from 'react-router-dom';
 import { Menu } from '@drill4j/ui-kit';
 
 import { List, ListColumn } from 'components';
-import { ManageSessionsPane, TestsToRunModal } from 'modules';
+import { ManageSessionsPaneProvider as ManageSessionsPane, TestsToRunModal } from 'modules';
 import { percentFormatter } from 'utils';
 import { ArrowType } from 'types/arrow-type';
 import { Summary } from 'types/service-group-summary';

@@ -1,4 +1,4 @@
-export { ManageSessionsPane } from './manage-sessions-pane';
+export { ManageSessionsPane, ManageSessionsPaneProvider } from './manage-sessions-pane';
 export { CancelAgentRegistrationModal } from './cancel-agent-registration-modal';
 export { NotImplementedStub } from './not-implemented-stub';
 export { Breadcrumbs } from './breadcrumbs';

@@ -1,0 +1,15 @@
+@import '~common/style-guide/index';
+
+.operation-action-warning {
+  height: 100%;
+  font-family: $regular-font;
+  font-size: 12px;
+  line-height: 20px;
+
+  &__actions {
+    min-width: 104px;
+    display: flex;
+    justify-content: space-between;
+    margin-left: 16px;
+  }
+}

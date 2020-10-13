@@ -1,19 +1,23 @@
 @import '~common/style-guide/index';
 
 .manage-active-sessions {
-  height: 100%;
-  overflow-y: auto;
+  height: 88px;
+  border-bottom: 1px solid map-get($monochrome, medium-tint);
+  font-size: 16px;
+  line-height: 20px;
+  color: map-get($monochrome, black);
 
-  &__search-panel {
+  &__content {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    height: 88px;
     padding: 16px 24px 10px 24px;
-    border-bottom: 1px solid map-get($monochrome, medium-tint);
-    font-size: 16px;
-    line-height: 20px;
-    color: map-get($monochrome, black);
+    height: 100%;
+  }
+
+  &__actions-panel {
+    display: flex;
+    gap: 16px;
   }
 
   &__count {
