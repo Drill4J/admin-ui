@@ -4,6 +4,7 @@
   display: flex;
   flex-direction: column;
   height: 100%;
+  overflow-y: hidden;
 
   &__content {
     height: 100%;
@@ -15,7 +16,7 @@
   &__filter {
     margin-top: 14px;
     margin-left: 24px;
-    color: map-get($color-palette, blue100);
+    color: map-get($orange, default);
   }
 
   &__methods {
@@ -27,26 +28,32 @@
 
   &__method {
     display: flex;
-    flex-direction: row;
-    align-items: center;
+    flex-direction: column;
+    justify-content: center;
     padding: 0 24px;
     font-size: 12px;
   }
 
+  &__coverage-icon,
   &__method-icon {
-    display: flex;
-    align-items: center;
-    margin-right: 18px;
+    height: 16px;
   }
 
   &__method-info {
-    display: flex;
-    flex-direction: column;
-    width: calc(100% - 70px);
+    height: 20px;
+  }
+
+  &__method-name {
+    max-width: 280px;
+    margin-left: 16px;
+    color: map-get($monochrome, black);
+    font-size: 14px;
   }
 
   &__method-package {
-    width: 280px;
-    color: $slate-gray;
+    max-width: 280px;
+    margin-left: 32px;
+    color: map-get($monochrome, default);
+    font-size: 12px;
   }
 }

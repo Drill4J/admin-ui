@@ -2,18 +2,20 @@
 
 .coverage-rate-icon {
   &__icon-wrapper {
+    height: 16px;
     margin-left: 16px;
+
     &--rate {
       &--full {
-        color: map-get($color-palette, green100);
+        color: map-get($monochrome, dark-tint);
       }
 
       &--partly {
-        color: map-get($color-palette, yellow50);
+        color: map-get($orange, default);
       }
 
       &--missed {
-        color: map-get($color-palette, red100);
+        color: map-get($red, default);
       }
     }
   }

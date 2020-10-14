@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { BEM, capitalize } from '@redneckz/react-bem-helper';
 import {
-  Panel, Icons, Modal, OverflowText,
+  Panel, Modal, OverflowText,
 } from '@drill4j/ui-kit';
 
 import { MethodCoveredByTest } from 'types/method-covered-by-test';
@@ -23,32 +23,31 @@ export const CoveredMethodsByTestSidebar = coveredMethodsByTestSidebar(
   ({
     className, isOpen, onToggle, testId, coveredMethods = [],
   }: Props) => {
-    const filtredMethods = coveredMethods.find(({ id }) => id === testId) || {};
+    const filteredMethods = coveredMethods.find(({ id }) => id === testId) || {};
     const {
       testName = '',
       testType = '',
       allMethods = [],
-    } = filtredMethods;
+    } = filteredMethods;
 
     return (
       <Modal isOpen={isOpen} onToggle={onToggle}>
         <div className={className}>
           <Header>
-            <Icons.Function height={18} width={18} />
-            <span>Covered methods</span>
-            <h2>{allMethods.length}</h2>
+            <ModalName>Covered methods</ModalName>
+            <MethodsCount>{allMethods.length}</MethodsCount>
           </Header>
           <Info>
             <Panel>
               <MethodInfoLabel>Test</MethodInfoLabel>
-              <MethodInfoValue>{testName}</MethodInfoValue>
+              <MethodInfoValue title={testName}>{testName}</MethodInfoValue>
             </Panel>
             <Panel>
               <MethodInfoLabel>Type</MethodInfoLabel>
               <MethodInfoValue>{capitalize(testType.toLowerCase())}</MethodInfoValue>
             </Panel>
           </Info>
-          <MethodsList coveredMethods={filtredMethods} />
+          <MethodsList coveredMethods={filteredMethods} />
         </div>
       </Modal>
     );
@@ -57,5 +56,7 @@ export const CoveredMethodsByTestSidebar = coveredMethodsByTestSidebar(
 
 const Header = coveredMethodsByTestSidebar.header('div');
 const Info = coveredMethodsByTestSidebar.info('div');
+const ModalName = coveredMethodsByTestSidebar.modalName('span');
+const MethodsCount = coveredMethodsByTestSidebar.methodsCount('span');
 const MethodInfoLabel = coveredMethodsByTestSidebar.methodInfoLabel('div');
 const MethodInfoValue = coveredMethodsByTestSidebar.methodInfoValue(OverflowText);

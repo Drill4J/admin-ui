@@ -8,37 +8,48 @@
   &__header {
     display: flex;
     align-items: center;
-    height: 63px;
-    border-bottom: 1px solid map-get($color-palette, light-blue);
+    min-height: 64px;
     padding-left: 24px;
-    font-size: 18px;
-    line-height: 24px;
-    color: map-get($color-palette, black100);
+    border-bottom: 1px solid map-get($monochrome, light-tint);
+    line-height: 32px;
 
     & > * {
       margin-right: 8px;
     }
   }
 
+  &__modal-name {
+    font-size: 20px;
+    color: map-get($monochrome, black);
+  }
+
+  &__methods-count {
+    height: 20px;
+    color: map-get($monochrome, default);
+    font-size: 16px;
+    line-height: 24px;
+  }
+
   &__info {
-    padding: 8px 24px;
     height: 84px;
-    background-color: rgba(map-get($color-palette, light-blue), 0.5);
+    padding: 8px 24px;
+    background-color: map-get($monochrome, light-tint);
+    border-top: 1px solid map-get($monochrome, medium-tint);
   }
 
   &__method-info-label {
-    min-width: 29px;
+    min-width: 32px;
     line-height: 32px;
     text-align: left;
-    color: map-get($color-palette, dark-blue);
-    font-size: 13px;
+    color: map-get($monochrome, black);
+    font-size: 14px;
     font-family: $semibold-font;
   }
 
   &__method-info-value {
-    margin-left: 20px;
-    color: $slate-gray;
-    font-size: 13px;
+    margin-left: 16px;
+    color: map-get($monochrome, default);
+    font-size: 14px;
     word-break: break-all;
   }
 }
