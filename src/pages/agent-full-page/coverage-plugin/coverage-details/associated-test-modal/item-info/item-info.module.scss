@@ -1,12 +1,14 @@
 @import '~common/style-guide/index';
 
 .item-info {
-  background-color: rgba(map-get($color-palette, light-blue), 0.5);
+  background-color: map-get($monochrome, light-tint);
+  border-top: 1px solid map-get($monochrome, medium-tint);
+  border-bottom: 1px solid map-get($monochrome, medium-tint);
 
   &__content {
-    padding: 16px 24px;
     display: flex;
     flex-direction: column;
+    padding: 16px 24px;
   }
 
   &__item-wrapper {
@@ -17,19 +19,21 @@
   }
 
   &__label {
-    min-width: 52px;
-    line-height: 32px;
-    text-align: right;
-    color: map-get($color-palette, dark-blue);
-    font-size: 13px;
+    min-width: 56px;
+    text-align: left;
+    color: map-get($monochrome, black);
     font-family: $semibold-font;
+    font-size: 14px;
+    line-height: 32px;
   }
 
   &__value {
-    margin-left: 20px;
+    display: flex;
+    align-items: center;
+    margin-left: 16px;
     line-height: 32px;
-    color: $slate-gray;
-    font-size: 13px;
+    color: map-get($monochrome, default);
+    font-size: 14px;
     word-break: break-all;
     cursor: pointer;
   }
