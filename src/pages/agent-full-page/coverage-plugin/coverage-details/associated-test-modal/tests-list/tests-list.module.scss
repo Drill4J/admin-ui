@@ -1,0 +1,57 @@
+@import '~common/style-guide/index';
+
+.tests-list {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow-y: auto;
+
+  &__content {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    border-top: 1px solid map-get($monochrome, medium-tint);
+    overflow-y: auto;
+  }
+
+  &__filter {
+    margin: 16px 24px;
+  }
+
+  &__test-item {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    overflow-wrap: normal;
+    min-height: 40px;
+    padding: 0 24px;
+    word-break: normal;
+    word-wrap: normal;
+    font-size: 14px;
+  }
+
+  &__test-info {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    height: 20px;
+  }
+
+  &__test-name {
+    margin-left: 16px;
+    font-size: 14px;
+    color: map-get($monochrome, black);
+  }
+
+  &__test-id {
+    padding-left: 28px;
+    font-size: 12px;
+    color: map-get($monochrome, default);
+  }
+
+  &__test-item-icon {
+    display: flex;
+    align-self: center;
+    height: 16px;
+  }
+}

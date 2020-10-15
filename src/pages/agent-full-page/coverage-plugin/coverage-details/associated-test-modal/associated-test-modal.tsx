@@ -1,10 +1,11 @@
 import * as React from 'react';
-import { BEM, div } from '@redneckz/react-bem-helper';
-import { Modal, Icons } from '@drill4j/ui-kit';
+import { BEM } from '@redneckz/react-bem-helper';
+import { Modal } from '@drill4j/ui-kit';
 
 import { AssociatedTests } from 'types/associated-tests';
 import { useBuildVersion } from 'hooks';
 import { ItemInfo } from './item-info';
+import { TestsList } from './tests-list';
 
 import styles from './associated-test-modal.module.scss';
 
@@ -28,52 +29,20 @@ export const AssociatedTestModal = associatedTestModal(
     } = associatedTests.find((test) => test.id === id) || {};
     const testsMap = tests.reduce((acc, { type = '', name = '' }) =>
       ({ ...acc, [type]: acc[type] ? [...acc[type], name] : [name] }), {} as { [testType: string]: string[] });
-    const [expandedSection, setExpandedSection] = React.useState('');
 
     return (
       <Modal isOpen={isOpen} onToggle={onToggle}>
         <div className={className}>
           <Header>
-            <Icons.Test height={20} width={18} viewBox="0 0 18 20" />
-            <span>Associated tests</span>
-            <h2>{tests.length}</h2>
+            <ModalName>Associated tests</ModalName>
+            <TestsCount>{tests.length}</TestsCount>
           </Header>
           <ItemInfo
             packageName={packageName}
             testClassName={testClassName}
             methodName={methodName}
           />
-          <Content>
-            {Object.keys(testsMap).map((testType) => (
-              <>
-                <TestSection
-                  expanded={expandedSection === testType}
-                  onClick={() => setExpandedSection(expandedSection === testType ? '' : testType)}
-                >
-                  <ExpanderIcon
-                    rotate={expandedSection === testType ? 90 : 0}
-                    height={13}
-                    width={13}
-                  />
-                  <TestListItemIcon>
-                    <Icons.Test />
-                  </TestListItemIcon>
-                  {testType}
-                </TestSection>
-                <TestList>
-                  {testType === expandedSection
-                    && testsMap[testType].map((test) => (
-                      <TestListItem>
-                        <TestListItemIcon>
-                          <Icons.Test />
-                        </TestListItemIcon>
-                        {test}
-                      </TestListItem>
-                    ))}
-                </TestList>
-              </>
-            ))}
-          </Content>
+          <TestsList associatedTests={testsMap} />
         </div>
       </Modal>
     );
@@ -81,11 +50,5 @@ export const AssociatedTestModal = associatedTestModal(
 );
 
 const Header = associatedTestModal.header('div');
-const Content = associatedTestModal.content('div');
-const TestSection = associatedTestModal.section(
-  div({ onClick: () => {} } as { expanded?: boolean; onClick: () => void }),
-);
-const TestList = associatedTestModal.testList('div');
-const ExpanderIcon = associatedTestModal.expanderIcon(Icons.Expander);
-const TestListItem = associatedTestModal.testListItem('div');
-const TestListItemIcon = associatedTestModal.testListItemIcon('div');
+const ModalName = associatedTestModal.modalName('span');
+const TestsCount = associatedTestModal.testsCount('div');
