@@ -25,7 +25,7 @@ export const AgentsPage = agentsPage(({ className }: Props) => {
     defaultAdminSocket,
     '/agents',
   ) || {};
-  const offlineAgents = useWsConnection<Agent[]>(
+  const agentsList = useWsConnection<Agent[]>(
     defaultAdminSocket,
     '/api/agents',
   ) || [];
@@ -38,19 +38,14 @@ export const AgentsPage = agentsPage(({ className }: Props) => {
       }))
       .flat(),
     ...single,
-    ...offlineAgents.filter((offlineAgent) => !offlineAgent.agentVersion),
+    ...agentsList.filter((agent) => !agent.agentVersion),
   ];
-
-  const agentsCount = grouped.reduce(
-    (sum, { agents: groupedAgents = [] }) => sum + groupedAgents.length,
-    single.length + offlineAgents.length,
-  );
 
   return (
     <div className={className}>
       <PageHeader
         title="Agents"
-        itemsCount={agentsCount}
+        itemsCount={agentsList.length}
         actions={(
           <Button type="secondary" size="large" onClick={() => push('/preregister/offline-agent')}>
             <Icons.Register />
@@ -58,7 +53,7 @@ export const AgentsPage = agentsPage(({ className }: Props) => {
           </Button>
         )}
       />
-      <Content>{agentsCount > 0 ? <AgentsTable agents={agents} /> : <NoAgentsStub />}</Content>
+      <Content>{agentsList.length > 0 ? <AgentsTable agents={agents} /> : <NoAgentsStub />}</Content>
     </div>
   );
 });
