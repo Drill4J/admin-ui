@@ -9,26 +9,28 @@ interface Props {
   className?: string;
   isOpen: boolean;
   onToggle: (value: boolean) => void;
+  header: React.ReactNode;
+  message: React.ReactNode;
 }
 
 const cancelAgentRegistrationModal = BEM(styles);
 
 export const CancelAgentRegistrationModal =
   cancelAgentRegistrationModal(({
-    className, isOpen, onToggle,
+    className, isOpen, onToggle, header, message,
   }: Props) => {
     const { push } = useHistory();
     return (
       <Popup
         isOpen={isOpen}
         onToggle={onToggle}
-        header="Abort Registration"
+        header={header}
         closeOnFadeClick
       >
         <div className={className}>
           <Content>
             <Message>
-              Are you sure you want to abort agent registration? All your progress will be lost.
+              {message}
             </Message>
             <ActionsPanel>
               <Button type="primary" size="large" onClick={() => push('/agents')}>

@@ -6,23 +6,30 @@
   line-height: 48px;
 
   &__agent-type-icon {
-    display: flex;
-    align-items: center;
+    display: grid;
+    place-items: center;
+    width: 24px;
+    height: 24px;
     margin-right: 16px;
-    color: map-get($color-palette, dark-blue);
+    color: map-get($monochrome, black);
+
+    &[disabled] {
+      color: map-get($monochrome, default);
+    }
   }
 
   &__new-agent-badge {
+    max-height: 20px;
     margin-right: 8px;
   }
 
   &__agent-name {
-    color: map-get($color-palette, blue100);
+    color: map-get($primary-blue, default);
     cursor: pointer;
 
     &--disabled {
       pointer-events: none;
-      color: $slate-gray;
+      color: map-get($monochrome, default);
     }
   }
 

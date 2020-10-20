@@ -111,6 +111,8 @@ export const ServiceGroupRegistrationPage = serviceGroupRegistrationPage(
           <CancelAgentRegistrationModal
             isOpen={isCancelModalOpened}
             onToggle={setIsCancelModalOpened}
+            header="Abort Registration"
+            message="Are you sure you want to abort agent registration? All your progress will be lost."
           />
         )}
       </div>

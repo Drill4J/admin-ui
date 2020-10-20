@@ -15,8 +15,7 @@ import { useAgent } from 'hooks';
 import { NotificationManagerContext } from 'notification-manager';
 import { CancelAgentRegistrationModal, InstallPluginsStep, SystemSettingsStep } from 'modules';
 import { GeneralSettingsForm } from './general-settings-form';
-
-import { registerAgent } from './register-agent';
+import { registerAgent, preregisterOfflineAgent } from './agent-registration-page-api';
 
 import styles from './agent-registration-page.module.scss';
 
@@ -42,23 +41,28 @@ export const AgentRegistrationPage = agentRegistrationPage(
           title={(
             <Panel>
               <HeaderIcon height={20} width={20} />
-              Register New Agent
+              {agentId ? 'Register New Agent' : 'Preregister Offline Agent'}
             </Panel>
           )}
           actions={(
             <Panel align="end">
               <Button type="secondary" size="large" onClick={() => setIsCancelModalOpened(true)}>
-                Abort Registration
+                Abort {agentId ? 'Registration' : 'Preregistration'}
               </Button>
             </Panel>
           )}
         />
         <Wizard
           initialValues={agent}
-          onSubmit={registerAgent(() => {
-            showMessage({ type: 'SUCCESS', text: 'Agent has been registered' });
-            push(`/full-page/${agentId}/${buildVersion}/dashboard`);
-          })}
+          onSubmit={agentId
+            ? registerAgent(() => {
+              showMessage({ type: 'SUCCESS', text: 'Agent has been registered' });
+              push(`/full-page/${agentId}/${buildVersion}/dashboard`);
+            })
+            : preregisterOfflineAgent(() => {
+              showMessage({ type: 'SUCCESS', text: 'Offline agent has been preregistered' });
+              push('/agents');
+            })}
         >
           <Step
             name="General Settings"
@@ -108,6 +112,10 @@ export const AgentRegistrationPage = agentRegistrationPage(
           <CancelAgentRegistrationModal
             isOpen={isCancelModalOpened}
             onToggle={setIsCancelModalOpened}
+            header={`Abort ${agentId ? 'Registration' : 'Preregistration'}`}
+            message={`Are you sure you want to abort ${agentId
+              ? 'agent registration'
+              : 'offline agent preregistration'}? All your progress will be lost.`}
           />
         )}
       </div>

@@ -1,9 +1,10 @@
 import { CommonEntity } from 'types/common-entity';
+import { AgentStatus } from './agent-status';
 import { Plugin } from './plugin';
 import { SystemSettings } from './system-settings';
 
 export interface Agent extends CommonEntity {
-  status?: 'ONLINE' | 'NOT_REGISTERED' | 'BUSY';
+  status?: AgentStatus;
   drillAdminUrl?: string;
   address?: string;
   plugins?: Plugin[];

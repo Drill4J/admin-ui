@@ -5,6 +5,7 @@ import { Panel, Legends } from '@drill4j/ui-kit';
 import { percentFormatter } from 'utils';
 import { ActiveScope } from 'types/active-scope';
 import { BuildCoverage } from 'types/build-coverage';
+import { AgentStatus } from 'types/agent-status';
 import { MultiProgressBar } from './multi-progress-bar';
 
 import styles from './active-build-coverage-info.module.scss';
@@ -15,7 +16,7 @@ interface Props {
   previousBuildVersion: string;
   previousBuildCodeCoverage: number;
   scope: ActiveScope | null;
-  status?: 'ONLINE' | 'NOT_REGISTERED' | 'BUSY' | 'OFFLINE';
+  status?: AgentStatus;
   loading: boolean;
 }
 

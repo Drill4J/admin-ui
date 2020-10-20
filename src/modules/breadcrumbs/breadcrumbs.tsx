@@ -58,6 +58,18 @@ export const Breadcrumbs = breadcrumbs(({ className }: Props) => {
     exact: true,
   }) || {};
 
+  const registrationLabel = () => {
+    switch (registrationType) {
+      case 'bulk-registration':
+        return 'Agents registration';
+      case 'registration':
+        return 'Agent registration';
+      case 'preregister':
+        return 'Preregister offline agent';
+      default: return '';
+    }
+  };
+
   const crumbs: CrumbType[] = [
     { label: 'Agents', link: agentId || serviceGroupId ? '/' : '' },
     {
@@ -65,7 +77,7 @@ export const Breadcrumbs = breadcrumbs(({ className }: Props) => {
       link: settings ? `/agents/${agentType}/${agentId}/settings` : '',
     },
     {
-      label: registrationType.startsWith('bulk') ? 'Agents registration' : 'Agent registration',
+      label: registrationLabel(),
       link: registrationType ? '/' : '',
     },
     {
@@ -106,6 +118,7 @@ export const Breadcrumbs = breadcrumbs(({ className }: Props) => {
       link: scopeId ? `/full-page/${agentId}/${buildVersion}/${pluginId}/scopes/${scopeId}` : '',
     },
   ];
+
   const currentPageCrumbs = crumbs.filter(({ link, label }) => link
   || label === location.state?.label)
     .map((currentPageCrumb) => {
@@ -119,6 +132,7 @@ export const Breadcrumbs = breadcrumbs(({ className }: Props) => {
       }
       return currentPageCrumb;
     });
+
   return (
     <div className={className}>
       {currentPageCrumbs.map(({ label, link, state }) => link && <Crumb key={label} to={{ pathname: link, state }}>{label}</Crumb>)}

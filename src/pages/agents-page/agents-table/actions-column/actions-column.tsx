@@ -17,57 +17,52 @@ interface ServiceGroup extends CommonEntity {
 
 interface Props {
   className?: string;
-  agent: | Agent;
+  agent: Agent;
 }
 
 const actionsColumn = BEM(styles);
 
-export const ActionsColumn = actionsColumn(
-  ({
-    className,
-    agent,
-  }: Props) => {
-    const {
-      id: agentId = '', status, agentType = '',
-    } = agent as Agent;
-    const { push } = useHistory();
-    const { agents = [] } = agent as ServiceGroup;
-    const unregisteredAgentsCount = agents.reduce(
-      (acc, { status: agentStatus }) => (agentStatus === AGENT_STATUS.NOT_REGISTERED ? acc + 1 : acc), 0,
-    );
-    return (
-      <div className={className}>
-        <Content align="end">
-          {(status === AGENT_STATUS.NOT_REGISTERED || unregisteredAgentsCount > 0) && (
-            <RegisterButton
-              onClick={() => push(`/${
-                agentType === 'ServiceGroup' ? 'bulk-registration' : 'registration'
-              }/${agentId}?unregisteredAgentsCount=${unregisteredAgentsCount}`)}
-              data-test="action-column:icons-register"
-              type="primary"
-            >
-              <Panel>
-                <Icons.Register />
-                &nbsp;Register {unregisteredAgentsCount ? `(${unregisteredAgentsCount})` : ''}
-              </Panel>
-            </RegisterButton>
+export const ActionsColumn = actionsColumn(({ className, agent }: Props) => {
+  const {
+    id: agentId = '', status, agentType = '', agentVersion,
+  } = agent;
+  const { push } = useHistory();
+  const { agents = [] } = agent as ServiceGroup;
+  const unregisteredAgentsCount = agents.reduce(
+    (acc, { status: agentStatus }) => (agentStatus === AGENT_STATUS.NOT_REGISTERED ? acc + 1 : acc), 0,
+  );
+  return (
+    <div className={className}>
+      <Content align="end">
+        {(status === AGENT_STATUS.NOT_REGISTERED || unregisteredAgentsCount > 0) && (
+          <RegisterButton
+            onClick={() => push(`/${
+              agentType === 'ServiceGroup' ? 'bulk-registration' : 'registration'
+            }/${agentId}?unregisteredAgentsCount=${unregisteredAgentsCount}`)}
+            data-test="action-column:icons-register"
+            type="primary"
+          >
+            <Panel>
+              <Icons.Register />
+              &nbsp;Register {unregisteredAgentsCount ? `(${unregisteredAgentsCount})` : ''}
+            </Panel>
+          </RegisterButton>
+        )}
+        <SettingsButton
+          onClick={() => push(
+            `/agents/${
+              agentType === 'ServiceGroup' ? 'service-group' : 'agent'
+            }/${agentId}/settings/`,
           )}
-          <SettingsButton
-            onClick={() => push(
-              `/agents/${
-                agentType === 'ServiceGroup' ? 'service-group' : 'agent'
-              }/${agentId}/settings/`,
-            )}
-            height={16}
-            width={16}
-            data-test="action-column:icons-settings"
-            disabled={status === AGENT_STATUS.NOT_REGISTERED}
-          />
-        </Content>
-      </div>
-    );
-  },
-);
+          height={16}
+          width={16}
+          data-test="action-column:icons-settings"
+          disabled={status === AGENT_STATUS.NOT_REGISTERED || (agentType !== 'ServiceGroup' && !agentVersion)}
+        />
+      </Content>
+    </div>
+  );
+});
 
 const Content = actionsColumn.content(Panel);
 const RegisterButton = actionsColumn.registerButton(Button);

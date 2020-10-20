@@ -44,6 +44,7 @@ export const PageSwitcher = () => (
         <PrivateRoute exact path="/settings" component={ApplicationSettingsPage} />
         <PrivateRoute exact path="/registration/:agentId" component={AgentRegistrationPage} />
         <PrivateRoute path="/bulk-registration/:serviceGroupId" component={ServiceGroupRegistrationPage} />
+        <PrivateRoute path="/preregister/offline-agent" component={AgentRegistrationPage} />
         <PrivateRoute component={NotFoundPage} />
       </Switch>
     </AppLayout>

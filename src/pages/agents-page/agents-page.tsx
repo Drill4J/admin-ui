@@ -1,5 +1,7 @@
 import * as React from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
+import { Button, Icons } from '@drill4j/ui-kit';
+import { useHistory } from 'react-router-dom';
 
 import { PageHeader } from 'components';
 import { useWsConnection } from 'hooks';
@@ -18,10 +20,15 @@ interface Props {
 const agentsPage = BEM(styles);
 
 export const AgentsPage = agentsPage(({ className }: Props) => {
+  const { push } = useHistory();
   const { single = [], grouped = [] } = useWsConnection<{ single: Agent[]; grouped: ServiceGroup[] }>(
     defaultAdminSocket,
     '/agents',
   ) || {};
+  const offlineAgents = useWsConnection<Agent[]>(
+    defaultAdminSocket,
+    '/api/agents',
+  ) || [];
   const agents = [
     ...grouped
       .map(({ group, agents: groupedAgents }: ServiceGroup) => ({
@@ -31,15 +38,26 @@ export const AgentsPage = agentsPage(({ className }: Props) => {
       }))
       .flat(),
     ...single,
+    ...offlineAgents.filter((offlineAgent) => !offlineAgent.agentVersion),
   ];
+
   const agentsCount = grouped.reduce(
     (sum, { agents: groupedAgents = [] }) => sum + groupedAgents.length,
-    single.length,
+    single.length + offlineAgents.length,
   );
 
   return (
     <div className={className}>
-      <PageHeader title="Agents" itemsCount={agentsCount} />
+      <PageHeader
+        title="Agents"
+        itemsCount={agentsCount}
+        actions={(
+          <Button type="secondary" size="large" onClick={() => push('/preregister/offline-agent')}>
+            <Icons.Register />
+            <span>Preregister Offline Agent</span>
+          </Button>
+        )}
+      />
       <Content>{agentsCount > 0 ? <AgentsTable agents={agents} /> : <NoAgentsStub />}</Content>
     </div>
   );
