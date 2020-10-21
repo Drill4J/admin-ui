@@ -31,7 +31,7 @@ export const NameColumn = nameColumn(
       0,
     );
     const isServiceGroup = agentType === 'ServiceGroup';
-    const isOfflineAgent = !isServiceGroup && !agentVersion;
+    const isOfflineAgent = agentType === 'Java' && !agentVersion;
     const AgentIcon = Icons[isOfflineAgent ? 'OfflineAgent' : 'Agent'];
     const agentIsDisabled = status === AGENT_STATUS.NOT_REGISTERED || isOfflineAgent
     || (unregisteredAgentsCount !== 0 && unregisteredAgentsCount === agents.length);

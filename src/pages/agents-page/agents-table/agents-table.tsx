@@ -81,9 +81,12 @@ export const AgentsTable = agentsTable(({ className, agents }: Props) => {
         <Column
           name="status"
           label="Status"
-          Cell={({ value, item }) => (item.agentType !== 'ServiceGroup' && item.agentVersion ? (
-            <AgentStatusToggler status={value} onChange={() => toggleAgent(item.id, value, showMessage)} />
-          ) : null)}
+          Cell={({ value, item }) => {
+            const isOfflineAgent = item.agentType === 'Java' && !item.agentVersion;
+            return (item.agentType !== 'ServiceGroup' && !isOfflineAgent ? (
+              <AgentStatusToggler status={value} onChange={() => toggleAgent(item.id, value, showMessage)} />
+            ) : null);
+          }}
         />
         <Column
           name="actions"

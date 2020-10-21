@@ -38,7 +38,7 @@ export const AgentsPage = agentsPage(({ className }: Props) => {
       }))
       .flat(),
     ...single,
-    ...agentsList.filter((agent) => !agent.agentVersion),
+    ...agentsList.filter((agent) => !agent.agentVersion && agent.agentType === 'Java'),
   ];
 
   return (
