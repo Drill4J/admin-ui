@@ -12,7 +12,6 @@ import { ProjectTestsCards } from '../project-tests-cards';
 export const Tests = () => {
   const testsUsages = useBuildVersion<AssociatedTests[]>('/build/tests-usages') || [];
   const coveredMethodsByTest = useBuildVersion<MethodCoveredByTest[]>('/build/tests/covered-methods') || [];
-  const coveredMethodsByTestType = useBuildVersion<MethodCoveredByTest[]>('/build/test-types/covered-methods') || [];
   const allTests = useBuildVersion<TestSummary>('/build/summary/tests/all') || {};
   const testsByType = useBuildVersion<TestTypeSummary[]>('/build/summary/tests/by-type') || [];
   const testsToRun = useBuildVersion<TestTypeCount[]>('/build/summary/tests-to-run/by-type') || [];
@@ -22,7 +21,6 @@ export const Tests = () => {
       <TestDetails
         testsUsages={testsUsages}
         coveredMethodsByTest={coveredMethodsByTest}
-        coveredMethodsByTestType={coveredMethodsByTestType}
       />
     </>
   );

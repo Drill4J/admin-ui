@@ -9,7 +9,6 @@ import { AssociatedTests } from 'types/associated-tests';
 import { MethodCoveredByTest } from 'types/method-covered-by-test';
 import { NoTestsStub } from './no-tests-stub';
 import { CoveredMethodsByTestSidebar } from './covered-methods-by-test-sidebar';
-import { CoveredMethodsByTestTypeSidebar } from './covered-methods-by-test-type-sidebar';
 import { DurationCell } from './duration-cell';
 import { CompoundCell } from '../compound-cell';
 
@@ -19,18 +18,15 @@ interface Props {
   className?: string;
   testsUsages: AssociatedTests[];
   coveredMethodsByTest: MethodCoveredByTest[];
-  coveredMethodsByTestType: MethodCoveredByTest[];
 }
 
 const testDetails = BEM(styles);
 
 export const TestDetails = testDetails(
   ({
-    className, testsUsages, coveredMethodsByTest, coveredMethodsByTestType,
+    className, testsUsages, coveredMethodsByTest,
   }: Props) => {
     const [selectedTest, setSelectedTest] = React.useState('');
-    const [selectedTestType, setSelectedTestType] = React.useState('');
-
     return (
       <div className={className}>
         {testsUsages.length > 0 ? (
@@ -88,10 +84,10 @@ export const TestDetails = testDetails(
               <Column
                 name="methodCalls"
                 HeaderCell={() => <div style={{ textAlign: 'right' }}>Methods covered</div>}
-                Cell={({ value, item: { testType = '' } = {} }) => (
+                Cell={({ value, item: { id = '' } = {} }) => (
                   <MethodCallsCell
                     onClick={() => {
-                      setSelectedTestType(testType);
+                      setSelectedTest(id);
                     }}
                     data-test="test-actions:view-curl:id"
                     clickable={Boolean(value)}
@@ -118,14 +114,6 @@ export const TestDetails = testDetails(
             onToggle={() => setSelectedTest('')}
             testId={selectedTest}
             coveredMethods={coveredMethodsByTest}
-          />
-        )}
-        {Boolean(selectedTestType) && (
-          <CoveredMethodsByTestTypeSidebar
-            isOpen={Boolean(selectedTestType)}
-            onToggle={() => setSelectedTestType('')}
-            testType={selectedTestType}
-            coveredMethods={coveredMethodsByTestType}
           />
         )}
       </div>

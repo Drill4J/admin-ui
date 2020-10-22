@@ -62,9 +62,6 @@ export const ScopeInfo = scopeInfo(
 
     const coveredMethodsByTest = useBuildVersion<MethodCoveredByTest[]>(`/scope/${scopeId}/tests/covered-methods`) || [];
 
-    const coveredMethodsByTestType = useBuildVersion<MethodCoveredByTest[]>(`/scope/${scopeId}/test-types/covered-methods`)
-        || [];
-
     const {
       name = '', active = false, enabled = false, started = 0, finished = 0,
     } = scope || {};
@@ -165,7 +162,6 @@ export const ScopeInfo = scopeInfo(
               <TestDetails
                 testsUsages={testsUsages}
                 coveredMethodsByTest={coveredMethodsByTest}
-                coveredMethodsByTestType={coveredMethodsByTestType}
               />
             </>
           )}
