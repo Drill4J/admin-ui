@@ -20,6 +20,7 @@ export const ScopeCoverageInfo = scopeCoverageInfo(({ className, scope }: Props)
   const {
     coverage: { percentage: coveragePercentage = 0, overlap: { percentage: overlapCoverage = 0 } = {} } = {},
   } = scope || {};
+  const uniqueCodeCoverage = percentFormatter(coveragePercentage) - percentFormatter(overlapCoverage);
   return (
     <div className={className}>
       <Title data-test="active-scope-info:title">SCOPE COVERAGE</Title>
@@ -27,7 +28,7 @@ export const ScopeCoverageInfo = scopeCoverageInfo(({ className, scope }: Props)
         <ScopeCoverage data-test="active-scope-info:scope-coverage">{`${percentFormatter((coveragePercentage))}%`}</ScopeCoverage>
         <b data-test="active-scope-info:overlap-coverage">{`${percentFormatter(overlapCoverage)}%`}</b>&nbsp;overlapped with build.&nbsp;
         <b data-test="active-scope-info:unique-coverage">
-          {`${percentFormatter(coveragePercentage - overlapCoverage)}%`}
+          {`${percentFormatter(uniqueCodeCoverage)}%`}
         </b>&nbsp;of new coverage
       </CoverageInfo>
       <MainProgressBar type="primary" value={`${coveragePercentage}%`} />
