@@ -1,30 +1,29 @@
 import * as React from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
-import { ColumnProps, Sort } from './table-types';
+import { SortArrows } from '@drill4j/ui-kit';
 
-import styles from './table.module.scss';
+import { ColumnProps, Sort, Order } from './table-types';
 
-export const DefaultHeaderCell = ({
-  column,
-  sort,
-  onSort,
-}: {
+import styles from './default-header-cell.module.scss';
+
+interface Props {
+  className?: string;
   column: ColumnProps;
-  sort?: Sort;
-  onSort?: (sortField: string) => void;
-}) => (onSort ? (
-  <TableSort onClick={() => onSort(column.name)}>
-    {column.label}
-    {sort && sort.field === column.name && (
-      <TableToggle>
-        {/* <Icons.AngleDown rotate={sort.order === 'ASC' ? 180 : undefined} height={4} width={8} /> */}
-      </TableToggle>
-    )}
-  </TableSort>
-) : (
-  column.label || null
+  sort: Sort;
+  onSort: (sort: Sort) => void;
+}
+
+const defaultHeaderCell = BEM(styles);
+
+export const DefaultHeaderCell = defaultHeaderCell(({
+  className, column: { name, label }, sort, onSort,
+}: Props) => (
+  <div className={className} onClick={() => onSort({ order: invertOrder(sort.order), fieldName: name })}>
+    {name !== 'selector' && <SortArrows order={name === sort.fieldName ? sort.order : null} /> }
+    {label}
+  </div>
 ));
 
-const table = BEM(styles);
-const TableSort = table.sort('div');
-const TableToggle = table.toggle('div');
+function invertOrder(order: Order) {
+  return order === 'ASC' ? 'DESC' : 'ASC';
+}

@@ -1,0 +1,17 @@
+@import '~common/style-guide/index';
+
+.clickable-cell {
+  display: inline-flex;
+  font-size: 12px;
+  line-height: 16px;
+  font-family: $semibold-font;
+  color: map-get($monochrome, black);
+  text-decoration: underline;
+  cursor: pointer;
+
+  &--disabled {
+    text-decoration: none;
+    cursor: default;
+    pointer-events: none;
+  }
+}

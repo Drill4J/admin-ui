@@ -30,21 +30,6 @@
     }
   }
 
-  &__coverage-cell {
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    font-family: $semibold-font;
-    color: map-get($monochrome, black);
-  }
-
-  &__coverage-icon {
-    display: flex;
-    align-items: center;
-    margin-right: 8px;
-    color: map-get($orange, default);
-  }
-
   &__test-type-cell {
     font-family: $regular-font;
     text-align: left;
@@ -61,17 +46,6 @@
       &--failed {
         color: map-get($red, default);
       }
-    }
-  }
-
-  &__method-calls-cell {
-    font-family: $semibold-font;
-    color: map-get($monochrome, black);
-    text-align: right;
-    cursor: pointer;
-
-    &--clickable {
-      text-decoration: underline;
     }
   }
 }

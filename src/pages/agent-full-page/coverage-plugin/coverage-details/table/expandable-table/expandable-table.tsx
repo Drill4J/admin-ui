@@ -1,11 +1,8 @@
 import * as React from 'react';
-import { BEM } from '@redneckz/react-bem-helper';
 
 import { Table } from '../table';
 import { Column } from '../column';
 import { RowExpander } from './row-expander';
-
-import styles from './expandable-table.module.scss';
 
 interface Props {
   data: Record<string, unknown>[];
@@ -21,53 +18,49 @@ interface Props {
   tableContentStub?: React.ReactNode | null;
 }
 
-const expandableTable = BEM(styles);
-
-export const ExpandableTable = expandableTable(
-  ({
-    children,
-    data,
-    idKey,
-    expandedColumns,
-    className,
-    hasSecondLevelExpand,
-    tableContentStub = null,
-    ...restProps
-  }: Props) => {
-    const [expandedRows, setExpandedRows] = React.useState<string[]>([]);
-    return (
-      <Table
-        className={className}
-        data={data as any}
-        expandedRows={expandedRows}
-        idKey={idKey}
-        tableContentStub={tableContentStub}
-        expandedColumns={
-          expandedColumns
-            ? [
-              hasSecondLevelExpand
-                ? getExpanderColumn({
-                  idKey,
-                  expandedRows,
-                  setExpandedRows,
-                  withMargin: true,
-                })
-                : null,
-              ...expandedColumns,
-            ]
-            : undefined
-        }
-        secondLevelExpand={expandedColumns}
-        {...restProps}
-      >
-        {[
-          getExpanderColumn({ idKey, expandedRows, setExpandedRows }),
-          ...React.Children.toArray(children),
-        ]}
-      </Table>
-    );
-  },
-);
+export const ExpandableTable = ({
+  children,
+  data,
+  idKey,
+  expandedColumns,
+  className,
+  hasSecondLevelExpand,
+  tableContentStub = null,
+  ...restProps
+}: Props) => {
+  const [expandedRows, setExpandedRows] = React.useState<string[]>([]);
+  return (
+    <Table
+      className={className}
+      data={data as any}
+      expandedRows={expandedRows}
+      idKey={idKey}
+      tableContentStub={tableContentStub}
+      expandedColumns={
+        expandedColumns
+          ? [
+            hasSecondLevelExpand
+              ? getExpanderColumn({
+                idKey,
+                expandedRows,
+                setExpandedRows,
+                withMargin: true,
+              })
+              : null,
+            ...expandedColumns,
+          ]
+          : undefined
+      }
+      secondLevelExpand={expandedColumns}
+      {...restProps}
+    >
+      {[
+        getExpanderColumn({ idKey, expandedRows, setExpandedRows }),
+        ...React.Children.toArray(children),
+      ]}
+    </Table>
+  );
+};
 
 const getExpanderColumn = ({
   expandedRows,
@@ -95,5 +88,6 @@ const getExpanderColumn = ({
         withMargin={withMargin}
       />
     )}
+    width="24px"
   />
 );

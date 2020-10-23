@@ -22,7 +22,7 @@ export const SecondLevelExpandContent = BEM(styles).row(({
     {columns.map((column) => {
       const Cell = column.Cell || DefaultCell;
       return (
-        <td key={column.name} colSpan={column.colSpan}>
+        <td key={column.name} colSpan={column.colSpan} style={{ width: column.width }} align={column.align}>
           <Cell value={get(field, column.name)} item={field} rowIndex={index} />
         </td>
       );

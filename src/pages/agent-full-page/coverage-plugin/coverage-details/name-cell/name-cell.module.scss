@@ -11,10 +11,11 @@
   }
 
   &__content {
+    height: 16px;
     margin-right: 8px;
-    width: 40vw;
-    color: map-get($color-palette, black100);
+    color: map-get($monochrome, black);
     font-size: 14px;
+    line-height: 16px;
     font-family: $semibold-font;
   }
 }

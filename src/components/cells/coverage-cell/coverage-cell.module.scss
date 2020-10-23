@@ -1,0 +1,10 @@
+@import '~common/style-guide/index';
+
+.coverage-cell {
+  &__coverage-icon {
+    display: flex;
+    align-items: center;
+    margin-right: 8px;
+    color: map-get($orange, default);
+  }
+}

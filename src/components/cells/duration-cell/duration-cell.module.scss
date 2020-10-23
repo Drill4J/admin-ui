@@ -1,0 +1,12 @@
+@import '~common/style-guide/index';
+
+.duration-cell {
+  font-size: 12px;
+  line-height: 16px;
+  color: map-get($monochrome, black);
+
+  &__affix {
+    margin-right: 4px;
+    color: map-get($monochrome, dark-tint);
+  }
+}

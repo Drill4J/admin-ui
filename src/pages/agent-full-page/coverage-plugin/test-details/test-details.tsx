@@ -4,13 +4,12 @@ import {
   Icons, Panel, Column, Table,
 } from '@drill4j/ui-kit';
 
-import { capitalize, percentFormatter } from 'utils';
+import { capitalize } from 'utils';
 import { AssociatedTests } from 'types/associated-tests';
 import { MethodCoveredByTest } from 'types/method-covered-by-test';
+import { Cells } from 'components';
 import { NoTestsStub } from './no-tests-stub';
 import { CoveredMethodsByTestSidebar } from './covered-methods-by-test-sidebar';
-import { DurationCell } from './duration-cell';
-import { CompoundCell } from '../compound-cell';
 
 import styles from './test-details.module.scss';
 
@@ -43,9 +42,10 @@ export const TestDetails = testDetails(
               <Column
                 name="testName"
                 label="Name"
-                Cell={({ item }) => (
-                  <CompoundCell pathKey="id" nameKey="testName" item={item} icon={<Icons.Test height={16} width={16} />} />
+                Cell={({ item: { id, testName } }) => (
+                  <Cells.Compound cellName={testName} cellAdditionalInfo={id} icon={<Icons.Test height={16} width={16} />} />
                 )}
+                width="40%"
               />
               <Column
                 name="testType"
@@ -67,41 +67,31 @@ export const TestDetails = testDetails(
               />
               <Column
                 name="coverage"
-                HeaderCell={() => <div style={{ textAlign: 'right' }}>Coverage, %</div>}
-                Cell={({ value }) => (
-                  <CoverageCell>
-                    {value === 0 && (
-                      <CoverageIcon
-                        title="Test didn't cover any methods. Make sure the test is actual or modify/delete it."
-                      >
-                        <Icons.UncoveredMethods />
-                      </CoverageIcon>
-                    )}
-                    {percentFormatter(value)}
-                  </CoverageCell>
-                )}
+                label="Coverage, %"
+                Cell={Cells.Coverage}
+                align="right"
               />
               <Column
                 name="methodCalls"
-                HeaderCell={() => <div style={{ textAlign: 'right' }}>Methods covered</div>}
+                label="Methods covered"
                 Cell={({ value, item: { id = '' } = {} }) => (
-                  <MethodCallsCell
+                  <Cells.Clickable
                     onClick={() => {
                       setSelectedTest(id);
                     }}
                     data-test="test-actions:view-curl:id"
-                    clickable={Boolean(value)}
+                    disabled={!value}
                   >
                     {value}
-                  </MethodCallsCell>
+                  </Cells.Clickable>
                 )}
+                align="right"
               />
               <Column
-                name="stats"
-                HeaderCell={() => <div style={{ textAlign: 'right', paddingRight: '8px' }}>Duration</div>}
-                Cell={({ value }) => (
-                  <DurationCell value={value?.duration} />
-                )}
+                name="stats.duration"
+                label="Duration"
+                Cell={Cells.Duration}
+                align="right"
               />,
             </Table>
           </>
@@ -123,9 +113,4 @@ export const TestDetails = testDetails(
 
 const Title = testDetails.title(Panel);
 const TableCell = testDetails.tableCell('span');
-const CoverageCell = testDetails.coverageCell('span');
-const CoverageIcon = testDetails.coverageIcon('span');
 const StatusCell = testDetails.statusCell('span');
-const MethodCallsCell = testDetails.methodCallsCell(
-  div({ onClick: () => {} } as { clickable?: boolean }),
-);

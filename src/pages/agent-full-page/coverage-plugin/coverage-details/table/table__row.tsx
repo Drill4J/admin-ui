@@ -38,7 +38,7 @@ export const TableRow = BEM(styles).row(
         {columns.map((column) => {
           const Cell = column.Cell || DefaultCell;
           return (
-            <td key={column.name} colSpan={column.colSpan}>
+            <td key={column.name} colSpan={column.colSpan} style={{ width: column.width }} align={column.align}>
               <Cell value={get(item, column.name)} item={item} rowIndex={index} />
             </td>
           );

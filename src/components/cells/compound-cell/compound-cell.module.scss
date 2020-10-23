@@ -1,0 +1,37 @@
+@import '~common/style-guide/index';
+
+.compound-cell {
+  display: flex;
+  gap: 8px;
+  color: map-get($monochrome, black);
+
+  &__cell-content {
+    width: 100%;
+    padding-right: 24px;
+    font-family: $semibold-font;
+  }
+
+  &__cell-name {
+    height: 16px;
+    line-height: 16px;
+    font-family: $semibold-font;
+  }
+
+  &__cell-additional-info {
+    margin-top: 4px;
+    line-height: 20px;
+    font-size: 12px;
+    font-family: $regular-font;
+    color: map-get($monochrome, default);
+  }
+
+  &--type {
+    &--primary {
+      padding-left: 24px;
+    }
+
+    &--secondary {
+      padding-left: 72px;
+    }
+  }
+}

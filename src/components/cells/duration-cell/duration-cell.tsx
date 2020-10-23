@@ -18,8 +18,10 @@ export const DurationCell = durationCell(({ className, value = 0 }: Props) => {
 
   return (
     <div className={className}>
-      {affix && '< '}
+      {affix && <Affix>&#60;</Affix>}
       {`${hours}:${minutes}:${affix ? '01' : seconds}`}
     </div>
   );
 });
+
+const Affix = durationCell.affix('span');

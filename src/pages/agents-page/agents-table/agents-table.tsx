@@ -33,6 +33,7 @@ export const AgentsTable = agentsTable(({ className, agents }: Props) => {
             name="name"
             label="Name"
             Cell={({ item }) => <NameColumn agent={item} withMargin />}
+            width="40%"
           />,
           <Column
             name="description"
@@ -64,7 +65,7 @@ export const AgentsTable = agentsTable(({ className, agents }: Props) => {
         ]}
         expandedContentKey="agents"
       >
-        <Column name="name" label="Name" Cell={({ item }) => <NameColumn agent={item} />} />
+        <Column name="name" label="Name" Cell={({ item }) => <NameColumn agent={item} />} width="40%" />
         <Column
           name="description"
           label="Description"
@@ -91,6 +92,7 @@ export const AgentsTable = agentsTable(({ className, agents }: Props) => {
         <Column
           name="actions"
           Cell={({ item }: { item: Agent }) => <ActionsColumn agent={item} />}
+          width="200px"
         />
       </ExpandableTable>
     </div>

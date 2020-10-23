@@ -7,8 +7,8 @@ import { Fields } from 'forms';
 
 import { ClassCoverage } from 'types/class-coverage';
 import { useVisibleElementsCount } from 'hooks';
+import { Cells } from 'components';
 import { useTableActionsState, useTableActionsDispatch, setSearch } from 'modules';
-import { CompoundCell } from '../compound-cell';
 import { CoverageCell } from './coverage-cell';
 import { NameCell } from './name-cell';
 import { AssociatedTestModal } from './associated-test-modal';
@@ -78,30 +78,25 @@ export const CoverageDetails = coverageDetails(
             expandedColumns={[
               <Column
                 name="name"
-                Cell={(props) => (
-                  <CompoundCell type="primary" nameKey="name" pathKey="path" icon={<Icons.Class />} {...props} />
+                Cell={({ item: { name, path } }) => (
+                  <Cells.Compound key={name} type="primary" cellName={name} cellAdditionalInfo={path} icon={<Icons.Class />} />
                 )}
               />,
               <Column name="coverage" Cell={CoverageCell} />,
-              <Column name="totalMethodsCount" />,
-              <Column name="coveredMethodsCount" />,
+              <Column name="totalMethodsCount" align="right" />,
+              <Column name="coveredMethodsCount" align="right" />,
               <Column
                 name="assocTestsCount"
                 label="Associated tests"
                 Cell={(props) => <AssociatedTestColumn onClick={setSelectedId} {...props} />}
+                align="right"
               />,
             ]}
             secondLevelExpand={[
               <Column
                 name="name"
-                Cell={(props) => (
-                  <CompoundCell
-                    type="secondary"
-                    nameKey="name"
-                    pathKey="decl"
-                    icon={<Icons.Function />}
-                    {...props}
-                  />
+                Cell={({ item: { name, decl } }) => (
+                  <Cells.Compound key={name} type="secondary" cellName={name} cellAdditionalInfo={decl} icon={<Icons.Function />} />
                 )}
                 colSpan={2}
               />,
@@ -110,6 +105,7 @@ export const CoverageDetails = coverageDetails(
                 name="assocTestsCount"
                 label="Associated tests"
                 Cell={(props) => <AssociatedTestColumn onClick={setSelectedId} {...props} />}
+                align="right"
               />,
             ]}
             expandedContentKey="name"
@@ -119,14 +115,16 @@ export const CoverageDetails = coverageDetails(
               name="name"
               label="Name"
               Cell={({ value }) => <NameCell icon={<Icons.Package />} value={value} />}
+              width="40%"
             />
             <Column name="coverage" label="Coverage" Cell={CoverageCell} />
-            <Column name="totalMethodsCount" label="Methods total" />
-            <Column name="coveredMethodsCount" label="Methods covered" />
+            <Column name="totalMethodsCount" label="Methods total" align="right" />
+            <Column name="coveredMethodsCount" label="Methods covered" align="right" />
             <Column
               name="assocTestsCount"
               label="Associated tests"
               Cell={(props) => <AssociatedTestColumn onClick={setSelectedId} {...props} />}
+              align="right"
             />
           </ExpandableTable>
           <div ref={ref} />

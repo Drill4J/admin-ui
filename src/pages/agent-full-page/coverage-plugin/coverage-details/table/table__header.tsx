@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
-import { Panel, SortArrows } from '@drill4j/ui-kit';
 
 import {
   useTableActionsDispatch, toggleOrder, useTableActionsState,
@@ -16,23 +15,19 @@ interface Props {
 
 export const TableHeader = BEM(styles).header(({ columns, className }: Props) => {
   const dispatch = useTableActionsDispatch();
-  const { sort: { fieldName, order } } = useTableActionsState();
+  const { sort } = useTableActionsState();
   return (
     <thead className={className}>
       <tr>
         {columns.map((column) => {
-          const HeaderCell = column.HeaderCell || DefaultHeaderCell;
+          const {
+            name, width, HeaderCell, align = 'left',
+          } = column;
           return (
-            <th key={column.name} style={{ width: column.width }}>
-              <Panel>
-                <HeaderCell column={column} />
-                {column.name !== 'selector' && (
-                  <SortArrows
-                    onClick={() => dispatch(toggleOrder(column.name))}
-                    order={column.name === fieldName ? order : null}
-                  />
-                )}
-              </Panel>
+            <th key={name} style={{ width }} align={align}>
+              {HeaderCell
+                ? HeaderCell({ column })
+                : <DefaultHeaderCell column={column} sort={sort} onSort={({ fieldName }) => dispatch(toggleOrder(fieldName))} />}
             </th>
           );
         })}
