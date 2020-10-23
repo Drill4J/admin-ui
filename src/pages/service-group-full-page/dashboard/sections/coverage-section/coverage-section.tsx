@@ -23,7 +23,7 @@ export const CoverageSection = coverageSection(({ className, coverage = 0, arrow
       info={(
         <>
           {`${percentFormatter(coverage)}%`}
-          {arrow && (
+          {(arrow === 'DECREASE' || arrow === 'INCREASE') && (
             <CoverageArrow
               rotate={arrow === 'INCREASE' ? 180 : 0}
               type={arrow}
