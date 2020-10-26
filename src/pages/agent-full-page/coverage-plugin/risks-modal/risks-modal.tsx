@@ -5,9 +5,8 @@ import {
   Panel, Icons, Modal, OverflowText, Inputs,
 } from '@drill4j/ui-kit';
 
-import { useElementSize } from 'hooks';
+import { useElementSize, useBuildVersion } from 'hooks';
 import { Risks } from 'types/risks';
-import { useBuildVersion } from '../use-build-version';
 
 import styles from './risks-modal.module.scss';
 

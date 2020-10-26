@@ -2,7 +2,7 @@ import * as React from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 
 import { get } from 'utils';
-import { useBuildVersion } from '../../use-build-version';
+import { useBuildVersion } from 'hooks';
 import { DefaultCell } from './default-cell';
 import { SecondLevelExpandContent } from './second-level-expand-content';
 

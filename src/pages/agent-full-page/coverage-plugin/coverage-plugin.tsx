@@ -2,6 +2,7 @@ import * as React from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 import { Switch, Route } from 'react-router-dom';
 
+import { TestsToRunList } from 'modules';
 import { Overview } from './overview';
 import { ScopesList, ScopeInfo } from './scope';
 import { Tests } from './tests';
@@ -42,6 +43,11 @@ export const CoveragePlugin = coveragePlugin(({ className }: Props) => (
               <Route
                 path="/full-page/:agentId/:buildVersion/:pluginId/tests"
                 component={Tests}
+                exact
+              />
+              <Route
+                path="/full-page/:agentId/:buildVersion/:pluginId/tests-to-run"
+                component={TestsToRunList}
                 exact
               />
             </Switch>

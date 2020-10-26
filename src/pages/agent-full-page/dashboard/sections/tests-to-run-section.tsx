@@ -7,7 +7,7 @@ import { TESTS_TO_RUN_TYPES_COLOR } from 'common/constants';
 import { TestTypeCount } from 'types/test-type-count';
 import { TestToRunInfo } from 'types/test-to-run-info';
 import { TestTypes } from 'types/test-types';
-import { useBuildVersion } from '../../coverage-plugin/use-build-version';
+import { useBuildVersion } from 'hooks';
 import { Section } from './section';
 import { SectionTooltip } from './section-tooltip';
 

@@ -1,6 +1,7 @@
 import React from 'react';
 
-import { TableActionsState, Order } from './table-actions-types';
+import { Order } from 'types/sort';
+import { TableActionsState } from './table-actions-types';
 import { Action } from './reducer';
 
 export const defaultState = {

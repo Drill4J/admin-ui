@@ -36,13 +36,11 @@ export const TestToCodePlugin = testToCodePlugin(
     summaries = [],
     aggregated,
   }: Props) => {
+    const [testsToRunModalIsOpen, setTestsToRunModalIsOpen] = React.useState(false);
     const { serviceGroupId = '', pluginId = '' } = useParams<{ serviceGroupId: string, pluginId: string}>();
     const { push } = useHistory();
     const [isManageSessionsModalOpen, setIsManageSessionsModalOpen] = React.useState(false);
     const [isFinishScopesModalOpen, setIsFinishScopesModalOpen] = React.useState(false);
-    const [{
-      groupedTests = {}, count = 0, agentType = '', id = '',
-    }, setSelectedTestsToRun] = React.useState<TestToRun>({});
     const serviceGroupSummaries = summaries
       .map((agentSummary) => ({ ...agentSummary, ...agentSummary.summary }));
 
@@ -97,10 +95,10 @@ export const TestToCodePlugin = testToCodePlugin(
             />
             <ListColumn
               name="testsToRun"
-              Cell={({ value, item: { id: agentId = '' } = {} }) => (
+              Cell={({ value, item: { id: agentId = '', buildVersion = '' } = {} }) => (
                 <TestToCodeCell
                   value={value?.count}
-                  onClick={() => setSelectedTestsToRun({ ...value, agentType: 'Agent', id: agentId })}
+                  onClick={() => push(`/full-page/${agentId}/${buildVersion}/${pluginId}/tests-to-run`)}
                   testContext="tests-to-run"
                 />
               )}
@@ -108,7 +106,7 @@ export const TestToCodePlugin = testToCodePlugin(
                 <TestToCodeHeaderCell
                   value={aggregated?.testsToRun?.count}
                   label="tests to run"
-                  onClick={() => setSelectedTestsToRun({ ...aggregated?.testsToRun, agentType: 'ServiceGroup', id: serviceGroupId })}
+                  onClick={() => setTestsToRunModalIsOpen(true)}
                 />
               )}
             />
@@ -147,10 +145,7 @@ export const TestToCodePlugin = testToCodePlugin(
                     {
                       label: 'Manage sessions',
                       icon: 'ManageSessions',
-                      onClick: () => {
-                        setIsManageSessionsModalOpen(true);
-                        setSelectedTestsToRun({ agentType: 'ServiceGroup' });
-                      },
+                      onClick: () => setIsManageSessionsModalOpen(true),
                     },
                   ]}
                 />
@@ -172,14 +167,10 @@ export const TestToCodePlugin = testToCodePlugin(
               pluginId={pluginId}
             />
           )}
-          {count > 0 && (
+          {testsToRunModalIsOpen && (
             <TestsToRunModal
-              isOpen={Boolean(count)}
-              onToggle={() => setSelectedTestsToRun({})}
-              agentId={id}
-              pluginId={pluginId}
-              testsToRun={groupedTests}
-              agentType={agentType}
+              isOpen={testsToRunModalIsOpen}
+              onToggle={setTestsToRunModalIsOpen}
             />
           )}
         </div>

@@ -12,7 +12,7 @@ interface Props {
 
 interface CrumbType {
   label: string;
-  link: string;
+  link?: string;
   state?: { label: string; buildVersion: string; pluginId: string };
 }
 
@@ -116,6 +116,10 @@ export const Breadcrumbs = breadcrumbs(({ className }: Props) => {
     {
       label: `${scopeId}`,
       link: scopeId ? `/full-page/${agentId}/${buildVersion}/${pluginId}/scopes/${scopeId}` : '',
+    },
+    {
+      label: 'Tests to Run',
+      link: page === 'tests-to-run' ? `/full-page/${agentId}/${buildVersion}/${pluginId}/tests-to-run` : '',
     },
   ];
 

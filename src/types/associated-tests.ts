@@ -1,7 +1,4 @@
-interface TestStats {
-  duration: number;
-  result: 'PASSED' | 'FAILED' | 'ERROR' | 'SKIPPED';
-}
+import { TestStats } from './test-stats';
 
 export interface AssociatedTests {
   id?: string;

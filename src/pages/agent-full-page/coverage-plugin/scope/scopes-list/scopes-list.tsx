@@ -11,8 +11,7 @@ import {
 import { NotificationManagerContext } from 'notification-manager';
 import { ScopeSummary } from 'types/scope-summary';
 import { TestTypeSummary } from 'types/test-type-summary';
-import { useAgent } from 'hooks';
-import { useBuildVersion } from '../../use-build-version';
+import { useAgent, useBuildVersion } from 'hooks';
 import { toggleScope } from '../../api';
 import { usePluginState } from '../../../store';
 import { useCoveragePluginDispatch, useCoveragePluginState, openModal } from '../../store';
