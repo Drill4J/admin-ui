@@ -50,7 +50,11 @@ export const DeleteScopeModal = deleteScopeModal(
               {errorMessage}
             </GeneralAlerts>
           )}
-          {scope && scope.active && <ActiveSessionsPanel />}
+          {scope && scope.active && (
+            <ActiveSessionsPanel>
+              If you delete the scope now, these sessions will not be saved.
+            </ActiveSessionsPanel>
+          )}
           <Content>
             <Message>
               {`You are about to ${

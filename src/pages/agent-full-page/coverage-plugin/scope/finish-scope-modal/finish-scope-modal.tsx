@@ -52,7 +52,9 @@ export const FinishScopeModal = finishScopeModal(
               {errorMessage}
             </GeneralAlerts>
           )}
-          <ActiveSessionsPanel />
+          <ActiveSessionsPanel>
+            If you finish the scope now, these sessions will not be saved.
+          </ActiveSessionsPanel>
           {!testsCount && (
             <GeneralAlerts type="WARNING">
               Scope is empty and will be deleted after finishing.

@@ -8,11 +8,12 @@ import styles from './active-sessions-panel.module.scss';
 
 interface Props {
   className?: string;
+  children: React.ReactNode;
 }
 
 const activeSessionsPanel = BEM(styles);
 
-export const ActiveSessionsPanel = activeSessionsPanel(({ className }: Props) => {
+export const ActiveSessionsPanel = activeSessionsPanel(({ className, children }: Props) => {
   const {
     activeSessions: { testTypes = [] },
   } = useCoveragePluginState();
@@ -33,7 +34,7 @@ export const ActiveSessionsPanel = activeSessionsPanel(({ className }: Props) =>
             ))}
           </ActiveSessionTypesList>
           <Instructions>
-            If you finish the scope now, these sessions will not be saved.
+            {children}
           </Instructions>
         </Content>
       )}
