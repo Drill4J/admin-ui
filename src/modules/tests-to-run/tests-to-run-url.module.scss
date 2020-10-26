@@ -1,11 +1,10 @@
 @import '~common/style-guide/index';
 
-.test-to-run-url {
-  min-width: 300px;
-  max-width: 300px;
-  font-size: 12px;
-  line-height: 16px;
-  color: map-get($color-palette, blue100);
+.tests-to-run-url {
+  width: 370px;
+  font-size: 14px;
+  line-height: 20px;
+  color: map-get($primary-blue, default);
   word-break: break-all;
 
   & > *:not(:first-child) {
@@ -15,11 +14,11 @@
   &__curl-flag {
     min-width: 18px;
     font-family: $semibold-font;
-    color: map-get($color-palette, black100);
+    color: map-get($monochrome, black);
 
     &--color {
       &--red {
-        color: map-get($color-palette, red100);
+        color: map-get($red, default);
       }
     }
 

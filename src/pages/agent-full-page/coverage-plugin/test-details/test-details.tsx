@@ -6,24 +6,23 @@ import {
 
 import { capitalize } from 'utils';
 import { AssociatedTests } from 'types/associated-tests';
-import { MethodCoveredByTest } from 'types/method-covered-by-test';
 import { Cells } from 'components';
+import { CoveredMethodsByTestSidebar } from 'modules';
 import { NoTestsStub } from './no-tests-stub';
-import { CoveredMethodsByTestSidebar } from './covered-methods-by-test-sidebar';
 
 import styles from './test-details.module.scss';
 
 interface Props {
   className?: string;
   testsUsages: AssociatedTests[];
-  coveredMethodsByTest: MethodCoveredByTest[];
+  topicCoveredMethodsByTest: string;
 }
 
 const testDetails = BEM(styles);
 
 export const TestDetails = testDetails(
   ({
-    className, testsUsages, coveredMethodsByTest,
+    className, testsUsages, topicCoveredMethodsByTest,
   }: Props) => {
     const [selectedTest, setSelectedTest] = React.useState('');
     return (
@@ -108,7 +107,7 @@ export const TestDetails = testDetails(
             isOpen={Boolean(selectedTest)}
             onToggle={() => setSelectedTest('')}
             testId={selectedTest}
-            coveredMethods={coveredMethodsByTest}
+            topicCoveredMethodsByTest={topicCoveredMethodsByTest}
           />
         )}
       </div>

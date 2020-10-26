@@ -1,0 +1,40 @@
+@import '~common/style-guide/index';
+
+.get-suggested-tests-modal {
+  width: 480px;
+
+  &__message {
+    display: flex;
+    flex-direction: column;
+    padding: 16px 24px 24px 24px;
+    font-size: 14px;
+    line-height: 20px;
+    overflow-wrap: break-word;
+    color: map-get($monochrome, black);
+  }
+
+  &__command-wrapper {
+    margin: 24px 0;
+
+    &:hover {
+      .get-suggested-tests-modal__copy-icon {
+        display: initial;
+      }
+    }
+  }
+
+  &__copy-icon {
+    display: none;
+    margin-left: auto;
+    color: map-get($primary-blue, default);
+    cursor: pointer;
+
+    &:active {
+      color: map-get($primary-blue, medium-tint);
+    }
+  }
+
+  &__close-button {
+    margin: 0 24px 24px auto;
+  }
+}

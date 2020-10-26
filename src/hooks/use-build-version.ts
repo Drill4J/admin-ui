@@ -1,8 +1,9 @@
 import { useState, useEffect } from 'react';
 
 import { defaultTest2CodePluginSocket } from 'common/connection';
-import { Search, Sort } from 'modules/table-actions/table-actions-types';
-import { usePluginState } from '../store';
+import { Search } from 'types/search';
+import { Sort } from 'types/sort';
+import { usePluginState } from 'pages/agent-full-page/store';
 
 export function useBuildVersion<Data>(topic: string, search?: Search, sort?: Sort): Data | null {
   const { agentId, buildVersion } = usePluginState();

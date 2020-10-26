@@ -4,7 +4,7 @@ import { Panel, Icons, Tooltip } from '@drill4j/ui-kit';
 import { Risks } from 'types/risks';
 import { RISKS_TYPES_COLOR } from 'common/constants';
 import { SingleBar } from 'components';
-import { useBuildVersion } from '../../coverage-plugin/use-build-version';
+import { useBuildVersion } from 'hooks';
 import { Section } from './section';
 import { SectionTooltip } from './section-tooltip';
 
