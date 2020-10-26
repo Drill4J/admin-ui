@@ -1,10 +1,4 @@
-import { Count } from './count';
-
-interface Coverage {
-  percentage?: number;
-  methodCount?: Count;
-  count?: Count;
-}
+import { Coverage } from './coverage';
 
 export interface TestSummary {
   coverage?: Coverage;

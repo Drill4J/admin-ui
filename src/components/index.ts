@@ -13,3 +13,5 @@ export { InfoCard } from './info-card';
 export { Cells } from './cells';
 export { SingleBar } from './single-bar';
 export { CoverageSectionTooltip } from './coverage-section-tooltip';
+export { SearchPanel } from './search-panel';
+export { CoverageRateIcon } from './coverage-rate-icon';

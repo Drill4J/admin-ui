@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useParams } from 'react-router-dom';
 import { BEM } from '@redneckz/react-bem-helper';
 import { nanoid } from 'nanoid';
 import {
@@ -6,31 +7,33 @@ import {
 } from '@drill4j/ui-kit';
 
 import { copyToClipboard } from 'utils';
-import { TestsToRunUrl } from './test-to-run-url';
-import { getTestToRunURL } from './get-test-to-run-url';
+import { usePluginData } from 'pages/service-group-full-page/use-plugin-data';
+import { TestsToRunUrl } from '../tests-to-run-url';
+import { getTestsToRunURL } from '../get-tests-to-run-url';
 
 import styles from './tests-to-run-modal.module.scss';
+
+interface GroupedTestToRun {
+  byType?: Record<string, string[]>;
+  totalCount?: number;
+}
 
 interface Props {
   className?: string;
   isOpen: boolean;
   onToggle: (value: boolean) => void;
-  testsToRun: { [testType: string]: string[] };
-  agentId: string;
-  pluginId: string;
-  agentType?: string;
-  filter?: string;
 }
 
 const testsToRunModal = BEM(styles);
 
 export const TestsToRunModal = testsToRunModal(
   ({
-    className, isOpen, onToggle, testsToRun, agentId, pluginId, agentType, filter = 'all',
+    className, isOpen, onToggle,
   }: Props) => {
+    const { serviceGroupId = '', pluginId = '' } = useParams<{ serviceGroupId: string, pluginId: string }>();
+    const { byType: testsToRun = {} } = usePluginData<GroupedTestToRun>('/service-group/data/tests-to-run', serviceGroupId, pluginId) || {};
     const allTests = Object.values(testsToRun).reduce((acc, tests) => [...acc, ...tests], []);
-    const [selectedFilter, setSelectedFilter] = React.useState(filter);
-
+    const [selectedFilter, setSelectedFilter] = React.useState('all');
     const getSelectedTests = () => {
       switch (selectedFilter) {
         case 'manual':
@@ -56,8 +59,8 @@ export const TestsToRunModal = testsToRunModal(
               Use this Curl in your command line to get JSON:
             </span>
             <CommandWrapper verticalAlign="end">
-              <TestsToRunUrl agentId={agentId} pluginId={pluginId} agentType={agentType} />
-              <CopyIcon onClick={() => copyToClipboard(getTestToRunURL(agentId, pluginId, agentType))} />
+              <TestsToRunUrl agentId={serviceGroupId} pluginId={pluginId} agentType="ServiceGroup" />
+              <CopyIcon onClick={() => copyToClipboard(getTestsToRunURL(serviceGroupId, pluginId, 'ServiceGroup'))} />
             </CommandWrapper>
           </NotificaitonPanel>
           <Content>

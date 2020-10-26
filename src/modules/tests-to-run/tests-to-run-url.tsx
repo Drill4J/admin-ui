@@ -4,7 +4,7 @@ import { Panel } from '@drill4j/ui-kit';
 
 import { adminUrl } from './admin-url';
 
-import styles from './test-to-run-url.module.scss';
+import styles from './tests-to-run-url.module.scss';
 
 interface Props {
   className?: string;

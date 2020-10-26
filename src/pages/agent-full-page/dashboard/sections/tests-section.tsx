@@ -7,7 +7,7 @@ import { BuildCoverage } from 'types/build-coverage';
 import { TestTypes } from 'types/test-types';
 import { capitalize } from 'utils';
 import { TestsInfo } from 'types/tests-info';
-import { useBuildVersion } from '../../coverage-plugin/use-build-version';
+import { useBuildVersion } from 'hooks';
 import { Section } from './section';
 import { SectionTooltip } from './section-tooltip';
 

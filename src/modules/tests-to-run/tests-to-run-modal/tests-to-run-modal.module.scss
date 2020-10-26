@@ -85,10 +85,10 @@
     flex-direction: row;
     align-items: center;
     min-height: 40px;
-    padding-left: 24px;
-    font-size: 14px;
-    margin-bottom: 16px;
     width: 400px;
+    padding: 0 24px;
+    margin-bottom: 16px;
+    font-size: 14px;
   }
 
   &__methods-list-item-icon {
@@ -100,5 +100,6 @@
   &__methods-info {
     display: flex;
     flex-direction: column;
+    overflow-wrap: anywhere;
   }
 }

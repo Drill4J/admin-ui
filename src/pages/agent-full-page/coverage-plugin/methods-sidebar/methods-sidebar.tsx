@@ -3,10 +3,9 @@ import { BEM } from '@redneckz/react-bem-helper';
 import VirtualList from 'react-tiny-virtual-list';
 import { Modal, Icons, OverflowText } from '@drill4j/ui-kit';
 
-import { useElementSize } from 'hooks';
+import { useElementSize, useBuildVersion } from 'hooks';
 import { MethodsDetails } from 'types/methods-details';
-import { useBuildVersion } from '../use-build-version';
-import { CoverageRateIcon } from '../coverage-rate-icon';
+import { CoverageRateIcon } from 'components';
 
 import styles from './methods-sidebar.module.scss';
 

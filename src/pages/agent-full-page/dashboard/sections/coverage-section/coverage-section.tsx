@@ -9,7 +9,7 @@ import { Methods } from 'types/methods';
 import { COVERAGE_TYPES_COLOR } from 'common/constants';
 import { ParentBuild } from 'types/parent-build';
 import { SingleBar, CoverageSectionTooltip } from 'components';
-import { useBuildVersion } from '../../../coverage-plugin/use-build-version';
+import { useBuildVersion } from 'hooks';
 import { usePreviousBuildCoverage } from '../../../coverage-plugin/use-previous-build-coverage';
 import { Section } from '../section';
 

@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 
 import { defaultTest2CodePluginSocket } from 'common/connection';
 
-export function usePluginData<Data>(serviceGroupId: string, pluginId: string): Data | null {
+export function usePluginData<Data>(topic: string, serviceGroupId: string, pluginId: string): Data | null {
   const [data, setData] = useState<Data | null>(null);
 
   useEffect(() => {
@@ -11,7 +11,7 @@ export function usePluginData<Data>(serviceGroupId: string, pluginId: string): D
     }
 
     const unsubscribe = defaultTest2CodePluginSocket.subscribe(
-      '/service-group/summary', handleDataChange, { groupId: serviceGroupId, type: 'GROUP' },
+      topic, handleDataChange, { groupId: serviceGroupId, type: 'GROUP' },
     );
 
     return () => {

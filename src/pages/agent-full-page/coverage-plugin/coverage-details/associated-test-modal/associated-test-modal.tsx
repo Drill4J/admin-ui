@@ -3,7 +3,7 @@ import { BEM, div } from '@redneckz/react-bem-helper';
 import { Modal, Icons } from '@drill4j/ui-kit';
 
 import { AssociatedTests } from 'types/associated-tests';
-import { useBuildVersion } from '../../use-build-version';
+import { useBuildVersion } from 'hooks';
 import { ItemInfo } from './item-info';
 
 import styles from './associated-test-modal.module.scss';
