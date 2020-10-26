@@ -31,12 +31,12 @@ export const FinishScopeModal = finishScopeModal(
     const { agentId, buildVersion } = usePluginState();
     const [errorMessage, setErrorMessage] = React.useState('');
     const [ignoreScope, setIgnoreScope] = React.useState(false);
-
     const testsCount = scope
       ? (scope.coverage.byTestType || []).reduce((acc, { summary: { testCount = 0 } }) => acc + testCount, 0)
       : 0;
     const { pluginId = '' } = useParams<{ pluginId: string }>();
     const { push, location: { pathname = '' } } = useHistory();
+    const isScopeInfoPage = scope?.id && pathname.includes(scope.id);
 
     return (
       <Popup
@@ -80,8 +80,7 @@ export const FinishScopeModal = finishScopeModal(
                     },
                     onError: setErrorMessage,
                   })({ prevScopeEnabled: !ignoreScope, savePrevScope: true });
-                  scope?.id && pathname.includes(scope.id)
-                    && push(`/full-page/${agentId}/${buildVersion}/${pluginId}/dashboard`);
+                  !testsCount && isScopeInfoPage && push(`/full-page/${agentId}/${buildVersion}/${pluginId}/dashboard`);
                 }}
                 data-test="finish-scope-modal:finish-scope-button"
               >
