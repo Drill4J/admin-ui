@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { BEM, div } from '@redneckz/react-bem-helper';
+import { BEM } from '@redneckz/react-bem-helper';
 import {
   Icons, Panel, Column, Table,
 } from '@drill4j/ui-kit';
@@ -35,9 +35,8 @@ export const TestDetails = testDetails(
             </Title>
             <Table
               data={testsUsages.map(({ tests = [], testType }) => tests.map((test) => ({ ...test, testType }))).flat()}
-              idKey="testType"
+              idKey="testName"
               columnsSize="medium"
-              expandedContentKey="tests"
             >
               <Column
                 name="testName"
@@ -45,35 +44,40 @@ export const TestDetails = testDetails(
                 Cell={({ item: { id, testName } }) => (
                   <Cells.Compound cellName={testName} cellAdditionalInfo={id} icon={<Icons.Test height={16} width={16} />} />
                 )}
-                width="40%"
               />
               <Column
                 name="testType"
                 label="Test type"
+                width="104px"
                 Cell={({ value }) => (
-                  <TableCell>
+                  <>
                     {capitalize(value)}
-                  </TableCell>
+                  </>
                 )}
               />
               <Column
-                name="stats"
+                name="stats.result"
                 label="Status"
-                Cell={({ value: testStatus }) => (
-                  <StatusCell type={testStatus?.result}>
-                    {capitalize(testStatus?.result)}
-                  </StatusCell>
+                width="44px"
+                Cell={({ value }) => (
+                  <Cells.TestStatus
+                    type={value}
+                  >
+                    {capitalize(value)}
+                  </Cells.TestStatus>
                 )}
               />
               <Column
                 name="coverage"
                 label="Coverage, %"
+                width="128px"
                 Cell={Cells.Coverage}
                 align="right"
               />
               <Column
                 name="methodCalls"
                 label="Methods covered"
+                width="160px"
                 Cell={({ value, item: { id = '' } = {} }) => (
                   <Cells.Clickable
                     onClick={() => {
@@ -90,6 +94,7 @@ export const TestDetails = testDetails(
               <Column
                 name="stats.duration"
                 label="Duration"
+                width="116px"
                 Cell={Cells.Duration}
                 align="right"
               />,
@@ -112,5 +117,3 @@ export const TestDetails = testDetails(
 );
 
 const Title = testDetails.title(Panel);
-const TableCell = testDetails.tableCell('span');
-const StatusCell = testDetails.statusCell('span');

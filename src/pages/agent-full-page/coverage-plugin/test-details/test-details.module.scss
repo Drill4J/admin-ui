@@ -9,43 +9,4 @@
     font-size: 18px;
     line-height: 24px;
   }
-
-  &__table-cell {
-    display: flex;
-    align-items: center;
-    color: map-get($monochrome, black);
-
-    & > * {
-      margin-right: 16px;
-    }
-
-    &--type {
-      &--primary {
-        font-family: $semibold-font;
-        text-transform: capitalize;
-      }
-      &--secondary {
-        margin-left: 54px;
-      }
-    }
-  }
-
-  &__test-type-cell {
-    font-family: $regular-font;
-    text-align: left;
-  }
-
-  &__status-cell {
-    font-family: $semibold-font;
-
-    &--type {
-      &--passed {
-        color: map-get($green, default);
-      }
-
-      &--failed {
-        color: map-get($red, default);
-      }
-    }
-  }
 }

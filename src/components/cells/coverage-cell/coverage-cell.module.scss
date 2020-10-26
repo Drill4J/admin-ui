@@ -6,5 +6,6 @@
     align-items: center;
     margin-right: 8px;
     color: map-get($orange, default);
+    pointer-events: all;
   }
 }

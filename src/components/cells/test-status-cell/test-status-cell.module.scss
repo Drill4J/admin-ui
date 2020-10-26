@@ -1,0 +1,14 @@
+@import '~common/style-guide/index';
+
+.test-status-cell {
+  font-family: $semibold-font;
+
+  &--type {
+    &--passed {
+      color: map-get($green, default);
+    }
+    &--failed {
+      color: map-get($red, default);
+    }
+  }
+}
