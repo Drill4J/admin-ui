@@ -68,6 +68,10 @@ export const AgentRegistrationPage = agentRegistrationPage(
             name="General Settings"
             component={GeneralSettingsForm}
             validate={composeValidators(
+              required('id', 'Agent ID'),
+              sizeLimit({
+                name: 'id', alias: 'Agent ID', min: 3, max: 32,
+              }),
               required('name'),
               sizeLimit({ name: 'name' }),
               sizeLimit({ name: 'environment' }),

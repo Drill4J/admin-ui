@@ -29,7 +29,7 @@ export const GeneralSettingsForm = generalSettingsForm(({ className, formValues:
           label="Agent ID"
           actions={<CopyAgentId onClick={() => copyToClipboard(id)} />}
         >
-          <Field name="id" component={Fields.Input} disabled={Boolean(agentId)} />
+          <Field name="id" component={Fields.Input} placeholder="Enter agent's ID" disabled={Boolean(agentId)} />
         </FormGroup>
         <FormGroup
           label="Agent version"
