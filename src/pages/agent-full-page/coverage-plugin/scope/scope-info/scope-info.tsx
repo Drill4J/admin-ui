@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
-import { useParams } from 'react-router-dom';
+import { Redirect, useParams } from 'react-router-dom';
 import {
   Panel, Icons, Menu, Button, SessionIndicator,
 } from '@drill4j/ui-kit';
@@ -102,71 +102,75 @@ export const ScopeInfo = scopeInfo(
         onClick: () => dispatch(openModal('DeleteScopeModal', scope)),
       },
     ].filter(Boolean);
-
+    const newBuildHasAppeared = activeBuildVersion && buildVersion && activeBuildVersion !== buildVersion;
     return (
-      <div className={className}>
-        <Header align="space-between">
-          <Panel>
-            <ScopeName data-test="scope-info:scope-name">{name}</ScopeName>
-            {active && <ScopeSessionIndicator active={loading} />}
-            <ScopeStatus active={active} loading={loading} enabled={enabled} started={started} finished={finished} />
-          </Panel>
-          <Panel align="end">
-            {active && (
-              <FinishScopeButton
-                type="primary"
-                size="large"
-                onClick={() => dispatch(openModal('FinishScopeModal', scope))}
-                data-test="scope-info:finish-scope-button"
-              >
-                <Icons.Complete />
-                <span>Finish Scope</span>
-              </FinishScopeButton>
-            )}
-            {activeBuildVersion === buildVersion && <Menu items={menuActions as MenuItemType[]} />}
-          </Panel>
-        </Header>
-        <ScopeCoverageInfo scope={scope} />
-        <RoutingTabsPanel>
-          <TabsPanel activeTab={selectedTab} onSelect={setSelectedTab}>
-            <Tab name="coverage">
-              <TabIconWrapper>
-                <Icons.Function />
-              </TabIconWrapper>
-              Scope methods
-            </Tab>
-            <Tab name="tests">
-              <TabIconWrapper>
-                <Icons.Test width={16} />
-              </TabIconWrapper>
-              Scope tests
-            </Tab>
-          </TabsPanel>
-        </RoutingTabsPanel>
-        <TabContent>
-          {selectedTab === 'coverage' ? (
-            <>
-              <ProjectMethodsCards methods={scopeMethods} />
-              <TableActionsProvider>
-                <CoverageDetails
-                  topic={`/scope/${scopeId}/coverage/packages`}
-                  associatedTestsTopic={`/scope/${scopeId}/associated-tests`}
-                  classesTopicPrefix={`scope/${scopeId}`}
-                  packageCount={total}
-                />
-              </TableActionsProvider>
-            </>
-          ) : (
-            <>
-              <ProjectTestsCards allTests={allScopeTests} testsByType={scopeTestsByType} />
-              <TestDetails
-                testsUsages={testsUsages}
-                coveredMethodsByTest={coveredMethodsByTest}
-              />
-            </>
-          )}
-        </TabContent>
-      </div>
+      !scope?.coverage.percentage && newBuildHasAppeared
+        ? <Redirect to={{ pathname: `/full-page/${agentId}/${activeBuildVersion}/${pluginId}/dashboard`, state: activeBuildVersion }} />
+        : (
+          <div className={className}>
+            <Header align="space-between">
+              <Panel>
+                <ScopeName data-test="scope-info:scope-name">{name}</ScopeName>
+                {active && <ScopeSessionIndicator active={loading} />}
+                <ScopeStatus active={active} loading={loading} enabled={enabled} started={started} finished={finished} />
+              </Panel>
+              <Panel align="end">
+                {active && (
+                  <FinishScopeButton
+                    type="primary"
+                    size="large"
+                    onClick={() => dispatch(openModal('FinishScopeModal', scope))}
+                    data-test="scope-info:finish-scope-button"
+                  >
+                    <Icons.Complete />
+                    <span>Finish Scope</span>
+                  </FinishScopeButton>
+                )}
+                {activeBuildVersion === buildVersion && <Menu items={menuActions as MenuItemType[]} />}
+              </Panel>
+            </Header>
+            <ScopeCoverageInfo scope={scope} />
+            <RoutingTabsPanel>
+              <TabsPanel activeTab={selectedTab} onSelect={setSelectedTab}>
+                <Tab name="coverage">
+                  <TabIconWrapper>
+                    <Icons.Function />
+                  </TabIconWrapper>
+                  Scope methods
+                </Tab>
+                <Tab name="tests">
+                  <TabIconWrapper>
+                    <Icons.Test width={16} />
+                  </TabIconWrapper>
+                  Scope tests
+                </Tab>
+              </TabsPanel>
+            </RoutingTabsPanel>
+            <TabContent>
+              {selectedTab === 'coverage' ? (
+                <>
+                  <ProjectMethodsCards methods={scopeMethods} />
+                  <TableActionsProvider>
+                    <CoverageDetails
+                      topic={`/scope/${scopeId}/coverage/packages`}
+                      associatedTestsTopic={`/scope/${scopeId}/associated-tests`}
+                      classesTopicPrefix={`scope/${scopeId}`}
+                      packageCount={total}
+                    />
+                  </TableActionsProvider>
+                </>
+              ) : (
+                <>
+                  <ProjectTestsCards allTests={allScopeTests} testsByType={scopeTestsByType} />
+                  <TestDetails
+                    testsUsages={testsUsages}
+                    coveredMethodsByTest={coveredMethodsByTest}
+                  />
+                </>
+              )}
+            </TabContent>
+          </div>
+        )
     );
   },
 );

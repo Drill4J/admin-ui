@@ -33,7 +33,7 @@ export const NewBuildModal = newBuildModal(
       } = {},
     },
   }: Props) => {
-    const { push } = useHistory();
+    const { push, location: { state: activeBuildVersion = '' } } = useHistory();
     React.useEffect(() => {
       id && readNotification(id);
     }, [id]);
@@ -62,13 +62,15 @@ export const NewBuildModal = newBuildModal(
               </Section>
             )}
             <ActionsPanel>
-              <Button
-                type="primary"
-                size="large"
-                onClick={() => { onToggle(false); push(`/full-page/${agentId}/${currentBuildVersionId}/dashboard`); }}
-              >
-                Go to New Build
-              </Button>
+              {activeBuildVersion !== currentBuildVersionId && (
+                <Button
+                  type="primary"
+                  size="large"
+                  onClick={() => { onToggle(false); push(`/full-page/${agentId}/${currentBuildVersionId}/dashboard`); }}
+                >
+                  Go to New Build
+                </Button>
+              )}
               <Button type="secondary" size="large" onClick={() => onToggle(false)}>
                 Ok, Got it
               </Button>
