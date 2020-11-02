@@ -29,7 +29,7 @@ export function preregisterOfflineAgent(onSuccess?: () => void) {
       });
       onSuccess && onSuccess();
     } catch ({ response: { data: { message } = {} } = {} }) {
-      onError && onError(message || 'There is some issue with your action. Please try again.');
+      onError && onError(message || 'On-submit error. Server problem or operation could not be processed in real-time.');
     }
   };
 }
