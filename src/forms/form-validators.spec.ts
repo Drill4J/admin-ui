@@ -1,4 +1,4 @@
-import { required, sizeLimit, composeValidators, toError } from './form-validators';
+import { required, sizeLimit, composeValidators, toError, handleFieldErrors } from './form-validators';
 
 describe('toError', () => {
   it('should return final form error format by provided fieldname and erorr', () => {
@@ -69,3 +69,16 @@ describe('composeValidators', () => {
     expect(composedValidators({ username: 'username', password: 'password' })).toEqual({});
   });
 });
+
+describe('handleFieldErrors', () => {
+  it('should return empty object if no field errors', () => {
+    expect(handleFieldErrors([])).toEqual({});
+  })
+
+  it('should return errors object if field errors no empty', () => {
+    expect(handleFieldErrors([
+      {field: 'username', message: 'required'},
+      {field: 'password', message: 'incorrect'}
+    ])).toEqual({username: 'required', password: 'incorrect'});
+  })
+})

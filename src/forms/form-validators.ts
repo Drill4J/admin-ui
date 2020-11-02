@@ -54,3 +54,13 @@ export function toError(fieldName: string, error: string) {
     { [key]: index === field.length - 1 ? error : acc }
   ), {});
 }
+
+interface FieldError {
+  field: string;
+  message: string;
+}
+
+export function handleFieldErrors(fieldErrors: FieldError[] = []): Record<string, string> {
+  return fieldErrors.reduce((acc, current) =>
+    ({ ...acc, [current.field]: current.message }), {});
+}
