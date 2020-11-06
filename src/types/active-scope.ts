@@ -8,5 +8,6 @@ export interface ActiveScope {
   enabled: boolean;
   active: boolean;
   coverage: ScopeCoverage;
+  sessionsFinished: number;
   [key: string]: string | number | boolean | ScopeCoverage;
 }
