@@ -1,9 +1,10 @@
 @import '~common/style-guide/index';
 
 .error-message {
-  color: map-get($color-palette, red100);
+  color: map-get($red, default);
   font-size: 12px;
   line-height: 24px;
+  white-space: nowrap;
 
   &::first-letter {
     text-transform: uppercase;
