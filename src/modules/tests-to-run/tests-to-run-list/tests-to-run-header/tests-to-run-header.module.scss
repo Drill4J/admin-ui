@@ -1,0 +1,39 @@
+@import '~common/style-guide/index';
+
+.tests-to-run-header {
+  display: flex;
+  align-items: center;
+  height: 80px;
+  border-bottom: 1px solid map-get($monochrome, medium-tint);
+
+  &__title {
+    display: flex;
+    line-height: 36px;
+    font-size: 24px;
+    font-family: $light-font;
+    color: map-get($monochrome, black);
+  }
+
+  &__count {
+    margin-left: 8px;
+    color: map-get($monochrome, default);
+  }
+
+  &__sub-title {
+    display: flex;
+    line-height: 24px;
+    font-size: 14px;
+    font-family: $semibold-font;
+    color: map-get($monochrome, default);
+  }
+
+  &__current-build-version {
+    color: map-get($monochrome, black);
+    margin: 0 8px 0 4px;
+  }
+
+  &__compared-build-version {
+    font-size: 12px;
+    font-family: $regular-font;
+  }
+}

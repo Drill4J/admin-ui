@@ -7,7 +7,7 @@ import {
 
 import { useElementSize } from 'hooks';
 import { MethodCoveredByTest } from 'types/method-covered-by-test';
-import { CoverageRateIcon } from '../../coverage-rate-icon';
+import { CoverageRateIcon } from 'components';
 
 import styles from './methods-list.module.scss';
 

@@ -1,5 +1,4 @@
 export { ManageSessionsPane } from './manage-sessions-pane';
-export { TestsToRunModal } from './tests-to-run-modal';
 export { CancelAgentRegistrationModal } from './cancel-agent-registration-modal';
 export { NotImplementedStub } from './not-implemented-stub';
 export { Breadcrumbs } from './breadcrumbs';
@@ -10,3 +9,5 @@ export {
   TableActionsProvider, useTableActionsState, useTableActionsDispatch,
   setSearch, toggleOrder,
 } from './table-actions';
+export { TestsToRunList, TestsToRunModal } from './tests-to-run';
+export { CoveredMethodsByTestSidebar } from './covered-methods-by-test-sidebar';

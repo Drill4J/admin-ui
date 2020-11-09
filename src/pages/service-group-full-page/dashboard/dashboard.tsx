@@ -26,7 +26,7 @@ export const Dashboard = dashboard(({
     <Header>Dashboard</Header>
     <Content>
       {plugins.map(({ id: pluginId = '', name }) => {
-        const serviceGroup = usePluginData<ServiceGroupSummary>(serviceGroupId, pluginId) || {};
+        const serviceGroup = usePluginData<ServiceGroupSummary>('/service-group/summary', serviceGroupId, pluginId) || {};
 
         return (
           <PluginCard

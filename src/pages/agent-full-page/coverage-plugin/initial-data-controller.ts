@@ -1,7 +1,7 @@
 import * as React from 'react';
 
 import { ActiveSessions } from 'types/active-sessions';
-import { useBuildVersion } from './use-build-version';
+import { useBuildVersion } from 'hooks';
 import { useCoveragePluginDispatch, setActiveSessions } from './store';
 import { usePluginDispatch, setLoading } from '../store';
 

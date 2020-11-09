@@ -1,0 +1,19 @@
+@import '~common/style-guide/index';
+
+.tests-to-run-list {
+  display: grid;
+  gap: 16px;
+  width: 100%;
+
+  &__title {
+    font-size: 12px;
+    line-height: 16px;
+    font-family: $semibold-font;
+    color: map-get($monochrome, default);
+  }
+
+  &__done {
+    font-family: $semibold-font;
+    color: map-get($green, default);
+  }
+}
