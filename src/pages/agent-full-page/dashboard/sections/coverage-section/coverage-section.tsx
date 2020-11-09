@@ -63,10 +63,7 @@ export const CoverageSection = coverageSection(({ className }: Props) => {
         label="Build Coverage"
         info={`${percentFormatter(buildCodeCoverage)}%`}
         graph={(
-          <Tooltip
-            customStyle={{ left: 'calc(50% - 2px)', bottom: 'calc(100% + 12px)' }}
-            message={<CoverageSectionTooltip data={tooltipData} />}
-          >
+          <Tooltip message={<CoverageSectionTooltip data={tooltipData} />}>
             <SingleBar
               width={108}
               height={128}

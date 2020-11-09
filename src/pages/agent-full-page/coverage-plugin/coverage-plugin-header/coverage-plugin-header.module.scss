@@ -41,6 +41,7 @@
   }
 
   &__quality-gate-label {
+    margin-right: 8px;
     font-size: 12px;
     line-height: 16px;
     font-family: $semibold-font;
@@ -48,7 +49,6 @@
 
   &__info-icon {
     display: flex;
-    margin-left: 8px;
   }
 
   &__status-wrapper {

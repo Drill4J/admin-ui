@@ -34,8 +34,6 @@ export const MultiProgressBar = multiProgressBar(({
   return (
     <div className={className} ref={node}>
       <Tooltip
-        customStyle={{ bottom: '40px', left: '50%' }}
-        position="top"
         message={(
           <Message>
             <div>
@@ -49,8 +47,6 @@ export const MultiProgressBar = multiProgressBar(({
       </Tooltip>
       <ScopeCoverage style={{ left: `${buildCodeCoverage - overlappingCode}%` }}>
         <Tooltip
-          customStyle={{ bottom: '30px', left: '50%' }}
-          position="top"
           message={(
             <Message>
               <div>
@@ -70,8 +66,6 @@ export const MultiProgressBar = multiProgressBar(({
           </OverlappingCodeProgressBar>
         </Tooltip>
         <Tooltip
-          customStyle={{ bottom: '30px', left: '50%' }}
-          position="top"
           message={(
             <Message>
               <div>
