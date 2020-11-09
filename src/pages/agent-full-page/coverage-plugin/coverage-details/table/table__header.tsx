@@ -15,7 +15,7 @@ interface Props {
 
 export const TableHeader = BEM(styles).header(({ columns, className }: Props) => {
   const dispatch = useTableActionsDispatch();
-  const { sort } = useTableActionsState();
+  const { sort: [sort] } = useTableActionsState();
   return (
     <thead className={className}>
       <tr>
@@ -27,7 +27,7 @@ export const TableHeader = BEM(styles).header(({ columns, className }: Props) =>
             <th key={name} style={{ width }} align={align}>
               {HeaderCell
                 ? HeaderCell({ column })
-                : <DefaultHeaderCell column={column} sort={sort} onSort={({ fieldName }) => dispatch(toggleOrder(fieldName))} />}
+                : <DefaultHeaderCell column={column} sort={sort} onSort={({ field }) => dispatch(toggleOrder(field))} />}
             </th>
           );
         })}

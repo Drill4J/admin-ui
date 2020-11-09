@@ -1,4 +1,7 @@
+type Operator = 'CONTAINS' | 'EQ';
+
 export interface Search {
-  fieldName: string;
+  field: string;
   value: string;
+  op?: Operator;
 }

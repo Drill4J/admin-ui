@@ -36,13 +36,14 @@ export const CoverageDetails = coverageDetails(
     const coverageByPackages = useBuildVersion<ClassCoverage[]>(topic, search, sort) || [];
     const ref = React.useRef<HTMLDivElement>(null);
     const visibleElementsCount = useVisibleElementsCount(ref, 10, 10);
+    const [searchQuery] = search;
 
     return (
       <div className={className}>
         <>
           <CoverageDetailsSearchPanel
-            onSearch={(searchValue) => dispatch(setSearch(searchValue))}
-            searchQuery={search.value}
+            onSearch={(searchValue) => dispatch(setSearch([{ value: searchValue, field: 'name', op: 'CONTAINS' }]))}
+            searchQuery={searchQuery.value}
             searchResult={coverageByPackages.length}
             placeholder="Search by packages"
           >
