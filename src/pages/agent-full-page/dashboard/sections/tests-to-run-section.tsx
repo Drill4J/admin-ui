@@ -33,10 +33,7 @@ export const TestsToRunSection = () => {
       label="Tests to run"
       info={totalTestsToRunCount}
       graph={(
-        <Tooltip
-          customStyle={{ left: 'calc(50% - 2px)', bottom: 'calc(100% + 12px)' }}
-          message={<SectionTooltip data={tooltipData} hideValue />}
-        >
+        <Tooltip message={<SectionTooltip data={tooltipData} hideValue />}>
           <Panel>
             {Object.keys(TESTS_TO_RUN_TYPES_COLOR).map((testType) => (
               <SingleBar
