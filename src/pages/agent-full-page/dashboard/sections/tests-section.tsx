@@ -34,10 +34,7 @@ export const TestsSection = () => {
       info={totalCoveredMethodCount}
       additionalInfo={`${finishedScopesCount} scopes`}
       graph={(
-        <Tooltip
-          customStyle={{ left: 'calc(50% - 2px)', bottom: 'calc(100% + 12px)' }}
-          message={<SectionTooltip data={tooltipData} />}
-        >
+        <Tooltip message={<SectionTooltip data={tooltipData} />}>
           <Panel>
             {Object.keys(TESTS_TYPES_COLOR).map((testType) => (
               <SingleBar

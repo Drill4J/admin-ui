@@ -67,8 +67,6 @@ export const CoveragePluginHeader = coveragePluginHeader(({ className }: Props) 
             <Panel>
               <QualityGateLabel data-test="coverage-plugin-header:quality-gate-label">QUALITY GATE</QualityGateLabel>
               <Tooltip
-                position="top"
-                customStyle={{ bottom: '24px', left: '16px' }}
                 message={(
                   <>
                     <div>Configure quality gate conditions to</div>

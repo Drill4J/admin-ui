@@ -27,10 +27,7 @@ export const RisksSection = () => {
       label="Risks"
       info={risksCount}
       graph={(
-        <Tooltip
-          customStyle={{ left: 'calc(50% - 2px)', bottom: 'calc(100% + 12px)' }}
-          message={<SectionTooltip data={tooltipData} hideValue />}
-        >
+        <Tooltip message={<SectionTooltip data={tooltipData} hideValue />}>
           <Panel>
             <SingleBar
               width={64}
