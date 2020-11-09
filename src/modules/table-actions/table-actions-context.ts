@@ -1,12 +1,11 @@
 import React from 'react';
 
-import { Order } from 'types/sort';
 import { TableActionsState } from './table-actions-types';
 import { Action } from './reducer';
 
-export const defaultState = {
-  search: { fieldName: 'name', value: '' },
-  sort: { fieldName: 'name', order: 'ASC' as Order },
+export const defaultState: TableActionsState = {
+  search: [{ field: 'name', value: '', op: 'CONTAINS' }],
+  sort: [{ field: '', order: 'ASC' }],
 };
 
 export const TableActionsStateContext = React.createContext<TableActionsState>(defaultState);

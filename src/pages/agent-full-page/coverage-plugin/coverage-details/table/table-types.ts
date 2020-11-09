@@ -5,7 +5,7 @@ export type Order = 'ASC' | 'DESC';
 export type Align = 'left' | 'center' | 'right' | 'justify';
 
 export interface Sort {
-  fieldName: string;
+  field: string;
   order: Order;
 }
 

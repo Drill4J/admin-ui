@@ -6,9 +6,10 @@ import {
 
 import { Cells, SearchPanel } from 'components';
 import { TestCoverageInfo } from 'types/test-coverage-info';
+import { Metrics } from 'types/metrics';
+import { Search } from 'types/search';
 import { useBuildVersion } from 'hooks';
 import { CoveredMethodsByTestSidebar } from 'modules';
-import { Metrics } from 'types/metrics';
 import { capitalize } from 'utils';
 import { TestsToRunHeader } from './tests-to-run-header';
 
@@ -23,17 +24,19 @@ const testsToRunList = BEM(styles);
 
 export const TestsToRunList = testsToRunList(({ className, agentType = 'Agent' }: Props) => {
   const [selectedTest, setSelectedTest] = React.useState('');
-  const [search, setSearch] = React.useState({ fieldName: 'name', value: '' });
+  const [search, setSearch] = React.useState<Search[]>([{ field: 'name', value: '', op: 'CONTAINS' }]);
   const testsToRun = useBuildVersion<TestCoverageInfo[]>('/build/tests-to-run', search) || [];
   const { tests: testToRunCount = 0 } = useBuildVersion<Metrics>('/data/stats') || {};
+  const [searchQuery] = search;
+
   return (
     <div className={className}>
       <TestsToRunHeader agentType={agentType} testsToRunCount={testToRunCount} />
       <Title data-test="tests-to-run-list:title">SUGGESTED TESTS</Title>
       <div>
         <SearchPanel
-          onSearch={(value) => setSearch({ ...search, value })}
-          searchQuery={search.value}
+          onSearch={(value) => setSearch([{ ...searchQuery, value }])}
+          searchQuery={searchQuery.value}
           searchResult={testsToRun.length}
           placeholder="Search tests by name"
         >
