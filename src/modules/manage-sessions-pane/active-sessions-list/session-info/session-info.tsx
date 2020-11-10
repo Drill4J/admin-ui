@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 import {
-  Panel, Button, LinkButton, OverflowText,
+  Panel, Button, LinkButton, OverflowText, Icons,
 } from '@drill4j/ui-kit';
 import { useParams } from 'react-router-dom';
 
@@ -15,6 +15,8 @@ import styles from './session-info.module.scss';
 interface Props {
   className?: string;
   testType: string;
+  isGlobal: boolean;
+  isRealtime: boolean;
   sessionId: string;
   agentId: string;
   showGeneralAlertMessage: (message: Message) => void;
@@ -24,7 +26,7 @@ const sessionInfo = BEM(styles);
 
 export const SessionInfo = sessionInfo(
   ({
-    className, testType, sessionId, agentId, showGeneralAlertMessage,
+    className, testType, isGlobal, isRealtime, sessionId, agentId, showGeneralAlertMessage,
   }: Props) => {
     const { pluginId = '' } = useParams<{ pluginId: string }>();
     const dispatch = useSessionsPaneDispatch();
@@ -65,7 +67,11 @@ export const SessionInfo = sessionInfo(
                 </Button>
               </ActionsPanel>
             </Panel>
-            <TestType disabled={disabled} data-test="session-info:test-type">{capitalize(testType)}</TestType>
+            <AdditionalSessionInfo disabled={disabled}>
+              <TestType data-test="session-info:test-type">{capitalize(testType)}</TestType>
+              {isGlobal && <SessionType><Icons.Global />&nbsp;Global</SessionType>}
+              {isRealtime && <SessionType><Icons.RealTime />&nbsp;Real-time</SessionType>}
+            </AdditionalSessionInfo>
           </>
         )}
       </div>
@@ -76,3 +82,5 @@ export const SessionInfo = sessionInfo(
 const SessionId = sessionInfo.sessionId(OverflowText);
 const ActionsPanel = sessionInfo.actionsPanel('div');
 const TestType = sessionInfo.testType('span');
+const AdditionalSessionInfo = sessionInfo.additionalSessionInfo('div');
+const SessionType = sessionInfo.sessionType(Panel);

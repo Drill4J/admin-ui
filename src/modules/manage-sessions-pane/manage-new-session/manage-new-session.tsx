@@ -2,7 +2,13 @@ import * as React from 'react';
 import { Field } from 'react-final-form';
 import { NavLink } from 'react-router-dom';
 import { BEM } from '@redneckz/react-bem-helper';
-import { FormGroup, GeneralAlerts } from '@drill4j/ui-kit';
+import {
+  FormGroup,
+  GeneralAlerts,
+  Icons,
+  Panel,
+  Tooltip,
+} from '@drill4j/ui-kit';
 
 import { Fields } from 'forms';
 
@@ -40,11 +46,44 @@ export const ManageNewSession = manageNewSession(({ className, agentId, serviceG
           )}
       </span>
     </GeneralAlerts>
-    <NewSessionForm label="Session ID">
-      <Field name="sessionId" component={Fields.Input} placeholder="Enter session ID" />
+    <NewSessionForm>
+      <FormGroup label="Session ID">
+        <Field name="sessionId" component={Fields.Input} placeholder="Enter session ID" />
+      </FormGroup>
+      <Field
+        name="isGlobal"
+        type="checkbox"
+        component={Fields.Checkbox}
+        render={({ input, meta }) => (
+          <GlobalSessionCheckbox>
+            <Fields.Checkbox
+              input={input}
+              meta={meta}
+            />
+            <Tooltip
+              message={(
+                <Panel direction="column" align="center">
+                  <div>Session that tracks all of the executions on your JVM</div>
+                  <div>(e.g. background tasks)</div>
+                </Panel>
+              )}
+            >
+              <IconInfo />
+            </Tooltip>
+          </GlobalSessionCheckbox>
+        )}
+      />
+      <Field
+        name="isRealtime"
+        type="checkbox"
+        component={Fields.Checkbox}
+        label="Real-time coverage collection"
+      />
     </NewSessionForm>
   </div>
 ));
 
 const SettingsLink = manageNewSession.settingsLink(NavLink);
-const NewSessionForm = manageNewSession.newSessionForm(FormGroup);
+const NewSessionForm = manageNewSession.newSessionForm('div');
+const GlobalSessionCheckbox = manageNewSession.globalSessionCheckbox(Panel);
+const IconInfo = manageNewSession.iconInfo(Icons.Info);

@@ -2,7 +2,7 @@ import { camelToSpaces, get } from 'utils';
 
 type FormValidationResult = { [key: string]: string } | undefined;
 type FormValidator = (formValues: {
-  [key: string]: string | string[] | null | undefined;
+  [key: string]: string | string[] | boolean | null | undefined;
 }) => FormValidationResult;
 
 export function composeValidators(...validators: FormValidator[]): FormValidator {

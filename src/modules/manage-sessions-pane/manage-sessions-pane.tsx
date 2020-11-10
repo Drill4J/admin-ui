@@ -1,10 +1,10 @@
 import * as React from 'react';
 import { Form } from 'react-final-form';
+import { useParams } from 'react-router-dom';
 import { BEM } from '@redneckz/react-bem-helper';
 import {
   Modal, GeneralAlerts,
 } from '@drill4j/ui-kit';
-import { useParams } from 'react-router-dom';
 
 import {
   composeValidators,
@@ -60,18 +60,25 @@ export const ManageSessionsPane = manageSessionsPane(
       <Modal isOpen={isOpen} onToggle={onToggle}>
         <div className={className}>
           <Form
-            onSubmit={async (values: { sessionId: string; }, form): Promise<unknown> => {
+            onSubmit={async (values: { sessionId: string; isRealtime: boolean; isGlobal: boolean }, form): Promise<unknown> => {
               try {
                 const response = await (agentId
                   ? startAgentSession(agentId, pluginId)(values)
                   : startServiceGroupSessions(serviceGroupId, pluginId)(values));
                 showGeneralAlertMessage({ type: 'SUCCESS', text: 'New session has been started successfully.' });
                 form.change('sessionId', '');
+                form.change('isGlobal', false);
+                form.change('isRealtime', false);
                 dispatch(setIsNewSession(false));
                 return response;
               } catch (error) {
                 if (error?.response?.data?.code === 409) {
-                  const { data: { fieldErrors = [] } = {} } = error?.response?.data || {};
+                  const { data: { fieldErrors = [] } = {}, message: errorMessage = '' } = error?.response?.data || {};
+                  errorMessage && showGeneralAlertMessage({
+                    type: 'ERROR',
+                    text: errorMessage || 'There is some issue with your action. Please try again.',
+                  });
+
                   return handleFieldErrors(fieldErrors);
                 }
                 showGeneralAlertMessage({ type: 'ERROR', text: 'There is some issue with your action. Please try again.' });
@@ -92,7 +99,7 @@ export const ManageSessionsPane = manageSessionsPane(
                   </GeneralAlerts>
                 )}
                 {isNewSession && <ManageNewSession agentId={agentId} serviceGroupId={serviceGroupId} />}
-                {!isNewSession && activeSessions.length > 0 ? (
+                {!isNewSession && activeSessions.length > 0 && (
                   <>
                     <ManageActiveSessions activeSessions={activeSessions} />
                     <ActiveSessionsList
@@ -101,7 +108,8 @@ export const ManageSessionsPane = manageSessionsPane(
                       showGeneralAlertMessage={showGeneralAlertMessage}
                     />
                   </>
-                ) : <EmptyActiveSessionsStub />}
+                )}
+                {!isNewSession && activeSessions.length === 0 && <EmptyActiveSessionsStub />}
                 <Footer>
                   {bulkOperation.isProcessing ? (
                     <BulkOperationWarning

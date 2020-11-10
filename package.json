@@ -5,7 +5,7 @@
   "private": true,
   "dependencies": {
     "@drill4j/socket": "0.1.8",
-    "@drill4j/ui-kit": "0.1.39",
+    "@drill4j/ui-kit": "0.1.41",
     "@redneckz/react-bem-helper": "2.0.4",
     "@redneckz/react-devirt": "0.0.6",
     "@types/jest": "26.0.14",
@@ -55,7 +55,7 @@
     "eslint-config-airbnb": "18.1.0",
     "eslint-config-prettier": "6.10.0",
     "eslint-import-resolver-typescript": "2.0.0",
-    "eslint-plugin-import": "2.20.1",
+    "eslint-plugin-import": "2.22.1",
     "eslint-plugin-json": "2.1.1",
     "eslint-plugin-jsx-a11y": "6.2.3",
     "eslint-plugin-prettier": "3.1.2",

@@ -22,12 +22,16 @@ export const ActiveSessionsList = activeSessionsList(({
 }: Props) => (
   <div className={className}>
     {agentType === 'Agent' ? (
-      activeSessions.map(({ id: sessionId, testType, agentId }) => (
+      activeSessions.map(({
+        id: sessionId, testType, agentId, isRealtime, isGlobal,
+      }) => (
         <SessionInfo
           key={sessionId}
           sessionId={sessionId}
           agentId={agentId}
           testType={testType}
+          isGlobal={isGlobal}
+          isRealtime={isRealtime}
           showGeneralAlertMessage={showGeneralAlertMessage}
         />
       ))

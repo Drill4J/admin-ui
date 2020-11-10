@@ -8,6 +8,17 @@
   line-height: 16px;
   color: map-get($monochrome, black);
 
+  &__additional-session-info {
+    display: flex;
+    margin-top: 4px;
+    gap: 8px;
+    color: map-get($monochrome, default);
+
+    &[disabled] {
+      opacity: 0.2;
+    }
+  }
+
   &__session-abort {
     height: 100%;
   }
@@ -32,7 +43,6 @@
   }
 
   &__test-type {
-    margin-top: 4px;
     font-size: 12px;
     line-height: 16px;
     color: map-get($monochrome, default);
@@ -40,5 +50,9 @@
     &[disabled] {
       opacity: 0.2;
     }
+  }
+
+  &__session-type {
+    width: max-content;
   }
 }
