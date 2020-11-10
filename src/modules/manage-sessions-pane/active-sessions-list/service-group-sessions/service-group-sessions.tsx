@@ -34,11 +34,15 @@ export const ServiceGroupSessions = serviceGroupSessions(({ className, activeSes
             {agentId}
           </ServiceGroupAgentPanel>
           {activeSessions.filter(({ agentId: sessionAgentId }) => sessionAgentId === agentId)
-            .map(({ id: sessionId, testType }) => (
+            .map(({
+              id: sessionId, testType, isGlobal, isRealtime,
+            }) => (
               <SessionInfo
                 key={sessionId}
                 sessionId={sessionId}
                 testType={testType}
+                isGlobal={isGlobal}
+                isRealtime={isRealtime}
                 agentId={agentId}
                 showGeneralAlertMessage={showGeneralAlertMessage}
               />

@@ -14,6 +14,17 @@
   }
 
   &__new-session-form {
+    display: grid;
+    gap: 16px;
     padding: 16px 24px;
+  }
+
+  &__global-session-checkbox {
+    gap: 8px;
+  }
+
+  &__icon-info {
+    display: flex;
+    color: map-get($monochrome, default);
   }
 }
