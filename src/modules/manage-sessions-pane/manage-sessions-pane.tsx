@@ -74,7 +74,7 @@ export const ManageSessionsPane = manageSessionsPane(
             }}
             validate={validateManageSessionsPane}
             render={({
-              invalid, handleSubmit, dirtySinceLastSubmit, submitting,
+              invalid, handleSubmit, dirtySinceLastSubmit, submitting, hasValidationErrors,
             }) => (
               <>
                 <Header data-test="manage-sessions-pane:header">
@@ -99,7 +99,7 @@ export const ManageSessionsPane = manageSessionsPane(
                     <Button
                       type="primary"
                       size="large"
-                      disabled={(invalid && !dirtySinceLastSubmit) || submitting}
+                      disabled={(invalid && !dirtySinceLastSubmit) || hasValidationErrors || submitting}
                       onClick={handleSubmit}
                       data-test="manage-sessions-pane:start-session-button"
                     >
