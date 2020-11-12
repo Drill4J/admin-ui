@@ -53,12 +53,12 @@ export const ManageNewSession = manageNewSession(({ className, agentId, serviceG
       <Field
         name="isGlobal"
         type="checkbox"
-        component={Fields.Checkbox}
         render={({ input, meta }) => (
           <GlobalSessionCheckbox>
             <Fields.Checkbox
               input={input}
               meta={meta}
+              label="Set as global session"
             />
             <Tooltip
               message={(
