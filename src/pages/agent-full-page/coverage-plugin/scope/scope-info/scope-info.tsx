@@ -99,8 +99,9 @@ export const ScopeInfo = scopeInfo(
       },
     ].filter(Boolean);
     const newBuildHasAppeared = activeBuildVersion && buildVersion && activeBuildVersion !== buildVersion;
+
     return (
-      !scope?.coverage.percentage && newBuildHasAppeared
+      scope && !scope?.coverage.percentage && newBuildHasAppeared
         ? <Redirect to={{ pathname: `/full-page/${agentId}/${activeBuildVersion}/${pluginId}/dashboard`, state: activeBuildVersion }} />
         : (
           <div className={className}>
