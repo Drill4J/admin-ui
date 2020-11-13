@@ -42,7 +42,7 @@ export const FinishScopeModal = finishScopeModal(
       <Popup
         isOpen={isOpen}
         onToggle={onToggle}
-        header={<OverflowText data-test="finish-scope-modal:header">{`Finish Scope ${scope && scope.name}`}</OverflowText>}
+        header={<Header data-test="finish-scope-modal:header">{`Finish Scope ${scope && scope.name}`}</Header>}
         type="info"
         closeOnFadeClick
       >
@@ -106,3 +106,4 @@ export const FinishScopeModal = finishScopeModal(
 const Content = finishScopeModal.content('div');
 const IgnoreScope = finishScopeModal.ignoreScope(Inputs.Checkbox);
 const ActionsPanel = finishScopeModal.actionsPanel(Panel);
+const Header = finishScopeModal.header(OverflowText);
