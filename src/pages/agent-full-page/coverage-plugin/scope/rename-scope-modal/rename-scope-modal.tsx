@@ -31,7 +31,9 @@ const renameScopeModal = BEM(styles);
 
 const validateScope = composeValidators(
   required('name'),
-  sizeLimit({ name: 'name', min: 1, max: 64 }),
+  sizeLimit({
+    name: 'name', min: 1, max: 64, alias: 'Scope Name',
+  }),
 );
 
 export const RenameScopeModal = renameScopeModal(
