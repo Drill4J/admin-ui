@@ -3,6 +3,10 @@
 .delete-scope-modal {
   width: 530px;
 
+  &__header {
+    max-width: 460px;
+  }
+
   &__content {
     margin: 24px;
   }
