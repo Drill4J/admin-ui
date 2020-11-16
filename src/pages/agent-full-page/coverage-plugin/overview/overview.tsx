@@ -88,7 +88,6 @@ export const Overview = overview(({ className }: Props) => {
                 topic="/build/coverage/packages"
                 associatedTestsTopic="/build/associated-tests"
                 classesTopicPrefix="build"
-                packageCount={buildCoverage.packageCount?.total}
               />
             </TableActionsProvider>
           </>

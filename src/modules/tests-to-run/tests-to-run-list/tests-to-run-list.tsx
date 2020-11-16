@@ -6,6 +6,7 @@ import {
 
 import { Cells, SearchPanel } from 'components';
 import { TestCoverageInfo } from 'types/test-coverage-info';
+import { FilterList } from 'types/filter-list';
 import { Metrics } from 'types/metrics';
 import { Search } from 'types/search';
 import { useBuildVersion } from 'hooks';
@@ -25,7 +26,11 @@ const testsToRunList = BEM(styles);
 export const TestsToRunList = testsToRunList(({ className, agentType = 'Agent' }: Props) => {
   const [selectedTest, setSelectedTest] = React.useState('');
   const [search, setSearch] = React.useState<Search[]>([{ field: 'name', value: '', op: 'CONTAINS' }]);
-  const testsToRun = useBuildVersion<TestCoverageInfo[]>('/build/tests-to-run', search) || [];
+  const {
+    items: testsToRun = [],
+    filteredCount = 0,
+    totalCount = 0,
+  } = useBuildVersion<FilterList<TestCoverageInfo>>('/build/tests-to-run', search, undefined, 'LIST') || {};
   const { tests: testToRunCount = 0 } = useBuildVersion<Metrics>('/data/stats') || {};
   const [searchQuery] = search;
 
@@ -37,10 +42,10 @@ export const TestsToRunList = testsToRunList(({ className, agentType = 'Agent' }
         <SearchPanel
           onSearch={(value) => setSearch([{ ...searchQuery, value }])}
           searchQuery={searchQuery.value}
-          searchResult={testsToRun.length}
+          searchResult={filteredCount}
           placeholder="Search tests by name"
         >
-          Displaying {testsToRun.length} of {testsToRun.length} tests
+          Displaying {filteredCount} of {totalCount} tests
         </SearchPanel>
         <Table data={testsToRun} idKey="name" columnsSize="medium">
           <Column
