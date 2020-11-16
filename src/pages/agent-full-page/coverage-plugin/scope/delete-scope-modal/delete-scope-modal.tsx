@@ -36,11 +36,7 @@ export const DeleteScopeModal = deleteScopeModal(
       <Popup
         isOpen={isOpen}
         onToggle={onToggle}
-        header={(
-          <OverflowText>
-            {`Delete Scope ${scope?.name}`}
-          </OverflowText>
-        )}
+        header={<Header>{`Delete Scope ${scope?.name}`}</Header>}
         type="info"
         closeOnFadeClick
       >
@@ -96,6 +92,7 @@ export const DeleteScopeModal = deleteScopeModal(
   },
 );
 
+const Header = deleteScopeModal.header(OverflowText);
 const Content = deleteScopeModal.content('div');
 const Message = deleteScopeModal.message('div');
 const ActionsPanel = deleteScopeModal.actionsPanel(Panel);
