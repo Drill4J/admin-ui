@@ -6,7 +6,7 @@ export function useGeneralAlertMessage() {
   const [generalAlertMessage, setGeneralAlertMessage] = useState<Message | null>(null);
   const showGeneralAlertMessage = (incommingMessage: Message) => {
     setGeneralAlertMessage(incommingMessage);
-    incommingMessage.type === 'SUCCESS' && setTimeout(() => setGeneralAlertMessage(null), 7000);
+    incommingMessage.type === 'SUCCESS' && setTimeout(() => setGeneralAlertMessage(null), 3000);
   };
 
   return { generalAlertMessage, showGeneralAlertMessage };
