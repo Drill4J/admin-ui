@@ -35,21 +35,13 @@
 
   &__actions-panel {
     display: flex;
-    margin-left: 16px;
-
-    :first-child {
-      margin-right: 16px;
-    }
+    gap: 16px;
   }
 
   &__test-type {
     font-size: 12px;
     line-height: 16px;
     color: map-get($monochrome, default);
-
-    &[disabled] {
-      opacity: 0.2;
-    }
   }
 
   &__session-type {

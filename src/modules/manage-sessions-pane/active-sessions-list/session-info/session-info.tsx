@@ -68,8 +68,9 @@ export const SessionInfo = sessionInfo(
               </ActionsPanel>
             </Panel>
             <AdditionalSessionInfo disabled={disabled}>
-              <TestType data-test="session-info:test-type">{capitalize(testType)}</TestType>
-              {isGlobal && <SessionType><Icons.Global />&nbsp;Global</SessionType>}
+              {isGlobal
+                ? <SessionType><Icons.Global />&nbsp;Global</SessionType>
+                : <TestType data-test="session-info:test-type">{capitalize(testType)}</TestType>}
               {isRealtime && <SessionType><Icons.RealTime />&nbsp;Real-time</SessionType>}
             </AdditionalSessionInfo>
           </>
