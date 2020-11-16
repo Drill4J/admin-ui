@@ -43,7 +43,7 @@ export const CoverageDetails = coverageDetails(
         <>
           <CoverageDetailsSearchPanel
             onSearch={(searchValue) => dispatch(setSearch([{ value: searchValue, field: 'name', op: 'CONTAINS' }]))}
-            searchQuery={searchQuery.value}
+            searchQuery={searchQuery?.value}
             searchResult={coverageByPackages.length}
             placeholder="Search by packages"
           >

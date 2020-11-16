@@ -1,3 +1,3 @@
 export { TableActionsProvider } from './table-actions-provider';
-export { setSearch, toggleOrder } from './reducer';
+export { setSearch, setSort } from './reducer';
 export { useTableActionsState, useTableActionsDispatch } from './table-actions-context';

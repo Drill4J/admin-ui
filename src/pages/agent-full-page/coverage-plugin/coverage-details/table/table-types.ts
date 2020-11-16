@@ -1,7 +1,7 @@
 import * as React from 'react';
 
 export type Cell = React.ComponentType<any>;
-export type Order = 'ASC' | 'DESC';
+export type Order = 'ASC' | 'DESC' | null;
 export type Align = 'left' | 'center' | 'right' | 'justify';
 
 export interface Sort {
