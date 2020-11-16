@@ -18,12 +18,19 @@ const defaultHeaderCell = BEM(styles);
 export const DefaultHeaderCell = defaultHeaderCell(({
   className, column: { name, label }, sort, onSort,
 }: Props) => (
-  <div className={className} onClick={() => onSort({ order: invertOrder(sort.order), field: name })}>
-    {name !== 'selector' && <SortArrows order={name === sort.field ? sort.order : null} /> }
+  <div className={className} onClick={() => onSort({ order: setOrder(sort?.order), field: name })}>
+    {name !== 'selector' && <SortArrows order={name === sort?.field ? sort.order : null} /> }
     {label}
   </div>
 ));
 
-function invertOrder(order: Order) {
-  return order === 'ASC' ? 'DESC' : 'ASC';
+function setOrder(order: Order) {
+  switch (order) {
+    case 'ASC':
+      return 'DESC';
+    case 'DESC':
+      return null;
+    default:
+      return 'ASC';
+  }
 }

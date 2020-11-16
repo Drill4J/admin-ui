@@ -2,7 +2,7 @@ import * as React from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 
 import {
-  useTableActionsDispatch, toggleOrder, useTableActionsState,
+  useTableActionsDispatch, setSort, useTableActionsState,
 } from 'modules';
 import { DefaultHeaderCell } from './default-header-cell';
 
@@ -27,7 +27,7 @@ export const TableHeader = BEM(styles).header(({ columns, className }: Props) =>
             <th key={name} style={{ width }} align={align}>
               {HeaderCell
                 ? HeaderCell({ column })
-                : <DefaultHeaderCell column={column} sort={sort} onSort={({ field }) => dispatch(toggleOrder(field))} />}
+                : <DefaultHeaderCell column={column} sort={sort} onSort={(cellSort) => dispatch(setSort(cellSort))} />}
             </th>
           );
         })}

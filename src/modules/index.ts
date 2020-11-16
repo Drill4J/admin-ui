@@ -7,7 +7,7 @@ export { InstallPluginsStep } from './install-plugins-step';
 export { SystemSettingsStep } from './system-setting-step';
 export {
   TableActionsProvider, useTableActionsState, useTableActionsDispatch,
-  setSearch, toggleOrder,
+  setSearch, setSort,
 } from './table-actions';
 export { TestsToRunList, TestsToRunModal } from './tests-to-run';
 export { CoveredMethodsByTestSidebar } from './covered-methods-by-test-sidebar';
