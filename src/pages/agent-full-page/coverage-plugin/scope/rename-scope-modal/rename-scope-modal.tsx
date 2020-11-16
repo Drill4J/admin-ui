@@ -30,7 +30,7 @@ interface Props {
 const renameScopeModal = BEM(styles);
 
 const validateScope = composeValidators(
-  required('name'),
+  required('name', 'Scope Name'),
   sizeLimit({
     name: 'name', min: 1, max: 64, alias: 'Scope Name',
   }),
