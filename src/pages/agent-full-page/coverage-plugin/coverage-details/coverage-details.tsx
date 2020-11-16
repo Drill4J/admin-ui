@@ -3,6 +3,7 @@ import { BEM } from '@redneckz/react-bem-helper';
 import { Icons } from '@drill4j/ui-kit';
 
 import { ClassCoverage } from 'types/class-coverage';
+import { FilterList } from 'types/filter-list';
 import { useVisibleElementsCount, useBuildVersion } from 'hooks';
 import { Cells, SearchPanel } from 'components';
 import {
@@ -21,19 +22,22 @@ interface Props {
   topic: string;
   associatedTestsTopic: string;
   classesTopicPrefix: string;
-  packageCount?: number;
 }
 
 const coverageDetails = BEM(styles);
 
 export const CoverageDetails = coverageDetails(
   ({
-    className, associatedTestsTopic, classesTopicPrefix, topic, packageCount = 0,
+    className, associatedTestsTopic, classesTopicPrefix, topic,
   }: Props) => {
     const [selectedId, setSelectedId] = React.useState('');
     const dispatch = useTableActionsDispatch();
     const { search, sort } = useTableActionsState();
-    const coverageByPackages = useBuildVersion<ClassCoverage[]>(topic, search, sort) || [];
+    const {
+      items: coverageByPackages = [],
+      totalCount = 0,
+      filteredCount = 0,
+    } = useBuildVersion<FilterList<ClassCoverage>>(topic, search, sort, 'LIST') || {};
     const ref = React.useRef<HTMLDivElement>(null);
     const visibleElementsCount = useVisibleElementsCount(ref, 10, 10);
     const [searchQuery] = search;
@@ -44,10 +48,10 @@ export const CoverageDetails = coverageDetails(
           <CoverageDetailsSearchPanel
             onSearch={(searchValue) => dispatch(setSearch([{ value: searchValue, field: 'name', op: 'CONTAINS' }]))}
             searchQuery={searchQuery?.value}
-            searchResult={coverageByPackages.length}
+            searchResult={filteredCount}
             placeholder="Search by packages"
           >
-            Displaying {coverageByPackages.slice(0, visibleElementsCount).length} of {packageCount} packages
+            Displaying {coverageByPackages.slice(0, visibleElementsCount).length} of {totalCount} packages
           </CoverageDetailsSearchPanel>
           <ExpandableTable
             data={coverageByPackages.slice(0, visibleElementsCount)}

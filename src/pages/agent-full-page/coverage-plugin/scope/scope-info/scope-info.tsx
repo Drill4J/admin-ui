@@ -15,7 +15,6 @@ import { AssociatedTests } from 'types/associated-tests';
 import { TestTypeSummary } from 'types/test-type-summary';
 import { TestSummary } from 'types/test-summary';
 import { TableActionsProvider } from 'modules';
-import { ScopeCoverage } from 'types/scope-coverage';
 import { useAgent, useBuildVersion } from 'hooks';
 import { ProjectMethodsCards } from '../../project-methods-cards';
 import { CoverageDetails } from '../../coverage-details';
@@ -52,7 +51,6 @@ export const ScopeInfo = scopeInfo(
     const dispatch = useCoveragePluginDispatch();
     const scope = useBuildVersion<ActiveScope>(`/scope/${scopeId}`);
     const scopeMethods = useBuildVersion<Methods>(`/scope/${scopeId}/methods`) || {};
-    const { packageCount: { total = 0 } = {} } = useBuildVersion<ScopeCoverage>(`/scope/${scopeId}/coverage`) || {};
 
     const testsUsages = useBuildVersion<AssociatedTests[]>(`/scope/${scopeId}/tests-usages`) || [];
     const allScopeTests = useBuildVersion<TestSummary>(`/scope/${scopeId}/summary/tests/all`) || {};
@@ -152,7 +150,6 @@ export const ScopeInfo = scopeInfo(
                       topic={`/scope/${scopeId}/coverage/packages`}
                       associatedTestsTopic={`/scope/${scopeId}/associated-tests`}
                       classesTopicPrefix={`scope/${scopeId}`}
-                      packageCount={total}
                     />
                   </TableActionsProvider>
                 </>
