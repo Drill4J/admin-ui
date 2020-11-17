@@ -121,6 +121,8 @@ describe('numericLimits', () => {
     expect(validator({ coverage: ' 1 ' })).toEqual(error);
     expect(validator({ coverage: ' 1' })).toEqual(error);
     expect(validator({ coverage: '1 ' })).toEqual(error);
+    expect(validator({ coverage: '.' })).toEqual(error);
+    expect(validator({ coverage: ',' })).toEqual(error);
     expect(validator({ coverage: undefined })).toEqual(error);
     expect(validator({ coverage: null })).toEqual(error);
     expect(validator({ coverage: false })).toEqual(error);
@@ -148,6 +150,8 @@ describe('positiveInteger', () => {
     expect(validator({ risks: '999  foo  999' })).toEqual(error);
     expect(validator({ risks: '999         ' })).toEqual(error);
     expect(validator({ risks: ' 9999' })).toEqual(error);
+    expect(validator({ risks: ',' })).toEqual(error);
+    expect(validator({ risks: '.' })).toEqual(error);
     expect(validator({ risks: undefined })).toEqual(error);
     expect(validator({ risks: null })).toEqual(error);
     expect(validator({ risks: false })).toEqual(error);

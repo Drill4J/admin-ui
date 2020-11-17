@@ -30,7 +30,7 @@ export const QualityGateSettings = qualityGateSettings(
           <Field
             name="coverage.condition.value"
             component={ThresholdValueField}
-            disabled={!conditionSettingByType.coverage?.enabled}
+            disabled={!conditionSettingByType?.coverage?.enabled}
             parse={parseCoverage}
           >
             <Condtion data-test="quality-gate-settings:condtion:coverage">
@@ -51,7 +51,7 @@ export const QualityGateSettings = qualityGateSettings(
           <Field
             name="risks.condition.value"
             component={ThresholdValueField}
-            disabled={!conditionSettingByType.risks?.enabled}
+            disabled={!conditionSettingByType?.risks?.enabled}
             parse={(value: string) => inputLengthRestriction(value, 7)}
           >
             <Condtion>
@@ -83,7 +83,7 @@ export const QualityGateSettings = qualityGateSettings(
           <Field
             name="tests.condition.value"
             component={ThresholdValueField}
-            disabled={!conditionSettingByType.tests?.enabled}
+            disabled={!conditionSettingByType?.tests?.enabled}
             parse={(value: string) => inputLengthRestriction(value, 7)}
           >
             <Condtion data-test="quality-gate-settings:condtion:tests">
