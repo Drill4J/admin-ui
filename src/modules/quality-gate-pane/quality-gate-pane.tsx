@@ -62,26 +62,30 @@ export const QualityGatePane = qualityGatePane(
         enabled: conditionSettingByType.coverage?.enabled,
         condition: {
           ...conditionSettingByType.coverage?.condition,
-          value: conditionSettingByType.coverage?.enabled ? conditionSettingByType.coverage.condition.value : undefined,
+          value: conditionSettingByType.coverage?.enabled ? String(conditionSettingByType.coverage.condition.value) : undefined,
         },
       } as ConditionSetting,
       risks: {
         enabled: conditionSettingByType.risks?.enabled,
         condition: {
           ...conditionSettingByType.risks?.condition,
-          value: conditionSettingByType.risks?.enabled ? conditionSettingByType.risks.condition.value : undefined,
+          value: conditionSettingByType.risks?.enabled ? String(conditionSettingByType.risks.condition.value) : undefined,
         },
       } as ConditionSetting,
       tests: {
         enabled: conditionSettingByType.tests?.enabled,
         condition: {
           ...conditionSettingByType.tests?.condition,
-          value: conditionSettingByType.tests?.enabled ? conditionSettingByType.tests.condition.value : undefined,
+          value: conditionSettingByType.tests?.enabled ? String(conditionSettingByType.tests.condition.value) : undefined,
         },
       } as ConditionSetting,
     };
+    const handleOnToggle = () => {
+      onToggle(false);
+      setIsEditing(false);
+    };
     return (
-      <Modal isOpen={isOpen} onToggle={onToggle}>
+      <Modal isOpen={isOpen} onToggle={handleOnToggle}>
         <div className={className}>
           <Form
             onSubmit={(values) => {
@@ -130,7 +134,7 @@ export const QualityGatePane = qualityGatePane(
                     <Button
                       type="primary"
                       size="large"
-                      onClick={() => setIsEditing(true)}
+                      onClick={() => { setIsEditing(true); showGeneralAlertMessage(null); }}
                       data-test="quality-gate-pane:edit-button"
                     >
                       Edit
@@ -161,7 +165,7 @@ export const QualityGatePane = qualityGatePane(
                   <Button
                     type="secondary"
                     size="large"
-                    onClick={() => onToggle(false)}
+                    onClick={handleOnToggle}
                     data-test="quality-gate-pane:cancel-button"
                   >
                     Cancel
