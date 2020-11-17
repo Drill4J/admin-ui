@@ -46,7 +46,7 @@ export const SessionInfo = sessionInfo(
         ) : (
           <>
             <Panel align="space-between">
-              <SessionId disabled={disabled} data-test="session-info:session-id">{sessionId}</SessionId>
+              <SessionId disabled={disabled} data-test="session-info:session-id" title={sessionId}>{sessionId}</SessionId>
               <ActionsPanel>
                 <LinkButton
                   size="small"
@@ -84,4 +84,4 @@ const SessionId = sessionInfo.sessionId(OverflowText);
 const ActionsPanel = sessionInfo.actionsPanel('div');
 const TestType = sessionInfo.testType('span');
 const AdditionalSessionInfo = sessionInfo.additionalSessionInfo('div');
-const SessionType = sessionInfo.sessionType(Panel);
+const SessionType = sessionInfo.sessionType('div');
