@@ -54,10 +54,10 @@ export const QualityGatePane = qualityGatePane(
     agentId,
     pluginId,
   }: Props) => {
+    const [isEditing, setIsEditing] = React.useState(false);
     const { generalAlertMessage, showGeneralAlertMessage } = useGeneralAlertMessage();
     const StatusIcon = Icons[qualityGate.status];
     const initialValues = {
-      isEditing: !configured,
       coverage: {
         enabled: conditionSettingByType.coverage?.enabled,
         condition: {
@@ -84,23 +84,26 @@ export const QualityGatePane = qualityGatePane(
       <Modal isOpen={isOpen} onToggle={onToggle}>
         <div className={className}>
           <Form
-            onSubmit={(values) => updateQualityGateSettings(agentId, pluginId, showGeneralAlertMessage)(values)}
+            onSubmit={(values) => {
+              updateQualityGateSettings(agentId, pluginId, showGeneralAlertMessage)(values);
+              setIsEditing(false);
+            }}
             initialValues={initialValues}
             validate={validateQualityGate}
             render={({
-              values, handleSubmit, invalid, form, pristine,
+              values, handleSubmit, invalid, pristine,
             }) => (
               <>
                 <Header align="space-between">
                   <Title data-test="quality-gate-pane:header-title">Quality Gate</Title>
-                  {configured && !values.isEditing && (
+                  {configured && !isEditing && (
                     <StatusIconWrapper type={qualityGate.status}>
                       <StatusIcon width={24} height={24} data-test="quality-gate-pane:header-status-icon" />
                     </StatusIconWrapper>
                   )}
                 </Header>
                 <GeneralAlerts type="INFO" data-test="quality-gate-pane:general-alerts:info">
-                  {configured && !values.isEditing
+                  {configured && !isEditing
                     ? 'Meet all conditions to pass the quality gate.'
                     : 'Choose the metrics and define their threshold.'}
                 </GeneralAlerts>
@@ -109,7 +112,7 @@ export const QualityGatePane = qualityGatePane(
                     {generalAlertMessage.text}
                   </GeneralAlerts>
                 )}
-                {configured && !values.isEditing
+                {configured && !isEditing
                   ? (
                     <QualityGateStatus
                       qualityGateSettings={{
@@ -123,11 +126,11 @@ export const QualityGatePane = qualityGatePane(
                   )
                   : <QualityGateSettings conditionSettingByType={values} />}
                 <ActionsPanel>
-                  {configured && !values.isEditing ? (
+                  {configured && !isEditing ? (
                     <Button
                       type="primary"
                       size="large"
-                      onClick={() => form.change('isEditing', !values.isEditing)}
+                      onClick={() => setIsEditing(true)}
                       data-test="quality-gate-pane:edit-button"
                     >
                       Edit
@@ -144,11 +147,11 @@ export const QualityGatePane = qualityGatePane(
                         Save
                       </Button>
                     )}
-                  {configured && values.isEditing && (
+                  {configured && isEditing && (
                     <Button
                       type="secondary"
                       size="large"
-                      onClick={() => form.change('isEditing', !values.isEditing)}
+                      onClick={() => setIsEditing(false)}
                       data-test="quality-gate-pane:back-button"
                     >
                       <Icons.Expander width={8} height={14} rotate={180} />

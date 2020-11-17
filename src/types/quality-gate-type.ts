@@ -15,11 +15,10 @@ export interface ConditionSetting {
 }
 
 export interface ConditionSettingByType {
-  isEditing: boolean;
   coverage: ConditionSetting;
   risks: ConditionSetting;
   tests: ConditionSetting;
-  [key: string]: boolean | ConditionSetting;
+  [key: string]: ConditionSetting;
 }
 
 export interface Results {
