@@ -1,14 +1,19 @@
 @import '~common/style-guide/index';
 
 .overview {
-  &__summary-panel {
-    margin-top: 14px;
-    height: 160px;
+  &__routing-tabs-panel {
+    width: 100%;
   }
 
-  &__routing-tabs-panel {
-    height: 49px;
-    border-bottom: 1px solid map-get($color-palette, light-blue);
+  &__info-panel {
+    display: flex;
+    gap: 24px;
+  }
+
+  &__summary-panel {
+    gap: 28px;
+    padding-top: 16px;
+    border-top: 1px solid map-get($monochrome, medium-tint);
   }
 
   &__tab-content {
@@ -19,6 +24,6 @@
     display: flex;
     align-items: center;
     margin-right: 8px;
-    color: map-get($color-palette, black100);
+    color: map-get($monochrome, black);
   }
 }

@@ -1,11 +1,13 @@
 import * as React from 'react';
-import { BEM } from '@redneckz/react-bem-helper';
-import { Panel, Icons } from '@drill4j/ui-kit';
+import { BEM, div } from '@redneckz/react-bem-helper';
+import { Icons, Panel } from '@drill4j/ui-kit';
 
 import { TabsPanel, Tab } from 'components';
 import { BuildCoverage } from 'types/build-coverage';
 import { ActiveScope } from 'types/active-scope';
 import { Methods } from 'types/methods';
+import { TestSummary } from 'types/test-summary';
+import { TestTypeSummary } from 'types/test-type-summary';
 import { useAgent, useBuildVersion } from 'hooks';
 import { TableActionsProvider } from 'modules';
 import { ParentBuild } from 'types/parent-build';
@@ -18,6 +20,7 @@ import { ActiveBuildCoverageInfo } from './active-build-coverage-info';
 import { BuildCoverageInfo } from './build-coverage-info';
 import { ActiveScopeInfo } from './active-scope-info';
 import { usePreviousBuildCoverage } from '../use-previous-build-coverage';
+import { ProjectTestsCards } from '../project-tests-cards';
 
 import styles from './overview.module.scss';
 
@@ -37,32 +40,12 @@ export const Overview = overview(({ className }: Props) => {
   const { percentage: buildCodeCoverage = 0 } = buildCoverage;
   const scope = useBuildVersion<ActiveScope>('/active-scope');
   const buildMethods = useBuildVersion<Methods>('/build/methods') || {};
+  const allTests = useBuildVersion<TestSummary>('/build/summary/tests/all') || {};
+  const testsByType = useBuildVersion<TestTypeSummary[]>('/build/summary/tests/by-type') || [];
 
   return (
     <div className={className}>
       <CoveragePluginHeader />
-      <SummaryPanel align="space-between">
-        {scope?.active ? (
-          <>
-            <ActiveBuildCoverageInfo
-              buildCoverage={buildCoverage}
-              previousBuildVersion={previousBuildVersion}
-              previousBuildCodeCoverage={previousBuildCodeCoverage}
-              scope={scope}
-              status={status}
-              loading={loading}
-            />
-            <ActiveScopeInfo scope={scope} />
-          </>
-        )
-          : (
-            <BuildCoverageInfo
-              buildCodeCoverage={buildCodeCoverage}
-              previousBuildVersion={previousBuildVersion}
-              previousBuildCodeCoverage={previousBuildCodeCoverage}
-            />
-          )}
-      </SummaryPanel>
       <RoutingTabsPanel>
         <TabsPanel activeTab={selectedTab} onSelect={setSelectedTab}>
           <Tab name="methods">
@@ -79,10 +62,33 @@ export const Overview = overview(({ className }: Props) => {
           </Tab>
         </TabsPanel>
       </RoutingTabsPanel>
+      <InfoPanel>
+        <SummaryPanel direction="column" verticalAlign="stretch">
+          {scope?.active ? (
+            <ActiveBuildCoverageInfo
+              buildCoverage={buildCoverage}
+              previousBuildVersion={previousBuildVersion}
+              previousBuildCodeCoverage={previousBuildCodeCoverage}
+              scope={scope}
+              status={status}
+              loading={loading}
+            />
+          ) : (
+            <BuildCoverageInfo
+              buildCodeCoverage={buildCodeCoverage}
+              previousBuildVersion={previousBuildVersion}
+              previousBuildCodeCoverage={previousBuildCodeCoverage}
+            />
+          )}
+          {selectedTab === 'methods'
+            ? <ProjectMethodsCards methods={buildMethods} />
+            : <ProjectTestsCards allTests={allTests} testsByType={testsByType} />}
+        </SummaryPanel>
+        {scope?.active && <ActiveScopeInfo scope={scope} />}
+      </InfoPanel>
       <TabContent>
         {selectedTab === 'methods' ? (
           <>
-            <ProjectMethodsCards methods={buildMethods} />
             <TableActionsProvider>
               <CoverageDetails
                 topic="/build/coverage/packages"
@@ -91,14 +97,13 @@ export const Overview = overview(({ className }: Props) => {
               />
             </TableActionsProvider>
           </>
-        ) : (
-          <Tests />
-        )}
+        ) : <Tests />}
       </TabContent>
     </div>
   );
 });
 
+const InfoPanel = overview.infoPanel('div');
 const SummaryPanel = overview.summaryPanel(Panel);
 const RoutingTabsPanel = overview.routingTabsPanel('div');
 const TabContent = overview.tabContent('div');
