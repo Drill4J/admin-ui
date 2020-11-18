@@ -6,6 +6,8 @@ import { percentFormatter } from 'utils';
 import { ActiveScope } from 'types/active-scope';
 import { BuildCoverage } from 'types/build-coverage';
 import { AgentStatus } from 'types/agent-status';
+import { useBuildVersion } from 'hooks';
+import { ParentBuild } from 'types/parent-build';
 import { MultiProgressBar } from './multi-progress-bar';
 
 import styles from './active-build-coverage-info.module.scss';
@@ -25,6 +27,7 @@ const activeBuildCoverageInfo = BEM(styles);
 export const ActiveBuildCoverageInfo = activeBuildCoverageInfo(({
   className, buildCoverage, previousBuildVersion, previousBuildCodeCoverage, scope, status = 'BUSY', loading,
 }: Props) => {
+  const { version: parentBuildVersion = '' } = useBuildVersion<ParentBuild>('/data/parent') || {};
   const {
     coverage: {
       percentage: coveragePercentage = 0,
@@ -64,7 +67,7 @@ export const ActiveBuildCoverageInfo = activeBuildCoverageInfo(({
                   &nbsp;
                 </b>
                 сomparing to Build:&nbsp;
-                {previousBuildVersion}
+                {parentBuildVersion}
               </span>
             )}
             {Boolean(coveragePercentage) && (
