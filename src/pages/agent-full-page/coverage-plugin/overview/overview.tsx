@@ -5,7 +5,6 @@ import { Icons, Panel } from '@drill4j/ui-kit';
 import { TabsPanel, Tab } from 'components';
 import { BuildCoverage } from 'types/build-coverage';
 import { Methods } from 'types/methods';
-import { TestSummary } from 'types/test-summary';
 import { TestTypeSummary } from 'types/test-type-summary';
 import { useActiveScope, useAgent, useBuildVersion } from 'hooks';
 import { TableActionsProvider } from 'modules';
@@ -37,13 +36,12 @@ export const Overview = overview(({ className }: Props) => {
   const { version: previousBuildVersion = '' } = useBuildVersion<ParentBuild>('/data/parent') || {};
   const {
     percentage: previousBuildCodeCoverage = 0,
-    byTestType: previousBuildTests,
+    byTestType: previousBuildTests = [],
   } = usePreviousBuildCoverage(previousBuildVersion) || {};
   const buildCoverage = useBuildVersion<BuildCoverage>('/build/coverage') || {};
   const { percentage: buildCodeCoverage = 0 } = buildCoverage;
   const scope = useActiveScope();
   const buildMethods = useBuildVersion<Methods>('/build/methods') || {};
-  const allTests = useBuildVersion<TestSummary>('/build/summary/tests/all') || {};
   const testsByType = useBuildVersion<TestTypeSummary[]>('/build/summary/tests/by-type') || [];
 
   return (
@@ -85,7 +83,7 @@ export const Overview = overview(({ className }: Props) => {
           )}
           {selectedTab === 'methods'
             ? <ProjectMethodsCards methods={buildMethods} />
-            : <ProjectTestsCards allTests={allTests} testsByType={testsByType} />}
+            : <ProjectTestsCards testsByType={testsByType} />}
         </SummaryPanel>
         {scope?.active && status === AGENT_STATUS.ONLINE && <ActiveScopeInfo scope={scope} />}
       </InfoPanel>

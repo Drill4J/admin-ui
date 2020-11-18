@@ -12,8 +12,7 @@ import { NotificationManagerContext } from 'notification-manager';
 import { ActiveScope } from 'types/active-scope';
 import { Methods } from 'types/methods';
 import { AssociatedTests } from 'types/associated-tests';
-import { TestTypeSummary } from 'types/test-type-summary';
-import { TestSummary } from 'types/test-summary';
+import { BuildCoverage } from 'types/build-coverage';
 import { TableActionsProvider } from 'modules';
 import { useAgent, useBuildVersion } from 'hooks';
 import { AGENT_STATUS } from 'common/constants';
@@ -54,9 +53,7 @@ export const ScopeInfo = scopeInfo(
     const scopeMethods = useBuildVersion<Methods>(`/scope/${scopeId}/methods`) || {};
 
     const testsUsages = useBuildVersion<AssociatedTests[]>(`/scope/${scopeId}/tests-usages`) || [];
-    const allScopeTests = useBuildVersion<TestSummary>(`/scope/${scopeId}/summary/tests/all`) || {};
-    const scopeTestsByType = useBuildVersion<TestTypeSummary[]>(`/scope/${scopeId}/summary/tests/by-type`) || [];
-
+    const { byTestType } = useBuildVersion<BuildCoverage>(`/scope/${scopeId}/coverage`) || {};
     const {
       name = '', active = false, enabled = false, started = 0, finished = 0,
     } = scope || {};
@@ -159,7 +156,7 @@ export const ScopeInfo = scopeInfo(
                 </>
               ) : (
                 <>
-                  <ProjectTestsCards allTests={allScopeTests} testsByType={scopeTestsByType} />
+                  <ProjectTestsCards testsByType={byTestType} />
                   <TestDetails
                     testsUsages={testsUsages}
                     topicCoveredMethodsByTest={`/scope/${scopeId}/tests/covered-methods`}

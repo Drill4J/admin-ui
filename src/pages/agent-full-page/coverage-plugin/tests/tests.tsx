@@ -7,10 +7,5 @@ import { TestDetails } from '../test-details';
 export const Tests = () => {
   const testsUsages = useBuildVersion<AssociatedTests[]>('/build/tests-usages') || [];
 
-  return (
-    <TestDetails
-      testsUsages={testsUsages}
-      topicCoveredMethodsByTest="/build/tests/covered-methods"
-    />
-  );
+  return <TestDetails testsUsages={testsUsages} topicCoveredMethodsByTest="/build/tests/covered-methods" />;
 };
