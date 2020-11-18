@@ -1,26 +1,52 @@
 @import '~common/style-guide/index';
 
 .active-scope-info {
-  width: 268px;
-  height: 100%;
-  font-size: 12px;
+  padding: 16px 16px 24px 16px;
+  font-size: 14px;
   line-height: 16px;
+  background: map-get($monochrome, light-tint);
   color: map-get($monochrome, default);
 
   &__title {
     font-family: $semibold-font;
+    font-size: 12px;
   }
 
-  &__link {
+  &__actions {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  &__navigation-panel {
+    margin-top: 24px;
+    gap: 12px;
+  }
+
+  &__link,
+  &__button-link {
     font-family: $semibold-font;
     color: map-get($primary-blue, default);
     letter-spacing: 0;
     line-height: 16px;
     text-decoration: none;
+    cursor: pointer;
 
     &:hover {
       color: map-get($primary-blue, medium-tint);
     }
+  }
+
+  &__finish-scope-button {
+    display: flex;
+    justify-content: center;
+    width: 248px;
+    margin-right: 8px;
+  }
+
+  &__icon {
+    color: map-get($primary-blue, default);
+    cursor: pointer;
   }
 
   &__coverage-info {

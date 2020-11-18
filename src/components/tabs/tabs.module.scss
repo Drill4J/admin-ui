@@ -4,24 +4,24 @@
   display: flex;
 
   &__tab-label {
+    position: relative;
     display: flex;
     align-items: center;
+    min-height: 46px;
     box-sizing: border-box;
-    position: relative;
-    cursor: pointer;
-    min-height: 47px;
     border: none;
     padding: 0 0 4px 0;
+    margin-right: 28px;
     background: none;
+    color: map-get($monochrome, default);
     white-space: nowrap;
     outline: none;
-    color: $slate-gray;
     font-family: $semibold-font;
     font-size: 14px;
-    margin-right: 28px;
+    cursor: pointer;
 
     &--active {
-      color: map-get($color-palette, black100);
+      color: map-get($monochrome, black);
 
       &:after {
         content: '';
@@ -32,7 +32,7 @@
         bottom: 0;
         height: 4px;
         border-radius: 2px;
-        background-color: map-get($color-palette, blue100);
+        background-color: map-get($primary-blue, default);
         transform: translateY(50%);
       }
     }

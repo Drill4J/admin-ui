@@ -2,7 +2,7 @@ import * as React from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 import { NavLink, useParams } from 'react-router-dom';
 import {
-  Panel, Button, Icons, SessionIndicator, Menu,
+  Panel, Button, Icons, SessionIndicator,
 } from '@drill4j/ui-kit';
 
 import { percentFormatter } from 'utils';
@@ -17,12 +17,6 @@ interface Props {
   scope: ActiveScope | null;
 }
 
-interface MenuItemType {
-  label: string;
-  icon: keyof typeof Icons;
-  onClick: () => void;
-}
-
 const activeScopeInfo = BEM(styles);
 
 export const ActiveScopeInfo = activeScopeInfo(({
@@ -31,75 +25,66 @@ export const ActiveScopeInfo = activeScopeInfo(({
 }: Props) => {
   const {
     id: scopeId,
-    coverage: { percentage = 0, overlap: { percentage: overlapCoverage = 0 } = {} } = {},
+    coverage: { percentage = 0 } = {},
   } = scope || {};
   const { agentId, buildVersion, pluginId } = useParams<{agentId: string, buildVersion: string, pluginId: string }>();
   const dispatch = useCoveragePluginDispatch();
   const { loading } = usePluginState();
 
-  const menuActions = [
-    {
-      label: 'Sessions Management',
-      icon: 'ManageSessions',
-      onClick: () => dispatch(openModal('SessionsManagementModal', null)),
-    },
-    {
-      label: 'Rename',
-      icon: 'Edit',
-      onClick: () => dispatch(openModal('RenameScopeModal', scope)),
-    },
-    {
-      label: 'Delete',
-      icon: 'Delete',
-      onClick: () => dispatch(openModal('DeleteScopeModal', scope)),
-    },
-  ];
-
   return (
     <div className={className}>
       <Panel align="space-between">
         <Title>ACTIVE SCOPE</Title>
-        <div>
-          <Link
-            to={`/full-page/${agentId}/${buildVersion}/${pluginId}/scopes/${scopeId}`}
-            data-test="active-scope-info:scope-details-link"
-          >Details
-          </Link>
-          &nbsp;&#124;&nbsp;
-          <Link
-            to={`/full-page/${agentId}/${buildVersion}/${pluginId}/scopes/`}
-            data-test="active-scope-info:all-scopes-link"
-          >All scopes
-          </Link>
-        </div>
+        <Actions>
+          <Icon onClick={() => dispatch(openModal('RenameScopeModal', scope))}><Icons.Edit height={16} /></Icon>
+          <Icon onClick={() => dispatch(openModal('DeleteScopeModal', scope))}><Icons.Delete /></Icon>
+        </Actions>
       </Panel>
       <CoverageInfo>
         <ScopeCoverage data-test="active-scope-info:scope-coverage">{`${percentFormatter(percentage)}%`}</ScopeCoverage>
-        <OverlappedCoverage
-          data-test="active-scope-info:overlapped-coverage"
-        >
-          <b>{`${percentFormatter(overlapCoverage)}%`}</b> overlapped with build
-        </OverlappedCoverage>
       </CoverageInfo>
       <Panel align="space-between">
-        <Button
+        <FinishScopeButton
           type="primary"
           size="large"
           onClick={() => dispatch(openModal('FinishScopeModal', scope))}
           data-test="active-scope-info:finish-scope-button"
         >
           <Icons.Complete />
-          <span>Finish Active Scope</span>
-        </Button>
+          <span>Finish Scope</span>
+        </FinishScopeButton>
         <SessionIndicator active={loading} />
-        <Menu items={menuActions as MenuItemType[]} />
       </Panel>
+      <NavigationPanel direction="column" verticalAlign="start">
+        <ButtonLink
+          onClick={() => dispatch(openModal('SessionsManagementModal', null))}
+          data-test="active-scope-info:sessions-management-link"
+        >
+          Sessions Management
+        </ButtonLink>
+        <Link
+          to={`/full-page/${agentId}/${buildVersion}/${pluginId}/scopes/${scopeId}`}
+          data-test="active-scope-info:scope-details-link"
+        >
+          Scope Details
+        </Link>
+        <Link
+          to={`/full-page/${agentId}/${buildVersion}/${pluginId}/scopes/`}
+          data-test="active-scope-info:all-scopes-link"
+        >
+          All Scopes
+        </Link>
+      </NavigationPanel>
     </div>
   );
 });
 
 const Title = activeScopeInfo.title('div');
+const Actions = activeScopeInfo.actions('div');
+const NavigationPanel = activeScopeInfo.navigationPanel(Panel);
 const Link = activeScopeInfo.link(NavLink);
+const Icon = activeScopeInfo.icon('div');
+const ButtonLink = activeScopeInfo.buttonLink('div');
 const CoverageInfo = activeScopeInfo.coverageInfo('div');
 const ScopeCoverage = activeScopeInfo.scopeCoverage('div');
-const OverlappedCoverage = activeScopeInfo.overlappedCoverage('div');
+const FinishScopeButton = activeScopeInfo.finishScopeButton(Button);

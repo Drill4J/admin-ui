@@ -124,7 +124,6 @@ export const ScopeInfo = scopeInfo(
                 {activeBuildVersion === buildVersion && <Menu items={menuActions as MenuItemType[]} />}
               </Panel>
             </Header>
-            <ScopeCoverageInfo scope={scope} />
             <RoutingTabsPanel>
               <TabsPanel activeTab={selectedTab} onSelect={setSelectedTab}>
                 <Tab name="coverage">
@@ -141,6 +140,7 @@ export const ScopeInfo = scopeInfo(
                 </Tab>
               </TabsPanel>
             </RoutingTabsPanel>
+            <ScopeCoverageInfo scope={scope} />
             <TabContent>
               {selectedTab === 'coverage' ? (
                 <>
