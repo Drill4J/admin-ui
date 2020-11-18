@@ -1,6 +1,6 @@
 @import '~common/style-guide/index';
 
-.tabs {
+.tabs-panel {
   display: flex;
 
   &__tab-label {
@@ -11,7 +11,7 @@
     box-sizing: border-box;
     border: none;
     padding: 0 0 4px 0;
-    margin-right: 28px;
+    margin-right: 16px;
     background: none;
     color: map-get($monochrome, default);
     white-space: nowrap;

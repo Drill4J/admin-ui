@@ -3,7 +3,7 @@ import { BEM } from '@redneckz/react-bem-helper';
 import { LinkButton } from '@drill4j/ui-kit';
 
 import { Methods } from 'types/methods';
-import { InfoCard } from 'components';
+import { BuildMethodsCard } from 'components';
 import { RisksModal } from '../risks-modal';
 
 import styles from './project-methods-cards.module.scss';
@@ -25,39 +25,43 @@ export const ProjectMethodsCards = projectMethodsCards(
     const [risksFilter, setRisksFilter] = React.useState<string>('');
     return (
       <div className={className}>
-        <InfoCard
-          label="TOTAL"
-          covered={all?.covered}
+        <BuildMethodsCard
           totalCount={all?.total}
-        />
-        <InfoCard
-          label="NEW"
-          covered={newMethods?.covered}
+          covered={all?.covered}
+          label="TOTAL METHODS"
+        >
+          {deleted?.total} <Deleted>deleted</Deleted>
+        </BuildMethodsCard>
+        <BuildMethodsCard
           totalCount={newMethods?.total}
+          covered={newMethods?.covered}
+          label="NEW"
         >
           {Boolean(risks?.new) && (
-            <LinkButton size="small" onClick={() => setRisksFilter('new')} data-test="info-card:link-button:new:risks">
+            <LinkButton
+              size="small"
+              onClick={() => setRisksFilter('new')}
+              data-test="project-methods-cards:link-button:new:risks"
+            >
               {risks?.new} risks
             </LinkButton>
           )}
-        </InfoCard>
-        <InfoCard
-          label="MODIFIED"
-          covered={modified?.covered}
+        </BuildMethodsCard>
+        <BuildMethodsCard
           totalCount={modified?.total}
+          covered={modified?.covered}
+          label="MODIFIED"
         >
           {Boolean(risks?.modified) && (
-            <LinkButton size="small" onClick={() => setRisksFilter('modified')} data-test="info-card:link-button:modified:risks">
+            <LinkButton
+              size="small"
+              onClick={() => setRisksFilter('modified')}
+              data-test="project-methods-cards:link-button:modified:risks"
+            >
               {risks?.modified} risks
             </LinkButton>
           )}
-        </InfoCard>
-        <InfoCard
-          label="DELETED"
-          covered={deleted?.covered}
-          totalCount={deleted?.total}
-          additionalInformation="of deleted methods were covered in previous build"
-        />
+        </BuildMethodsCard>
         {risksFilter && (
           <RisksModal
             isOpen={Boolean(risksFilter)}
@@ -69,3 +73,5 @@ export const ProjectMethodsCards = projectMethodsCards(
     );
   },
 );
+
+const Deleted = projectMethodsCards.deleted('span');

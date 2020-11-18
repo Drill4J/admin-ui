@@ -1,10 +1,7 @@
+import { Count } from './count';
 import { RisksSummary } from './risks-summary';
+import { TestTypeOverlap } from './test-type-overlap';
 import { TestTypeSummary } from './test-type-summary';
-
-interface Count {
-  covered?: number;
-  total?: number;
-}
 
 export interface BuildCoverage {
   percentage?: number;
@@ -17,4 +14,5 @@ export interface BuildCoverage {
   classCount?: Count;
   methodCount?: Count;
   packageCount?: Count;
+  testTypeOverlap?: TestTypeOverlap;
 }

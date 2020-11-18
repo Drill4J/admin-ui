@@ -28,7 +28,7 @@ import styles from './coverage-plugin-header.module.scss';
 
 interface Props {
   className?: string;
-  previousBuildTests?: TestTypeSummary[];
+  previousBuildTests: TestTypeSummary[];
 }
 
 const coveragePluginHeader = BEM(styles);
