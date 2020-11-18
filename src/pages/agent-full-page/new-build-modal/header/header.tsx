@@ -8,23 +8,23 @@ import styles from './header.module.scss';
 
 interface Props {
   className?: string;
-  prevBuildVersion?: string;
+  baselineBuild?: string;
 }
 
 const header = BEM(styles);
 
 export const Header = header(
-  ({ className, prevBuildVersion }: Props) => (
+  ({ className, baselineBuild }: Props) => (
     <div className={className}>
       <LogoWrapper>
         <Logo />
       </LogoWrapper>
       <Content>
         <Title>New Build has Arrived!</Title>
-        <PrevBuildInfo>
-          Previous build:&nbsp;
-          <PrevBuildVersion>{prevBuildVersion}</PrevBuildVersion>
-        </PrevBuildInfo>
+        <BaselineBuildInfo>
+          Baseline build:&nbsp;
+          <BaselineBuild>{baselineBuild}</BaselineBuild>
+        </BaselineBuildInfo>
       </Content>
     </div>
   ),
@@ -34,5 +34,5 @@ const LogoWrapper = header.logoWrapper('div');
 const Logo = header.logo(LogoSvg);
 const Content = header.content('div');
 const Title = header.title('div');
-const PrevBuildInfo = header.prevBuildInfo(Panel);
-const PrevBuildVersion = header.prevBuildVersion('span');
+const BaselineBuildInfo = header.baselineBuildInfo(Panel);
+const BaselineBuild = header.baselineBuild('span');

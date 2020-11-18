@@ -1,9 +1,10 @@
+import { BuildInfo } from './build-info';
+
 type NotificationType = 'BUILD';
 
 interface Message {
   currentId?: string;
-  prevId?: string;
-  buildDiff?: { [methodType: string]: number };
+  buildInfo?: BuildInfo;
   recommendations?: string[];
 }
 

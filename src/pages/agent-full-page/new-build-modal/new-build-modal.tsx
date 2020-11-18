@@ -29,7 +29,7 @@ export const NewBuildModal = newBuildModal(
       id = '',
       agentId = '',
       message: {
-        currentId: currentBuildVersionId, prevId, buildDiff = {}, recommendations = [],
+        currentId: currentBuildVersionId, buildInfo = {}, recommendations = [],
       } = {},
     },
   }: Props) => {
@@ -42,17 +42,17 @@ export const NewBuildModal = newBuildModal(
       <Popup
         isOpen={isOpen}
         onToggle={onToggle}
-        header={<Header prevBuildVersion={prevId} />}
+        header={<Header baselineBuild={buildInfo?.parentVersion} />}
         closeOnFadeClick
       >
         <div className={className}>
           <Content>
             <Section>
               <BuildUpdates
-                buildDiff={{
-                  new: buildDiff?.new,
-                  modified: buildDiff?.modified,
-                  deleted: buildDiff?.deleted,
+                buildInfo={{
+                  new: buildInfo?.new,
+                  modified: buildInfo?.modified,
+                  deleted: buildInfo?.deleted,
                 }}
               />
             </Section>
