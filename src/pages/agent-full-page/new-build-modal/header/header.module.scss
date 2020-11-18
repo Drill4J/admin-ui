@@ -32,7 +32,7 @@
     margin-left: 24px;
   }
 
-  &__prev-build-info {
+  &__baseline-build-info {
     margin-top: 16px;
     font-size: 12px;
     line-height: 16px;
@@ -40,12 +40,7 @@
     white-space: nowrap;
   }
 
-  &__prev-build-icon {
-    margin-right: 8px;
-    margin-left: 4px;
-  }
-
-  &__prev-build-version {
+  &__baseline-build {
     font-family: $semibold-font;
   }
 }

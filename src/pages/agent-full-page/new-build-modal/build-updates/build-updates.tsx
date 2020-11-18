@@ -3,26 +3,28 @@ import { BEM } from '@redneckz/react-bem-helper';
 import { nanoid } from 'nanoid';
 import { Panel, Icons } from '@drill4j/ui-kit';
 
+import { BuildInfo } from 'types/build-info';
+
 import styles from './build-updates.module.scss';
 
 interface Props {
   className?: string;
-  buildDiff?: { [methodType: string]: number };
+  buildInfo?: BuildInfo;
 }
 
 const buildUpdates = BEM(styles);
 
-export const BuildUpdates = buildUpdates(({ className, buildDiff = {} }: Props) => (
+export const BuildUpdates = buildUpdates(({ className, buildInfo = {} }: Props) => (
   <div className={className}>
     <Title>Build updates</Title>
     <Content>
-      {Object.keys(buildDiff).map((methodType) => (
+      {Object.keys(buildInfo).map((methodType) => (
         <div key={nanoid()}>
           <Panel>
             <IconsWrapper type={methodType}>{getMethodsIcon(methodType)}</IconsWrapper>
             <MethodsType>{methodType}</MethodsType>
           </Panel>
-          <MethodsCount>{buildDiff[methodType]}</MethodsCount>
+          <MethodsCount>{buildInfo[methodType]}</MethodsCount>
         </div>
       ))}
     </Content>
