@@ -76,7 +76,7 @@ export const ScopesList = scopesList(({ className }: Props) => {
                       onClick={() => push(`/full-page/${agentId}/${buildVersion}/${pluginId}/scopes/${id}`)}
                       data-test="scopes-list:scope-name"
                     >
-                      {value}
+                      <ScopeName title={value}>{value}</ScopeName>
                       <Panel>
                         <ScopeTimer started={started} finished={finished} active={active} size="small" />
                         {active && <ActiveBadge>Active</ActiveBadge>}
@@ -88,6 +88,7 @@ export const ScopesList = scopesList(({ className }: Props) => {
                 <Column
                   name="started"
                   HeaderCell={() => <HeaderCell>Started</HeaderCell>}
+                  width="190px"
                   Cell={({ value }) => (
                     <>
                       <StartDate>
@@ -102,6 +103,7 @@ export const ScopesList = scopesList(({ className }: Props) => {
                 <Column
                   name="coverage"
                   HeaderCell={() => <HeaderCell>Coverage</HeaderCell>}
+                  width="190px"
                   Cell={({ item: { coverage: { percentage } } }) => (
                     <Coverage data-test="scopes-list:coverage">
                       {`${percentFormatter(percentage)}%`}
@@ -116,6 +118,7 @@ export const ScopesList = scopesList(({ className }: Props) => {
                       <TestTypeLabel>Auto Tests</TestTypeLabel>
                     </HeaderCell>
                   )}
+                  width="160px"
                   Cell={({
                     item: { coverage: { byTestType }, active },
                   }: { item: { coverage: { byTestType: TestTypeSummary[] }; active: boolean }}) => {
@@ -149,6 +152,7 @@ export const ScopesList = scopesList(({ className }: Props) => {
                       <TestTypeLabel>Manual</TestTypeLabel>
                     </HeaderCell>
                   )}
+                  width="110px"
                   Cell={({
                     item: { coverage: { byTestType }, active },
                   }: { item: { coverage: { byTestType: TestTypeSummary[] }; active: boolean }}) => {
@@ -179,6 +183,7 @@ export const ScopesList = scopesList(({ className }: Props) => {
                   <Column
                     name="actions"
                     HeaderCell={() => null}
+                    width="80px"
                     Cell={({ item }) => {
                       const { active, enabled, id } = item;
                       const menuActions = [
@@ -247,6 +252,7 @@ const TestTypeTestCount = scopesList.testTypeTestCount('div');
 const RecordingIcon = scopesList.recordingIcon('span');
 const RecordingText = scopesList.recordingText('span');
 const NameCell = scopesList.nameCell('span');
+const ScopeName = scopesList.scopeName('div');
 const StartDate = scopesList.startDate('div');
 const StartTime = scopesList.startTime('div');
 const ActiveBadge = scopesList.activeBadge(Status);

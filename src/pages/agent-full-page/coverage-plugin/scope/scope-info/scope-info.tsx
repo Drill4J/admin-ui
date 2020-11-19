@@ -103,9 +103,9 @@ export const ScopeInfo = scopeInfo(
         ? <Redirect to={{ pathname: `/full-page/${agentId}/${activeBuildVersion}/${pluginId}/dashboard`, state: activeBuildVersion }} />
         : (
           <div className={className}>
-            <Header align="space-between">
+            <Header>
+              <ScopeName data-test="scope-info:scope-name" title={name}>{name}</ScopeName>
               <Panel>
-                <ScopeName data-test="scope-info:scope-name">{name}</ScopeName>
                 {active && <ScopeSessionIndicator active={loading} />}
                 <ScopeStatus active={active} loading={loading} enabled={enabled} started={started} finished={finished} />
               </Panel>
@@ -169,7 +169,7 @@ export const ScopeInfo = scopeInfo(
   },
 );
 
-const Header = scopeInfo.header(Panel);
+const Header = scopeInfo.header('div');
 const ScopeName = scopeInfo.scopeName('div');
 const ScopeSessionIndicator = scopeInfo.scopeSessionIndicator(SessionIndicator);
 const FinishScopeButton = scopeInfo.finishScopeButton(Button);

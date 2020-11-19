@@ -1,8 +1,9 @@
 import * as React from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 
-import styles from './scope-status.module.scss';
 import { ScopeTimer } from '../..';
+
+import styles from './scope-status.module.scss';
 
 interface Props {
   className?: string;
