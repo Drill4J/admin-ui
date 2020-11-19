@@ -32,7 +32,7 @@ const renameScopeModal = BEM(styles);
 const validateScope = composeValidators(
   required('name', 'Scope Name'),
   sizeLimit({
-    name: 'name', min: 1, max: 64, alias: 'Scope Name',
+    name: 'name', min: 1, max: 64, alias: 'Scope name',
   }),
 );
 
@@ -49,7 +49,7 @@ export const RenameScopeModal = renameScopeModal(
       <Popup
         isOpen={isOpen}
         onToggle={onToggle}
-        header={<Panel>Rename Scope</Panel>}
+        header={<Header>Rename Scope</Header>}
         type="info"
         closeOnFadeClick
       >
@@ -72,7 +72,7 @@ export const RenameScopeModal = renameScopeModal(
             render={({ handleSubmit }) => (
               <Content>
                 <FormGroup label="Scope Name">
-                  <Field name="name" component={Fields.Input} placeholder="e.g. Automation Tests" />
+                  <Field name="name" component={Fields.Input} placeholder="Enter scope name" />
                 </FormGroup>
                 <ActionsPanel>
                   <Button type="primary" size="large" onClick={handleSubmit as any}>
@@ -93,3 +93,4 @@ export const RenameScopeModal = renameScopeModal(
 
 const Content = renameScopeModal.content('div');
 const ActionsPanel = renameScopeModal.actionsPanel(Panel);
+const Header = renameScopeModal.header('div');

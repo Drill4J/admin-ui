@@ -3,15 +3,17 @@
 .rename-scope-modal {
   width: 480px;
 
+  &__header {
+    font-size: 20px;
+  }
+
   &__content {
     margin: 24px;
   }
 
   &__actions-panel {
-    margin-top: 38px;
-
-    :first-child {
-      margin-right: 16px;
-    }
+    display: flex;
+    gap: 16px;
+    margin-top: 44px;
   }
 }
