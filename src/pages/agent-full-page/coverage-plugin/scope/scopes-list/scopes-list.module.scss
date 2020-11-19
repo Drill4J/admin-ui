@@ -73,6 +73,12 @@
     cursor: pointer;
   }
 
+  &__scope-name {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+  }
+
   &__start-date {
     font-size: 12px;
     line-height: 20px;
