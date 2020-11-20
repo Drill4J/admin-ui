@@ -63,7 +63,7 @@ export const TestToCodePlugin = testToCodePlugin(
                 <TestToCodeNameCell
                   name={value}
                   additionalInformation={`Build: ${buildVersion}`}
-                  onClick={() => push(`/full-page/${agentId}/${buildVersion}/dashboard`)}
+                  onClick={() => push(`/full-page/${agentId}/${buildVersion}/dashboard`, buildVersion)}
                 />
               )}
               HeaderCell={() => <TableTitle>Test2Code</TableTitle>}
