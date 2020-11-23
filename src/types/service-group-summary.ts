@@ -1,4 +1,6 @@
-import { ArrowType } from 'types/arrow-type';
+import { RisksSummary } from './risks-summary';
+import { TestCount } from './test-count';
+import { TestTypeSummary } from './test-type-summary';
 
 export interface Summary {
   id?: string;
@@ -12,22 +14,22 @@ export interface Summary {
     };
     risks?: number;
     testsToRun?: number;
-    arrow?: ArrowType;
   };
 }
 
 export interface ServiceGroupSummary {
   name?: string;
   summaries?: Summary[];
-  count?: number;
   aggregated?: {
     coverage?: number;
     coverageCount?: {
       covered?: number;
       total?: number;
     };
-    risks?: number;
-    arrow?: ArrowType;
-    testsToRun?: { groupedTets?: { [testType: string]: string[] }; count?: number};
+    riskCounts?: RisksSummary;
+    tests: TestTypeSummary[],
+    testsToRun: TestCount,
+    scopeCount?: number;
+    recommendations?: string[];
   };
 }

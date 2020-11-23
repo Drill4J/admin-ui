@@ -3,6 +3,7 @@
 .dashboard-section {
   display: flex;
   width: 100%;
+  column-gap: 16px;
 
   &__info {
     width: 50%;
@@ -17,7 +18,8 @@
   }
 
   &__main-info {
-    margin-bottom: 16px;
+    margin-bottom: 24px;
+    color: map-get($monochrome, black);
     font-size: 48px;
     line-height: 48px;
     font-family: $light-font;

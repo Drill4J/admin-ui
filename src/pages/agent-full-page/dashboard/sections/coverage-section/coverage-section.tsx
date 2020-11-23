@@ -8,10 +8,9 @@ import { BuildSummary } from 'types/build-summary';
 import { Methods } from 'types/methods';
 import { COVERAGE_TYPES_COLOR } from 'common/constants';
 import { ParentBuild } from 'types/parent-build';
-import { SingleBar, CoverageSectionTooltip } from 'components';
+import { SingleBar, CoverageSectionTooltip, DashboardSection } from 'components';
 import { useBuildVersion } from 'hooks';
 import { usePreviousBuildCoverage } from '../../../coverage-plugin/use-previous-build-coverage';
-import { Section } from '../section';
 
 import styles from './coverage-section.module.scss';
 
@@ -59,7 +58,7 @@ export const CoverageSection = coverageSection(({ className }: Props) => {
 
   return (
     <div className={className}>
-      <Section
+      <DashboardSection
         label="Build Coverage"
         info={`${percentFormatter(buildCodeCoverage)}%`}
         graph={(

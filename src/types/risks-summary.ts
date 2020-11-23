@@ -1,5 +1,5 @@
 export interface RisksSummary {
-  total: number;
-  new: number;
-  modified: number;
+  total?: number;
+  new?: number;
+  modified?: number;
 }

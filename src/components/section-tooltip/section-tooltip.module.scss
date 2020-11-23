@@ -16,10 +16,10 @@
   }
 
   &__tooltip-item-value {
-    margin-left: 12px;
+    margin-left: 32px;
     font-family: $regular-font;
     line-height: 20px;
     text-align: right;
-    opacity: 0.5;
+    color: map-get($monochrome, default);
   }
 }

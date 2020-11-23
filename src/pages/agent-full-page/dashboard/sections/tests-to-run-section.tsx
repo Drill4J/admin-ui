@@ -1,14 +1,12 @@
 import * as React from 'react';
 import { Panel, Tooltip } from '@drill4j/ui-kit';
 
-import { SingleBar } from 'components';
+import { SingleBar, DashboardSection, SectionTooltip } from 'components';
 import { capitalize, convertToPercentage } from 'utils';
 import { TESTS_TO_RUN_TYPES_COLOR } from 'common/constants';
 import { BuildSummary } from 'types/build-summary';
 import { TestTypes } from 'types/test-types';
 import { useBuildVersion } from 'hooks';
-import { Section } from './section';
-import { SectionTooltip } from './section-tooltip';
 
 export const TestsToRunSection = () => {
   const { testsToRun: { count = 0, byType: testsToRunByType = {} } = {} } = useBuildVersion<BuildSummary>('/build/summary') || {};
@@ -24,7 +22,7 @@ export const TestsToRunSection = () => {
   };
 
   return (
-    <Section
+    <DashboardSection
       label="Tests to run"
       info={count}
       graph={(

@@ -14,3 +14,5 @@ export { SingleBar } from './single-bar';
 export { CoverageSectionTooltip } from './coverage-section-tooltip';
 export { SearchPanel } from './search-panel';
 export { CoverageRateIcon } from './coverage-rate-icon';
+export { DashboardSection } from './dashboard-section';
+export { SectionTooltip } from './section-tooltip';
