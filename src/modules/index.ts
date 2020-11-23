@@ -14,3 +14,4 @@ export { CoveredMethodsByTestSidebar } from './covered-methods-by-test-sidebar';
 export { QualityGatePane } from './quality-gate-pane';
 export { PluginsSettingsTab } from './plugins-settings-tab';
 export { SystemSettingsForm } from './system-settings-form';
+export { NoPluginsStub } from './no-plugins-stub';
