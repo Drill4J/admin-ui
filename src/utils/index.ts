@@ -13,3 +13,4 @@ export { parseCoverage } from './parse-coverage';
 export { transformObjectsArrayToObject } from './transform-objects-array-to-object';
 export { formatMsToDate } from './format-ms-to-date';
 export { inputLengthRestriction } from './input-length-restriction';
+export { convertToPercentage } from './convert-to-percentage';

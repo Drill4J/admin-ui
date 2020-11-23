@@ -5,7 +5,7 @@ import { SingleBar } from 'components';
 import { TESTS_TYPES_COLOR } from 'common/constants';
 import { BuildCoverage } from 'types/build-coverage';
 import { TestTypes } from 'types/test-types';
-import { capitalize } from 'utils';
+import { capitalize, convertToPercentage } from 'utils';
 import { TestsInfo } from 'types/tests-info';
 import { useBuildVersion } from 'hooks';
 import { Section } from './section';
@@ -42,7 +42,7 @@ export const TestsSection = () => {
                 width={64}
                 height={128}
                 color={TESTS_TYPES_COLOR[testType as TestTypes]}
-                percent={(testsInfo[testType] && (testsInfo[testType].summary.testCount || 0) / totalCoveredMethodCount) * 100}
+                percent={convertToPercentage((testsInfo[testType] && testsInfo[testType].summary.testCount) || 0, totalCoveredMethodCount)}
                 icon={capitalize(testType)}
               />
             ))}
