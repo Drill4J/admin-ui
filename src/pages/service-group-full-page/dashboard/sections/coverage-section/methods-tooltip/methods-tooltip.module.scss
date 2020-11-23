@@ -1,0 +1,12 @@
+@import '~common/style-guide/index';
+
+.methods-tooltip {
+  font-family: $semibold-font;
+  font-size: 12px;
+  text-transform: uppercase;
+
+  &__percent {
+    margin-left: 32px;
+    color: map-get($monochrome, default);
+  }
+}

@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 
-import styles from './section.module.scss';
+import styles from './dashboard-section.module.scss';
 
 interface Props {
   className?: string;
@@ -11,9 +11,9 @@ interface Props {
   additionalInfo?: React.ReactNode;
 }
 
-const section = BEM(styles);
+const dashboardSection = BEM(styles);
 
-export const Section = section(({
+export const DashboardSection = dashboardSection(({
   className, graph, info, label, additionalInfo,
 }: Props) => (
   <div className={className}>
@@ -26,8 +26,8 @@ export const Section = section(({
   </div>
 ));
 
-const Label = section.label('div');
-const Info = section.info('div');
-const MainInfo = section.mainInfo('div');
-const AdditionalInfo = section.additionalInfo('div');
-const Graph = section.graph('div');
+const Label = dashboardSection.label('div');
+const Info = dashboardSection.info('div');
+const MainInfo = dashboardSection.mainInfo('div');
+const AdditionalInfo = dashboardSection.additionalInfo('div');
+const Graph = dashboardSection.graph('div');

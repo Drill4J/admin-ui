@@ -1,15 +1,13 @@
 import * as React from 'react';
 import { Panel, Tooltip } from '@drill4j/ui-kit';
 
-import { SingleBar } from 'components';
+import { SingleBar, DashboardSection, SectionTooltip } from 'components';
 import { TESTS_TYPES_COLOR } from 'common/constants';
 import { BuildCoverage } from 'types/build-coverage';
 import { TestTypes } from 'types/test-types';
 import { capitalize, convertToPercentage } from 'utils';
 import { TestsInfo } from 'types/tests-info';
 import { useBuildVersion } from 'hooks';
-import { Section } from './section';
-import { SectionTooltip } from './section-tooltip';
 
 export const TestsSection = () => {
   const { byTestType = [], finishedScopesCount = 0 } = useBuildVersion<BuildCoverage>('/build/coverage') || {};
@@ -29,7 +27,7 @@ export const TestsSection = () => {
   };
 
   return (
-    <Section
+    <DashboardSection
       label="Tests"
       info={totalCoveredMethodCount}
       additionalInfo={`${finishedScopesCount} scopes`}

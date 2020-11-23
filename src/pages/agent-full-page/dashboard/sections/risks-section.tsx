@@ -3,11 +3,9 @@ import { Panel, Icons, Tooltip } from '@drill4j/ui-kit';
 
 import { BuildSummary } from 'types/build-summary';
 import { RISKS_TYPES_COLOR } from 'common/constants';
-import { SingleBar } from 'components';
+import { SingleBar, DashboardSection, SectionTooltip } from 'components';
 import { useBuildVersion } from 'hooks';
 import { convertToPercentage } from 'utils';
-import { Section } from './section';
-import { SectionTooltip } from './section-tooltip';
 
 export const RisksSection = () => {
   const {
@@ -25,7 +23,7 @@ export const RisksSection = () => {
   };
 
   return (
-    <Section
+    <DashboardSection
       label="Risks"
       info={total}
       graph={(

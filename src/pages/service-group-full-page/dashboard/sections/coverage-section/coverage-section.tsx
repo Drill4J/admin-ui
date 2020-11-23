@@ -1,45 +1,33 @@
 import * as React from 'react';
-import { BEM } from '@redneckz/react-bem-helper';
-import { Icons } from '@drill4j/ui-kit';
+import { Tooltip } from '@drill4j/ui-kit';
 
 import { percentFormatter } from 'utils';
-import { ArrowType } from 'types/arrow-type';
-import { Section } from '../section';
-
-import styles from './coverage-section.module.scss';
+import { Count } from 'types/count';
+import { COVERAGE_TYPES_COLOR } from 'common/constants';
+import { SingleBar, DashboardSection } from 'components';
+import { MethodsTooltip } from './methods-tooltip';
 
 interface Props {
   className?: string;
-  coverage?: number;
-  arrow?: ArrowType;
+  totalCoverage?: number;
+  coverageCount?: Count;
 }
 
-const coverageSection = BEM(styles);
-
-export const CoverageSection = coverageSection(({ className, coverage = 0, arrow }: Props) => (
+export const CoverageSection = ({ className, totalCoverage = 0, coverageCount: { total = 0, covered = 0 } = {} }: Props) => (
   <div className={className}>
-    <Section
+    <DashboardSection
       label="Build Coverage"
-      info={(
-        <>
-          {`${percentFormatter(coverage)}%`}
-          {(arrow === 'DECREASE' || arrow === 'INCREASE') && (
-            <CoverageArrow
-              rotate={arrow === 'INCREASE' ? 180 : 0}
-              type={arrow}
-              height={34}
-              width={24}
-            />
-          )}
-        </>
+      info={`${percentFormatter(totalCoverage)}%`}
+      graph={(
+        <Tooltip message={<MethodsTooltip data={{ coveredMethods: { total, covered } }} />}>
+          <SingleBar
+            width={108}
+            height={128}
+            color={COVERAGE_TYPES_COLOR.TOTAL}
+            percent={percentFormatter(totalCoverage)}
+          />
+        </Tooltip>
       )}
     />
   </div>
-));
-
-const CoverageArrow: React.FC<{
-  rotate: number;
-  type: ArrowType;
-  height: number;
-  width: number;
-}> = coverageSection.coverageArrow(Icons.CoverageArrow);
+);

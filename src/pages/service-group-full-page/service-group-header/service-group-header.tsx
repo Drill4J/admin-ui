@@ -29,9 +29,9 @@ export const ServiceGroupHeader = serviceGroupHeader(
         <Content>
           <AgentInfo>
             <ServiceGroupName>{name}</ServiceGroupName>
-            <AgentsCount>
-              {`${summaries.length} agents`}
-            </AgentsCount>
+            <AgentsCountInfo>
+              Agents&nbsp;<AgentsCount>{summaries.length}</AgentsCount>
+            </AgentsCountInfo>
           </AgentInfo>
           <SettingsButton
             width={32}
@@ -49,5 +49,6 @@ const Logo = serviceGroupHeader.logo(LogoSvg);
 const Content = serviceGroupHeader.content('div');
 const AgentInfo = serviceGroupHeader.agentInfo('div');
 const ServiceGroupName = serviceGroupHeader.serviceGroupName('div');
-const AgentsCount = serviceGroupHeader.agentsCount('div');
+const AgentsCountInfo = serviceGroupHeader.agentsCountInfo('div');
+const AgentsCount = serviceGroupHeader.agentsCount('span');
 const SettingsButton = serviceGroupHeader.settingsButton(Icons.Settings);

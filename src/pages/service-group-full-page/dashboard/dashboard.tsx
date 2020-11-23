@@ -7,7 +7,7 @@ import { ServiceGroupSummary } from 'types/service-group-summary';
 import { usePluginData } from '../use-plugin-data';
 import { PluginCard } from './plugin-card';
 import {
-  CoverageSection, RisksSection, TestsToRunSection,
+  CoverageSection, RisksSection, TestsToRunSection, TestsSection,
 } from './sections';
 
 import styles from './dashboard.module.scss';
@@ -27,7 +27,16 @@ export const Dashboard = dashboard(({
     <Header>Dashboard</Header>
     <Content>
       {plugins.length > 0 ? plugins.map(({ id: pluginId = '', name }) => {
-        const serviceGroup = usePluginData<ServiceGroupSummary>('/service-group/summary', serviceGroupId, pluginId) || {};
+        const {
+          aggregated: {
+            scopeCount = 0,
+            coverage = 0,
+            coverageCount = {},
+            tests = [],
+            testsToRun = {},
+            riskCounts = {},
+          } = {},
+        } = usePluginData<ServiceGroupSummary>('/service-group/summary', serviceGroupId, pluginId) || {};
 
         return (
           <PluginCard
@@ -35,9 +44,10 @@ export const Dashboard = dashboard(({
             pluginLink={`/service-group-full-page/${serviceGroupId}/${pluginId}`}
             key={pluginId}
           >
-            <CoverageSection coverage={serviceGroup?.aggregated?.coverage} arrow={serviceGroup?.aggregated?.arrow} />
-            <RisksSection risks={serviceGroup?.aggregated?.risks} />
-            <TestsToRunSection testsToRun={serviceGroup?.aggregated?.testsToRun} />
+            <CoverageSection totalCoverage={coverage} coverageCount={coverageCount} />
+            <TestsSection testsType={tests} scopeCount={scopeCount} />
+            <RisksSection risks={riskCounts} />
+            <TestsToRunSection testsToRun={testsToRun} />
           </PluginCard>
         );
       }) : <NoPluginsStub agentId={serviceGroupId} agentType="ServiceGroup" />}

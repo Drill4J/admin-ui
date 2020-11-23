@@ -29,9 +29,13 @@
     line-height: 40px;
   }
 
-  &__agents-count {
-    font-size: 12px;
+  &__agents-count-info {
+    font-size: 14px;
     line-height: 20px;
+  }
+
+  &__agents-count {
+    color: map-get($monochrome, default);
   }
 
   &__settings-button {
