@@ -3,7 +3,7 @@ import { BEM } from '@redneckz/react-bem-helper';
 import { Button, Panel } from '@drill4j/ui-kit';
 import { useParams } from 'react-router-dom';
 
-import { useBuildVersion } from 'hooks';
+import { useAgent, useBuildVersion } from 'hooks';
 import { ParentBuild } from 'types/parent-build';
 import { GetSuggestedTestsModal } from './get-suggested-tests-modal';
 
@@ -19,8 +19,10 @@ const testsToRunHeader = BEM(styles);
 
 export const TestsToRunHeader = testsToRunHeader(({ className, testsToRunCount, agentType }: Props) => {
   const { version: previousBuildVersion = '' } = useBuildVersion<ParentBuild>('/data/parent') || {};
-  const { buildVersion = '' } = useParams<{ buildVersion: string; }>();
+  const { buildVersion = '', agentId = '' } = useParams<{ buildVersion: string; agentId: string; }>();
+  const { buildVersion: activeBuildVersion = '' } = useAgent(agentId) || {};
   const [modalIsOpen, setModalIsOpen] = React.useState(false);
+
   return (
     <>
       <div className={className}>
@@ -38,14 +40,16 @@ export const TestsToRunHeader = testsToRunHeader(({ className, testsToRunCount, 
               </ComparedBuildVersion>
             </SubTitle>
           </div>
-          <Button
-            type="secondary"
-            size="large"
-            onClick={() => setModalIsOpen(true)}
-            data-test="tests-to-run-header:get-suggested-tests-button"
-          >
-            Get Suggested Tests
-          </Button>
+          {activeBuildVersion === buildVersion && (
+            <Button
+              type="secondary"
+              size="large"
+              onClick={() => setModalIsOpen(true)}
+              data-test="tests-to-run-header:get-suggested-tests-button"
+            >
+              Get Suggested Tests
+            </Button>
+          )}
         </Panel>
       </div>
       {modalIsOpen && <GetSuggestedTestsModal isOpen={modalIsOpen} onToggle={setModalIsOpen} agentType={agentType} />}
