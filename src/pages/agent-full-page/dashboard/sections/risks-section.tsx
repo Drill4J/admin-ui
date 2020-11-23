@@ -1,23 +1,25 @@
 import * as React from 'react';
 import { Panel, Icons, Tooltip } from '@drill4j/ui-kit';
 
-import { Risks } from 'types/risks';
+import { BuildSummary } from 'types/build-summary';
 import { RISKS_TYPES_COLOR } from 'common/constants';
 import { SingleBar } from 'components';
 import { useBuildVersion } from 'hooks';
+import { convertToPercentage } from 'utils';
 import { Section } from './section';
 import { SectionTooltip } from './section-tooltip';
 
 export const RisksSection = () => {
-  const { newMethods = [], modifiedMethods = [] } = useBuildVersion<Risks>('/build/risks') || {};
-  const risksCount = newMethods.length + modifiedMethods.length;
+  const {
+    riskCounts: { total = 0, new: newMethodsCount = 0, modified: modifiedMethodsCount = 0 } = {},
+  } = useBuildVersion<BuildSummary>('/build/summary') || {};
   const tooltipData = {
     new: {
-      count: newMethods.length,
+      count: newMethodsCount,
       color: RISKS_TYPES_COLOR.NEW,
     },
     modified: {
-      count: modifiedMethods.length,
+      count: modifiedMethodsCount,
       color: RISKS_TYPES_COLOR.MODIFIED,
     },
   };
@@ -25,7 +27,7 @@ export const RisksSection = () => {
   return (
     <Section
       label="Risks"
-      info={risksCount}
+      info={total}
       graph={(
         <Tooltip message={<SectionTooltip data={tooltipData} hideValue />}>
           <Panel>
@@ -33,14 +35,14 @@ export const RisksSection = () => {
               width={64}
               height={128}
               color={RISKS_TYPES_COLOR.NEW}
-              percent={(newMethods.length / risksCount) * 100}
+              percent={convertToPercentage(newMethodsCount, total)}
               icon={<Icons.Add height={16} width={16} />}
             />
             <SingleBar
               width={64}
               height={128}
               color={RISKS_TYPES_COLOR.MODIFIED}
-              percent={(modifiedMethods.length / risksCount) * 100}
+              percent={convertToPercentage(modifiedMethodsCount, total)}
               icon={<Icons.Edit height={16} width={16} viewBox="0 0 16 15" />}
             />
           </Panel>

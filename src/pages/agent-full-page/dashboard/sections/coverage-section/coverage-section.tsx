@@ -4,7 +4,7 @@ import { NavLink, useParams } from 'react-router-dom';
 import { Panel, Tooltip } from '@drill4j/ui-kit';
 
 import { percentFormatter } from 'utils';
-import { BuildCoverage } from 'types/build-coverage';
+import { BuildSummary } from 'types/build-summary';
 import { Methods } from 'types/methods';
 import { COVERAGE_TYPES_COLOR } from 'common/constants';
 import { ParentBuild } from 'types/parent-build';
@@ -24,7 +24,7 @@ const coverageSection = BEM(styles);
 export const CoverageSection = coverageSection(({ className }: Props) => {
   const { version: previousBuildVersion = '' } = useBuildVersion<ParentBuild>('/data/parent') || {};
   const { percentage: previousBuildCodeCoverage = 0 } = usePreviousBuildCoverage(previousBuildVersion) || {};
-  const { percentage: buildCodeCoverage = 0, finishedScopesCount = 0 } = useBuildVersion<BuildCoverage>('/build/coverage') || {};
+  const { coverage: buildCodeCoverage = 0, scopeCount = 0 } = useBuildVersion<BuildSummary>('/build/summary') || {};
   const {
     all: {
       total: allMethodsTotalCount = 0,
@@ -74,7 +74,7 @@ export const CoverageSection = coverageSection(({ className }: Props) => {
         )}
         additionalInfo={(
           <Panel>
-            {Boolean(buildDiff) && !isFirstBuild && finishedScopesCount > 0
+            {Boolean(buildDiff) && !isFirstBuild && scopeCount > 0
               && (
                 <BuildInfo>
                   {`${buildDiff > 0 ? '+' : '-'} ${percentFormatter(Math.abs(buildDiff))}% vs`}
