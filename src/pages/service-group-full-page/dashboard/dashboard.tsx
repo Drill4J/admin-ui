@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 
+import { NoPluginsStub } from 'modules';
 import { Plugin } from 'types/plugin';
 import { ServiceGroupSummary } from 'types/service-group-summary';
 import { usePluginData } from '../use-plugin-data';
@@ -25,7 +26,7 @@ export const Dashboard = dashboard(({
   <div className={className}>
     <Header>Dashboard</Header>
     <Content>
-      {plugins.map(({ id: pluginId = '', name }) => {
+      {plugins.length > 0 ? plugins.map(({ id: pluginId = '', name }) => {
         const serviceGroup = usePluginData<ServiceGroupSummary>('/service-group/summary', serviceGroupId, pluginId) || {};
 
         return (
@@ -39,7 +40,7 @@ export const Dashboard = dashboard(({
             <TestsToRunSection testsToRun={serviceGroup?.aggregated?.testsToRun} />
           </PluginCard>
         );
-      })}
+      }) : <NoPluginsStub agentId={serviceGroupId} agentType="ServiceGroup" />}
     </Content>
   </div>
 ));

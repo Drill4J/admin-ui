@@ -1,10 +1,10 @@
 import * as React from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 
+import { NoPluginsStub } from 'modules';
 import { Agent } from 'types/agent';
 import { usePluginState } from '../store';
 import { PluginCard } from './plugin-card';
-import { NoPluginsStub } from './no-plugins-stub';
 import {
   CoverageSection, TestsSection, RisksSection, TestsToRunSection,
 } from './sections';
@@ -21,14 +21,15 @@ const dashboard = BEM(styles);
 export const Dashboard = dashboard(({ className, agent }: Props) => {
   const { id: agentId, plugins = [] } = agent;
   const { buildVersion } = usePluginState();
+  const installedPlugins = plugins.filter(plugin => !plugin.available);
 
   return (
     <div className={className}>
       <Header>Dashboard</Header>
       <Content>
-        {plugins.length > 0 ? (
+        {installedPlugins.length > 0 ? (
           <>
-            {plugins.map(({ id, name }) => (
+            {installedPlugins.map(({ id, name }) => (
               <PluginCard
                 key={id}
                 label={name}
@@ -40,11 +41,8 @@ export const Dashboard = dashboard(({ className, agent }: Props) => {
                 <TestsToRunSection />
               </PluginCard>
             ))}
-
           </>
-        ) : (
-          <NoPluginsStub agent={agent} />
-        )}
+        ) : <NoPluginsStub agentId={agent.id} agentType="Agent" />}
       </Content>
     </div>
   );

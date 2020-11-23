@@ -79,7 +79,10 @@ export const ServiceGroupFullPage = serviceGroupFullPage(
               <Route
                 path="/service-group-full-page/:serviceGroupId/service-group-dashboard"
                 render={() => (
-                  <Dashboard serviceGroupId={id} plugins={plugins} />
+                  <Dashboard
+                    serviceGroupId={id}
+                    plugins={plugins.filter(plugin => !plugin.available)}
+                  />
                 )}
               />
               <Route

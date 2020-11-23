@@ -3,30 +3,29 @@ import { BEM } from '@redneckz/react-bem-helper';
 import { Link } from 'react-router-dom';
 import { Icons } from '@drill4j/ui-kit';
 
-import { Agent } from 'types/agent';
+import { camelToSpaces } from 'utils';
 
 import styles from './no-plugins-stub.module.scss';
 
 interface Props {
   className?: string;
-  agent: Agent;
+  agentId?: string;
+  agentType: 'Agent' | 'ServiceGroup';
 }
 
 const noPluginsStub = BEM(styles);
 
-export const NoPluginsStub = noPluginsStub(({ className, agent = {} }: Props) => (
+export const NoPluginsStub = noPluginsStub(({ className, agentId = '', agentType }: Props) => (
   <div className={className}>
-    <Icon height={164} width={164} />
+    <Icon height={160} width={160} />
     <Title>No data available</Title>
     <Message>
-      <div>There are no enabled plugins on this agent to collect the data from.</div>
-      <div>
-        To enable or install a plugin,&nbsp;
-        <AgentInfoLink to={`/agents/agent/${agent.id}/settings`}>
-          go back to Agent administration page.
-        </AgentInfoLink>
-      </div>
+      <div>There are no enabled plugins on this {camelToSpaces(agentType)} to collect the data from.</div>
+      <div>To install a plugin go to</div>
     </Message>
+    <AgentInfoLink to={`/agents/${agentType === 'Agent' ? 'agent' : 'service-group'}/${agentId}/settings`}>
+      {camelToSpaces(agentType)} settings page
+    </AgentInfoLink>
   </div>
 ));
 
