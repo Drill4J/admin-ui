@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 import { Button, Popup } from '@drill4j/ui-kit';
-import { useHistory } from 'react-router-dom';
+import { matchPath, useHistory } from 'react-router-dom';
 
 import { Notification } from 'types/notificaiton';
 import { readNotification } from '../api';
@@ -33,7 +33,10 @@ export const NewBuildModal = newBuildModal(
       } = {},
     },
   }: Props) => {
-    const { push, location: { state: activeBuildVersion = '' } } = useHistory();
+    const { push, location: { pathname } } = useHistory();
+    const { params: { buildVersion: activeBuildVersion = '' } = {} } = matchPath<{ buildVersion: string }>(pathname, {
+      path: '/:page/:agentId/:buildVersion',
+    }) || {};
     React.useEffect(() => {
       id && readNotification(id);
     }, [id]);
