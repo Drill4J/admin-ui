@@ -1,11 +1,12 @@
 import * as React from 'react';
 import { BEM, div } from '@redneckz/react-bem-helper';
-import { useParams, useHistory } from 'react-router-dom';
+import { useHistory, matchPath } from 'react-router-dom';
 import { Panel, Spinner, Icons } from '@drill4j/ui-kit';
 
 import { AGENT_STATUS } from 'common/constants';
 import { capitalize } from 'utils';
 import { AgentStatus } from 'types/agent-status';
+import { useAgent } from 'hooks';
 import { usePluginState } from '../store';
 import { ReactComponent as LogoSvg } from './logo.svg';
 
@@ -21,13 +22,17 @@ const pluginHeader = BEM(styles);
 
 export const PluginHeader = pluginHeader(({ className, agentName, agentStatus }: Props) => {
   const { loading } = usePluginState();
-  const { agentId = '' } = useParams<{ agentId: string }>();
-  const { push } = useHistory();
+  const { push, location: { pathname } } = useHistory();
+  const { params: { buildVersion = '', agentId = '' } = {} } = matchPath<{ buildVersion: string; agentId: string }>(pathname, {
+    path: '/:page/:agentId/:buildVersion',
+  }) || {};
+  const { buildVersion: activeBuildVersion = '' } = useAgent(agentId) || {};
+
   return (
     <div className={className}>
       <Content>
         <Panel>
-          <LogoWrapper recording={loading}>
+          <LogoWrapper recording={buildVersion === activeBuildVersion && loading}>
             <Logo />
           </LogoWrapper>
           <AgentInfo>
