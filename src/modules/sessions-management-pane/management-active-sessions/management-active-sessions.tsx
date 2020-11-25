@@ -7,22 +7,22 @@ import { Fields } from 'forms';
 import { ActiveSession } from 'types/active-session';
 import { useSessionsPaneDispatch, useSessionsPaneState, setBulkOperation } from '../store';
 
-import styles from './manage-active-sessions.module.scss';
+import styles from './management-active-sessions.module.scss';
 
 interface Props {
   className?: string;
   activeSessions: ActiveSession[];
 }
 
-const manageActiveSessions = BEM(styles);
+const managementActiveSessions = BEM(styles);
 
-export const ManageActiveSessions = manageActiveSessions(({ className, activeSessions }: Props) => {
+export const ManagementActiveSessions = managementActiveSessions(({ className, activeSessions }: Props) => {
   const dispatch = useSessionsPaneDispatch();
   const { bulkOperation, singleOperation } = useSessionsPaneState();
   const disabled = bulkOperation.isProcessing || Boolean(singleOperation.id);
 
   return (
-    <div className={className} data-test="manage-active-sessions:search-panel">
+    <div className={className} data-test="management-active-sessions:search-panel">
       <Content>
         <Panel align="space-between">
           <span>
@@ -33,7 +33,7 @@ export const ManageActiveSessions = manageActiveSessions(({ className, activeSes
             <LinkButton
               size="small"
               onClick={() => dispatch(setBulkOperation('abort', true))}
-              data-test="manage-active-sessions:abort-all"
+              data-test="management-active-sessions:abort-all"
               disabled={disabled}
             >
               Abort all
@@ -41,7 +41,7 @@ export const ManageActiveSessions = manageActiveSessions(({ className, activeSes
             <LinkButton
               size="small"
               onClick={() => dispatch(setBulkOperation('finish', true))}
-              data-test="manage-active-sessions:finish-all"
+              data-test="management-active-sessions:finish-all"
               disabled={disabled}
             >
               Finish all
@@ -61,6 +61,6 @@ export const ManageActiveSessions = manageActiveSessions(({ className, activeSes
   );
 });
 
-const Count = manageActiveSessions.count('span');
-const ActionsPanel = manageActiveSessions.actionsPanel('div');
-const Content = manageActiveSessions.content('div');
+const Count = managementActiveSessions.count('span');
+const ActionsPanel = managementActiveSessions.actionsPanel('div');
+const Content = managementActiveSessions.content('div');

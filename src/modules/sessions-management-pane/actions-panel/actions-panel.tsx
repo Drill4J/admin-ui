@@ -32,7 +32,7 @@ export const ActionsPanel = actionsPanel(
             size="large"
             disabled={startSessionDisabled}
             onClick={handleSubmit}
-            data-test="manage-sessions-pane:start-session-button"
+            data-test="sessions-management-pane:start-session-button"
           >
             Start Session
           </Button>
@@ -41,7 +41,7 @@ export const ActionsPanel = actionsPanel(
             type="primary"
             size="large"
             onClick={() => dispatch(setIsNewSession(true))}
-            data-test="manage-sessions-pane:start-new-session-button"
+            data-test="sessions-management-pane:start-new-session-button"
             disabled={Boolean(singleOperation.id)}
           >
             Start New Session
@@ -52,18 +52,17 @@ export const ActionsPanel = actionsPanel(
             type="secondary"
             size="large"
             onClick={() => dispatch(setIsNewSession(false))}
-            data-test="manage-sessions-pane:back-button"
+            data-test="sessions-management-pane:back-button"
           >
             <Icons.Expander width={8} height={14} rotate={180} />
             <span>Back</span>
           </Button>
         )}
-
         <Button
           type="secondary"
           size="large"
           onClick={() => onToggle(false)}
-          data-test="manage-sessions-pane:cancel-button"
+          data-test="sessions-management-pane:cancel-button"
         >
           Cancel
         </Button>
