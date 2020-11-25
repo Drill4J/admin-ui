@@ -4,7 +4,7 @@ import { useHistory, useParams } from 'react-router-dom';
 import { Menu } from '@drill4j/ui-kit';
 
 import { List, ListColumn } from 'components';
-import { ManageSessionsPaneProvider as ManageSessionsPane, TestsToRunModal } from 'modules';
+import { SessionsManagementPaneProvider as SessionsManagementPane, TestsToRunModal } from 'modules';
 import { percentFormatter } from 'utils';
 import { ArrowType } from 'types/arrow-type';
 import { Summary } from 'types/service-group-summary';
@@ -39,7 +39,7 @@ export const TestToCodePlugin = testToCodePlugin(
     const [testsToRunModalIsOpen, setTestsToRunModalIsOpen] = React.useState(false);
     const { serviceGroupId = '', pluginId = '' } = useParams<{ serviceGroupId: string, pluginId: string}>();
     const { push } = useHistory();
-    const [isManageSessionsModalOpen, setIsManageSessionsModalOpen] = React.useState(false);
+    const [isSessionsManagementModalOpen, setIsSessionsManagementModalOpen] = React.useState(false);
     const [isFinishScopesModalOpen, setIsFinishScopesModalOpen] = React.useState(false);
     const serviceGroupSummaries = summaries
       .map((agentSummary) => ({ ...agentSummary, ...agentSummary.summary }));
@@ -143,19 +143,19 @@ export const TestToCodePlugin = testToCodePlugin(
                       onClick: () => setIsFinishScopesModalOpen(true),
                     },
                     {
-                      label: 'Manage sessions',
+                      label: 'Sessions Management',
                       icon: 'ManageSessions',
-                      onClick: () => setIsManageSessionsModalOpen(true),
+                      onClick: () => setIsSessionsManagementModalOpen(true),
                     },
                   ]}
                 />
               )}
             />
           </List>
-          {isManageSessionsModalOpen && (
-            <ManageSessionsPane
-              isOpen={isManageSessionsModalOpen}
-              onToggle={setIsManageSessionsModalOpen}
+          {isSessionsManagementModalOpen && (
+            <SessionsManagementPane
+              isOpen={isSessionsManagementModalOpen}
+              onToggle={setIsSessionsManagementModalOpen}
             />
           )}
           {isFinishScopesModalOpen && (

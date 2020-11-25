@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { ManageSessionsPaneProvider as ManageSessionsModal } from 'modules';
+import { SessionsManagementPaneProvider as SessionsManagementModal } from 'modules';
 import { useCoveragePluginState, useCoveragePluginDispatch, openModal } from './store';
 import { RenameScopeModal } from './scope/rename-scope-modal';
 import { FinishScopeModal } from './scope/finish-scope-modal';
@@ -10,7 +10,7 @@ const modals = {
   RenameScopeModal,
   FinishScopeModal,
   DeleteScopeModal,
-  ManageSessionsModal,
+  SessionsManagementModal,
 };
 
 export const CoveragePluginModals = () => {

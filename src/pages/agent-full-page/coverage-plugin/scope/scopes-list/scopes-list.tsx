@@ -193,9 +193,9 @@ export const ScopesList = scopesList(({ className }: Props) => {
                           onClick: () => dispatch(openModal('FinishScopeModal', item)),
                         },
                         active && {
-                          label: 'Manage Sessions',
+                          label: 'Sessions Management',
                           icon: 'ManageSessions',
-                          onClick: () => dispatch(openModal('ManageSessionsModal', null)),
+                          onClick: () => dispatch(openModal('SessionsManagementModal', null)),
                         },
                         !active && {
                           label: `${enabled ? 'Ignore' : 'Include'} in stats`,

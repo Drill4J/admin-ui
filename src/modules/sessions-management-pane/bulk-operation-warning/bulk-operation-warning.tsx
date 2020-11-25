@@ -3,7 +3,7 @@ import * as React from 'react';
 import { Message } from 'types/message';
 import { useSessionsPaneDispatch, useSessionsPaneState, setBulkOperation } from '../store';
 import { OperationActionWarning } from '../operation-action-warning';
-import { abortAllSession, finishAllSession } from '../manage-sessions-pane-api';
+import { abortAllSession, finishAllSession } from '../sessions-management-pane-api';
 
 interface Props {
   agentType: string;

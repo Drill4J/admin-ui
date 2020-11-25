@@ -13,19 +13,19 @@ import {
   handleFieldErrors,
 } from 'forms';
 import { useGeneralAlertMessage } from 'hooks';
-import { ManageNewSession } from './manage-new-session';
+import { ManagementNewSession } from './management-new-session';
 import { useActiveSessions } from './use-active-sessions';
 import {
   startServiceGroupSessions, startAgentSession,
-} from './manage-sessions-pane-api';
-import { ManageActiveSessions } from './manage-active-sessions';
+} from './sessions-management-pane-api';
+import { ManagementActiveSessions } from './management-active-sessions';
 import { EmptyActiveSessionsStub } from './active-sessions-list/empty-active-sessions-stub';
 import { ActiveSessionsList } from './active-sessions-list';
 import { BulkOperationWarning } from './bulk-operation-warning';
 import { ActionsPanel } from './actions-panel';
 import { setIsNewSession, useSessionsPaneDispatch, useSessionsPaneState } from './store';
 
-import styles from './manage-sessions-pane.module.scss';
+import styles from './sessions-management-pane.module.scss';
 
 interface Props {
   className?: string;
@@ -42,7 +42,7 @@ const validateManageSessionsPane = composeValidators(
   }),
 );
 
-export const ManageSessionsPane = manageSessionsPane(
+export const SessionsManagementPane = manageSessionsPane(
   ({
     className, isOpen, onToggle,
   }: Props) => {
@@ -90,18 +90,18 @@ export const ManageSessionsPane = manageSessionsPane(
               invalid, handleSubmit, dirtySinceLastSubmit, submitting, hasValidationErrors,
             }) => (
               <>
-                <Header data-test="manage-sessions-pane:header">
-                  {isNewSession ? 'Start New Session' : 'Manage Sessions'}
+                <Header data-test="sessions-management-pane:header">
+                  {isNewSession ? 'Start New Session' : 'Sessions Management'}
                 </Header>
                 {generalAlertMessage?.type && (
                   <GeneralAlerts type={generalAlertMessage.type}>
                     {generalAlertMessage.text}
                   </GeneralAlerts>
                 )}
-                {isNewSession && <ManageNewSession agentId={agentId} serviceGroupId={serviceGroupId} />}
+                {isNewSession && <ManagementNewSession agentId={agentId} serviceGroupId={serviceGroupId} />}
                 {!isNewSession && activeSessions.length > 0 && (
                   <>
-                    <ManageActiveSessions activeSessions={activeSessions} />
+                    <ManagementActiveSessions activeSessions={activeSessions} />
                     <ActiveSessionsList
                       agentType={agentType}
                       activeSessions={activeSessions}

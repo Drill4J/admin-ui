@@ -39,9 +39,9 @@ export const ActiveScopeInfo = activeScopeInfo(({
 
   const menuActions = [
     {
-      label: 'Manage Sessions',
+      label: 'Sessions Management',
       icon: 'ManageSessions',
-      onClick: () => dispatch(openModal('ManageSessionsModal', null)),
+      onClick: () => dispatch(openModal('SessionsManagementModal', null)),
     },
     {
       label: 'Rename',

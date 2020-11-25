@@ -12,7 +12,7 @@ import {
 
 import { Fields } from 'forms';
 
-import styles from './manage-new-session.module.scss';
+import styles from './management-new-session.module.scss';
 
 interface Props {
   className?: string;
@@ -20,18 +20,18 @@ interface Props {
   serviceGroupId: string;
 }
 
-const manageNewSession = BEM(styles);
+const managementNewSession = BEM(styles);
 
-export const ManageNewSession = manageNewSession(({ className, agentId, serviceGroupId }: Props) => (
+export const ManagementNewSession = managementNewSession(({ className, agentId, serviceGroupId }: Props) => (
   <div className={className}>
     <GeneralAlerts type="INFO">
-      <span data-test="manage-new-session:info-general-alert">
+      <span data-test="management-new-session:info-general-alert">
         Pay attention that you have to specify Header Mapping in&nbsp;
         {agentId
           ? (
             <SettingsLink
               to={`/agents/agent/${agentId}/settings/`}
-              data-test="manage-new-session:settings-link:agent"
+              data-test="management-new-session:settings-link:agent"
             >
               Agent Settings
             </SettingsLink>
@@ -39,7 +39,7 @@ export const ManageNewSession = manageNewSession(({ className, agentId, serviceG
           : (
             <SettingsLink
               to={`/agents/service-group/${serviceGroupId}/settings/`}
-              data-test="manage-new-session:settings-link:service-group"
+              data-test="management-new-session:settings-link:service-group"
             >
               Service Group Settings
             </SettingsLink>
@@ -83,7 +83,7 @@ export const ManageNewSession = manageNewSession(({ className, agentId, serviceG
   </div>
 ));
 
-const SettingsLink = manageNewSession.settingsLink(NavLink);
-const NewSessionForm = manageNewSession.newSessionForm('div');
-const GlobalSessionCheckbox = manageNewSession.globalSessionCheckbox(Panel);
-const IconInfo = manageNewSession.iconInfo(Icons.Info);
+const SettingsLink = managementNewSession.settingsLink(NavLink);
+const NewSessionForm = managementNewSession.newSessionForm('div');
+const GlobalSessionCheckbox = managementNewSession.globalSessionCheckbox(Panel);
+const IconInfo = managementNewSession.iconInfo(Icons.Info);

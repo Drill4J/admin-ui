@@ -5,7 +5,7 @@ export type ModalName =
   | 'RenameScopeModal'
   | 'DeleteScopeModal'
   | 'FinishScopeModal'
-  | 'ManageSessionsModal';
+  | 'SessionsManagementModal';
 
 export interface PluginState {
   openedModalName?: ModalName;
