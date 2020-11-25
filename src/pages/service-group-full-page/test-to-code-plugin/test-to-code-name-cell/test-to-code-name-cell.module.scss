@@ -1,7 +1,6 @@
 @import '~common/style-guide/index';
 
 .test-to-code-name-cell {
-  font-family: $light-font;
   font-size: 24px;
 
   &__name-cell {
@@ -11,12 +10,13 @@
     &--on-click {
       font-family: $semibold-font;
       font-size: 14px;
-      color: map-get($color-palette, blue100);
+      color: map-get($primary-blue, default);
       cursor: pointer;
     }
   }
 
   &__additional-information {
+    margin-top: 4px;
     font-size: 12px;
   }
 }

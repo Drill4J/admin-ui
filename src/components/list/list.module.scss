@@ -20,5 +20,5 @@
   display: grid;
   align-items: center;
   height: 80px;
-  border-bottom: 1px solid map-get($color-palette, black10);
+  border-bottom: 1px solid map-get($monochrome, medium-tint);
 }

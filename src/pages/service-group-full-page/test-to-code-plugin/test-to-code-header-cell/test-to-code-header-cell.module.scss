@@ -2,35 +2,26 @@
 
 .test-to-code-header-cell {
   &__content {
-    border-left: 1px solid map-get($color-palette, black10);
+    border-left: 1px solid map-get($monochrome, medium-tint);
   }
 
   &__label {
     font-family: $semibold-font;
     font-size: 12px;
-    color: $slate-gray;
+    color: map-get($monochrome, default);
     text-transform: uppercase;
     margin-left: 16px;
   }
 
   &__value {
-    display: inline-grid;
-    grid-template-columns: max-content;
+    display: flex;
+    align-items: center;
     margin-left: 16px;
     font-size: 20px;
-    color: map-get($color-palette, black100);
+    color: map-get($monochrome, black);
     pointer-events: none;
 
     &--clickable {
-      background-image: linear-gradient(
-        to right,
-        map-get($color-palette, black100) 50%,
-        transparent 50%
-      );
-      background-position: 0 1.15em;
-      background-repeat: repeat-x;
-      background-size: 2px 1px;
-      pointer-events: auto;
       cursor: pointer;
     }
   }
@@ -42,11 +33,16 @@
 
     &--type {
       &--increase {
-        color: map-get($color-palette, green100);
+        color: map-get($green, default);
       }
       &--decrease {
-        color: map-get($color-palette, red100);
+        color: map-get($red, default);
       }
     }
+  }
+
+  &__link-icon {
+    color: map-get($primary-blue, default);
+    margin-left: 4px;
   }
 }

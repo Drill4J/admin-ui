@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { BEM, span } from '@redneckz/react-bem-helper';
-import { Tooltip } from '@drill4j/ui-kit';
+import { Icons, Panel, Tooltip } from '@drill4j/ui-kit';
 
 import styles from './test-to-code-cell.module.scss';
 
@@ -19,7 +19,18 @@ export const TestToCodeCell = testToCodeCell(({
   <div className={className}>
     <Content>
       <Value onClick={onClick} clickable={Boolean(onClick && value)} data-test={`dashboard-cell:value:${testContext}`}>
-        {value === undefined ? <Tooltip message="Test2Code plugin is not installed">n/a</Tooltip> : value}
+        {value === undefined ? (
+          <Tooltip message={(
+            <Panel direction="column">
+              <div>Test2Code plugin</div>
+              <div>is not installed</div>
+            </Panel>
+          )}
+          >
+            n/a
+          </Tooltip>
+        ) : value}
+        {Boolean(onClick && value) && <LinkIcon height={8} />}
       </Value>
     </Content>
   </div>
@@ -29,3 +40,4 @@ const Content = testToCodeCell.content('div');
 const Value = testToCodeCell.value(
   span({ onClick: () => {}, 'data-test': '' } as { onClick?: () => void; clickable?: boolean; 'data-test'?: string }),
 );
+const LinkIcon = testToCodeCell.linkIcon(Icons.Expander);
