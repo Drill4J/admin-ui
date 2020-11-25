@@ -5,7 +5,7 @@ import { get } from 'utils';
 import { DefaultCell } from './default-cell';
 import { ExpandedRowContent } from './expanded-row-content';
 
-import styles from './table.module.scss';
+import styles from './table-row.module.scss';
 
 interface Props {
   className?: string;
@@ -20,7 +20,9 @@ interface Props {
   classesTopicPrefix: string;
 }
 
-export const TableRow = BEM(styles).row(
+const tableRow = BEM(styles);
+
+export const TableRow = tableRow(
   ({
     className,
     item,
@@ -32,28 +34,35 @@ export const TableRow = BEM(styles).row(
     secondLevelExpand = [],
     expandedRows = [],
     classesTopicPrefix,
-  }: Props) => (
-    <>
-      <tr className={className}>
-        {columns.map((column) => {
-          const Cell = column.Cell || DefaultCell;
-          return (
-            <td key={column.name} colSpan={column.colSpan} style={{ width: column.width }} align={column.align}>
-              <Cell value={get(item, column.name)} item={item} rowIndex={index} />
-            </td>
-          );
-        })}
-      </tr>
-      {color && (
-        <ExpandedRowContent
-          key={String(item[expandedContentKey])}
-          item={item[expandedContentKey]}
-          expandedColumns={expandedColumns}
-          secondLevelExpand={secondLevelExpand}
-          expandedRows={expandedRows}
-          classesTopicPrefix={classesTopicPrefix}
-        />
-      )}
-    </>
-  ),
+  }: Props) => {
+    const gridTemplateColumns = expandedColumns?.length
+      ? `32px 40% repeat(${columns.length - 2}, 1fr)`
+      : `2fr repeat(${columns.length - 1}, 1fr)`;
+    return (
+      <>
+        <div className={className} style={{ display: 'grid', gridTemplateColumns, backgroundColor: color ? '#F8F9FB' : undefined }}>
+          {columns.map((column) => {
+            const Cell = column.Cell || DefaultCell;
+            return (
+              <TableRowCell key={column.name} type={column.align || 'end'}>
+                <Cell value={get(item, column.name)} item={item} rowIndex={index} />
+              </TableRowCell>
+            );
+          })}
+        </div>
+        {color && (
+          <ExpandedRowContent
+            key={String(item[expandedContentKey])}
+            item={item[expandedContentKey]}
+            expandedColumns={expandedColumns}
+            secondLevelExpand={secondLevelExpand}
+            expandedRows={expandedRows}
+            classesTopicPrefix={classesTopicPrefix}
+          />
+        )}
+      </>
+    );
+  },
 );
+
+const TableRowCell = tableRow.tableRowCell('div');

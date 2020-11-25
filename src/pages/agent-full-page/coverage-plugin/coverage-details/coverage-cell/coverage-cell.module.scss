@@ -1,18 +1,18 @@
 @import '~common/style-guide/index';
 
 .packages-tree-coverage-cell {
-  display: flex;
-  flex-direction: row;
+  display: inline-flex;
   align-items: center;
+  gap: 16px;
+  font-family: $semibold-font;
 
   &__icon {
     display: flex;
     align-items: center;
-    margin-right: 8px;
 
     &--type {
       &--success {
-        color: map-get($green, default);
+        color: map-get($monochrome, default);
       }
 
       &--warning {

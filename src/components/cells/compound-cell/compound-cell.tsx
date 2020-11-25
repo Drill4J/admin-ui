@@ -9,7 +9,6 @@ interface Props {
   cellName: string;
   cellAdditionalInfo?: string;
   icon?: React.ReactNode;
-  type?: 'primary' | 'secondary';
 }
 
 const compoundCell = BEM(styles);

@@ -15,8 +15,8 @@ const coverageCell = BEM(styles);
 
 export const CoverageCell = coverageCell(({ className, value }: Props) => (
   <div className={className}>
-    {getCoverageIcon(value)}
     {`${percentFormatter(value)}%`}
+    {getCoverageIcon(value)}
   </div>
 ));
 
@@ -28,7 +28,7 @@ function getCoverageIcon(coverage: number) {
   if (!coverage) {
     return (
       <IconWrapper type="error">
-        <Icons.Warning height={16} width={16} />
+        <Icons.Cancel height={16} width={16} />
       </IconWrapper>
     );
   }

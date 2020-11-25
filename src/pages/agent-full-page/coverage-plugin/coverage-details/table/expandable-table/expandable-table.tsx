@@ -8,7 +8,6 @@ interface Props {
   data: Record<string, unknown>[];
   idKey: string;
   children: React.ReactNode;
-  columnsSize?: 'wide' | 'medium';
   expandedColumns?: any[];
   expandedContentKey: string;
   secondLevelExpand?: any[];
@@ -44,7 +43,6 @@ export const ExpandableTable = ({
                 idKey,
                 expandedRows,
                 setExpandedRows,
-                withMargin: true,
               })
               : null,
             ...expandedColumns,
@@ -66,12 +64,10 @@ const getExpanderColumn = ({
   expandedRows,
   setExpandedRows,
   idKey,
-  withMargin,
 }: {
   idKey: string;
   expandedRows: string[];
   setExpandedRows: (arg: string[]) => void;
-  withMargin?: boolean;
 }) => (
   <Column
     name="selector"
@@ -85,9 +81,8 @@ const getExpanderColumn = ({
         }}
         expanded={expandedRows.includes(item[idKey])}
         key={item[idKey]}
-        withMargin={withMargin}
       />
     )}
-    width="24px"
+    align="end"
   />
 );

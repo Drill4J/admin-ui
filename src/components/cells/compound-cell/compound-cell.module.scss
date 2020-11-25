@@ -3,11 +3,11 @@
 .compound-cell {
   display: flex;
   gap: 8px;
+  padding: 8px 0;
   color: map-get($monochrome, black);
 
   &__cell-content {
     width: 100%;
-    padding-right: 24px;
     font-family: $semibold-font;
   }
 
@@ -24,15 +24,5 @@
     font-size: 12px;
     font-family: $regular-font;
     color: map-get($monochrome, default);
-  }
-
-  &--type {
-    &--primary {
-      padding-left: 24px;
-    }
-
-    &--secondary {
-      padding-left: 72px;
-    }
   }
 }

@@ -1,6 +1,6 @@
 @import '~common/style-guide/index';
 
-.name-call {
+.name-cell {
   display: flex;
   align-items: center;
 
@@ -11,11 +11,7 @@
   }
 
   &__content {
-    height: 16px;
-    margin-right: 8px;
     color: map-get($monochrome, black);
-    font-size: 14px;
-    line-height: 16px;
-    font-family: $semibold-font;
+    font-size: 12px;
   }
 }

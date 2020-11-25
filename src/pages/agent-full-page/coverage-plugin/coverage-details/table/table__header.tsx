@@ -6,32 +6,36 @@ import {
 } from 'modules';
 import { DefaultHeaderCell } from './default-header-cell';
 
-import styles from './table.module.scss';
+import styles from './table-header.module.scss';
 
 interface Props {
   className?: string;
   columns: any[];
+  expandedColumns?: any[];
 }
 
-export const TableHeader = BEM(styles).header(({ columns, className }: Props) => {
+const tableHeader = BEM(styles);
+
+export const TableHeader = tableHeader(({ columns, className, expandedColumns }: Props) => {
   const dispatch = useTableActionsDispatch();
   const { sort: [sort] } = useTableActionsState();
+  const gridTemplateColumns = expandedColumns?.length
+    ? `32px 40% repeat(${columns.length - 2}, 1fr)`
+    : `2fr repeat(${columns.length - 1}, 1fr)`;
   return (
-    <thead className={className}>
-      <tr>
-        {columns.map((column) => {
-          const {
-            name, width, HeaderCell, align = 'left',
-          } = column;
-          return (
-            <th key={name} style={{ width }} align={align}>
-              {HeaderCell
-                ? HeaderCell({ column })
-                : <DefaultHeaderCell column={column} sort={sort} onSort={(cellSort) => dispatch(setSort(cellSort))} />}
-            </th>
-          );
-        })}
-      </tr>
-    </thead>
+    <div className={className} style={{ display: 'grid', gridTemplateColumns }}>
+      {columns.map((column) => {
+        const { name, HeaderCell, align = 'end' } = column;
+        return (
+          <TableHeaderCell key={name} style={{ justifySelf: align }}>
+            {HeaderCell
+              ? HeaderCell({ column })
+              : <DefaultHeaderCell column={column} sort={sort} onSort={(cellSort) => dispatch(setSort(cellSort))} />}
+          </TableHeaderCell>
+        );
+      })}
+    </div>
   );
 });
+
+const TableHeaderCell = tableHeader.tableHeaderCell('div');

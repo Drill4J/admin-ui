@@ -1,22 +1,17 @@
 @import '~common/style-guide/index';
 
 .packages-tree-row-expander {
-  display: flex;
-  align-items: center;
-  justify-content: center;
   cursor: pointer;
 
   &__icon {
-    display: flex;
-    align-items: center;
+    display: grid;
+    place-items: center;
+    width: 16px;
+    height: 16px;
     color: map-get($primary-blue, default);
 
     &--expanded {
       transform: rotate(90deg);
-    }
-
-    &--with-margin {
-      margin-left: 40px;
     }
   }
 }
