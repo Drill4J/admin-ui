@@ -1,0 +1,16 @@
+@import '~common/style-guide/index';
+
+.table-header {
+  align-items: center;
+  height: 52px;
+  font-size: 14px;
+  line-height: 20px;
+  font-family: $semibold-font;
+  border-bottom: 1px solid map-get($monochrome, black);
+  border-top: 1px solid map-get($monochrome, black);
+  color: map-get($monochrome, black);
+
+  &__table-header-cell {
+    padding: 0 16px;
+  }
+}

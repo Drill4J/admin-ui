@@ -12,7 +12,6 @@ interface Props {
   children: any;
   idKey?: string;
   footer?: React.ReactNode;
-  columnsSize?: 'wide' | 'medium';
   expandedRows?: string[];
   expandedColumns?: any[];
   secondLevelExpand?: any[];
@@ -53,28 +52,26 @@ export const Table = table(
 
     return (
       <>
-        <table className={className}>
-          {!withoutHeader && <TableHeader columns={columns} />}
+        <div className={className}>
+          {!withoutHeader && <TableHeader columns={columns} expandedColumns={expandedColumns} />}
           {data.length > 0 && (
-            <tbody>
-              {data.map((item, index) => (
-                <TableRow
-                  key={idKey ? String(item[idKey]) : index}
-                  item={item}
-                  columns={columns}
-                  index={index}
-                  expandedColumns={expandedColumnsComponents}
-                  color={getRowColor({ expandedRows, selectedRows, itemId: String(item[idKey]) })}
-                  expandedContentKey={expandedContentKey}
-                  expandedRows={expandedRows}
-                  secondLevelExpand={expandedColumnsSecondLevel}
-                  classesTopicPrefix={classesTopicPrefix}
-                />
-              ))}
-            </tbody>
+            data.map((item, index) => (
+              <TableRow
+                key={idKey ? String(item[idKey]) : index}
+                item={item}
+                columns={columns}
+                index={index}
+                expandedColumns={expandedColumnsComponents}
+                color={getRowColor({ expandedRows, selectedRows, itemId: String(item[idKey]) })}
+                expandedContentKey={expandedContentKey}
+                expandedRows={expandedRows}
+                secondLevelExpand={expandedColumnsSecondLevel}
+                classesTopicPrefix={classesTopicPrefix}
+              />
+            ))
           ) }
           {footer}
-        </table>
+        </div>
         {tableContentStub}
       </>
     );

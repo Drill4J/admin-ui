@@ -6,7 +6,7 @@ import { useBuildVersion } from 'hooks';
 import { DefaultCell } from './default-cell';
 import { SecondLevelExpandContent } from './second-level-expand-content';
 
-import styles from './table.module.scss';
+import styles from './table-row.module.scss';
 
 interface Props {
   className?: string;
@@ -19,7 +19,7 @@ interface Props {
   classesTopicPrefix: string;
 }
 
-export const ExpandedRowContent = BEM(styles).row(({
+export const ExpandedRowContent = BEM(styles)(({
   className,
   item = {},
   idKey = 'name',
@@ -32,19 +32,23 @@ export const ExpandedRowContent = BEM(styles).row(({
 
   return classes.map((field: any, index: number) => (
     <>
-      <tr
+      <div
         className={className}
-        style={expandedRows.includes(String(field.name)) ? { backgroundColor: 'rgba(143, 157, 168, 0.15)' } : undefined}
+        style={{
+          display: 'grid',
+          gridTemplateColumns: `64px calc(40% - 32px) repeat(${expandedColumns.length - 2}, 1fr)`,
+          backgroundColor: expandedRows.includes(String(field.name)) ? '#F8F9FB' : undefined,
+        }}
       >
         {expandedColumns.map((column) => {
           const Cell = column.Cell || DefaultCell;
           return (
-            <td key={column.name} colSpan={column.colSpan} style={{ width: column.width }} align={column.align}>
+            <TableRowCell key={column.name} type={column.align || 'end'}>
               <Cell value={get(field, column.name)} item={field} rowIndex={index} />
-            </td>
+            </TableRowCell>
           );
         })}
-      </tr>
+      </div>
       {expandedRows.includes(String(field[idKey])) && (
         <SecondLevelExpandContent
           data={field.methods}
@@ -54,3 +58,5 @@ export const ExpandedRowContent = BEM(styles).row(({
     </>
   ));
 });
+
+const TableRowCell = BEM(styles).tableRowCell('div');

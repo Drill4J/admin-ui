@@ -1,0 +1,25 @@
+@import '~common/style-guide/index';
+
+.table-row {
+  align-items: center;
+  min-height: 40px;
+
+  &__table-row-cell {
+    padding: 0 16px;
+
+    &:first-child {
+      padding: 0 0;
+    }
+
+    &--type {
+      &--start {
+        width: 100%;
+        justify-self: start;
+      }
+
+      &--end {
+        justify-self: end;
+      }
+    }
+  }
+}

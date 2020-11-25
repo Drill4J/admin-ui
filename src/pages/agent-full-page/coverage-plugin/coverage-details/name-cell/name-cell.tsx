@@ -8,6 +8,7 @@ interface Props {
   className?: string;
   icon?: React.ReactNode;
   value?: string;
+  type?: 'primary' | 'secondary';
 }
 
 const nameCell = BEM(styles);

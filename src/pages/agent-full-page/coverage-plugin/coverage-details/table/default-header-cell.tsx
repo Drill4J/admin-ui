@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
-import { SortArrows } from '@drill4j/ui-kit';
+import { SortArrow, useHover } from '@drill4j/ui-kit';
 
 import { ColumnProps, Sort, Order } from './table-types';
 
@@ -17,12 +17,16 @@ const defaultHeaderCell = BEM(styles);
 
 export const DefaultHeaderCell = defaultHeaderCell(({
   className, column: { name, label }, sort, onSort,
-}: Props) => (
-  <div className={className} onClick={() => onSort({ order: setOrder(sort?.order), field: name })}>
-    {name !== 'selector' && <SortArrows order={name === sort?.field ? sort.order : null} /> }
-    {label}
-  </div>
-));
+}: Props) => {
+  const { ref, isVisible } = useHover();
+  const activeCell = name === sort?.field;
+  return (
+    <div className={className} ref={ref} onClick={() => onSort({ order: setOrder(sort?.order), field: name })}>
+      {name !== 'selector' && (isVisible || activeCell) && <SortArrow active={activeCell} order={activeCell ? sort.order : null} /> }
+      {label}
+    </div>
+  );
+});
 
 function setOrder(order: Order) {
   switch (order) {

@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
-import { Icons } from '@drill4j/ui-kit';
+import { Icons, Panel } from '@drill4j/ui-kit';
 
 import { ClassCoverage } from 'types/class-coverage';
 import { FilterList } from 'types/filter-list';
@@ -9,11 +9,10 @@ import { Cells, SearchPanel } from 'components';
 import {
   useTableActionsState, useTableActionsDispatch, setSearch,
 } from 'modules';
-import { CoverageCell } from './coverage-cell';
 import { NameCell } from './name-cell';
 import { AssociatedTestModal } from './associated-test-modal';
-import { AssociatedTestColumn } from './associated-test-column';
 import { ExpandableTable, Column } from './table';
+import { CoverageCell } from './coverage-cell';
 
 import styles from './coverage-details.module.scss';
 
@@ -41,6 +40,26 @@ export const CoverageDetails = coverageDetails(
     const ref = React.useRef<HTMLDivElement>(null);
     const visibleElementsCount = useVisibleElementsCount(ref, 10, 10);
     const [searchQuery] = search;
+    const expandedColumns = [
+      <Column name="coverage" Cell={CoverageCell} />,
+      <Column name="totalMethodsCount" />,
+      <Column name="coveredMethodsCount" />,
+      <Column
+        name="assocTestsCount"
+        label="Associated tests"
+        Cell={({ value, item: { id = '' } = {} }) => (
+          <Cells.Clickable
+            onClick={() => {
+              setSelectedId(id);
+            }}
+            data-test="test-actions:view-curl:id"
+            disabled={!value}
+          >
+            {value || 'n/a'}
+          </Cells.Clickable>
+        )}
+      />,
+    ];
 
     return (
       <div className={className}>
@@ -56,7 +75,6 @@ export const CoverageDetails = coverageDetails(
           <ExpandableTable
             data={coverageByPackages.slice(0, visibleElementsCount)}
             idKey="name"
-            columnsSize="medium"
             classesTopicPrefix={classesTopicPrefix}
             tableContentStub={coverageByPackages.length === 0 && (
               <NotFound>
@@ -68,35 +86,20 @@ export const CoverageDetails = coverageDetails(
             expandedColumns={[
               <Column
                 name="name"
-                Cell={({ item: { name, path } }) => (
-                  <Cells.Compound key={name} type="primary" cellName={name} cellAdditionalInfo={path} icon={<Icons.Class />} />
-                )}
+                Cell={(({ item: { name } }) => <NameCell type="primary" icon={<Icons.Class width={16} height={16} />} value={name} />)}
+                align="start"
               />,
-              <Column name="coverage" Cell={CoverageCell} />,
-              <Column name="totalMethodsCount" align="right" />,
-              <Column name="coveredMethodsCount" align="right" />,
-              <Column
-                name="assocTestsCount"
-                label="Associated tests"
-                Cell={(props) => <AssociatedTestColumn onClick={setSelectedId} {...props} />}
-                align="right"
-              />,
+              ...expandedColumns,
             ]}
             secondLevelExpand={[
               <Column
                 name="name"
                 Cell={({ item: { name, decl } }) => (
-                  <Cells.Compound key={name} type="secondary" cellName={name} cellAdditionalInfo={decl} icon={<Icons.Function />} />
+                  <Cells.Compound key={name} cellName={name} cellAdditionalInfo={decl} icon={<Icons.Function />} />
                 )}
-                colSpan={2}
+                align="start"
               />,
-              <Column name="coverage" Cell={CoverageCell} colSpan={3} />,
-              <Column
-                name="assocTestsCount"
-                label="Associated tests"
-                Cell={(props) => <AssociatedTestColumn onClick={setSelectedId} {...props} />}
-                align="right"
-              />,
+              ...expandedColumns,
             ]}
             expandedContentKey="name"
             hasSecondLevelExpand
@@ -105,16 +108,33 @@ export const CoverageDetails = coverageDetails(
               name="name"
               label="Name"
               Cell={({ value }) => <NameCell icon={<Icons.Package />} value={value} />}
-              width="40%"
+              align="start"
             />
-            <Column name="coverage" label="Coverage" Cell={CoverageCell} />
-            <Column name="totalMethodsCount" label="Methods total" align="right" />
-            <Column name="coveredMethodsCount" label="Methods covered" align="right" />
+            <Column
+              name="coverage"
+              label={(
+                <Panel align="end">
+                  Coverage, %<CoverageIcon width={16} height={16} />
+                </Panel>
+              )}
+              Cell={CoverageCell}
+            />
+            <Column name="totalMethodsCount" label="Methods total" />
+            <Column name="coveredMethodsCount" label="Methods covered" />
             <Column
               name="assocTestsCount"
               label="Associated tests"
-              Cell={(props) => <AssociatedTestColumn onClick={setSelectedId} {...props} />}
-              align="right"
+              Cell={({ value, item: { id = '' } = {} }) => (
+                <Cells.Clickable
+                  onClick={() => {
+                    setSelectedId(id);
+                  }}
+                  data-test="test-actions:view-curl:id"
+                  disabled={!value}
+                >
+                  {value || 'n/a'}
+                </Cells.Clickable>
+              )}
             />
           </ExpandableTable>
           <div ref={ref} />
@@ -136,3 +156,4 @@ const CoverageDetailsSearchPanel = coverageDetails.coverageDetailsSearchPanel(Se
 const NotFound = coverageDetails.notFound('div');
 const Title = coverageDetails.title('div');
 const Message = coverageDetails.message('div');
+const CoverageIcon = coverageDetails.coverageIcon(Icons.Checkbox);

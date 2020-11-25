@@ -28,4 +28,10 @@
     color: map-get($monochrome, default);
     text-align: center;
   }
+
+  &__coverage-icon {
+    min-width: 16px;
+    margin-left: 16px;
+    color: map-get($monochrome, default);
+  }
 }

@@ -8,19 +8,18 @@ interface Props {
   className?: string;
   expanded?: boolean;
   onClick: () => void;
-  withMargin?: boolean;
 }
 
 const rowExpander = BEM(styles);
 
 export const RowExpander = rowExpander(({
-  className, expanded, onClick, withMargin,
+  className, expanded, onClick,
 }: Props) => (
   <div className={className} onClick={onClick}>
-    <IconWrapper expanded={expanded} withMargin={withMargin}>
+    <IconWrapper expanded={expanded}>
       <Icons.Expander />
     </IconWrapper>
   </div>
 ));
 
-const IconWrapper = rowExpander.icon(div({} as { expanded?: boolean; withMargin?: boolean }));
+const IconWrapper = rowExpander.icon(div({} as { expanded?: boolean; }));
