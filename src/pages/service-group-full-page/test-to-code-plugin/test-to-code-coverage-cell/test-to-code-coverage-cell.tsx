@@ -15,10 +15,21 @@ interface Props {
 
 const testToCodeCoverageCell = BEM(styles);
 
-export const TestToCodeCoverageCell = testToCodeCoverageCell(({ className, value, arrow }: Props) => (
+export const TestToCodeCoverageCell = testToCodeCoverageCell(({ className, value = 0, arrow }: Props) => (
   <div className={className}>
     <Content>
       <Value data-test="dashboard-coverage-cell:value">
+        {value === undefined ? (
+          <Tooltip message={(
+            <Panel direction="column">
+              <div>Test2Code plugin</div>
+              <div>is not installed</div>
+            </Panel>
+          )}
+          >
+            n/a
+          </Tooltip>
+        ) : `${percentFormatter(value)}%`}
         {(arrow === 'INCREASE' || arrow === 'DECREASE') && (
           <ArrowIcon
             rotate={arrow === 'INCREASE' ? 180 : 0}
@@ -28,7 +39,6 @@ export const TestToCodeCoverageCell = testToCodeCoverageCell(({ className, value
             data-test="dashboard-coverage-cell:arrow-icon"
           />
         )}
-        {value === undefined ? <Tooltip message="Test2Code plugin is not installed">n/a</Tooltip> : `${percentFormatter(value)}%`}
       </Value>
     </Content>
   </div>

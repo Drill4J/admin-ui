@@ -7,18 +7,18 @@
 
   &__value {
     font-size: 20px;
-    color: map-get($color-palette, black100);
+    color: map-get($monochrome, black);
   }
 
   &__arrow-icon {
-    margin-right: 8px;
+    margin-left: 8px;
 
     &--type {
       &--increase {
-        color: map-get($color-palette, green100);
+        color: map-get($green, default);
       }
       &--decrease {
-        color: map-get($color-palette, red100);
+        color: map-get($red, default);
       }
     }
   }

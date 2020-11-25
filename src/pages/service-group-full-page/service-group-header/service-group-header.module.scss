@@ -35,14 +35,7 @@
   }
 
   &__settings-button {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 32px;
-    width: 32px;
-    border: 1px solid map-get($color-palette, blue100);
-    border-radius: 16px;
-    color: map-get($color-palette, blue100);
+    color: map-get($primary-blue, default);
     cursor: pointer;
   }
 }

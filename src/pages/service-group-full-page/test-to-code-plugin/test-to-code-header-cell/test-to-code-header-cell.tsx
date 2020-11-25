@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { Icons } from '@drill4j/ui-kit';
 import { BEM, div } from '@redneckz/react-bem-helper';
 
 import { spacesToDashes } from 'utils';
@@ -26,6 +27,7 @@ export const TestToCodeHeaderCell = testToCodeHeaderCell(({
         data-test={`dashboard-header-cell:${spacesToDashes(label)}:value`}
       >
         {value}
+        {Boolean(onClick && value) && <LinkIcon height={8} />}
       </Value>
     </Content>
   </div>
@@ -36,3 +38,4 @@ const Label = testToCodeHeaderCell.label('div');
 const Value = testToCodeHeaderCell.value(
   div({ onClick: () => {}, 'data-test': '' } as { onClick?: () => void; clickable?: boolean;'data-test'?: string }),
 );
+const LinkIcon = testToCodeHeaderCell.linkIcon(Icons.Expander);

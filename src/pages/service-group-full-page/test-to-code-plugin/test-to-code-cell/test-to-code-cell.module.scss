@@ -6,19 +6,12 @@
   }
 
   &__value {
+    display: flex;
+    align-items: center;
     font-size: 20px;
-    color: map-get($color-palette, black100);
+    color: map-get($monochrome, black);
 
     &--clickable {
-      background-image: linear-gradient(
-        to right,
-        map-get($color-palette, black100) 50%,
-        transparent 50%
-      );
-      background-position: 0 1.15em;
-      background-repeat: repeat-x;
-      background-size: 2px 1px;
-      pointer-events: auto;
       cursor: pointer;
     }
   }
@@ -30,11 +23,16 @@
 
     &--type {
       &--increase {
-        color: map-get($color-palette, green100);
+        color: map-get($green, default);
       }
       &--decrease {
-        color: map-get($color-palette, red100);
+        color: map-get($red, default);
       }
     }
+  }
+
+  &__link-icon {
+    margin-left: 4px;
+    color: map-get($primary-blue, default);
   }
 }
