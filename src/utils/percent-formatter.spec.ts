@@ -9,6 +9,10 @@ describe('percentFormatter', () => {
     expect(percentFormatter(-213.20)).toEqual(-213.2);
   });
 
+  it('should round to an integer number if the value is number with decimals and decimal part equal to 0', () => {
+    expect(percentFormatter(213.0)).toEqual(213);
+  });
+
   it('should return 0 if the value is 0', () => {
     expect(percentFormatter(0)).toEqual(0);
   });
@@ -36,5 +40,4 @@ describe('percentFormatter', () => {
   it('should return 0 if the value is Infinity', () => {
     expect(percentFormatter(Infinity)).toEqual(0);
   });
-  
 });
