@@ -4,7 +4,7 @@
   width: 480px;
 
   &__content {
-    margin: 24px;
+    margin: 16px 24px 24px 24px;
     font-size: 14px;
     line-height: 24px;
   }
@@ -29,5 +29,9 @@
     width: auto;
     font-size: 14px;
     font-family: $semibold-font;
+  }
+
+  &__management-sessions-button {
+    font-size: 14px;
   }
 }

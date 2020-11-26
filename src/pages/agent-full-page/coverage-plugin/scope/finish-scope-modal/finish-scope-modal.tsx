@@ -2,15 +2,15 @@ import * as React from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 import { useParams, useHistory } from 'react-router-dom';
 import {
-  Panel, Button, Inputs, Popup, OverflowText, GeneralAlerts,
+  Panel, Button, Inputs, Popup, OverflowText, GeneralAlerts, LinkButton,
 } from '@drill4j/ui-kit';
 
 import { NotificationManagerContext } from 'notification-manager';
 import { ActiveScope } from 'types/active-scope';
 import { finishScope } from '../../api';
 import { ScopeSummary } from './scope-summary';
-import { ActiveSessionsPanel } from '../active-sessions-panel';
 import { usePluginState } from '../../../store';
+import { openModal, useCoveragePluginDispatch, useCoveragePluginState } from '../../store';
 
 import styles from './finish-scope-modal.module.scss';
 
@@ -27,7 +27,11 @@ export const FinishScopeModal = finishScopeModal(
   ({
     className, isOpen, onToggle, scope,
   }: Props) => {
+    const dispatch = useCoveragePluginDispatch();
     const { showMessage } = React.useContext(NotificationManagerContext);
+    const {
+      activeSessions: { testTypes = [] },
+    } = useCoveragePluginState();
     const { agentId, buildVersion } = usePluginState();
     const [errorMessage, setErrorMessage] = React.useState('');
     const [ignoreScope, setIgnoreScope] = React.useState(false);
@@ -52,9 +56,17 @@ export const FinishScopeModal = finishScopeModal(
               {errorMessage}
             </GeneralAlerts>
           )}
-          <ActiveSessionsPanel>
-            If you finish the scope now, these sessions will not be saved.
-          </ActiveSessionsPanel>
+          {testTypes.length > 0 && (
+            <GeneralAlerts type="WARNING">
+              <div>
+                At least one active session has been detected.<br />
+                First, you need to finish it in&nbsp;
+                <ManagementSessionsButton onClick={() => dispatch(openModal('SessionsManagementModal', null))}>
+                  Sessions Management
+                </ManagementSessionsButton>
+              </div>
+            </GeneralAlerts>
+          )}
           {!testsCount && (
             <GeneralAlerts type="WARNING">
               Scope is empty and will be deleted after finishing.
@@ -66,12 +78,13 @@ export const FinishScopeModal = finishScopeModal(
               checked={ignoreScope}
               onChange={() => setIgnoreScope(!ignoreScope)}
               label="Ignore scope in build stats"
-              disabled={!testsCount}
+              disabled={!testsCount || testTypes.length > 0}
             />
             <ActionsPanel>
               <Button
                 type="primary"
                 size="large"
+                disabled={testTypes.length > 0}
                 onClick={async () => {
                   await finishScope(agentId, pluginId, {
                     onSuccess: () => {
@@ -107,3 +120,4 @@ const Content = finishScopeModal.content('div');
 const IgnoreScope = finishScopeModal.ignoreScope(Inputs.Checkbox);
 const ActionsPanel = finishScopeModal.actionsPanel(Panel);
 const Header = finishScopeModal.header(OverflowText);
+const ManagementSessionsButton = finishScopeModal.managementSessionsButton(LinkButton);
