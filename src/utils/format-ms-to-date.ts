@@ -1,4 +1,9 @@
 export function formatMsToDate(duration: number) {
+  if (Number.isNaN(duration) || !Number.isFinite(duration)) {
+    return {
+      days: 0, hours: 0, minutes: 0, seconds: 0,
+    };
+  }
   const days = Math.floor(duration / 86400000);
   const hours = Math.floor((duration - days * 86400000) / 3600000);
   const minutes = Math.floor((duration - days * 86400000 - hours * 3600000) / 60000);
