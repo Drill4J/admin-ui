@@ -1,6 +1,8 @@
-import { MethodsDetails } from './methods-details';
+import { RiskType } from './risk-type';
 
 export interface Risks {
-  newMethods?: MethodsDetails[];
-  modifiedMethods?: MethodsDetails[];
+  desc?: string;
+  name?: string;
+  ownerClass?: string;
+  type?: RiskType;
 }

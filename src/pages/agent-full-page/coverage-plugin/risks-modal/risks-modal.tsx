@@ -26,28 +26,30 @@ export const RisksModal = risksModal(
     onToggle,
     filter = 'all',
   }: Props) => {
-    const { newMethods = [], modifiedMethods = [] } = useBuildVersion<Risks>('/build/risks') || {};
+    const risks = useBuildVersion<Risks[]>('/build/risks') || [];
     const [selectedSection, setSelectedSection] = React.useState<string>(filter);
-    const allMethods = newMethods.concat(modifiedMethods);
     const node = React.useRef<HTMLDivElement>(null);
     const { height: methodsListHeight } = useElementSize(node);
-    const getMethods = () => {
+    const newRisks = risks.filter(({ type }) => type === 'NEW');
+    const modifiedRisks = risks.filter(({ type }) => type === 'MODIFIED');
+    const getRisks = () => {
       switch (selectedSection) {
         case 'new':
-          return newMethods;
+          return newRisks;
         case 'modified':
-          return modifiedMethods;
+          return modifiedRisks;
         default:
-          return allMethods;
+          return risks;
       }
     };
+
     return (
       <Modal isOpen={isOpen} onToggle={onToggle}>
         <div className={className}>
           <Header>
             <Icons.Test height={20} width={18} viewBox="0 0 18 20" />
             <span>Risks</span>
-            <h2>{allMethods.length}</h2>
+            <h2>{risks.length}</h2>
           </Header>
           <NotificationPanel>
             Risks are not covered
@@ -60,10 +62,10 @@ export const RisksModal = risksModal(
             <Filter
               items={[
                 { value: 'all', label: 'All risks' },
-                { value: 'new', label: `Not covered new methods (${newMethods.length})` },
+                { value: 'new', label: `Not covered new methods (${newRisks.length})` },
                 {
                   value: 'modified',
-                  label: `Not covered modified methods (${modifiedMethods.length})`,
+                  label: `Not covered modified methods (${modifiedRisks.length})`,
                 },
               ]}
               onChange={({ value }) => setSelectedSection(value)}
@@ -74,15 +76,15 @@ export const RisksModal = risksModal(
                 <VirtualList
                   itemSize={60}
                   height={methodsListHeight}
-                  itemCount={getMethods().length}
+                  itemCount={getRisks().length}
                   renderItem={({ index, style }) => (
-                    <MethodsListItem key={index} style={style as any}>
+                    <MethodsListItem key={index} style={style as Record<symbol, string>}>
                       <MethodsListItemIcon>
                         <Icons.Function />
                       </MethodsListItemIcon>
                       <MethodInfo>
-                        <OverflowText>{getMethods()[index].name}</OverflowText>
-                        <MethodsPackage>{getMethods()[index].ownerClass}</MethodsPackage>
+                        <OverflowText>{getRisks()[index]?.name}</OverflowText>
+                        <MethodsPackage>{getRisks()[index]?.ownerClass}</MethodsPackage>
                       </MethodInfo>
                     </MethodsListItem>
                   )}

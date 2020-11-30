@@ -150,7 +150,7 @@ export const CoveragePluginHeader = coveragePluginHeader(({ className }: Props) 
           onClick={() => push(`/full-page/${agentId}/${buildVersion}/${pluginId}/tests-to-run`)}
         />
       </Actions>
-      <RisksModal isOpen={isRisksModalOpen} onToggle={setIsRisksModalOpen} />
+      {isRisksModalOpen && <RisksModal isOpen={isRisksModalOpen} onToggle={setIsRisksModalOpen} />}
       <QualityGatePane
         isOpen={isOpenQualityGatesPane}
         onToggle={() => setIsOpenQualityGatesPane(false)}
