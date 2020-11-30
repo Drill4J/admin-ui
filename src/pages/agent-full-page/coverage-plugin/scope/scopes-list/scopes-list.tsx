@@ -11,7 +11,7 @@ import {
 import { NotificationManagerContext } from 'notification-manager';
 import { ScopeSummary } from 'types/scope-summary';
 import { TestTypeSummary } from 'types/test-type-summary';
-import { useAgent, useBuildVersion } from 'hooks';
+import { useActiveScope, useAgent, useBuildVersion } from 'hooks';
 import { toggleScope } from '../../api';
 import { usePluginState } from '../../../store';
 import { useCoveragePluginDispatch, useCoveragePluginState, openModal } from '../../store';
@@ -42,7 +42,7 @@ export const ScopesList = scopesList(({ className }: Props) => {
   const { pluginId = '', buildVersion = '' } = useParams<{ pluginId: string; buildVersion: string }>();
   const { push } = useHistory();
   const dispatch = useCoveragePluginDispatch();
-  const activeScope = useBuildVersion<ScopeSummary>('/active-scope');
+  const activeScope = useActiveScope();
   const scopes = useBuildVersion<ScopeSummary[]>('/scopes') || [];
   scopes.sort(
     ({ started: firstStartedDate }, { started: secondStartedDate }) => secondStartedDate - firstStartedDate,

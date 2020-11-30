@@ -4,11 +4,10 @@ import { Icons, Panel } from '@drill4j/ui-kit';
 
 import { TabsPanel, Tab } from 'components';
 import { BuildCoverage } from 'types/build-coverage';
-import { ActiveScope } from 'types/active-scope';
 import { Methods } from 'types/methods';
 import { TestSummary } from 'types/test-summary';
 import { TestTypeSummary } from 'types/test-type-summary';
-import { useAgent, useBuildVersion } from 'hooks';
+import { useActiveScope, useAgent, useBuildVersion } from 'hooks';
 import { TableActionsProvider } from 'modules';
 import { ParentBuild } from 'types/parent-build';
 import { CoveragePluginHeader } from '../coverage-plugin-header';
@@ -38,7 +37,7 @@ export const Overview = overview(({ className }: Props) => {
   const { percentage: previousBuildCodeCoverage = 0 } = usePreviousBuildCoverage(previousBuildVersion) || {};
   const buildCoverage = useBuildVersion<BuildCoverage>('/build/coverage') || {};
   const { percentage: buildCodeCoverage = 0 } = buildCoverage;
-  const scope = useBuildVersion<ActiveScope>('/active-scope');
+  const scope = useActiveScope();
   const buildMethods = useBuildVersion<Methods>('/build/methods') || {};
   const allTests = useBuildVersion<TestSummary>('/build/summary/tests/all') || {};
   const testsByType = useBuildVersion<TestTypeSummary[]>('/build/summary/tests/by-type') || [];
