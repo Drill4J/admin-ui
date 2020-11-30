@@ -9,17 +9,4 @@
     font-size: 20px;
     color: map-get($monochrome, black);
   }
-
-  &__arrow-icon {
-    margin-left: 8px;
-
-    &--type {
-      &--increase {
-        color: map-get($green, default);
-      }
-      &--decrease {
-        color: map-get($red, default);
-      }
-    }
-  }
 }

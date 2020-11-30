@@ -18,7 +18,7 @@ export const TestToCodeCell = testToCodeCell(({
 }: Props) => (
   <div className={className}>
     <Content>
-      <Value onClick={onClick} clickable={Boolean(onClick && value)} data-test={`dashboard-cell:value:${testContext}`}>
+      <Value onClick={onClick} clickable={Boolean(onClick)} data-test={`dashboard-cell:value:${testContext}`}>
         {value === undefined ? (
           <Tooltip message={(
             <Panel direction="column">
@@ -30,7 +30,7 @@ export const TestToCodeCell = testToCodeCell(({
             n/a
           </Tooltip>
         ) : value}
-        {Boolean(onClick && value) && <LinkIcon height={8} />}
+        {Boolean(onClick) && <LinkIcon height={8} />}
       </Value>
     </Content>
   </div>

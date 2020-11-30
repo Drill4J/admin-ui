@@ -70,8 +70,8 @@ export const TestToCodePlugin = testToCodePlugin(
           <ListColumn
             name="coverage"
             label="Coverage"
-            Cell={({ value, item: { arrow } }) => (
-              <TestToCodeCoverageCell value={value} arrow={arrow} />
+            Cell={({ value }) => (
+              <TestToCodeCoverageCell value={value} />
             )}
             HeaderCell={() => (
               <TestToCodeHeaderCell
@@ -103,7 +103,7 @@ export const TestToCodePlugin = testToCodePlugin(
             )}
             HeaderCell={() => (
               <TestToCodeHeaderCell
-                value={aggregated?.testsToRun?.count}
+                value={aggregated?.testsToRun?.count || 0}
                 label="tests to run"
                 onClick={() => setTestsToRunModalIsOpen(true)}
               />

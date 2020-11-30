@@ -19,7 +19,6 @@
     margin-left: 16px;
     font-size: 20px;
     color: map-get($monochrome, black);
-    pointer-events: none;
 
     &--clickable {
       cursor: pointer;

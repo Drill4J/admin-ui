@@ -1,8 +1,6 @@
 import * as React from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
-import {
-  Table, Column, Icons,
-} from '@drill4j/ui-kit';
+import { Table, Column, Icons } from '@drill4j/ui-kit';
 
 import { Cells, SearchPanel } from 'components';
 import { TestCoverageInfo } from 'types/test-coverage-info';
@@ -37,7 +35,7 @@ export const TestsToRunList = testsToRunList(({ className, agentType = 'Agent' }
   return (
     <div className={className}>
       <TestsToRunHeader agentType={agentType} testsToRunCount={testToRunCount} />
-      <Title data-test="tests-to-run-list:title">SUGGESTED TESTS</Title>
+      <Title data-test="tests-to-run-list:title">ALL SUGGESTED TESTS ({totalCount})</Title>
       <div>
         <SearchPanel
           onSearch={(value) => setSearch([{ ...searchQuery, value }])}

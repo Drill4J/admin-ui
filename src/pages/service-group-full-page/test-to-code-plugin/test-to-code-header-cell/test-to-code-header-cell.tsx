@@ -23,11 +23,11 @@ export const TestToCodeHeaderCell = testToCodeHeaderCell(({
       <Label>{label}</Label>
       <Value
         onClick={onClick}
-        clickable={Boolean(value && onClick)}
+        clickable={Boolean(onClick)}
         data-test={`dashboard-header-cell:${spacesToDashes(label)}:value`}
       >
         {value}
-        {Boolean(onClick && value) && <LinkIcon height={8} />}
+        {Boolean(onClick) && <LinkIcon height={8} />}
       </Value>
     </Content>
   </div>
