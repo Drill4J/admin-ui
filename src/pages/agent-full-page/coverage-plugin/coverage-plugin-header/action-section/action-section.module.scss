@@ -32,8 +32,13 @@
     color: map-get($primary-blue, default);
   }
 
-  &__zero-value {
+  &__no-value {
     font-size: 20px;
     line-height: 32px;
+    color: map-get($monochrome, black);
+  }
+
+  &__tooltip-message {
+    text-align: center;
   }
 }

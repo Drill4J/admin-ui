@@ -143,11 +143,17 @@ export const CoveragePluginHeader = coveragePluginHeader(({ className }: Props) 
             )}
           </QualityGateSection>
         )}
-        <ActionSection label="Risks" count={risksCount} onClick={() => setIsRisksModalOpen(true)} />
         <ActionSection
-          label="Tests to run"
+          label="risks"
+          count={risksCount}
+          onClick={() => setIsRisksModalOpen(true)}
+          previousBuildVersion={previousBuildVersion}
+        />
+        <ActionSection
+          label="tests to run"
           count={testToRunCount}
           onClick={() => push(`/full-page/${agentId}/${buildVersion}/${pluginId}/tests-to-run`)}
+          previousBuildVersion={previousBuildVersion}
         />
       </Actions>
       <RisksModal isOpen={isRisksModalOpen} onToggle={setIsRisksModalOpen} />
