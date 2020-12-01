@@ -63,13 +63,9 @@ export const QualityGateStatus = qualityGateStatus(
             thresholdValue={conditionSettingByType.tests.condition.value}
           >
             <CondtionStatus data-test="quality-gate-status:condition-status:tests">
-              {qualityGate?.results?.tests
-                ? 'Passed. You have executed all tests to run'
-                : 'Failed. You have '}
-              {qualityGate?.results?.tests
-                ? null
-                : <Value data-test="quality-gate-status:condition-status:tests">{metrics?.tests}</Value>}
-              {qualityGate?.results?.tests ? '' : ' not executed tests to run'}
+              {qualityGate?.results?.tests ? 'Passed' : 'Failed'}. You have&nbsp;
+              <Value data-test="quality-gate-status:condition-status:tests">{metrics?.tests}</Value>
+              {qualityGate?.results?.tests ? ' Tests to run' : ' not executed tests to run'}
             </CondtionStatus>
           </Condition>
         )}

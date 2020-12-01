@@ -11,7 +11,7 @@ import {
   positiveInteger,
 } from 'forms';
 import {
-  QualityGateSettings as QualityGate, ConditionSetting, ConditionSettingByType,
+  QualityGateSettings as QualityGate, ConditionSettingByType,
 } from 'types/quality-gate-type';
 import { useGeneralAlertMessage } from 'hooks';
 import { QualityGateStatus } from './quality-gate-status';
@@ -57,33 +57,12 @@ export const QualityGatePane = qualityGatePane(
     const [isEditing, setIsEditing] = React.useState(false);
     const { generalAlertMessage, showGeneralAlertMessage } = useGeneralAlertMessage();
     const StatusIcon = Icons[qualityGate.status];
-    const initialValues = {
-      coverage: {
-        enabled: conditionSettingByType.coverage?.enabled,
-        condition: {
-          ...conditionSettingByType.coverage?.condition,
-          value: conditionSettingByType.coverage?.enabled ? String(conditionSettingByType.coverage.condition.value) : undefined,
-        },
-      } as ConditionSetting,
-      risks: {
-        enabled: conditionSettingByType.risks?.enabled,
-        condition: {
-          ...conditionSettingByType.risks?.condition,
-          value: conditionSettingByType.risks?.enabled ? String(conditionSettingByType.risks.condition.value) : undefined,
-        },
-      } as ConditionSetting,
-      tests: {
-        enabled: conditionSettingByType.tests?.enabled,
-        condition: {
-          ...conditionSettingByType.tests?.condition,
-          value: conditionSettingByType.tests?.enabled ? String(conditionSettingByType.tests.condition.value) : undefined,
-        },
-      } as ConditionSetting,
-    };
+
     const handleOnToggle = () => {
       onToggle(false);
       setIsEditing(false);
     };
+
     return (
       <Modal isOpen={isOpen} onToggle={handleOnToggle}>
         <div className={className}>
@@ -92,7 +71,30 @@ export const QualityGatePane = qualityGatePane(
               updateQualityGateSettings(agentId, pluginId, showGeneralAlertMessage)(values);
               setIsEditing(false);
             }}
-            initialValues={initialValues}
+            initialValues={{
+              coverage: {
+                enabled: conditionSettingByType.coverage?.enabled,
+                condition: {
+                  ...conditionSettingByType.coverage?.condition,
+                  value: conditionSettingByType.coverage?.enabled ? String(conditionSettingByType.coverage.condition.value) : undefined,
+                },
+              },
+              risks: {
+                enabled: conditionSettingByType.risks?.enabled,
+                condition: {
+                  ...conditionSettingByType.risks?.condition,
+                  value: conditionSettingByType.risks?.enabled ? String(conditionSettingByType.risks.condition.value) : undefined,
+                },
+              },
+              tests: {
+                enabled: conditionSettingByType.tests?.enabled,
+                condition: {
+                  ...conditionSettingByType.tests?.condition,
+                  value: conditionSettingByType.tests?.enabled ? String(conditionSettingByType.tests.condition.value) : undefined,
+                },
+              },
+            }}
+            initialValuesEqual={(prevValues, nextValues) => JSON.stringify(prevValues) === JSON.stringify(nextValues)}
             validate={validateQualityGate}
             render={({
               values, handleSubmit, invalid, pristine,
@@ -128,13 +130,15 @@ export const QualityGatePane = qualityGatePane(
                       pluginId={pluginId}
                     />
                   )
-                  : <QualityGateSettings conditionSettingByType={values} />}
+                  : (
+                    <QualityGateSettings conditionSettingByType={values} />
+                  )}
                 <ActionsPanel>
                   {configured && !isEditing ? (
                     <Button
                       type="primary"
                       size="large"
-                      onClick={() => { setIsEditing(true); showGeneralAlertMessage(null); }}
+                      onClick={() => setIsEditing(true)}
                       data-test="quality-gate-pane:edit-button"
                     >
                       Edit
