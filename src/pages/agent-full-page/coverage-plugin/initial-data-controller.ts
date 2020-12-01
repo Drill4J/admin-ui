@@ -17,6 +17,8 @@ export const InitialDataController = ({ children }: Props) => {
   React.useEffect(() => {
     dispatch(setActiveSessions(activeSessions));
     pluginDispatch(setLoading(Boolean(activeSessions.count)));
+
+    return () => pluginDispatch(setLoading(false));
     // eslint-disable-next-line
   }, [activeSessions.count]);
   return children as React.ReactElement<any>;
