@@ -91,7 +91,7 @@ export const GeneralSettingsForm = generalSettingsForm(
                     placeholder="Give Service Group a name"
                   />
                 </ServiceGroupName>
-                <Description label="Description">
+                <Description label="Description" optional>
                   <Field
                     name="description"
                     component={Fields.Textarea}
