@@ -67,7 +67,7 @@ export const FinishScopeModal = finishScopeModal(
               </div>
             </GeneralAlerts>
           )}
-          {!testsCount && (
+          {Boolean(!testsCount && !testTypes.length) && (
             <GeneralAlerts type="WARNING">
               Scope is empty and will be deleted after finishing.
             </GeneralAlerts>
@@ -81,33 +81,46 @@ export const FinishScopeModal = finishScopeModal(
               disabled={!testsCount || testTypes.length > 0}
             />
             <ActionsPanel>
-              <Button
-                type="primary"
-                size="large"
-                disabled={testTypes.length > 0}
-                onClick={async () => {
-                  await finishScope(agentId, pluginId, {
-                    onSuccess: () => {
-                      showMessage({ type: 'SUCCESS', text: 'Scope has been finished' });
-                      onToggle(false);
-                    },
-                    onError: setErrorMessage,
-                  })({ prevScopeEnabled: !ignoreScope, savePrevScope: true });
-                  isScopeInfoPage && !scope?.sessionsFinished &&
-                    push(`/full-page/${agentId}/${buildVersion}/${pluginId}/dashboard`);
-                }}
-                data-test="finish-scope-modal:finish-scope-button"
-              >
-                {testsCount ? 'Finish Scope' : 'Finish and Delete'}
-              </Button>
-              <Button
-                type="secondary"
-                size="large"
-                onClick={() => onToggle(false)}
-                data-test="finish-scope-modal:cancel-modal-button"
-              >
-                Cancel
-              </Button>
+              {!testTypes.length ? (
+                <>
+                  <Button
+                    type="primary"
+                    size="large"
+                    disabled={testTypes.length > 0}
+                    onClick={async () => {
+                      await finishScope(agentId, pluginId, {
+                        onSuccess: () => {
+                          showMessage({ type: 'SUCCESS', text: 'Scope has been finished' });
+                          onToggle(false);
+                        },
+                        onError: setErrorMessage,
+                      })({ prevScopeEnabled: !ignoreScope, savePrevScope: true });
+                      isScopeInfoPage && !scope?.sessionsFinished &&
+                        push(`/full-page/${agentId}/${buildVersion}/${pluginId}/dashboard`);
+                    }}
+                    data-test="finish-scope-modal:finish-scope-button"
+                  >
+                    {testsCount ? 'Finish Scope' : 'Finish and Delete'}
+                  </Button>
+                  <Button
+                    type="secondary"
+                    size="large"
+                    onClick={() => onToggle(false)}
+                    data-test="finish-scope-modal:cancel-modal-button"
+                  >
+                    Cancel
+                  </Button>
+                </>
+              ) : (
+                <Button
+                  type="secondary"
+                  size="large"
+                  onClick={() => onToggle(false)}
+                  data-test="finish-scope-modal:cancel-modal-button"
+                >
+                  Ok, got it
+                </Button>
+              )}
             </ActionsPanel>
           </Content>
         </div>
