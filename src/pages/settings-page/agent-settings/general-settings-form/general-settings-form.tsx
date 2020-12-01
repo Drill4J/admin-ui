@@ -96,7 +96,7 @@ export const GeneralSettingsForm = generalSettingsForm(
                     placeholder="Specify an environment"
                   />
                 </FormGroup>
-                <Description label="Description">
+                <Description label="Description" optional>
                   <Field
                     name="description"
                     component={Fields.Textarea}
