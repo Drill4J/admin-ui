@@ -14,6 +14,7 @@ interface Props {
   className?: string;
   activeBuildVersion: string;
   totalDuration: number;
+  summaryTestsToRun: TestsToRunSummary;
 }
 
 const barChart = BEM(styles);
@@ -23,7 +24,9 @@ const BAR_WITH_GAP_WIDTH_PX = 112;
 const CHART_HEIGHT_PX = 160;
 const BORDER_PX = 1;
 
-export const BarChart = barChart(({ className, activeBuildVersion, totalDuration }: Props) => {
+export const BarChart = barChart(({
+  className, activeBuildVersion, totalDuration, summaryTestsToRun,
+}: Props) => {
   const ref = React.useRef(null);
   const { width } = useElementSize(ref);
   const [slice, setSlice] = React.useState(0);
@@ -34,7 +37,6 @@ export const BarChart = barChart(({ className, activeBuildVersion, totalDuration
   }, [width, visibleBarsCount]);
 
   const testsToRunParentStats = useBuildVersion<TestsToRunSummary[]>('/build/tests-to-run/parent-stats') || [];
-  const summaryTestsToRun = useBuildVersion<TestsToRunSummary>('/build/summary/tests-to-run') || {};
   const testsToRunHistory = [...testsToRunParentStats, summaryTestsToRun];
 
   const sliceTestsToRunHistory = testsToRunHistory.slice(testsToRunHistory.length - slice, slice

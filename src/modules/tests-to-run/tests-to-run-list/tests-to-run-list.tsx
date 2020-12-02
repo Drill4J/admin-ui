@@ -16,6 +16,7 @@ import { useBuildVersion, useAgent } from 'hooks';
 import { CoveredMethodsByTestSidebar } from 'modules';
 import { capitalize } from 'utils';
 import { DATA_VISUALIZATION_COLORS } from 'common/constants';
+import { TestsToRunSummary } from 'types/tests-to-run-summary';
 import { TestsToRunHeader } from './tests-to-run-header';
 import { BarChart } from './bar-chart';
 import { NoTestsToRunStub } from './no-tests-to-run-stub';
@@ -42,6 +43,7 @@ export const TestsToRunList = testsToRunList(({ className, agentType = 'Agent' }
   const { buildVersion = '', agentId = '' } = useParams<{ buildVersion: string; agentId: string; }>();
   const { buildVersion: activeBuildVersion = '' } = useAgent(agentId) || {};
   const { version: previousBuildVersion = '' } = useBuildVersion<ParentBuild>('/data/parent') || {};
+  const summaryTestsToRun = useBuildVersion<TestsToRunSummary>('/build/summary/tests-to-run') || {};
   const { tests: previousBuildTests = [], testDuration: totalDuration = 1 } = useBuildVersion<BuildSummary>(
     '/build/summary', undefined, undefined, undefined, previousBuildVersion,
   ) || {};
@@ -55,11 +57,12 @@ export const TestsToRunList = testsToRunList(({ className, agentType = 'Agent' }
         agentInfo={{
           agentType, buildVersion, previousBuildVersion, activeBuildVersion,
         }}
+        summaryTestsToRun={summaryTestsToRun}
         previousBuildTestsDuration={totalDuration}
         previousBuildAutoTestsCount={previousBuildAutoTestsCount}
       />
-      <Panel align="space-between">
-        <Title data-test="tests-to-run-list:title">SAVED TIME HISTORY</Title>
+      <Panel align="space-between" verticalAlign="start">
+        <BarTitle data-test="tests-to-run-list:bar-title">SAVED TIME HISTORY</BarTitle>
         <Legend
           legendItems={[
             { label: 'No data', borderColor: DATA_VISUALIZATION_COLORS.SAVED_TIME, color: 'transparent' },
@@ -68,74 +71,82 @@ export const TestsToRunList = testsToRunList(({ className, agentType = 'Agent' }
           ]}
         />
       </Panel>
-      {previousBuildAutoTestsCount ? <BarChart activeBuildVersion={activeBuildVersion} totalDuration={totalDuration} /> : <NoDataStub />}
-      <Title data-test="tests-to-run-list:title">ALL SUGGESTED TESTS ({totalCount})</Title>
+      {previousBuildAutoTestsCount ? (
+        <BarChart
+          activeBuildVersion={activeBuildVersion}
+          totalDuration={totalDuration}
+          summaryTestsToRun={summaryTestsToRun}
+        />
+      ) : <NoDataStub />}
       <div>
-        <SearchPanel
-          onSearch={(value) => setSearch([{ ...searchQuery, value }])}
-          searchQuery={searchQuery.value}
-          searchResult={filteredCount}
-          placeholder="Search tests by name"
-        >
-          Displaying {filteredCount} of {totalCount} tests
-        </SearchPanel>
-        <Table data={testsToRun} idKey="name" columnsSize="medium">
-          <Column
-            name="name"
-            label="Name"
-            Cell={({ value }) => (
-              <Cells.Compound cellName={value} cellAdditionalInfo="&ndash;" icon={<Icons.Test />} />
-            )}
-          />
-          <Column
-            name="type"
-            label="Test type"
-            width="108px"
-            Cell={({ value }) => (
-              <>
-                {capitalize(value)}
-              </>
-            )}
-          />
-          <Column
-            name="stats.result"
-            label="State"
-            Cell={({ item: { toRun } }) => (
-              toRun ? <>To run</> : <Done>Done</Done>
-            )}
-            width="68px"
-          />
-          <Column
-            name="coverage.percentage"
-            label="Coverage, %"
-            Cell={({ value, item: { toRun } }) => (toRun ? null : <Cells.Coverage value={value} />)}
-            align="right"
-            width="98px"
-          />
-          <Column
-            name="coverage.methodCount.covered"
-            label="Methods covered"
-            Cell={({ value, item: { id = '', toRun } }) => (
-              toRun ? null : (
-                <Cells.Clickable
-                  onClick={() => setSelectedTest(id)}
-                  disabled={!value}
-                >
-                  {value}
-                </Cells.Clickable>
-              )
-            )}
-            align="right"
-            width="162px"
-          />
-          <Column
-            name="stats.duration"
-            label="Duration"
-            Cell={({ value, item: { toRun } }) => (toRun ? null : <Cells.Duration value={value} />)}
-            align="right"
-            width="118px"
-          />,
-        </Table>
+        <TableTitle data-test="tests-to-run-list:table-title">ALL SUGGESTED TESTS ({totalCount})</TableTitle>
+        <div>
+          <SearchPanel
+            onSearch={(value) => setSearch([{ ...searchQuery, value }])}
+            searchQuery={searchQuery.value}
+            searchResult={filteredCount}
+            placeholder="Search tests by name"
+          >
+            Displaying {filteredCount} of {totalCount} tests
+          </SearchPanel>
+          <Table data={testsToRun} idKey="name" columnsSize="medium">
+            <Column
+              name="name"
+              label="Name"
+              Cell={({ value }) => (
+                <Cells.Compound cellName={value} cellAdditionalInfo="&ndash;" icon={<Icons.Test />} />
+              )}
+            />
+            <Column
+              name="type"
+              label="Test type"
+              width="108px"
+              Cell={({ value }) => (
+                <>
+                  {capitalize(value)}
+                </>
+              )}
+            />
+            <Column
+              name="stats.result"
+              label="State"
+              Cell={({ item: { toRun } }) => (
+                toRun ? <>To run</> : <Done>Done</Done>
+              )}
+              width="68px"
+            />
+            <Column
+              name="coverage.percentage"
+              label="Coverage, %"
+              Cell={({ value, item: { toRun } }) => (toRun ? null : <Cells.Coverage value={value} />)}
+              align="right"
+              width="98px"
+            />
+            <Column
+              name="coverage.methodCount.covered"
+              label="Methods covered"
+              Cell={({ value, item: { id = '', toRun } }) => (
+                toRun ? null : (
+                  <Cells.Clickable
+                    onClick={() => setSelectedTest(id)}
+                    disabled={!value}
+                  >
+                    {value}
+                  </Cells.Clickable>
+                )
+              )}
+              align="right"
+              width="162px"
+            />
+            <Column
+              name="stats.duration"
+              label="Duration"
+              Cell={({ value, item: { toRun } }) => (toRun ? null : <Cells.Duration value={value} />)}
+              align="right"
+              width="118px"
+            />,
+          </Table>
+        </div>
       </div>
       {!testsToRun.length && <NoTestsToRunStub />}
       {Boolean(selectedTest) && (
@@ -150,5 +161,6 @@ export const TestsToRunList = testsToRunList(({ className, agentType = 'Agent' }
   );
 });
 
-const Title = testsToRunList.title('span');
+const BarTitle = testsToRunList.barTitle('span');
+const TableTitle = testsToRunList.tableTitle('span');
 const Done = testsToRunList.done('span');

@@ -7,10 +7,10 @@ import styles from './saved-time-section.module.scss';
 interface Props {
   className?: string;
   percentage?: number;
-  previousBuildAutoTestsCount?: number;
-  message?: React.ReactNode;
-  children?: React.ReactNode;
-  label?: React.ReactNode;
+  previousBuildAutoTestsCount: number;
+  message: React.ReactNode;
+  children: React.ReactNode;
+  label: React.ReactNode;
 }
 
 const savedTimeSection = BEM(styles);

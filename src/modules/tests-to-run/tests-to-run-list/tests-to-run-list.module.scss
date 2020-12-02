@@ -7,11 +7,20 @@
   width: 100%;
   height: 100%;
 
-  &__title {
+  &__bar-title {
+    height: 24px;
+    vertical-align: top;
     font-size: 12px;
-    line-height: 16px;
     font-family: $semibold-font;
     color: map-get($monochrome, default);
+    line-height: 16px;
+  }
+
+  &__table-title {
+    font-size: 12px;
+    font-family: $semibold-font;
+    color: map-get($monochrome, default);
+    line-height: 32px;
   }
 
   &__done {
