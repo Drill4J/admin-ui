@@ -2,7 +2,6 @@ import * as React from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 import { Button, Panel } from '@drill4j/ui-kit';
 
-import { useBuildVersion } from 'hooks';
 import { TestsToRunSummary } from 'types/tests-to-run-summary';
 import { convertToPercentage, getDuration, percentFormatter } from 'utils';
 import { GetSuggestedTestsModal } from './get-suggested-tests-modal';
@@ -21,24 +20,25 @@ interface Props {
   agentInfo: AgentInfo;
   previousBuildAutoTestsCount: number;
   previousBuildTestsDuration: number;
+  summaryTestsToRun: TestsToRunSummary;
 }
 
 const testsToRunHeader = BEM(styles);
 
 export const TestsToRunHeader = testsToRunHeader(({
-  className, agentInfo, previousBuildAutoTestsCount, previousBuildTestsDuration,
+  className, agentInfo, previousBuildAutoTestsCount, previousBuildTestsDuration, summaryTestsToRun,
 }: Props) => {
   const {
     stats: { duration: currentDuration = 0, parentDuration = 0, total: totalTestsToRun = 0 } = {},
-    statsByType: { AUTO: autoTestsToRun = {} } = {},
-  } = useBuildVersion<TestsToRunSummary>('/build/summary/tests-to-run') || {};
+    statsByType: { AUTO: { total: totalAutoTestsToRun = 0, completed: completedAutoTestsToRun = 0 } = {} } = {},
+  } = summaryTestsToRun;
   const [modalIsOpen, setModalIsOpen] = React.useState(false);
   const {
     buildVersion, previousBuildVersion, activeBuildVersion, agentType,
   } = agentInfo;
-  const totalDuration = getDuration(Number(previousBuildTestsDuration));
-  const estimatedTimeSaved = getDuration(Number(previousBuildTestsDuration) - Number(parentDuration));
-  const totalTimeSaved = getDuration(Number(previousBuildTestsDuration) - Number(currentDuration));
+  const totalDuration = getDuration(previousBuildTestsDuration);
+  const estimatedTimeSaved = getDuration(previousBuildTestsDuration - parentDuration);
+  const totalTimeSaved = getDuration(previousBuildTestsDuration - currentDuration);
 
   return (
     <>
@@ -79,24 +79,24 @@ export const TestsToRunHeader = testsToRunHeader(({
             <SavedTimeSection
               previousBuildAutoTestsCount={previousBuildAutoTestsCount}
               label="estimated time saved"
-              percentage={autoTestsToRun?.total
+              percentage={totalAutoTestsToRun
                 ? percentFormatter(convertToPercentage(previousBuildTestsDuration - parentDuration, previousBuildTestsDuration))
                 : undefined}
-              message={previousBuildAutoTestsCount ? getEstimatedTimeSavedTooltipMessage(Number(autoTestsToRun?.total)) : null}
+              message={previousBuildAutoTestsCount && getEstimatedTimeSavedTooltipMessage(totalAutoTestsToRun)}
             >
-              {autoTestsToRun?.total
+              {totalAutoTestsToRun
                 ? `${estimatedTimeSaved.hours}:${estimatedTimeSaved.minutes}:${estimatedTimeSaved.seconds}`
                 : '––:––:––'}
             </SavedTimeSection>
             <SavedTimeSection
               previousBuildAutoTestsCount={previousBuildAutoTestsCount}
               label="total time saved"
-              percentage={autoTestsToRun?.total && autoTestsToRun?.total === autoTestsToRun?.completed
+              percentage={totalAutoTestsToRun && totalAutoTestsToRun === completedAutoTestsToRun
                 ? percentFormatter(convertToPercentage(previousBuildTestsDuration - currentDuration, previousBuildTestsDuration))
                 : undefined}
-              message={getTotalSavedTimeTooltipMessage(Number(autoTestsToRun?.total) - Number(autoTestsToRun?.completed))}
+              message={getTotalSavedTimeTooltipMessage(totalAutoTestsToRun - completedAutoTestsToRun)}
             >
-              { autoTestsToRun?.total && autoTestsToRun?.total === autoTestsToRun?.completed
+              { totalAutoTestsToRun && totalAutoTestsToRun === completedAutoTestsToRun
                 ? `${totalTimeSaved.hours}:${totalTimeSaved.minutes}:${totalTimeSaved.seconds}`
                 : '––:––:––' }
             </SavedTimeSection>
