@@ -4,7 +4,7 @@ import { Field } from 'react-final-form';
 import { Panel, FormGroup } from '@drill4j/ui-kit';
 
 import { Fields } from 'forms';
-import { parsePackges, formatPackages } from 'utils';
+import { parsePackages, formatPackages } from 'utils';
 
 import styles from './system-settings-step.module.scss';
 
@@ -25,7 +25,7 @@ export const SystemSettingsStep = systemSettingsStep(({ className, infoPanel }: 
           <Field
             name="systemSettings.packages"
             component={ProjectPackages}
-            parse={parsePackges}
+            parse={parsePackages}
             format={formatPackages}
             placeholder="e.g. com/example/mypackage&#10;foo/bar/baz&#10;and so on."
           />

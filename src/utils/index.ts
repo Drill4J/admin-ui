@@ -4,7 +4,7 @@ export { camelToTitle } from './camel-to-title';
 export { copyToClipboard } from './copy-to-clipboard';
 export { kebabToPascalCase } from './kebab-to-pascal-case';
 export { camelToSpaces } from './camel-to-spaces';
-export { parsePackges } from './parse-packges';
+export { parsePackages } from './parse-packages';
 export { formatPackages } from './format-packages';
 export { capitalize } from './capitalize';
 export { spacesToDashes } from './spaces-to-dashes';
