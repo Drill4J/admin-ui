@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
-import { Panel, Legends } from '@drill4j/ui-kit';
+import { Legend, Panel, ProgressBarLegends } from '@drill4j/ui-kit';
 
 import { percentFormatter } from 'utils';
 import { ActiveScope } from 'types/active-scope';
@@ -8,6 +8,7 @@ import { BuildCoverage } from 'types/build-coverage';
 import { AgentStatus } from 'types/agent-status';
 import { useBuildVersion } from 'hooks';
 import { ParentBuild } from 'types/parent-build';
+import { LEGEND_COLORS } from 'common/constants';
 import { MultiProgressBar } from './multi-progress-bar';
 
 import styles from './active-build-coverage-info.module.scss';
@@ -48,9 +49,12 @@ export const ActiveBuildCoverageInfo = activeBuildCoverageInfo(({
       <Panel align="space-between">
         <Title data-test="active-build-coverage-info:title">BUILD COVERAGE</Title>
         <span>
-          <BuildCoverageType type="build">Build</BuildCoverageType>
-          <BuildCoverageType type="overlapping">Build / Scope overlap</BuildCoverageType>
-          <BuildCoverageType type="scope">Scope</BuildCoverageType>
+          <Legend legendItems={[
+            { label: 'Build', color: LEGEND_COLORS.BUILD_COVER },
+            { label: 'Build / Scope overlap', color: LEGEND_COLORS.BUILD_OVERLAPPING },
+            { label: 'Scope', color: LEGEND_COLORS.SCOPE_COVER },
+          ]}
+          />
         </span>
       </Panel>
       <BuildCoverageStatus data-test="active-build-coverage-info:status">
@@ -91,13 +95,12 @@ export const ActiveBuildCoverageInfo = activeBuildCoverageInfo(({
         methods={{ overlapCoveredMethods, buildCoveredMethods, uniqueMethods }}
         active={loading}
       />
-      <Legends />
+      <ProgressBarLegends />
     </div>
   );
 });
 
 const Title = activeBuildCoverageInfo.title('div');
 const BuildCoverageStatus = activeBuildCoverageInfo.buildCoverageStatus('div');
-const BuildCoverageType = activeBuildCoverageInfo.buildCoverageType('span');
 const BuildCoveragePercentage = activeBuildCoverageInfo.buildCoveragePercentage('div');
 const UniqueCoveragePercentage = activeBuildCoverageInfo.uniqueCoveragePercentage('span');

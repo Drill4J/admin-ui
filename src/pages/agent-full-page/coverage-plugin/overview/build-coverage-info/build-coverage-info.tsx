@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { NavLink, useParams } from 'react-router-dom';
 import { BEM } from '@redneckz/react-bem-helper';
-import { Panel, Legends, MainProgressBar } from '@drill4j/ui-kit';
+import { Panel, MainProgressBar, ProgressBarLegends } from '@drill4j/ui-kit';
 
 import { percentFormatter } from 'utils';
 
@@ -49,7 +49,7 @@ export const BuildCoverageInfo = buildCoverageInfo(({
         )}
       </DetailedCodeCoverageInfo>
       <MainProgressBar type="primary" value={`${buildCodeCoverage}%`} />
-      <Legends />
+      <ProgressBarLegends />
     </div>
   );
 });

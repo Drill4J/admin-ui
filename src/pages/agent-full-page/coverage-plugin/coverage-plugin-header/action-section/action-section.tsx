@@ -1,15 +1,21 @@
 import * as React from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
-import { Icons, Panel, Tooltip } from '@drill4j/ui-kit';
+import { Tooltip } from '@drill4j/ui-kit';
+
+import { TestTypeSummary } from 'types/test-type-summary';
+import { spacesToDashes } from 'utils';
 
 import styles from './action-section.module.scss';
 
+interface PreviousBuild {
+  previousBuildVersion?: string;
+  previousBuildTests?: TestTypeSummary[];
+}
+
 interface Props {
   className?: string;
-  label?: React.ReactNode;
-  count?: number;
-  previousBuildVersion?: string;
-  onClick?: () => void;
+  label?: string;
+  previousBuild?: PreviousBuild;
   children?: React.ReactNode;
 }
 
@@ -17,26 +23,17 @@ const actionSection = BEM(styles);
 
 export const ActionSection = actionSection(
   ({
-    className, label, count, onClick, previousBuildVersion,
+    className, label = '', previousBuild: { previousBuildVersion = '', previousBuildTests = [] } = {}, children,
   }: Props) => (
     <div className={className}>
       <Action data-test={`action-section:action:${label}`}>
         <Tooltip
-          message={!previousBuildVersion && (
-            <TooltipMessage>
-              There are no data about {label} on the initial build.<br />
-              It will be calculated when at least 1 parent build appears.
-            </TooltipMessage>
-          )}
+          position={label === 'risks' ? 'top-center' : 'top-left'}
+          message={getTooltipMessage(label, previousBuildVersion, previousBuildTests.length)}
         >
           <ActionName>{label}</ActionName>
+          {previousBuildVersion ? children : <span data-test={`action-section:no-value:${spacesToDashes(label)}`}>&ndash;</span> }
         </Tooltip>
-        {previousBuildVersion ? (
-          <Count onClick={onClick} data-test={`action-section:count:${label}`}>
-            {count}
-            <LinkIcon width={8} height={8} />
-          </Count>
-        ) : <NoValue data-test={`action-section:no-value:${label}`}>&ndash;</NoValue>}
       </Action>
     </div>
   ),
@@ -44,7 +41,24 @@ export const ActionSection = actionSection(
 
 const Action = actionSection.action('div');
 const ActionName = actionSection.actionName('div');
-const Count = actionSection.count(Panel);
-const LinkIcon = actionSection.linkIcon(Icons.Expander);
-const NoValue = actionSection.noValue('div');
 const TooltipMessage = actionSection.tooltipMessage('div');
+
+function getTooltipMessage(label: string, buildVersion: string, testsCount: number) {
+  if (!buildVersion) {
+    return (
+      <TooltipMessage>
+        There are no data about {label} on the initial build.<br />
+        It will be calculated when at least 1 parent build appears.
+      </TooltipMessage>
+    );
+  }
+  if (buildVersion && testsCount === 0 && label === 'tests to run') {
+    return (
+      <TooltipMessage>
+        There are no tests in the parent build<br />
+        to create a list of suggested tests to run
+      </TooltipMessage>
+    );
+  }
+  return undefined;
+}

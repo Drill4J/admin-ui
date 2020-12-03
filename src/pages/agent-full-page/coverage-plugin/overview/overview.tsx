@@ -34,7 +34,10 @@ export const Overview = overview(({ className }: Props) => {
   const { agentId, loading } = usePluginState();
   const { status } = useAgent(agentId) || {};
   const { version: previousBuildVersion = '' } = useBuildVersion<ParentBuild>('/data/parent') || {};
-  const { percentage: previousBuildCodeCoverage = 0 } = usePreviousBuildCoverage(previousBuildVersion) || {};
+  const {
+    percentage: previousBuildCodeCoverage = 0,
+    byTestType: previousBuildTests,
+  } = usePreviousBuildCoverage(previousBuildVersion) || {};
   const buildCoverage = useBuildVersion<BuildCoverage>('/build/coverage') || {};
   const { percentage: buildCodeCoverage = 0 } = buildCoverage;
   const scope = useActiveScope();
@@ -44,7 +47,7 @@ export const Overview = overview(({ className }: Props) => {
 
   return (
     <div className={className}>
-      <CoveragePluginHeader />
+      <CoveragePluginHeader previousBuildTests={previousBuildTests} />
       <RoutingTabsPanel>
         <TabsPanel activeTab={selectedTab} onSelect={setSelectedTab}>
           <Tab name="methods">
