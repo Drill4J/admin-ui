@@ -11,7 +11,7 @@ import {
   Fields, requiredArray, composeValidators, sizeLimit,
 } from 'forms';
 import { UnlockingSystemSettingsFormModal } from 'modules';
-import { parsePackges, formatPackages } from 'utils';
+import { parsePackages, formatPackages } from 'utils';
 import { Agent } from 'types/agent';
 import { Message } from 'types/message';
 import { SystemSettings } from 'types/system-settings';
@@ -27,7 +27,7 @@ interface Props {
 const systemSettingsForm = BEM(styles);
 
 const validateSettings = composeValidators(
-  requiredArray('packages'),
+  requiredArray('packages', 'Path prefix is required.'),
   sizeLimit({
     name: 'sessionIdHeaderName',
     alias: 'Session header name',
@@ -118,7 +118,7 @@ export const SystemSettingsForm = systemSettingsForm(
                     <Field
                       name="packages"
                       component={ProjectPackages}
-                      parse={parsePackges}
+                      parse={parsePackages}
                       format={formatPackages}
                       placeholder="e.g. com/example/mypackage&#10;foo/bar/baz&#10;and so on."
                       disabled={!unlocked}
