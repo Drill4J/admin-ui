@@ -89,4 +89,32 @@
       text-transform: uppercase;
     }
   }
+
+  &__no-risks-count {
+    font-size: 20px;
+    line-height: 32px;
+    color: map-get($monochrome, black);
+  }
+
+  &__count {
+    font-size: 20px;
+    line-height: 32px;
+    color: map-get($monochrome, black);
+    cursor: pointer;
+
+    &:hover {
+      color: map-get($primary-blue, medium-tint);
+    }
+  }
+
+  &__link-icon {
+    margin-left: 4px;
+    color: map-get($primary-blue, default);
+  }
+
+  &__no-value {
+    font-size: 20px;
+    line-height: 32px;
+    color: map-get($monochrome, black);
+  }
 }

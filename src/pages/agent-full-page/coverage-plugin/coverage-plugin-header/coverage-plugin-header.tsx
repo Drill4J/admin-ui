@@ -17,6 +17,7 @@ import { Metrics } from 'types/metrics';
 import { useAgent, useBuildVersion } from 'hooks';
 import { Baseline } from 'types/baseline';
 import { ParentBuild } from 'types/parent-build';
+import { TestTypeSummary } from 'types/test-type-summary';
 import { ActionSection } from './action-section';
 import { BaselineBuildModal } from './baseline-build-modal';
 import { RisksModal } from '../risks-modal';
@@ -26,11 +27,12 @@ import styles from './coverage-plugin-header.module.scss';
 
 interface Props {
   className?: string;
+  previousBuildTests?: TestTypeSummary[];
 }
 
 const coveragePluginHeader = BEM(styles);
 
-export const CoveragePluginHeader = coveragePluginHeader(({ className }: Props) => {
+export const CoveragePluginHeader = coveragePluginHeader(({ className, previousBuildTests = [] }: Props) => {
   const [isRisksModalOpen, setIsRisksModalOpen] = React.useState(false);
   const [isOpenQualityGatesPane, setIsOpenQualityGatesPane] = React.useState(false);
   const [isBaselineBuildModalOpened, setIsBaselineBuildModalOpened] = React.useState(false);
@@ -58,7 +60,7 @@ export const CoveragePluginHeader = coveragePluginHeader(({ className }: Props) 
     }),
     {} as ConditionSettingByType,
   );
-  const configured = conditionSettings.some(({ enabled }) => enabled === true);
+  const configured = conditionSettings.some(({ enabled }) => enabled);
   const qualityGateSettings: QualityGateSettings = {
     configured,
     conditionSettingByType,
@@ -145,16 +147,29 @@ export const CoveragePluginHeader = coveragePluginHeader(({ className }: Props) 
         )}
         <ActionSection
           label="risks"
-          count={risksCount}
-          onClick={() => setIsRisksModalOpen(true)}
-          previousBuildVersion={previousBuildVersion}
-        />
+          previousBuild={{ previousBuildVersion, previousBuildTests }}
+        >
+          {risksCount > 0 ? (
+            <Count onClick={() => setIsRisksModalOpen(true)} data-test="action-section:count:risks">
+              {risksCount}
+              <LinkIcon width={8} height={8} />
+            </Count>
+          ) : <NoRisksCount data-test="action-section:no-risks-count">{risksCount}</NoRisksCount>}
+        </ActionSection>
         <ActionSection
           label="tests to run"
-          count={testToRunCount}
-          onClick={() => push(`/full-page/${agentId}/${buildVersion}/${pluginId}/tests-to-run`)}
-          previousBuildVersion={previousBuildVersion}
-        />
+          previousBuild={{ previousBuildVersion, previousBuildTests }}
+        >
+          {previousBuildTests.length > 0 ? (
+            <Count
+              onClick={() => push(`/full-page/${agentId}/${buildVersion}/${pluginId}/tests-to-run`)}
+              data-test="action-section:count:tests-to-run"
+            >
+              {testToRunCount}
+              <LinkIcon width={8} height={8} />
+            </Count>
+          ) : <NoValue data-test="action-section:no-value:tests-to-run">&ndash;</NoValue>}
+        </ActionSection>
       </Actions>
       {isRisksModalOpen && <RisksModal isOpen={isRisksModalOpen} onToggle={setIsRisksModalOpen} />}
       <QualityGatePane
@@ -199,6 +214,10 @@ const Actions = coveragePluginHeader.actions('div');
 const QualityGateSection = coveragePluginHeader.qualityGateSection('div');
 const StatusWrapper = coveragePluginHeader.statusWrapper('div');
 const StatusTitle = coveragePluginHeader.statusTitle('div');
+const Count = coveragePluginHeader.count(Panel);
+const NoRisksCount = coveragePluginHeader.noRisksCount(Panel);
+const LinkIcon = coveragePluginHeader.linkIcon(Icons.Expander);
+const NoValue = coveragePluginHeader.noValue('div');
 
 function showBaseline(isBaseline: boolean, isActiveBuild: boolean, previousBuildVersion: string) {
   if (!previousBuildVersion && isBaseline) {

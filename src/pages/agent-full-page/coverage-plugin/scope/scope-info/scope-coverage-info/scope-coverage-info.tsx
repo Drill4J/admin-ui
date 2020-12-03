@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 import {
-  MainProgressBar, Legends,
+  MainProgressBar, ProgressBarLegends,
 } from '@drill4j/ui-kit';
 
 import { percentFormatter } from 'utils';
@@ -32,7 +32,7 @@ export const ScopeCoverageInfo = scopeCoverageInfo(({ className, scope }: Props)
         </b>&nbsp;of new coverage
       </CoverageInfo>
       <MainProgressBar type="primary" value={`${coveragePercentage}%`} />
-      <Legends />
+      <ProgressBarLegends />
     </div>
   );
 });

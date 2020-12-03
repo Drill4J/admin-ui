@@ -17,37 +17,6 @@
     font-size: 12px;
   }
 
-  &__build-coverage-type {
-    &::before {
-      content: '';
-      display: inline-block;
-      margin-right: 4px;
-      width: 8px;
-      height: 8px;
-      border-radius: 4px;
-    }
-
-    &:nth-child(1) {
-      &::before {
-        background-color: map-get($data-visualization, build-cover);
-      }
-    }
-
-    &:nth-child(2) {
-      margin-left: 16px;
-      &::before {
-        background-color: map-get($data-visualization, overlapping);
-      }
-    }
-
-    &:nth-child(3) {
-      margin-left: 16px;
-      &::before {
-        background-color: map-get($data-visualization, scope-cover);
-      }
-    }
-  }
-
   &__build-coverage-percentage {
     margin-right: 8px;
     font-size: 32px;
