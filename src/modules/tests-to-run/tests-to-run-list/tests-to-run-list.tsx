@@ -9,7 +9,6 @@ import { ParentBuild } from 'types/parent-build';
 import { Cells, SearchPanel } from 'components';
 import { TestCoverageInfo } from 'types/test-coverage-info';
 import { FilterList } from 'types/filter-list';
-import { Metrics } from 'types/metrics';
 import { Search } from 'types/search';
 import { BuildSummary } from 'types/build-summary';
 import { TestsInfo } from 'types/tests-info';
@@ -39,7 +38,6 @@ export const TestsToRunList = testsToRunList(({ className, agentType = 'Agent' }
     filteredCount = 0,
     totalCount = 0,
   } = useBuildVersion<FilterList<TestCoverageInfo>>('/build/tests-to-run', search, undefined, 'LIST') || {};
-  const { tests: testToRunCount = 0 } = useBuildVersion<Metrics>('/data/stats') || {};
   const [searchQuery] = search;
   const { buildVersion = '', agentId = '' } = useParams<{ buildVersion: string; agentId: string; }>();
   const { buildVersion: activeBuildVersion = '' } = useAgent(agentId) || {};
@@ -57,7 +55,8 @@ export const TestsToRunList = testsToRunList(({ className, agentType = 'Agent' }
         agentInfo={{
           agentType, buildVersion, previousBuildVersion, activeBuildVersion,
         }}
-        testsToRunCount={testToRunCount}
+        previousBuildTestsDuration={totalDuration}
+        previousBuildAutoTestsCount={previousBuildAutoTestsCount}
       />
       <Panel align="space-between">
         <Title data-test="tests-to-run-list:title">SAVED TIME HISTORY</Title>

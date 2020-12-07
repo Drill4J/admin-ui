@@ -27,6 +27,13 @@
     color: map-get($monochrome, default);
   }
 
+  &__actions {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    margin-right: 40px;
+  }
+
   &__current-build-version {
     color: map-get($monochrome, black);
     margin: 0 8px 0 4px;
