@@ -1,6 +1,8 @@
 @import '~common/style-guide/index';
 
 .new-sidebar {
+  display: flex;
+  flex-direction: column;
   width: 80px;
   height: 100%;
   background-color: map-get($color-palette, ultra-light-blue);
