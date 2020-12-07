@@ -6,15 +6,14 @@ import { nanoid } from 'nanoid';
 import { DATA_VISUALIZATION_COLORS } from 'common/constants';
 import { useBuildVersion, useElementSize } from 'hooks';
 import { TestsToRunSummary } from 'types/tests-to-run-summary';
-import { BuildSummary } from 'types/build-summary';
 import { getDuration, percentFormatter } from 'utils';
 
 import styles from './bar-chart.module.scss';
 
-type BuildVersion = 'previousBuildVersion' | 'activeBuildVersion';
 interface Props {
   className?: string;
-  buildVersion: Record<BuildVersion, string>;
+  activeBuildVersion: string;
+  totalDuration: number;
 }
 
 const barChart = BEM(styles);
@@ -24,7 +23,7 @@ const BAR_WITH_GAP_WIDTH_PX = 112;
 const CHART_HEIGHT_PX = 160;
 const BORDER_PX = 1;
 
-export const BarChart = barChart(({ className, buildVersion: { previousBuildVersion, activeBuildVersion } }: Props) => {
+export const BarChart = barChart(({ className, activeBuildVersion, totalDuration }: Props) => {
   const ref = React.useRef(null);
   const { width } = useElementSize(ref);
   const [slice, setSlice] = React.useState(0);
@@ -34,9 +33,6 @@ export const BarChart = barChart(({ className, buildVersion: { previousBuildVers
     setSlice(visibleBarsCount);
   }, [width, visibleBarsCount]);
 
-  const { testDuration: totalDuration = 1 } = useBuildVersion<BuildSummary>(
-    '/build/summary', undefined, undefined, undefined, previousBuildVersion,
-  ) || {};
   const testsToRunParentStats = useBuildVersion<TestsToRunSummary[]>('/build/tests-to-run/parent-stats') || [];
   const summaryTestsToRun = useBuildVersion<TestsToRunSummary>('/build/summary/tests-to-run') || {};
   const testsToRunHistory = [...testsToRunParentStats, summaryTestsToRun];
