@@ -27,7 +27,7 @@ interface Props {
 interface Link {
   id: string;
   link: string;
-  icon: keyof typeof Icons;
+  name: keyof typeof Icons;
   computed?: boolean;
 }
 
@@ -37,12 +37,12 @@ const getPluginsList = (serviceGroupId: string, plugins: Plugin[]): Link[] => [
   {
     id: 'service-group-dashboard',
     link: `service-group-full-page/${serviceGroupId}/service-group-dashboard`,
-    icon: 'Dashboard',
+    name: 'Dashboard',
   },
   ...plugins.map(({ id = '', name = '' }) => ({
     id,
     link: `service-group-full-page/${serviceGroupId}/${id}`,
-    icon: name as keyof typeof Icons,
+    name: name as keyof typeof Icons,
   })),
 ];
 

@@ -3,7 +3,7 @@ import { BEM, div } from '@redneckz/react-bem-helper';
 import {
   useParams, useHistory, useLocation, matchPath,
 } from 'react-router-dom';
-import { Icons } from '@drill4j/ui-kit';
+import { Icons, Tooltip } from '@drill4j/ui-kit';
 
 import styles from './sidebar.module.scss';
 
@@ -12,7 +12,7 @@ interface Props {
   active?: 'active';
   links: Array<{
     id: string;
-    icon: keyof typeof Icons;
+    name: keyof typeof Icons;
     link: string;
     computed?: boolean;
   }>;
@@ -31,22 +31,23 @@ export const Sidebar = sidebar(
     const { pathname } = useLocation();
     const { push } = useHistory();
     const { params: { buildVersion = '', activeLink = '' } = {} } =
-        matchPath<{ buildVersion: string; activeLink: string }>(pathname, matchParams) || {};
+      matchPath<{ buildVersion: string; activeLink: string }>(pathname, matchParams) || {};
 
     return (
       <div className={className}>
         {links.map(({
-          id, icon, link, computed,
+          id, name, link, computed,
         }) => {
-          const Icon = Icons[icon] || Icons.Plugins;
+          const Icon = Icons[name] || Icons.Plugins;
           return (
-            <SidebarLink
-              key={link}
-              type={id === activeLink ? 'active' : ''}
-              onClick={() => push(`/${computed ? `full-page/${agentId}/${buildVersion}/${link}` : link}`)}
-            >
-              <Icon />
-            </SidebarLink>
+            <Tooltip message={<div>{name}</div>} position="right" key={link}>
+              <SidebarLink
+                type={id === activeLink ? 'active' : ''}
+                onClick={() => push(`/${computed ? `full-page/${agentId}/${buildVersion}/${link}` : link}`)}
+              >
+                <Icon />
+              </SidebarLink>
+            </Tooltip>
           );
         })}
       </div>
