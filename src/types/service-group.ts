@@ -1,7 +1,9 @@
-import { CommonEntity } from 'types/common-entity';
-import { Agent } from './agent';
+import { SystemSettings } from './system-settings';
 
 export interface ServiceGroup {
-  group: CommonEntity;
-  agents?: Agent[];
+  id?: string;
+  name?: string;
+  environment?: string;
+  description?: string;
+  systemSettings?: SystemSettings;
 }

@@ -1,11 +1,13 @@
 import * as React from 'react';
 import { BEM, div } from '@redneckz/react-bem-helper';
 import { useHistory } from 'react-router-dom';
-import { Panel, Icons, Badge } from '@drill4j/ui-kit';
+import {
+  Panel, Icons, Badge,
+} from '@drill4j/ui-kit';
 
 import { AGENT_STATUS } from 'common/constants';
 import { Agent } from 'types/agent';
-import { ServiceGroup } from 'types/service-group';
+import { ServiceGroupAgents } from 'types/service-group-agents';
 
 import styles from './name-column.module.scss';
 
@@ -25,7 +27,7 @@ export const NameColumn = nameColumn(
     } = {},
   }: Props) => {
     const { push } = useHistory();
-    const { agents = [] } = agent as ServiceGroup;
+    const { agents = [] } = agent as ServiceGroupAgents;
     const unregisteredAgentsCount = agents.reduce(
       (acc, item) => (item.status === AGENT_STATUS.NOT_REGISTERED ? acc + 1 : acc),
       0,
