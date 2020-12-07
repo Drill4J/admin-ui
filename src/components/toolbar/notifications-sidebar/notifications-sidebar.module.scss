@@ -4,7 +4,7 @@
   display: flex;
   flex-direction: column;
   height: 100%;
-  background-color: map-get($color-palette, white);
+  background-color: map-get($monochrome, white);
 
   &__header {
     display: flex;
@@ -13,8 +13,8 @@
     padding-left: 24px;
     font-size: 18px;
     line-height: 24px;
-    border-bottom: 1px solid map-get($color-palette, light-blue);
-    color: map-get($color-palette, black100);
+    border-bottom: 1px solid map-get($monochrome, medium-tint);
+    color: map-get($monochrome, black);
 
     & > * {
       margin-right: 8px;
@@ -29,22 +29,22 @@
   }
 
   &__actions-panel {
-    border-bottom: 1px solid map-get($color-palette, light-blue);
+    border-bottom: 1px solid map-get($monochrome, medium-tint);
     font-family: $semibold-font;
     font-size: 12px;
     line-height: 38px;
-    color: map-get($color-palette, blue100);
+    color: map-get($primary-blue, default);
 
     & > * {
       margin-right: 16px;
       cursor: pointer;
 
       &:hover {
-        color: map-get($color-palette, blue75);
+        color: map-get($primary-blue, medium-tint);
       }
 
       &:active {
-        color: map-get($color-palette, blue125);
+        color: map-get($primary-blue, shade);
       }
     }
   }
@@ -60,19 +60,19 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    color: map-get($color-palette, light-blue);
+    color: map-get($monochrome, medium-tint);
   }
 
   &__title {
     margin: 40px 0 8px 0;
-    color: map-get($color-palette, middle-blue);
+    color: map-get($monochrome, medium-tint);
     font-size: 24px;
     line-height: 32px;
     text-align: center;
   }
 
   &__sub-title {
-    color: $slate-gray;
+    color: map-get($monochrome, default);
     font-size: 14px;
     line-height: 24px;
     text-align: center;

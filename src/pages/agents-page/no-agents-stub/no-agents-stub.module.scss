@@ -8,7 +8,7 @@
   flex-direction: column;
 
   &__title {
-    color: map-get($color-palette, middle-blue);
+    color: map-get($monochrome, default);
     font-size: 24px;
     line-height: 32px;
     text-align: center;
@@ -16,13 +16,13 @@
   }
 
   &__sub-title {
-    color: $slate-gray;
+    color: map-get($monochrome, default);
     font-size: 14px;
     line-height: 24px;
     text-align: center;
   }
 
   &__link {
-    color: map-get($color-palette, blue100);
+    color: map-get($primary-blue, default);
   }
 }

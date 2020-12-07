@@ -6,7 +6,7 @@
   justify-content: space-between;
   height: 80px;
   width: 100%;
-  border-bottom: 1px solid map-get($color-palette, light-blue);
+  border-bottom: 1px solid map-get($monochrome, medium-tint);
 
   &__actions {
     display: flex;

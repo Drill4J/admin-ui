@@ -39,7 +39,7 @@
 
   &__methods-type {
     margin-left: 8px;
-    color: $slate-gray;
+    color: map-get($monochrome, default);
     font-size: 12px;
     line-height: 24px;
     text-transform: uppercase;

@@ -4,8 +4,8 @@
   &__info-panel {
     height: 48px;
     padding: 0 24px;
-    background-color: map-get($color-palette, ultra-light-blue);
-    color: $slate-gray;
+    background-color: map-get($monochrome, light-tint);
+    color: map-get($monochrome, default);
     font-size: 14px;
     line-height: 24px;
   }
@@ -25,20 +25,20 @@
 
   &__field-name {
     margin-bottom: 8px;
-    color: map-get($color-palette, black100);
+    color: map-get($monochrome, black);
     font-family: $semibold-font;
     font-size: 14px;
     line-height: 24px;
   }
 
   &__blocker-status {
-    color: $slate-gray;
+    color: map-get($monochrome, default);
     margin-left: 8px;
     line-height: 0;
     cursor: pointer;
 
     &--unlocked {
-      color: map-get($color-palette, red100);
+      color: map-get($red, default);
     }
   }
 
@@ -59,18 +59,18 @@
     height: 120px;
     font-size: 14px;
     line-height: 24px;
-    color: map-get($color-palette, dark-blue);
+    color: map-get($monochrome, black);
 
     &--disabled {
-      background-color: map-get($color-palette, ultra-light-blue);
-      color: $slate-gray;
+      background-color: map-get($monochrome, light-tint);
+      color: map-get($monochrome, default);
     }
   }
 
   &__instructions {
     max-width: 352px;
     margin-left: 24px;
-    color: $slate-gray;
+    color: map-get($monochrome, default);
     font-size: 12px;
     line-height: 20px;
   }

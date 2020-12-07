@@ -42,9 +42,8 @@
     height: 8px;
     width: 8px;
     border-radius: 4px;
-    background-color: map-get($color-palette, red100);
-    margin-right: 3px;
-    margin-left: 4px;
+    background-color: map-get($red, default);
+    margin: 0 4px;
     animation-name: blinker;
     animation-iteration-count: infinite;
     animation-timing-function: cubic-bezier(1, 0, 0, 1);
@@ -63,12 +62,12 @@
   &__recording-text {
     font-size: 12px;
     line-height: 12px;
-    color: map-get($color-palette, red100);
+    color: map-get($red, default);
     font-family: $semibold-font;
   }
 
   &__name-cell {
-    color: map-get($color-palette, blue100);
+    color: map-get($primary-blue, default);
     font-family: $semibold-font;
     cursor: pointer;
   }
@@ -89,7 +88,7 @@
   &__start-time {
     font-size: 12px;
     line-height: 20px;
-    color: $slate-gray;
+    color: map-get($monochrome, default);
     font-family: $regular-font;
   }
 
@@ -108,13 +107,13 @@
   &__coverage {
     font-size: 24px;
     line-height: 80px;
-    color: map-get($color-palette, black100);
+    color: map-get($monochrome, black);
   }
 
   &__test-type-coverage {
     font-size: 12px;
     line-height: 20px;
-    color: map-get($color-palette, black100);
+    color: map-get($monochrome, black);
     font-family: $semibold-font;
     min-width: 20px;
   }
@@ -122,7 +121,7 @@
   &__test-type-test-count {
     font-size: 12px;
     line-height: 20px;
-    color: $slate-gray;
+    color: map-get($monochrome, default);
     font-family: $regular-font;
   }
 
@@ -130,7 +129,7 @@
     display: flex;
     align-items: center;
     justify-content: flex-end;
-    color: map-get($color-palette, blue100);
+    color: map-get($primary-blue, default);
 
     & > * {
       margin-right: 24px;

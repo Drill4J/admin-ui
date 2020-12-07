@@ -2,7 +2,7 @@
 
 .items-actions {
   &__count {
-    color: $gravel-color;
+    color: map-get($monochrome, default);
     font-size: 16px;
     font-family: $light-font;
     line-height: 20px;
@@ -10,7 +10,7 @@
 
   &__action {
     margin-left: 24px;
-    color: map-get($color-palette, blue100);
+    color: map-get($primary-blue, default);
     cursor: pointer;
   }
 }

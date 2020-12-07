@@ -5,7 +5,7 @@
   flex-direction: column;
   width: 80px;
   height: 100%;
-  background-color: map-get($color-palette, ultra-light-blue);
+  background-color: map-get($monochrome, light-tint);
 
   &__link {
     display: flex;
@@ -14,13 +14,13 @@
     height: 80px;
     width: 100%;
     border-bottom: 1px solid #e4e6ec;
-    color: map-get($color-palette, blue100);
+    color: map-get($primary-blue, default);
     cursor: pointer;
 
     &--type {
       &--active {
-        color: map-get($color-palette, black50);
-        background-color: map-get($color-palette, white);
+        color: map-get($monochrome, default);
+        background-color: map-get($monochrome, white);
       }
     }
   }

@@ -8,12 +8,12 @@
   &__header {
     display: flex;
     align-items: center;
-    height: 63px;
+    height: 64px;
     padding-left: 24px;
-    border-bottom: 1px solid map-get($color-palette, light-blue);
+    border-bottom: 1px solid map-get($monochrome, medium-tint);
     font-size: 18px;
     line-height: 24px;
-    color: map-get($color-palette, black100);
+    color: map-get($monochrome, black);
 
     & > * {
       margin-right: 8px;
@@ -30,8 +30,8 @@
   &__notification-panel {
     height: 40px;
     padding: 0 24px;
-    font-size: 13px;
-    background-color: map-get($color-palette, light-blue);
+    font-size: 14px;
+    background-color: map-get($monochrome, medium-tint);
     line-height: 20px;
     opacity: 0.5;
   }
@@ -39,14 +39,13 @@
   &__bold {
     margin: 0 4px;
     font-family: $semibold-font;
-    font-size: 13px;
     line-height: 20px;
   }
 
   &__filter {
     margin-top: 14px;
     margin-left: 24px;
-    color: map-get($color-palette, blue100);
+    color: map-get($primary-blue, default);
   }
 
   &__methods-list {
@@ -82,6 +81,6 @@
 
   &__methods-package {
     width: 320px;
-    color: $slate-gray;
+    color: map-get($monochrome, default);
   }
 }

@@ -6,10 +6,10 @@
 
     &--type {
       &--increase {
-        color: map-get($color-palette, green100);
+        color: map-get($green, default);
       }
       &--decrease {
-        color: map-get($color-palette, red100);
+        color: map-get($red, default);
       }
     }
   }

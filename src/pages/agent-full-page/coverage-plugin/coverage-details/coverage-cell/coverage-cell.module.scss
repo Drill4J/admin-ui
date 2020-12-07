@@ -12,15 +12,15 @@
 
     &--type {
       &--success {
-        color: map-get($color-palette, green100);
+        color: map-get($green, default);
       }
 
       &--warning {
-        color: map-get($color-palette, yellow50);
+        color: map-get($orange, default);
       }
 
       &--error {
-        color: map-get($color-palette, red100);
+        color: map-get($red, default);
       }
     }
   }

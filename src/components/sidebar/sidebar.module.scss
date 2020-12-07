@@ -4,7 +4,7 @@
   width: 100%;
   min-width: 80px;
   height: 100%;
-  background-color: $athens-gray;
+  background-color: map-get($monochrome, light-tint);
 
   &__logo {
     display: flex;
@@ -21,15 +21,15 @@
     justify-content: center;
     height: 80px;
     width: 100%;
-    border-bottom: 1px solid map-get($color-palette, light-blue);
-    border-top: 1px solid map-get($color-palette, light-blue);
+    border-bottom: 1px solid map-get($monochrome, medium-tint);
+    border-top: 1px solid map-get($monochrome, medium-tint);
     cursor: pointer;
-    color: map-get($color-palette, middle-blue);
+    color: map-get($monochrome, default);
 
     &--type {
       &--active {
-        color: map-get($color-palette, white);
-        background-color: map-get($color-palette, blue100);
+        color: map-get($monochrome, white);
+        background-color: map-get($primary-blue, default);
       }
     }
   }
