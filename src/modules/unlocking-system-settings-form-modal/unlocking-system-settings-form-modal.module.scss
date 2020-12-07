@@ -5,7 +5,7 @@
 
   &__header-icon {
     display: flex;
-    color: map-get($color-palette, red100);
+    color: map-get($red, default);
   }
 
   &__content {

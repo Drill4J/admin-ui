@@ -16,11 +16,11 @@
   }
 
   &__breadcrumbs {
-    color: $slate-gray;
+    color: map-get($monochrome, default);
   }
 
   &__divider {
-    background-color: map-get($color-palette, light-blue);
+    background-color: map-get($monochrome, medium-tint);
     height: 20px;
     width: 1px;
     margin-right: 16px;
@@ -31,11 +31,11 @@
     align-items: center;
     font-size: 12px;
     line-height: 20px;
-    color: $slate-gray;
+    color: map-get($monochrome, default);
   }
 
   &__icon-notification {
-    color: map-get($color-palette, blue100);
+    color: map-get($primary-blue, default);
     cursor: pointer;
   }
 
@@ -48,13 +48,13 @@
     padding: 0px 4px;
     border-radius: 10px;
     font-family: $semibold-font;
-    color: map-get($color-palette, middle-blue);
-    background-color: map-get($color-palette, light-blue);
+    color: map-get($monochrome, default);
+    background-color: map-get($monochrome, medium-tint);
 
     &--unread {
-      font-size: 11px;
-      color: map-get($color-palette, white);
-      background-color: map-get($color-palette, red100);
+      font-size: 12px;
+      color: map-get($monochrome, white);
+      background-color: map-get($red, default);
     }
   }
 
@@ -63,7 +63,7 @@
     font-size: 12px;
     line-height: 20px;
     font-family: $semibold-font;
-    color: map-get($color-palette, blue100);
+    color: map-get($primary-blue, default);
     cursor: pointer;
   }
 }

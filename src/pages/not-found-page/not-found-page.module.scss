@@ -20,19 +20,19 @@
 
   &__title {
     margin-bottom: 26px;
-    color: map-get($color-palette, dark-blue);
+    color: map-get($monochrome, black);
     font-size: 64px;
-    line-height: 87px;
+    line-height: 86px;
   }
 
   &__message {
-    color: $slate-gray;
+    color: map-get($monochrome, default);
     font-size: 16px;
     line-height: 28px;
   }
 
   &__error-code {
-    color: map-get($color-palette, dark-blue);
+    color: map-get($monochrome, black);
     font-size: 14px;
     line-height: 40px;
     font-family: $semibold-font;

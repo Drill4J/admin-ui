@@ -8,12 +8,12 @@
   &__header {
     display: flex;
     align-items: center;
-    height: 63px;
-    border-bottom: 1px solid map-get($color-palette, light-blue);
+    height: 64px;
+    border-bottom: 1px solid map-get($monochrome, medium-tint);
     padding-left: 24px;
     font-size: 18px;
     line-height: 24px;
-    color: map-get($color-palette, black100);
+    color: map-get($monochrome, black);
 
     & > * {
       margin-right: 8px;
@@ -26,9 +26,9 @@
     padding: 10px 24px;
     font-size: 14px;
     line-height: 20px;
-    background-color: map-get($color-palette, light-blue);
+    background-color: map-get($monochrome, medium-tint);
     overflow-wrap: break-word;
-    color: $slate-gray;
+    color: map-get($monochrome, default);
 
     & > * {
       margin-bottom: 8px;
@@ -37,7 +37,7 @@
 
   &__bold {
     font-family: $semibold-font;
-    font-size: 13px;
+    font-size: 14px;
     line-height: 20px;
   }
 
@@ -52,11 +52,11 @@
   &__copy-icon {
     display: none;
     margin-left: 36px;
-    color: map-get($color-palette, blue100);
+    color: map-get($primary-blue, default);
     cursor: pointer;
 
     &:active {
-      color: map-get($color-palette, blue125);
+      color: map-get($primary-blue, shade);
     }
   }
 
@@ -70,7 +70,7 @@
   &__filter {
     margin-top: 14px;
     margin-left: 24px;
-    color: map-get($color-palette, blue100);
+    color: map-get($primary-blue, default);
   }
 
   &__methods-list {

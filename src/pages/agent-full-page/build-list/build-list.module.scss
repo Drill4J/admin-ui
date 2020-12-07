@@ -7,14 +7,14 @@
 
   &__title {
     height: 58px;
-    color: map-get($color-palette, black100);
+    color: map-get($monochrome, black);
     font-family: $regular-font;
     font-size: 20px;
     line-height: 24px;
   }
 
   &__items-count {
-    color: map-get($color-palette, middle-blue);
+    color: map-get($monochrome, default);
     font-size: 18px;
     font-family: $light-font;
     line-height: 24px;
@@ -22,7 +22,7 @@
   }
 
   &__name-cell {
-    color: map-get($color-palette, blue100);
+    color: map-get($primary-blue, default);
     cursor: pointer;
     font-family: $semibold-font;
   }

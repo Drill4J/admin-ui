@@ -4,7 +4,7 @@
   opacity: 0.75;
   font-size: 12px;
   line-height: 32px;
-  color: $slate-gray;
+  color: map-get($monochrome, default);
 
   &__content-wrapper {
     padding: 0 24px;
@@ -12,7 +12,7 @@
 
   &__content {
     width: 100%;
-    border-top: 1px solid map-get($color-palette, light-blue);
+    border-top: 1px solid map-get($monochrome, medium-tint);
   }
 
   &__admin-info {
@@ -24,7 +24,7 @@
 
   &__link {
     text-decoration: none;
-    color: $slate-gray;
+    color: map-get($monochrome, default);
     &:not(:last-child)::after {
       content: '\2022';
       margin: 0 8px;

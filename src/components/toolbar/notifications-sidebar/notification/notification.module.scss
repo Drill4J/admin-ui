@@ -8,8 +8,8 @@
     padding: 0px 16px;
     height: 80px;
     font-size: 12px;
-    color: $slate-gray;
-    border-bottom: 1px solid map-get($color-palette, light-blue);
+    color: map-get($monochrome, default);
+    border-bottom: 1px solid map-get($monochrome, medium-tint);
 
     & > *:not(:last-child) {
       margin-bottom: 4px;
@@ -41,8 +41,8 @@
     display: flex;
     justify-content: space-between;
     height: 20px;
-    font-size: 13px;
-    color: map-get($color-palette, dark-blue);
+    font-size: 12px;
+    color: map-get($monochrome, black);
 
     &--unread {
       font-family: $semibold-font;
@@ -54,17 +54,17 @@
     width: 8px;
     margin-right: 8px;
     border-radius: 4px;
-    background-color: map-get($color-palette, black15);
+    background-color: map-get($monochrome, medium-tint);
 
     &--unread {
-      background-color: $slate-gray;
+      background-color: map-get($monochrome, default);
     }
   }
 
   &__button-group {
     display: none;
     width: 48px;
-    color: map-get($color-palette, blue100);
+    color: map-get($primary-blue, default);
 
     & > * {
       margin-left: 16px;
@@ -73,7 +73,7 @@
 
   &__mark-as-read-button {
     height: 16px;
-    color: map-get($color-palette, blue100);
+    color: map-get($primary-blue, default);
     cursor: pointer;
 
     &--read {
@@ -81,39 +81,39 @@
     }
 
     &:hover {
-      color: map-get($color-palette, blue75);
+      color: map-get($primary-blue, medium-tint);
     }
 
     &:active {
-      color: map-get($color-palette, blue125);
+      color: map-get($primary-blue, shade);
     }
   }
 
   &__delete-notification-button {
     height: 16px;
-    color: map-get($color-palette, red100);
+    color: map-get($red, default);
     cursor: pointer;
 
     &:hover {
-      color: map-get($color-palette, red50);
+      color: map-get($red, medium-tint);
     }
 
     &:active {
-      color: map-get($color-palette, red125);
+      color: map-get($red, shade);
     }
   }
 
   &__link-to-dashboard {
     text-decoration: none;
-    color: map-get($color-palette, blue100);
+    color: map-get($primary-blue, default);
     cursor: pointer;
 
     &:hover {
-      color: map-get($color-palette, blue75);
+      color: map-get($primary-blue, medium-tint);
     }
 
     &:active {
-      color: map-get($color-palette, blue125);
+      color: map-get($primary-blue, shade);
     }
 
     &::after {
@@ -123,7 +123,7 @@
   }
 
   &__notification-button {
-    color: map-get($color-palette, blue100);
+    color: map-get($primary-blue, default);
     cursor: not-allowed;
     opacity: 0.5;
   }

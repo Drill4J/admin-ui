@@ -15,7 +15,7 @@
   }
 
   &__title {
-    color: map-get($color-palette, dark-blue);
+    color: map-get($monochrome, black);
     font-size: 32px;
     line-height: $common-element-height;
     text-align: center;
@@ -24,7 +24,7 @@
   &__sub-title {
     margin-top: 8px;
     padding: 0 40px;
-    color: $slate-gray;
+    color: map-get($monochrome, default);
     font-size: 16px;
     line-height: 28px;
     text-align: center;
@@ -50,7 +50,7 @@
   &__forgot-password {
     margin-top: 8px;
     margin-bottom: 42px;
-    color: map-get($color-palette, blue100);
+    color: map-get($primary-blue, default);
     font-family: $semibold-font;
     font-size: 14px;
     line-height: 22px;
@@ -65,7 +65,7 @@
 
   &__copyright {
     margin-top: 130px;
-    color: $slate-gray;
+    color: map-get($monochrome, default);
     font-family: $regular-font;
     font-size: 12px;
     line-height: 24px;

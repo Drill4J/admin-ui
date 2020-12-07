@@ -24,21 +24,21 @@
     height: 50px;
     width: 100%;
     flex-shrink: 0;
-    border-bottom: 1px solid map-get($color-palette, light-blue);
+    border-bottom: 1px solid map-get($monochrome, medium-tint);
   }
 
   &__header {
     height: 112px;
     width: 100%;
     flex-shrink: 0;
-    border-bottom: 1px solid map-get($color-palette, light-blue);
+    border-bottom: 1px solid map-get($monochrome, medium-tint);
   }
 
   &__breadcrumbs {
     height: 40px;
     width: 100%;
     flex-shrink: 0;
-    border-bottom: 1px solid map-get($color-palette, light-blue);
+    border-bottom: 1px solid map-get($monochrome, medium-tint);
   }
 
   &__overflow-wrapper {

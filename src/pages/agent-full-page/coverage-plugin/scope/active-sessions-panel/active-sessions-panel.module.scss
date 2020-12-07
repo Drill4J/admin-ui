@@ -1,16 +1,16 @@
 @import '~common/style-guide/index';
 
 .active-sessions-panel {
-  background-color: rgba(map-get($color-palette, yellow50), 0.1);
   display: flex;
   flex-direction: column;
+  background-color: map-get($orange, light-tint);
 
   &__content {
     margin: 8px 24px;
   }
 
   &__icon {
-    color: #ffa000;
+    color: map-get($orange, default);
     margin-right: 8px;
   }
 

@@ -19,7 +19,7 @@
     height: 80px;
     width: 80px;
     border-radius: 50%;
-    border: 2px solid map-get($color-palette, black100);
+    border: 2px solid map-get($monochrome, black);
     &--recording {
       &:before {
         content: '';
@@ -86,16 +86,16 @@
 
     &--status {
       &--online {
-        color: map-get($color-palette, green100);
+        color: map-get($green, default);
       }
       &--offline {
-        color: map-get($color-palette, middle-blue);
+        color: map-get($monochrome, default);
       }
       &--not-registered {
-        color: map-get($color-palette, red100);
+        color: map-get($red, default);
       }
       &--busy {
-        color: map-get($color-palette, yellow50);
+        color: map-get($orange, default);
       }
     }
   }
@@ -110,9 +110,9 @@
     justify-content: center;
     height: 32px;
     width: 32px;
-    border: 1px solid map-get($color-palette, blue100);
+    border: 1px solid map-get($primary-blue, default);
     border-radius: 16px;
-    color: map-get($color-palette, blue100);
+    color: map-get($primary-blue, default);
     cursor: pointer;
   }
 }

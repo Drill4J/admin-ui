@@ -3,15 +3,15 @@
 .card {
   height: 160px;
   width: 100%;
-  border: 1px solid map-get($color-palette, light-blue);
-  background-color: map-get($color-palette, ultra-light-blue);
+  border: 1px solid map-get($monochrome, medium-tint);
+  background-color: map-get($monochrome, light-tint);
 
   &__header {
     margin: 16px;
     line-height: 20px;
-    font-size: 13px;
+    font-size: 14px;
     font-family: $semibold-font;
-    color: $slate-gray;
+    color: map-get($monochrome, default);
     text-transform: uppercase;
   }
 
