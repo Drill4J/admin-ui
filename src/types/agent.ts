@@ -16,4 +16,5 @@ export interface Agent extends CommonEntity {
   agentType?: string;
   agentVersion?: string;
   systemSettings?: SystemSettings;
+  instanceIds?: string[];
 }

@@ -21,24 +21,18 @@ const agentsPage = BEM(styles);
 
 export const AgentsPage = agentsPage(({ className }: Props) => {
   const { push } = useHistory();
-  const { single = [], grouped = [] } = useWsConnection<{ single: Agent[]; grouped: ServiceGroup[] }>(
-    defaultAdminSocket,
-    '/agents',
-  ) || {};
   const agentsList = useWsConnection<Agent[]>(
     defaultAdminSocket,
     '/api/agents',
   ) || [];
+  const serviceGroups = useWsConnection<ServiceGroup[]>(defaultAdminSocket, '/api/groups') || [];
   const agents = [
-    ...grouped
-      .map(({ group, agents: groupedAgents }: ServiceGroup) => ({
-        ...group,
-        agents: groupedAgents,
-        agentType: 'ServiceGroup',
-      }))
-      .flat(),
-    ...single,
-    ...agentsList.filter((agent) => !agent.agentVersion && agent.agentType === 'Java'),
+    ...serviceGroups.map((serviceGroup) => ({
+      ...serviceGroup,
+      agentType: 'ServiceGroup',
+      agents: agentsList.filter((agent) => agent.serviceGroup === serviceGroup.id),
+    })),
+    ...agentsList.filter(({ serviceGroup }) => !serviceGroup),
   ];
 
   return (

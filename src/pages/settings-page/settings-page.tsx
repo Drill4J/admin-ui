@@ -3,14 +3,12 @@ import { BEM } from '@redneckz/react-bem-helper';
 import { useParams } from 'react-router-dom';
 import { Panel, Icons, Menu } from '@drill4j/ui-kit';
 
-import { toggleAgent } from 'api';
 import { useCommonEntity } from 'hooks';
 import { PageHeader } from 'components';
 import { AGENT_STATUS } from 'common/constants';
-import { NotificationManagerContext } from 'notification-manager';
 import { Agent } from 'types/agent';
 import { UnregisterAgentModal } from './unregister-agent-modal';
-import { AgentStatusToggler } from '../agents-page/agent-status-toggler';
+import { AgentStatusToggle } from '../agents-page/agent-status-toggle';
 import { AgentSettings } from './agent-settings';
 import { ServiceGroupSettings } from './service-group-settings';
 
@@ -28,7 +26,6 @@ export const SettingsPage = settingsPage(
   }: Props) => {
     const { id = '', type = '' } = useParams<{ id: string, type: string}>();
     const data = useCommonEntity(id, type) || {};
-    const { showMessage } = React.useContext(NotificationManagerContext);
     const [isUnregisterModalOpen, setIsUnregisterModalOpen] = React.useState(false);
 
     return (
@@ -42,10 +39,7 @@ export const SettingsPage = settingsPage(
               ) : (
                 <>
                   Agent Settings
-                  <AgentStatus
-                    status={(data as Agent).status}
-                    onChange={() => toggleAgent(data.id, (data as Agent).status, showMessage)}
-                  />
+                  <AgentStatus agent={(data as Agent)} />
                 </>
               )}
             </Panel>
@@ -85,4 +79,4 @@ export const SettingsPage = settingsPage(
 );
 
 const HeaderIcon = settingsPage.headerIcon(Icons.Settings);
-const AgentStatus = settingsPage.agentStatus(AgentStatusToggler);
+const AgentStatus = settingsPage.agentStatus(AgentStatusToggle);
