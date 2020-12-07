@@ -11,12 +11,16 @@ import { TestCoverageInfo } from 'types/test-coverage-info';
 import { FilterList } from 'types/filter-list';
 import { Metrics } from 'types/metrics';
 import { Search } from 'types/search';
+import { BuildSummary } from 'types/build-summary';
+import { TestsInfo } from 'types/tests-info';
 import { useBuildVersion, useAgent } from 'hooks';
 import { CoveredMethodsByTestSidebar } from 'modules';
 import { capitalize } from 'utils';
 import { DATA_VISUALIZATION_COLORS } from 'common/constants';
 import { TestsToRunHeader } from './tests-to-run-header';
 import { BarChart } from './bar-chart';
+import { NoTestsToRunStub } from './no-tests-to-run-stub';
+import { NoDataStub } from './no-data-stub';
 
 import styles from './tests-to-run-list.module.scss';
 
@@ -40,6 +44,12 @@ export const TestsToRunList = testsToRunList(({ className, agentType = 'Agent' }
   const { buildVersion = '', agentId = '' } = useParams<{ buildVersion: string; agentId: string; }>();
   const { buildVersion: activeBuildVersion = '' } = useAgent(agentId) || {};
   const { version: previousBuildVersion = '' } = useBuildVersion<ParentBuild>('/data/parent') || {};
+  const { tests: previousBuildTests = [], testDuration: totalDuration = 1 } = useBuildVersion<BuildSummary>(
+    '/build/summary', undefined, undefined, undefined, previousBuildVersion,
+  ) || {};
+  const { AUTO } = previousBuildTests
+    .reduce((test, testType) => ({ ...test, [testType.type]: testType }), {}) as TestsInfo;
+  const previousBuildAutoTestsCount = AUTO?.summary?.testCount || 0;
 
   return (
     <div className={className}>
@@ -59,7 +69,7 @@ export const TestsToRunList = testsToRunList(({ className, agentType = 'Agent' }
           ]}
         />
       </Panel>
-      <BarChart buildVersion={{ activeBuildVersion, previousBuildVersion }} />
+      {previousBuildAutoTestsCount ? <BarChart activeBuildVersion={activeBuildVersion} totalDuration={totalDuration} /> : <NoDataStub />}
       <Title data-test="tests-to-run-list:title">ALL SUGGESTED TESTS ({totalCount})</Title>
       <div>
         <SearchPanel
@@ -128,6 +138,7 @@ export const TestsToRunList = testsToRunList(({ className, agentType = 'Agent' }
           />,
         </Table>
       </div>
+      {!testsToRun.length && <NoTestsToRunStub />}
       {Boolean(selectedTest) && (
         <CoveredMethodsByTestSidebar
           isOpen={Boolean(selectedTest)}
