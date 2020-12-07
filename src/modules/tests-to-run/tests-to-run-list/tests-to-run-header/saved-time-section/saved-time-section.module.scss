@@ -1,0 +1,46 @@
+@import '~common/style-guide/index';
+
+.saved-time-section {
+  border-left: 1px solid map-get($monochrome, medium-tint);
+  color: map-get($monochrome, default);
+
+  &__content {
+    margin-left: 16px;
+  }
+
+  &__title {
+    font-size: 12px;
+    line-height: 16px;
+    font-family: $semibold-font;
+    text-transform: uppercase;
+  }
+
+  &__value {
+    gap: 8px;
+    margin-top: 8px;
+    font-size: 20px;
+    line-height: 20px;
+    color: map-get($monochrome, black);
+  }
+
+  &__duration {
+    font-family: $regular-font;
+  }
+
+  &__message {
+    text-align: center;
+  }
+
+  &__percentage {
+    font-family: $semibold-font;
+
+    &::before {
+      content: '';
+      display: inline-block;
+      width: 1px;
+      height: 16px;
+      margin: auto 8px auto 0;
+      background-color: map-get($monochrome, black);
+    }
+  }
+}
