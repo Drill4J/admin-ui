@@ -3,15 +3,11 @@
 .login-page {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
   height: 100%;
-  box-sizing: border-box;
 
-  &__logo {
-    height: 158px;
-    width: 349px;
-    margin-bottom: 33px;
+  &__content {
+    height: 100%;
+    padding: 0 64px;
   }
 
   &__title {
@@ -23,48 +19,55 @@
 
   &__sub-title {
     margin-top: 8px;
-    padding: 0 40px;
     color: map-get($monochrome, default);
     font-size: 16px;
-    line-height: 28px;
+    line-height: 24px;
     text-align: center;
   }
 
   &__error {
+    width: 100%;
     margin-top: 16px;
   }
 
   &__sign-in-form {
-    margin-top: 32px;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    row-gap: 24px;
+    margin-top: 24px;
 
     & > * {
-      margin-bottom: 16px;
       height: $common-element-height;
-      width: 320px;
+      width: 352px;
     }
   }
 
   &__forgot-password {
-    margin-top: 8px;
-    margin-bottom: 42px;
+    margin-top: 24px;
     color: map-get($primary-blue, default);
     font-family: $semibold-font;
     font-size: 14px;
-    line-height: 22px;
+    line-height: 20px;
     opacity: 0.25;
   }
 
-  &__login-page-button-wrapepr {
+  &__login-button,
+  &__login-as-guest-button {
     display: flex;
     flex-direction: column;
-    width: 320px;
+    width: 352px;
+  }
+
+  &__login-button {
+    margin-top: 24px;
+  }
+
+  &__login-as-guest-button {
+    margin-top: 40px;
   }
 
   &__copyright {
-    margin-top: 130px;
+    margin-bottom: 24px;
     color: map-get($monochrome, default);
     font-family: $regular-font;
     font-size: 12px;
