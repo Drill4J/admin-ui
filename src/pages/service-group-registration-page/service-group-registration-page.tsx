@@ -71,7 +71,7 @@ export const ServiceGroupRegistrationPage = serviceGroupRegistrationPage(
               />
             )}
             validate={composeValidators(
-              requiredArray('systemSettings.packages', 'Package prefixes'),
+              requiredArray('systemSettings.packages', 'Path prefix is required.'),
               sizeLimit({
                 name: 'systemSettings.sessionIdHeaderName',
                 alias: 'Session header name',
