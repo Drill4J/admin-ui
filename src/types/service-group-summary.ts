@@ -1,3 +1,4 @@
+import { Count } from './count';
 import { RisksSummary } from './risks-summary';
 import { TestCount } from './test-count';
 import { TestTypeSummary } from './test-type-summary';
@@ -8,10 +9,7 @@ export interface Summary {
   buildVersion?: string;
   summary?: {
     coverage?: number;
-    coverageCount?: {
-      covered?: number;
-      total?: number;
-    };
+    coverageCount?: Count;
     risks?: number;
     testsToRun?: number;
   };
@@ -22,13 +20,11 @@ export interface ServiceGroupSummary {
   summaries?: Summary[];
   aggregated?: {
     coverage?: number;
-    coverageCount?: {
-      covered?: number;
-      total?: number;
-    };
+    coverageCount?: Count;
+    methodCount: Count;
     riskCounts?: RisksSummary;
-    tests: TestTypeSummary[],
-    testsToRun: TestCount,
+    tests: TestTypeSummary[];
+    testsToRun: TestCount;
     scopeCount?: number;
     recommendations?: string[];
   };

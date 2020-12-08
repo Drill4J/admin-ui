@@ -10,16 +10,16 @@ import { MethodsTooltip } from './methods-tooltip';
 interface Props {
   className?: string;
   totalCoverage?: number;
-  coverageCount?: Count;
+  methodCount?: Count;
 }
 
-export const CoverageSection = ({ className, totalCoverage = 0, coverageCount: { total = 0, covered = 0 } = {} }: Props) => (
+export const CoverageSection = ({ className, totalCoverage = 0, methodCount: { total = 0, covered = 0 } = {} }: Props) => (
   <div className={className}>
     <DashboardSection
       label="Build Coverage"
       info={`${percentFormatter(totalCoverage)}%`}
       graph={(
-        <Tooltip message={<MethodsTooltip data={{ coveredMethods: { total, covered } }} />}>
+        <Tooltip message={<MethodsTooltip coveredMethods={{ total, covered }} />}>
           <SingleBar
             width={108}
             height={128}
