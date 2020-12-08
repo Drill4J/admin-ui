@@ -31,7 +31,7 @@ export const Dashboard = dashboard(({
           aggregated: {
             scopeCount = 0,
             coverage = 0,
-            coverageCount = {},
+            methodCount = {},
             tests = [],
             testsToRun = {},
             riskCounts = {},
@@ -44,7 +44,7 @@ export const Dashboard = dashboard(({
             pluginLink={`/service-group-full-page/${serviceGroupId}/${pluginId}`}
             key={pluginId}
           >
-            <CoverageSection totalCoverage={coverage} coverageCount={coverageCount} />
+            <CoverageSection totalCoverage={coverage} methodCount={methodCount} />
             <TestsSection testsType={tests} scopeCount={scopeCount} />
             <RisksSection risks={riskCounts} />
             <TestsToRunSection testsToRun={testsToRun} />
