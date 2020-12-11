@@ -16,6 +16,7 @@ import { TestTypeSummary } from 'types/test-type-summary';
 import { TestSummary } from 'types/test-summary';
 import { TableActionsProvider } from 'modules';
 import { useAgent, useBuildVersion } from 'hooks';
+import { AGENT_STATUS } from 'common/constants';
 import { ProjectMethodsCards } from '../../project-methods-cards';
 import { CoverageDetails } from '../../coverage-details';
 import { TestDetails } from '../../test-details';
@@ -46,7 +47,7 @@ export const ScopeInfo = scopeInfo(
   }: Props) => {
     const { showMessage } = React.useContext(NotificationManagerContext);
     const { agentId, loading } = usePluginState();
-    const { buildVersion: activeBuildVersion = '' } = useAgent(agentId) || {};
+    const { buildVersion: activeBuildVersion = '', status } = useAgent(agentId) || {};
     const { pluginId = '', scopeId = '', buildVersion } = useParams<{ pluginId: string, scopeId: string, buildVersion: string }>();
     const dispatch = useCoveragePluginDispatch();
     const scope = useBuildVersion<ActiveScope>(`/scope/${scopeId}`);
@@ -105,12 +106,14 @@ export const ScopeInfo = scopeInfo(
           <div className={className}>
             <Header>
               <ScopeName data-test="scope-info:scope-name" title={name}>{name}</ScopeName>
-              <Panel>
-                {active && <ScopeSessionIndicator active={loading} />}
-                <ScopeStatus active={active} loading={loading} enabled={enabled} started={started} finished={finished} />
-              </Panel>
+              {status === AGENT_STATUS.ONLINE && (
+                <Panel>
+                  {active && <ScopeSessionIndicator active={loading} />}
+                  <ScopeStatus active={active} loading={loading} enabled={enabled} started={started} finished={finished} />
+                </Panel>
+              )}
               <Panel align="end">
-                {active && (
+                {active && status === AGENT_STATUS.ONLINE && (
                   <FinishScopeButton
                     type="primary"
                     size="large"
@@ -121,7 +124,8 @@ export const ScopeInfo = scopeInfo(
                     <span>Finish Scope</span>
                   </FinishScopeButton>
                 )}
-                {activeBuildVersion === buildVersion && <Menu items={menuActions as MenuItemType[]} />}
+                {activeBuildVersion === buildVersion && status === AGENT_STATUS.ONLINE
+                  && <Menu items={menuActions as MenuItemType[]} />}
               </Panel>
             </Header>
             <RoutingTabsPanel>
