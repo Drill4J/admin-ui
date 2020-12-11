@@ -24,14 +24,15 @@ const actionsColumn = BEM(styles);
 
 export const ActionsColumn = actionsColumn(({ className, agent }: Props) => {
   const {
-    id: agentId = '', status, agentType = '', agentVersion = '',
+    id: agentId = '', status, agentType = '',
   } = agent;
   const { push } = useHistory();
   const { agents = [] } = agent as ServiceGroup;
   const unregisteredAgentsCount = agents.reduce(
     (acc, { status: agentStatus }) => (agentStatus === AGENT_STATUS.NOT_REGISTERED ? acc + 1 : acc), 0,
   );
-  const isOfflineAgent = agentType === 'Java' && !agentVersion;
+  const hasOfflineAgent = agents.some(({ status: agentStatus }) => agentStatus === AGENT_STATUS.OFFLINE);
+
   return (
     <div className={className}>
       <Content align="end">
@@ -58,7 +59,7 @@ export const ActionsColumn = actionsColumn(({ className, agent }: Props) => {
           height={16}
           width={16}
           data-test="action-column:icons-settings"
-          disabled={status === AGENT_STATUS.NOT_REGISTERED || isOfflineAgent}
+          disabled={(status && status !== AGENT_STATUS.ONLINE) || hasOfflineAgent || unregisteredAgentsCount > 0}
         />
       </Content>
     </div>

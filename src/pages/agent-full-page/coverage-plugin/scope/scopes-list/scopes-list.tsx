@@ -12,6 +12,7 @@ import { NotificationManagerContext } from 'notification-manager';
 import { ScopeSummary } from 'types/scope-summary';
 import { TestTypeSummary } from 'types/test-type-summary';
 import { useActiveScope, useAgent, useBuildVersion } from 'hooks';
+import { AGENT_STATUS } from 'common/constants';
 import { toggleScope } from '../../api';
 import { usePluginState } from '../../../store';
 import { useCoveragePluginDispatch, useCoveragePluginState, openModal } from '../../store';
@@ -38,7 +39,7 @@ export const ScopesList = scopesList(({ className }: Props) => {
     activeSessions: { testTypes = [] },
   } = useCoveragePluginState();
   const { agentId } = usePluginState();
-  const { buildVersion: activeBuildVersion = '' } = useAgent(agentId) || {};
+  const { buildVersion: activeBuildVersion = '', status } = useAgent(agentId) || {};
   const { pluginId = '', buildVersion = '' } = useParams<{ pluginId: string; buildVersion: string }>();
   const { push } = useHistory();
   const dispatch = useCoveragePluginDispatch();
@@ -77,11 +78,13 @@ export const ScopesList = scopesList(({ className }: Props) => {
                       data-test="scopes-list:scope-name"
                     >
                       <ScopeName title={value}>{value}</ScopeName>
-                      <Panel>
-                        <ScopeTimer started={started} finished={finished} active={active} size="small" />
-                        {active && <ActiveBadge>Active</ActiveBadge>}
-                        {!enabled && <IgnoreBadge>Ignored</IgnoreBadge>}
-                      </Panel>
+                      {status === AGENT_STATUS.ONLINE && (
+                        <Panel>
+                          <ScopeTimer started={started} finished={finished} active={active} size="small" />
+                          {active && <ActiveBadge>Active</ActiveBadge>}
+                          {!enabled && <IgnoreBadge>Ignored</IgnoreBadge>}
+                        </Panel>
+                      )}
                     </NameCell>
                   )}
                 />
@@ -179,7 +182,7 @@ export const ScopesList = scopesList(({ className }: Props) => {
                     );
                   }}
                 />
-                {activeBuildVersion === buildVersion && (
+                {activeBuildVersion === buildVersion && status === AGENT_STATUS.ONLINE && (
                   <Column
                     name="actions"
                     HeaderCell={() => null}

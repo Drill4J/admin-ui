@@ -13,6 +13,7 @@ import {
   QualityGate,
   QualityGateSettings,
 } from 'types/quality-gate-type';
+import { AGENT_STATUS } from 'common/constants';
 import { Metrics } from 'types/metrics';
 import { useAgent, useBuildVersion } from 'hooks';
 import { Baseline } from 'types/baseline';
@@ -44,7 +45,7 @@ export const CoveragePluginHeader = coveragePluginHeader(({ className, previousB
     agentId: string;
     buildVersion: string;
   }>();
-  const { buildVersion: activeBuildVersion = '' } = useAgent(agentId) || {};
+  const { buildVersion: activeBuildVersion = '', status: agentStatus } = useAgent(agentId) || {};
 
   const conditionSettings = useBuildVersion<ConditionSetting[]>('/data/quality-gate-settings') || [];
   const {
@@ -83,7 +84,7 @@ export const CoveragePluginHeader = coveragePluginHeader(({ className, previousB
             Build:
             <Version data-test="coverage-plugin-header:build-version">{buildVersion}</Version>
           </CurrentBuild>
-          {baselineInfo && (
+          {baselineInfo && agentStatus === AGENT_STATUS.ONLINE && (
             <BaselinePanel>
               <Checkbox
                 label="Baseline"
@@ -105,7 +106,7 @@ export const CoveragePluginHeader = coveragePluginHeader(({ className, previousB
         </Panel>
       </div>
       <Actions>
-        {activeBuildVersion === buildVersion && (
+        {activeBuildVersion === buildVersion && agentStatus === AGENT_STATUS.ONLINE && (
           <QualityGateSection>
             <Panel>
               <QualityGateLabel data-test="coverage-plugin-header:quality-gate-label">

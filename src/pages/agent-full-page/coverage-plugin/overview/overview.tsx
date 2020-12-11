@@ -10,6 +10,7 @@ import { TestTypeSummary } from 'types/test-type-summary';
 import { useActiveScope, useAgent, useBuildVersion } from 'hooks';
 import { TableActionsProvider } from 'modules';
 import { ParentBuild } from 'types/parent-build';
+import { AGENT_STATUS } from 'common/constants';
 import { CoveragePluginHeader } from '../coverage-plugin-header';
 import { CoverageDetails } from '../coverage-details';
 import { ProjectMethodsCards } from '../project-methods-cards';
@@ -66,7 +67,7 @@ export const Overview = overview(({ className }: Props) => {
       </RoutingTabsPanel>
       <InfoPanel>
         <SummaryPanel direction="column" verticalAlign="stretch">
-          {scope?.active ? (
+          {(scope?.active && status === AGENT_STATUS.ONLINE) ? (
             <ActiveBuildCoverageInfo
               buildCoverage={buildCoverage}
               previousBuildVersion={previousBuildVersion}
@@ -86,7 +87,7 @@ export const Overview = overview(({ className }: Props) => {
             ? <ProjectMethodsCards methods={buildMethods} />
             : <ProjectTestsCards allTests={allTests} testsByType={testsByType} />}
         </SummaryPanel>
-        {scope?.active && <ActiveScopeInfo scope={scope} />}
+        {scope?.active && status === AGENT_STATUS.ONLINE && <ActiveScopeInfo scope={scope} />}
       </InfoPanel>
       <TabContent>
         {selectedTab === 'methods' ? (

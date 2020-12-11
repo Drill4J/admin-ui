@@ -6,6 +6,7 @@ import { Panel, Spinner, Icons } from '@drill4j/ui-kit';
 import { AGENT_STATUS } from 'common/constants';
 import { capitalize } from 'utils';
 import { AgentStatus } from 'types/agent-status';
+import { ComponentPropsType } from 'types/component-props-type';
 import { useAgent } from 'hooks';
 import { usePluginState } from '../store';
 import { ReactComponent as LogoSvg } from './logo.svg';
@@ -45,10 +46,9 @@ export const PluginHeader = pluginHeader(({ className, agentName, agentStatus }:
         </Panel>
         <SettingsButton
           onClick={() => push(`/agents/agent/${agentId}/settings`)}
+          disabled={agentStatus === AGENT_STATUS.OFFLINE}
           data-test="plugin-header:settings-button"
-        >
-          <Icons.Settings />
-        </SettingsButton>
+        />
       </Content>
     </div>
   );
@@ -59,12 +59,7 @@ const LogoWrapper = pluginHeader.logoWrapper(div({} as { recording?: boolean }))
 const Logo = pluginHeader.logo(LogoSvg);
 const AgentInfo = pluginHeader.agentInfo('div');
 const AgentName = pluginHeader.agentName('div');
-const AgentStatusWrapper = pluginHeader.agentStatusWrapper(
-  div(
-    {} as {
-      status?: AgentStatus;
-    },
-  ),
-);
+const AgentStatusWrapper = pluginHeader.agentStatusWrapper(div({} as { status?: AgentStatus }));
 const SpinnerWrapper = pluginHeader.spinnerWrapper(Panel);
-const SettingsButton = pluginHeader.settingsButton('div');
+const SettingsButton: React.FC<ComponentPropsType<typeof Icons.Settings> & { disabled?: boolean }>
+  = pluginHeader.settingsButton(Icons.Settings);
