@@ -8,7 +8,7 @@ import { BuildCoverage } from 'types/build-coverage';
 import { AgentStatus } from 'types/agent-status';
 import { useBuildVersion } from 'hooks';
 import { ParentBuild } from 'types/parent-build';
-import { LEGEND_COLORS } from 'common/constants';
+import { DATA_VISUALIZATION_COLORS } from 'common/constants';
 import { MultiProgressBar } from './multi-progress-bar';
 
 import styles from './active-build-coverage-info.module.scss';
@@ -50,9 +50,9 @@ export const ActiveBuildCoverageInfo = activeBuildCoverageInfo(({
         <Title data-test="active-build-coverage-info:title">BUILD COVERAGE</Title>
         <span>
           <Legend legendItems={[
-            { label: 'Build', color: LEGEND_COLORS.BUILD_COVER },
-            { label: 'Build / Scope overlap', color: LEGEND_COLORS.BUILD_OVERLAPPING },
-            { label: 'Scope', color: LEGEND_COLORS.SCOPE_COVER },
+            { label: 'Build', color: DATA_VISUALIZATION_COLORS.BUILD_COVER },
+            { label: 'Build / Scope overlap', color: DATA_VISUALIZATION_COLORS.BUILD_OVERLAPPING },
+            { label: 'Scope', color: DATA_VISUALIZATION_COLORS.SCOPE_COVER },
           ]}
           />
         </span>

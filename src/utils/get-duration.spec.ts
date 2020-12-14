@@ -1,4 +1,4 @@
-import { getDuration } from './getDuration';
+import { getDuration } from './get-duration';
 
 describe('getDuration', () => {
   it('should return object with the seconds, minutes, hours properties is equal 00 and isLessThenOneSecond is equal false if value is NaN', () => {

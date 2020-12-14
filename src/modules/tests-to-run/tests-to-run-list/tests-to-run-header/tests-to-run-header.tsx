@@ -1,28 +1,30 @@
 import * as React from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 import { Button, Panel } from '@drill4j/ui-kit';
-import { useParams } from 'react-router-dom';
 
-import { useAgent, useBuildVersion } from 'hooks';
-import { ParentBuild } from 'types/parent-build';
 import { GetSuggestedTestsModal } from './get-suggested-tests-modal';
 
 import styles from './tests-to-run-header.module.scss';
 
+interface AgentInfo {
+  agentType: string;
+  buildVersion: string;
+  previousBuildVersion: string;
+  activeBuildVersion: string;
+}
 interface Props {
   className?: string;
   testsToRunCount: number;
-  agentType: string;
+  agentInfo: AgentInfo;
 }
 
 const testsToRunHeader = BEM(styles);
 
-export const TestsToRunHeader = testsToRunHeader(({ className, testsToRunCount, agentType }: Props) => {
-  const { version: previousBuildVersion = '' } = useBuildVersion<ParentBuild>('/data/parent') || {};
-  const { buildVersion = '', agentId = '' } = useParams<{ buildVersion: string; agentId: string; }>();
-  const { buildVersion: activeBuildVersion = '' } = useAgent(agentId) || {};
+export const TestsToRunHeader = testsToRunHeader(({ className, testsToRunCount, agentInfo }: Props) => {
   const [modalIsOpen, setModalIsOpen] = React.useState(false);
-
+  const {
+    buildVersion, previousBuildVersion, activeBuildVersion, agentType,
+  } = agentInfo;
   return (
     <>
       <div className={className}>

@@ -14,3 +14,4 @@ export { transformObjectsArrayToObject } from './transform-objects-array-to-obje
 export { formatMsToDate } from './format-ms-to-date';
 export { inputLengthRestriction } from './input-length-restriction';
 export { convertToPercentage } from './convert-to-percentage';
+export { getDuration } from './get-duration';

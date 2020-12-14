@@ -40,7 +40,7 @@
   &__progress {
     height: 8px;
     border-radius: 2px;
-    background: map-get($data-visualization, card-progress-bar);
+    background: map-get($data-visualization, scrollbar-thumb);
   }
 
   &__additional-information {
