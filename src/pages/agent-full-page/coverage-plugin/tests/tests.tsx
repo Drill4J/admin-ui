@@ -1,11 +1,16 @@
 import * as React from 'react';
 
-import { AssociatedTests } from 'types/associated-tests';
+import { TestCoverageInfo } from 'types/test-coverage-info';
 import { useBuildVersion } from 'hooks';
 import { TestDetails } from '../test-details';
 
 export const Tests = () => {
-  const testsUsages = useBuildVersion<AssociatedTests[]>('/build/tests-usages') || [];
+  const tests = useBuildVersion<TestCoverageInfo[]>('/build/tests') || [];
 
-  return <TestDetails testsUsages={testsUsages} topicCoveredMethodsByTest="/build/tests/covered-methods" />;
+  return (
+    <TestDetails
+      tests={tests}
+      topicCoveredMethodsByTest="/build/tests/covered-methods"
+    />
+  );
 };

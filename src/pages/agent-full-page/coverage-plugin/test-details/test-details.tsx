@@ -5,7 +5,7 @@ import {
 } from '@drill4j/ui-kit';
 
 import { capitalize } from 'utils';
-import { AssociatedTests } from 'types/associated-tests';
+import { TestCoverageInfo } from 'types/test-coverage-info';
 import { Cells } from 'components';
 import { CoveredMethodsByTestSidebar } from 'modules';
 import { NoTestsStub } from './no-tests-stub';
@@ -14,7 +14,7 @@ import styles from './test-details.module.scss';
 
 interface Props {
   className?: string;
-  testsUsages: AssociatedTests[];
+  tests: TestCoverageInfo[];
   topicCoveredMethodsByTest: string;
 }
 
@@ -22,30 +22,31 @@ const testDetails = BEM(styles);
 
 export const TestDetails = testDetails(
   ({
-    className, testsUsages, topicCoveredMethodsByTest,
+    className, tests, topicCoveredMethodsByTest,
   }: Props) => {
     const [selectedTest, setSelectedTest] = React.useState('');
+
     return (
       <div className={className}>
-        {testsUsages.length > 0 ? (
+        {tests.length > 0 ? (
           <>
             <Title>
               Tests
             </Title>
             <Table
-              data={testsUsages.map(({ tests = [], testType }) => tests.map((test) => ({ ...test, testType }))).flat()}
-              idKey="testName"
+              data={tests}
+              idKey="name"
               columnsSize="medium"
             >
               <Column
                 name="testName"
                 label="Name"
-                Cell={({ item: { id, testName } }) => (
-                  <Cells.Compound cellName={testName} cellAdditionalInfo={id} icon={<Icons.Test height={16} width={16} />} />
+                Cell={({ item: { id, name } }) => (
+                  <Cells.Compound cellName={name} cellAdditionalInfo={id} icon={<Icons.Test height={16} width={16} />} />
                 )}
               />
               <Column
-                name="testType"
+                name="type"
                 label="Test type"
                 width="104px"
                 Cell={({ value }) => (
@@ -67,14 +68,14 @@ export const TestDetails = testDetails(
                 )}
               />
               <Column
-                name="coverage"
+                name="coverage.percentage"
                 label="Coverage, %"
                 width="128px"
                 Cell={Cells.Coverage}
                 align="right"
               />
               <Column
-                name="methodCalls"
+                name="coverage.methodCount.covered"
                 label="Methods covered"
                 width="160px"
                 Cell={({ value, item: { id = '' } = {} }) => (

@@ -11,7 +11,7 @@ import {
 import { NotificationManagerContext } from 'notification-manager';
 import { ActiveScope } from 'types/active-scope';
 import { Methods } from 'types/methods';
-import { AssociatedTests } from 'types/associated-tests';
+import { TestCoverageInfo } from 'types/test-coverage-info';
 import { BuildCoverage } from 'types/build-coverage';
 import { TableActionsProvider } from 'modules';
 import { useAgent, useBuildVersion } from 'hooks';
@@ -51,8 +51,7 @@ export const ScopeInfo = scopeInfo(
     const dispatch = useCoveragePluginDispatch();
     const scope = useBuildVersion<ActiveScope>(`/scope/${scopeId}`);
     const scopeMethods = useBuildVersion<Methods>(`/scope/${scopeId}/methods`) || {};
-
-    const testsUsages = useBuildVersion<AssociatedTests[]>(`/scope/${scopeId}/tests-usages`) || [];
+    const tests = useBuildVersion<TestCoverageInfo[]>(`/scope/${scopeId}/tests`) || [];
     const { byTestType } = useBuildVersion<BuildCoverage>(`/scope/${scopeId}/coverage`) || {};
     const {
       name = '', active = false, enabled = false, started = 0, finished = 0,
@@ -158,7 +157,7 @@ export const ScopeInfo = scopeInfo(
                 <>
                   <ProjectTestsCards testsByType={byTestType} />
                   <TestDetails
-                    testsUsages={testsUsages}
+                    tests={tests}
                     topicCoveredMethodsByTest={`/scope/${scopeId}/tests/covered-methods`}
                   />
                 </>
