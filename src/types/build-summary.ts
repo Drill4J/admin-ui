@@ -10,4 +10,5 @@ export interface BuildSummary {
   tests?: TestCount;
   testsToRun?: TestCount;
   recommendations?: string[];
+  testDuration?: number;
 }

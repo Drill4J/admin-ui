@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 
-import { getDuration } from './getDuration';
+import { getDuration } from 'utils';
 
 import styles from './duration-cell.module.scss';
 
