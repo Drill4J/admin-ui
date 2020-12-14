@@ -1,4 +1,4 @@
 export interface TestStats {
-  duration: number;
-  result: 'PASSED' | 'FAILED' | 'ERROR' | 'SKIPPED';
+  duration?: number;
+  status?: 'PASSED' | 'FAILED' | 'ERROR' | 'SKIPPED';
 }
