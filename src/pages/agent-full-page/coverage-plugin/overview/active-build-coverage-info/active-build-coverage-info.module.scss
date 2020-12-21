@@ -23,9 +23,4 @@
     line-height: 40px;
     color: map-get($monochrome, black);
   }
-
-  &__unique-coverage-percentage {
-    line-height: 24px;
-    color: map-get($data-visualization, coverage);
-  }
 }
