@@ -16,14 +16,15 @@ interface Props {
   onToggle: (arg: boolean) => void;
   plugins: Plugin[];
   agentId: string;
+  selectedPlugins: string[],
+  setSelectedPlugins: (plugins: string[]) => void;
 }
 
 const addPluginModal = BEM(styles);
 
 export const AddPluginsModal = addPluginModal(({
-  className, isOpen, onToggle, plugins, agentId,
+  className, isOpen, onToggle, plugins, agentId, selectedPlugins, setSelectedPlugins,
 }: Props) => {
-  const [selectedPlugins, setSelectedPlugins] = React.useState<string[]>([]);
   const { showMessage } = React.useContext(NotificationManagerContext);
   const { type } = useParams<{ type: 'service-group' | 'agent' }>();
   const handleLoadPlugins = loadPlugins(
