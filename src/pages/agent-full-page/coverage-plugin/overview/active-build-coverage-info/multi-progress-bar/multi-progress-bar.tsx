@@ -8,17 +8,11 @@ import { percentFormatter } from 'utils';
 
 import styles from './multi-progress-bar.module.scss';
 
-interface Methods {
-  overlapCoveredMethods: number;
-  buildCoveredMethods: number;
-  uniqueMethods: number;
-}
 interface Props {
   className?: string;
   buildCodeCoverage: number;
   uniqueCodeCoverage: number;
   overlappingCode: number;
-  methods: Methods ;
   active: boolean;
 }
 
@@ -26,7 +20,6 @@ const multiProgressBar = BEM(styles);
 
 export const MultiProgressBar = multiProgressBar(({
   className, buildCodeCoverage = 0, uniqueCodeCoverage = 0, overlappingCode = 0, active,
-  methods: { overlapCoveredMethods = 0, buildCoveredMethods = 0, uniqueMethods = 0 },
 }: Props) => {
   const node = React.useRef<HTMLDivElement>(null);
   const { width } = useElementSize(node);
@@ -36,10 +29,8 @@ export const MultiProgressBar = multiProgressBar(({
       <Tooltip
         message={(
           <Message>
-            <div>
-              {`${percentFormatter(buildCodeCoverage)}% (${buildCoveredMethods} methods) of current build`}
-            </div>
-            <div>have been already covered by tests.</div>
+            <b>{percentFormatter(buildCodeCoverage)}%</b> of current build <br />
+            has already been covered by tests
           </Message>
         )}
       >
@@ -49,10 +40,7 @@ export const MultiProgressBar = multiProgressBar(({
         <Tooltip
           message={(
             <Message>
-              <div>
-                {`${percentFormatter(overlappingCode)}% (${overlapCoveredMethods} methods) of current build`}
-              </div>
-              <div>were overlapped in active scope.</div>
+              <b>{percentFormatter(overlappingCode)}%</b> of the coverage of current build <br /> were overlapped in active scope
             </Message>
           )}
         >
@@ -68,10 +56,8 @@ export const MultiProgressBar = multiProgressBar(({
         <Tooltip
           message={(
             <Message>
-              <div>
-                {`Active scope has covered +${percentFormatter(uniqueCodeCoverage)}% (${uniqueMethods} unique methods).`}
-              </div>
-              <div>Finish your scope to add it to your total build coverage.</div>
+              Active scope additionally covered <b>+{percentFormatter(uniqueCodeCoverage)}%</b>. <br />
+              Finish your scope to add it to your total build coverage.
             </Message>
           )}
         >
