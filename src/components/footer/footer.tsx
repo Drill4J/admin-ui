@@ -48,7 +48,7 @@ export const Footer = footer(({ className }: Props) => {
     },
     {
       name: 'Documentation',
-      link: 'https://drill4j.github.io/Wiki/',
+      link: 'https://drill4j.github.io/faq/',
     },
   ];
 
