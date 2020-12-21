@@ -40,7 +40,7 @@ export const AgentsTable = agentsTable(({ className, agents }: Props) => (
           name="environment"
           label="Environment"
           Cell={({ value, item }) => (
-            <span>{item.status === AGENT_STATUS.NOT_REGISTERED ? 'n/a' : value}</span>
+            <OverflowText title={value}>{item.status === AGENT_STATUS.NOT_REGISTERED ? 'n/a' : value}</OverflowText>
           )}
         />,
         <Column
@@ -66,7 +66,7 @@ export const AgentsTable = agentsTable(({ className, agents }: Props) => (
         name="environment"
         label="Environment"
         Cell={({ value, item }) => (
-          <span>{item.status === AGENT_STATUS.NOT_REGISTERED ? 'n/a' : value}</span>
+          <OverflowText title={value}>{item.status === AGENT_STATUS.NOT_REGISTERED ? 'n/a' : value}</OverflowText>
         )}
       />
       <Column
