@@ -62,14 +62,15 @@ export const CoverageSection = coverageSection(({ className }: Props) => {
         label="Build Coverage"
         info={`${percentFormatter(buildCodeCoverage)}%`}
         graph={(
-          <Tooltip message={<CoverageSectionTooltip data={tooltipData} />}>
+          <BarTooltip message={<CoverageSectionTooltip data={tooltipData} />}>
             <SingleBar
               width={108}
               height={128}
               color={COVERAGE_TYPES_COLOR.TOTAL}
               percent={percentFormatter(buildCodeCoverage)}
             />
-          </Tooltip>
+            {!isFirstBuild && <BaselineBuild style={{ bottom: `${previousBuildCodeCoverage}%` }} />}
+          </BarTooltip>
         )}
         additionalInfo={(
           <Panel>
@@ -91,3 +92,5 @@ export const CoverageSection = coverageSection(({ className }: Props) => {
 
 const Link = coverageSection.link(NavLink);
 const BuildInfo = coverageSection.buildInfo('div');
+const BaselineBuild = coverageSection.baselineBuild('div');
+const BarTooltip = coverageSection.barTooltip(Tooltip);

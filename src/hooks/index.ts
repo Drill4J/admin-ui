@@ -7,3 +7,4 @@ export { useVisibleElementsCount } from './use-visible-elements-count';
 export { useGeneralAlertMessage } from './use-general-alert-message';
 export { useBuildVersion } from './use-build-version';
 export { useActiveScope } from './use-active-scope';
+export { useBaselineVersion } from './use-baseline-version';

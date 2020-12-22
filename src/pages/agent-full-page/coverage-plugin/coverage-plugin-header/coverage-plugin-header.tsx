@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
-import { useHistory, useParams } from 'react-router-dom';
+import { NavLink, useHistory, useParams } from 'react-router-dom';
 import {
-  Button, Icons, Tooltip, Panel, Checkbox,
+  Button, Icons, Tooltip, Panel,
 } from '@drill4j/ui-kit';
 
 import { QualityGatePane } from 'modules';
@@ -73,38 +73,40 @@ export const CoveragePluginHeader = coveragePluginHeader(({ className, previousB
   const { version: previousBuildVersion = '' } = useBuildVersion<ParentBuild>('/data/parent') || {};
   const isBaseline = baseline === buildVersion;
   const isActiveBuild = activeBuildVersion === buildVersion;
-  const baselineInfo = showBaseline(isBaseline, isActiveBuild, previousBuildVersion);
+  const { Flag, disabled, info } = showBaseline(isBaseline, isActiveBuild, previousBuildVersion);
 
   return (
     <div className={className}>
-      <div>
+      <Info>
         <PluginName data-test="coverage-plugin-header:plugin-name">Test2Code</PluginName>
-        <Panel>
-          <CurrentBuild>
-            Build:
-            <Version data-test="coverage-plugin-header:build-version">{buildVersion}</Version>
-          </CurrentBuild>
-          {baselineInfo && agentStatus === AGENT_STATUS.ONLINE && (
-            <BaselinePanel>
-              <Checkbox
-                label="Baseline"
-                checked={isBaseline}
-                onChange={() => setIsBaselineBuildModalOpened(true)}
-                disabled={baselineInfo.disabled}
-              />
-              <Tooltip
-                message={(
-                  <Panel direction="column">
-                    {baselineInfo.info}
-                  </Panel>
-                )}
-              >
-                <InfoIcon />
-              </Tooltip>
-            </BaselinePanel>
-          )}
-        </Panel>
-      </div>
+        {agentStatus === AGENT_STATUS.ONLINE && (
+          <BaselinePanel>
+            <span>
+              <div>Current build: </div>
+              <div>Parent build:</div>
+            </span>
+            <BuildsInfo>
+              <CurrentBuildVersion>
+                {buildVersion}
+                <Tooltip message={<TooltipMessage>{info}</TooltipMessage>} position="top-center">
+                  <FlagWrapper
+                    type={isActiveBuild ? 'active-build' : undefined}
+                    onClick={() => !disabled && setIsBaselineBuildModalOpened(true)}
+                  >
+                    <Flag />
+                  </FlagWrapper>
+                </Tooltip>
+              </CurrentBuildVersion>
+              {previousBuildVersion
+                ? (
+                  <ParentBuildVersion to={`/full-page/${agentId}/${previousBuildVersion}/dashboard`}>
+                    {previousBuildVersion}
+                  </ParentBuildVersion>
+                ) : <span>&ndash;</span>}
+            </BuildsInfo>
+          </BaselinePanel>
+        )}
+      </Info>
       <Actions>
         {activeBuildVersion === buildVersion && agentStatus === AGENT_STATUS.ONLINE && (
           <QualityGateSection>
@@ -180,35 +182,40 @@ export const CoveragePluginHeader = coveragePluginHeader(({ className, previousB
         agentId={agentId}
         pluginId={pluginId}
       />
-      <BaselineBuildModal
-        isOpen={isBaselineBuildModalOpened}
-        onToggle={setIsBaselineBuildModalOpened}
-        isBaseline={isBaseline}
-        toggleBaseline={async () => {
-          try {
-            await toggleBaseline(agentId, pluginId);
-            showMessage({
-              type: 'SUCCESS',
-              text: `Current build has been ${isBaseline
-                ? 'unlinked'
-                : 'marked'} as baseline successfully. All subsequent builds will be compared to it.`,
-            });
-          } catch ({ response: { data: { message } = {} } = {} }) {
-            showMessage({
-              type: 'ERROR',
-              text: message || 'There is some issue with your action. Please try again later.',
-            });
-          }
-        }}
-      />
+      {isBaselineBuildModalOpened && (
+        <BaselineBuildModal
+          isOpen={isBaselineBuildModalOpened}
+          onToggle={setIsBaselineBuildModalOpened}
+          isBaseline={isBaseline}
+          toggleBaseline={async () => {
+            try {
+              await toggleBaseline(agentId, pluginId);
+              showMessage({
+                type: 'SUCCESS',
+                text: `Current build has been ${isBaseline
+                  ? 'unset as baseline successfully. All subsequent builds won\'t be compared to it.'
+                  : 'set as baseline successfully. All subsequent builds will be compared to it.'}`,
+              });
+            } catch ({ response: { data: { message } = {} } = {} }) {
+              showMessage({
+                type: 'ERROR',
+                text: message || 'There is some issue with your action. Please try again later.',
+              });
+            }
+          }}
+        />
+      )}
     </div>
   );
 });
 
-const PluginName = coveragePluginHeader.pluginName('span');
-const CurrentBuild = coveragePluginHeader.currentBuild('div');
-const BaselinePanel = coveragePluginHeader.baselinePanel(Panel);
-const Version = coveragePluginHeader.version('div');
+const Info = coveragePluginHeader.info('div');
+const PluginName = coveragePluginHeader.pluginName('div');
+const BaselinePanel = coveragePluginHeader.baselinePanel('div');
+const BuildsInfo = coveragePluginHeader.buildsInfo('span');
+const CurrentBuildVersion = coveragePluginHeader.currentBuildVersion(Panel);
+const ParentBuildVersion = coveragePluginHeader.parentBuildVersion(NavLink);
+const FlagWrapper = coveragePluginHeader.flagWrapper('div');
 const QualityGateLabel = coveragePluginHeader.qualityGateLabel('div');
 const InfoIcon = coveragePluginHeader.infoIcon(Icons.Info);
 const Actions = coveragePluginHeader.actions('div');
@@ -219,6 +226,7 @@ const Count = coveragePluginHeader.count(Panel);
 const NoRisksCount = coveragePluginHeader.noRisksCount(Panel);
 const LinkIcon = coveragePluginHeader.linkIcon(Icons.Expander);
 const NoValue = coveragePluginHeader.noValue('div');
+const TooltipMessage = coveragePluginHeader.tooltipMessage('div');
 
 function showBaseline(isBaseline: boolean, isActiveBuild: boolean, previousBuildVersion: string) {
   if (!previousBuildVersion && isBaseline) {
@@ -226,45 +234,43 @@ function showBaseline(isBaseline: boolean, isActiveBuild: boolean, previousBuild
       disabled: true,
       info: (
         <>
-          <div>The initial build is marked as baseline by default.</div>
-          <div>All subsequent builds are compared with it.</div>
+          The initial build is marked as baseline by default. All methods <br />
+          and key metrics of subsequent builds are compared with it.
         </>
       ),
+      Flag: Icons.Flag,
     });
   }
   if (isActiveBuild && !isBaseline) {
     return ({
       disabled: false,
-      info: (
-        <>
-          <div>Baseline build is a source for comparing</div>
-          <div>the coverage and time savings.</div>
-        </>
-      ),
+      info: 'Set as Baseline',
+      Flag: Icons.Flag,
     });
   }
-  if (previousBuildVersion && isActiveBuild && isBaseline) {
+  if (isActiveBuild && isBaseline) {
     return ({
       disabled: false,
-      info: (
-        <>
-          <div>This is a baseline build.</div>
-          <div>All subsequent builds will be compared to it.</div>
-        </>
-      ),
-    }
-    );
+      info: 'Unset as Baseline',
+      Flag: Icons.FilledFlag,
+    });
   }
-  if (previousBuildVersion && !isActiveBuild && isBaseline) {
+  if (!isActiveBuild && isBaseline) {
     return ({
       disabled: true,
       info: (
         <>
-          <div>This build is marked as a baseline.</div>
-          <div>All subsequent builds are compared with it.</div>
+          This build is set as baseline. <br />
+          All subsequent builds are compared with it.
         </>
       ),
+      Flag: Icons.Flag,
     });
   }
-  return undefined;
+
+  return {
+    disabled: true,
+    info: null,
+    Flag: () => null,
+  };
 }
