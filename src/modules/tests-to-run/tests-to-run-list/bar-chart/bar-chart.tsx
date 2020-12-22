@@ -158,13 +158,38 @@ const MS_IN_HOURS = MS_IN_MINUTES * 60;
 
 const graphParams = [
   {
-    duration: 24 * MS_IN_HOURS,
-    step: 8 * MS_IN_HOURS,
+    duration: 100 * MS_IN_HOURS,
+    step: 25 * MS_IN_HOURS,
     unit: 'h',
   },
   {
-    duration: 16 * MS_IN_HOURS,
-    step: 4 * MS_IN_HOURS,
+    duration: 90 * MS_IN_HOURS,
+    step: 30 * MS_IN_HOURS,
+    unit: 'h',
+  },
+  {
+    duration: 60 * MS_IN_HOURS,
+    step: 20 * MS_IN_HOURS,
+    unit: 'h',
+  },
+  {
+    duration: 45 * MS_IN_HOURS,
+    step: 15 * MS_IN_HOURS,
+    unit: 'h',
+  },
+  {
+    duration: 30 * MS_IN_HOURS,
+    step: 10 * MS_IN_HOURS,
+    unit: 'h',
+  },
+  {
+    duration: 15 * MS_IN_HOURS,
+    step: 5 * MS_IN_HOURS,
+    unit: 'h',
+  },
+  {
+    duration: 12 * MS_IN_HOURS,
+    step: 3 * MS_IN_HOURS,
     unit: 'h',
   },
   {
@@ -173,25 +198,16 @@ const graphParams = [
     unit: 'h',
   },
   {
-    duration: 4 * MS_IN_HOURS,
+    duration: 3 * MS_IN_HOURS,
     step: 1 * MS_IN_HOURS,
     unit: 'h',
-  },
-  {
-    duration: 2 * MS_IN_HOURS,
-    step: 40 * MS_IN_MINUTES,
-    unit: 'm',
-  },
-  {
-    duration: 1.5 * MS_IN_HOURS,
-    step: 30 * MS_IN_MINUTES,
-    unit: 'm',
   },
   {
     duration: 1 * MS_IN_HOURS,
     step: 20 * MS_IN_MINUTES,
     unit: 'm',
   },
+  // duration < 1 hour
   {
     duration: 45 * MS_IN_MINUTES,
     step: 15 * MS_IN_MINUTES,
@@ -208,12 +224,17 @@ const graphParams = [
     unit: 'm',
   },
   {
-    duration: 10 * MS_IN_MINUTES,
+    duration: 12 * MS_IN_MINUTES,
+    step: 3 * MS_IN_MINUTES,
+    unit: 'm',
+  },
+  {
+    duration: 6 * MS_IN_MINUTES,
     step: 2 * MS_IN_MINUTES,
     unit: 'm',
   },
   {
-    duration: 5 * MS_IN_MINUTES,
+    duration: 3 * MS_IN_MINUTES,
     step: 1 * MS_IN_MINUTES,
     unit: 'm',
   },
@@ -222,10 +243,41 @@ const graphParams = [
     step: 20 * MS_IN_SECONDS,
     unit: 's',
   },
+  // duration < 1m
+  {
+    duration: 45 * MS_IN_SECONDS,
+    step: 15 * MS_IN_SECONDS,
+    unit: 's',
+  },
   {
     duration: 30 * MS_IN_SECONDS,
     step: 10 * MS_IN_SECONDS,
     unit: 's',
+  },
+  {
+    duration: 15 * MS_IN_SECONDS,
+    step: 5 * MS_IN_SECONDS,
+    unit: 's',
+  },
+  {
+    duration: 12 * MS_IN_SECONDS,
+    step: 3 * MS_IN_SECONDS,
+    unit: 's',
+  },
+  {
+    duration: 6 * MS_IN_SECONDS,
+    step: 2 * MS_IN_SECONDS,
+    unit: 's',
+  },
+  {
+    duration: 3 * MS_IN_SECONDS,
+    step: 1 * MS_IN_SECONDS,
+    unit: 's',
+  },
+  {
+    duration: 1 * MS_IN_SECONDS,
+    step: 200,
+    unit: 'ms',
   },
 ];
 
