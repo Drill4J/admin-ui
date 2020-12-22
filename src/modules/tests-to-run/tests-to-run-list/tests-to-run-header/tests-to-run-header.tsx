@@ -82,7 +82,7 @@ export const TestsToRunHeader = testsToRunHeader(({
               percentage={totalAutoTestsToRun
                 ? percentFormatter(convertToPercentage(previousBuildTestsDuration - parentDuration, previousBuildTestsDuration))
                 : undefined}
-              message={previousBuildAutoTestsCount && getEstimatedTimeSavedTooltipMessage(totalAutoTestsToRun)}
+              message={previousBuildAutoTestsCount ? getEstimatedTimeSavedTooltipMessage(totalAutoTestsToRun) : null}
             >
               {totalAutoTestsToRun
                 ? `${estimatedTimeSaved.hours}:${estimatedTimeSaved.minutes}:${estimatedTimeSaved.seconds}`
