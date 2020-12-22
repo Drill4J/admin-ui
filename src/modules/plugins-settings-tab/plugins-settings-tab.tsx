@@ -31,6 +31,7 @@ export const PluginsSettingsTab = pluginsSettingsTab(
     const pluginsTopic = `/${agentType === 'agent' ? 'agents' : 'service-groups'}/${id}/plugins`;
     const plugins = useWsConnection<Plugin[]>(defaultAdminSocket, pluginsTopic) || [];
     const installedPlugins = plugins.filter((plugin) => !plugin.available);
+    const [selectedPlugins, setSelectedPlugins] = React.useState<string[]>([]);
 
     return (
       <div className={className}>
@@ -85,6 +86,8 @@ export const PluginsSettingsTab = pluginsSettingsTab(
             onToggle={setIsAddPluginOpen}
             plugins={plugins}
             agentId={id}
+            selectedPlugins={selectedPlugins}
+            setSelectedPlugins={setSelectedPlugins}
           />
         )}
       </div>
