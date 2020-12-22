@@ -12,10 +12,10 @@
     font-size: 12px;
   }
 
-  &__actions {
-    display: flex;
-    align-items: center;
-    gap: 16px;
+  &__scope-info {
+    height: 40px;
+    gap: 8px;
+    margin: 24px 0 12px 0;
   }
 
   &__navigation-panel {
@@ -28,7 +28,7 @@
     font-family: $semibold-font;
     color: map-get($primary-blue, default);
     letter-spacing: 0;
-    line-height: 16px;
+    line-height: 20px;
     text-decoration: none;
     cursor: pointer;
 
@@ -44,29 +44,10 @@
     margin-right: 8px;
   }
 
-  &__icon {
-    color: map-get($primary-blue, default);
-    cursor: pointer;
-  }
-
-  &__coverage-info {
-    display: flex;
-    align-items: baseline;
-    margin-top: 24px;
-  }
-
   &__scope-coverage {
-    margin-bottom: 12px;
     color: map-get($monochrome, black);
     font-size: 32px;
     letter-spacing: 0;
     line-height: 40px;
-  }
-
-  &__overlappedCoverage {
-    margin-left: 8px;
-    color: map-get($monochrome, default);
-    letter-spacing: 0;
-    line-height: 16px;
   }
 }

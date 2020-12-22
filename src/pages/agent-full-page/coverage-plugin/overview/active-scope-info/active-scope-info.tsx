@@ -33,35 +33,23 @@ export const ActiveScopeInfo = activeScopeInfo(({
 
   return (
     <div className={className}>
-      <Panel align="space-between">
-        <Title>ACTIVE SCOPE</Title>
-        <Actions>
-          <Icon onClick={() => dispatch(openModal('RenameScopeModal', scope))}><Icons.Edit height={16} /></Icon>
-          <Icon onClick={() => dispatch(openModal('DeleteScopeModal', scope))}><Icons.Delete /></Icon>
-        </Actions>
-      </Panel>
-      <CoverageInfo>
-        <ScopeCoverage data-test="active-scope-info:scope-coverage">{`${percentFormatter(percentage)}%`}</ScopeCoverage>
-      </CoverageInfo>
-      <Panel align="space-between">
-        <FinishScopeButton
-          type="primary"
-          size="large"
-          onClick={() => dispatch(openModal('FinishScopeModal', scope))}
-          data-test="active-scope-info:finish-scope-button"
-        >
-          <Icons.Complete />
-          <span>Finish Scope</span>
-        </FinishScopeButton>
+      <Title>ACTIVE SCOPE COVERAGE</Title>
+      <ScopeInfo>
+        <ScopeCoverage data-test="active-scope-info:scope-coverage">
+          {`${percentFormatter(percentage)}%`}
+        </ScopeCoverage>
         <SessionIndicator active={loading} />
-      </Panel>
+      </ScopeInfo>
+      <FinishScopeButton
+        type="primary"
+        size="large"
+        onClick={() => dispatch(openModal('FinishScopeModal', scope))}
+        data-test="active-scope-info:finish-scope-button"
+      >
+        <Icons.Complete />
+        <span>Finish Scope</span>
+      </FinishScopeButton>
       <NavigationPanel direction="column" verticalAlign="start">
-        <ButtonLink
-          onClick={() => dispatch(openModal('SessionsManagementModal', null))}
-          data-test="active-scope-info:sessions-management-link"
-        >
-          Sessions Management
-        </ButtonLink>
         <Link
           to={`/full-page/${agentId}/${buildVersion}/${pluginId}/scopes/${scopeId}`}
           data-test="active-scope-info:scope-details-link"
@@ -74,17 +62,21 @@ export const ActiveScopeInfo = activeScopeInfo(({
         >
           All Scopes
         </Link>
+        <ButtonLink
+          onClick={() => dispatch(openModal('SessionsManagementModal', null))}
+          data-test="active-scope-info:sessions-management-link"
+        >
+          Sessions Management
+        </ButtonLink>
       </NavigationPanel>
     </div>
   );
 });
 
 const Title = activeScopeInfo.title('div');
-const Actions = activeScopeInfo.actions('div');
+const ScopeInfo = activeScopeInfo.scopeInfo(Panel);
 const NavigationPanel = activeScopeInfo.navigationPanel(Panel);
 const Link = activeScopeInfo.link(NavLink);
-const Icon = activeScopeInfo.icon('div');
 const ButtonLink = activeScopeInfo.buttonLink('div');
-const CoverageInfo = activeScopeInfo.coverageInfo('div');
 const ScopeCoverage = activeScopeInfo.scopeCoverage('div');
 const FinishScopeButton = activeScopeInfo.finishScopeButton(Button);

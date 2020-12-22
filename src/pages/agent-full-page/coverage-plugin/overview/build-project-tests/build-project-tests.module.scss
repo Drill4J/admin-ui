@@ -1,0 +1,12 @@
+@import '~common/style-guide/index';
+
+.build-project-tests {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+
+  &__cards {
+    display: flex;
+    gap: 8px;
+  }
+}

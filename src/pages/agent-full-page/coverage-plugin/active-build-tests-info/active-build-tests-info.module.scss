@@ -1,0 +1,51 @@
+@import '~common/style-guide/index';
+
+.active-build-tests-info {
+  font-size: 12px;
+  line-height: 16px;
+  color: map-get($monochrome, default);
+
+  &__title {
+    font-family: $semibold-font;
+  }
+
+  &__info {
+    display: flex;
+    gap: 4px;
+    align-items: baseline;
+    margin: 24px 0 12px 0;
+  }
+
+  &__executed-tests {
+    font-size: 32px;
+    line-height: 40px;
+    color: map-get($monochrome, black);
+  }
+
+  &__executed-tests-bar {
+    position: relative;
+    height: 32px;
+    background-color: map-get($monochrome, light-tint);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+
+  &__tests-bar {
+    height: 32px;
+    opacity: 0.5;
+
+    &:hover {
+      opacity: 1;
+    }
+
+    &--type {
+      &--auto {
+        background-color: map-get($data-visualization, auto);
+      }
+
+      &--manual {
+        background-color: map-get($data-visualization, manual);
+      }
+    }
+  }
+}

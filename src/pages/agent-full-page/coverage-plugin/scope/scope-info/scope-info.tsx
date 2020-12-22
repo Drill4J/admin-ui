@@ -10,21 +10,18 @@ import {
 } from 'components';
 import { NotificationManagerContext } from 'notification-manager';
 import { ActiveScope } from 'types/active-scope';
-import { Methods } from 'types/methods';
 import { TestCoverageInfo } from 'types/test-coverage-info';
-import { BuildCoverage } from 'types/build-coverage';
 import { TableActionsProvider } from 'modules';
 import { useAgent, useBuildVersion } from 'hooks';
 import { AGENT_STATUS } from 'common/constants';
-import { ProjectMethodsCards } from '../../project-methods-cards';
+import { ScopeProjectMethods } from './scope-project-methods';
 import { CoverageDetails } from '../../coverage-details';
 import { TestDetails } from '../../test-details';
 import { toggleScope } from '../../api';
 import { usePluginState } from '../../../store';
 import { useCoveragePluginDispatch, openModal } from '../../store';
-import { ScopeCoverageInfo } from './scope-coverage-info';
 import { ScopeStatus } from './scope-status';
-import { ProjectTestsCards } from '../../project-tests-cards';
+import { ScopeProjectTests } from './scope-project-tests';
 
 import styles from './scope-info.module.scss';
 
@@ -50,9 +47,7 @@ export const ScopeInfo = scopeInfo(
     const { pluginId = '', scopeId = '', buildVersion } = useParams<{ pluginId: string, scopeId: string, buildVersion: string }>();
     const dispatch = useCoveragePluginDispatch();
     const scope = useBuildVersion<ActiveScope>(`/scope/${scopeId}`);
-    const scopeMethods = useBuildVersion<Methods>(`/scope/${scopeId}/methods`) || {};
     const tests = useBuildVersion<TestCoverageInfo[]>(`/scope/${scopeId}/tests`) || [];
-    const { byTestType } = useBuildVersion<BuildCoverage>(`/scope/${scopeId}/coverage`) || {};
     const {
       name = '', active = false, enabled = false, started = 0, finished = 0,
     } = scope || {};
@@ -140,11 +135,10 @@ export const ScopeInfo = scopeInfo(
                 </Tab>
               </TabsPanel>
             </RoutingTabsPanel>
-            <ScopeCoverageInfo scope={scope} />
             <TabContent>
               {selectedTab === 'coverage' ? (
                 <>
-                  <ProjectMethodsCards methods={scopeMethods} />
+                  <ScopeProjectMethods scope={scope} />
                   <TableActionsProvider>
                     <CoverageDetails
                       topic={`/scope/${scopeId}/coverage/packages`}
@@ -155,7 +149,7 @@ export const ScopeInfo = scopeInfo(
                 </>
               ) : (
                 <>
-                  <ProjectTestsCards testsByType={byTestType} />
+                  <ScopeProjectTests scopeId={scopeId} />
                   <TestDetails
                     tests={tests}
                     topicCoveredMethodsByTest={`/scope/${scopeId}/tests/covered-methods`}

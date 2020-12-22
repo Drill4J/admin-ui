@@ -1,0 +1,16 @@
+@import '~common/style-guide/index';
+
+.build-project-methods {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+
+  &__cards {
+    display: flex;
+    gap: 8px;
+  }
+
+  &__deleted {
+    font-family: $regular-font;
+  }
+}
