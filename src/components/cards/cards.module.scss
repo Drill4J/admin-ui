@@ -26,12 +26,6 @@
     color: map-get($monochrome, black);
   }
 
-  &__methods-covered {
-    font-size: 12px;
-    line-height: 16px;
-    color: map-get($monochrome, default);
-  }
-
   &__info {
     width: 100%;
     font-size: 12px;

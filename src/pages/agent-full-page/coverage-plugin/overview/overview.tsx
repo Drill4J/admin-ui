@@ -1,25 +1,20 @@
 import * as React from 'react';
-import { BEM, div } from '@redneckz/react-bem-helper';
+import { BEM } from '@redneckz/react-bem-helper';
 import { Icons, Panel } from '@drill4j/ui-kit';
 
 import { TabsPanel, Tab } from 'components';
-import { BuildCoverage } from 'types/build-coverage';
-import { Methods } from 'types/methods';
-import { TestTypeSummary } from 'types/test-type-summary';
 import { useActiveScope, useAgent, useBuildVersion } from 'hooks';
 import { TableActionsProvider } from 'modules';
 import { ParentBuild } from 'types/parent-build';
 import { AGENT_STATUS } from 'common/constants';
 import { CoveragePluginHeader } from '../coverage-plugin-header';
 import { CoverageDetails } from '../coverage-details';
-import { ProjectMethodsCards } from '../project-methods-cards';
+import { BuildProjectMethods } from './build-project-methods';
 import { usePluginState } from '../../store';
 import { Tests } from '../tests';
-import { ActiveBuildCoverageInfo } from './active-build-coverage-info';
-import { BuildCoverageInfo } from './build-coverage-info';
 import { ActiveScopeInfo } from './active-scope-info';
 import { usePreviousBuildCoverage } from '../use-previous-build-coverage';
-import { ProjectTestsCards } from '../project-tests-cards';
+import { BuildProjectTests } from './build-project-tests';
 
 import styles from './overview.module.scss';
 
@@ -38,11 +33,7 @@ export const Overview = overview(({ className }: Props) => {
     percentage: previousBuildCodeCoverage = 0,
     byTestType: previousBuildTests = [],
   } = usePreviousBuildCoverage(previousBuildVersion) || {};
-  const buildCoverage = useBuildVersion<BuildCoverage>('/build/coverage') || {};
-  const { percentage: buildCodeCoverage = 0 } = buildCoverage;
   const scope = useActiveScope();
-  const buildMethods = useBuildVersion<Methods>('/build/methods') || {};
-  const testsByType = useBuildVersion<TestTypeSummary[]>('/build/summary/tests/by-type') || [];
 
   return (
     <div className={className}>
@@ -65,25 +56,16 @@ export const Overview = overview(({ className }: Props) => {
       </RoutingTabsPanel>
       <InfoPanel>
         <SummaryPanel direction="column" verticalAlign="stretch">
-          {(scope?.active && status === AGENT_STATUS.ONLINE) ? (
-            <ActiveBuildCoverageInfo
-              buildCoverage={buildCoverage}
-              previousBuildVersion={previousBuildVersion}
-              previousBuildCodeCoverage={previousBuildCodeCoverage}
-              scope={scope}
-              status={status}
-              loading={loading}
-            />
-          ) : (
-            <BuildCoverageInfo
-              buildCodeCoverage={buildCodeCoverage}
-              previousBuildVersion={previousBuildVersion}
-              previousBuildCodeCoverage={previousBuildCodeCoverage}
-            />
-          )}
           {selectedTab === 'methods'
-            ? <ProjectMethodsCards methods={buildMethods} />
-            : <ProjectTestsCards testsByType={testsByType} />}
+            ? (
+              <BuildProjectMethods
+                scope={scope}
+                previousBuildInfo={{ previousBuildVersion, previousBuildCodeCoverage }}
+                loading={loading}
+                status={status}
+              />
+            )
+            : <BuildProjectTests />}
         </SummaryPanel>
         {scope?.active && status === AGENT_STATUS.ONLINE && <ActiveScopeInfo scope={scope} />}
       </InfoPanel>

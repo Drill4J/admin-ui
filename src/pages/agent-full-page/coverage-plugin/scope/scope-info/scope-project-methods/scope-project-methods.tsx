@@ -2,29 +2,37 @@ import * as React from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 import { LinkButton } from '@drill4j/ui-kit';
 
-import { Methods } from 'types/methods';
 import { BuildMethodsCard } from 'components';
-import { RisksModal } from '../risks-modal';
+import { Methods } from 'types/methods';
+import { ActiveScope } from 'types/active-scope';
+import { AgentStatus } from 'types/agent-status';
+import { useBuildVersion } from 'hooks';
+import { RisksModal } from '../../../risks-modal';
+import { PreviousBuildInfo } from './previous-build-info-types';
+import { ScopeCoverageInfo } from '../scope-coverage-info';
 
-import styles from './project-methods-cards.module.scss';
+import styles from './scope-project-methods.module.scss';
 
 interface Props {
   className?: string;
-  methods: Methods;
+  scope: ActiveScope | null;
+  previousBuildInfo?: PreviousBuildInfo;
+  loading?: boolean;
+  status?: AgentStatus;
 }
 
-const projectMethodsCards = BEM(styles);
+const scopeProjectMethods = BEM(styles);
 
-export const ProjectMethodsCards = projectMethodsCards(
-  ({
-    className,
-    methods: {
-      all, new: newMethods, modified, deleted, risks,
-    },
-  }: Props) => {
-    const [risksFilter, setRisksFilter] = React.useState<string>('');
-    return (
-      <div className={className}>
+export const ScopeProjectMethods = scopeProjectMethods(({ className, scope }: Props) => {
+  const {
+    all, new: newMethods, modified, deleted, risks,
+  } = useBuildVersion<Methods>(`/scope/${scope?.id}/methods`) || {};
+  const [risksFilter, setRisksFilter] = React.useState('');
+
+  return (
+    <div className={className}>
+      <ScopeCoverageInfo scope={scope} />
+      <Cards>
         <BuildMethodsCard
           totalCount={all?.total}
           covered={all?.covered}
@@ -62,16 +70,17 @@ export const ProjectMethodsCards = projectMethodsCards(
             </LinkButton>
           )}
         </BuildMethodsCard>
-        {risksFilter && (
-          <RisksModal
-            isOpen={Boolean(risksFilter)}
-            onToggle={() => setRisksFilter('')}
-            filter={risksFilter}
-          />
-        )}
-      </div>
-    );
-  },
-);
+      </Cards>
+      {risksFilter && (
+        <RisksModal
+          isOpen={Boolean(risksFilter)}
+          onToggle={() => setRisksFilter('')}
+          filter={risksFilter}
+        />
+      )}
+    </div>
+  );
+});
 
-const Deleted = projectMethodsCards.deleted('span');
+const Cards = scopeProjectMethods.cards('div');
+const Deleted = scopeProjectMethods.deleted('span');

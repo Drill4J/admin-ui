@@ -4,20 +4,20 @@ import { BEM } from '@redneckz/react-bem-helper';
 import { Panel, MainProgressBar, ProgressBarLegends } from '@drill4j/ui-kit';
 
 import { percentFormatter } from 'utils';
+import { PreviousBuildInfo } from '../previous-build-info-types';
 
 import styles from './build-coverage-info.module.scss';
 
 interface Props {
   className?: string;
   buildCodeCoverage: number;
-  previousBuildCodeCoverage: number;
-  previousBuildVersion: string;
+  previousBuildInfo?: PreviousBuildInfo;
 }
 
 const buildCoverageInfo = BEM(styles);
 
 export const BuildCoverageInfo = buildCoverageInfo(({
-  className, buildCodeCoverage, previousBuildCodeCoverage, previousBuildVersion,
+  className, buildCodeCoverage, previousBuildInfo: { previousBuildVersion = '', previousBuildCodeCoverage = 0 } = {},
 }: Props) => {
   const { agentId, buildVersion, pluginId } = useParams<{agentId: string, buildVersion: string, pluginId: string }>();
   const buildDiff = percentFormatter(buildCodeCoverage) - percentFormatter(previousBuildCodeCoverage);
@@ -43,8 +43,7 @@ export const BuildCoverageInfo = buildCoverageInfo(({
               {percentFormatter(Math.abs(buildDiff))}%
               &nbsp;
             </b>
-            сomparing to Build:&nbsp;
-            {previousBuildVersion}
+            сompared to the parent build
           </span>
         )}
       </DetailedCodeCoverageInfo>
