@@ -1,10 +1,14 @@
 import * as React from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 import { useHistory, useParams } from 'react-router-dom';
-import { Panel, Table, Column } from '@drill4j/ui-kit';
+import {
+  Panel, Table, Column, Icons, Tooltip,
+} from '@drill4j/ui-kit';
 
 import { defaultAdminSocket } from 'common/connection';
-import { useWsConnection, useElementSize } from 'hooks';
+import {
+  useWsConnection, useElementSize, useAgent, useBaselineVersion,
+} from 'hooks';
 import { dateTimeFormatter } from 'utils';
 import { BuildVersion } from 'types/build-version';
 import { setBuildVersion, usePluginDispatch } from '../store';
@@ -25,6 +29,8 @@ export const BuildList =
       const { agentId = '' } = useParams<{ agentId: string }>();
       const { push } = useHistory();
       const buildVersions = useWsConnection<BuildVersion[]>(defaultAdminSocket, `/agents/${agentId}/builds`) || [];
+      const { buildVersion: activeBuildVersion } = useAgent(agentId) || {};
+      const { version: baseline } = useBaselineVersion(agentId, activeBuildVersion) || {};
       const dispatch = usePluginDispatch();
       const node = React.useRef<HTMLDivElement>(null);
       const { width: contentWidth } = useElementSize(node);
@@ -50,6 +56,19 @@ export const BuildList =
                       }}
                     >
                       {buildVersion}
+                      {baseline === buildVersion && (
+                        <Tooltip
+                          message={(
+                            <span>
+                              This build is set as baseline.<br />
+                              All subsequent builds are compared with it.
+                            </span>
+                          )}
+                          position="top-right"
+                        >
+                          <BaselineFlag />
+                        </Tooltip>
+                      )}
                     </NameCell>
                   )}
                   width={columnWidth}
@@ -120,3 +139,4 @@ const BuildCount = buildList.itemsCount('span');
 const NameCell = buildList.nameCell('div');
 const HeaderCell = buildList.headerCell('div');
 const HeaderLabel = buildList.headerLabel('div');
+const BaselineFlag = buildList.baselineFlag(Icons.Flag);

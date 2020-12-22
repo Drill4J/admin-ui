@@ -20,29 +20,57 @@
     color: map-get($monochrome, default);
   }
 
+  &__info {
+    display: flex;
+    align-items: center;
+  }
+
   &__plugin-name {
-    margin-bottom: 4px;
+    margin-right: 24px;
     font-family: $light-font;
     font-size: 24px;
     line-height: 32px;
   }
 
-  &__current-build {
+  &__baseline-panel {
     display: flex;
+    padding-left: 24px;
+    border-left: 1px solid map-get($monochrome, medium-tint);
     font-family: $semibold-font;
-    font-size: 14px;
-    line-height: 20px;
+    font-size: 12px;
+    line-height: 24px;
     color: map-get($monochrome, default);
   }
 
-  &__baseline-panel {
-    gap: 8px;
-    margin-left: 16px;
+  &__builds-info {
+    margin-left: 8px;
+    display: inline-flex;
+    flex-direction: column;
   }
 
-  &__version {
-    margin-left: 4px;
+  &__flag-wrapper {
+    display: flex;
+    margin-left: 8px;
+
+    &--type {
+      &--active-build {
+        color: map-get($primary-blue, default);
+        cursor: pointer;
+      }
+    }
+  }
+
+  &__current-build-version {
     color: map-get($monochrome, black);
+  }
+
+  &__parent-build-version {
+    color: map-get($primary-blue, default);
+    text-decoration: none;
+  }
+
+  &__tooltip-message {
+    text-align: center;
   }
 
   &__quality-gate-label {

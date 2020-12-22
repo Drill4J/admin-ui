@@ -22,9 +22,18 @@
   }
 
   &__name-cell {
+    display: flex;
+    align-items: center;
+    gap: 8px;
     color: map-get($primary-blue, default);
-    cursor: pointer;
     font-family: $semibold-font;
+    cursor: pointer;
+  }
+
+  &__baseline-flag {
+    display: flex;
+    align-items: center;
+    color: map-get($monochrome, default);
   }
 
   &__header-cell {
