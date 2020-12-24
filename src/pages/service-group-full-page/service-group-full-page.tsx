@@ -70,7 +70,7 @@ export const ServiceGroupFullPage = serviceGroupFullPage(
       defaultAdminSocket,
       `/service-groups/${id}/plugins`,
     ) || [];
-    const serviceGroup = usePluginData<ServiceGroupSummary>('/service-group/summary', id, pluginId) || {};
+    const serviceGroup = usePluginData<ServiceGroupSummary>('/group/summary', id, pluginId) || {};
     const path = '/:page/:serviceGroupId/:activeLink';
     const { params: { activeLink = '' } = {} } = matchPath<{ activeLink: string }>(pathname, {
       path,

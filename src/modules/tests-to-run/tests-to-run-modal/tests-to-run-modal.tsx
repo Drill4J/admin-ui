@@ -46,7 +46,7 @@ export const TestsToRunModal = testsToRunModal(
     className, isOpen, onToggle,
   }: Props) => {
     const { serviceGroupId = '', pluginId = '' } = useParams<{ serviceGroupId: string, pluginId: string }>();
-    const { byType: testsToRun = {} } = usePluginData<GroupedTestToRun>('/service-group/data/tests-to-run', serviceGroupId, pluginId) || {};
+    const { byType: testsToRun = {} } = usePluginData<GroupedTestToRun>('/group/data/tests-to-run', serviceGroupId, pluginId) || {};
     const allTests = Object.values(testsToRun).reduce((acc, tests) => [...acc, ...tests], []);
     const [selectedFilter, setSelectedFilter] = useState('all');
     const getSelectedTests = () => {
