@@ -50,7 +50,7 @@ export const Dashboard = dashboard(({
             testsToRun = {},
             riskCounts = {},
           } = {},
-        } = usePluginData<ServiceGroupSummary>('/service-group/summary', serviceGroupId, pluginId) || {};
+        } = usePluginData<ServiceGroupSummary>('/group/summary', serviceGroupId, pluginId) || {};
 
         return (
           <PluginCard

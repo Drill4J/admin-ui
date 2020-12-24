@@ -25,7 +25,7 @@ export function useActiveSessions(agentType: string, id: string, buildVersion?: 
     buildVersion,
     type: 'AGENT',
   } : { groupId: id, type: 'GROUP' };
-  const topic = agentType === 'Agent' ? '/active/sessions' : '/service-group/active/sessions';
+  const topic = agentType === 'Agent' ? '/active-scope/active-sessions' : '/group/active-sessions';
 
   useEffect(() => {
     function handleDataChange(newData: ActiveSession[]) {
