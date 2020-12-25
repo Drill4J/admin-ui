@@ -1,7 +1,7 @@
 @import '~common/style-guide/index';
 
 .active-scope-info {
-  padding: 16px 16px 24px 16px;
+  padding: 16px 24px 24px 24px;
   font-size: 14px;
   line-height: 16px;
   background: map-get($monochrome, light-tint);
@@ -40,8 +40,7 @@
   &__finish-scope-button {
     display: flex;
     justify-content: center;
-    width: 248px;
-    margin-right: 8px;
+    width: 272px;
   }
 
   &__scope-coverage {

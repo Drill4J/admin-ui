@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 import { Legend, Panel, Tooltip } from '@drill4j/ui-kit';
+import { useParams } from 'react-router-dom';
 
 import { DATA_VISUALIZATION_COLORS } from 'common/constants';
 import { TestsInfo } from 'types/tests-info';
@@ -37,6 +38,7 @@ export const ActiveBuildTestsInfo = activeBuildTestsInfo(({ className, testsInfo
   const autoTestsBarWidth = (autoTestsCount / testsExecuted) * width;
   const manualTestsBarWidth = (manualTestsCount / testsExecuted) * width;
   const minBarWidth = 4;
+  const { scopeId = '' } = useParams<{ scopeId?: string }>();
 
   return (
     <div className={className} ref={ref}>
@@ -50,14 +52,15 @@ export const ActiveBuildTestsInfo = activeBuildTestsInfo(({ className, testsInfo
       </Panel>
       <Info>
         <ExecutedTests data-test="active-build-tests-info:executed-tests">{testsExecuted}</ExecutedTests>
-        &nbsp;tests executed in build
+        &nbsp;tests executed in {scopeId ? 'scope' : 'build'}
       </Info>
       <ExecutedTestsBar data-test="active-build-tests-info:executed-tests-bar">
         <div style={{ position: 'absolute' }}>
           {Boolean(autoTestsCount) && (
             <Tooltip
               message={
-                `${autoTestsCount} Auto tests covered ${percentFormatter(autoTestsPercentage)}% of application in the current build`
+                `${autoTestsCount} Auto tests covered ${
+                  percentFormatter(autoTestsPercentage)}% of application in the current ${scopeId ? 'scope' : 'build'}`
               }
             >
               <TestsBar
@@ -73,7 +76,8 @@ export const ActiveBuildTestsInfo = activeBuildTestsInfo(({ className, testsInfo
           {Boolean(manualTestsCount) && (
             <Tooltip
               message={
-                `${manualTestsCount} Manual tests covered ${percentFormatter(manualTestsPercentage)}% of application in the current build`
+                `${manualTestsCount} Manual tests covered ${
+                  percentFormatter(manualTestsPercentage)}% of application in the current ${scopeId ? 'scope' : 'build'}`
               }
             >
               <TestsBar
