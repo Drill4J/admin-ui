@@ -25,6 +25,7 @@
     display: flex;
     align-items: center;
     gap: 8px;
+    height: 48px;
     color: map-get($primary-blue, default);
     font-family: $semibold-font;
     cursor: pointer;
@@ -34,17 +35,5 @@
     display: flex;
     align-items: center;
     color: map-get($monochrome, default);
-  }
-
-  &__header-cell {
-    display: flex;
-    flex-direction: column-reverse;
-    height: 52px;
-    margin-top: 14px;
-  }
-
-  &__header-label {
-    font-size: 12px;
-    line-height: 24px;
   }
 }

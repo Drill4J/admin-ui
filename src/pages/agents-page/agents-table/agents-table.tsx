@@ -28,25 +28,28 @@ export const AgentsTable = agentsTable(({ className, agents }: Props) => (
           name="name"
           label="Name"
           Cell={({ item }) => <NameColumn agent={item} withMargin />}
-          width="40%"
+          align="start"
         />,
         <Column
           name="description"
           label="Description"
           Cell={({ value }) => <OverflowText>{value.substr(0, 150)}</OverflowText>}
+          align="start"
         />,
-        <Column name="agentType" label="Type" />,
+        <Column name="agentType" label="Type" align="start" />,
         <Column
           name="environment"
           label="Environment"
           Cell={({ value, item }) => (
             <OverflowText title={value}>{item.status === AGENT_STATUS.NOT_REGISTERED ? 'n/a' : value}</OverflowText>
           )}
+          align="start"
         />,
         <Column
           name="status"
           label="Status"
           Cell={({ item }) => <AgentStatusToggle agent={item} />}
+          align="start"
         />,
         <Column
           name="actions"
@@ -55,19 +58,21 @@ export const AgentsTable = agentsTable(({ className, agents }: Props) => (
       ]}
       expandedContentKey="agents"
     >
-      <Column name="name" label="Name" Cell={({ item }) => <NameColumn agent={item} />} width="40%" />
+      <Column name="name" label="Name" Cell={({ item }) => <NameColumn agent={item} />} align="start" />
       <Column
         name="description"
         label="Description"
         Cell={({ value }) => <OverflowText>{value.substr(0, 150)}</OverflowText>}
+        align="start"
       />
-      <Column name="agentType" label="Type" />
+      <Column name="agentType" label="Type" align="start" />
       <Column
         name="environment"
         label="Environment"
         Cell={({ value, item }) => (
           <OverflowText title={value}>{item.status === AGENT_STATUS.NOT_REGISTERED ? 'n/a' : value}</OverflowText>
         )}
+        align="start"
       />
       <Column
         name="status"
@@ -78,11 +83,11 @@ export const AgentsTable = agentsTable(({ className, agents }: Props) => (
             <AgentStatusToggle agent={item} />
           ) : null);
         }}
+        align="start"
       />
       <Column
         name="actions"
         Cell={({ item }: { item: Agent }) => <ActionsColumn agent={item} />}
-        width="200px"
       />
     </ExpandableTable>
   </div>

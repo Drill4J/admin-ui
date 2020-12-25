@@ -1,8 +1,9 @@
 @import '~common/style-guide/index';
 
-.table-row {
+.packages-tree-table-row {
   align-items: center;
   min-height: 40px;
+  border-bottom: 1px solid map-get($monochrome, medium-tint);
 
   &__table-row-cell {
     padding: 0 16px;

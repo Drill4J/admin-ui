@@ -24,19 +24,6 @@
     color: map-get($monochrome, default);
   }
 
-  &__header-cell {
-    height: 52px;
-    position: relative;
-    margin-top: 14px;
-  }
-
-  &__test-type-label {
-    position: absolute;
-    bottom: 8px;
-    font-size: 12px;
-    line-height: 24px;
-  }
-
   &__recording-icon {
     display: inline-block;
     height: 8px;
@@ -123,16 +110,5 @@
     line-height: 20px;
     color: map-get($monochrome, default);
     font-family: $regular-font;
-  }
-
-  &__action-cell {
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-    color: map-get($primary-blue, default);
-
-    & > * {
-      margin-right: 24px;
-    }
   }
 }

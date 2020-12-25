@@ -57,189 +57,168 @@ export const ScopesList = scopesList(({ className }: Props) => {
           All Scopes
           <ScopesCount>{scopesData.length}</ScopesCount>
         </Title>
-        {
-          scopesData.length > 0
-            ? (
-              <Table
-                data={scopesData}
-                idKey="name"
-                columnsSize="wide"
-              >
-                <Column
-                  name="name"
-                  HeaderCell={() => <HeaderCell>Name</HeaderCell>}
-                  Cell={({
-                    value, item: {
-                      id, started, active, enabled, finished,
-                    },
-                  }) => (
-                    <NameCell
-                      onClick={() => push(`/full-page/${agentId}/${buildVersion}/${pluginId}/scopes/${id}`)}
-                      data-test="scopes-list:scope-name"
-                    >
-                      <ScopeName title={value}>{value}</ScopeName>
-                      {status === AGENT_STATUS.ONLINE && (
-                        <Panel>
-                          <ScopeTimer started={started} finished={finished} active={active} size="small" />
-                          {active && <ActiveBadge>Active</ActiveBadge>}
-                          {!enabled && <IgnoreBadge>Ignored</IgnoreBadge>}
-                        </Panel>
+        {scopesData.length > 0
+          ? (
+            <Table data={scopesData} idKey="name" templateColumns="40% repeat(4, 1fr) 48px">
+              <Column
+                name="name"
+                label="Name"
+                Cell={({
+                  value, item: {
+                    id, started, active, enabled, finished,
+                  },
+                }) => (
+                  <NameCell
+                    onClick={() => push(`/full-page/${agentId}/${buildVersion}/${pluginId}/scopes/${id}`)}
+                    data-test="scopes-list:scope-name"
+                  >
+                    <ScopeName title={value}>{value}</ScopeName>
+                    {status === AGENT_STATUS.ONLINE && (
+                      <Panel>
+                        <ScopeTimer started={started} finished={finished} active={active} size="small" />
+                        {active && <ActiveBadge>Active</ActiveBadge>}
+                        {!enabled && <IgnoreBadge>Ignored</IgnoreBadge>}
+                      </Panel>
+                    )}
+                  </NameCell>
+                )}
+                align="start"
+              />
+              <Column
+                name="started"
+                label="Started"
+                Cell={({ value }) => (
+                  <>
+                    <StartDate>
+                      {dateFormatter(value)}
+                    </StartDate>
+                    <StartTime>
+                      at {timeFormatter(value)}
+                    </StartTime>
+                  </>
+                )}
+                align="start"
+              />
+              <Column
+                name="coverage"
+                label="Coverage"
+                Cell={({ item: { coverage: { percentage } } }) => (
+                  <Coverage data-test="scopes-list:coverage">
+                    {`${percentFormatter(percentage)}%`}
+                  </Coverage>
+                )}
+              />
+              <Column
+                name="autoTests"
+                label="Auto Tests"
+                Cell={({
+                  item: { coverage: { byTestType }, active },
+                }: { item: { coverage: { byTestType: TestTypeSummary[] }; active: boolean }}) => {
+                  const coverageByTestType = transformObjectsArrayToObject(byTestType, 'type');
+                  return (
+                    <TestTypeCoverage>
+                      {coverageByTestType?.AUTO && (
+                        <span>
+                          {`${percentFormatter(coverageByTestType?.AUTO?.summary?.coverage?.percentage || 0)}%`}
+                        </span>
                       )}
-                    </NameCell>
-                  )}
-                />
-                <Column
-                  name="started"
-                  HeaderCell={() => <HeaderCell>Started</HeaderCell>}
-                  width="190px"
-                  Cell={({ value }) => (
-                    <>
-                      <StartDate>
-                        {dateFormatter(value)}
-                      </StartDate>
-                      <StartTime>
-                        at {timeFormatter(value)}
-                      </StartTime>
-                    </>
-                  )}
-                />
-                <Column
-                  name="coverage"
-                  HeaderCell={() => <HeaderCell>Coverage</HeaderCell>}
-                  width="190px"
-                  Cell={({ item: { coverage: { percentage } } }) => (
-                    <Coverage data-test="scopes-list:coverage">
-                      {`${percentFormatter(percentage)}%`}
-                    </Coverage>
-                  )}
-                />
-                <Column
-                  name="autoTests"
-                  HeaderCell={() => (
-                    <HeaderCell>
-                      <div>Distribution</div>
-                      <TestTypeLabel>Auto Tests</TestTypeLabel>
-                    </HeaderCell>
-                  )}
-                  width="160px"
-                  Cell={({
-                    item: { coverage: { byTestType }, active },
-                  }: { item: { coverage: { byTestType: TestTypeSummary[] }; active: boolean }}) => {
-                    const coverageByTestType = transformObjectsArrayToObject(byTestType, 'type');
-                    return (
-                      <TestTypeCoverage>
-                        {coverageByTestType?.AUTO && (
-                          <span>
-                            {`${percentFormatter(coverageByTestType?.AUTO?.summary?.coverage?.percentage || 0)}%`}
-                          </span>
-                        )}
-                        {active && testTypes.includes('AUTO') && (
-                          <>
-                            <RecordingIcon />
-                            <RecordingText>Rec</RecordingText>
-                          </>
-                        )}
-                        <TestTypeTestCount>
-                          {coverageByTestType?.AUTO
+                      {active && testTypes.includes('AUTO') && (
+                        <>
+                          <RecordingIcon />
+                          <RecordingText>Rec</RecordingText>
+                        </>
+                      )}
+                      <TestTypeTestCount>
+                        {coverageByTestType?.AUTO
                       && coverageByTestType?.AUTO?.summary?.testCount
                       && `${coverageByTestType?.AUTO?.summary?.testCount} tests`}
-                        </TestTypeTestCount>
-                      </TestTypeCoverage>
-                    );
-                  }}
-                />
-                <Column
-                  name="manualTests"
-                  HeaderCell={() => (
-                    <HeaderCell>
-                      <TestTypeLabel>Manual</TestTypeLabel>
-                    </HeaderCell>
-                  )}
-                  width="110px"
-                  Cell={({
-                    item: { coverage: { byTestType }, active },
-                  }: { item: { coverage: { byTestType: TestTypeSummary[] }; active: boolean }}) => {
-                    const coverageByTestType = transformObjectsArrayToObject(byTestType, 'type');
-                    return (
-                      <TestTypeCoverage>
-                        {coverageByTestType?.MANUAL && (
-                          <span>
-                            {`${percentFormatter(coverageByTestType?.MANUAL?.summary?.coverage?.percentage || 0)}%`}
-                          </span>
-                        )}
-                        {active && testTypes.includes('MANUAL') && (
-                          <>
-                            <RecordingIcon />
-                            <RecordingText>Rec</RecordingText>
-                          </>
-                        )}
-                        <TestTypeTestCount>
-                          {coverageByTestType?.MANUAL
+                      </TestTypeTestCount>
+                    </TestTypeCoverage>
+                  );
+                }}
+              />
+              <Column
+                name="manualTests"
+                label="Manual tests"
+                Cell={({
+                  item: { coverage: { byTestType }, active },
+                }: { item: { coverage: { byTestType: TestTypeSummary[] }; active: boolean }}) => {
+                  const coverageByTestType = transformObjectsArrayToObject(byTestType, 'type');
+                  return (
+                    <TestTypeCoverage>
+                      {coverageByTestType?.MANUAL && (
+                        <span>
+                          {`${percentFormatter(coverageByTestType?.MANUAL?.summary?.coverage?.percentage || 0)}%`}
+                        </span>
+                      )}
+                      {active && testTypes.includes('MANUAL') && (
+                        <>
+                          <RecordingIcon />
+                          <RecordingText>Rec</RecordingText>
+                        </>
+                      )}
+                      <TestTypeTestCount>
+                        {coverageByTestType?.MANUAL
                       && coverageByTestType?.MANUAL?.summary?.testCount
                       && `${coverageByTestType?.MANUAL?.summary?.testCount} tests`}
-                        </TestTypeTestCount>
-                      </TestTypeCoverage>
+                      </TestTypeTestCount>
+                    </TestTypeCoverage>
+                  );
+                }}
+              />
+              {activeBuildVersion === buildVersion && status === AGENT_STATUS.ONLINE && (
+                <Column
+                  name="actions"
+                  Cell={({ item }) => {
+                    const { active, enabled, id } = item;
+                    const menuActions = [
+                      active && {
+                        label: 'Finish Scope',
+                        icon: 'Check',
+                        onClick: () => dispatch(openModal('FinishScopeModal', item)),
+                      },
+                      active && {
+                        label: 'Sessions Management',
+                        icon: 'ManageSessions',
+                        onClick: () => dispatch(openModal('SessionsManagementModal', null)),
+                      },
+                      !active && {
+                        label: `${enabled ? 'Ignore' : 'Include'} in stats`,
+                        icon: enabled ? 'EyeCrossed' : 'Eye',
+                        onClick: () => toggleScope(agentId, pluginId, {
+                          onSuccess: () => {
+                            showMessage({
+                              type: 'SUCCESS',
+                              text: `Scope has been ${enabled ? 'ignored' : 'included'} in build stats.`,
+                            });
+                          },
+                          onError: () => {
+                            showMessage({
+                              type: 'ERROR',
+                              text: 'There is some issue with your action. Please try again later',
+                            });
+                          },
+                        })(id),
+                      },
+                      {
+                        label: 'Rename',
+                        icon: 'Edit',
+                        onClick: () => dispatch(openModal('RenameScopeModal', item)),
+                      },
+                      {
+                        label: 'Delete',
+                        icon: 'Delete',
+                        onClick: () => dispatch(openModal('DeleteScopeModal', item)),
+                      },
+                    ].filter(Boolean);
+                    return (
+                      <Menu items={menuActions as MenuItemType[]} />
                     );
                   }}
                 />
-                {activeBuildVersion === buildVersion && status === AGENT_STATUS.ONLINE && (
-                  <Column
-                    name="actions"
-                    HeaderCell={() => null}
-                    width="80px"
-                    Cell={({ item }) => {
-                      const { active, enabled, id } = item;
-                      const menuActions = [
-                        active && {
-                          label: 'Finish Scope',
-                          icon: 'Check',
-                          onClick: () => dispatch(openModal('FinishScopeModal', item)),
-                        },
-                        active && {
-                          label: 'Sessions Management',
-                          icon: 'ManageSessions',
-                          onClick: () => dispatch(openModal('SessionsManagementModal', null)),
-                        },
-                        !active && {
-                          label: `${enabled ? 'Ignore' : 'Include'} in stats`,
-                          icon: enabled ? 'EyeCrossed' : 'Eye',
-                          onClick: () => toggleScope(agentId, pluginId, {
-                            onSuccess: () => {
-                              showMessage({
-                                type: 'SUCCESS',
-                                text: `Scope has been ${enabled ? 'ignored' : 'included'} in build stats.`,
-                              });
-                            },
-                            onError: () => {
-                              showMessage({
-                                type: 'ERROR',
-                                text: 'There is some issue with your action. Please try again later',
-                              });
-                            },
-                          })(id),
-                        },
-                        {
-                          label: 'Rename',
-                          icon: 'Edit',
-                          onClick: () => dispatch(openModal('RenameScopeModal', item)),
-                        },
-                        {
-                          label: 'Delete',
-                          icon: 'Delete',
-                          onClick: () => dispatch(openModal('DeleteScopeModal', item)),
-                        },
-                      ].filter(Boolean);
-                      return (
-                        <ActionCell>
-                          <Menu items={menuActions as MenuItemType[]} />
-                        </ActionCell>
-                      );
-                    }}
-                  />
-                )}
-              </Table>
-            ) : <NoScopeStub />
-        }
+              )}
+            </Table>
+          ) : <NoScopeStub />}
       </Content>
     </div>
   );
@@ -248,8 +227,6 @@ export const ScopesList = scopesList(({ className }: Props) => {
 const Content = scopesList.content('div');
 const Title = scopesList.title(Panel);
 const ScopesCount = scopesList.scopesCount('span');
-const HeaderCell = scopesList.headerCell('div');
-const TestTypeLabel = scopesList.testTypeLabel('div');
 const TestTypeCoverage = scopesList.testTypeCoverage('div');
 const TestTypeTestCount = scopesList.testTypeTestCount('div');
 const RecordingIcon = scopesList.recordingIcon('span');
@@ -261,4 +238,3 @@ const StartTime = scopesList.startTime('div');
 const ActiveBadge = scopesList.activeBadge(Status);
 const IgnoreBadge = scopesList.ignoreBadge(Status);
 const Coverage = scopesList.coverage('div');
-const ActionCell = scopesList.actionCell('div');

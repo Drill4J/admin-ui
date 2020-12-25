@@ -11,15 +11,15 @@ import styles from './table-header.module.scss';
 interface Props {
   className?: string;
   columns: any[];
-  expandedColumns?: any[];
+  expandedColumnsLength?: number;
 }
 
 const tableHeader = BEM(styles);
 
-export const TableHeader = tableHeader(({ columns, className, expandedColumns }: Props) => {
+export const TableHeader = tableHeader(({ columns, className, expandedColumnsLength }: Props) => {
   const dispatch = useTableActionsDispatch();
   const { sort: [sort] } = useTableActionsState();
-  const gridTemplateColumns = expandedColumns?.length
+  const gridTemplateColumns = expandedColumnsLength
     ? `32px 40% repeat(${columns.length - 2}, 1fr)`
     : `2fr repeat(${columns.length - 1}, 1fr)`;
   return (

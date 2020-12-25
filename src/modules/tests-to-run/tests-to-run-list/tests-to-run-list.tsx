@@ -89,23 +89,24 @@ export const TestsToRunList = testsToRunList(({ className, agentType = 'Agent' }
           >
             Displaying {filteredCount} of {totalCount} tests
           </SearchPanel>
-          <Table data={testsToRun} idKey="name" columnsSize="medium">
+          <Table data={testsToRun} idKey="name" templateColumns="calc(100% - 664px) 130px 76px 152px 186px 120px">
             <Column
               name="name"
               label="Name"
               Cell={({ value }) => (
-                <Cells.Compound cellName={value} cellAdditionalInfo="&ndash;" icon={<Icons.Test />} />
+                <Cells.Compound cellName={value} cellAdditionalInfo="&ndash;" icon={<Icons.Test height={16} width={16} />} />
               )}
+              align="start"
             />
             <Column
               name="type"
               label="Test type"
-              width="108px"
               Cell={({ value }) => (
                 <>
                   {capitalize(value)}
                 </>
               )}
+              align="start"
             />
             <Column
               name="stats.result"
@@ -113,14 +114,12 @@ export const TestsToRunList = testsToRunList(({ className, agentType = 'Agent' }
               Cell={({ item: { toRun } }) => (
                 toRun ? <>To run</> : <Done>Done</Done>
               )}
-              width="68px"
+              align="start"
             />
             <Column
               name="coverage.percentage"
               label="Coverage, %"
               Cell={({ value, item: { toRun } }) => (toRun ? null : <Cells.Coverage value={value} />)}
-              align="right"
-              width="98px"
             />
             <Column
               name="coverage.methodCount.covered"
@@ -135,15 +134,11 @@ export const TestsToRunList = testsToRunList(({ className, agentType = 'Agent' }
                   </Cells.Clickable>
                 )
               )}
-              align="right"
-              width="162px"
             />
             <Column
               name="stats.duration"
               label="Duration"
               Cell={({ value, item: { toRun } }) => (toRun ? null : <Cells.Duration value={value} />)}
-              align="right"
-              width="118px"
             />,
           </Table>
         </div>

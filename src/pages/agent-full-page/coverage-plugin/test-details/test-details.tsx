@@ -33,32 +33,28 @@ export const TestDetails = testDetails(
             <Title>
               Tests
             </Title>
-            <Table
-              data={tests}
-              idKey="name"
-              columnsSize="medium"
-            >
+            <Table data={tests} idKey="name" templateColumns="calc(100% - 664px) 130px 76px 152px 186px 120px">
               <Column
                 name="testName"
                 label="Name"
                 Cell={({ item: { id, name } }) => (
                   <Cells.Compound cellName={name} cellAdditionalInfo={id} icon={<Icons.Test height={16} width={16} />} />
                 )}
+                align="start"
               />
               <Column
                 name="type"
                 label="Test type"
-                width="104px"
                 Cell={({ value }) => (
                   <>
                     {capitalize(value)}
                   </>
                 )}
+                align="start"
               />
               <Column
                 name="stats.result"
                 label="Status"
-                width="44px"
                 Cell={({ value }) => (
                   <Cells.TestStatus
                     type={value}
@@ -66,18 +62,16 @@ export const TestDetails = testDetails(
                     {capitalize(value)}
                   </Cells.TestStatus>
                 )}
+                align="start"
               />
               <Column
                 name="coverage.percentage"
                 label="Coverage, %"
-                width="128px"
                 Cell={Cells.Coverage}
-                align="right"
               />
               <Column
                 name="coverage.methodCount.covered"
                 label="Methods covered"
-                width="160px"
                 Cell={({ value, item: { id = '' } = {} }) => (
                   <Cells.Clickable
                     onClick={() => {
@@ -89,14 +83,11 @@ export const TestDetails = testDetails(
                     {value}
                   </Cells.Clickable>
                 )}
-                align="right"
               />
               <Column
                 name="stats.duration"
                 label="Duration"
-                width="116px"
                 Cell={Cells.Duration}
-                align="right"
               />,
             </Table>
           </>
