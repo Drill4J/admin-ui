@@ -25,7 +25,7 @@ const scopeProjectMethods = BEM(styles);
 
 export const ScopeProjectMethods = scopeProjectMethods(({ className, scope }: Props) => {
   const {
-    all, new: newMethods, modified, deleted, risks,
+    all, new: newMethods, modified, risks,
   } = useBuildVersion<Methods>(`/scope/${scope?.id}/methods`) || {};
   const [risksFilter, setRisksFilter] = React.useState('');
 
@@ -37,9 +37,7 @@ export const ScopeProjectMethods = scopeProjectMethods(({ className, scope }: Pr
           totalCount={all?.total}
           covered={all?.covered}
           label="TOTAL METHODS"
-        >
-          {deleted?.total} <Deleted>deleted</Deleted>
-        </BuildMethodsCard>
+        />
         <BuildMethodsCard
           totalCount={newMethods?.total}
           covered={newMethods?.covered}
@@ -83,4 +81,3 @@ export const ScopeProjectMethods = scopeProjectMethods(({ className, scope }: Pr
 });
 
 const Cards = scopeProjectMethods.cards('div');
-const Deleted = scopeProjectMethods.deleted('span');
