@@ -7,7 +7,7 @@ import {
 
 import { defaultAdminSocket } from 'common/connection';
 import {
-  useWsConnection, useElementSize, useAgent, useBaselineVersion,
+  useWsConnection, useAgent, useBaselineVersion,
 } from 'hooks';
 import { dateTimeFormatter } from 'utils';
 import { BuildVersion } from 'types/build-version';
@@ -21,122 +21,87 @@ interface Props {
 
 const buildList = BEM(styles);
 
-export const BuildList =
-  buildList(
-    ({
-      className,
-    }: Props) => {
-      const { agentId = '' } = useParams<{ agentId: string }>();
-      const { push } = useHistory();
-      const buildVersions = useWsConnection<BuildVersion[]>(defaultAdminSocket, `/agents/${agentId}/builds`) || [];
-      const { buildVersion: activeBuildVersion } = useAgent(agentId) || {};
-      const { version: baseline } = useBaselineVersion(agentId, activeBuildVersion) || {};
-      const dispatch = usePluginDispatch();
-      const node = React.useRef<HTMLDivElement>(null);
-      const { width: contentWidth } = useElementSize(node);
-      const columnWidth = `${(contentWidth - 48) / 10}px`;
+export const BuildList = buildList(({ className }: Props) => {
+  const { agentId = '' } = useParams<{ agentId: string }>();
+  const { push } = useHistory();
+  const buildVersions = useWsConnection<BuildVersion[]>(defaultAdminSocket, `/agents/${agentId}/builds`) || [];
+  const { buildVersion: activeBuildVersion } = useAgent(agentId) || {};
+  const { version: baseline } = useBaselineVersion(agentId, activeBuildVersion) || {};
+  const dispatch = usePluginDispatch();
+  const node = React.useRef<HTMLDivElement>(null);
 
-      return (
-        <div className={className}>
-          <Content>
-            <div ref={node}>
-              <Title>
-                <span>All builds </span>
-                <BuildCount>{buildVersions.length}</BuildCount>
-              </Title>
-              <Table data={buildVersions}>
-                <Column
-                  name="buildVersion"
-                  label="Name"
-                  Cell={({ value: buildVersion }) => (
-                    <NameCell
-                      onClick={() => {
-                        dispatch(setBuildVersion(buildVersion));
-                        push(`/full-page/${agentId}/${buildVersion}/dashboard`);
-                      }}
-                    >
-                      {buildVersion}
-                      {baseline === buildVersion && (
-                        <Tooltip
-                          message={(
-                            <span>
-                              This build is set as baseline.<br />
-                              All subsequent builds are compared with it.
-                            </span>
-                          )}
-                          position="top-right"
-                        >
-                          <BaselineFlag />
-                        </Tooltip>
+  return (
+    <div className={className}>
+      <Content>
+        <div ref={node}>
+          <Title>
+            <span>All builds </span>
+            <BuildCount>{buildVersions.length}</BuildCount>
+          </Title>
+          <Table data={buildVersions} templateColumns="30% 20% repeat(5, 1fr)">
+            <Column
+              name="buildVersion"
+              label="Name"
+              Cell={({ value: buildVersion }) => (
+                <NameCell
+                  onClick={() => {
+                    dispatch(setBuildVersion(buildVersion));
+                    push(`/full-page/${agentId}/${buildVersion}/dashboard`);
+                  }}
+                >
+                  {buildVersion}
+                  {baseline === buildVersion && (
+                    <Tooltip
+                      message={(
+                        <span>
+                          This build is set as baseline.<br />
+                          All subsequent builds are compared with it.
+                        </span>
                       )}
-                    </NameCell>
+                      position="top-right"
+                    >
+                      <BaselineFlag />
+                    </Tooltip>
                   )}
-                  width={columnWidth}
-                />
-                <Column
-                  name="detectedAt"
-                  label="Added"
-                  Cell={({ value }) => <span>{dateTimeFormatter(value)}</span>}
-                  width={columnWidth}
-                />
-                <Column
-                  name="summary.total"
-                  HeaderCell={() => (
-                    <HeaderCell>
-                      <HeaderLabel>Total</HeaderLabel>
-                      <div>Methods</div>
-                    </HeaderCell>
-                  )}
-                  width={columnWidth}
-                />
-                <Column
-                  name="summary.new"
-                  HeaderCell={() => (
-                    <HeaderCell>
-                      <HeaderLabel>New</HeaderLabel>
-                    </HeaderCell>
-                  )}
-                  width={columnWidth}
-                />
-                <Column
-                  name="summary.modified"
-                  HeaderCell={() => (
-                    <HeaderCell>
-                      <HeaderLabel>Modified</HeaderLabel>
-                    </HeaderCell>
-                  )}
-                  width={columnWidth}
-                />
-                <Column
-                  name="summary.unaffected"
-                  HeaderCell={() => (
-                    <HeaderCell>
-                      <HeaderLabel>Unaffected</HeaderLabel>
-                    </HeaderCell>
-                  )}
-                  width={columnWidth}
-                />
-                <Column
-                  name="summary.deleted"
-                  HeaderCell={() => (
-                    <HeaderCell>
-                      <HeaderLabel>Deleted</HeaderLabel>
-                    </HeaderCell>
-                  )}
-                  width={columnWidth}
-                />
-              </Table>
-            </div>
-          </Content>
+                </NameCell>
+              )}
+              align="start"
+            />
+            <Column
+              name="detectedAt"
+              label="Added"
+              Cell={({ value }) => <span>{dateTimeFormatter(value)}</span>}
+              align="start"
+            />
+            <Column
+              name="summary.total"
+              label="Total methods"
+            />
+            <Column
+              name="summary.new"
+              label="New"
+            />
+            <Column
+              name="summary.modified"
+              label="Modified"
+            />
+            <Column
+              name="summary.unaffected"
+              label="Unaffected"
+            />
+            <Column
+              name="summary.deleted"
+              label="Deleted"
+            />
+          </Table>
         </div>
-      );
-    },
+      </Content>
+    </div>
   );
+});
 
 const Content = buildList.content('div');
 const Title = buildList.title(Panel);
 const BuildCount = buildList.itemsCount('span');
 const NameCell = buildList.nameCell('div');
-const HeaderCell = buildList.headerCell('div');
-const HeaderLabel = buildList.headerLabel('div');
 const BaselineFlag = buildList.baselineFlag(Icons.Flag);

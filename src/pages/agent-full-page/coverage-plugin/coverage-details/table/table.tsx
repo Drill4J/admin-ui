@@ -53,7 +53,7 @@ export const Table = table(
     return (
       <>
         <div className={className}>
-          {!withoutHeader && <TableHeader columns={columns} expandedColumns={expandedColumns} />}
+          {!withoutHeader && <TableHeader columns={columns} expandedColumnsLength={expandedColumns?.length} />}
           {data.length > 0 && (
             data.map((item, index) => (
               <TableRow
