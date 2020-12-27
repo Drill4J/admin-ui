@@ -21,5 +21,5 @@ export const InitialDataController = ({ children }: Props) => {
     return () => pluginDispatch(setLoading(false));
     // eslint-disable-next-line
   }, [activeSessions.count]);
-  return children as React.ReactElement<any>;
+  return children as React.ReactElement;
 };

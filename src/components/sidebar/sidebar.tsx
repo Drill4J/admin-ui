@@ -6,10 +6,19 @@ import { ReactComponent as LogoSvg } from './logo.svg';
 
 import styles from './sidebar.module.scss';
 
+interface IconProps {
+  width?: number;
+  height?: number;
+  onClick?: () => void;
+  viewBox?: string;
+  rotate?: number;
+  'data-test'?: string;
+}
+
 interface Props {
   className?: string;
   active?: 'active';
-  links: Array<{ icon: React.ComponentType<any>; link: string; computedLink?: string }>;
+  links: Array<{ icon: React.ComponentType<IconProps>; link: string; computedLink?: string }>;
   matchParams: { path: string };
 }
 

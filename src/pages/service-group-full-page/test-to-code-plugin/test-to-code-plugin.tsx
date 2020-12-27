@@ -55,7 +55,7 @@ export const TestToCodePlugin = testToCodePlugin(
               },
             }: {
               value: string;
-              item: any;
+              item: { buildVersion?: string; id?: string; };
             }) => (
               <TestToCodeNameCell
                 name={value}

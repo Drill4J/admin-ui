@@ -9,19 +9,20 @@ import { Agent } from 'types/agent';
 import {
   wizardReducer, previousStep, nextStep, state,
 } from './wizard-reducer';
+import { FormValidator } from '../../forms/form-validators';
 
 import styles from './wizard.module.scss';
 
 export interface StepProps {
   name: string;
   component: React.ComponentType<any>;
-  validate?: (fields: any) => { [fieldName: string]: string | string[] } | undefined;
+  validate?: FormValidator;
 }
 
 interface Props {
   className?: string;
   initialValues: Agent;
-  onSubmit: (val: any, onError: (message: string) => void) => any;
+  onSubmit: (val: Record<string, unknown>, onError: (message: string) => void) => void;
   children: React.ReactElement<StepProps>[];
 }
 

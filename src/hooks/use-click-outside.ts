@@ -4,14 +4,14 @@ export function useClickOutside(callback: () => void) {
   const node = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    function handleClick(event: any) {
-      if (node && node.current && node.current.contains(event.target)) {
+    function handleClick(event: MouseEvent) {
+      if (node && node.current && node.current.contains(event.target as HTMLElement)) {
         return;
       }
       callback();
     }
     const handleEsc = (event: KeyboardEvent) => {
-      if (event.keyCode === 27) {
+      if (event.key === 'Escape') {
         callback();
       }
     };

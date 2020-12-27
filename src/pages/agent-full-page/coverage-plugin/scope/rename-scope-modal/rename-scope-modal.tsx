@@ -67,7 +67,7 @@ export const RenameScopeModal = renameScopeModal(
               },
               onError: setErrorMessage,
             })(values as ScopeSummary)}
-            validate={validateScope as any}
+            validate={validateScope}
             initialValues={scope || {}}
             render={({ handleSubmit }) => (
               <Content>
@@ -75,7 +75,7 @@ export const RenameScopeModal = renameScopeModal(
                   <Field name="name" component={Fields.Input} placeholder="Enter scope name" />
                 </FormGroup>
                 <ActionsPanel>
-                  <Button type="primary" size="large" onClick={handleSubmit as any}>
+                  <Button type="primary" size="large" onClick={handleSubmit}>
                     Save
                   </Button>
                   <Button type="secondary" size="large" onClick={() => onToggle(false)}>

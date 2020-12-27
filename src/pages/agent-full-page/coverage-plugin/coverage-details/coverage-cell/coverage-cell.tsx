@@ -3,17 +3,17 @@ import { BEM, div } from '@redneckz/react-bem-helper';
 import { Icons } from '@drill4j/ui-kit';
 
 import { percentFormatter } from 'utils';
+import { CellProps } from '../table/table-types';
 
 import styles from './coverage-cell.module.scss';
 
-interface Props {
-  className?: string;
-  value: number;
-}
-
 const coverageCell = BEM(styles);
 
-export const CoverageCell = coverageCell(({ className, value }: Props) => (
+interface Props extends CellProps<number, unknown>{
+  className?: string;
+}
+
+export const CoverageCell = coverageCell(({ className, value = 0 }: Props) => (
   <div className={className}>
     <span data-test="coverage-cell:coverage">{`${percentFormatter(value)}%`}</span>
     {getCoverageIcon(value)}

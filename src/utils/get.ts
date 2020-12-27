@@ -1,4 +1,4 @@
-export function get<T>(obj?: any, path?: string): T | void | null {
+export function get<T>(obj?: any, path?: string): T {
   if (!path || !path.length) {
     return obj;
   }

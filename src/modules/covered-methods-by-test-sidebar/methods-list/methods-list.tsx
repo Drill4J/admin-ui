@@ -65,7 +65,7 @@ export const MethodsList = methodsList(({ className, coveredMethods }: Props) =>
               height={Math.ceil(methodsListHeight)}
               itemCount={methods.length}
               renderItem={({ index, style }) => (
-                <Method key={`${methods[index].name}${index}`} style={style as any}>
+                <Method key={`${methods[index].name}${index}`} style={style as Record<symbol, string>}>
                   <MethodInfo>
                     <Panel>
                       <MethodsListItemIcon>

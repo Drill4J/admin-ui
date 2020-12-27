@@ -1,23 +1,25 @@
 import * as React from 'react';
 
+import { get } from 'utils';
 import { Table } from '../table';
 import { Column } from '../column';
 import { RowExpander } from './row-expander';
+import { ColumnProps } from '../table-types';
 
-interface Props {
-  data: Record<string, unknown>[];
+interface Props<T> {
+  data: T[];
   idKey: string;
-  children: React.ReactNode;
-  expandedColumns?: any[];
+  children: React.ReactElement<ColumnProps<unknown, T>>[];
+  expandedColumns?: React.ReactElement<ColumnProps<unknown, T>>[];
   expandedContentKey: string;
-  secondLevelExpand?: any[];
+  secondLevelExpand?: React.ReactElement<ColumnProps<unknown, T>>[];
   className?: string;
   hasSecondLevelExpand?: boolean;
   classesTopicPrefix: string;
   tableContentStub?: React.ReactNode | null;
 }
 
-export const ExpandableTable = ({
+export const ExpandableTable = <T, >({
   children,
   data,
   idKey,
@@ -26,17 +28,17 @@ export const ExpandableTable = ({
   hasSecondLevelExpand,
   tableContentStub = null,
   ...restProps
-}: Props) => {
+}: Props<T>) => {
   const [expandedRows, setExpandedRows] = React.useState<string[]>([]);
   return (
     <Table
       className={className}
-      data={data as any}
+      data={data}
       expandedRows={expandedRows}
       idKey={idKey}
       tableContentStub={tableContentStub}
       expandedColumns={
-        expandedColumns
+        (expandedColumns
           ? [
             hasSecondLevelExpand
               ? getExpanderColumn({
@@ -44,17 +46,17 @@ export const ExpandableTable = ({
                 expandedRows,
                 setExpandedRows,
               })
-              : null,
+              : undefined,
             ...expandedColumns,
           ]
-          : undefined
+          : undefined) as React.ReactElement<ColumnProps<unknown, T>>[]
       }
       secondLevelExpand={expandedColumns}
       {...restProps}
     >
       {[
         getExpanderColumn({ idKey, expandedRows, setExpandedRows }),
-        ...React.Children.toArray(children),
+        ...React.Children.toArray(children) as React.ReactElement<ColumnProps<unknown, T>>[],
       ]}
     </Table>
   );
@@ -75,12 +77,12 @@ const getExpanderColumn = ({
     Cell={({ item }) => (
       <RowExpander
         onClick={() => {
-          expandedRows.includes(item[idKey])
-            ? setExpandedRows(expandedRows.filter((selectedItem) => selectedItem !== item[idKey]))
-            : setExpandedRows([...expandedRows, item[idKey]]);
+          expandedRows.includes(get(item, idKey))
+            ? setExpandedRows(expandedRows.filter((selectedItem) => selectedItem !== get(item, idKey)))
+            : setExpandedRows([...expandedRows, get(item, idKey)]);
         }}
-        expanded={expandedRows.includes(item[idKey])}
-        key={item[idKey]}
+        expanded={expandedRows.includes(get(item, idKey))}
+        key={get(item, idKey)}
       />
     )}
     align="end"

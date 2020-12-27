@@ -5,7 +5,7 @@ import { FieldRenderProps } from 'react-final-form';
 
 import styles from './threshold-value-field.module.scss';
 
-interface Props extends FieldRenderProps<any> {
+interface Props extends FieldRenderProps<string> {
   className?: string;
   children: React.ReactNode;
 }

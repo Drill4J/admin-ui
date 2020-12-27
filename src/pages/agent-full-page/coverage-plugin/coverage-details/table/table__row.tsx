@@ -4,17 +4,18 @@ import { BEM } from '@redneckz/react-bem-helper';
 import { get } from 'utils';
 import { DefaultCell } from './default-cell';
 import { ExpandedRowContent } from './expanded-row-content';
+import { ColumnProps } from './table-types';
 
 import styles from './table-row.module.scss';
 
-interface Props {
+interface Props<T> {
   className?: string;
-  item: { [key: string]: unknown };
-  columns: any[];
+  item: T;
+  columns: ColumnProps<unknown, T>[];
   index: number;
   color?: 'blue' | 'gray' | 'yellow';
-  expandedColumns?: any[];
-  secondLevelExpand?: any[];
+  expandedColumns?: ColumnProps<unknown, T>[];
+  secondLevelExpand?: ColumnProps<unknown, T>[];
   expandedContentKey?: string;
   expandedRows?: string[];
   classesTopicPrefix: string;
@@ -23,7 +24,7 @@ interface Props {
 const tableRow = BEM(styles);
 
 export const TableRow = tableRow(
-  ({
+  <T, >({
     className,
     item,
     columns,
@@ -34,7 +35,7 @@ export const TableRow = tableRow(
     secondLevelExpand = [],
     expandedRows = [],
     classesTopicPrefix,
-  }: Props) => {
+  }: Props<T>) => {
     const gridTemplateColumns = expandedColumns?.length
       ? `32px 40% repeat(${columns.length - 2}, 1fr)`
       : `2fr repeat(${columns.length - 1}, 1fr)`;
@@ -52,8 +53,8 @@ export const TableRow = tableRow(
         </div>
         {color && (
           <ExpandedRowContent
-            key={String(item[expandedContentKey])}
-            item={item[expandedContentKey]}
+            key={String(get(item, expandedContentKey))}
+            item={get(item, expandedContentKey)}
             expandedColumns={expandedColumns}
             secondLevelExpand={secondLevelExpand}
             expandedRows={expandedRows}

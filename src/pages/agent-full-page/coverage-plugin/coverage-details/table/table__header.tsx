@@ -5,18 +5,19 @@ import {
   useTableActionsDispatch, setSort, useTableActionsState,
 } from 'modules';
 import { DefaultHeaderCell } from './default-header-cell';
+import { ColumnProps } from './table-types';
 
 import styles from './table-header.module.scss';
 
-interface Props {
+interface Props<T> {
   className?: string;
-  columns: any[];
+  columns: ColumnProps<unknown, T>[];
   expandedColumnsLength?: number;
 }
 
 const tableHeader = BEM(styles);
 
-export const TableHeader = tableHeader(({ columns, className, expandedColumnsLength }: Props) => {
+export const TableHeader = tableHeader(<T, >({ columns, className, expandedColumnsLength }: Props<T>) => {
   const dispatch = useTableActionsDispatch();
   const { sort: [sort] } = useTableActionsState();
   const gridTemplateColumns = expandedColumnsLength
