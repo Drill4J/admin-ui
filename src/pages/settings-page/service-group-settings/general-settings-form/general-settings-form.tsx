@@ -42,7 +42,7 @@ export const GeneralSettingsForm = generalSettingsForm(
             onError: (message: Message) => showMessage(message),
           })}
           initialValues={serviceGroup}
-          validate={validateSettings as any}
+          validate={validateSettings}
           render={({
             handleSubmit,
             submitting,

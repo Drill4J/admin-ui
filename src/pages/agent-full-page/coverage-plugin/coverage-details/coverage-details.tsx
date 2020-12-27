@@ -13,6 +13,7 @@ import { NameCell } from './name-cell';
 import { AssociatedTestModal } from './associated-test-modal';
 import { ExpandableTable, Column } from './table';
 import { CoverageCell } from './coverage-cell';
+import { CellProps } from './table/table-types';
 
 import styles from './coverage-details.module.scss';
 
@@ -47,7 +48,7 @@ export const CoverageDetails = coverageDetails(
       <Column
         name="assocTestsCount"
         label="Associated tests"
-        Cell={({ value, item: { id = '' } = {} }) => (
+        Cell={({ value = '', item: { id = '' } = {} }: CellProps<string, { id?: string }>) => (
           <Cells.Clickable
             onClick={() => {
               setSelectedId(id);
@@ -86,13 +87,8 @@ export const CoverageDetails = coverageDetails(
             expandedColumns={[
               <Column
                 name="name"
-                Cell={(({ item: { name } }) => (
-                  <NameCell
-                    type="primary"
-                    icon={<Icons.Class width={16} height={16} />}
-                    value={name}
-                    testContext="class"
-                  />
+                Cell={(({ item: { name = '' } = {} }: CellProps<unknown, { name?: string }>) => (
+                  <NameCell type="primary" icon={<Icons.Class width={16} height={16} />} value={name} testContext="class" />
                 ))}
                 align="start"
               />,
@@ -101,7 +97,7 @@ export const CoverageDetails = coverageDetails(
             secondLevelExpand={[
               <Column
                 name="name"
-                Cell={({ item: { name, decl } }) => (
+                Cell={({ item: { name = '', decl = '' } = {} }: CellProps<unknown, { name?: string, decl?: string }>) => (
                   <Cells.Compound key={name} cellName={name} cellAdditionalInfo={decl} icon={<Icons.Function />} />
                 )}
                 align="start"
@@ -114,7 +110,13 @@ export const CoverageDetails = coverageDetails(
             <Column
               name="name"
               label="Name"
-              Cell={({ value }) => <NameCell testContext="package" icon={<Icons.Package />} value={value} />}
+              Cell={({ value = '' }: CellProps<string, unknown>) => (
+                <NameCell
+                  icon={<Icons.Package />}
+                  value={value}
+                  testContext="package"
+                />
+              )}
               align="start"
             />
             <Column
@@ -131,7 +133,7 @@ export const CoverageDetails = coverageDetails(
             <Column
               name="assocTestsCount"
               label="Associated tests"
-              Cell={({ value, item: { id = '' } = {} }) => (
+              Cell={({ value = '', item: { id = '' } = {} }: CellProps<string, { id?: string; }>) => (
                 <Cells.Clickable
                   onClick={() => {
                     setSelectedId(id);

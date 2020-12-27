@@ -42,7 +42,7 @@ export const MethodsSidebar = methodsSidebar(
                   height={methodsListHeight}
                   itemCount={methods.length}
                   renderItem={({ index, style }) => (
-                    <MethodsListItem key={index} style={style as any}>
+                    <MethodsListItem key={index} style={style as Record<symbol, string>}>
                       <MethodsListIcon>
                         <Icons.Function />
                       </MethodsListIcon>

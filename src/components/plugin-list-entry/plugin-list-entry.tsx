@@ -10,8 +10,8 @@ import styles from './plugin-list-entry.module.scss';
 interface Props {
   className?: string;
   onClick?: () => void;
-  input?: FieldInputProps<any>;
-  meta?: FieldMetaState<any>;
+  input?: FieldInputProps<string>;
+  meta?: FieldMetaState<string>;
   icon: keyof typeof Icons;
   description?: string;
   children?: React.ReactNode;

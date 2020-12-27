@@ -6,18 +6,18 @@ import { ColumnProps, Sort, Order } from './table-types';
 
 import styles from './default-header-cell.module.scss';
 
-interface Props {
+interface Props<T> {
   className?: string;
-  column: ColumnProps;
+  column: ColumnProps<unknown, T>;
   sort: Sort;
   onSort: (sort: Sort) => void;
 }
 
 const defaultHeaderCell = BEM(styles);
 
-export const DefaultHeaderCell = defaultHeaderCell(({
+export const DefaultHeaderCell = defaultHeaderCell(<T, >({
   className, column: { name, label }, sort, onSort,
-}: Props) => {
+}: Props<T>) => {
   const { ref, isVisible } = useHover();
   const activeCell = name === sort?.field;
   return (

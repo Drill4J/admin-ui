@@ -3,7 +3,7 @@ import { FieldRenderProps } from 'react-final-form';
 
 import { ErrorMessage } from './error-message';
 
-export const field = (Input: React.ElementType) => (props: FieldRenderProps<any>) => {
+export const field = <T, >(Input: React.ElementType) => (props: FieldRenderProps<T>) => {
   const { input, meta, ...rest } = props;
   const isError = (meta.error || (meta.submitError && !meta.dirtySinceLastSubmit)) && meta.touched;
   return (

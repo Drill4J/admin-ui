@@ -2,14 +2,14 @@ import * as React from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 import { OverflowText } from '@drill4j/ui-kit';
 
+import { CellProps } from '../table/table-types';
+
 import styles from './name-cell.module.scss';
 
-interface Props {
+interface Props extends CellProps<string, unknown>{
   className?: string;
   icon?: React.ReactNode;
-  value?: string;
   type?: 'primary' | 'secondary';
-  testContext?: string;
 }
 
 const nameCell = BEM(styles);

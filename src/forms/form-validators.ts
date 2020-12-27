@@ -1,7 +1,7 @@
 import { camelToSpaces, get } from 'utils';
 
 type FormValidationResult = Record<string, string> | undefined;
-type FormValidator = <T extends Record<string, unknown>>(formValues: T) => FormValidationResult;
+export type FormValidator = <T extends Record<string, unknown>>(formValues: T) => FormValidationResult;
 
 export function composeValidators(...validators: FormValidator[]): FormValidator {
   return (values) => Object.assign({}, ...validators.map((validator) => validator(values)));
