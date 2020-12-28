@@ -45,8 +45,8 @@ export const ActionsColumn = actionsColumn(({ className, agent }: Props) => {
             type="primary"
           >
             <Panel>
-              <Icons.Register />
-              &nbsp;Register {unregisteredAgentsCount ? `(${unregisteredAgentsCount})` : ''}
+              <RegisterIcon />
+              Register {unregisteredAgentsCount ? `(${unregisteredAgentsCount})` : ''}
             </Panel>
           </RegisterButton>
         )}
@@ -70,3 +70,4 @@ const Content = actionsColumn.content(Panel);
 const RegisterButton = actionsColumn.registerButton(Button);
 const SettingsButton: React.FC<ComponentPropsType<typeof Icons.Settings> & { disabled?: boolean}> =
   actionsColumn.settingsButton(Icons.Settings);
+const RegisterIcon = actionsColumn.registerIcon(Icons.Register);

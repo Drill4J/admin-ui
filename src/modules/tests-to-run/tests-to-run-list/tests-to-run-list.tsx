@@ -89,7 +89,7 @@ export const TestsToRunList = testsToRunList(({ className, agentType = 'Agent' }
           >
             Displaying {filteredCount} of {totalCount} tests
           </SearchPanel>
-          <Table data={testsToRun} idKey="name" templateColumns="calc(100% - 664px) 130px 76px 152px 186px 120px">
+          <Table data={testsToRun} idKey="name" gridTemplateColumns="calc(100% - 664px) 130px 76px 152px 186px 120px">
             <Column
               name="name"
               label="Name"
@@ -112,7 +112,7 @@ export const TestsToRunList = testsToRunList(({ className, agentType = 'Agent' }
               name="stats.result"
               label="State"
               Cell={({ item: { toRun } }) => (
-                toRun ? <>To run</> : <Done>Done</Done>
+                <StateCell>{toRun ? 'To run' : <Done>Done</Done>}</StateCell>
               )}
               align="start"
             />
@@ -159,3 +159,4 @@ export const TestsToRunList = testsToRunList(({ className, agentType = 'Agent' }
 const BarTitle = testsToRunList.barTitle('span');
 const TableTitle = testsToRunList.tableTitle('span');
 const Done = testsToRunList.done('span');
+const StateCell = testsToRunList.stateCell('span');

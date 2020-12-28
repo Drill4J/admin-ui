@@ -56,10 +56,13 @@
   &__name-cell {
     color: map-get($primary-blue, default);
     font-family: $semibold-font;
+    font-size: 14px;
+    line-height: 20px;
     cursor: pointer;
   }
 
   &__scope-name {
+    line-height: 20px;
     white-space: nowrap;
     text-overflow: ellipsis;
     overflow: hidden;
@@ -92,8 +95,8 @@
   }
 
   &__coverage {
-    font-size: 24px;
-    line-height: 80px;
+    font-size: 20px;
+    line-height: 64px;
     color: map-get($monochrome, black);
   }
 

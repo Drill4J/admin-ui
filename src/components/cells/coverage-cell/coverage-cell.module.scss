@@ -1,6 +1,8 @@
 @import '~common/style-guide/index';
 
 .coverage-cell {
+  line-height: 64px;
+
   &__coverage-icon {
     display: flex;
     align-items: center;

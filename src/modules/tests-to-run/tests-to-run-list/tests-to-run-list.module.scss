@@ -21,6 +21,10 @@
     line-height: 32px;
   }
 
+  &__state-cell {
+    line-height: 64px;
+  }
+
   &__done {
     font-family: $semibold-font;
     color: map-get($green, default);

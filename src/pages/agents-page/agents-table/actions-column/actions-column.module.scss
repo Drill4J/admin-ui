@@ -4,26 +4,24 @@
   color: map-get($primary-blue, default);
 
   &__content {
-    & > *:not(:first-child) {
-      margin-left: 16px;
-    }
-
-    & > *:last-child {
-      margin-right: 16px;
-    }
-
-    & > * {
-      cursor: pointer;
-    }
+    gap: 16px;
   }
 
   &__register-button {
+    white-space: nowrap;
     line-height: 22px;
     padding: 2px 12px;
     font-size: 12px;
+    cursor: pointer;
+  }
+
+  &__register-icon {
+    margin-right: 8px;
   }
 
   &__settings-button {
+    cursor: pointer;
+
     &--disabled {
       opacity: 0.25;
       pointer-events: none;

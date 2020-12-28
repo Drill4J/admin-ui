@@ -2,7 +2,7 @@ import * as React from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 import { useHistory, useParams } from 'react-router-dom';
 import {
-  Panel, Table, Column, Icons, Tooltip,
+  Panel, Table, Column, Icons, Tooltip, OverflowText,
 } from '@drill4j/ui-kit';
 
 import { defaultAdminSocket } from 'common/connection';
@@ -38,7 +38,7 @@ export const BuildList = buildList(({ className }: Props) => {
             <span>All builds </span>
             <BuildCount>{buildVersions.length}</BuildCount>
           </Title>
-          <Table data={buildVersions} templateColumns="30% 20% repeat(5, 1fr)">
+          <Table data={buildVersions} gridTemplateColumns="30% 20% repeat(5, 1fr)">
             <Column
               name="buildVersion"
               label="Name"
@@ -48,6 +48,7 @@ export const BuildList = buildList(({ className }: Props) => {
                     dispatch(setBuildVersion(buildVersion));
                     push(`/full-page/${agentId}/${buildVersion}/dashboard`);
                   }}
+                  title={buildVersion}
                 >
                   {buildVersion}
                   {baseline === buildVersion && (
@@ -103,5 +104,5 @@ export const BuildList = buildList(({ className }: Props) => {
 const Content = buildList.content('div');
 const Title = buildList.title(Panel);
 const BuildCount = buildList.itemsCount('span');
-const NameCell = buildList.nameCell('div');
+const NameCell = buildList.nameCell(OverflowText);
 const BaselineFlag = buildList.baselineFlag(Icons.Flag);
