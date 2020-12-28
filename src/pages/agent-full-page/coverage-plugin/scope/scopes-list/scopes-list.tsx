@@ -59,7 +59,7 @@ export const ScopesList = scopesList(({ className }: Props) => {
         </Title>
         {scopesData.length > 0
           ? (
-            <Table data={scopesData} idKey="name" templateColumns="40% repeat(4, 1fr) 48px">
+            <Table data={scopesData} idKey="name" gridTemplateColumns="40% repeat(4, 1fr) 48px">
               <Column
                 name="name"
                 label="Name"

@@ -33,7 +33,7 @@ export const TestDetails = testDetails(
             <Title>
               Tests
             </Title>
-            <Table data={tests} idKey="name" templateColumns="calc(100% - 664px) 130px 76px 152px 186px 120px">
+            <Table data={tests} idKey="name" gridTemplateColumns="calc(100% - 664px) 130px 76px 152px 186px 120px">
               <Column
                 name="testName"
                 label="Name"

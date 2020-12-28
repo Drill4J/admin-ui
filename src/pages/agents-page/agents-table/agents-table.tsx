@@ -57,6 +57,8 @@ export const AgentsTable = agentsTable(({ className, agents }: Props) => (
         />,
       ]}
       expandedContentKey="agents"
+      gridTemplateColumns="32px calc(100% - 862px) 250px 150px 120px 120px 190px"
+      gridExpandedTemplateColumns="32px calc(100% - 862px) 250px 150px 120px 120px 190px"
     >
       <Column name="name" label="Name" Cell={({ item }) => <NameColumn agent={item} />} align="start" />
       <Column

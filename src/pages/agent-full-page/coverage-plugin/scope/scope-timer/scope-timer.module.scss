@@ -1,7 +1,8 @@
 @import '~common/style-guide/index';
 
 .scope-timer {
-  line-height: 24px;
+  font-size: 12px;
+  line-height: 20px;
 
   &__duration {
     color: map-get($monochrome, default);
@@ -11,15 +12,5 @@
   &__timer {
     font-family: $semibold-font;
     color: map-get($green, default);
-  }
-
-  &--size {
-    &--normal {
-      font-size: 14px;
-    }
-    &--small {
-      line-height: 16px;
-      font-size: 12px;
-    }
   }
 }
