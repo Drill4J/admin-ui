@@ -9,14 +9,17 @@ interface Props {
   icon?: React.ReactNode;
   value?: string;
   type?: 'primary' | 'secondary';
+  testContext?: string;
 }
 
 const nameCell = BEM(styles);
 
-export const NameCell = nameCell(({ className, icon, value }: Props) => (
+export const NameCell = nameCell(({
+  className, icon, value, testContext,
+}: Props) => (
   <span className={className}>
     {icon && <Prefix>{icon}</Prefix>}
-    <Content>{value}</Content>
+    <Content data-test={`name-cell:content:${testContext}`}>{value}</Content>
   </span>
 ));
 

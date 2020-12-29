@@ -42,8 +42,8 @@ export const CoverageDetails = coverageDetails(
     const [searchQuery] = search;
     const expandedColumns = [
       <Column name="coverage" Cell={CoverageCell} />,
-      <Column name="totalMethodsCount" />,
-      <Column name="coveredMethodsCount" />,
+      <Column name="totalMethodsCount" testContext="total-methods-count" />,
+      <Column name="coveredMethodsCount" testContext="covered-methods-count" />,
       <Column
         name="assocTestsCount"
         label="Associated tests"
@@ -52,7 +52,7 @@ export const CoverageDetails = coverageDetails(
             onClick={() => {
               setSelectedId(id);
             }}
-            data-test="test-actions:view-curl:id"
+            data-test="coverage-details:associated-tests-count"
             disabled={!value}
           >
             {value || 'n/a'}
@@ -86,7 +86,14 @@ export const CoverageDetails = coverageDetails(
             expandedColumns={[
               <Column
                 name="name"
-                Cell={(({ item: { name } }) => <NameCell type="primary" icon={<Icons.Class width={16} height={16} />} value={name} />)}
+                Cell={(({ item: { name } }) => (
+                  <NameCell
+                    type="primary"
+                    icon={<Icons.Class width={16} height={16} />}
+                    value={name}
+                    testContext="class"
+                  />
+                ))}
                 align="start"
               />,
               ...expandedColumns,
@@ -107,7 +114,7 @@ export const CoverageDetails = coverageDetails(
             <Column
               name="name"
               label="Name"
-              Cell={({ value }) => <NameCell icon={<Icons.Package />} value={value} />}
+              Cell={({ value }) => <NameCell testContext="package" icon={<Icons.Package />} value={value} />}
               align="start"
             />
             <Column
@@ -119,8 +126,8 @@ export const CoverageDetails = coverageDetails(
               )}
               Cell={CoverageCell}
             />
-            <Column name="totalMethodsCount" label="Methods total" />
-            <Column name="coveredMethodsCount" label="Methods covered" />
+            <Column name="totalMethodsCount" label="Methods total" testContext="total-methods-count" />
+            <Column name="coveredMethodsCount" label="Methods covered" testContext="covered-methods-count" />
             <Column
               name="assocTestsCount"
               label="Associated tests"
@@ -129,7 +136,7 @@ export const CoverageDetails = coverageDetails(
                   onClick={() => {
                     setSelectedId(id);
                   }}
-                  data-test="test-actions:view-curl:id"
+                  data-test="coverage-details:associated-tests-count"
                   disabled={!value}
                 >
                   {value || 'n/a'}

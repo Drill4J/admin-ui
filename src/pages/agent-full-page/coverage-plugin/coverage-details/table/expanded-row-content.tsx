@@ -44,7 +44,7 @@ export const ExpandedRowContent = BEM(styles)(({
           const Cell = column.Cell || DefaultCell;
           return (
             <TableRowCell key={column.name} type={column.align || 'end'}>
-              <Cell value={get(field, column.name)} item={field} rowIndex={index} />
+              <Cell value={get(field, column.name)} item={field} rowIndex={index} testContext={column?.testContext} />
             </TableRowCell>
           );
         })}

@@ -19,12 +19,12 @@ export const BuildMethodsCard = BEM(styles)(({
 }: Props) => (
   <Panel className={className} direction="column" align="space-between">
     <Panel align="space-between">
-      <Label data-test={`build-methods:label:${label}`}>{label}</Label>
-      <TotalCount>{totalCount}</TotalCount>
+      <Label data-test={`build-methods-card:label:${label}`}>{label}</Label>
+      <TotalCount data-test={`build-methods-card:total-count:${label}`}>{totalCount}</TotalCount>
     </Panel>
     <Info>
       <Panel align="space-between">
-        <Covered>{covered}</Covered>
+        <Covered data-test={`build-methods-card:covered-count:${label}`}>{covered}</Covered>
         <span>{children}</span>
       </Panel>
       <CoverageBar>
