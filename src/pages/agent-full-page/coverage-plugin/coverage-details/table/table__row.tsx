@@ -45,7 +45,7 @@ export const TableRow = tableRow(
             const Cell = column.Cell || DefaultCell;
             return (
               <TableRowCell key={column.name} type={column.align || 'end'}>
-                <Cell value={get(item, column.name)} item={item} rowIndex={index} />
+                <Cell value={get(item, column.name)} item={item} rowIndex={index} testContext={column?.testContext} />
               </TableRowCell>
             );
           })}

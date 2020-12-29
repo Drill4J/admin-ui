@@ -19,8 +19,13 @@ export const CompoundCell = compoundCell(({
   <div className={className}>
     <div>{icon}</div>
     <CellContent>
-      <CellName title={cellName}>{cellName}</CellName>
-      <CellAdditionalInfo title={cellAdditionalInfo}>{cellAdditionalInfo}</CellAdditionalInfo>
+      <CellName data-test="compound-cell:name" title={cellName}>{cellName}</CellName>
+      <CellAdditionalInfo
+        data-test="compound-cell:additional-info"
+        title={cellAdditionalInfo}
+      >
+        {cellAdditionalInfo}
+      </CellAdditionalInfo>
     </CellContent>
   </div>
 ));

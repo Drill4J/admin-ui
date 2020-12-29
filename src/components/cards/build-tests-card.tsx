@@ -20,10 +20,10 @@ export const BuildTestsCard = BEM(styles)(({
   return (
     <Panel className={className} direction="column" align="space-between">
       <Panel align="space-between">
-        <Label data-test={`build-tests:label:${label}`}>{label}</Label>
-        <TotalCount>{testCount}</TotalCount>
+        <Label data-test={`build-tests-card:label:${label}`}>{label}</Label>
+        <TotalCount data-test={`build-tests-card:total-count:${label}`}>{testCount}</TotalCount>
       </Panel>
-      <Percentage>{percentFormatter(percentage)}%</Percentage>
+      <Percentage data-test={`build-tests-card:percentage:${label}`}>{percentFormatter(percentage)}%</Percentage>
     </Panel>
   );
 });

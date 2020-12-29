@@ -16,10 +16,10 @@ export const RowExpander = rowExpander(({
   className, expanded, onClick,
 }: Props) => (
   <div className={className} onClick={onClick}>
-    <IconWrapper expanded={expanded}>
+    <IconWrapper expanded={expanded} data-test="row-expander">
       <Icons.Expander />
     </IconWrapper>
   </div>
 ));
 
-const IconWrapper = rowExpander.icon(div({} as { expanded?: boolean; }));
+const IconWrapper = rowExpander.icon(div({ 'data-test': '' } as { expanded?: boolean; 'data-test': string }));

@@ -15,6 +15,7 @@ export interface ColumnProps {
   HeaderCell?: (props: { column: ColumnProps }) => JSX.Element;
   label?: React.ReactNode;
   align?: Align;
+  testContext?: string;
 }
 
 export interface ExpandSchema {
