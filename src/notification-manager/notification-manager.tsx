@@ -2,6 +2,7 @@ import * as React from 'react';
 import { MessagePanel } from '@drill4j/ui-kit';
 
 import { Message } from 'types/message';
+import { defaultAdminSocket } from 'common/connection';
 
 interface Props {
   className?: string;
@@ -28,6 +29,13 @@ export const NotificationManager = ({ children }: Props) => {
 
     setMessage(incomingMessage);
   }
+
+  React.useEffect(() => {
+    defaultAdminSocket.onCloseEvent = () => setMessage(
+      { type: 'ERROR', text: 'WebSocket connection has been closed.' },
+    );
+  }, []);
+
   const contextValue = { showMessage: handleShowMessage, closeMessage: () => setMessage(null) };
   return (
     <NotificationManagerContext.Provider value={contextValue}>
