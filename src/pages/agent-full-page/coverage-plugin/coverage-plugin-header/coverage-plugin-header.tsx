@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { BEM } from '@redneckz/react-bem-helper';
+import { BEM, div } from '@redneckz/react-bem-helper';
 import { NavLink, useHistory, useParams } from 'react-router-dom';
 import {
   Button, Icons, Tooltip, Panel,
@@ -90,7 +90,7 @@ export const CoveragePluginHeader = coveragePluginHeader(({ className, previousB
                 {buildVersion}
                 <Tooltip message={<TooltipMessage>{info}</TooltipMessage>} position="top-center">
                   <FlagWrapper
-                    type={isActiveBuild ? 'active-build' : undefined}
+                    active={Boolean(isActiveBuild && previousBuildVersion)}
                     onClick={() => !disabled && setIsBaselineBuildModalOpened(true)}
                   >
                     <Flag />
@@ -215,7 +215,7 @@ const BaselinePanel = coveragePluginHeader.baselinePanel('div');
 const BuildsInfo = coveragePluginHeader.buildsInfo('span');
 const CurrentBuildVersion = coveragePluginHeader.currentBuildVersion(Panel);
 const ParentBuildVersion = coveragePluginHeader.parentBuildVersion(NavLink);
-const FlagWrapper = coveragePluginHeader.flagWrapper('div');
+const FlagWrapper = coveragePluginHeader.flagWrapper(div({ onClick: () => {}, active: false } as { onClick: () => void; active: boolean }));
 const QualityGateLabel = coveragePluginHeader.qualityGateLabel('div');
 const InfoIcon = coveragePluginHeader.infoIcon(Icons.Info);
 const Actions = coveragePluginHeader.actions('div');

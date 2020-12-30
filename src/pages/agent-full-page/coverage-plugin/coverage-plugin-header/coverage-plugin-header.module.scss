@@ -51,12 +51,11 @@
   &__flag-wrapper {
     display: flex;
     margin-left: 8px;
+    color: map-get($monochrome, default);
 
-    &--type {
-      &--active-build {
-        color: map-get($primary-blue, default);
-        cursor: pointer;
-      }
+    &--active {
+      color: map-get($primary-blue, default);
+      cursor: pointer;
     }
   }
 
