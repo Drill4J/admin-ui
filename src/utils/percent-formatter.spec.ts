@@ -6,7 +6,7 @@ describe('percentFormatter', () => {
   });
 
   it('should return rounded to a negative number if the value is negative number after the decimal point equal to 1', () => {
-    expect(percentFormatter(-213.20)).toEqual(-213.2);
+    expect(percentFormatter(-213.20)).toEqual(0.1);
   });
 
   it('should round to an integer number if the value is number with decimals and decimal part equal to 0', () => {
@@ -39,5 +39,9 @@ describe('percentFormatter', () => {
 
   it('should return 0 if the value is Infinity', () => {
     expect(percentFormatter(Infinity)).toEqual(0);
+  });
+
+  it('should return 0,1 if the number you are rounding is in the range (0;0.1)', () => {
+    expect(percentFormatter(0.09)).toEqual(0.1);
   });
 });
