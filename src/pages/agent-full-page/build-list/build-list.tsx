@@ -2,7 +2,7 @@ import * as React from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 import { useHistory, useParams } from 'react-router-dom';
 import {
-  Panel, Table, Column, Icons, Tooltip, OverflowText,
+  Panel, Table, Column, Icons, Tooltip, EllipsisOverflowText,
 } from '@drill4j/ui-kit';
 
 import { defaultAdminSocket } from 'common/connection';
@@ -50,7 +50,7 @@ export const BuildList = buildList(({ className }: Props) => {
                   }}
                   title={buildVersion}
                 >
-                  {buildVersion}
+                  <EllipsisOverflowText>{buildVersion}</EllipsisOverflowText>
                   {baseline === buildVersion && (
                     <Tooltip
                       message={(
@@ -104,5 +104,5 @@ export const BuildList = buildList(({ className }: Props) => {
 const Content = buildList.content('div');
 const Title = buildList.title(Panel);
 const BuildCount = buildList.itemsCount('span');
-const NameCell = buildList.nameCell(OverflowText);
+const NameCell = buildList.nameCell('div');
 const BaselineFlag = buildList.baselineFlag(Icons.Flag);

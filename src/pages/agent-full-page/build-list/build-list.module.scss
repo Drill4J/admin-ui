@@ -22,7 +22,9 @@
   }
 
   &__name-cell {
-    display: flex;
+    width: 100%;
+    display: grid;
+    grid-template-columns: minmax(auto, max-content) max-content;
     align-items: center;
     gap: 8px;
     height: 48px;

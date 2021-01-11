@@ -1,9 +1,9 @@
 @import '~common/style-guide/index';
 
 .coverage-plugin-header {
-  display: flex;
+  display: grid;
+  grid-template-columns: max-content auto max-content;
   align-items: center;
-  justify-content: space-between;
   height: 80px;
   width: 100%;
   border-bottom: 1px solid map-get($monochrome, medium-tint);
@@ -20,11 +20,6 @@
     color: map-get($monochrome, default);
   }
 
-  &__info {
-    display: flex;
-    align-items: center;
-  }
-
   &__plugin-name {
     margin-right: 24px;
     font-family: $light-font;
@@ -33,19 +28,16 @@
   }
 
   &__baseline-panel {
-    display: flex;
+    display: grid;
+    grid-template-columns: max-content minmax(64px, auto);
+    grid-template-rows: repeat(2, 1fr);
+    grid-column-gap: 8px;
     padding-left: 24px;
     border-left: 1px solid map-get($monochrome, medium-tint);
     font-family: $semibold-font;
     font-size: 12px;
     line-height: 24px;
     color: map-get($monochrome, default);
-  }
-
-  &__builds-info {
-    margin-left: 8px;
-    display: inline-flex;
-    flex-direction: column;
   }
 
   &__flag-wrapper {
@@ -64,10 +56,10 @@
   }
 
   &__parent-build-version {
+    display: block;
     color: map-get($primary-blue, default);
     text-decoration: none;
   }
-
   &__tooltip-message {
     text-align: center;
   }
