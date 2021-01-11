@@ -1,6 +1,8 @@
 @import '~common/style-guide/index';
 
 .test-to-code-name-cell {
+  display: grid;
+  grid-template-rows: repeat(2, max-content);
   font-size: 24px;
 
   &__name-cell {

@@ -2,7 +2,7 @@ import * as React from 'react';
 import { BEM, div } from '@redneckz/react-bem-helper';
 import { NavLink, useHistory, useParams } from 'react-router-dom';
 import {
-  Button, Icons, Tooltip, Panel,
+  Button, Icons, Tooltip, Panel, EllipsisOverflowText,
 } from '@drill4j/ui-kit';
 
 import { QualityGatePane } from 'modules';
@@ -77,36 +77,30 @@ export const CoveragePluginHeader = coveragePluginHeader(({ className, previousB
 
   return (
     <div className={className}>
-      <Info>
-        <PluginName data-test="coverage-plugin-header:plugin-name">Test2Code</PluginName>
-        {agentStatus === AGENT_STATUS.ONLINE && (
-          <BaselinePanel>
-            <span>
-              <div>Current build: </div>
-              <div>Parent build:</div>
-            </span>
-            <BuildsInfo>
-              <CurrentBuildVersion>
-                {buildVersion}
-                <Tooltip message={<TooltipMessage>{info}</TooltipMessage>} position="top-center">
-                  <FlagWrapper
-                    active={Boolean(isActiveBuild && previousBuildVersion)}
-                    onClick={() => !disabled && setIsBaselineBuildModalOpened(true)}
-                  >
-                    <Flag />
-                  </FlagWrapper>
-                </Tooltip>
-              </CurrentBuildVersion>
-              {previousBuildVersion
-                ? (
-                  <ParentBuildVersion to={`/full-page/${agentId}/${previousBuildVersion}/dashboard`}>
-                    {previousBuildVersion}
-                  </ParentBuildVersion>
-                ) : <span>&ndash;</span>}
-            </BuildsInfo>
-          </BaselinePanel>
-        )}
-      </Info>
+      <PluginName data-test="coverage-plugin-header:plugin-name">Test2Code</PluginName>
+      {agentStatus === AGENT_STATUS.ONLINE && (
+        <BaselinePanel>
+          <div>Current build: </div>
+          <Panel>
+            <CurrentBuildVersion title={buildVersion}>{buildVersion}</CurrentBuildVersion>
+            <Tooltip message={<TooltipMessage>{info}</TooltipMessage>} position="top-center">
+              <FlagWrapper
+                active={Boolean(isActiveBuild && previousBuildVersion)}
+                onClick={() => !disabled && setIsBaselineBuildModalOpened(true)}
+              >
+                <Flag />
+              </FlagWrapper>
+            </Tooltip>
+          </Panel>
+          <div>Parent build:</div>
+          {previousBuildVersion
+            ? (
+              <ParentBuildVersion to={`/full-page/${agentId}/${previousBuildVersion}/dashboard`}>
+                <EllipsisOverflowText title={previousBuildVersion}>{previousBuildVersion}</EllipsisOverflowText>
+              </ParentBuildVersion>
+            ) : <span>&ndash;</span>}
+        </BaselinePanel>
+      )}
       <Actions>
         {activeBuildVersion === buildVersion && agentStatus === AGENT_STATUS.ONLINE && (
           <QualityGateSection>
@@ -209,11 +203,9 @@ export const CoveragePluginHeader = coveragePluginHeader(({ className, previousB
   );
 });
 
-const Info = coveragePluginHeader.info('div');
 const PluginName = coveragePluginHeader.pluginName('div');
 const BaselinePanel = coveragePluginHeader.baselinePanel('div');
-const BuildsInfo = coveragePluginHeader.buildsInfo('span');
-const CurrentBuildVersion = coveragePluginHeader.currentBuildVersion(Panel);
+const CurrentBuildVersion = coveragePluginHeader.currentBuildVersion(EllipsisOverflowText);
 const ParentBuildVersion = coveragePluginHeader.parentBuildVersion(NavLink);
 const FlagWrapper = coveragePluginHeader.flagWrapper(div({ onClick: () => {}, active: false } as { onClick: () => void; active: boolean }));
 const QualityGateLabel = coveragePluginHeader.qualityGateLabel('div');

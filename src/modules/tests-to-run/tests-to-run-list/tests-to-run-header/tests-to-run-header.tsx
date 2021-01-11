@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
-import { Button, Panel } from '@drill4j/ui-kit';
+import { Button, EllipsisOverflowText, Panel } from '@drill4j/ui-kit';
 
 import { TestsToRunSummary } from 'types/tests-to-run-summary';
 import { convertToPercentage, getDuration, percentFormatter } from 'utils';
@@ -51,9 +51,15 @@ export const TestsToRunHeader = testsToRunHeader(({
             </Title>
             <SubTitle data-test="tests-to-run-header:subtitle">
               Build:
-              <CurrentBuildVersion data-test="tests-to-run-header:current-build-version">{buildVersion}</CurrentBuildVersion>
-              <ComparedBuildVersion data-test="tests-to-run-header:compared-build-version">
-                (compared to Build {previousBuildVersion})
+              <CurrentBuildVersion
+                data-test="tests-to-run-header:current-build-version"
+                title={buildVersion}
+              >
+                {buildVersion}
+              </CurrentBuildVersion>
+              Compared to: &nbsp;
+              <ComparedBuildVersion data-test="tests-to-run-header:compared-build-version" title={previousBuildVersion}>
+                {previousBuildVersion}
               </ComparedBuildVersion>
             </SubTitle>
           </div>
@@ -112,8 +118,8 @@ const Title = testsToRunHeader.title('div');
 const Count = testsToRunHeader.count('div');
 const SubTitle = testsToRunHeader.subTitle('div');
 const Actions = testsToRunHeader.actions('div');
-const CurrentBuildVersion = testsToRunHeader.currentBuildVersion('span');
-const ComparedBuildVersion = testsToRunHeader.comparedBuildVersion('span');
+const CurrentBuildVersion = testsToRunHeader.currentBuildVersion(EllipsisOverflowText);
+const ComparedBuildVersion = testsToRunHeader.comparedBuildVersion(EllipsisOverflowText);
 
 function getTotalDurationTooltipMessage(previousBuildAutoTestsCount: number) {
   return previousBuildAutoTestsCount

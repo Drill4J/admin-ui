@@ -20,7 +20,12 @@
   }
 
   &__sub-title {
-    display: flex;
+    display: grid;
+    grid-template-columns: max-content minmax(auto, max-content) max-content minmax(
+        auto,
+        max-content
+      );
+    margin-right: 16px;
     line-height: 24px;
     font-size: 14px;
     font-family: $semibold-font;
@@ -35,12 +40,13 @@
   }
 
   &__current-build-version {
-    color: map-get($monochrome, black);
+    max-width: 200px;
     margin: 0 8px 0 4px;
+    color: map-get($monochrome, black);
   }
 
   &__compared-build-version {
-    font-size: 12px;
-    font-family: $regular-font;
+    max-width: 200px;
+    color: map-get($monochrome, black);
   }
 }
