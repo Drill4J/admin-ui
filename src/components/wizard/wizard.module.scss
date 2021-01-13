@@ -15,4 +15,10 @@
   &__previous-button {
     margin-right: 16px;
   }
+
+  &__white-spinner {
+    & > div::after {
+      background-color: map-get($monochrome, white);
+    }
+  }
 }

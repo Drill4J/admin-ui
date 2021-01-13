@@ -2,7 +2,7 @@ import * as React from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 import { Form } from 'react-final-form';
 import {
-  Panel, Icons, Button, GeneralAlerts,
+  Panel, Icons, Button, GeneralAlerts, Spinner,
 } from '@drill4j/ui-kit';
 
 import { Agent } from 'types/agent';
@@ -22,7 +22,7 @@ export interface StepProps {
 interface Props {
   className?: string;
   initialValues: Agent;
-  onSubmit: (val: Record<string, unknown>, onError: (message: string) => void) => void;
+  onSubmit: (val: Record<string, unknown>, onError: (message: string) => void) => Promise<void>;
   children: React.ReactElement<StepProps>[];
 }
 
@@ -42,7 +42,13 @@ export const Wizard = wizard(({
     <div className={className}>
       <Form
         initialValues={initialValues}
-        onSubmit={(values) => onSubmit(values, setErrorMessage)}
+        onSubmit={async (values) => {
+          try {
+            await onSubmit(values, setErrorMessage);
+          } catch ({ response: { data: { message } = {} } = {} }) {
+            setErrorMessage(message || 'On-submit error. Server problem or operation could not be processed in real-time.');
+          }
+        }}
         validate={validate}
         render={({
           handleSubmit,
@@ -88,9 +94,10 @@ export const Wizard = wizard(({
                     type="primary"
                     size="large"
                     onClick={handleSubmit}
-                    data-test="wizard:finish-registration-button"
+                    data-test="wizard:finishng-button"
+                    disabled={submitting || Boolean(errorMessage)}
                   >
-                    <Icons.Check height={10} width={14} viewBox="0 0 14 10" />
+                    {submitting ? <WhiteSpinner /> : <Icons.Check height={10} width={14} viewBox="0 0 14 10" />}
                     <span>Finish registration</span>
                   </Button>
                 )}
@@ -112,3 +119,4 @@ export const Wizard = wizard(({
 const Header = wizard.header(Panel);
 const StepName = wizard.stepName('span');
 const PreviousButton = wizard.previousButton(Button);
+const WhiteSpinner = wizard.whiteSpinner(Spinner);

@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 import { useParams, useHistory } from 'react-router-dom';
+import axios from 'axios';
 import {
   Panel, Icons, Button, GeneralAlerts,
 } from '@drill4j/ui-kit';
@@ -14,8 +15,8 @@ import {
 import { useAgent } from 'hooks';
 import { NotificationManagerContext } from 'notification-manager';
 import { CancelAgentRegistrationModal, InstallPluginsStep, SystemSettingsStep } from 'modules';
+import { Agent } from 'types/agent';
 import { GeneralSettingsForm } from './general-settings-form';
-import { registerAgent, preregisterOfflineAgent } from './agent-registration-page-api';
 
 import styles from './agent-registration-page.module.scss';
 
@@ -54,15 +55,17 @@ export const AgentRegistrationPage = agentRegistrationPage(
         />
         <Wizard
           initialValues={agent}
-          onSubmit={agentId
-            ? registerAgent(() => {
+          onSubmit={async (data: Agent) => {
+            if (agentId) {
+              await registerAgent(data);
               showMessage({ type: 'SUCCESS', text: 'Agent has been registered' });
               push(`/full-page/${agentId}/${buildVersion}/dashboard`);
-            })
-            : preregisterOfflineAgent(() => {
+            } else {
+              await preregisterOfflineAgent(data);
               showMessage({ type: 'SUCCESS', text: 'Offline agent has been preregistered' });
               push('/agents');
-            })}
+            }
+          }}
         >
           <Step
             name="General Settings"
@@ -128,3 +131,45 @@ export const AgentRegistrationPage = agentRegistrationPage(
 );
 
 const HeaderIcon = agentRegistrationPage.headerIcon(Icons.Register);
+
+async function preregisterOfflineAgent({
+  id,
+  name,
+  environment,
+  description,
+  plugins,
+  systemSettings,
+}: Agent) {
+  await axios.post('/agents', {
+    id,
+    name,
+    agentType: 'JAVA',
+    environment,
+    description,
+    plugins,
+    systemSettings: {
+      ...systemSettings,
+      packages: systemSettings?.packages?.filter(Boolean),
+    },
+  });
+}
+
+async function registerAgent({
+  id,
+  name,
+  environment,
+  description,
+  plugins,
+  systemSettings,
+}: Agent) {
+  await axios.patch(`/agents/${id}`, {
+    name,
+    environment,
+    description,
+    plugins,
+    systemSettings: {
+      ...systemSettings,
+      packages: systemSettings?.packages?.filter(Boolean),
+    },
+  });
+}
