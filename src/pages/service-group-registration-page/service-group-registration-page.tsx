@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 import { useParams, useHistory, useLocation } from 'react-router-dom';
+import axios from 'axios';
 import {
   Panel, Icons, Button, GeneralAlerts,
 } from '@drill4j/ui-kit';
@@ -13,7 +14,6 @@ import { composeValidators, requiredArray, sizeLimit } from 'forms';
 import { defaultAdminSocket } from 'common/connection';
 import { NotificationManagerContext } from 'notification-manager';
 import { Agent } from 'types/agent';
-import { registerAgent } from './register-service-group';
 
 import styles from './service-group-registration-page.module.scss';
 
@@ -31,12 +31,6 @@ export const ServiceGroupRegistrationPage = serviceGroupRegistrationPage(
     const [isCancelModalOpened, setIsCancelModalOpened] = React.useState(false);
     const { showMessage } = React.useContext(NotificationManagerContext);
     const serviceGroup = useWsConnection<Agent>(defaultAdminSocket, `/service-groups/${serviceGroupId}`) || {};
-    const handleRegisterAgent = registerAgent({
-      onSuccess: () => {
-        showMessage({ type: 'SUCCESS', text: 'Multiple agents registration has been finished.' });
-        push(`/service-group-full-page/${serviceGroupId}/service-group-dashboard`);
-      },
-    });
     const { unregisteredAgentsCount } = queryString.parse(search);
 
     return (
@@ -58,7 +52,11 @@ export const ServiceGroupRegistrationPage = serviceGroupRegistrationPage(
         />
         <Wizard
           initialValues={serviceGroup}
-          onSubmit={handleRegisterAgent}
+          onSubmit={async (data: Agent) => {
+            await registerServiceGroup(data);
+            showMessage({ type: 'SUCCESS', text: 'Multiple agents registration has been finished.' });
+            push(`/service-group-full-page/${serviceGroupId}/service-group-dashboard`);
+          }}
         >
           <Step
             name="System settings"
@@ -122,3 +120,19 @@ export const ServiceGroupRegistrationPage = serviceGroupRegistrationPage(
 
 const HeaderIcon = serviceGroupRegistrationPage.headerIcon(Icons.Register);
 const AgentsInfo = serviceGroupRegistrationPage.agentsInfo('span');
+
+async function registerServiceGroup({
+  id,
+  plugins,
+  name = '',
+  systemSettings,
+}: Agent) {
+  await axios.patch(`/service-groups/${id}`, {
+    plugins,
+    name,
+    systemSettings: {
+      ...systemSettings,
+      packages: systemSettings?.packages?.filter(Boolean),
+    },
+  });
+}

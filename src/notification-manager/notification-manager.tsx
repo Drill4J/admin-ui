@@ -30,11 +30,9 @@ export const NotificationManager = ({ children }: Props) => {
     setMessage(incomingMessage);
   }
 
-  React.useEffect(() => {
-    defaultAdminSocket.onCloseEvent = () => setMessage(
-      { type: 'ERROR', text: 'WebSocket connection has been closed.' },
-    );
-  }, []);
+  defaultAdminSocket.onCloseEvent = () => setMessage(
+    { type: 'ERROR', text: 'Backend connection has been lost. Please, try to refresh the page.' },
+  );
 
   const contextValue = { showMessage: handleShowMessage, closeMessage: () => setMessage(null) };
   return (
