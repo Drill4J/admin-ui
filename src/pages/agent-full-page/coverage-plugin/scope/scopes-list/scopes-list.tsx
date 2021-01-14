@@ -129,9 +129,7 @@ export const ScopesList = scopesList(({ className }: Props) => {
                         </>
                       )}
                       <TestTypeTestCount>
-                        {coverageByTestType?.AUTO
-                      && coverageByTestType?.AUTO?.summary?.testCount
-                      && `${coverageByTestType?.AUTO?.summary?.testCount} tests`}
+                        {coverageByTestType?.AUTO && coverageByTestType?.AUTO?.summary?.testCount}
                       </TestTypeTestCount>
                     </TestTypeCoverage>
                   );
@@ -158,9 +156,7 @@ export const ScopesList = scopesList(({ className }: Props) => {
                         </>
                       )}
                       <TestTypeTestCount>
-                        {coverageByTestType?.MANUAL
-                      && coverageByTestType?.MANUAL?.summary?.testCount
-                      && `${coverageByTestType?.MANUAL?.summary?.testCount} tests`}
+                        {coverageByTestType?.MANUAL && coverageByTestType?.MANUAL?.summary?.testCount}
                       </TestTypeTestCount>
                     </TestTypeCoverage>
                   );
