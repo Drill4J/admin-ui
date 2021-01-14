@@ -111,6 +111,7 @@
   &__test-type-test-count {
     font-size: 12px;
     line-height: 20px;
+    text-align: right;
     color: map-get($monochrome, default);
     font-family: $regular-font;
   }
