@@ -1,0 +1,89 @@
+@import '../node_modules/bootstrap/scss/functions';
+@import '../node_modules/bootstrap/scss/variables';
+
+$spacer: 4px;
+$spacers: (
+  0: 0,
+  1: $spacer,
+  2: $spacer * 2,
+  3: $spacer * 3,
+  4: $spacer * 4,
+  5: $spacer * 5,
+  6: $spacer * 6,
+  7: $spacer * 7,
+  8: $spacer * 8,
+  9: $spacer * 9,
+  10: $spacer * 10,
+);
+
+@import '../node_modules/bootstrap/scss/mixins/breakpoints';
+
+@import '../node_modules/bootstrap/scss/utilities/align';
+@import '../node_modules/bootstrap/scss/utilities/display';
+@import '../node_modules/bootstrap/scss/utilities/flex';
+@import '../node_modules/bootstrap/scss/utilities/sizing';
+@import '../node_modules/bootstrap/scss/utilities/spacing';
+
+@import '../node_modules/bootstrap/scss/bootstrap-grid';
+
+@import './common/style-guide/colors';
+
+.container-fluid {
+  padding: 0;
+}
+
+@each $size, $gap in $spacers {
+  .g-#{$size} {
+    gap: $gap !important;
+  }
+
+  .gx-#{$size} {
+    gap: $gap !important;
+  }
+
+  .gy-#{$size} {
+    gap: $gap !important;
+  }
+}
+
+@each $colorName, $color in $primary-blue {
+  .primary-blue-#{$colorName} {
+    color: $color !important;
+  }
+}
+
+@each $colorName, $color in $monochrome {
+  .monochrome-#{$colorName} {
+    color: $color !important;
+  }
+}
+
+@each $colorName, $color in $green {
+  .green-#{$colorName} {
+    color: $color !important;
+  }
+}
+
+@each $colorName, $color in $red {
+  .red-#{$colorName} {
+    color: $color !important;
+  }
+}
+
+@each $colorName, $color in $yellow {
+  .yellow-#{$colorName} {
+    color: $color !important;
+  }
+}
+
+@each $colorName, $color in $orange {
+  .orange-#{$colorName} {
+    color: $color !important;
+  }
+}
+
+@each $colorName, $color in $data-visualization {
+  .data-visualization-#{$colorName} {
+    color: $color !important;
+  }
+}
