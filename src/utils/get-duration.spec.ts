@@ -37,6 +37,15 @@ describe('getDuration', () => {
     });
   });
 
+  it('should return object with the hours is equal 25 with value is 3600000 * 25', () => {
+    expect(getDuration(3600000 * 25)).toEqual({
+      seconds: '00',
+      minutes: '00',
+      hours: '25',
+      isLessThenOneSecond: false
+    });
+  });
+
   it('should return object with isLessThenOneSecond property is equal true if value is 123', () => {
     expect(getDuration(123).isLessThenOneSecond).toBe(true);
   });
