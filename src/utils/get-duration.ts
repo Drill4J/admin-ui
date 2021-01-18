@@ -4,12 +4,16 @@ export const getDuration = (value: number): { hours: string, minutes: string, se
       hours: '00', minutes: '00', seconds: '00', isLessThenOneSecond: false,
     };
   }
-  const seconds = (`0${Math.round(value / 1000) % 60}`).slice(-2);
-  const minutes = (`0${Math.round(value / 60000) % 60}`).slice(-2);
-  const hours = (`0${Math.round(value / 3600000)}`).slice(-2);
-  const isLessThenOneSecond = value > 0 && seconds === '00' && minutes === '00' && hours === '00';
+
+  const seconds = Math.round(value / 1000) % 60;
+  const minutes = Math.round((value - seconds * 1000) / 60000) % 60;
+  const hours = Math.round((value - minutes * 60000 - seconds * 1000) / 3600000);
+  const isLessThenOneSecond = value > 0 && value < 1000;
 
   return {
-    hours, minutes, seconds, isLessThenOneSecond,
+    hours: `0${hours}`.slice(-2),
+    minutes: `0${minutes}`.slice(-2),
+    seconds: `0${seconds}`.slice(-2),
+    isLessThenOneSecond,
   };
 };

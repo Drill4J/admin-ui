@@ -89,19 +89,23 @@ export const BarChart = barChart(({
 
             return (
               <GroupedBars bordered={!isAllAutoTestsDone} hasUncompletedTests={completed > 0 && completed < total} key={nanoid()}>
-                <Tooltip message={isAllAutoTestsDone
-                  ? (
-                    <SavedTimePercent>
-                      Total time saved: {savedTimeDuration.hours}:{savedTimeDuration.minutes}:{savedTimeDuration.seconds}
-                      <span>{percentFormatter((1 - duration / totalDuration) * 100)}%</span>
-                    </SavedTimePercent>
-                  )
-                  : (
-                    <Panel direction="column">
-                      <span>{`${completed ? 'Not all' : 'None'} of the suggested Auto tests`}</span>
-                      <span>were run in this build</span>
-                    </Panel>
-                  )}
+                <Tooltip message={(
+                  <>
+                    {!total && 'No Auto Tests suggested to run in this build'}
+                    {isAllAutoTestsDone && (
+                      <SavedTimePercent>
+                        Total time saved: {savedTimeDuration.hours}:{savedTimeDuration.minutes}:{savedTimeDuration.seconds}
+                        <span>{percentFormatter((1 - duration / totalDuration) * 100)}%</span>
+                      </SavedTimePercent>
+                    )}
+                    {Boolean(total) && !isAllAutoTestsDone && (
+                      <Panel direction="column">
+                        <span>{`${completed ? 'Not all' : 'None'} of the suggested Auto Tests`}</span>
+                        <span>were run in this build</span>
+                      </Panel>
+                    )}
+                  </>
+                )}
                 >
                   <Bar
                     type={buildVersion !== activeBuildVersion ? 'saved-time' : undefined}
@@ -112,11 +116,11 @@ export const BarChart = barChart(({
                   />
                 </Tooltip>
                 {buildVersion !== activeBuildVersion ? (
-                  <Tooltip message={`Auto tests duration with Drill4J: ${hours}:${minutes}:${seconds}`}>
+                  <Tooltip message={`Auto Tests duration with Drill4J: ${hours}:${minutes}:${seconds}`}>
                     <Bar type="duration" style={{ height: `${durationHeight}px` }} />
                   </Tooltip>
                 ) : (
-                  <Tooltip message={`Auto tests current duration with Drill4J: ${hours}:${minutes}:${seconds}`}>
+                  <Tooltip message={`Auto Tests current duration with Drill4J: ${hours}:${minutes}:${seconds}`}>
                     <Bar type="active" style={{ height: `${durationHeight}px` }} />
                   </Tooltip>
                 )}
