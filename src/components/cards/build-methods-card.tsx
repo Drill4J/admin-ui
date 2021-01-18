@@ -11,10 +11,11 @@ interface Props {
   covered?: number;
   totalCount?: number;
   label: string;
+  testContext?: string;
 }
 
 export const BuildMethodsCard = BEM(styles)(({
-  className, children, covered = 0, totalCount = 0, label,
+  className, children, covered = 0, totalCount = 0, label, testContext,
 }: Props) => (
   <Panel className={className} direction="column" align="space-between">
     <Panel align="space-between">
@@ -24,7 +25,7 @@ export const BuildMethodsCard = BEM(styles)(({
     <Info>
       <Panel align="space-between">
         <Covered data-test={`build-methods-card:covered-count:${label}`}>{covered}</Covered>
-        <span>{children}</span>
+        <span data-test={`build-methods-card:${testContext}`}>{children}</span>
       </Panel>
       <CoverageBar>
         <Progress style={{ width: `${convertToPercentage(covered, totalCount)}%` }} />

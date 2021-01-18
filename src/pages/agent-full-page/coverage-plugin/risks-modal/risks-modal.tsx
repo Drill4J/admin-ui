@@ -83,8 +83,8 @@ export const RisksModal = risksModal(
                         <Icons.Function />
                       </MethodsListItemIcon>
                       <MethodInfo>
-                        <OverflowText>{getRisks()[index]?.name}</OverflowText>
-                        <MethodsPackage>{getRisks()[index]?.ownerClass}</MethodsPackage>
+                        <OverflowText title={getRisks()[index]?.name}>{getRisks()[index]?.name}</OverflowText>
+                        <MethodsPackage title={getRisks()[index]?.ownerClass}>{getRisks()[index]?.ownerClass}</MethodsPackage>
                       </MethodInfo>
                     </MethodsListItem>
                   )}
