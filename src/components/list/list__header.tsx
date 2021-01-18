@@ -13,7 +13,7 @@ interface Props {
 
 export const ListHeader = BEM(styles).header(({ className, columns, style }: Props) => (
   <div className={className} style={style}>
-    {columns.map((column, index) => {
+    {columns.map((column) => {
       const DefaultHeaderCell = ({ column: { label } }: { column: ColumnProps }) => (
         <div>{label}</div>
       );

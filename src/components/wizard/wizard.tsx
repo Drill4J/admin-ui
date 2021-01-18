@@ -31,6 +31,7 @@ interface Props {
 
 const wizard = BEM(styles);
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export const Step = (props: StepProps) => null;
 
 export const Wizard = wizard(({
