@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { BEM } from '@redneckz/react-bem-helper';
 import { nanoid } from 'nanoid';
@@ -33,7 +33,7 @@ export const TestsToRunModal = testsToRunModal(
     const { serviceGroupId = '', pluginId = '' } = useParams<{ serviceGroupId: string, pluginId: string }>();
     const { byType: testsToRun = {} } = usePluginData<GroupedTestToRun>('/service-group/data/tests-to-run', serviceGroupId, pluginId) || {};
     const allTests = Object.values(testsToRun).reduce((acc, tests) => [...acc, ...tests], []);
-    const [selectedFilter, setSelectedFilter] = React.useState('all');
+    const [selectedFilter, setSelectedFilter] = useState('all');
     const getSelectedTests = () => {
       switch (selectedFilter) {
         case 'manual':

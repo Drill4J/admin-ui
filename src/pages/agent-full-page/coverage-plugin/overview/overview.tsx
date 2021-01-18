@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { useState } from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 import { Icons, Panel } from '@drill4j/ui-kit';
 
@@ -25,7 +25,7 @@ interface Props {
 const overview = BEM(styles);
 
 export const Overview = overview(({ className }: Props) => {
-  const [selectedTab, setSelectedTab] = React.useState('methods');
+  const [selectedTab, setSelectedTab] = useState('methods');
   const { agentId, loading } = usePluginState();
   const { status } = useAgent(agentId) || {};
   const { version: previousBuildVersion = '' } = useBuildVersion<ParentBuild>('/data/parent') || {};

@@ -1,4 +1,4 @@
-import React from 'react';
+import { createContext, Dispatch, useContext } from 'react';
 
 import { TableActionsState } from './table-actions-types';
 import { Action } from './reducer';
@@ -8,20 +8,20 @@ export const defaultState: TableActionsState = {
   sort: [],
 };
 
-export const TableActionsStateContext = React.createContext<TableActionsState>(defaultState);
+export const TableActionsStateContext = createContext<TableActionsState>(defaultState);
 
-export const TableActionsDispatchContext = React.createContext<React.Dispatch<Action>>(() => {});
+export const TableActionsDispatchContext = createContext<Dispatch<Action>>(() => {});
 
 export function useTableActionsState(): TableActionsState {
-  const context = React.useContext(TableActionsStateContext);
+  const context = useContext(TableActionsStateContext);
   if (!context) {
     throw new Error('useTableActionsState must be used within a TableActionsStateContext');
   }
   return context;
 }
 
-export function useTableActionsDispatch(): React.Dispatch<Action> {
-  const context = React.useContext(TableActionsDispatchContext);
+export function useTableActionsDispatch(): Dispatch<Action> {
+  const context = useContext(TableActionsDispatchContext);
   if (!context) {
     throw new Error('useTableActionsDispatch must be used within a TableActionsDispatchContext');
   }

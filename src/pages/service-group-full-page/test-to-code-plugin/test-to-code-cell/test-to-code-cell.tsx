@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { BEM, span } from '@redneckz/react-bem-helper';
 import { Icons, Panel, Tooltip } from '@drill4j/ui-kit';
 

@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { ReactNode, useState } from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 
 import { TabsPanel, Tab } from 'components';
@@ -15,13 +15,13 @@ interface Props {
 
 interface TabsComponent {
   name: string;
-  component: React.ReactNode;
+  component: ReactNode;
 }
 
 const agentSettings = BEM(styles);
 
 export const AgentSettings = agentSettings(({ className, agent }: Props) => {
-  const [selectedTab, setSelectedTab] = React.useState('general');
+  const [selectedTab, setSelectedTab] = useState('general');
   const tabsComponents: TabsComponent[] = [
     {
       name: 'general',

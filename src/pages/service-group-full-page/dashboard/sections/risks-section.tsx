@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { Panel, Icons, Tooltip } from '@drill4j/ui-kit';
 
 import { RISKS_TYPES_COLOR } from 'common/constants';

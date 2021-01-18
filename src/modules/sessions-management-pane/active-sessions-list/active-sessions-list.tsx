@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 
 import { ActiveSession } from 'types/active-session';

@@ -1,4 +1,4 @@
-import React from 'react';
+import { createContext, Dispatch, useContext } from 'react';
 
 import { PluginState } from './store-types';
 import { Action } from './reducer';
@@ -9,12 +9,12 @@ export const defaultState = {
   activeSessions: {},
 };
 
-export const CoveragePluginStateContext = React.createContext<PluginState>(defaultState);
+export const CoveragePluginStateContext = createContext<PluginState>(defaultState);
 
-export const CoveragePluginDispatchContext = React.createContext<React.Dispatch<Action>>(() => {});
+export const CoveragePluginDispatchContext = createContext<Dispatch<Action>>(() => {});
 
 export function useCoveragePluginState() {
-  const context = React.useContext(CoveragePluginStateContext);
+  const context = useContext(CoveragePluginStateContext);
   if (!context) {
     throw new Error('usePluginState must be used within a PluginStateContext');
   }
@@ -22,7 +22,7 @@ export function useCoveragePluginState() {
 }
 
 export function useCoveragePluginDispatch() {
-  const context = React.useContext(CoveragePluginDispatchContext);
+  const context = useContext(CoveragePluginDispatchContext);
   if (!context) {
     throw new Error('usePluginDispatch must be used within a PluginDispatchContext');
   }

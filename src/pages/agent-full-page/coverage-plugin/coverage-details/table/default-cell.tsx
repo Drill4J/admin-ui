@@ -1,5 +1,3 @@
-import * as React from 'react';
-
 import { CellProps } from './table-types';
 
 export const DefaultCell = ({ value, testContext }: CellProps<string, unknown>) => (

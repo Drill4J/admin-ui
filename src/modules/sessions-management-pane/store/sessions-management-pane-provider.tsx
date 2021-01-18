@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { useReducer } from 'react';
 
 import {
   SessionsManagementPaneContext,
@@ -14,7 +14,7 @@ interface Props {
 }
 
 export const SessionsManagementPaneProvider = ({ isOpen, onToggle }: Props) => {
-  const [state, dispatch] = React.useReducer(sessionPaneReducer, defaultState);
+  const [state, dispatch] = useReducer(sessionPaneReducer, defaultState);
   return (
     <SessionsManagementPaneContext.Provider value={state}>
       <SessionsManagementPaneDispatchContext.Provider value={dispatch}>

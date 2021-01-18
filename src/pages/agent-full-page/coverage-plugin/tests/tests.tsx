@@ -1,5 +1,3 @@
-import * as React from 'react';
-
 import { TestCoverageInfo } from 'types/test-coverage-info';
 import { useBuildVersion } from 'hooks';
 import { TestDetails } from '../test-details';

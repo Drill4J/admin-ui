@@ -1,11 +1,11 @@
-import * as React from 'react';
+import { ReactElement, useEffect } from 'react';
 import { useLocation, matchPath } from 'react-router-dom';
 
 import { useAgent } from '../../hooks';
 import { usePluginDispatch, setInitialConfig, setAgent } from './store';
 
 interface Props {
-  children?: React.ReactElement;
+  children?: ReactElement;
 }
 
 export const InitialConfigController = ({ children }: Props) => {
@@ -20,7 +20,7 @@ export const InitialConfigController = ({ children }: Props) => {
   const agent = useAgent(agentId) || {};
 
   const dispatch = usePluginDispatch();
-  React.useEffect(() => {
+  useEffect(() => {
     dispatch(
       setInitialConfig({
         agentId,
@@ -31,5 +31,5 @@ export const InitialConfigController = ({ children }: Props) => {
     dispatch(setAgent(agent));
     // eslint-disable-next-line
   }, [buildVersion]);
-  return children as React.ReactElement<unknown>;
+  return children as ReactElement<unknown>;
 };

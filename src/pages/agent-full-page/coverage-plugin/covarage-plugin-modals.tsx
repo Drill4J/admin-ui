@@ -1,5 +1,3 @@
-import * as React from 'react';
-
 import { SessionsManagementPaneProvider as SessionsManagementModal } from 'modules';
 import { useCoveragePluginState, useCoveragePluginDispatch, openModal } from './store';
 import { RenameScopeModal } from './scope/rename-scope-modal';

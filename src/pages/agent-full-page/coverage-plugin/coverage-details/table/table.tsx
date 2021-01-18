@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { Children, ReactElement, ReactNode } from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 
 import { get } from 'utils';
@@ -11,17 +11,17 @@ import styles from './table.module.scss';
 interface Props<T> {
   className?: string;
   data?: T[];
-  children: React.ReactElement<ColumnProps<unknown, T>> | React.ReactElement<ColumnProps<unknown, T>>[];
+  children: ReactElement<ColumnProps<unknown, T>> | ReactElement<ColumnProps<unknown, T>>[];
   idKey?: string;
-  footer?: React.ReactNode;
+  footer?: ReactNode;
   expandedRows?: string[];
-  expandedColumns?: React.ReactElement<ColumnProps<unknown, T>>[];
-  secondLevelExpand?: React.ReactElement<ColumnProps<unknown, T>>[];
+  expandedColumns?: ReactElement<ColumnProps<unknown, T>>[];
+  secondLevelExpand?: ReactElement<ColumnProps<unknown, T>>[];
   expandedContentKey?: string;
   withoutHeader?: boolean;
   selectedRows?: string[];
   classesTopicPrefix: string;
-  tableContentStub?: React.ReactNode | null;
+  tableContentStub?: ReactNode | null;
 }
 
 const table = BEM(styles);
@@ -42,13 +42,13 @@ export const Table = table(
     classesTopicPrefix,
     tableContentStub = null,
   }: Props<T>) => {
-    const columns = React.Children.map(children, (column) => column && column.props);
+    const columns = Children.map(children, (column) => column && column.props);
 
-    const expandedColumnsComponents = React.Children.map(
+    const expandedColumnsComponents = Children.map(
       expandedColumns,
       (column) => column && column.props,
     );
-    const expandedColumnsSecondLevel = React.Children.map(
+    const expandedColumnsSecondLevel = Children.map(
       secondLevelExpand,
       (column) => column && column.props,
     );

@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 import { Field } from 'react-final-form';
 import { Panel, FormGroup } from '@drill4j/ui-kit';

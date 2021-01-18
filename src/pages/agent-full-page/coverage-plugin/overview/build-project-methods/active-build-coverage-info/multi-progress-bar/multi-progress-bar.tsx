@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { useRef } from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 import {
   MainProgressBar, AdditionalProgressBar, StripedProgressBar, Tooltip, useElementSize,
@@ -21,7 +21,7 @@ const multiProgressBar = BEM(styles);
 export const MultiProgressBar = multiProgressBar(({
   className, buildCodeCoverage = 0, uniqueCodeCoverage = 0, overlappingCode = 0, active,
 }: Props) => {
-  const node = React.useRef<HTMLDivElement>(null);
+  const node = useRef<HTMLDivElement>(null);
   const { width } = useElementSize(node);
 
   return (

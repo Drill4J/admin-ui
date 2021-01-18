@@ -1,5 +1,5 @@
-import * as React from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
+import { useRef, useState } from 'react';
 import VirtualList from 'react-tiny-virtual-list';
 import {
   Panel, Icons, Modal, OverflowText, Inputs,
@@ -27,8 +27,8 @@ export const RisksModal = risksModal(
     filter = 'all',
   }: Props) => {
     const risks = useBuildVersion<Risks[]>('/build/risks') || [];
-    const [selectedSection, setSelectedSection] = React.useState<string>(filter);
-    const node = React.useRef<HTMLDivElement>(null);
+    const [selectedSection, setSelectedSection] = useState<string>(filter);
+    const node = useRef<HTMLDivElement>(null);
     const { height: methodsListHeight } = useElementSize(node);
     const newRisks = risks.filter(({ type }) => type === 'NEW');
     const modifiedRisks = risks.filter(({ type }) => type === 'MODIFIED');

@@ -1,5 +1,5 @@
-import * as React from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
+import { useRef, useState } from 'react';
 import VirtualList from 'react-tiny-virtual-list';
 import { Icons, Inputs, OverflowText } from '@drill4j/ui-kit';
 
@@ -16,8 +16,8 @@ const testsList = BEM(styles);
 
 export const TestsList = testsList(({ className, associatedTests }: Props) => {
   const { AUTO: autoTests = [], MANUAL: manualTests = [] } = associatedTests;
-  const node = React.useRef<HTMLDivElement>(null);
-  const [selectedSection, setSelectedSection] = React.useState('all');
+  const node = useRef<HTMLDivElement>(null);
+  const [selectedSection, setSelectedSection] = useState('all');
   const { height: testsListHeight } = useElementSize(node);
 
   const getTests = (): string[] => {

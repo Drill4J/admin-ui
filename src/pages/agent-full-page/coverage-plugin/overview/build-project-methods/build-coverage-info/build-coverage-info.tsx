@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { NavLink, useParams } from 'react-router-dom';
 import { BEM } from '@redneckz/react-bem-helper';
 import { Panel, MainProgressBar, ProgressBarLegends } from '@drill4j/ui-kit';

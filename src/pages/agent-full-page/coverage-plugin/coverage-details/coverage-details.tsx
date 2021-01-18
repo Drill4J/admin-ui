@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { useRef, useState } from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 import { Icons, Panel } from '@drill4j/ui-kit';
 
@@ -30,7 +30,7 @@ export const CoverageDetails = coverageDetails(
   ({
     className, associatedTestsTopic, classesTopicPrefix, topic,
   }: Props) => {
-    const [selectedId, setSelectedId] = React.useState('');
+    const [selectedId, setSelectedId] = useState('');
     const dispatch = useTableActionsDispatch();
     const { search, sort } = useTableActionsState();
     const {
@@ -38,7 +38,7 @@ export const CoverageDetails = coverageDetails(
       totalCount = 0,
       filteredCount = 0,
     } = useBuildVersion<FilterList<ClassCoverage>>(topic, search, sort, 'LIST') || {};
-    const ref = React.useRef<HTMLDivElement>(null);
+    const ref = useRef<HTMLDivElement>(null);
     const visibleElementsCount = useVisibleElementsCount(ref, 10, 10);
     const [searchQuery] = search;
     const expandedColumns = [

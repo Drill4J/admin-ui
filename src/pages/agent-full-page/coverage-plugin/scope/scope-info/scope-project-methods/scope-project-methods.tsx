@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { useState } from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 import { LinkButton } from '@drill4j/ui-kit';
 
@@ -27,7 +27,7 @@ export const ScopeProjectMethods = scopeProjectMethods(({ className, scope }: Pr
   const {
     all, new: newMethods, modified, risks,
   } = useBuildVersion<Methods>(`/scope/${scope?.id}/methods`) || {};
-  const [risksFilter, setRisksFilter] = React.useState('');
+  const [risksFilter, setRisksFilter] = useState('');
 
   return (
     <div className={className}>

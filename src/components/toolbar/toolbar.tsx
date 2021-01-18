@@ -1,5 +1,5 @@
-import * as React from 'react';
 import { BEM, div } from '@redneckz/react-bem-helper';
+import { ReactNode, useState } from 'react';
 import { Icons } from '@drill4j/ui-kit';
 
 import { TOKEN_KEY } from 'common/constants';
@@ -12,13 +12,13 @@ import styles from './toolbar.module.scss';
 
 interface Props {
   className?: string;
-  breadcrumbs?: React.ReactNode;
+  breadcrumbs?: ReactNode;
 }
 
 const toolbar = BEM(styles);
 
 export const Toolbar = toolbar(({ className, breadcrumbs }: Props) => {
-  const [isNotificationPaneOpen, setIsNotificationPaneOpen] = React.useState(false);
+  const [isNotificationPaneOpen, setIsNotificationPaneOpen] = useState(false);
   const notifications = useWsConnection<Notification[]>(defaultAdminSocket, '/notifications') || [];
   const unreadNotifications = notifications.filter(notification => !notification.read);
   return (

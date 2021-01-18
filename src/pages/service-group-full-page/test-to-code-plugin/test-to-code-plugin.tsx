@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { useState } from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 import { useHistory, useParams } from 'react-router-dom';
 import { Menu } from '@drill4j/ui-kit';
@@ -34,11 +34,11 @@ export const TestToCodePlugin = testToCodePlugin(
     summaries = [],
     aggregated,
   }: Props) => {
-    const [testsToRunModalIsOpen, setTestsToRunModalIsOpen] = React.useState(false);
+    const [testsToRunModalIsOpen, setTestsToRunModalIsOpen] = useState(false);
     const { serviceGroupId = '', pluginId = '' } = useParams<{ serviceGroupId: string, pluginId: string}>();
     const { push } = useHistory();
-    const [isSessionsManagementModalOpen, setIsSessionsManagementModalOpen] = React.useState(false);
-    const [isFinishScopesModalOpen, setIsFinishScopesModalOpen] = React.useState(false);
+    const [isSessionsManagementModalOpen, setIsSessionsManagementModalOpen] = useState(false);
+    const [isFinishScopesModalOpen, setIsFinishScopesModalOpen] = useState(false);
     const serviceGroupSummaries = summaries
       .map((agentSummary) => ({ ...agentSummary, ...agentSummary.summary }));
 

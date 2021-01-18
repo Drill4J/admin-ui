@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { useContext } from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 import { Form, Field } from 'react-final-form';
 import axios from 'axios';
@@ -32,7 +32,7 @@ const validateSettings = composeValidators(
 
 export const GeneralSettingsForm = generalSettingsForm(
   ({ className, serviceGroup }: Props) => {
-    const { showMessage } = React.useContext(NotificationManagerContext);
+    const { showMessage } = useContext(NotificationManagerContext);
 
     return (
       <div className={className}>

@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 import { Switch, Route } from 'react-router-dom';
 

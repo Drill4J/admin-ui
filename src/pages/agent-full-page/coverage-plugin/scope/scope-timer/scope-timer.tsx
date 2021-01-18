@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { useEffect, useState } from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 
 import { formatMsToDate } from 'utils';
@@ -27,11 +27,11 @@ export const ScopeTimer = scopeTimer(({
 }: Props) => {
   const [{
     days, hours, minutes, seconds,
-  }, setDuration] = React.useState<State>(
+  }, setDuration] = useState<State>(
     getTimeDifference(started, finished),
   );
 
-  React.useEffect(() => {
+  useEffect(() => {
     function updateTimer() {
       setDuration(getTimeDifference(started, finished));
     }

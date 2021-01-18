@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { Field } from 'react-final-form';
 import { NavLink } from 'react-router-dom';
 import { BEM } from '@redneckz/react-bem-helper';

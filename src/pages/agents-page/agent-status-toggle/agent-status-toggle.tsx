@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { useContext } from 'react';
 import { Panel, Spinner, Inputs } from '@drill4j/ui-kit';
 import axios from 'axios';
 
@@ -13,7 +13,7 @@ interface Props {
 }
 
 export const AgentStatusToggle = ({ className, agent }: Props) => {
-  const { showMessage } = React.useContext(NotificationManagerContext);
+  const { showMessage } = useContext(NotificationManagerContext);
   return (
     <div className={className}>
       <Panel data-test="agent-status-toggle">

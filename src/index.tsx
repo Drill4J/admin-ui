@@ -1,4 +1,3 @@
-import React from 'react';
 import ReactDOM from 'react-dom';
 import './common/style-guide/common.scss';
 import './common/style-guide/fonts/fonts.scss';

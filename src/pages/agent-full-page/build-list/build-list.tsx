@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { useRef } from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 import { useHistory, useParams } from 'react-router-dom';
 import {
@@ -28,7 +28,7 @@ export const BuildList = buildList(({ className }: Props) => {
   const { buildVersion: activeBuildVersion } = useAgent(agentId) || {};
   const { version: baseline } = useBaselineVersion(agentId, activeBuildVersion) || {};
   const dispatch = usePluginDispatch();
-  const node = React.useRef<HTMLDivElement>(null);
+  const node = useRef<HTMLDivElement>(null);
 
   return (
     <div className={className}>

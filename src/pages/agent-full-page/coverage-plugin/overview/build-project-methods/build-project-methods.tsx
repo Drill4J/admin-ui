@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { useState } from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 import { LinkButton } from '@drill4j/ui-kit';
 
@@ -34,7 +34,7 @@ export const BuildProjectMethods = buildProjectMethods(
     status,
     loading,
   }: Props) => {
-    const [risksFilter, setRisksFilter] = React.useState<string>('');
+    const [risksFilter, setRisksFilter] = useState<string>('');
 
     const buildCoverage = useBuildVersion<BuildCoverage>('/build/coverage') || {};
     const {

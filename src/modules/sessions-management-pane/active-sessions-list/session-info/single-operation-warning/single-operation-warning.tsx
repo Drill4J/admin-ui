@@ -1,5 +1,3 @@
-import * as React from 'react';
-
 import { Message } from 'types/message';
 import { setSingleOperation, useSessionsPaneDispatch, useSessionsPaneState } from '../../../store';
 import { OperationActionWarning } from '../../../operation-action-warning';

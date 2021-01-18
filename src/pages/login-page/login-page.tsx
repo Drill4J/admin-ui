@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { useState } from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 import { useHistory } from 'react-router-dom';
 import axios from 'axios';
@@ -19,7 +19,7 @@ interface Props {
 const loginPage = BEM(styles);
 
 export const LoginPage = loginPage(({ className }: Props) => {
-  const [error, setError] = React.useState<string | null>(null);
+  const [error, setError] = useState<string | null>(null);
   const { push } = useHistory();
 
   async function handleLogin() {

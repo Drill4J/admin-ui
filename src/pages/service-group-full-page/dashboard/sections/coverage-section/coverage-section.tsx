@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { Tooltip } from '@drill4j/ui-kit';
 
 import { percentFormatter } from 'utils';

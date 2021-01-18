@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { useEffect } from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 import { Button, Popup } from '@drill4j/ui-kit';
 import { matchPath, useHistory } from 'react-router-dom';
@@ -37,7 +37,7 @@ export const NewBuildModal = newBuildModal(
     const { params: { buildVersion: activeBuildVersion = '' } = {} } = matchPath<{ buildVersion: string }>(pathname, {
       path: '/:page/:agentId/:buildVersion',
     }) || {};
-    React.useEffect(() => {
+    useEffect(() => {
       id && readNotification(id);
     }, [id]);
 

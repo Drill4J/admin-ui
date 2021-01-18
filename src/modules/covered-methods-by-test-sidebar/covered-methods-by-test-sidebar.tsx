@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { BEM, capitalize } from '@redneckz/react-bem-helper';
 import {
   Panel, Modal, OverflowText,

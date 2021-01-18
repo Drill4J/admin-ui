@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { Children, ReactNode } from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 import { Link } from 'react-router-dom';
 import { Panel } from '@drill4j/ui-kit';
@@ -7,8 +7,8 @@ import styles from './plugin-card.module.scss';
 
 interface Props {
   className?: string;
-  label?: React.ReactNode;
-  children?: React.ReactNode[];
+  label?: ReactNode;
+  children?: ReactNode[];
   pluginLink: string;
 }
 
@@ -23,7 +23,7 @@ export const PluginCard = pluginCard(({
       <PluginLink to={pluginLink}>View more &gt;</PluginLink>
     </Header>
     <Content>
-      {React.Children.map(children, (child) => (
+      {Children.map(children, (child) => (
         <CardSection>{child}</CardSection>
       ))}
     </Content>

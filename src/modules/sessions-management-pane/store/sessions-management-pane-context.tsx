@@ -1,4 +1,4 @@
-import React from 'react';
+import { createContext, Dispatch, useContext } from 'react';
 
 import { Action, SessionsPaneState } from './reducer';
 
@@ -14,20 +14,20 @@ export const defaultState: SessionsPaneState = {
   },
 };
 
-export const SessionsManagementPaneContext = React.createContext<SessionsPaneState>(defaultState);
+export const SessionsManagementPaneContext = createContext<SessionsPaneState>(defaultState);
 
-export const SessionsManagementPaneDispatchContext = React.createContext<React.Dispatch<Action>>(() => {});
+export const SessionsManagementPaneDispatchContext = createContext<Dispatch<Action>>(() => {});
 
 export function useSessionsPaneState(): SessionsPaneState {
-  const context = React.useContext(SessionsManagementPaneContext);
+  const context = useContext(SessionsManagementPaneContext);
   if (!context) {
     throw new Error('useSessionsPaneState must be used within a SessionsManagementPaneContext');
   }
   return context;
 }
 
-export function useSessionsPaneDispatch(): React.Dispatch<Action> {
-  const context = React.useContext(SessionsManagementPaneDispatchContext);
+export function useSessionsPaneDispatch(): Dispatch<Action> {
+  const context = useContext(SessionsManagementPaneDispatchContext);
   if (!context) {
     throw new Error('useSessionsPaneDispatch must be used within a SessionsManagementPaneDispatchContext');
   }

@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { useContext } from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 import { useParams, useHistory } from 'react-router-dom';
 import {
@@ -34,7 +34,7 @@ interface MenuItemType {
 const scopesList = BEM(styles);
 
 export const ScopesList = scopesList(({ className }: Props) => {
-  const { showMessage } = React.useContext(NotificationManagerContext);
+  const { showMessage } = useContext(NotificationManagerContext);
   const {
     activeSessions: { testTypes = [] },
   } = useCoveragePluginState();

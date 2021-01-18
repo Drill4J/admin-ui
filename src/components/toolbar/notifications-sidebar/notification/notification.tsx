@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { BEM, tag, div } from '@redneckz/react-bem-helper';
 import { format } from 'timeago.js';
 import { Panel, Icons } from '@drill4j/ui-kit';

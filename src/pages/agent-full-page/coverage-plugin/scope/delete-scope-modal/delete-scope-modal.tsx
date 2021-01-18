@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { useContext, useState } from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 import { useHistory, useParams } from 'react-router-dom';
 import {
@@ -29,8 +29,8 @@ export const DeleteScopeModal = deleteScopeModal(
     const { agentId, buildVersion } = usePluginState();
     const { pluginId = '' } = useParams<{ pluginId: string }>();
     const { push, location: { pathname = '' } } = useHistory();
-    const { showMessage } = React.useContext(NotificationManagerContext);
-    const [errorMessage, setErrorMessage] = React.useState('');
+    const { showMessage } = useContext(NotificationManagerContext);
+    const [errorMessage, setErrorMessage] = useState('');
 
     return (
       <Popup

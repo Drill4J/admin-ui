@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { useContext, useState } from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 import { useParams, useHistory } from 'react-router-dom';
 import axios from 'axios';
@@ -34,8 +34,8 @@ export const AgentRegistrationPage = agentRegistrationPage(
     const { push } = useHistory();
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { buildVersion = '', plugins = [], ...agent } = useAgent(agentId) || {};
-    const [isCancelModalOpened, setIsCancelModalOpened] = React.useState(false);
-    const { showMessage } = React.useContext(NotificationManagerContext);
+    const [isCancelModalOpened, setIsCancelModalOpened] = useState(false);
+    const { showMessage } = useContext(NotificationManagerContext);
     return (
       <div className={className}>
         <PageHeader

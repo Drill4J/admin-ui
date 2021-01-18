@@ -1,5 +1,3 @@
-import * as React from 'react';
-
 export interface CellProps<T, I> {
   value?: T;
   item?: I;

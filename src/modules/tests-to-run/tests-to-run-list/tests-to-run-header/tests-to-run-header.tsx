@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { useState } from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 import { Button, EllipsisOverflowText, Panel } from '@drill4j/ui-kit';
 
@@ -32,7 +32,7 @@ export const TestsToRunHeader = testsToRunHeader(({
     stats: { duration: currentDuration = 0, parentDuration = 0, total: totalTestsToRun = 0 } = {},
     statsByType: { AUTO: { total: totalAutoTestsToRun = 0, completed: completedAutoTestsToRun = 0 } = {} } = {},
   } = summaryTestsToRun;
-  const [modalIsOpen, setModalIsOpen] = React.useState(false);
+  const [modalIsOpen, setModalIsOpen] = useState(false);
   const {
     buildVersion, previousBuildVersion, activeBuildVersion, agentType,
   } = agentInfo;

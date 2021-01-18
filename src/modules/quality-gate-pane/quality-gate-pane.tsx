@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { useState } from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 import {
   Button, Modal, Panel, Icons, GeneralAlerts,
@@ -54,7 +54,7 @@ export const QualityGatePane = qualityGatePane(
     agentId,
     pluginId,
   }: Props) => {
-    const [isEditing, setIsEditing] = React.useState(false);
+    const [isEditing, setIsEditing] = useState(false);
     const { generalAlertMessage, showGeneralAlertMessage } = useGeneralAlertMessage();
     const StatusIcon = Icons[qualityGate.status];
 
