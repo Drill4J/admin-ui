@@ -40,7 +40,11 @@ export const TableRow = tableRow(
       : `2fr repeat(${columns.length - 1}, 1fr)`;
     return (
       <>
-        <div className={className} style={{ display: 'grid', gridTemplateColumns, backgroundColor: color ? '#F8F9FB' : undefined }}>
+        <div
+          className={className}
+          style={{ display: 'grid', gridTemplateColumns, backgroundColor: color ? '#F8F9FB' : undefined }}
+          data-test="table-row"
+        >
           {columns.map((column) => {
             const Cell = column.Cell || DefaultCell;
             return (

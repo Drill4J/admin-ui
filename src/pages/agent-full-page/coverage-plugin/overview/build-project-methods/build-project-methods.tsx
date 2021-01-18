@@ -63,6 +63,7 @@ export const BuildProjectMethods = buildProjectMethods(
             totalCount={all?.total}
             covered={all?.covered}
             label="TOTAL METHODS"
+            testContext="deleted-methods"
           >
             {deleted?.total} <Deleted>deleted</Deleted>
           </BuildMethodsCard>
