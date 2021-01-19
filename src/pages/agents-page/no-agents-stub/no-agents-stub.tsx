@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { BEM, tag } from '@redneckz/react-bem-helper';
 
 import { ReactComponent as NoAgentsSvg } from './no-agents.svg';

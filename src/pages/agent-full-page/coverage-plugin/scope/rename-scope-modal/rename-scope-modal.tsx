@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { useContext, useState } from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 import { Form, Field } from 'react-final-form';
 import { useParams } from 'react-router-dom';
@@ -42,8 +42,8 @@ export const RenameScopeModal = renameScopeModal(
   }: Props) => {
     const { agentId } = usePluginState();
     const { pluginId = '' } = useParams<{ pluginId: string }>();
-    const { showMessage } = React.useContext(NotificationManagerContext);
-    const [errorMessage, setErrorMessage] = React.useState('');
+    const { showMessage } = useContext(NotificationManagerContext);
+    const [errorMessage, setErrorMessage] = useState('');
 
     return (
       <Popup

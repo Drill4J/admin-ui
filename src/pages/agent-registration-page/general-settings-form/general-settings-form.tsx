@@ -1,4 +1,3 @@
-import React from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 import { Field } from 'react-final-form';
 import { useParams } from 'react-router-dom';

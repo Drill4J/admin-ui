@@ -1,12 +1,11 @@
-import * as React from 'react';
-
+import { ReactElement, useEffect } from 'react';
 import { ActiveSessions } from 'types/active-sessions';
 import { useBuildVersion } from 'hooks';
 import { useCoveragePluginDispatch, setActiveSessions } from './store';
 import { usePluginDispatch, setLoading } from '../store';
 
 interface Props {
-  children?: React.ReactElement;
+  children?: ReactElement;
 }
 
 export const InitialDataController = ({ children }: Props) => {
@@ -14,12 +13,12 @@ export const InitialDataController = ({ children }: Props) => {
   const dispatch = useCoveragePluginDispatch();
   const pluginDispatch = usePluginDispatch();
 
-  React.useEffect(() => {
+  useEffect(() => {
     dispatch(setActiveSessions(activeSessions));
     pluginDispatch(setLoading(Boolean(activeSessions.count)));
 
     return () => pluginDispatch(setLoading(false));
     // eslint-disable-next-line
   }, [activeSessions.count]);
-  return children as React.ReactElement;
+  return children as ReactElement;
 };

@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { useContext } from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 import { Modal, Button } from '@drill4j/ui-kit';
 import { useParams } from 'react-router-dom';
@@ -25,7 +25,7 @@ const addPluginModal = BEM(styles);
 export const AddPluginsModal = addPluginModal(({
   className, isOpen, onToggle, plugins, agentId, setSelectedPlugins, selectedPlugins,
 }: Props) => {
-  const { showMessage } = React.useContext(NotificationManagerContext);
+  const { showMessage } = useContext(NotificationManagerContext);
   const { type } = useParams<{ type: 'service-group' | 'agent' }>();
   const handleLoadPlugins = loadPlugins(
     `/${type === 'agent' ? 'agents' : 'service-groups'}/${agentId}/plugins`, {

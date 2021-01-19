@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 import { Button, Icons } from '@drill4j/ui-kit';
 import { useHistory } from 'react-router-dom';

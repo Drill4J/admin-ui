@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { useState } from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 import {
   Table, Column, Icons, Panel, Legend,
@@ -32,8 +32,8 @@ interface Props {
 const testsToRunList = BEM(styles);
 
 export const TestsToRunList = testsToRunList(({ className, agentType = 'Agent' }: Props) => {
-  const [selectedTest, setSelectedTest] = React.useState('');
-  const [search, setSearch] = React.useState<Search[]>([{ field: 'name', value: '', op: 'CONTAINS' }]);
+  const [selectedTest, setSelectedTest] = useState('');
+  const [search, setSearch] = useState<Search[]>([{ field: 'name', value: '', op: 'CONTAINS' }]);
   const {
     items: testsToRun = [],
     filteredCount = 0,

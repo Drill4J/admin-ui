@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 import { NavLink, useParams } from 'react-router-dom';
 import { EllipsisOverflowText, Tooltip } from '@drill4j/ui-kit';

@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { Panel, Tooltip } from '@drill4j/ui-kit';
 
 import { SingleBar, DashboardSection, SectionTooltip } from 'components';

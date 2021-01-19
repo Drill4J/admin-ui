@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { ReactNode, useReducer } from 'react';
 
 import {
   CoveragePluginStateContext,
@@ -8,11 +8,11 @@ import {
 import { pluginReducer } from './reducer';
 
 interface Props {
-  children: React.ReactNode;
+  children: ReactNode;
 }
 
 export const CoveragePluginProvider = ({ children }: Props) => {
-  const [state, dispatch] = React.useReducer(pluginReducer, defaultState);
+  const [state, dispatch] = useReducer(pluginReducer, defaultState);
 
   return (
     <CoveragePluginStateContext.Provider value={state}>

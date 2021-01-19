@@ -1,4 +1,4 @@
-import React from 'react';
+import { createContext, Dispatch, useContext } from 'react';
 
 import { PluginState } from './store-types';
 import { Action } from './reducer';
@@ -11,12 +11,12 @@ export const defaultState = {
   agent: {},
 };
 
-export const PluginStateContext = React.createContext<PluginState>(defaultState);
+export const PluginStateContext = createContext<PluginState>(defaultState);
 
-export const PluginDispatchContext = React.createContext<React.Dispatch<Action>>(() => {});
+export const PluginDispatchContext = createContext<Dispatch<Action>>(() => {});
 
 export function usePluginState() {
-  const context = React.useContext(PluginStateContext);
+  const context = useContext(PluginStateContext);
   if (!context) {
     throw new Error('usePluginState must be used within a PluginStateContext');
   }
@@ -24,7 +24,7 @@ export function usePluginState() {
 }
 
 export function usePluginDispatch() {
-  const context = React.useContext(PluginDispatchContext);
+  const context = useContext(PluginDispatchContext);
   if (!context) {
     throw new Error('usePluginDispatch must be used within a PluginDispatchContext');
   }

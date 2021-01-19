@@ -1,11 +1,11 @@
-import * as React from 'react';
+import { Children, cloneElement, ReactElement } from 'react';
 import { BEM, button } from '@redneckz/react-bem-helper';
 
 import styles from './tabs.module.scss';
 
 interface Props {
   className?: string;
-  children: React.ReactElement | React.ReactElement[];
+  children: ReactElement | ReactElement[];
   activeTab: number | string;
   onSelect: (tabName: string) => void;
 }
@@ -19,7 +19,7 @@ export const TabsPanel = tabsPanel((props: Props) => {
 
   return (
     <div className={className}>
-      {React.Children.map(children, (child: React.ReactElement, index: number) => React.cloneElement(child, {
+      {Children.map(children, (child: ReactElement, index: number) => cloneElement(child, {
         onClick: () => onSelect && onSelect(child.props.name || index),
         active: (child.props.name || index) === activeTab,
       }))}

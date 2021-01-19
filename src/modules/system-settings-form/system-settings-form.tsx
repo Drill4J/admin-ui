@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { useContext, useState } from 'react';
 import { BEM, div } from '@redneckz/react-bem-helper';
 import {
   Panel, Icons, Tooltip, Button, FormGroup,
@@ -43,9 +43,9 @@ export const SystemSettingsForm = systemSettingsForm(
       id, systemSettings,
     },
   }: Props) => {
-    const [unlocked, setUnlocked] = React.useState(false);
-    const [isUnlockingModalOpened, setIsUnlockingModalOpened] = React.useState(false);
-    const { showMessage } = React.useContext(NotificationManagerContext);
+    const [unlocked, setUnlocked] = useState(false);
+    const [isUnlockingModalOpened, setIsUnlockingModalOpened] = useState(false);
+    const { showMessage } = useContext(NotificationManagerContext);
     const { type: agentType } = useParams<{ type: 'service-group' | 'agent' }>();
 
     return (

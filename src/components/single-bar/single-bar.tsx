@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { BEM, tag } from '@redneckz/react-bem-helper';
 
 import styles from './single-bar.module.scss';

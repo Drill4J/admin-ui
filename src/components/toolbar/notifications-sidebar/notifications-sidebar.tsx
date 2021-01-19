@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { useState } from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 import { nanoid } from 'nanoid';
 import {
@@ -27,7 +27,7 @@ export const NotificationsSidebar = notificationsSidebar(
     onToggle,
     notifications,
   }: Props) => {
-    const [errorMessage, setErrorMessage] = React.useState('');
+    const [errorMessage, setErrorMessage] = useState('');
 
     return (
       <Modal isOpen={isOpen} onToggle={onToggle}>

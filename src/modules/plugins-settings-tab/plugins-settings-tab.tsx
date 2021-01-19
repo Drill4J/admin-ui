@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { useState } from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 import { useHistory, useParams } from 'react-router-dom';
 import { Panel, Icons, Button } from '@drill4j/ui-kit';
@@ -25,13 +25,13 @@ export const PluginsSettingsTab = pluginsSettingsTab(
     className,
     agent: { id = '', buildVersion = '' },
   }: Props) => {
-    const [isAddPluginOpen, setIsAddPluginOpen] = React.useState(false);
+    const [isAddPluginOpen, setIsAddPluginOpen] = useState(false);
     const { type: agentType } = useParams<{ type: 'service-group' | 'agent' }>();
     const { push } = useHistory();
     const pluginsTopic = `/${agentType === 'agent' ? 'agents' : 'service-groups'}/${id}/plugins`;
     const plugins = useWsConnection<Plugin[]>(defaultAdminSocket, pluginsTopic) || [];
     const installedPlugins = plugins.filter((plugin) => !plugin.available);
-    const [selectedPlugins, setSelectedPlugins] = React.useState<string[]>([]);
+    const [selectedPlugins, setSelectedPlugins] = useState<string[]>([]);
 
     return (
       <div className={className}>

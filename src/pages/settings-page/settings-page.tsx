@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { useState } from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 import { useParams } from 'react-router-dom';
 import { Panel, Icons, Menu } from '@drill4j/ui-kit';
@@ -26,7 +26,7 @@ export const SettingsPage = settingsPage(
   }: Props) => {
     const { id = '', type = '' } = useParams<{ id: string, type: string}>();
     const data = useCommonEntity(id, type) || {};
-    const [isUnregisterModalOpen, setIsUnregisterModalOpen] = React.useState(false);
+    const [isUnregisterModalOpen, setIsUnregisterModalOpen] = useState(false);
 
     return (
       <div className={className}>

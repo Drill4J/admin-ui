@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { useContext, useState } from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 import { useHistory } from 'react-router-dom';
 import axios from 'axios';
@@ -20,8 +20,8 @@ const unregisterAgentModal = BEM(styles);
 export const UnregisterAgentModal = unregisterAgentModal(({
   className, isOpen, onToggle, agentId,
 }: Props) => {
-  const { showMessage } = React.useContext(NotificationManagerContext);
-  const [errorMessage, setErrorMessage] = React.useState('');
+  const { showMessage } = useContext(NotificationManagerContext);
+  const [errorMessage, setErrorMessage] = useState('');
   const { push } = useHistory();
 
   return (

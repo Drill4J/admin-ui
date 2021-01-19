@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { Panel, Icons, Tooltip } from '@drill4j/ui-kit';
 
 import { BuildSummary } from 'types/build-summary';

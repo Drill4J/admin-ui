@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { useContext, useState } from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 import { useParams, useHistory, useLocation } from 'react-router-dom';
 import axios from 'axios';
@@ -28,8 +28,8 @@ export const ServiceGroupRegistrationPage = serviceGroupRegistrationPage(
     const { push } = useHistory();
     const { serviceGroupId = '' } = useParams<{ serviceGroupId: string }>();
     const { search } = useLocation();
-    const [isCancelModalOpened, setIsCancelModalOpened] = React.useState(false);
-    const { showMessage } = React.useContext(NotificationManagerContext);
+    const [isCancelModalOpened, setIsCancelModalOpened] = useState(false);
+    const { showMessage } = useContext(NotificationManagerContext);
     const serviceGroup = useWsConnection<Agent>(defaultAdminSocket, `/service-groups/${serviceGroupId}`) || {};
     const { unregisteredAgentsCount } = queryString.parse(search);
 

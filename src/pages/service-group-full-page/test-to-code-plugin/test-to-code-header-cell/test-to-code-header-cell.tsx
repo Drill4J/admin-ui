@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { Icons } from '@drill4j/ui-kit';
 import { BEM, div } from '@redneckz/react-bem-helper';
 

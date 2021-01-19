@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { useContext, useState } from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 import {
   Panel, Button, Popup, OverflowText, GeneralAlerts, LinkButton,
@@ -26,8 +26,8 @@ export const FinishAllScopesModal = finishAllScopesModal(
   ({
     className, isOpen, onToggle, setIsSessionsManagementModalOpen, serviceGroupId, agentsCount, pluginId,
   }: Props) => {
-    const { showMessage } = React.useContext(NotificationManagerContext);
-    const [errorMessage, setErrorMessage] = React.useState('');
+    const { showMessage } = useContext(NotificationManagerContext);
+    const [errorMessage, setErrorMessage] = useState('');
     const activeSessions = useActiveSessions('ServiceGroup', serviceGroupId) || [];
 
     return (

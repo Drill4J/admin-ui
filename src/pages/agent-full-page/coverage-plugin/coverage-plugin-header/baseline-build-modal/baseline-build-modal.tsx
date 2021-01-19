@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { useState } from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 import {
   Button, Popup, Checkbox, Panel,
@@ -19,7 +19,7 @@ const baselineBuildModal = BEM(styles);
 export const BaselineBuildModal = baselineBuildModal(({
   className, isOpen, onToggle, isBaseline, toggleBaseline,
 }: Props) => {
-  const [isConfirmed, setIsConfirmed] = React.useState(isBaseline);
+  const [isConfirmed, setIsConfirmed] = useState(isBaseline);
 
   return (
     <Popup

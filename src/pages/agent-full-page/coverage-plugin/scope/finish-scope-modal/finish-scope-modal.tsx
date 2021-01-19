@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { useContext, useState } from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 import { useParams, useHistory } from 'react-router-dom';
 import {
@@ -28,13 +28,13 @@ export const FinishScopeModal = finishScopeModal(
     className, isOpen, onToggle, scope,
   }: Props) => {
     const dispatch = useCoveragePluginDispatch();
-    const { showMessage } = React.useContext(NotificationManagerContext);
+    const { showMessage } = useContext(NotificationManagerContext);
     const {
       activeSessions: { testTypes = [] },
     } = useCoveragePluginState();
     const { agentId, buildVersion } = usePluginState();
-    const [errorMessage, setErrorMessage] = React.useState('');
-    const [ignoreScope, setIgnoreScope] = React.useState(false);
+    const [errorMessage, setErrorMessage] = useState('');
+    const [ignoreScope, setIgnoreScope] = useState(false);
     const testsCount = scope
       ? (scope.coverage.byTestType || []).reduce((acc, { summary: { testCount = 0 } }) => acc + testCount, 0)
       : 0;

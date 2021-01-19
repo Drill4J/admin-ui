@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { ReactNode, useReducer } from 'react';
 
 import {
   TableActionsStateContext,
@@ -8,11 +8,11 @@ import {
 import { actionsReducer } from './reducer';
 
 interface Props {
-  children: React.ReactNode;
+  children: ReactNode;
 }
 
 export const TableActionsProvider = ({ children }: Props) => {
-  const [state, dispatch] = React.useReducer(actionsReducer, defaultState);
+  const [state, dispatch] = useReducer(actionsReducer, defaultState);
 
   return (
     <TableActionsStateContext.Provider value={state}>

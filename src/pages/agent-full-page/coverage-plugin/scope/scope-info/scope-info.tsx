@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { useContext, useState } from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 import { Redirect, useParams } from 'react-router-dom';
 import {
@@ -41,7 +41,7 @@ export const ScopeInfo = scopeInfo(
   ({
     className,
   }: Props) => {
-    const { showMessage } = React.useContext(NotificationManagerContext);
+    const { showMessage } = useContext(NotificationManagerContext);
     const { agentId, loading } = usePluginState();
     const { buildVersion: activeBuildVersion = '', status } = useAgent(agentId) || {};
     const { pluginId = '', scopeId = '', buildVersion } = useParams<{ pluginId: string, scopeId: string, buildVersion: string }>();
@@ -52,7 +52,7 @@ export const ScopeInfo = scopeInfo(
       name = '', active = false, enabled = false, started = 0, finished = 0,
     } = scope || {};
 
-    const [selectedTab, setSelectedTab] = React.useState('coverage');
+    const [selectedTab, setSelectedTab] = useState('coverage');
     const menuActions = [
       !active && {
         label: `${enabled ? 'Ignore' : 'Include'} in stats`,

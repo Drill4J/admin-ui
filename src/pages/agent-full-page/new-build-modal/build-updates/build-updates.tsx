@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 import { nanoid } from 'nanoid';
 import { Panel, Icons } from '@drill4j/ui-kit';

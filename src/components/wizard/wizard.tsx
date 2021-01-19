@@ -1,4 +1,6 @@
-import * as React from 'react';
+import {
+  Children, ComponentType, ReactElement, useReducer, useState, Component,
+} from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 import { Form } from 'react-final-form';
 import {
@@ -6,6 +8,7 @@ import {
 } from '@drill4j/ui-kit';
 
 import { Agent } from 'types/agent';
+
 import {
   wizardReducer, previousStep, nextStep, state,
 } from './wizard-reducer';
@@ -15,7 +18,7 @@ import styles from './wizard.module.scss';
 
 export interface StepProps {
   name: string;
-  component: React.ComponentType<any>;
+  component: ComponentType<any>;
   validate?: FormValidator;
 }
 
@@ -23,20 +26,21 @@ interface Props {
   className?: string;
   initialValues: Agent;
   onSubmit: (val: Record<string, unknown>, onError: (message: string) => void) => Promise<void>;
-  children: React.ReactElement<StepProps>[];
+  children: ReactElement<StepProps>[];
 }
 
 const wizard = BEM(styles);
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export const Step = (props: StepProps) => null;
 
 export const Wizard = wizard(({
   className, children, initialValues, onSubmit,
 }: Props) => {
-  const [{ currentStepIndex }, dispatch] = React.useReducer(wizardReducer, state);
-  const [errorMessage, setErrorMessage] = React.useState('');
-  const steps = React.Children.toArray(children);
-  const { name, validate, component: StepComponent } = (steps[currentStepIndex] as React.Component<StepProps>).props;
+  const [{ currentStepIndex }, dispatch] = useReducer(wizardReducer, state);
+  const [errorMessage, setErrorMessage] = useState('');
+  const steps = Children.toArray(children);
+  const { name, validate, component: StepComponent } = (steps[currentStepIndex] as Component<StepProps>).props;
 
   return (
     <div className={className}>
@@ -64,7 +68,7 @@ export const Wizard = wizard(({
           <>
             <Header>
               <StepName>
-                {`${currentStepIndex + 1} of ${React.Children.count(children)}. ${name} `}
+                {`${currentStepIndex + 1} of ${Children.count(children)}. ${name} `}
               </StepName>
               <Panel align="end">
                 {currentStepIndex > 0 && (

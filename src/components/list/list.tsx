@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { Children, ComponentType, ReactElement } from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 import { nanoid } from 'nanoid';
 
@@ -11,10 +11,10 @@ interface Props {
   className?: string;
   data?: Array<{ [key: string]: unknown }>;
   children: Array<
-  React.ReactElement<{
+  ReactElement<{
     name: string;
     label: string;
-    HeaderCell?: React.ComponentType<unknown>;
+    HeaderCell?: ComponentType<unknown>;
   }>
   >;
   gridTemplateColumns?: string;
@@ -26,7 +26,7 @@ const list = BEM(styles);
 export const List = list(({
   className, data = [], children, gridTemplateColumns, testContext,
 }: Props) => {
-  const columns = React.Children.map(children, (column) => column && column.props);
+  const columns = Children.map(children, (column) => column && column.props);
   return (
     <div
       className={className}

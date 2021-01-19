@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { BEM, div } from '@redneckz/react-bem-helper';
 import {
   useParams, useHistory, useLocation, matchPath,

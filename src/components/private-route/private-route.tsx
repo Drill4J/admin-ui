@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { RouteProps, Route, Redirect } from 'react-router-dom';
 
 import { TOKEN_KEY } from 'common/constants';

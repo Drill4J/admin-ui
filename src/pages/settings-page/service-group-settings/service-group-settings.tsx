@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { useState } from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 
 import { TabsPanel, Tab } from 'components';
@@ -23,7 +23,7 @@ const agentSettings = BEM(styles);
 
 export const ServiceGroupSettings = agentSettings(
   ({ className, serviceGroup }: Props) => {
-    const [selectedTab, setSelectedTab] = React.useState('general');
+    const [selectedTab, setSelectedTab] = useState('general');
     const tabsComponents: TabsComponent[] = [
       {
         name: 'general',

@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { useRef } from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 import { Legend, Panel, Tooltip } from '@drill4j/ui-kit';
 import { useParams } from 'react-router-dom';
@@ -33,7 +33,7 @@ export const ActiveBuildTestsInfo = activeBuildTestsInfo(({ className, testsInfo
     } = {},
   } = testsInfo;
   const testsExecuted = autoTestsCount + manualTestsCount;
-  const ref = React.useRef<HTMLDivElement>(null);
+  const ref = useRef<HTMLDivElement>(null);
   const { width } = useElementSize(ref);
   const autoTestsBarWidth = (autoTestsCount / testsExecuted) * width;
   const manualTestsBarWidth = (manualTestsCount / testsExecuted) * width;

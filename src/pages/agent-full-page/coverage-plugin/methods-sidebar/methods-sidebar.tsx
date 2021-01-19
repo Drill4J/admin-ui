@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { useRef } from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 import VirtualList from 'react-tiny-virtual-list';
 import { Modal, Icons, OverflowText } from '@drill4j/ui-kit';
@@ -24,7 +24,7 @@ export const MethodsSidebar = methodsSidebar(
     className, isOpen, onToggle, title, type,
   }: Props) => {
     const { methods = [] } = useBuildVersion<{ methods: MethodsDetails[] }>(`/build/methods/${type}`) || {};
-    const node = React.useRef<HTMLDivElement>(null);
+    const node = useRef<HTMLDivElement>(null);
     const { height: methodsListHeight } = useElementSize(node);
     return (
       <Modal isOpen={isOpen} onToggle={onToggle}>

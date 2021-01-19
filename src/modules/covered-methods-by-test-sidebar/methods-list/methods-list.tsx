@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { useRef, useState } from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 import VirtualList from 'react-tiny-virtual-list';
 import {
@@ -22,8 +22,8 @@ export const MethodsList = methodsList(({ className, coveredMethods }: Props) =>
   const {
     newMethods = [], modifiedMethods = [], unaffectedMethods = [], allMethods = [],
   } = coveredMethods;
-  const [selectedSection, setSelectedSection] = React.useState('all');
-  const node = React.useRef<HTMLDivElement>(null);
+  const [selectedSection, setSelectedSection] = useState('all');
+  const node = useRef<HTMLDivElement>(null);
   const { height: methodsListHeight } = useElementSize(node);
   const getMethods = () => {
     switch (selectedSection) {

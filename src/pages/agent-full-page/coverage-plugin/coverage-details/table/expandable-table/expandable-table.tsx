@@ -1,4 +1,6 @@
-import * as React from 'react';
+import {
+  Children, ReactElement, ReactNode, useState,
+} from 'react';
 
 import { get } from 'utils';
 import { Table } from '../table';
@@ -9,14 +11,14 @@ import { ColumnProps } from '../table-types';
 interface Props<T> {
   data: T[];
   idKey: string;
-  children: React.ReactElement<ColumnProps<unknown, T>>[];
-  expandedColumns?: React.ReactElement<ColumnProps<unknown, T>>[];
+  children: ReactElement<ColumnProps<unknown, T>>[];
+  expandedColumns?: ReactElement<ColumnProps<unknown, T>>[];
   expandedContentKey: string;
-  secondLevelExpand?: React.ReactElement<ColumnProps<unknown, T>>[];
+  secondLevelExpand?: ReactElement<ColumnProps<unknown, T>>[];
   className?: string;
   hasSecondLevelExpand?: boolean;
   classesTopicPrefix: string;
-  tableContentStub?: React.ReactNode | null;
+  tableContentStub?: ReactNode | null;
 }
 
 export const ExpandableTable = <T, >({
@@ -29,7 +31,7 @@ export const ExpandableTable = <T, >({
   tableContentStub = null,
   ...restProps
 }: Props<T>) => {
-  const [expandedRows, setExpandedRows] = React.useState<string[]>([]);
+  const [expandedRows, setExpandedRows] = useState<string[]>([]);
   return (
     <Table
       className={className}
@@ -49,14 +51,14 @@ export const ExpandableTable = <T, >({
               : undefined,
             ...expandedColumns,
           ]
-          : undefined) as React.ReactElement<ColumnProps<unknown, T>>[]
+          : undefined) as ReactElement<ColumnProps<unknown, T>>[]
       }
       secondLevelExpand={expandedColumns}
       {...restProps}
     >
       {[
         getExpanderColumn({ idKey, expandedRows, setExpandedRows }),
-        ...React.Children.toArray(children) as React.ReactElement<ColumnProps<unknown, T>>[],
+        ...Children.toArray(children) as ReactElement<ColumnProps<unknown, T>>[],
       ]}
     </Table>
   );

@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { ReactNode, useState, createContext } from 'react';
 import { MessagePanel } from '@drill4j/ui-kit';
 
 import { Message } from 'types/message';
@@ -6,7 +6,7 @@ import { defaultAdminSocket } from 'common/connection';
 
 interface Props {
   className?: string;
-  children?: React.ReactNode;
+  children?: ReactNode;
 }
 
 type ContextType = {
@@ -14,10 +14,10 @@ type ContextType = {
   closeMessage: () => void;
 };
 
-export const NotificationManagerContext = React.createContext<ContextType>({ showMessage: () => {}, closeMessage: () => {} });
+export const NotificationManagerContext = createContext<ContextType>({ showMessage: () => {}, closeMessage: () => {} });
 
 export const NotificationManager = ({ children }: Props) => {
-  const [message, setMessage] = React.useState<Message | null>();
+  const [message, setMessage] = useState<Message | null>();
 
   function handleShowMessage(incomingMessage: Message) {
     if (incomingMessage.type === 'SUCCESS') {

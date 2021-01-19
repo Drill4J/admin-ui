@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { useContext, useState } from 'react';
 import { BEM, div } from '@redneckz/react-bem-helper';
 import { NavLink, useHistory, useParams } from 'react-router-dom';
 import {
@@ -34,10 +34,10 @@ interface Props {
 const coveragePluginHeader = BEM(styles);
 
 export const CoveragePluginHeader = coveragePluginHeader(({ className, previousBuildTests = [] }: Props) => {
-  const [isRisksModalOpen, setIsRisksModalOpen] = React.useState(false);
-  const [isOpenQualityGatesPane, setIsOpenQualityGatesPane] = React.useState(false);
-  const [isBaselineBuildModalOpened, setIsBaselineBuildModalOpened] = React.useState(false);
-  const { showMessage } = React.useContext(NotificationManagerContext);
+  const [isRisksModalOpen, setIsRisksModalOpen] = useState(false);
+  const [isOpenQualityGatesPane, setIsOpenQualityGatesPane] = useState(false);
+  const [isBaselineBuildModalOpened, setIsBaselineBuildModalOpened] = useState(false);
+  const { showMessage } = useContext(NotificationManagerContext);
 
   const { push } = useHistory();
   const { pluginId = '', agentId = '', buildVersion = '' } = useParams<{

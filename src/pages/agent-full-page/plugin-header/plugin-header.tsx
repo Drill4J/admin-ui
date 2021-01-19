@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { BEM, div } from '@redneckz/react-bem-helper';
 import { useHistory, matchPath } from 'react-router-dom';
 import { Panel, Spinner, Icons } from '@drill4j/ui-kit';

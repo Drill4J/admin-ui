@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { useEffect, useState } from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 import {
   Switch, useLocation, useParams, Route, matchPath,
@@ -61,8 +61,8 @@ export const AgentFullPage = agentFullPage(
     }) || {};
     const notifications = useWsConnection<Notification[]>(defaultAdminSocket, '/notifications') || [];
     const newBuildNotification = notifications.find((notification) => notification.agentId === agentId) || {};
-    const [isNewBuildModalOpened, setIsNewBuildModalOpened] = React.useState(false);
-    React.useEffect(() => {
+    const [isNewBuildModalOpened, setIsNewBuildModalOpened] = useState(false);
+    useEffect(() => {
       if (!newBuildNotification?.read && newBuildNotification?.agentId === agentId) {
         setIsNewBuildModalOpened(true);
       }

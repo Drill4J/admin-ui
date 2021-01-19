@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { BEM, div } from '@redneckz/react-bem-helper';
 import { useHistory } from 'react-router-dom';
 import {

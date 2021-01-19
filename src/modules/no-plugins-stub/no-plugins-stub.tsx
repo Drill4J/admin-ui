@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 import { Link } from 'react-router-dom';
 import { Icons } from '@drill4j/ui-kit';

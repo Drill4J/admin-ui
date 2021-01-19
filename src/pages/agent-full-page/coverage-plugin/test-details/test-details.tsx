@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { useState } from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 import {
   Icons, Panel, Column, Table,
@@ -24,7 +24,7 @@ export const TestDetails = testDetails(
   ({
     className, tests, topicCoveredMethodsByTest,
   }: Props) => {
-    const [selectedTest, setSelectedTest] = React.useState('');
+    const [selectedTest, setSelectedTest] = useState('');
 
     return (
       <div className={className}>

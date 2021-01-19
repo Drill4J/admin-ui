@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { BEM, div } from '@redneckz/react-bem-helper';
 import { FieldInputProps, FieldMetaState } from 'react-final-form';
 import { Icons } from '@drill4j/ui-kit';

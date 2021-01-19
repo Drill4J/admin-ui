@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { BEM, div } from '@redneckz/react-bem-helper';
 import { Panel, Tooltip } from '@drill4j/ui-kit';
 import { nanoid } from 'nanoid';
@@ -27,12 +27,12 @@ const BORDER_PX = 1;
 export const BarChart = barChart(({
   className, activeBuildVersion, totalDuration, summaryTestsToRun,
 }: Props) => {
-  const ref = React.useRef(null);
+  const ref = useRef(null);
   const { width } = useElementSize(ref);
-  const [slice, setSlice] = React.useState(0);
+  const [slice, setSlice] = useState(0);
   const visibleBarsCount = Math.floor((width - BAR_HORIZONTAL_PADDING_PX) / BAR_WITH_GAP_WIDTH_PX);
 
-  React.useEffect(() => {
+  useEffect(() => {
     setSlice(visibleBarsCount);
   }, [width, visibleBarsCount]);
 
