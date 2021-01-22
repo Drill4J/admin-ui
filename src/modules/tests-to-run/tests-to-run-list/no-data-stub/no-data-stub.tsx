@@ -28,7 +28,7 @@ export const NoDataStub = noDataStub(({ className }: Props) => (
   <div className={className}>
     <Icon width={70} height={75} />
     <Title>No data about saved time</Title>
-    <SubTitle>There is no information about Auto tests duration in the parent build.</SubTitle>
+    <SubTitle>There is no information about Auto Tests duration in the parent build.</SubTitle>
   </div>
 ));
 
