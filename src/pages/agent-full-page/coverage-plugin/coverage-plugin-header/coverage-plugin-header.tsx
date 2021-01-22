@@ -241,7 +241,7 @@ function showBaseline(isBaseline: boolean, isActiveBuild: boolean, previousBuild
       disabled: true,
       info: (
         <>
-          The initial build is marked as baseline by default. All methods <br />
+          The initial build is set as baseline by default. All methods <br />
           and key metrics of subsequent builds are compared with it.
         </>
       ),
