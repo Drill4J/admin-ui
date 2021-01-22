@@ -62,6 +62,7 @@
 
   &__compared-build-version {
     max-width: 200px;
+    margin-left: 4px;
     color: map-get($monochrome, black);
   }
 }

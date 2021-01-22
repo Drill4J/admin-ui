@@ -74,7 +74,7 @@ export const TestsToRunHeader = testsToRunHeader(({
               >
                 {buildVersion}
               </CurrentBuildVersion>
-              Compared to: &nbsp;
+              Compared to:
               <ComparedBuildVersion data-test="tests-to-run-header:compared-build-version" title={previousBuildVersion}>
                 {previousBuildVersion}
               </ComparedBuildVersion>
