@@ -20,8 +20,8 @@
     color: map-get($monochrome, default);
   }
 
-  :not(:last-child) {
-    &:after {
+  :not(:first-child) {
+    &:before {
       padding: 0 8px;
       color: map-get($monochrome, default);
       content: '/';
