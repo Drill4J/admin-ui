@@ -44,7 +44,9 @@ export const TestsToRunHeader = testsToRunHeader(({
   className, agentInfo, previousBuildAutoTestsCount, previousBuildTestsDuration, summaryTestsToRun,
 }: Props) => {
   const {
-    stats: { duration: currentDuration = 0, parentDuration = 0, total: totalTestsToRun = 0 } = {},
+    stats: {
+      duration: currentDuration = 0, parentDuration = 0, total: totalTestsToRun = 0, completed: completedTestsToRun = 0,
+    } = {},
     statsByType: { AUTO: { total: totalAutoTestsToRun = 0, completed: completedAutoTestsToRun = 0 } = {} } = {},
   } = summaryTestsToRun;
   const [modalIsOpen, setModalIsOpen] = useState(false);
@@ -62,7 +64,7 @@ export const TestsToRunHeader = testsToRunHeader(({
           <div>
             <Title data-test="tests-to-run-header:title">
               Tests to Run
-              <Count>{totalTestsToRun}</Count>
+              <Count>{totalTestsToRun - completedTestsToRun}</Count>
             </Title>
             <SubTitle data-test="tests-to-run-header:subtitle">
               Build:
