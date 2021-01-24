@@ -84,7 +84,7 @@ export const CoverageDetails = coverageDetails(
             onSearch={(searchValue) => dispatch(setSearch([{ value: searchValue, field: 'name', op: 'CONTAINS' }]))}
             searchQuery={searchQuery?.value}
             searchResult={filteredCount}
-            placeholder="Search by packages"
+            placeholder="Search package by name"
           >
             Displaying {coverageByPackages.slice(0, visibleElementsCount).length} of {totalCount} packages
           </CoverageDetailsSearchPanel>
