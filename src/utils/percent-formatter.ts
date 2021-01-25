@@ -14,11 +14,11 @@
  * limitations under the License.
  */
 export const percentFormatter = (value: number): number => {
-  if (Number.isNaN(value) || value === Infinity || !value) {
+  if (Number.isNaN(value) || value === Infinity || !value || Math.sign(value) === -1) {
     return 0;
   }
 
-  if (value < 0.1) {
+  if (value < 0.1 && value > 0) {
     return 0.1;
   }
 

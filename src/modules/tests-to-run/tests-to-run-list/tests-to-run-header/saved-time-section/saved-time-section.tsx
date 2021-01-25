@@ -41,7 +41,7 @@ export const SavedTimeSection = savedTimeSection(
           <Title>{label}</Title>
           <Value verticalAlign="center">
             <Duration>{previousBuildAutoTestsCount ? children : 'n/a'}</Duration>
-            {Boolean(percentage) && <Percentage>{percentage}%</Percentage>}
+            {typeof percentage === 'number' && <Percentage>{percentage}%</Percentage>}
           </Value>
         </Tooltip>
       </Content>
