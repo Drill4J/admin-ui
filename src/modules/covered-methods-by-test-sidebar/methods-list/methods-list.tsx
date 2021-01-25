@@ -82,12 +82,12 @@ export const MethodsList = methodsList(({ className, coveredMethods }: Props) =>
               renderItem={({ index, style }) => (
                 <Method key={`${methods[index].name}${index}`} style={style as Record<symbol, string>}>
                   <MethodInfo>
-                    <Panel>
+                    <div className="d-flex align-items-center w-100">
                       <MethodsListItemIcon>
                         <Icons.Function />
                       </MethodsListItemIcon>
                       <MethodName title={methods[index].name as string}>{methods[index].name}</MethodName>
-                    </Panel>
+                    </div>
                     <CoverageIcon>
                       <CoverageRateIcon coverageRate={methods[index].coverageRate} />
                     </CoverageIcon>

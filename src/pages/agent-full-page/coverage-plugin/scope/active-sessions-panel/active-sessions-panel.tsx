@@ -36,10 +36,10 @@ export const ActiveSessionsPanel = activeSessionsPanel(({ className, children }:
     <div className={className}>
       {testTypes.length > 0 && (
         <Content>
-          <Panel>
+          <div className="d-flex align-items-center w-100">
             <Icon height={16} width={16} />
             <WarningMessage>The following test sessions are still being recorded:</WarningMessage>
-          </Panel>
+          </div>
           <ActiveSessionTypesList>
             {testTypes.map((type) => (
               <ActiveSessionType key={type}>

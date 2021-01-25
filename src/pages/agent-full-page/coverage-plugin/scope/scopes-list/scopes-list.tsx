@@ -89,11 +89,11 @@ export const ScopesList = scopesList(({ className }: Props) => {
                   >
                     <ScopeName title={value}>{value}</ScopeName>
                     {status === AGENT_STATUS.ONLINE && (
-                      <Panel>
+                      <div className="d-flex align-items-center w-100">
                         <ScopeTimer started={started} finished={finished} active={active} size="small" />
                         {active && <ActiveBadge>Active</ActiveBadge>}
                         {!enabled && <IgnoreBadge>Ignored</IgnoreBadge>}
-                      </Panel>
+                      </div>
                     )}
                   </NameCell>
                 )}

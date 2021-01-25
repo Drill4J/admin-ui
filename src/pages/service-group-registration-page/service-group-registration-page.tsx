@@ -58,10 +58,10 @@ export const ServiceGroupRegistrationPage = serviceGroupRegistrationPage(
       <div className={className}>
         <PageHeader
           title={(
-            <Panel>
+            <div className="d-flex align-items-center w-100">
               <HeaderIcon height={20} width={20} />
               Register New Agents
-            </Panel>
+            </div>
           )}
           actions={(
             <Panel align="end">

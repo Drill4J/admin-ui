@@ -54,7 +54,7 @@ export const NameColumn = nameColumn(
 
     return (
       <div className={className}>
-        <Panel>
+        <div className="d-flex align-items-center w-100">
           <AgentTypeIcon disabled={agentIsDisabled}>
             {isServiceGroup ? <Icons.ServiceGroup /> : <AgentIcon />}
           </AgentTypeIcon>
@@ -73,7 +73,7 @@ export const NameColumn = nameColumn(
           >
             {isServiceGroup ? `${name || id} (${agents.length})` : name || id}
           </AgentName>
-        </Panel>
+        </div>
       </div>
     );
   },

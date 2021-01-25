@@ -42,7 +42,7 @@ export const RisksSection = ({ risks: { modified: modifiedMethodsCount = 0, new:
       info={total}
       graph={(
         <Tooltip message={<SectionTooltip data={tooltipData} hideValue />}>
-          <Panel>
+          <div className="d-flex align-items-center w-100">
             <SingleBar
               width={64}
               height={128}
@@ -57,7 +57,7 @@ export const RisksSection = ({ risks: { modified: modifiedMethodsCount = 0, new:
               percent={convertToPercentage(modifiedMethodsCount, total)}
               icon={<Icons.Edit height={16} width={16} viewBox="0 0 16 16" />}
             />
-          </Panel>
+          </div>
         </Tooltip>
       )}
     />

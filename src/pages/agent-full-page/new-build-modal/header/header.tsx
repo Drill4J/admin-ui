@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 import { BEM } from '@redneckz/react-bem-helper';
-import { EllipsisOverflowText, Panel } from '@drill4j/ui-kit';
+import { EllipsisOverflowText } from '@drill4j/ui-kit';
 
 import { ReactComponent as LogoSvg } from './logo.svg';
 
@@ -35,7 +35,7 @@ export const Header = header(
       </LogoWrapper>
       <Content>
         <Title>New Build has Arrived!</Title>
-        <BaselineBuildInfo>
+        <BaselineBuildInfo className="d-flex align-items-center w-100 mt-4">
           Baseline build:&nbsp;
           <BaselineBuild title={baselineBuild}>{baselineBuild}</BaselineBuild>
         </BaselineBuildInfo>
@@ -48,5 +48,5 @@ const LogoWrapper = header.logoWrapper('div');
 const Logo = header.logo(LogoSvg);
 const Content = header.content('div');
 const Title = header.title('div');
-const BaselineBuildInfo = header.baselineBuildInfo(Panel);
+const BaselineBuildInfo = header.baselineBuildInfo('div');
 const BaselineBuild = header.baselineBuild(EllipsisOverflowText);

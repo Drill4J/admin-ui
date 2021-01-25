@@ -43,10 +43,10 @@ export const Notification = notification(({
         <SinceNotificationArrived>{format(createdAt || Date.now())}</SinceNotificationArrived>
       </Panel>
       <BuildVersion unread={!read}>
-        <Panel>
+        <div className="d-flex align-items-center w-100">
           <NotificationStatusIndicator unread={!read} />
           Build {buildVersion} arrived
-        </Panel>
+        </div>
         <ButtonGroup align="end">
           <MarkAsReadButton
             onClick={() => readNotification(id, { onError })}

@@ -32,10 +32,10 @@ export const CoverageSectionTooltip = coverageSectionTooltip((
 ) => (
   <div className={className}>
     <TooltipItem align="space-between">
-      <Panel>
+      <div className="d-flex align-items-center w-100">
         <TooltipItemTotal>total covered: {`${covered}/${total}`}</TooltipItemTotal>
         <TooltipItemTotalValue>{`${percentFormatter((covered / total) * 100)}%`}</TooltipItemTotalValue>
-      </Panel>
+      </div>
     </TooltipItem>
     {Object.keys(testTypes).map((testType) => (
       <TooltipItem align="space-between" key={testType}>

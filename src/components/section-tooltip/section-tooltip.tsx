@@ -32,10 +32,10 @@ export const SectionTooltip = sectionTooltip(({ className, data, hideValue }: Pr
   <div className={className}>
     {Object.keys(data).map((label) => (
       <TooltipItem align="space-between" key={label}>
-        <Panel>
+        <div className="d-flex align-items-center w-100">
           <TooltipItemIcon style={{ backgroundColor: data[label].color }} />
           {`${camelToTitle(label)} (${data[label].count || 0})`}
-        </Panel>
+        </div>
         {!hideValue && (
           <TooltipItemValue>{`${percentFormatter(data[label].value || 0)}%`}</TooltipItemValue>
         )}

@@ -89,10 +89,10 @@ export const SystemSettingsForm = systemSettingsForm(
           }) => (
             <>
               <InfoPanel align="space-between">
-                <Panel>
+                <div className="d-flex align-items-center w-100">
                   <InfoIcon />
                   Information related to your application / project.
-                </Panel>
+                </div>
                 <SaveChangesButton
                   type="primary"
                   size="large"

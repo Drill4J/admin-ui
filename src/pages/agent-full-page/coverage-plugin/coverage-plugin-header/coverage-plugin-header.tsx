@@ -17,7 +17,7 @@ import { useContext, useState } from 'react';
 import { BEM, div } from '@redneckz/react-bem-helper';
 import { NavLink, useHistory, useParams } from 'react-router-dom';
 import {
-  Button, Icons, Tooltip, Panel, EllipsisOverflowText,
+  Button, Icons, Tooltip, EllipsisOverflowText,
 } from '@drill4j/ui-kit';
 
 import { QualityGatePane } from 'modules';
@@ -96,7 +96,7 @@ export const CoveragePluginHeader = coveragePluginHeader(({ className, previousB
       {agentStatus === AGENT_STATUS.ONLINE && (
         <BaselinePanel>
           <div>Current build: </div>
-          <Panel>
+          <div className="d-flex align-items-center w-100">
             <CurrentBuildVersion title={buildVersion}>{buildVersion}</CurrentBuildVersion>
             <Tooltip message={<TooltipMessage>{info}</TooltipMessage>} position="top-center">
               <FlagWrapper
@@ -106,7 +106,7 @@ export const CoveragePluginHeader = coveragePluginHeader(({ className, previousB
                 <Flag />
               </FlagWrapper>
             </Tooltip>
-          </Panel>
+          </div>
           <div>Parent build:</div>
           {previousBuildVersion
             ? (
@@ -116,10 +116,10 @@ export const CoveragePluginHeader = coveragePluginHeader(({ className, previousB
             ) : <span>&ndash;</span>}
         </BaselinePanel>
       )}
-      <Actions>
+      <div className="d-flex justify-content-end align-items-center">
         {activeBuildVersion === buildVersion && agentStatus === AGENT_STATUS.ONLINE && (
           <QualityGateSection>
-            <Panel>
+            <div className="d-flex align-items-center w-100">
               <QualityGateLabel data-test="coverage-plugin-header:quality-gate-label">
                 QUALITY GATE
               </QualityGateLabel>
@@ -135,7 +135,7 @@ export const CoveragePluginHeader = coveragePluginHeader(({ className, previousB
                   <InfoIcon />
                 </Tooltip>
               )}
-            </Panel>
+            </div>
             {!configured ? (
               <StatusWrapper>
                 <Button
@@ -166,7 +166,14 @@ export const CoveragePluginHeader = coveragePluginHeader(({ className, previousB
               {risksCount}
               <LinkIcon width={8} height={8} />
             </Count>
-          ) : <NoRisksCount data-test="action-section:no-risks-count">{risksCount}</NoRisksCount>}
+          ) : (
+            <NoRisksCount
+              className="d-flex align-items-center w-100"
+              data-test="action-section:no-risks-count"
+            >
+              {risksCount}
+            </NoRisksCount>
+          )}
         </ActionSection>
         <ActionSection
           label="tests to run"
@@ -174,6 +181,7 @@ export const CoveragePluginHeader = coveragePluginHeader(({ className, previousB
         >
           {previousBuildTests.length > 0 ? (
             <Count
+              className="d-flex align-items-center w-100"
               onClick={() => push(`/full-page/${agentId}/${buildVersion}/${pluginId}/tests-to-run`)}
               data-test="action-section:count:tests-to-run"
             >
@@ -182,7 +190,7 @@ export const CoveragePluginHeader = coveragePluginHeader(({ className, previousB
             </Count>
           ) : <NoValue data-test="action-section:no-value:tests-to-run">&ndash;</NoValue>}
         </ActionSection>
-      </Actions>
+      </div>
       {isRisksModalOpen && <RisksModal isOpen={isRisksModalOpen} onToggle={setIsRisksModalOpen} />}
       <QualityGatePane
         isOpen={isOpenQualityGatesPane}
@@ -225,12 +233,11 @@ const ParentBuildVersion = coveragePluginHeader.parentBuildVersion(NavLink);
 const FlagWrapper = coveragePluginHeader.flagWrapper(div({ onClick: () => {}, active: false } as { onClick: () => void; active: boolean }));
 const QualityGateLabel = coveragePluginHeader.qualityGateLabel('div');
 const InfoIcon = coveragePluginHeader.infoIcon(Icons.Info);
-const Actions = coveragePluginHeader.actions('div');
 const QualityGateSection = coveragePluginHeader.qualityGateSection('div');
 const StatusWrapper = coveragePluginHeader.statusWrapper('div');
 const StatusTitle = coveragePluginHeader.statusTitle('div');
-const Count = coveragePluginHeader.count(Panel);
-const NoRisksCount = coveragePluginHeader.noRisksCount(Panel);
+const Count = coveragePluginHeader.count('div');
+const NoRisksCount = coveragePluginHeader.noRisksCount('div');
 const LinkIcon = coveragePluginHeader.linkIcon(Icons.Expander);
 const NoValue = coveragePluginHeader.noValue('div');
 const TooltipMessage = coveragePluginHeader.tooltipMessage('div');

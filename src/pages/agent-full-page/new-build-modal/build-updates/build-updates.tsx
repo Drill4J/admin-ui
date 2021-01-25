@@ -34,10 +34,10 @@ export const BuildUpdates = buildUpdates(({ className, buildInfo = {} }: Props) 
     <Content>
       {Object.keys(buildInfo).map((methodType) => (
         <div key={nanoid()}>
-          <Panel>
+          <div className="d-flex align-items-center w-100">
             <IconsWrapper type={methodType}>{getMethodsIcon(methodType)}</IconsWrapper>
             <MethodsType>{methodType}</MethodsType>
-          </Panel>
+          </div>
           <MethodsCount>{buildInfo[methodType]}</MethodsCount>
         </div>
       ))}

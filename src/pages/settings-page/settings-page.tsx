@@ -47,7 +47,7 @@ export const SettingsPage = settingsPage(
       <div className={className}>
         <PageHeader
           title={(
-            <Panel>
+            <div className="d-flex align-items-center w-100">
               <HeaderIcon height={24} width={24} />
               {(type as string) === 'service-group' ? (
                 'Service Group Settings'
@@ -57,7 +57,7 @@ export const SettingsPage = settingsPage(
                   <AgentStatus agent={(data as Agent)} />
                 </>
               )}
-            </Panel>
+            </div>
           )}
           actions={
             (type as string) !== 'service-group' && (

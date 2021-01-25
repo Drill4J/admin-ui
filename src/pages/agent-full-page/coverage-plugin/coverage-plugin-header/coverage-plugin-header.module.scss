@@ -23,11 +23,6 @@
   width: 100%;
   border-bottom: 1px solid map-get($monochrome, medium-tint);
 
-  &__actions {
-    display: flex;
-    align-items: center;
-  }
-
   &__quality-gate-section {
     padding-left: 16px;
     padding-right: 40px;

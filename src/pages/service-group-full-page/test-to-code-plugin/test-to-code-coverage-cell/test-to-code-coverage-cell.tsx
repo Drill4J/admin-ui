@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 import { BEM } from '@redneckz/react-bem-helper';
-import { Panel, Tooltip } from '@drill4j/ui-kit';
+import { Tooltip } from '@drill4j/ui-kit';
 
 import { percentFormatter } from 'utils';
 
@@ -30,13 +30,13 @@ const testToCodeCoverageCell = BEM(styles);
 export const TestToCodeCoverageCell = testToCodeCoverageCell(({ className, value = 0 }: Props) => (
   <div className={className}>
     <Content>
-      <Value data-test="dashboard-coverage-cell:value">
+      <Value className="d-flex align-items-center w-100" data-test="dashboard-coverage-cell:value">
         {value === undefined ? (
           <Tooltip message={(
-            <Panel direction="column">
+            <div className="d-flex flex-column align-items-center w-100">
               <div>Test2Code plugin</div>
               <div>is not installed</div>
-            </Panel>
+            </div>
           )}
           >
             n/a
@@ -48,4 +48,4 @@ export const TestToCodeCoverageCell = testToCodeCoverageCell(({ className, value
 ));
 
 const Content = testToCodeCoverageCell.content('div');
-const Value = testToCodeCoverageCell.value(Panel);
+const Value = testToCodeCoverageCell.value('div');

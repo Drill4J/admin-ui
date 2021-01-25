@@ -71,10 +71,10 @@ export const GeneralSettingsForm = generalSettingsForm(
           }) => (
             <>
               <InfoPanel align="space-between">
-                <Panel>
+                <div className="d-flex align-items-center w-100">
                   <InfoIcon />
                   Basic agent settings.
-                </Panel>
+                </div>
                 <SaveChangesButton
                   type="primary"
                   size="large"

@@ -58,10 +58,10 @@ export const ActionsColumn = actionsColumn(({ className, agent }: Props) => {
             data-test="action-column:icons-register"
             type="primary"
           >
-            <Panel>
+            <div className="d-flex align-items-center w-100">
               <RegisterIcon />
               Register {unregisteredAgentsCount ? `(${unregisteredAgentsCount})` : ''}
-            </Panel>
+            </div>
           </RegisterButton>
         )}
         <SettingsButton

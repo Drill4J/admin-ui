@@ -18,7 +18,7 @@ import { useParams } from 'react-router-dom';
 import { BEM } from '@redneckz/react-bem-helper';
 import { nanoid } from 'nanoid';
 import {
-  Icons, Inputs, Modal, Panel,
+  Icons, Inputs, Modal,
 } from '@drill4j/ui-kit';
 
 import { copyToClipboard } from 'utils';
@@ -73,7 +73,7 @@ export const TestsToRunModal = testsToRunModal(
               These are recommendations for this build updates only.
               Use this Curl in your command line to get JSON:
             </span>
-            <CommandWrapper verticalAlign="end">
+            <CommandWrapper className="d-flex align-items-end w-100">
               <TestsToRunUrl agentId={serviceGroupId} pluginId={pluginId} agentType="ServiceGroup" />
               <CopyIcon onClick={() => copyToClipboard(getTestsToRunURL(serviceGroupId, pluginId, 'ServiceGroup'))} />
             </CommandWrapper>
@@ -116,5 +116,5 @@ const MethodsList = testsToRunModal.methodsList('div');
 const MethodsListItem = testsToRunModal.methodsListItem('div');
 const MethodInfo = testsToRunModal.methodsInfo('div');
 const MethodsListItemIcon = testsToRunModal.methodsListItemIcon('div');
-const CommandWrapper = testsToRunModal.commandWrapper(Panel);
+const CommandWrapper = testsToRunModal.commandWrapper('div');
 const CopyIcon = testsToRunModal.copyIcon(Icons.Copy);

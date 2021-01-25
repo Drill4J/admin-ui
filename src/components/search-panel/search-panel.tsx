@@ -36,7 +36,7 @@ export const SearchPanel = searchPanel(({
   className, onSearch, searchQuery, searchResult, children, placeholder,
 }: Props) => (
   <div className={className}>
-    <Panel>
+    <div className="d-flex align-items-center w-100">
       <Form
         onSubmit={({ search = '' }) => onSearch(search)}
         render={({ handleSubmit, form }) => (
@@ -58,7 +58,7 @@ export const SearchPanel = searchPanel(({
           {children}
         </span>
       </SearchResult>
-    </Panel>
+    </div>
   </div>
 ));
 

@@ -15,7 +15,7 @@
  */
 import { BEM, div } from '@redneckz/react-bem-helper';
 import { useHistory, matchPath } from 'react-router-dom';
-import { Panel, Spinner, Icons } from '@drill4j/ui-kit';
+import { Spinner, Icons } from '@drill4j/ui-kit';
 
 import { AGENT_STATUS } from 'common/constants';
 import { capitalize } from 'utils';
@@ -46,18 +46,22 @@ export const PluginHeader = pluginHeader(({ className, agentName, agentStatus }:
   return (
     <div className={className}>
       <Content>
-        <Panel>
+        <div className="d-flex align-items-center w-100">
           <LogoWrapper recording={buildVersion === activeBuildVersion && loading}>
             <Logo />
           </LogoWrapper>
           <AgentInfo>
             <AgentName>{agentName}</AgentName>
-            <Panel>
+            <div className="d-flex align-items-center w-100">
               <AgentStatusWrapper status={agentStatus}>{capitalize(agentStatus)}</AgentStatusWrapper>
-              <SpinnerWrapper>{agentStatus === AGENT_STATUS.BUSY && <Spinner />}</SpinnerWrapper>
-            </Panel>
+              <div
+                className="d-flex align-items-center w-100 ml-2"
+              >
+                {agentStatus === AGENT_STATUS.BUSY && <Spinner />}
+              </div>
+            </div>
           </AgentInfo>
-        </Panel>
+        </div>
         <SettingsButton
           onClick={() => push(`/agents/agent/${agentId}/settings`)}
           disabled={agentStatus === AGENT_STATUS.OFFLINE}
@@ -74,6 +78,5 @@ const Logo = pluginHeader.logo(LogoSvg);
 const AgentInfo = pluginHeader.agentInfo('div');
 const AgentName = pluginHeader.agentName('div');
 const AgentStatusWrapper = pluginHeader.agentStatusWrapper(div({} as { status?: AgentStatus }));
-const SpinnerWrapper = pluginHeader.spinnerWrapper(Panel);
 const SettingsButton: React.FC<ComponentPropsType<typeof Icons.Settings> & { disabled?: boolean }>
   = pluginHeader.settingsButton(Icons.Settings);

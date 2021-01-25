@@ -113,10 +113,10 @@ export const ScopeInfo = scopeInfo(
             <Header>
               <ScopeName data-test="scope-info:scope-name" title={name}>{name}</ScopeName>
               {status === AGENT_STATUS.ONLINE && (
-                <Panel>
+                <div className="d-flex align-items-center w-100">
                   {active && <ScopeSessionIndicator active={loading} />}
                   <ScopeStatus active={active} loading={loading} enabled={enabled} started={started} finished={finished} />
-                </Panel>
+                </div>
               )}
               <Panel align="end">
                 {active && status === AGENT_STATUS.ONLINE && (

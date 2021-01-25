@@ -58,7 +58,7 @@ export const TestsSection = ({ scopeCount = 0, testsType = [] }: Props) => {
       additionalInfo={`${scopeCount} scopes`}
       graph={(
         <Tooltip message={<SectionTooltip data={tooltipData} />}>
-          <Panel>
+          <div className="d-flex align-items-center w-100">
             {Object.keys(TESTS_TYPES_COLOR).map((testType) => (
               <SingleBar
                 key={testType}
@@ -69,7 +69,7 @@ export const TestsSection = ({ scopeCount = 0, testsType = [] }: Props) => {
                 icon={capitalize(testType)}
               />
             ))}
-          </Panel>
+          </div>
         </Tooltip>
       )}
     />

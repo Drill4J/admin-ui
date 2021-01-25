@@ -15,7 +15,7 @@
  */
 import { BEM, div } from '@redneckz/react-bem-helper';
 import {
-  Badge, Icons, Inputs, Panel,
+  Badge, Icons, Inputs,
 } from '@drill4j/ui-kit';
 
 import { Plugin as PluginType } from 'types/plugin';
@@ -41,7 +41,7 @@ export const SelectableList = selectableList(
         id = '', available, description, version, name,
       }) => (
         <Element key={id} selected={selectedRows.includes(id)}>
-          <Plugin verticalAlign="center">
+          <Plugin className="d-flex align-items-center g-4 p-4 w-100">
             {available && (
               <Inputs.Checkbox
                 onChange={() => {
@@ -55,16 +55,16 @@ export const SelectableList = selectableList(
             <PluginsIcon selected={selectedRows.includes(id)}>
               <Icons.Test2Code />
             </PluginsIcon>
-            <Panel direction="column" verticalAlign="start">
-              <Panel>
+            <div className="d-flex flex-column align-items-start">
+              <div className="d-flex align-items-center w-100">
                 <PluginName>{name}</PluginName>
                 {!available && <PluginRelation color="gray">Installed</PluginRelation>}
                 {version && <PluginVersion>{version}</PluginVersion>}
-              </Panel>
+              </div>
               <PluginDescription title={description}>
                 {description}
               </PluginDescription>
-            </Panel>
+            </div>
           </Plugin>
         </Element>
       ))}
@@ -74,7 +74,7 @@ export const SelectableList = selectableList(
 
 const Element = selectableList.element(div({} as { selected?: boolean }));
 const PluginRelation = selectableList.pluginRelation(Badge);
-const Plugin = selectableList.plugin(Panel);
+const Plugin = selectableList.plugin('div');
 const PluginsIcon = selectableList.pluginsIcon(div({} as { selected?: boolean }));
 const PluginName = selectableList.pluginName('div');
 const PluginVersion = selectableList.pluginVersion('div');
