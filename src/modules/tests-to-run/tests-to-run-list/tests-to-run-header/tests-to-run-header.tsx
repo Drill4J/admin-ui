@@ -55,7 +55,7 @@ export const TestsToRunHeader = testsToRunHeader(({
   } = agentInfo;
   const totalDuration = getDuration(previousBuildTestsDuration);
   const estimatedTimeSaved = getDuration(previousBuildTestsDuration - parentDuration);
-  const totalTimeSaved = getDuration(previousBuildTestsDuration - currentDuration);
+  const totalTimeSaved = getDuration((previousBuildTestsDuration - currentDuration) > 0 ? previousBuildTestsDuration - currentDuration : 0);
 
   return (
     <>

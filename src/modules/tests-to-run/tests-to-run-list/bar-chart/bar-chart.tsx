@@ -94,7 +94,9 @@ export const BarChart = barChart(({
             const MIN_DURATION_HEIGHT_PX = completed ? 4 : 0; // min height in px required by UX design
 
             const msPerPx = CHART_HEIGHT_PX / (yScale.stepSizeMs * yScale.stepsCount);
-            const durationHeight = Math.max(msPerPx * duration - BORDER_PX, MIN_DURATION_HEIGHT_PX);
+            const durationHeight = duration < totalDuration
+              ? Math.max(msPerPx * duration - BORDER_PX, MIN_DURATION_HEIGHT_PX)
+              : msPerPx * totalDuration - BORDER_PX;
 
             const savedTimeMs = totalDuration - duration;
             const savedTimeHeight = msPerPx * savedTimeMs - (durationHeight > 4 ? 0 : MIN_DURATION_HEIGHT_PX);
@@ -131,11 +133,24 @@ export const BarChart = barChart(({
                   />
                 </Tooltip>
                 {buildVersion !== activeBuildVersion ? (
-                  <Tooltip message={`Auto Tests duration with Drill4J: ${hours}:${minutes}:${seconds}`}>
+                  <Tooltip message={(
+                    <div className="text-center">
+                      {duration > totalDuration && <div>No time was saved in this build.</div>}
+                      <div>Auto Tests duration with Drill4J: {hours}:{minutes}:{seconds}</div>
+                    </div>
+                  )}
+                  >
                     <Bar type="duration" style={{ height: `${durationHeight}px` }} />
                   </Tooltip>
                 ) : (
-                  <Tooltip message={`Auto Tests current duration with Drill4J: ${hours}:${minutes}:${seconds}`}>
+                  <Tooltip
+                    message={(
+                      <div className="text-center">
+                        {duration > totalDuration && <div>No time was saved in this build.</div>}
+                        <div>Auto Tests current duration with Drill4J: {hours}:{minutes}:{seconds}</div>
+                      </div>
+                    )}
+                  >
                     <Bar type="active" style={{ height: `${durationHeight}px` }} />
                   </Tooltip>
                 )}
