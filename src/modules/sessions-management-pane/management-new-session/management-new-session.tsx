@@ -68,7 +68,7 @@ export const ManagementNewSession = managementNewSession(({ className, agentId, 
         name="isGlobal"
         type="checkbox"
         render={({ input, meta }) => (
-          <GlobalSessionCheckbox>
+          <div className="d-flex align-items-center g-2">
             <Fields.Checkbox
               input={input}
               meta={meta}
@@ -76,15 +76,15 @@ export const ManagementNewSession = managementNewSession(({ className, agentId, 
             />
             <Tooltip
               message={(
-                <Panel direction="column" align="center">
+                <div className="d-flex flex-column justify-content-center align-items-center w-100">
                   <div>Session that tracks all of the executions on your JVM</div>
                   <div>(e.g. background tasks)</div>
-                </Panel>
+                </div>
               )}
             >
               <IconInfo />
             </Tooltip>
-          </GlobalSessionCheckbox>
+          </div>
         )}
       />
       <Field
@@ -99,5 +99,4 @@ export const ManagementNewSession = managementNewSession(({ className, agentId, 
 
 const SettingsLink = managementNewSession.settingsLink(NavLink);
 const NewSessionForm = managementNewSession.newSessionForm('div');
-const GlobalSessionCheckbox = managementNewSession.globalSessionCheckbox(Panel);
 const IconInfo = managementNewSession.iconInfo(Icons.Info);

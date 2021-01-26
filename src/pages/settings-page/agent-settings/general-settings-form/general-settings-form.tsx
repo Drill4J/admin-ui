@@ -17,9 +17,7 @@ import { useContext } from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 import { Form, Field } from 'react-final-form';
 import axios from 'axios';
-import {
-  Panel, Icons, FormGroup, Button,
-} from '@drill4j/ui-kit';
+import { Icons, FormGroup, Button } from '@drill4j/ui-kit';
 
 import {
   Fields, composeValidators, required, sizeLimit,
@@ -70,7 +68,7 @@ export const GeneralSettingsForm = generalSettingsForm(
             invalid: boolean;
           }) => (
             <>
-              <InfoPanel align="space-between">
+              <InfoPanel className="d-flex justify-content-between align-items-center w-100 px-6">
                 <div className="d-flex align-items-center w-100">
                   <InfoIcon />
                   Basic agent settings.
@@ -127,7 +125,7 @@ export const GeneralSettingsForm = generalSettingsForm(
   },
 );
 
-const InfoPanel = generalSettingsForm.infoPanel(Panel);
+const InfoPanel = generalSettingsForm.infoPanel('div');
 const InfoIcon = generalSettingsForm.infoIcon(Icons.Info);
 const SaveChangesButton = generalSettingsForm.saveChangesButton(Button);
 const Content = generalSettingsForm.content('div');

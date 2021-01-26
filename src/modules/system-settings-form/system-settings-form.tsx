@@ -16,7 +16,7 @@
 import { useContext, useState } from 'react';
 import { BEM, div } from '@redneckz/react-bem-helper';
 import {
-  Panel, Icons, Tooltip, Button, FormGroup,
+  Icons, Tooltip, Button, FormGroup,
 } from '@drill4j/ui-kit';
 import { Field, Form } from 'react-final-form';
 import axios from 'axios';
@@ -88,7 +88,7 @@ export const SystemSettingsForm = systemSettingsForm(
             invalid: boolean;
           }) => (
             <>
-              <InfoPanel align="space-between">
+              <InfoPanel className="d-flex justify-content-between align-items-center px-6">
                 <div className="d-flex align-items-center w-100">
                   <InfoIcon />
                   Information related to your application / project.
@@ -104,7 +104,7 @@ export const SystemSettingsForm = systemSettingsForm(
                 </SaveChangesButton>
               </InfoPanel>
               <Content>
-                <FieldName>
+                <FieldName className="d-flex align-items-center w-100 mb-2">
                   Project Package(s)
                   <BlockerStatus
                     unlocked={unlocked}
@@ -117,7 +117,7 @@ export const SystemSettingsForm = systemSettingsForm(
                     ) : (
                       <Tooltip
                         message={(
-                          <SecuredMessage direction="column">
+                          <SecuredMessage className="d-flex flex-column align-items-center w-100">
                             <span>Secured from editing.</span>
                             <span> Click to unlock.</span>
                           </SecuredMessage>
@@ -128,7 +128,7 @@ export const SystemSettingsForm = systemSettingsForm(
                     )}
                   </BlockerStatus>
                 </FieldName>
-                <Panel verticalAlign="start">
+                <div className="d-flex align-items-start w-100 mb-4">
                   <PackagesTextarea>
                     <Field
                       name="packages"
@@ -145,7 +145,7 @@ export const SystemSettingsForm = systemSettingsForm(
                       Use new line as a separator, &quot;!&quot; before package/class for excluding and use &quot;/&quot; in a package path.
                     </Instruction>
                   )}
-                </Panel>
+                </div>
                 <HeaderMapping label="Header Mapping" optional>
                   <Field
                     name="sessionIdHeaderName"
@@ -176,15 +176,15 @@ export const SystemSettingsForm = systemSettingsForm(
   },
 );
 
-const InfoPanel = systemSettingsForm.infoPanel(Panel);
+const InfoPanel = systemSettingsForm.infoPanel('div');
 const InfoIcon = systemSettingsForm.infoIcon(Icons.Info);
 const SaveChangesButton = systemSettingsForm.saveChangesButton(Button);
 const Content = systemSettingsForm.content('div');
-const FieldName = systemSettingsForm.fieldName(Panel);
+const FieldName = systemSettingsForm.fieldName('div');
 const BlockerStatus = systemSettingsForm.blockerStatus(
   div({ onClick: () => {} } as { unlocked: boolean; onClick: () => void }),
 );
-const SecuredMessage = systemSettingsForm.securedMessage(Panel);
+const SecuredMessage = systemSettingsForm.securedMessage('div');
 const PackagesTextarea = systemSettingsForm.packagesTextarea('div');
 const Instruction = systemSettingsForm.instructions('div');
 const ProjectPackages = systemSettingsForm.projectPackages(Fields.Textarea);

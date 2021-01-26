@@ -15,9 +15,7 @@
  */
 import { BEM } from '@redneckz/react-bem-helper';
 import { useParams } from 'react-router-dom';
-import {
-  Button, Popup, Panel, Icons,
-} from '@drill4j/ui-kit';
+import { Button, Popup, Icons } from '@drill4j/ui-kit';
 
 import { copyToClipboard } from 'utils';
 import { TestsToRunUrl } from '../../../tests-to-run-url';
@@ -49,7 +47,7 @@ export const GetSuggestedTestsModal = getSuggestedTestsModal(({
         <Message data-test="get-suggested-tests-modal:message">
           <span>These are recommendations for this build updates only.</span>
           <span>Use this Curl in your command line to get JSON:</span>
-          <CommandWrapper verticalAlign="end">
+          <CommandWrapper className="d-flex align-items-end w-100 my-6">
             <TestsToRunUrl agentId={agentId} pluginId={pluginId} agentType={agentType} />
             <CopyIcon onClick={() => copyToClipboard(getTestsToRunURL(agentId, pluginId, agentType))} />
           </CommandWrapper>
@@ -68,6 +66,6 @@ export const GetSuggestedTestsModal = getSuggestedTestsModal(({
 });
 
 const Message = getSuggestedTestsModal.message('div');
-const CommandWrapper = getSuggestedTestsModal.commandWrapper(Panel);
+const CommandWrapper = getSuggestedTestsModal.commandWrapper('div');
 const CopyIcon = getSuggestedTestsModal.copyIcon(Icons.Copy);
 const CloseButton = getSuggestedTestsModal.closeButton(Button);

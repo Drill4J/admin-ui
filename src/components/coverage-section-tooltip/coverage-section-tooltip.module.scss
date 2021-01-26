@@ -21,10 +21,6 @@
   font-family: $semibold-font;
   font-size: 12px;
 
-  &__tooltip-item {
-    display: flex;
-  }
-
   &__tooltip-item-value,
   &__tooltip-item-total-value {
     margin-left: 24px;

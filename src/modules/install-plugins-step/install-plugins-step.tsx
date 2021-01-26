@@ -15,7 +15,7 @@
  */
 import { BEM } from '@redneckz/react-bem-helper';
 import { Field } from 'react-final-form';
-import { Panel, Icons } from '@drill4j/ui-kit';
+import { Icons } from '@drill4j/ui-kit';
 
 import { PluginListEntry } from 'components';
 import { Plugin } from 'types/plugin';
@@ -62,7 +62,7 @@ export const InstallPluginsStep = installPluginsStep(
                   },
                 })}
               >
-                <PluginInfo>
+                <PluginInfo className="d-flex align-items-center w-100 mb-3">
                   <PluginName>{name}&nbsp;</PluginName>
                   {version && <PluginVersion>({version})</PluginVersion>}
                 </PluginInfo>
@@ -77,6 +77,6 @@ export const InstallPluginsStep = installPluginsStep(
 
 const SelectedPluginsInfo = installPluginsStep.selectedPluginsInfo('div');
 const PluginsList = installPluginsStep.pluginsList('div');
-const PluginInfo = installPluginsStep.pluginInfo(Panel);
+const PluginInfo = installPluginsStep.pluginInfo('div');
 const PluginName = installPluginsStep.pluginName('div');
 const PluginVersion = installPluginsStep.pluginVersion('div');

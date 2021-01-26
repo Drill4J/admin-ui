@@ -18,7 +18,6 @@
 .service-group-system-settings-form {
   &__info-panel {
     height: 48px;
-    padding: 0 24px;
     background-color: map-get($monochrome, light-tint);
     color: map-get($monochrome, default);
     font-size: 14px;
@@ -39,7 +38,6 @@
   }
 
   &__field-name {
-    margin-bottom: 8px;
     color: map-get($monochrome, black);
     font-family: $semibold-font;
     font-size: 14px;

@@ -18,7 +18,7 @@ import { BEM } from '@redneckz/react-bem-helper';
 import { Form, Field } from 'react-final-form';
 import { useParams } from 'react-router-dom';
 import {
-  Panel, Button, FormGroup, Popup, GeneralAlerts,
+  Button, FormGroup, Popup, GeneralAlerts,
 } from '@drill4j/ui-kit';
 
 import {
@@ -64,7 +64,7 @@ export const RenameScopeModal = renameScopeModal(
       <Popup
         isOpen={isOpen}
         onToggle={onToggle}
-        header={<Header>Rename Scope</Header>}
+        header={<div className="fs-20">Rename Scope</div>}
         type="info"
         closeOnFadeClick
       >
@@ -85,19 +85,19 @@ export const RenameScopeModal = renameScopeModal(
             validate={validateScope}
             initialValues={scope || {}}
             render={({ handleSubmit }) => (
-              <Content>
+              <div className="m-6">
                 <FormGroup label="Scope Name">
                   <Field name="name" component={Fields.Input} placeholder="Enter scope name" />
                 </FormGroup>
-                <ActionsPanel>
+                <div className="d-flex align-items-center g-4 w-100 mt-6">
                   <Button type="primary" size="large" onClick={handleSubmit}>
                     Save
                   </Button>
                   <Button type="secondary" size="large" onClick={() => onToggle(false)}>
                     Cancel
                   </Button>
-                </ActionsPanel>
-              </Content>
+                </div>
+              </div>
             )}
           />
         </div>
@@ -105,7 +105,3 @@ export const RenameScopeModal = renameScopeModal(
     );
   },
 );
-
-const Content = renameScopeModal.content('div');
-const ActionsPanel = renameScopeModal.actionsPanel(Panel);
-const Header = renameScopeModal.header('div');

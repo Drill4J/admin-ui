@@ -17,7 +17,7 @@ import { useContext, useState } from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 import { useHistory, useParams } from 'react-router-dom';
 import {
-  Panel, Button, Popup, OverflowText, GeneralAlerts,
+  Button, Popup, OverflowText, GeneralAlerts,
 } from '@drill4j/ui-kit';
 
 import { NotificationManagerContext } from 'notification-manager';
@@ -73,7 +73,7 @@ export const DeleteScopeModal = deleteScopeModal(
               }. Are you sure you want to proceed? All scope
               data will be lost.`}
             </Message>
-            <ActionsPanel>
+            <div className="d-flex align-items-center w-100 mt-6">
               <DeleteScopeButton
                 type="primary"
                 onClick={async () => {
@@ -99,7 +99,7 @@ export const DeleteScopeModal = deleteScopeModal(
               >
                 Cancel
               </Button>
-            </ActionsPanel>
+            </div>
           </Content>
         </div>
       </Popup>
@@ -110,5 +110,4 @@ export const DeleteScopeModal = deleteScopeModal(
 const Header = deleteScopeModal.header(OverflowText);
 const Content = deleteScopeModal.content('div');
 const Message = deleteScopeModal.message('div');
-const ActionsPanel = deleteScopeModal.actionsPanel(Panel);
 const DeleteScopeButton = deleteScopeModal.deleteScopeButton(Button);

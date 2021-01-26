@@ -15,7 +15,7 @@
  */
 import { BEM } from '@redneckz/react-bem-helper';
 import { useHistory } from 'react-router-dom';
-import { Panel, Icons, Button } from '@drill4j/ui-kit';
+import { Icons, Button } from '@drill4j/ui-kit';
 
 import { AGENT_STATUS } from 'common/constants';
 import { CommonEntity } from 'types/common-entity';
@@ -49,7 +49,7 @@ export const ActionsColumn = actionsColumn(({ className, agent }: Props) => {
 
   return (
     <div className={className}>
-      <Content align="end">
+      <Content className="d-flex justify-content-end align-items-center w-100">
         {(status === AGENT_STATUS.NOT_REGISTERED || unregisteredAgentsCount > 0) && (
           <RegisterButton
             onClick={() => push(`/${
@@ -80,7 +80,7 @@ export const ActionsColumn = actionsColumn(({ className, agent }: Props) => {
   );
 });
 
-const Content = actionsColumn.content(Panel);
+const Content = actionsColumn.content('div');
 const RegisterButton = actionsColumn.registerButton(Button);
 const SettingsButton: React.FC<ComponentPropsType<typeof Icons.Settings> & { disabled?: boolean}> =
   actionsColumn.settingsButton(Icons.Settings);

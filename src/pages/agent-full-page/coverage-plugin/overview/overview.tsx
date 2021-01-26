@@ -15,7 +15,7 @@
  */
 import { useState } from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
-import { Icons, Panel } from '@drill4j/ui-kit';
+import { Icons } from '@drill4j/ui-kit';
 
 import { TabsPanel, Tab } from 'components';
 import { useActiveScope, useAgent, useBuildVersion } from 'hooks';
@@ -70,7 +70,7 @@ export const Overview = overview(({ className }: Props) => {
         </TabsPanel>
       </RoutingTabsPanel>
       <InfoPanel>
-        <SummaryPanel direction="column" verticalAlign="stretch">
+        <SummaryPanel className="d-flex flex-column align-items-stretch w-100">
           {selectedTab === 'methods'
             ? (
               <BuildProjectMethods
@@ -102,7 +102,7 @@ export const Overview = overview(({ className }: Props) => {
 });
 
 const InfoPanel = overview.infoPanel('div');
-const SummaryPanel = overview.summaryPanel(Panel);
+const SummaryPanel = overview.summaryPanel('div');
 const RoutingTabsPanel = overview.routingTabsPanel('div');
 const TabContent = overview.tabContent('div');
 const TabIconWrapper = overview.tabIconWrapper('div');

@@ -18,7 +18,7 @@ import { BEM } from '@redneckz/react-bem-helper';
 import { useHistory } from 'react-router-dom';
 import axios from 'axios';
 import {
-  Inputs, Button, GeneralAlerts, Panel,
+  Inputs, Button, GeneralAlerts,
 } from '@drill4j/ui-kit';
 
 import { LoginLayout } from 'layouts';
@@ -55,7 +55,7 @@ export const LoginPage = loginPage(({ className }: Props) => {
   return (
     <LoginLayout>
       <div className={className}>
-        <Content align="center" direction="column">
+        <Content className="d-flex flex-column justify-content-center align-items-center w-100 h-100">
           <Title>Welcome to Drill4J</Title>
           <SubTitle>Click &quot;Continue as a guest&quot; to entry Admin Panel with admin privilege</SubTitle>
           {error && <Error type="ERROR">{`${error}`}</Error>}
@@ -77,7 +77,7 @@ export const LoginPage = loginPage(({ className }: Props) => {
   );
 });
 
-const Content = loginPage.content(Panel);
+const Content = loginPage.content('div');
 const Title = loginPage.title('div');
 const SubTitle = loginPage.subTitle('div');
 const Error = loginPage.error(GeneralAlerts);

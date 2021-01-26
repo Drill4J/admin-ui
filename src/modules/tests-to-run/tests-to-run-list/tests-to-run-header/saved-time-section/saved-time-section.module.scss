@@ -31,8 +31,6 @@
   }
 
   &__value {
-    gap: 8px;
-    margin-top: 8px;
     font-size: 20px;
     line-height: 20px;
     color: map-get($monochrome, black);
@@ -40,10 +38,6 @@
 
   &__duration {
     font-family: $regular-font;
-  }
-
-  &__message {
-    text-align: center;
   }
 
   &__percentage {

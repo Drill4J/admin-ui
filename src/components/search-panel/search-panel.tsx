@@ -14,7 +14,6 @@
  * limitations under the License.
  */
 import { BEM } from '@redneckz/react-bem-helper';
-import { Panel } from '@drill4j/ui-kit';
 import { Form, Field } from 'react-final-form';
 
 import { Fields } from 'forms';
@@ -40,7 +39,7 @@ export const SearchPanel = searchPanel(({
       <Form
         onSubmit={({ search = '' }) => onSearch(search)}
         render={({ handleSubmit, form }) => (
-          <SearchField>
+          <div className="py-2 h-40px">
             <form onSubmit={handleSubmit}>
               <Field
                 name="search"
@@ -49,10 +48,12 @@ export const SearchPanel = searchPanel(({
                 reset={() => { form.reset(); handleSubmit(); }}
               />
             </form>
-          </SearchField>
+          </div>
         )}
       />
-      <SearchResult align={searchQuery ? 'space-between' : 'end'}>
+      <SearchResult
+        className={`d-flex align-items-center w-100 ml-4 ${searchQuery ? 'justify-content-between' : 'justify-content-end'}`}
+      >
         {searchQuery && <span data-test="search-panel:search-result">{searchResult} result{searchResult > 1 ? 's' : ''}</span>}
         <span data-test="search-panel:displaying-results-count">
           {children}
@@ -62,5 +63,4 @@ export const SearchPanel = searchPanel(({
   </div>
 ));
 
-const SearchField = searchPanel.searchField('div');
-const SearchResult = searchPanel.searchResult(Panel);
+const SearchResult = searchPanel.searchResult('div');

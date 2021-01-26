@@ -14,9 +14,7 @@
  * limitations under the License.
  */
 import { BEM, capitalize } from '@redneckz/react-bem-helper';
-import {
-  Panel, Modal, OverflowText,
-} from '@drill4j/ui-kit';
+import { Modal, OverflowText } from '@drill4j/ui-kit';
 
 import { MethodCoveredByTest } from 'types/method-covered-by-test';
 import { useBuildVersion } from 'hooks';

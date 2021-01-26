@@ -17,18 +17,4 @@
 
 .rename-scope-modal {
   width: 480px;
-
-  &__header {
-    font-size: 20px;
-  }
-
-  &__content {
-    margin: 24px;
-  }
-
-  &__actions-panel {
-    display: flex;
-    gap: 16px;
-    margin-top: 44px;
-  }
 }
