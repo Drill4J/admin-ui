@@ -13,7 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { useContext, useState } from 'react';
+import {
+  useContext, useEffect, useRef, useState,
+} from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 import { useParams, useHistory } from 'react-router-dom';
 import axios from 'axios';
@@ -51,6 +53,11 @@ export const AgentRegistrationPage = agentRegistrationPage(
     const { buildVersion = '', plugins = [], ...agent } = useAgent(agentId) || {};
     const [isCancelModalOpened, setIsCancelModalOpened] = useState(false);
     const { showMessage } = useContext(NotificationManagerContext);
+
+    const isMounted = useRef(true);
+    useEffect(() => () => {
+      isMounted.current = false;
+    }, []);
     return (
       <div className={className}>
         <PageHeader
@@ -73,12 +80,14 @@ export const AgentRegistrationPage = agentRegistrationPage(
           onSubmit={async (data: Agent) => {
             if (agentId) {
               await registerAgent(data);
+              if (isMounted.current) {
+                push(`/full-page/${agentId}/${buildVersion}/dashboard`);
+              }
               showMessage({ type: 'SUCCESS', text: 'Agent has been registered' });
-              push(`/full-page/${agentId}/${buildVersion}/dashboard`);
             } else {
               await preregisterOfflineAgent(data);
-              showMessage({ type: 'SUCCESS', text: 'Offline agent has been preregistered' });
               push('/agents');
+              showMessage({ type: 'SUCCESS', text: 'Offline agent has been preregistered' });
             }
           }}
         >

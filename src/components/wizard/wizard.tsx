@@ -24,6 +24,8 @@ import {
 
 import { Agent } from 'types/agent';
 
+import { useWsConnection } from 'hooks';
+import { defaultAdminSocket } from 'common/connection';
 import {
   wizardReducer, previousStep, nextStep, state,
 } from './wizard-reducer';
@@ -56,11 +58,12 @@ export const Wizard = wizard(({
   const [errorMessage, setErrorMessage] = useState('');
   const steps = Children.toArray(children);
   const { name, validate, component: StepComponent } = (steps[currentStepIndex] as Component<StepProps>).props;
-
+  const availablePlugins = useWsConnection<Plugin[]>(defaultAdminSocket, '/plugins') || [];
   return (
     <div className={className}>
       <Form
-        initialValues={initialValues}
+        initialValues={{ ...initialValues, availablePlugins }}
+        keepDirtyOnReinitialize
         onSubmit={async (values) => {
           try {
             await onSubmit(values, setErrorMessage);
