@@ -13,7 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { useContext, useState } from 'react';
+import {
+  useContext, useEffect, useRef, useState,
+} from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 import { useParams, useHistory, useLocation } from 'react-router-dom';
 import axios from 'axios';
@@ -47,6 +49,10 @@ export const ServiceGroupRegistrationPage = serviceGroupRegistrationPage(
     const { showMessage } = useContext(NotificationManagerContext);
     const serviceGroup = useWsConnection<Agent>(defaultAdminSocket, `/service-groups/${serviceGroupId}`) || {};
     const { unregisteredAgentsCount } = queryString.parse(search);
+    const isMounted = useRef(true);
+    useEffect(() => () => {
+      isMounted.current = false;
+    }, []);
 
     return (
       <div className={className}>
@@ -69,8 +75,10 @@ export const ServiceGroupRegistrationPage = serviceGroupRegistrationPage(
           initialValues={serviceGroup}
           onSubmit={async (data: Agent) => {
             await registerServiceGroup(data);
+            if (isMounted.current) {
+              push(`/service-group-full-page/${serviceGroupId}/service-group-dashboard`);
+            }
             showMessage({ type: 'SUCCESS', text: 'Multiple agents registration has been finished.' });
-            push(`/service-group-full-page/${serviceGroupId}/service-group-dashboard`);
           }}
         >
           <Step
