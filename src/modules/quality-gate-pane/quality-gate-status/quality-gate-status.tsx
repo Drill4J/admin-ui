@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 import { BEM } from '@redneckz/react-bem-helper';
-import { Panel, Icons } from '@drill4j/ui-kit';
+import { Icons } from '@drill4j/ui-kit';
 
 import { copyToClipboard, percentFormatter } from 'utils';
 import { QualityGateSettings } from 'types/quality-gate-type';
@@ -89,7 +89,7 @@ export const QualityGateStatus = qualityGateStatus(
           This is quality gate configuration for this build.
           Use this Curl in your command line to get JSON:
         </span>
-        <CommandWrapper verticalAlign="end">
+        <CommandWrapper className="d-flex align-items-end">
           <QualityGateConfigurationUrl agentId={agentId} pluginId={pluginId} />
           <CopyIcon
             data-test="quality-gate-status:copy-icon"
@@ -105,5 +105,5 @@ const Conditions = qualityGateStatus.conditions('div');
 const CondtionStatus = qualityGateStatus.condtionStatus('div');
 const Value = qualityGateStatus.value('span');
 const InfoPanel = qualityGateStatus.infoPanel('div');
-const CommandWrapper = qualityGateStatus.commandWrapper(Panel);
+const CommandWrapper = qualityGateStatus.commandWrapper('div');
 const CopyIcon = qualityGateStatus.copyIcon(Icons.Copy);

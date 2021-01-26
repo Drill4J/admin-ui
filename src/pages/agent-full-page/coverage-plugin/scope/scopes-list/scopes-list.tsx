@@ -17,7 +17,7 @@ import { useContext } from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 import { useParams, useHistory } from 'react-router-dom';
 import {
-  Panel, Menu, Icons, Table, Column, Status,
+  Menu, Icons, Table, Column, Status,
 } from '@drill4j/ui-kit';
 
 import {
@@ -68,7 +68,7 @@ export const ScopesList = scopesList(({ className }: Props) => {
   return (
     <div className={className}>
       <Content>
-        <Title>
+        <Title className="d-flex align-items-center w-100">
           All Scopes
           <ScopesCount>{scopesData.length}</ScopesCount>
         </Title>
@@ -89,11 +89,11 @@ export const ScopesList = scopesList(({ className }: Props) => {
                   >
                     <ScopeName title={value}>{value}</ScopeName>
                     {status === AGENT_STATUS.ONLINE && (
-                      <Panel>
+                      <div className="d-flex align-items-center w-100">
                         <ScopeTimer started={started} finished={finished} active={active} size="small" />
                         {active && <ActiveBadge>Active</ActiveBadge>}
                         {!enabled && <IgnoreBadge>Ignored</IgnoreBadge>}
-                      </Panel>
+                      </div>
                     )}
                   </NameCell>
                 )}
@@ -236,7 +236,7 @@ export const ScopesList = scopesList(({ className }: Props) => {
 });
 
 const Content = scopesList.content('div');
-const Title = scopesList.title(Panel);
+const Title = scopesList.title('div');
 const ScopesCount = scopesList.scopesCount('span');
 const TestTypeCoverage = scopesList.testTypeCoverage('div');
 const TestTypeTestCount = scopesList.testTypeTestCount('div');

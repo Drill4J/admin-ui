@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { Panel, Tooltip } from '@drill4j/ui-kit';
+import { Tooltip } from '@drill4j/ui-kit';
 
 import { SingleBar, DashboardSection, SectionTooltip } from 'components';
 import { TESTS_TYPES_COLOR } from 'common/constants';
@@ -47,7 +47,7 @@ export const TestsSection = () => {
       additionalInfo={`${finishedScopesCount} scopes`}
       graph={(
         <Tooltip message={<SectionTooltip data={tooltipData} />}>
-          <Panel>
+          <div className="d-flex align-items-center w-100">
             {Object.keys(TESTS_TYPES_COLOR).map((testType) => (
               <SingleBar
                 key={testType}
@@ -58,7 +58,7 @@ export const TestsSection = () => {
                 icon={capitalize(testType)}
               />
             ))}
-          </Panel>
+          </div>
         </Tooltip>
       )}
     />

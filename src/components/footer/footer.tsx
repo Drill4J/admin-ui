@@ -15,7 +15,6 @@
  */
 import { BEM, tag } from '@redneckz/react-bem-helper';
 import { nanoid } from 'nanoid';
-import { Panel } from '@drill4j/ui-kit';
 
 import { useWsConnection } from 'hooks';
 import { defaultAdminSocket } from 'common/connection';
@@ -69,7 +68,7 @@ export const Footer = footer(({ className }: Props) => {
   return (
     <div className={className}>
       <ContentWrapper>
-        <Content align="space-between">
+        <Content className="d-flex justify-content-between align-items-center w-100">
           <AdminInfo>
             <span>
               {`© Drill4J ${new Date().getFullYear()}`}
@@ -96,7 +95,7 @@ export const Footer = footer(({ className }: Props) => {
 });
 
 const ContentWrapper = footer.contentWrapper('div');
-const Content = footer.content(Panel);
+const Content = footer.content('div');
 const AdminInfo = footer.adminInfo('span');
 const Link = footer.link(
   tag('a')({ href: '', rel: '', target: '' } as { href: string; rel: string; target: string }),

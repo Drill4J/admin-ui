@@ -15,9 +15,7 @@
  */
 import { BEM } from '@redneckz/react-bem-helper';
 import { NavLink, useParams } from 'react-router-dom';
-import {
-  Panel, Button, Icons, SessionIndicator,
-} from '@drill4j/ui-kit';
+import { Button, Icons, SessionIndicator } from '@drill4j/ui-kit';
 
 import { percentFormatter } from 'utils';
 import { ActiveScope } from 'types/active-scope';
@@ -48,12 +46,12 @@ export const ActiveScopeInfo = activeScopeInfo(({
   return (
     <div className={className}>
       <Title>ACTIVE SCOPE COVERAGE</Title>
-      <ScopeInfo>
+      <div className="d-flex align-items-center gx-2 w-100 h-40px mt-6 mb-3 ">
         <ScopeCoverage data-test="active-scope-info:scope-coverage">
           {`${percentFormatter(percentage)}%`}
         </ScopeCoverage>
         <SessionIndicator active={loading} />
-      </ScopeInfo>
+      </div>
       <FinishScopeButton
         type="primary"
         size="large"
@@ -63,7 +61,7 @@ export const ActiveScopeInfo = activeScopeInfo(({
         <Icons.Complete />
         <span>Finish Scope</span>
       </FinishScopeButton>
-      <NavigationPanel direction="column" verticalAlign="start">
+      <div className="d-flex flex-column align-items-start g-3 w-100 mt-6">
         <Link
           to={`/full-page/${agentId}/${buildVersion}/${pluginId}/scopes/${scopeId}`}
           data-test="active-scope-info:scope-details-link"
@@ -82,14 +80,12 @@ export const ActiveScopeInfo = activeScopeInfo(({
         >
           Sessions Management
         </ButtonLink>
-      </NavigationPanel>
+      </div>
     </div>
   );
 });
 
 const Title = activeScopeInfo.title('div');
-const ScopeInfo = activeScopeInfo.scopeInfo(Panel);
-const NavigationPanel = activeScopeInfo.navigationPanel(Panel);
 const Link = activeScopeInfo.link(NavLink);
 const ButtonLink = activeScopeInfo.buttonLink('div');
 const ScopeCoverage = activeScopeInfo.scopeCoverage('div');

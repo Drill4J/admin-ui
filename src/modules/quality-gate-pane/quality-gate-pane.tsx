@@ -16,7 +16,7 @@
 import { useState } from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 import {
-  Button, Modal, Panel, Icons, GeneralAlerts,
+  Button, Modal, Icons, GeneralAlerts,
 } from '@drill4j/ui-kit';
 import { Form } from 'react-final-form';
 
@@ -115,7 +115,7 @@ export const QualityGatePane = qualityGatePane(
               values, handleSubmit, invalid, pristine,
             }) => (
               <>
-                <Header align="space-between">
+                <Header className="d-flex justify-content-between align-items-center px-6">
                   <Title data-test="quality-gate-pane:header-title">Quality Gate</Title>
                   {configured && !isEditing && (
                     <StatusIconWrapper type={qualityGate.status}>
@@ -199,7 +199,7 @@ export const QualityGatePane = qualityGatePane(
   },
 );
 
-const Header = qualityGatePane.header(Panel);
+const Header = qualityGatePane.header('div');
 const StatusIconWrapper = qualityGatePane.statusIconWrapper('div');
 const Title = qualityGatePane.title('div');
 const ActionsPanel = qualityGatePane.actionsPanel('div');

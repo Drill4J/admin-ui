@@ -14,7 +14,6 @@
  * limitations under the License.
  */
 import { BEM, span } from '@redneckz/react-bem-helper';
-import { Panel } from '@drill4j/ui-kit';
 
 import { adminUrl } from './admin-url';
 
@@ -53,7 +52,7 @@ export const QualityGateConfigurationUrl = qualityGateConfigurationUrl(
         &quot;content-type: application/json&quot;
         <CurlFlag> \</CurlFlag>
       </div>
-      <Panel verticalAlign="start">
+      <div className="d-flex align-items-start w-100">
         <CurlFlag>
           &nbsp;
           <CurlFlag color="red">
@@ -66,7 +65,7 @@ export const QualityGateConfigurationUrl = qualityGateConfigurationUrl(
           <CurlFlag> GET </CurlFlag>
           {`${adminUrl}api/agents/${agentId}/plugins/${pluginId}/data/quality-gate`}
         </span>
-      </Panel>
+      </div>
     </span>
   ),
 );

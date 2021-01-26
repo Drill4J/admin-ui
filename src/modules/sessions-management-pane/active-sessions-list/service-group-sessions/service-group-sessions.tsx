@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 import { BEM } from '@redneckz/react-bem-helper';
-import { Icons, Panel } from '@drill4j/ui-kit';
+import { Icons } from '@drill4j/ui-kit';
 
 import { ActiveSession } from 'types/active-session';
 import { Message } from 'types/message';
@@ -40,6 +40,7 @@ export const ServiceGroupSessions = serviceGroupSessions(({ className, activeSes
       {serviceGroupAgentsIds.map((agentId) => (
         <div key={agentId}>
           <ServiceGroupAgentPanel
+            className="d-flex align-items-center w-100 px-6 py-1"
             data-test="service-group-sessions:service-group-agent-panel"
             disabled={Boolean(singleOperation.id) || bulkOperation.isProcessing}
           >
@@ -67,5 +68,5 @@ export const ServiceGroupSessions = serviceGroupSessions(({ className, activeSes
   );
 });
 
-const ServiceGroupAgentPanel = serviceGroupSessions.serviceGroupAgentPanel(Panel);
+const ServiceGroupAgentPanel = serviceGroupSessions.serviceGroupAgentPanel('div');
 const AgentTitle = serviceGroupSessions.agentTitle('span');

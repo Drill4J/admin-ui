@@ -16,10 +16,6 @@
 @import '~common/style-guide/index';
 
 .risks-modal {
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-
   &__header {
     display: flex;
     align-items: center;

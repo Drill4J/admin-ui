@@ -16,7 +16,7 @@
 import { useState } from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 import { useHistory, useParams } from 'react-router-dom';
-import { Panel, Icons, Button } from '@drill4j/ui-kit';
+import { Icons, Button } from '@drill4j/ui-kit';
 
 import { PluginListEntry } from 'components';
 import { Agent } from 'types/agent';
@@ -50,11 +50,11 @@ export const PluginsSettingsTab = pluginsSettingsTab(
 
     return (
       <div className={className}>
-        <InfoPanel align="space-between">
-          <Panel>
+        <InfoPanel className="d-flex justify-content-between align-items-center w-100 px-6">
+          <div className="d-flex align-items-center w-100">
             <InfoIcon />
             {`Plugins installed on your ${agentType === 'agent' ? 'agent' : 'service group'}.`}
-          </Panel>
+          </div>
         </InfoPanel>
         <Header>
           <span>
@@ -83,10 +83,10 @@ export const PluginsSettingsTab = pluginsSettingsTab(
                   : push(`/service-group-full-page/${id}/${pluginId}`))}
                 icon={name as keyof typeof Icons}
               >
-                <Panel>
+                <div className="d-flex align-items-center w-100">
                   <PluginName>{name}&nbsp;</PluginName>
                   {version && <PluginVersion>({version})</PluginVersion>}
-                </Panel>
+                </div>
               </PluginListEntry>
             ))
           ) : (
@@ -110,7 +110,7 @@ export const PluginsSettingsTab = pluginsSettingsTab(
   },
 );
 
-const InfoPanel = pluginsSettingsTab.infoPanel(Panel);
+const InfoPanel = pluginsSettingsTab.infoPanel('div');
 const InfoIcon = pluginsSettingsTab.infoIcon(Icons.Info);
 const Content = pluginsSettingsTab.content('div');
 const Header = pluginsSettingsTab.header('div');

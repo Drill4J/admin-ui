@@ -15,7 +15,7 @@
  */
 import { useRef, useState } from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
-import { Icons, Panel } from '@drill4j/ui-kit';
+import { Icons } from '@drill4j/ui-kit';
 
 import { ClassCoverage } from 'types/class-coverage';
 import { FilterList } from 'types/filter-list';
@@ -137,9 +137,9 @@ export const CoverageDetails = coverageDetails(
             <Column
               name="coverage"
               label={(
-                <Panel align="end">
+                <div className="d-flex justify-content-end align-items-center w-100">
                   Coverage, %<CoverageIcon width={16} height={16} />
-                </Panel>
+                </div>
               )}
               Cell={CoverageCell}
             />

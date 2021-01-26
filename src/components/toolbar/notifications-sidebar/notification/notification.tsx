@@ -15,7 +15,7 @@
  */
 import { BEM, tag, div } from '@redneckz/react-bem-helper';
 import { format } from 'timeago.js';
-import { Panel, Icons } from '@drill4j/ui-kit';
+import { Icons } from '@drill4j/ui-kit';
 
 import { Notification as NotificationType } from 'types/notificaiton';
 import { readNotification, deleteNotification } from '../api';
@@ -38,16 +38,16 @@ export const Notification = notification(({
 }: Props) => (
   <div className={className}>
     <Content>
-      <Panel align="space-between">
+      <div className="d-flex justify-content-between align-items-center w-100">
         <span>{agentId}</span>
         <SinceNotificationArrived>{format(createdAt || Date.now())}</SinceNotificationArrived>
-      </Panel>
+      </div>
       <BuildVersion unread={!read}>
-        <Panel>
+        <div className="d-flex align-items-center w-100">
           <NotificationStatusIndicator unread={!read} />
           Build {buildVersion} arrived
-        </Panel>
-        <ButtonGroup align="end">
+        </div>
+        <ButtonGroup className="d-flex justify-content-end align-items-center w-100">
           <MarkAsReadButton
             onClick={() => readNotification(id, { onError })}
             read={read}
@@ -84,7 +84,7 @@ const Content = notification.content('div');
 const SinceNotificationArrived = notification.sinceNotificationArrived('span');
 const BuildVersion = notification.buildVersion(div({} as { unread?: boolean}));
 const NotificationStatusIndicator = notification.notificationStatusIndicator(div({} as { unread?: boolean}));
-const ButtonGroup = notification.buttonGroup(Panel);
+const ButtonGroup = notification.buttonGroup('div');
 const MarkAsReadButton = notification.markAsReadButton(div({ onClick: () => {} } as { onClick?: () => void; read?: boolean }));
 const DeleteNotificationButton = notification.deleteNotificationButton(
   div({ onClick: () => {} } as { onClick?: () => void; read?: boolean }),

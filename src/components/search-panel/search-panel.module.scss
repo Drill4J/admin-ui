@@ -16,13 +16,7 @@
 @import '~common/style-guide/index';
 
 .search-panel {
-  &__search-field {
-    padding: 8px 0;
-    height: 40px;
-  }
-
   &__search-result {
-    margin-left: 16px;
     font-size: 12px;
     line-height: 20px;
     color: map-get($monochrome, default);

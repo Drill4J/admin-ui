@@ -18,21 +18,8 @@
 .baseline-build-modal {
   width: 480px;
 
-  &__content {
-    display: flex;
-    flex-direction: column;
-    gap: 24px;
-    padding: 16px 24px 24px;
-  }
-
   &__message {
-    gap: 8px;
     font-size: 14px;
     line-height: 20px;
-  }
-
-  &__actions-panel {
-    display: flex;
-    gap: 16px;
   }
 }

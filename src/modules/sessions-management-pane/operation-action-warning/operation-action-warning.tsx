@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 import { BEM } from '@redneckz/react-bem-helper';
-import { Button, NegativeActionButton, Panel } from '@drill4j/ui-kit';
+import { Button, NegativeActionButton } from '@drill4j/ui-kit';
 
 import { OperationType } from '../store/reducer';
 
@@ -35,7 +35,7 @@ export const OperationActionWarning = operationActionWarning(({
 } : Props) => {
   const ConfirmButton = operationType === 'abort' ? NegativeActionButton : Button;
   return (
-    <Panel className={className} data-test="operation-action-warning">
+    <div className={`${className} d-flex align-items-center w-100`} data-test="operation-action-warning">
       <span>{children}</span>
       <Actions>
         <Button
@@ -55,7 +55,7 @@ export const OperationActionWarning = operationActionWarning(({
           Yes
         </ConfirmButton>
       </Actions>
-    </Panel>
+    </div>
   );
 });
 

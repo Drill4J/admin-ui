@@ -17,7 +17,7 @@ import { useRef } from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 import { useHistory, useParams } from 'react-router-dom';
 import {
-  Panel, Table, Column, Icons, Tooltip, EllipsisOverflowText,
+  Table, Column, Icons, Tooltip, EllipsisOverflowText,
 } from '@drill4j/ui-kit';
 
 import { defaultAdminSocket } from 'common/connection';
@@ -49,7 +49,7 @@ export const BuildList = buildList(({ className }: Props) => {
     <div className={className}>
       <Content>
         <div ref={node}>
-          <Title>
+          <Title className="d-flex align-items-center w-100">
             <span>All builds </span>
             <BuildCount>{buildVersions.length}</BuildCount>
           </Title>
@@ -117,7 +117,7 @@ export const BuildList = buildList(({ className }: Props) => {
 });
 
 const Content = buildList.content('div');
-const Title = buildList.title(Panel);
+const Title = buildList.title('div');
 const BuildCount = buildList.itemsCount('span');
 const NameCell = buildList.nameCell('div');
 const BaselineFlag = buildList.baselineFlag(Icons.Flag);

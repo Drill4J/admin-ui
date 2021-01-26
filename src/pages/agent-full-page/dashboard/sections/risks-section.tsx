@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { Panel, Icons, Tooltip } from '@drill4j/ui-kit';
+import { Icons, Tooltip } from '@drill4j/ui-kit';
 
 import { BuildSummary } from 'types/build-summary';
 import { RISKS_TYPES_COLOR } from 'common/constants';
@@ -42,7 +42,7 @@ export const RisksSection = () => {
       info={total}
       graph={(
         <Tooltip message={<SectionTooltip data={tooltipData} hideValue />}>
-          <Panel>
+          <div className="d-flex align-items-center w-100">
             <SingleBar
               width={64}
               height={128}
@@ -57,7 +57,7 @@ export const RisksSection = () => {
               percent={convertToPercentage(modifiedMethodsCount, total)}
               icon={<Icons.Edit height={16} width={16} viewBox="0 0 16 15" />}
             />
-          </Panel>
+          </div>
         </Tooltip>
       )}
     />

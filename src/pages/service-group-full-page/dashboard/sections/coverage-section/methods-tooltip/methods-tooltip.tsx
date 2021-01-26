@@ -14,7 +14,6 @@
  * limitations under the License.
  */
 import { BEM } from '@redneckz/react-bem-helper';
-import { Panel } from '@drill4j/ui-kit';
 
 import { percentFormatter } from 'utils';
 import { Count } from 'types/count';
@@ -30,10 +29,10 @@ interface Props {
 
 export const MethodsTooltip = methodsTooltip(({ className, coveredMethods: { covered = 0, total = 0 } }: Props) => (
   <div className={className}>
-    <Panel>
+    <div className="d-flex align-items-center w-100">
       <div>covered methods: {covered}/{total}</div>
       <Percent>{percentFormatter((covered / total) * 100)}%</Percent>
-    </Panel>
+    </div>
   </div>
 ));
 

@@ -14,7 +14,6 @@
  * limitations under the License.
  */
 import { BEM } from '@redneckz/react-bem-helper';
-import { Panel } from '@drill4j/ui-kit';
 
 import styles from './plugins-layout.module.scss';
 
@@ -40,7 +39,7 @@ export const PluginsLayout = pluginsLayout(
       {breadcrumbs && <BreadcrumbsWrapper>{breadcrumbs}</BreadcrumbsWrapper>}
       <WithSidebarWrapper>
         <SidebarWrapper>{sidebar}</SidebarWrapper>
-        <OverflowWrapper verticalAlign="start" direction="column">
+        <OverflowWrapper className="d-flex align-items-start flex-column w-100">
           <Content>{children}</Content>
           <Footer>{footer}</Footer>
         </OverflowWrapper>
@@ -53,7 +52,7 @@ const SidebarWrapper = pluginsLayout.sidebar('div');
 const ToolbarWrapper = pluginsLayout.toolbar('div');
 const HeaderWrapper = pluginsLayout.header('div');
 const BreadcrumbsWrapper = pluginsLayout.breadcrumbs('div');
-const OverflowWrapper = pluginsLayout.overflowWrapper(Panel);
+const OverflowWrapper = pluginsLayout.overflowWrapper('div');
 const Content = pluginsLayout.content('div');
 const Footer = pluginsLayout.footer('div');
 const WithSidebarWrapper = pluginsLayout.withSidebarWrapper('div');

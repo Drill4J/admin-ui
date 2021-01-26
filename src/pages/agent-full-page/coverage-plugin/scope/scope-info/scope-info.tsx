@@ -17,7 +17,7 @@ import { useContext, useState } from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 import { Redirect, useParams } from 'react-router-dom';
 import {
-  Panel, Icons, Menu, Button, SessionIndicator,
+  Icons, Menu, Button, SessionIndicator,
 } from '@drill4j/ui-kit';
 
 import {
@@ -113,12 +113,12 @@ export const ScopeInfo = scopeInfo(
             <Header>
               <ScopeName data-test="scope-info:scope-name" title={name}>{name}</ScopeName>
               {status === AGENT_STATUS.ONLINE && (
-                <Panel>
+                <div className="d-flex align-items-center w-100">
                   {active && <ScopeSessionIndicator active={loading} />}
                   <ScopeStatus active={active} loading={loading} enabled={enabled} started={started} finished={finished} />
-                </Panel>
+                </div>
               )}
-              <Panel align="end">
+              <div className="d-flex justify-content-end align-items-center w-100">
                 {active && status === AGENT_STATUS.ONLINE && (
                   <FinishScopeButton
                     type="primary"
@@ -132,9 +132,9 @@ export const ScopeInfo = scopeInfo(
                 )}
                 {activeBuildVersion === buildVersion && status === AGENT_STATUS.ONLINE
                   && <Menu items={menuActions as MenuItemType[]} />}
-              </Panel>
+              </div>
             </Header>
-            <RoutingTabsPanel>
+            <RoutingTabsPanel className="d-flex align-items-center w-100">
               <TabsPanel activeTab={selectedTab} onSelect={setSelectedTab}>
                 <Tab name="coverage">
                   <TabIconWrapper>
@@ -182,6 +182,6 @@ const Header = scopeInfo.header('div');
 const ScopeName = scopeInfo.scopeName('div');
 const ScopeSessionIndicator = scopeInfo.scopeSessionIndicator(SessionIndicator);
 const FinishScopeButton = scopeInfo.finishScopeButton(Button);
-const RoutingTabsPanel = scopeInfo.routingTabsPanel(Panel);
+const RoutingTabsPanel = scopeInfo.routingTabsPanel('div');
 const TabIconWrapper = scopeInfo.tabIconWrapper('div');
 const TabContent = scopeInfo.tabContent('div');

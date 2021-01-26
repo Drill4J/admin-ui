@@ -14,7 +14,6 @@
  * limitations under the License.
  */
 import { BEM, span } from '@redneckz/react-bem-helper';
-import { Panel } from '@drill4j/ui-kit';
 
 import { percentFormatter, camelToTitle } from 'utils';
 
@@ -31,20 +30,19 @@ const sectionTooltip = BEM(styles);
 export const SectionTooltip = sectionTooltip(({ className, data, hideValue }: Props) => (
   <div className={className}>
     {Object.keys(data).map((label) => (
-      <TooltipItem align="space-between" key={label}>
-        <Panel>
+      <div className="d-flex justify-content-between align-items-center w-100" key={label}>
+        <div className="d-flex align-items-center w-100">
           <TooltipItemIcon style={{ backgroundColor: data[label].color }} />
           {`${camelToTitle(label)} (${data[label].count || 0})`}
-        </Panel>
+        </div>
         {!hideValue && (
           <TooltipItemValue>{`${percentFormatter(data[label].value || 0)}%`}</TooltipItemValue>
         )}
-      </TooltipItem>
+      </div>
     ))}
   </div>
 ));
 
-const TooltipItem = sectionTooltip.tooltipItem(Panel);
 const TooltipItemIcon = sectionTooltip.tooltipItemIcon(
   span({ style: {} } as { style?: { [key: string]: string } }),
 );

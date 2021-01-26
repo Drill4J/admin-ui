@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 import { BEM, span } from '@redneckz/react-bem-helper';
-import { Icons, Panel, Tooltip } from '@drill4j/ui-kit';
+import { Icons, Tooltip } from '@drill4j/ui-kit';
 
 import styles from './test-to-code-cell.module.scss';
 
@@ -35,10 +35,10 @@ export const TestToCodeCell = testToCodeCell(({
       <Value onClick={onClick} clickable={Boolean(onClick)} data-test={`dashboard-cell:value:${testContext}`}>
         {value === undefined ? (
           <Tooltip message={(
-            <Panel direction="column">
+            <div className="d-flex flex-column align-items-center w-100">
               <div>Test2Code plugin</div>
               <div>is not installed</div>
-            </Panel>
+            </div>
           )}
           >
             n/a

@@ -14,7 +14,6 @@
  * limitations under the License.
  */
 import { BEM } from '@redneckz/react-bem-helper';
-import { Panel } from '@drill4j/ui-kit';
 
 import { camelToTitle, percentFormatter } from 'utils';
 
@@ -31,14 +30,14 @@ export const CoverageSectionTooltip = coverageSectionTooltip((
   { className, data: { totalCovered: { covered, total }, ...testTypes } }: Props,
 ) => (
   <div className={className}>
-    <TooltipItem align="space-between">
-      <Panel>
+    <div className="d-flex justify-content-between align-items-center w-100">
+      <div className="d-flex align-items-center w-100">
         <TooltipItemTotal>total covered: {`${covered}/${total}`}</TooltipItemTotal>
         <TooltipItemTotalValue>{`${percentFormatter((covered / total) * 100)}%`}</TooltipItemTotalValue>
-      </Panel>
-    </TooltipItem>
+      </div>
+    </div>
     {Object.keys(testTypes).map((testType) => (
-      <TooltipItem align="space-between" key={testType}>
+      <div className="d-flex justify-content-between align-items-center w-100" key={testType}>
         <TooltipItemDetails>
           {`${camelToTitle(testType)} (${testTypes[testType]
             .covered || 0}/${testTypes[testType].total || 0}`})
@@ -46,12 +45,11 @@ export const CoverageSectionTooltip = coverageSectionTooltip((
         <TooltipItemValue>
           {`${percentFormatter((testTypes[testType].covered / testTypes[testType].total) * 100)}%`}
         </TooltipItemValue>
-      </TooltipItem>
+      </div>
     ))}
   </div>
 ));
 
-const TooltipItem = coverageSectionTooltip.tooltipItem(Panel);
 const TooltipItemValue = coverageSectionTooltip.tooltipItemValue('span');
 const TooltipItemTotal = coverageSectionTooltip.tooltipItemTotal('span');
 const TooltipItemTotalValue = coverageSectionTooltip.tooltipItemTotalValue('span');

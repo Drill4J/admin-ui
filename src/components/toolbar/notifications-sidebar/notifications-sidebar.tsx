@@ -16,9 +16,7 @@
 import { useState } from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 import { nanoid } from 'nanoid';
-import {
-  Panel, Icons, Modal, GeneralAlerts,
-} from '@drill4j/ui-kit';
+import { Icons, Modal, GeneralAlerts } from '@drill4j/ui-kit';
 
 import { Notification as NotificationType } from 'types/notificaiton';
 import { Notification } from './notification';
@@ -53,7 +51,7 @@ export const NotificationsSidebar = notificationsSidebar(
           </Header>
           {notifications.length > 0 ? (
             <Content>
-              <ActionsPanel align="end">
+              <ActionsPanel className="d-flex justify-content-end align-items-center w-100">
                 <span
                   onClick={() => readAllNotifications({ onError: setErrorMessage })}
                   data-test="notification-sidebar:mark-all-as-read"
@@ -92,7 +90,7 @@ export const NotificationsSidebar = notificationsSidebar(
 
 const Header = notificationsSidebar.header('div');
 const Content = notificationsSidebar.content('div');
-const ActionsPanel = notificationsSidebar.actionsPanel(Panel);
+const ActionsPanel = notificationsSidebar.actionsPanel('div');
 const NotificationsList = notificationsSidebar.notificationsList('div');
 const EmptyNotificationPanel = notificationsSidebar.emptyNotificationPanel('div');
 const Title = notificationsSidebar.title('div');

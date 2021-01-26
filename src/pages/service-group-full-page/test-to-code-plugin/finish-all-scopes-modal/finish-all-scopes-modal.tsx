@@ -16,7 +16,7 @@
 import { useContext, useState } from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 import {
-  Panel, Button, Popup, OverflowText, GeneralAlerts, LinkButton,
+  Button, Popup, OverflowText, GeneralAlerts, LinkButton,
 } from '@drill4j/ui-kit';
 
 import { useActiveSessions } from 'modules';
@@ -81,7 +81,7 @@ export const FinishAllScopesModal = finishAllScopesModal(
               <div>Empty scopes will be deleted</div>
               <div>New scopes will be started automatically</div>
             </Instructions>
-            <ActionsPanel>
+            <div className="d-flex align-items-center w-100 mt-6">
               <FinishScopeButton
                 type="primary"
                 disabled={activeSessions.length > 0}
@@ -103,7 +103,7 @@ export const FinishAllScopesModal = finishAllScopesModal(
               <Button type="secondary" size="large" onClick={() => onToggle(false)}>
                 Cancel
               </Button>
-            </ActionsPanel>
+            </div>
           </Content>
         </div>
       </Popup>
@@ -113,6 +113,5 @@ export const FinishAllScopesModal = finishAllScopesModal(
 
 const Content = finishAllScopesModal.content('div');
 const Instructions = finishAllScopesModal.instructions('div');
-const ActionsPanel = finishAllScopesModal.actionsPanel(Panel);
 const FinishScopeButton = finishAllScopesModal.finishScopeButton(Button);
 const ManagementSessionsButton = finishAllScopesModal.managementSessionsButton(LinkButton);

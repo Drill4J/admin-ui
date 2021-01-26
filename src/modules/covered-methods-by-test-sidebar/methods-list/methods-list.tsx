@@ -17,7 +17,7 @@ import { useRef, useState } from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 import VirtualList from 'react-tiny-virtual-list';
 import {
-  Inputs, OverflowText, Icons, Panel,
+  Inputs, OverflowText, Icons,
 } from '@drill4j/ui-kit';
 
 import { useElementSize } from 'hooks';
@@ -81,17 +81,17 @@ export const MethodsList = methodsList(({ className, coveredMethods }: Props) =>
               itemCount={methods.length}
               renderItem={({ index, style }) => (
                 <Method key={`${methods[index].name}${index}`} style={style as Record<symbol, string>}>
-                  <MethodInfo>
-                    <Panel>
+                  <div className="d-flex align-items-center w-100 h-20px">
+                    <div className="d-flex align-items-center w-100">
                       <MethodsListItemIcon>
                         <Icons.Function />
                       </MethodsListItemIcon>
                       <MethodName title={methods[index].name as string}>{methods[index].name}</MethodName>
-                    </Panel>
+                    </div>
                     <CoverageIcon>
                       <CoverageRateIcon coverageRate={methods[index].coverageRate} />
                     </CoverageIcon>
-                  </MethodInfo>
+                  </div>
                   <MethodsPackage title={methods[index].ownerClass}>{methods[index].ownerClass}</MethodsPackage>
                 </Method>
               )}
@@ -107,7 +107,6 @@ const Content = methodsList.content('div');
 const Filter = methodsList.filter(Inputs.Dropdown);
 const Methods = methodsList.methods('div');
 const Method = methodsList.method('div');
-const MethodInfo = methodsList.methodInfo(Panel);
 const MethodName = methodsList.methodName(OverflowText);
 const MethodsPackage = methodsList.methodPackage(OverflowText);
 const MethodsListItemIcon = methodsList.methodIcon('div');

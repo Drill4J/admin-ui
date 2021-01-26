@@ -14,7 +14,6 @@
  * limitations under the License.
  */
 import { BEM } from '@redneckz/react-bem-helper';
-import { Panel } from '@drill4j/ui-kit';
 
 import { convertToPercentage } from 'utils';
 
@@ -32,21 +31,21 @@ interface Props {
 export const BuildMethodsCard = BEM(styles)(({
   className, children, covered = 0, totalCount = 0, label, testContext,
 }: Props) => (
-  <Panel className={className} direction="column" align="space-between">
-    <Panel align="space-between">
+  <div className={`${className} d-flex flex-column justify-content-between align-items-center w-100`}>
+    <div className="d-flex justify-content-between align-items-center w-100">
       <Label data-test={`build-methods-card:label:${label}`}>{label}</Label>
       <TotalCount data-test={`build-methods-card:total-count:${label}`}>{totalCount}</TotalCount>
-    </Panel>
+    </div>
     <Info>
-      <Panel align="space-between">
+      <div className="d-flex justify-content-between align-items-center w-100">
         <Covered data-test={`build-methods-card:covered-count:${label}`}>{covered}</Covered>
         <span data-test={`build-methods-card:${testContext}`}>{children}</span>
-      </Panel>
+      </div>
       <CoverageBar>
         <Progress style={{ width: `${convertToPercentage(covered, totalCount)}%` }} />
       </CoverageBar>
     </Info>
-  </Panel>
+  </div>
 ));
 
 const Covered = BEM(styles).covered('div');

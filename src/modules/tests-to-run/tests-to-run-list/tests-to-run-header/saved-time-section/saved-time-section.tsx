@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 import { BEM } from '@redneckz/react-bem-helper';
-import { Panel, Tooltip } from '@drill4j/ui-kit';
+import { Tooltip } from '@drill4j/ui-kit';
 
 import styles from './saved-time-section.module.scss';
 
@@ -36,10 +36,10 @@ export const SavedTimeSection = savedTimeSection(
     <div className={className}>
       <Content data-test={`information-section:${label}`}>
         <Tooltip
-          message={message && <Message>{message}</Message>}
+          message={message && <div className="d-flex align-items-center w-100 text-center">{message}</div>}
         >
           <Title>{label}</Title>
-          <Value verticalAlign="center">
+          <Value className="d-flex align-items-center g-2 mt-2 w-100">
             <Duration>{previousBuildAutoTestsCount ? children : 'n/a'}</Duration>
             {typeof percentage === 'number' && <Percentage>{percentage}%</Percentage>}
           </Value>
@@ -53,5 +53,4 @@ const Content = savedTimeSection.content('div');
 const Title = savedTimeSection.title('div');
 const Duration = savedTimeSection.duration('span');
 const Percentage = savedTimeSection.percentage('span');
-const Value = savedTimeSection.value(Panel);
-const Message = savedTimeSection.message(Panel);
+const Value = savedTimeSection.value('div');

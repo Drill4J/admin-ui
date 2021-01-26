@@ -16,7 +16,7 @@
 import { useState } from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 import {
-  Table, Column, Icons, Panel, Legend,
+  Table, Column, Icons, Legend,
 } from '@drill4j/ui-kit';
 import { useParams } from 'react-router-dom';
 
@@ -76,7 +76,7 @@ export const TestsToRunList = testsToRunList(({ className, agentType = 'Agent' }
         previousBuildTestsDuration={totalDuration}
         previousBuildAutoTestsCount={previousBuildAutoTestsCount}
       />
-      <Panel align="space-between" verticalAlign="start">
+      <div className="d-flex justify-content-between align-items-start w-100">
         <BarTitle data-test="tests-to-run-list:bar-title">SAVED TIME HISTORY</BarTitle>
         <Legend
           legendItems={[
@@ -85,7 +85,7 @@ export const TestsToRunList = testsToRunList(({ className, agentType = 'Agent' }
             { label: 'Duration with Drill4J', color: DATA_VISUALIZATION_COLORS.DURATION_WITH_D4J },
           ]}
         />
-      </Panel>
+      </div>
       {previousBuildAutoTestsCount ? (
         <BarChart
           activeBuildVersion={activeBuildVersion}

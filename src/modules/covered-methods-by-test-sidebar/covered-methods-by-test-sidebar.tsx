@@ -14,9 +14,7 @@
  * limitations under the License.
  */
 import { BEM, capitalize } from '@redneckz/react-bem-helper';
-import {
-  Panel, Modal, OverflowText,
-} from '@drill4j/ui-kit';
+import { Modal, OverflowText } from '@drill4j/ui-kit';
 
 import { MethodCoveredByTest } from 'types/method-covered-by-test';
 import { useBuildVersion } from 'hooks';
@@ -54,14 +52,14 @@ export const CoveredMethodsByTestSidebar = coveredMethodsByTestSidebar(
             <MethodsCount>{allMethods.length}</MethodsCount>
           </Header>
           <Info>
-            <Panel>
+            <div className="d-flex align-items-center w-100">
               <MethodInfoLabel>Test</MethodInfoLabel>
               <MethodInfoValue title={testName}>{testName}</MethodInfoValue>
-            </Panel>
-            <Panel>
+            </div>
+            <div className="d-flex align-items-center w-100">
               <MethodInfoLabel>Type</MethodInfoLabel>
               <MethodInfoValue>{capitalize(testType.toLowerCase())}</MethodInfoValue>
-            </Panel>
+            </div>
           </Info>
           <MethodsList coveredMethods={filteredMethods} />
         </div>

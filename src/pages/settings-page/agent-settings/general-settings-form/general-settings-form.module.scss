@@ -18,7 +18,6 @@
 .general-settings-form {
   &__info-panel {
     height: 48px;
-    padding: 0 24px;
     background-color: map-get($monochrome, light-tint);
     color: map-get($monochrome, default);
     font-size: 14px;

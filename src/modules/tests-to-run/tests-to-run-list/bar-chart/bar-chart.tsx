@@ -15,7 +15,7 @@
  */
 import { useEffect, useRef, useState } from 'react';
 import { BEM, div } from '@redneckz/react-bem-helper';
-import { Panel, Tooltip } from '@drill4j/ui-kit';
+import { Tooltip } from '@drill4j/ui-kit';
 import { nanoid } from 'nanoid';
 
 import { DATA_VISUALIZATION_COLORS } from 'common/constants';
@@ -116,10 +116,10 @@ export const BarChart = barChart(({
                       </SavedTimePercent>
                     )}
                     {Boolean(total) && !isAllAutoTestsDone && (
-                      <Panel direction="column">
+                      <div className="d-flex flex-column align-items-center w-100">
                         <span>{`${completed ? 'Not all' : 'None'} of the suggested Auto Tests`}</span>
                         <span>were run in this build</span>
-                      </Panel>
+                      </div>
                     )}
                   </>
                 )}

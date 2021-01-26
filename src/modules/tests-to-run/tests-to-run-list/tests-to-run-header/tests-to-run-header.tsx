@@ -15,7 +15,7 @@
  */
 import { useState } from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
-import { Button, EllipsisOverflowText, Panel } from '@drill4j/ui-kit';
+import { Button, EllipsisOverflowText } from '@drill4j/ui-kit';
 
 import { TestsToRunSummary } from 'types/tests-to-run-summary';
 import { convertToPercentage, getDuration, percentFormatter } from 'utils';
@@ -60,7 +60,7 @@ export const TestsToRunHeader = testsToRunHeader(({
   return (
     <>
       <div className={className}>
-        <Panel align="space-between">
+        <div className="d-flex justify-content-between align-items-center w-100">
           <div>
             <Title data-test="tests-to-run-header:title">
               Tests to Run
@@ -124,7 +124,7 @@ export const TestsToRunHeader = testsToRunHeader(({
                 : '––:––:––' }
             </SavedTimeSection>
           </Actions>
-        </Panel>
+        </div>
       </div>
       {modalIsOpen && <GetSuggestedTestsModal isOpen={modalIsOpen} onToggle={setModalIsOpen} agentType={agentType} />}
     </>

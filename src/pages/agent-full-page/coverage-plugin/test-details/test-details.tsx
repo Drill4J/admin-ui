@@ -16,7 +16,7 @@
 import { useState } from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 import {
-  Icons, Panel, Column, Table,
+  Icons, Column, Table,
 } from '@drill4j/ui-kit';
 
 import { capitalize } from 'utils';
@@ -45,7 +45,7 @@ export const TestDetails = testDetails(
       <div className={className}>
         {tests.length > 0 ? (
           <>
-            <Title>
+            <Title className="d-flex align-items-center w-100">
               Tests
             </Title>
             <Table data={tests} idKey="name" gridTemplateColumns="calc(100% - 664px) 130px 76px 152px 186px 120px">
@@ -122,4 +122,4 @@ export const TestDetails = testDetails(
   },
 );
 
-const Title = testDetails.title(Panel);
+const Title = testDetails.title('div');

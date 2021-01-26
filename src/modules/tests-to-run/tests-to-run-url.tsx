@@ -14,7 +14,6 @@
  * limitations under the License.
  */
 import { BEM, span } from '@redneckz/react-bem-helper';
-import { Panel } from '@drill4j/ui-kit';
 
 import { adminUrl } from './admin-url';
 
@@ -42,13 +41,13 @@ export const TestsToRunUrl = testsToRunUrl(
         <CurlFlag> <CurlFlag color="red">-</CurlFlag>H </CurlFlag>
         &quot;content-type: application/json&quot;<CurlFlag> \</CurlFlag>
       </div>
-      <Panel verticalAlign="start">
+      <div className="d-flex align-items-start">
         <CurlFlag> <CurlFlag color="red">-</CurlFlag>X <CurlFlag invisible>\</CurlFlag></CurlFlag>
         <span>
           <CurlFlag> GET </CurlFlag>{`${adminUrl}api/${agentType === 'ServiceGroup'
             ? 'service-groups' : 'agents'}/${agentId}/plugins/${pluginId}/data/tests-to-run`}
         </span>
-      </Panel>
+      </div>
     </span>
   ),
 );

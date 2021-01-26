@@ -15,9 +15,7 @@
  */
 import { BEM, div } from '@redneckz/react-bem-helper';
 import { useHistory } from 'react-router-dom';
-import {
-  Panel, Icons, Badge,
-} from '@drill4j/ui-kit';
+import { Icons, Badge } from '@drill4j/ui-kit';
 
 import { AGENT_STATUS } from 'common/constants';
 import { Agent } from 'types/agent';
@@ -54,7 +52,7 @@ export const NameColumn = nameColumn(
 
     return (
       <div className={className}>
-        <Panel>
+        <div className="d-flex align-items-center w-100">
           <AgentTypeIcon disabled={agentIsDisabled}>
             {isServiceGroup ? <Icons.ServiceGroup /> : <AgentIcon />}
           </AgentTypeIcon>
@@ -73,7 +71,7 @@ export const NameColumn = nameColumn(
           >
             {isServiceGroup ? `${name || id} (${agents.length})` : name || id}
           </AgentName>
-        </Panel>
+        </div>
       </div>
     );
   },

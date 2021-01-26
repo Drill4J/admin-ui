@@ -16,7 +16,6 @@
 import { Children, ReactNode } from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 import { Link } from 'react-router-dom';
-import { Panel } from '@drill4j/ui-kit';
 
 import styles from './plugin-card.module.scss';
 
@@ -33,7 +32,7 @@ export const PluginCard = pluginCard(({
   className, label, children, pluginLink,
 }: Props) => (
   <div className={className}>
-    <Header align="space-between">
+    <Header className="d-flex justify-content-between align-items-center w-100 p-4">
       <span>{label}</span>
       <PluginLink to={pluginLink}>View more &gt;</PluginLink>
     </Header>
@@ -45,7 +44,7 @@ export const PluginCard = pluginCard(({
   </div>
 ));
 
-const Header = pluginCard.header(Panel);
+const Header = pluginCard.header('div');
 const PluginLink = pluginCard.link(Link);
 const Content = pluginCard.content('div');
 const CardSection = pluginCard.section('div');

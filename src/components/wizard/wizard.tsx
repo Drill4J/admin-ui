@@ -19,7 +19,7 @@ import {
 import { BEM } from '@redneckz/react-bem-helper';
 import { Form } from 'react-final-form';
 import {
-  Panel, Icons, Button, GeneralAlerts, Spinner,
+  Icons, Button, GeneralAlerts, Spinner,
 } from '@drill4j/ui-kit';
 
 import { Agent } from 'types/agent';
@@ -84,11 +84,11 @@ export const Wizard = wizard(({
           values: Agent;
         }) => (
           <>
-            <Header>
+            <div className="d-flex align-items-center w-100 px-6 py-4">
               <StepName>
                 {`${currentStepIndex + 1} of ${Children.count(children)}. ${name} `}
               </StepName>
-              <Panel align="end">
+              <div className="d-flex justify-content-end align-items-center w-100">
                 {currentStepIndex > 0 && (
                   <PreviousButton
                     type="secondary"
@@ -123,8 +123,8 @@ export const Wizard = wizard(({
                     <span>Finish registration</span>
                   </Button>
                 )}
-              </Panel>
-            </Header>
+              </div>
+            </div>
             {errorMessage && (
               <GeneralAlerts type="ERROR">
                 {errorMessage}
@@ -138,7 +138,6 @@ export const Wizard = wizard(({
   );
 });
 
-const Header = wizard.header(Panel);
 const StepName = wizard.stepName('span');
 const PreviousButton = wizard.previousButton(Button);
 const WhiteSpinner = wizard.whiteSpinner(Spinner);

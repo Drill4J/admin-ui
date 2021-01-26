@@ -17,7 +17,7 @@ import { useContext, useState } from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 import { useParams, useHistory } from 'react-router-dom';
 import {
-  Panel, Button, Inputs, Popup, OverflowText, GeneralAlerts, LinkButton,
+  Button, Inputs, Popup, OverflowText, GeneralAlerts, LinkButton,
 } from '@drill4j/ui-kit';
 
 import { NotificationManagerContext } from 'notification-manager';
@@ -95,7 +95,7 @@ export const FinishScopeModal = finishScopeModal(
               label="Ignore scope in build stats"
               disabled={!testsCount || testTypes.length > 0}
             />
-            <ActionsPanel>
+            <div className="d-flex align-items-center gx-4 w-100 mt-9">
               {!testTypes.length ? (
                 <>
                   <Button
@@ -136,7 +136,7 @@ export const FinishScopeModal = finishScopeModal(
                   Ok, got it
                 </Button>
               )}
-            </ActionsPanel>
+            </div>
           </Content>
         </div>
       </Popup>
@@ -146,6 +146,5 @@ export const FinishScopeModal = finishScopeModal(
 
 const Content = finishScopeModal.content('div');
 const IgnoreScope = finishScopeModal.ignoreScope(Inputs.Checkbox);
-const ActionsPanel = finishScopeModal.actionsPanel(Panel);
 const Header = finishScopeModal.header(OverflowText);
 const ManagementSessionsButton = finishScopeModal.managementSessionsButton(LinkButton);

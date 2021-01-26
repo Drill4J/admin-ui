@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { Panel, Tooltip } from '@drill4j/ui-kit';
+import { Tooltip } from '@drill4j/ui-kit';
 
 import { SingleBar, DashboardSection, SectionTooltip } from 'components';
 import { capitalize, convertToPercentage } from 'utils';
@@ -43,7 +43,7 @@ export const TestsToRunSection = ({ testsToRun: { count = 0, byType = {} } = {} 
       info={count}
       graph={(
         <Tooltip message={<SectionTooltip data={tooltipData} hideValue />}>
-          <Panel>
+          <div className="d-flex align-items-center w-100">
             {Object.keys(TESTS_TO_RUN_TYPES_COLOR).map((testType) => (
               <SingleBar
                 key={testType}
@@ -54,7 +54,7 @@ export const TestsToRunSection = ({ testsToRun: { count = 0, byType = {} } = {} 
                 icon={capitalize(testType)}
               />
             ))}
-          </Panel>
+          </div>
         </Tooltip>
       )}
     />

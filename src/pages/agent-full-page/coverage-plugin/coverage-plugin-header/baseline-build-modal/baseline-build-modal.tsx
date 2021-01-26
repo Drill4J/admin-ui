@@ -16,7 +16,7 @@
 import { useState } from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 import {
-  Button, Popup, Checkbox, Panel,
+  Button, Popup, Checkbox,
 } from '@drill4j/ui-kit';
 
 import styles from './baseline-build-modal.module.scss';
@@ -44,8 +44,8 @@ export const BaselineBuildModal = baselineBuildModal(({
       closeOnFadeClick
     >
       <div className={className}>
-        <Content>
-          <Message>
+        <div className="d-flex flex-column g-6 pt-4 px-6 pb-6">
+          <Message className="d-flex align-items-center w-100">
             {isBaseline
               ? (
                 <>
@@ -61,7 +61,7 @@ export const BaselineBuildModal = baselineBuildModal(({
               )}
           </Message>
           {!isBaseline && (
-            <Message verticalAlign="start">
+            <Message className="d-flex align-items-start g-2 w-100">
               <Checkbox checked={isConfirmed} onChange={() => setIsConfirmed(!isConfirmed)} />
               <span>
                 I understand that it is necessary to run full regression to be <br />
@@ -69,7 +69,7 @@ export const BaselineBuildModal = baselineBuildModal(({
               </span>
             </Message>
           )}
-          <ActionsPanel>
+          <div className="d-flex gx-4">
             <Button
               type="primary"
               size="large"
@@ -84,13 +84,11 @@ export const BaselineBuildModal = baselineBuildModal(({
             <Button type="secondary" size="large" onClick={() => onToggle(false)}>
               Cancel
             </Button>
-          </ActionsPanel>
-        </Content>
+          </div>
+        </div>
       </div>
     </Popup>
   );
 });
 
-const Content = baselineBuildModal.content('div');
-const Message = baselineBuildModal.message(Panel);
-const ActionsPanel = baselineBuildModal.actionsPanel('div');
+const Message = baselineBuildModal.message('div');
