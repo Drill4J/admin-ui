@@ -13,9 +13,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { DrillSocket } from '@drill4j/socket';
-
 import { TOKEN_KEY } from '../constants';
+import { DrillSocket } from './drill-socket';
 
 export const getSocketUrl = (socket: string) => {
   const token = localStorage.getItem(TOKEN_KEY);

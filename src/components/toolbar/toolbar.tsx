@@ -13,8 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { BEM, div } from '@redneckz/react-bem-helper';
 import { ReactNode, useState } from 'react';
+import { BEM, div } from '@redneckz/react-bem-helper';
+import { useHistory } from 'react-router-dom';
 import { Icons } from '@drill4j/ui-kit';
 
 import { TOKEN_KEY } from 'common/constants';
@@ -36,6 +37,8 @@ export const Toolbar = toolbar(({ className, breadcrumbs }: Props) => {
   const [isNotificationPaneOpen, setIsNotificationPaneOpen] = useState(false);
   const notifications = useWsConnection<Notification[]>(defaultAdminSocket, '/notifications') || [];
   const unreadNotifications = notifications.filter(notification => !notification.read);
+  const { push } = useHistory();
+
   return (
     <div className={className}>
       <Content>
@@ -52,8 +55,8 @@ export const Toolbar = toolbar(({ className, breadcrumbs }: Props) => {
           Signed in as Guest
           <SingOut
             onClick={() => {
-              window.location.href = '/login';
               localStorage.removeItem(TOKEN_KEY);
+              push('/login');
             }}
             data-test="toolbar:sign-out"
           >

@@ -22,7 +22,6 @@ import {
 } from '@drill4j/ui-kit';
 
 import { LoginLayout } from 'layouts';
-import { defaultAdminSocket, defaultTest2CodePluginSocket, getSocketUrl } from 'common/connection';
 import { TOKEN_HEADER, TOKEN_KEY } from 'common/constants';
 
 import styles from './login-page.module.scss';
@@ -44,8 +43,6 @@ export const LoginPage = loginPage(({ className }: Props) => {
       if (authToken) {
         localStorage.setItem(TOKEN_KEY, authToken);
       }
-      defaultAdminSocket.reconnect(getSocketUrl('drill-admin-socket'));
-      defaultTest2CodePluginSocket.reconnect(getSocketUrl('/plugins/test2code'));
       push('/');
     } catch ({ response: { data: { message = '' } = {} } = {} }) {
       setError(message || 'There was some issue with an authentication. Please try again later.');
