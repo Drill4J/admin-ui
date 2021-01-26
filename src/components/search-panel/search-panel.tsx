@@ -13,15 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { BEM } from '@redneckz/react-bem-helper';
 import { Form, Field } from 'react-final-form';
 
 import { Fields } from 'forms';
 
-import styles from './search-panel.module.scss';
-
 interface Props {
-  className?: string;
   onSearch: (search: string) => void;
   searchQuery: string;
   searchResult: number;
@@ -29,12 +25,10 @@ interface Props {
   placeholder: string;
 }
 
-const searchPanel = BEM(styles);
-
-export const SearchPanel = searchPanel(({
-  className, onSearch, searchQuery, searchResult, children, placeholder,
+export const SearchPanel = ({
+  onSearch, searchQuery, searchResult, children, placeholder,
 }: Props) => (
-  <div className={className}>
+  <div>
     <div className="d-flex align-items-center w-100">
       <Form
         onSubmit={({ search = '' }) => onSearch(search)}
@@ -51,16 +45,16 @@ export const SearchPanel = searchPanel(({
           </div>
         )}
       />
-      <SearchResult
-        className={`d-flex align-items-center w-100 ml-4 ${searchQuery ? 'justify-content-between' : 'justify-content-end'}`}
+      <div
+        className={`d-flex align-items-center w-100 ml-4 ${searchQuery
+          ? 'justify-content-between'
+          : 'justify-content-end'} fs-12 lh-20 monochrome-default`}
       >
         {searchQuery && <span data-test="search-panel:search-result">{searchResult} result{searchResult > 1 ? 's' : ''}</span>}
         <span data-test="search-panel:displaying-results-count">
           {children}
         </span>
-      </SearchResult>
+      </div>
     </div>
   </div>
-));
-
-const SearchResult = searchPanel.searchResult('div');
+);

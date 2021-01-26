@@ -46,12 +46,12 @@ export const ActiveScopeInfo = activeScopeInfo(({
   return (
     <div className={className}>
       <Title>ACTIVE SCOPE COVERAGE</Title>
-      <ScopeInfo className="d-flex align-items-center gx-2 w-100 mt-6 mb-3 ">
+      <div className="d-flex align-items-center gx-2 w-100 h-40px mt-6 mb-3 ">
         <ScopeCoverage data-test="active-scope-info:scope-coverage">
           {`${percentFormatter(percentage)}%`}
         </ScopeCoverage>
         <SessionIndicator active={loading} />
-      </ScopeInfo>
+      </div>
       <FinishScopeButton
         type="primary"
         size="large"
@@ -86,7 +86,6 @@ export const ActiveScopeInfo = activeScopeInfo(({
 });
 
 const Title = activeScopeInfo.title('div');
-const ScopeInfo = activeScopeInfo.scopeInfo('div');
 const Link = activeScopeInfo.link(NavLink);
 const ButtonLink = activeScopeInfo.buttonLink('div');
 const ScopeCoverage = activeScopeInfo.scopeCoverage('div');
