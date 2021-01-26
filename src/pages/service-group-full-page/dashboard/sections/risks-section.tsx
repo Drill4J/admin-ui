@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { Panel, Icons, Tooltip } from '@drill4j/ui-kit';
+import { Icons, Tooltip } from '@drill4j/ui-kit';
 
 import { RISKS_TYPES_COLOR } from 'common/constants';
 import { RisksSummary } from 'types/risks-summary';

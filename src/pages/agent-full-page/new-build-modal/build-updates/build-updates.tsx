@@ -15,7 +15,7 @@
  */
 import { BEM } from '@redneckz/react-bem-helper';
 import { nanoid } from 'nanoid';
-import { Panel, Icons } from '@drill4j/ui-kit';
+import { Icons } from '@drill4j/ui-kit';
 
 import { BuildInfo } from 'types/build-info';
 

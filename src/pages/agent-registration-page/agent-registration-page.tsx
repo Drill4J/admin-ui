@@ -20,7 +20,7 @@ import { BEM } from '@redneckz/react-bem-helper';
 import { useParams, useHistory } from 'react-router-dom';
 import axios from 'axios';
 import {
-  Panel, Icons, Button, GeneralAlerts,
+  Icons, Button, GeneralAlerts,
 } from '@drill4j/ui-kit';
 
 import {
@@ -68,11 +68,11 @@ export const AgentRegistrationPage = agentRegistrationPage(
             </div>
           )}
           actions={(
-            <Panel align="end">
+            <div className="d-flex justify-content-end align-items-center w-100">
               <Button type="secondary" size="large" onClick={() => setIsCancelModalOpened(true)}>
                 Abort {agentId ? 'Registration' : 'Preregistration'}
               </Button>
-            </Panel>
+            </div>
           )}
         />
         <Wizard

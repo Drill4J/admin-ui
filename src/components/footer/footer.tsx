@@ -95,7 +95,7 @@ export const Footer = footer(({ className }: Props) => {
 });
 
 const ContentWrapper = footer.contentWrapper('div');
-const Content = footer.content('divs');
+const Content = footer.content('div');
 const AdminInfo = footer.adminInfo('span');
 const Link = footer.link(
   tag('a')({ href: '', rel: '', target: '' } as { href: string; rel: string; target: string }),

@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { Panel, Tooltip } from '@drill4j/ui-kit';
+import { Tooltip } from '@drill4j/ui-kit';
 
 import { SingleBar, DashboardSection, SectionTooltip } from 'components';
 import { TESTS_TYPES_COLOR } from 'common/constants';

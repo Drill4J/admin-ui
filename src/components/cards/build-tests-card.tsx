@@ -14,7 +14,6 @@
  * limitations under the License.
  */
 import { BEM } from '@redneckz/react-bem-helper';
-import { Panel } from '@drill4j/ui-kit';
 
 import { percentFormatter } from 'utils';
 import { TestTypeSummary } from 'types/test-type-summary';
@@ -32,13 +31,13 @@ export const BuildTestsCard = BEM(styles)(({
 }: Props) => {
   const { summary: { testCount = 0, coverage: { percentage = 0 } = {} } = {} } = testTypeSummary || {};
   return (
-    <Panel className={className} direction="column" align="space-between">
-      <Panel align="space-between">
+    <div className={`${className} d-flex flex-column justify-content-between align-items-center w-100`}>
+      <div className="d-flex justify-content-between align-items-center w-100">
         <Label data-test={`build-tests-card:label:${label}`}>{label}</Label>
         <TotalCount data-test={`build-tests-card:total-count:${label}`}>{testCount}</TotalCount>
-      </Panel>
+      </div>
       <Percentage data-test={`build-tests-card:percentage:${label}`}>{percentFormatter(percentage)}%</Percentage>
-    </Panel>
+    </div>
   );
 });
 

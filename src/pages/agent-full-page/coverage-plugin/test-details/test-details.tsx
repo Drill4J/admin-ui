@@ -16,7 +16,7 @@
 import { useState } from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 import {
-  Icons, Panel, Column, Table,
+  Icons, Column, Table,
 } from '@drill4j/ui-kit';
 
 import { capitalize } from 'utils';

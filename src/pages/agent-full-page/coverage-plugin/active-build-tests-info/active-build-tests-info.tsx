@@ -15,7 +15,7 @@
  */
 import { useRef } from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
-import { Legend, Panel, Tooltip } from '@drill4j/ui-kit';
+import { Legend, Tooltip } from '@drill4j/ui-kit';
 import { useParams } from 'react-router-dom';
 
 import { DATA_VISUALIZATION_COLORS } from 'common/constants';
@@ -57,14 +57,14 @@ export const ActiveBuildTestsInfo = activeBuildTestsInfo(({ className, testsInfo
 
   return (
     <div className={className} ref={ref}>
-      <Panel align="space-between">
+      <div className="d-flex justify-content-between align-items-center w-100">
         <Title data-test="active-build-tests-info:title">TESTS EXECUTION</Title>
         <Legend legendItems={[
           { label: 'Auto', color: DATA_VISUALIZATION_COLORS.AUTO },
           { label: 'Manual', color: DATA_VISUALIZATION_COLORS.MANUAL },
         ]}
         />
-      </Panel>
+      </div>
       <Info>
         <ExecutedTests data-test="active-build-tests-info:executed-tests">{testsExecuted}</ExecutedTests>
         &nbsp;tests executed in {scopeId ? 'scope' : 'build'}

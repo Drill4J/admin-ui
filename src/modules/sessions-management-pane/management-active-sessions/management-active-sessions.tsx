@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { LinkButton, Panel } from '@drill4j/ui-kit';
+import { LinkButton } from '@drill4j/ui-kit';
 import { BEM } from '@redneckz/react-bem-helper';
 import { Field } from 'react-final-form';
 
@@ -38,7 +38,7 @@ export const ManagementActiveSessions = managementActiveSessions(({ className, a
   return (
     <div className={className} data-test="management-active-sessions:search-panel">
       <Content>
-        <Panel align="space-between">
+        <div className="d-flex justify-content-between align-items-center w-100">
           <span>
             Active Sessions
             <Count>{activeSessions.length}</Count>
@@ -61,7 +61,7 @@ export const ManagementActiveSessions = managementActiveSessions(({ className, a
               Finish all
             </LinkButton>
           </ActionsPanel>
-        </Panel>
+        </div>
         <form>
           <Field
             name="id"

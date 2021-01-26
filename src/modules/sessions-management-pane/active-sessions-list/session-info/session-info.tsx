@@ -15,7 +15,7 @@
  */
 import { BEM } from '@redneckz/react-bem-helper';
 import {
-  Panel, Button, LinkButton, OverflowText, Icons,
+  Button, LinkButton, OverflowText, Icons,
 } from '@drill4j/ui-kit';
 import { useParams } from 'react-router-dom';
 
@@ -59,7 +59,7 @@ export const SessionInfo = sessionInfo(
           />
         ) : (
           <>
-            <Panel align="space-between">
+            <div className="d-flex justify-content-between align-items-center w-100">
               <SessionId disabled={disabled} data-test="session-info:session-id" title={sessionId}>{sessionId}</SessionId>
               <ActionsPanel>
                 <LinkButton
@@ -80,7 +80,7 @@ export const SessionInfo = sessionInfo(
                   Finish
                 </Button>
               </ActionsPanel>
-            </Panel>
+            </div>
             <AdditionalSessionInfo disabled={disabled}>
               {isGlobal
                 ? <SessionType><Icons.Global />&nbsp;Global</SessionType>

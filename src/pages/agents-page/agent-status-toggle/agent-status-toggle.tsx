@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 import { useContext } from 'react';
-import { Panel, Spinner, Inputs } from '@drill4j/ui-kit';
+import { Spinner, Inputs } from '@drill4j/ui-kit';
 import axios from 'axios';
 
 import { AGENT_STATUS } from 'common/constants';
@@ -31,7 +31,7 @@ export const AgentStatusToggle = ({ className, agent }: Props) => {
   const { showMessage } = useContext(NotificationManagerContext);
   return (
     <div className={className}>
-      <Panel data-test="agent-status-toggle">
+      <div className="d-flex align-items-center w-100" data-test="agent-status-toggle">
         <Inputs.Toggler
           value={agent.status === AGENT_STATUS.ONLINE || agent.status === AGENT_STATUS.BUSY}
           label={toggleLabel(agent.status)}
@@ -45,7 +45,7 @@ export const AgentStatusToggle = ({ className, agent }: Props) => {
           }}
           disabled={agent.status === AGENT_STATUS.NOT_REGISTERED || agent.status === AGENT_STATUS.BUSY || !agent.instanceIds?.length}
         />
-      </Panel>
+      </div>
     </div>
   );
 };

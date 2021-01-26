@@ -16,7 +16,7 @@
 import { useState } from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 import { useParams } from 'react-router-dom';
-import { Panel, Icons, Menu } from '@drill4j/ui-kit';
+import { Icons, Menu } from '@drill4j/ui-kit';
 
 import { useCommonEntity } from 'hooks';
 import { PageHeader } from 'components';
@@ -61,7 +61,7 @@ export const SettingsPage = settingsPage(
           )}
           actions={
             (type as string) !== 'service-group' && (
-              <Panel align="end">
+              <div className="d-flex justify-content-end align-items-center w-100">
                 {(data as Agent).status !== AGENT_STATUS.NOT_REGISTERED && (
                   <Menu
                     bordered
@@ -76,7 +76,7 @@ export const SettingsPage = settingsPage(
                     ]}
                   />
                 )}
-              </Panel>
+              </div>
             )
           }
         />

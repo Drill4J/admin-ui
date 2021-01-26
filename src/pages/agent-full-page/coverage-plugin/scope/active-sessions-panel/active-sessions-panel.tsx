@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 import { BEM } from '@redneckz/react-bem-helper';
-import { Panel, Icons } from '@drill4j/ui-kit';
+import { Icons } from '@drill4j/ui-kit';
 
 import { useCoveragePluginState } from '../../store';
 

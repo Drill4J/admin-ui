@@ -16,7 +16,7 @@
 import { useState } from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 import {
-  Button, Popup, Checkbox, Panel,
+  Button, Popup, Checkbox,
 } from '@drill4j/ui-kit';
 
 import styles from './baseline-build-modal.module.scss';

@@ -14,7 +14,6 @@
  * limitations under the License.
  */
 import { BEM } from '@redneckz/react-bem-helper';
-import { Panel } from '@drill4j/ui-kit';
 
 import { percentFormatter } from 'utils';
 import { Count } from 'types/count';

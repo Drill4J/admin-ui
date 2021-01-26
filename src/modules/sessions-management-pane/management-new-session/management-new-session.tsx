@@ -20,7 +20,6 @@ import {
   FormGroup,
   GeneralAlerts,
   Icons,
-  Panel,
   Tooltip,
 } from '@drill4j/ui-kit';
 

@@ -15,7 +15,7 @@
  */
 import { NavLink, useParams } from 'react-router-dom';
 import { BEM } from '@redneckz/react-bem-helper';
-import { Panel, MainProgressBar, ProgressBarLegends } from '@drill4j/ui-kit';
+import { MainProgressBar, ProgressBarLegends } from '@drill4j/ui-kit';
 
 import { percentFormatter } from 'utils';
 import { PreviousBuildInfo } from '../previous-build-info-types';
@@ -37,7 +37,7 @@ export const BuildCoverageInfo = buildCoverageInfo(({
   const buildDiff = percentFormatter(buildCodeCoverage) - percentFormatter(previousBuildCodeCoverage);
   return (
     <div className={className}>
-      <Panel align="space-between">
+      <div className="d-flex justify-content-between align-items-center w-100">
         <Title data-test="build-coverage-info:title">BUILD COVERAGE</Title>
         <Link
           to={`/full-page/${agentId}/${buildVersion}/${pluginId}/scopes/`}
@@ -45,7 +45,7 @@ export const BuildCoverageInfo = buildCoverageInfo(({
         >
           All scopes
         </Link>
-      </Panel>
+      </div>
       <DetailedCodeCoverageInfo data-test="build-coverage-info:detailed-code-coverage-info">
         <BuildCoveragePercentage data-test="build-coverage-info:build-coverage-percentage">
           {percentFormatter(buildCodeCoverage)}%

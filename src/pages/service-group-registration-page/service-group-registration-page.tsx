@@ -20,7 +20,7 @@ import { BEM } from '@redneckz/react-bem-helper';
 import { useParams, useHistory, useLocation } from 'react-router-dom';
 import axios from 'axios';
 import {
-  Panel, Icons, Button, GeneralAlerts,
+  Icons, Button, GeneralAlerts,
 } from '@drill4j/ui-kit';
 import queryString from 'query-string';
 
@@ -64,11 +64,11 @@ export const ServiceGroupRegistrationPage = serviceGroupRegistrationPage(
             </div>
           )}
           actions={(
-            <Panel align="end">
+            <div className="d-flex justify-content-end align-items-center w-100">
               <Button type="secondary" size="large" onClick={() => setIsCancelModalOpened(true)}>
                 Abort Registration
               </Button>
-            </Panel>
+            </div>
           )}
         />
         <Wizard

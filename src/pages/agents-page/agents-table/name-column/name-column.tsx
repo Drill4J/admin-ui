@@ -15,9 +15,7 @@
  */
 import { BEM, div } from '@redneckz/react-bem-helper';
 import { useHistory } from 'react-router-dom';
-import {
-  Panel, Icons, Badge,
-} from '@drill4j/ui-kit';
+import { Icons, Badge } from '@drill4j/ui-kit';
 
 import { AGENT_STATUS } from 'common/constants';
 import { Agent } from 'types/agent';

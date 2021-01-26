@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 import { BEM } from '@redneckz/react-bem-helper';
-import { Panel, Icons, Tooltip } from '@drill4j/ui-kit';
+import { Icons, Tooltip } from '@drill4j/ui-kit';
 import { Field } from 'react-final-form';
 
 import { Fields } from 'forms/fields';
@@ -69,19 +69,19 @@ export const QualityGateSettings = qualityGateSettings(
             parse={(value: string) => inputLengthRestriction(value, 7)}
           >
             <Condtion>
-              <Panel data-test="quality-gate-settings:condtion:risks">
+              <div className="d-flex align-items-center w-100" data-test="quality-gate-settings:condtion:risks">
                 Risks
                 <RisksInfoIcon
                   message={(
-                    <Panel direction="column">
+                    <div className="d-flex flex-column align-items-center w-100">
                       <span>Try to cover all of your risks in current build.</span>
                       <span>Uncovered risks won’t be counted in your next build.</span>
-                    </Panel>
+                    </div>
                   )}
                 >
                   <Icons.Info width={12} height={12} data-test="quality-gate-settings:info-icon" />
                 </RisksInfoIcon>
-              </Panel>
+              </div>
               <CondtionStatus data-test="quality-gate-settings:condtion-status:risks">
                 Maximum number of risks in the build
               </CondtionStatus>

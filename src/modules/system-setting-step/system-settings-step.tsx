@@ -15,7 +15,7 @@
  */
 import { BEM } from '@redneckz/react-bem-helper';
 import { Field } from 'react-final-form';
-import { Panel, FormGroup } from '@drill4j/ui-kit';
+import { FormGroup } from '@drill4j/ui-kit';
 
 import { Fields } from 'forms';
 import { parsePackages, formatPackages } from 'utils';
@@ -34,7 +34,7 @@ export const SystemSettingsStep = systemSettingsStep(({ className, infoPanel }: 
     {infoPanel}
     <Content>
       <FieldName>Project Package(s)</FieldName>
-      <Panel verticalAlign="start">
+      <div className="d-flex align-items-start w-100">
         <PackagesTextarea>
           <Field
             name="systemSettings.packages"
@@ -48,7 +48,7 @@ export const SystemSettingsStep = systemSettingsStep(({ className, infoPanel }: 
           Make sure you add application packages only, otherwise agent&apos;s performance will be affected.
           Use new line as a separator, &quot;!&quot; before package/class for excluding and use &quot;/&quot; in a package path.
         </Instruction>
-      </Panel>
+      </div>
       <HeaderMapping label="Header Mapping" optional>
         <Field
           name="systemSettings.sessionIdHeaderName"
