@@ -110,7 +110,7 @@ export const CoveragePluginHeader = coveragePluginHeader(({ className, previousB
           <div>Parent build:</div>
           {previousBuildVersion
             ? (
-              <ParentBuildVersion to={`/full-page/${agentId}/${previousBuildVersion}/dashboard`}>
+              <ParentBuildVersion className="pr-6" to={`/full-page/${agentId}/${previousBuildVersion}/dashboard`}>
                 <EllipsisOverflowText title={previousBuildVersion}>{previousBuildVersion}</EllipsisOverflowText>
               </ParentBuildVersion>
             ) : <span>&ndash;</span>}
