@@ -230,7 +230,7 @@ const PluginName = coveragePluginHeader.pluginName('div');
 const BaselinePanel = coveragePluginHeader.baselinePanel('div');
 const CurrentBuildVersion = coveragePluginHeader.currentBuildVersion(EllipsisOverflowText);
 const ParentBuildVersion = coveragePluginHeader.parentBuildVersion(NavLink);
-const FlagWrapper = coveragePluginHeader.flagWrapper(div({ onClick: () => {}, active: false } as { onClick: () => void; active: boolean }));
+const FlagWrapper = coveragePluginHeader.flagWrapper(div({ onClick: () => {} } as { onClick: () => void; active: boolean }));
 const QualityGateLabel = coveragePluginHeader.qualityGateLabel('div');
 const InfoIcon = coveragePluginHeader.infoIcon(Icons.Info);
 const QualityGateSection = coveragePluginHeader.qualityGateSection('div');
