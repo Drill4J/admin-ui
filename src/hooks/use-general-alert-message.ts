@@ -13,16 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { Message } from 'types/message';
 
 export function useGeneralAlertMessage() {
   const [generalAlertMessage, setGeneralAlertMessage] = useState<Message | null>(null);
+  const timeout = setTimeout(() => setGeneralAlertMessage(null), 3000);
   const showGeneralAlertMessage = (incommingMessage: Message) => {
     setGeneralAlertMessage(incommingMessage);
-    incommingMessage?.type === 'SUCCESS' && setTimeout(() => setGeneralAlertMessage(null), 3000);
+    incommingMessage?.type === 'SUCCESS' && timeout;
   };
+
+  useEffect(() => () => clearTimeout(timeout));
 
   return { generalAlertMessage, showGeneralAlertMessage };
 }

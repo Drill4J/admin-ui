@@ -49,7 +49,7 @@ export const ExpandedRowContent = expandedRowContent(<T, >({
   return (
     <>
       {classes.map((field, index) => (
-        <>
+        <div key={field.id}>
           <div
             className={className}
             style={{
@@ -73,7 +73,7 @@ export const ExpandedRowContent = expandedRowContent(<T, >({
               columns={secondLevelExpand}
             />
           )}
-        </>
+        </div>
       ))}
     </>
   );

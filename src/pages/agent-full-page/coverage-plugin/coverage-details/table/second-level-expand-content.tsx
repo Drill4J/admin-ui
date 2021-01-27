@@ -35,6 +35,7 @@ export const SecondLevelExpandContent = BEM(styles)(<T, >({ className, data = []
       <div
         className={className}
         style={{ display: 'grid', gridTemplateColumns: `104px calc(40% - 72px) repeat(${columns.length - 1}, 1fr)` }}
+        key={field.name}
       >
         {columns.map((column, index) => {
           const Cell = column.Cell || DefaultCell;
