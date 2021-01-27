@@ -145,14 +145,12 @@
     }
 
     &::-webkit-slider-thumb {
-      width: 30%;
       height: 8px;
       background: map-get($data-visualization, scrollbar-thumb);
       -webkit-appearance: none;
     }
 
     &::-moz-range-thumb {
-      width: 30%;
       height: 100%;
       border: none;
       border-radius: 0;
