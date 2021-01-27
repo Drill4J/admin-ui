@@ -21,7 +21,9 @@ import { nanoid } from 'nanoid';
 import { DATA_VISUALIZATION_COLORS } from 'common/constants';
 import { useBuildVersion, useElementSize } from 'hooks';
 import { TestsToRunSummary } from 'types/tests-to-run-summary';
-import { getDuration, percentFormatter } from 'utils';
+import {
+  convertToPercentage, getDuration, percentFormatter,
+} from 'utils';
 
 import styles from './bar-chart.module.scss';
 
@@ -54,11 +56,11 @@ export const BarChart = barChart(({
   const testsToRunParentStats = useBuildVersion<TestsToRunSummary[]>('/build/tests-to-run/parent-stats') || [];
   const testsToRunHistory = [...testsToRunParentStats, summaryTestsToRun];
 
-  const sliceTestsToRunHistory = testsToRunHistory.slice(testsToRunHistory.length - slice, slice
-    ? testsToRunHistory.length + visibleBarsCount - slice
-    : testsToRunHistory.length);
-  const bars = visibleBarsCount > testsToRunHistory.length ? testsToRunHistory : sliceTestsToRunHistory;
+  const sliderThumb = convertToPercentage(visibleBarsCount, testsToRunHistory.length);
 
+  const bars = visibleBarsCount > testsToRunHistory.length
+    ? testsToRunHistory
+    : testsToRunHistorySlice(testsToRunHistory, slice, visibleBarsCount);
   const yScale = getYScale(totalDuration);
 
   return (
@@ -165,10 +167,16 @@ export const BarChart = barChart(({
             );
           })}
         </CartesianLayout>
+        {/* This hack is needed to dynamically change the slider of a custom scrollbar */}
+        <style type="text/css">
+          #custom-scroll-bar::-webkit-slider-thumb &#123;
+          width: {sliderThumb}% !important;
+        </style>
         <input
-          style={{ width: `${visibleBarsCount > testsToRunHistory.length ? 0 : width}px` }}
+          id="custom-scroll-bar"
           type="range"
           min={visibleBarsCount > testsToRunHistory.length ? 0 : visibleBarsCount}
+          style={{ width: `${visibleBarsCount <= 0 || visibleBarsCount >= testsToRunHistory.length ? 0 : width - 30}px` }}
           value={slice || bars.length}
           max={testsToRunHistory.length}
           onChange={(event) => setSlice(Number(event.currentTarget.value))}
@@ -321,6 +329,12 @@ const graphParams = [
     unit: 'ms',
   },
 ];
+
+function testsToRunHistorySlice(testsToRunHistory: TestsToRunSummary[], slice: number, visibleBarsCount: number) {
+  return testsToRunHistory.slice(testsToRunHistory.length - slice, slice
+    ? testsToRunHistory.length + visibleBarsCount - slice
+    : testsToRunHistory.length);
+}
 
 // TODO move that
 function getTimeFormat(durationMs: number, unit: string) {
