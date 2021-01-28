@@ -103,58 +103,65 @@ export const BarChart = barChart(({
 
             const { hours, minutes, seconds } = getDuration(duration);
             const savedTimeDuration = getDuration(totalDuration - duration);
-
+            const durationType = isAllAutoTestsDone ? 'all-tests-done-duration' : 'duration';
+            const hasUncompletedTests = completed > 0 && completed < total;
             return (
-              <GroupedBars bordered={!isAllAutoTestsDone} hasUncompletedTests={completed > 0 && completed < total} key={nanoid()}>
-                <Tooltip message={(
-                  <>
-                    {!total && 'No Auto Tests suggested to run in this build'}
-                    {isAllAutoTestsDone && (
-                      <SavedTimePercent>
-                        Total time saved: {savedTimeDuration.hours}:{savedTimeDuration.minutes}:{savedTimeDuration.seconds}
-                        <span>{percentFormatter((1 - duration / totalDuration) * 100)}%</span>
-                      </SavedTimePercent>
-                    )}
-                    {Boolean(total) && !isAllAutoTestsDone && (
-                      <div className="d-flex flex-column align-items-center w-100">
-                        <span>{`${completed ? 'Not all' : 'None'} of the suggested Auto Tests`}</span>
-                        <span>were run in this build</span>
-                      </div>
-                    )}
-                  </>
-                )}
-                >
-                  <Bar
-                    type={buildVersion !== activeBuildVersion ? 'saved-time' : undefined}
-                    style={{
-                      height: `${savedTimeHeight}px`,
-                      backgroundColor: isAllAutoTestsDone ? DATA_VISUALIZATION_COLORS.SAVED_TIME : 'transparent',
-                    }}
-                  />
-                </Tooltip>
-                {buildVersion !== activeBuildVersion ? (
-                  <Tooltip message={(
+              <Tooltip message={(hasUncompletedTests && buildVersion !== activeBuildVersion) && (
+                <div className="d-flex flex-column align-items-center w-100">
+                  <span>Not all the suggested Auto Tests</span>
+                  <span>were run in this build</span>
+                </div>
+              )}
+              >
+                <GroupedBars bordered={!isAllAutoTestsDone} hasUncompletedTests={hasUncompletedTests} key={nanoid()}>
+                  <Tooltip message={(hasUncompletedTests && buildVersion !== activeBuildVersion) ? null : (
+                    <>
+                      {!total && 'No Auto Tests suggested to run in this build'}
+                      {isAllAutoTestsDone && (
+                        <SavedTimePercent>
+                          Total time saved: {savedTimeDuration.hours}:{savedTimeDuration.minutes}:{savedTimeDuration.seconds}
+                          <span>{percentFormatter((1 - duration / totalDuration) * 100)}%</span>
+                        </SavedTimePercent>
+                      )}
+                      {Boolean(total) && !isAllAutoTestsDone && (
+                        <div className="d-flex flex-column align-items-center w-100">
+                          <span>
+                            {`${completed
+                              ? 'Not all'
+                              : 'None'} of the suggested Auto Tests`}
+                          </span>
+                          <span>were run in this build</span>
+                        </div>
+                      )}
+                    </>
+                  )}
+                  >
+                    <Bar
+                      type={buildVersion !== activeBuildVersion
+                        ? 'saved-time'
+                        : undefined}
+                      style={{
+                        height: `${savedTimeHeight}px`,
+                        backgroundColor: isAllAutoTestsDone ? DATA_VISUALIZATION_COLORS.SAVED_TIME : 'transparent',
+                      }}
+                    />
+                  </Tooltip>
+                  <Tooltip message={(isAllAutoTestsDone || buildVersion === activeBuildVersion) && (
                     <div className="text-center">
-                      {duration > totalDuration && <div>No time was saved in this build.</div>}
-                      <div>Auto Tests duration with Drill4J: {hours}:{minutes}:{seconds}</div>
+                      {duration >= totalDuration && <div>No time was saved in this build.</div>}
+                      <div>Auto Tests {!isAllAutoTestsDone && 'current'} duration with Drill4J: {hours}:{minutes}:{seconds}</div>
                     </div>
                   )}
                   >
-                    <Bar type="duration" style={{ height: `${durationHeight}px` }} />
+                    <Bar
+                      type={buildVersion !== activeBuildVersion
+                        ? durationType
+                        : 'active'}
+                      style={{ height: `${durationHeight}px` }}
+                    />
                   </Tooltip>
-                ) : (
-                  <Tooltip
-                    message={(
-                      <div className="text-center">
-                        {duration > totalDuration && <div>No time was saved in this build.</div>}
-                        <div>Auto Tests current duration with Drill4J: {hours}:{minutes}:{seconds}</div>
-                      </div>
-                    )}
-                  >
-                    <Bar type="active" style={{ height: `${durationHeight}px` }} />
-                  </Tooltip>
-                )}
-              </GroupedBars>
+                </GroupedBars>
+              </Tooltip>
             );
           })}
         </CartesianLayout>

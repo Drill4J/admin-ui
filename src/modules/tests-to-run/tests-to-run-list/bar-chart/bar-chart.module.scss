@@ -101,13 +101,18 @@
         }
       }
 
-      &--duration {
+      &--all-tests-done-duration {
         background: map-get($data-visualization, coverage);
         opacity: 0.5;
 
         &:hover {
           opacity: 1;
         }
+      }
+
+      &--duration {
+        background: map-get($data-visualization, coverage);
+        opacity: 0.5;
       }
     }
   }
