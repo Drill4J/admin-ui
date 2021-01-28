@@ -16,7 +16,7 @@
 import { useContext, useState } from 'react';
 import { BEM, div } from '@redneckz/react-bem-helper';
 import {
-  Icons, Tooltip, Button, FormGroup,
+  Icons, Tooltip, Button, FormGroup, Spinner,
 } from '@drill4j/ui-kit';
 import { Field, Form } from 'react-final-form';
 import axios from 'axios';
@@ -89,18 +89,19 @@ export const SystemSettingsForm = systemSettingsForm(
           }) => (
             <>
               <InfoPanel className="d-flex justify-content-between align-items-center px-6">
-                <div className="d-flex align-items-center w-100">
+                <div className="d-flex align-items-center">
                   <InfoIcon />
                   Information related to your application / project.
                 </div>
                 <SaveChangesButton
+                  className="d-flex align-items-center gx-1"
                   type="primary"
                   size="large"
                   onClick={handleSubmit}
                   disabled={submitting || pristine || invalid}
                   data-test="system-settings-form:save-changes-button"
                 >
-                  Save Changes
+                  {submitting && <Spinner disabled />} Save Changes
                 </SaveChangesButton>
               </InfoPanel>
               <Content>

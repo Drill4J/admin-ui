@@ -16,7 +16,7 @@
 import { useState } from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 import {
-  Button, Modal, Icons, GeneralAlerts,
+  Button, Modal, Icons, GeneralAlerts, Spinner,
 } from '@drill4j/ui-kit';
 import { Form } from 'react-final-form';
 
@@ -82,8 +82,8 @@ export const QualityGatePane = qualityGatePane(
       <Modal isOpen={isOpen} onToggle={handleOnToggle}>
         <div className={className}>
           <Form
-            onSubmit={(values) => {
-              updateQualityGateSettings(agentId, pluginId, showGeneralAlertMessage)(values);
+            onSubmit={async (values) => {
+              await updateQualityGateSettings(agentId, pluginId, showGeneralAlertMessage)(values);
               setIsEditing(false);
             }}
             initialValues={{
@@ -112,7 +112,7 @@ export const QualityGatePane = qualityGatePane(
             initialValuesEqual={(prevValues, nextValues) => JSON.stringify(prevValues) === JSON.stringify(nextValues)}
             validate={validateQualityGate}
             render={({
-              values, handleSubmit, invalid, pristine,
+              values, handleSubmit, invalid, pristine, submitting,
             }) => (
               <>
                 <Header className="d-flex justify-content-between align-items-center px-6">
@@ -161,13 +161,14 @@ export const QualityGatePane = qualityGatePane(
                   )
                     : (
                       <Button
+                        className="d-flex align-items-center gx-1"
                         type="primary"
                         size="large"
-                        disabled={invalid || pristine}
+                        disabled={invalid || pristine || submitting}
                         onClick={handleSubmit}
                         data-test="quality-gate-pane:save-button"
                       >
-                        Save
+                        {submitting && <Spinner disabled />} Save
                       </Button>
                     )}
                   {configured && isEditing && (

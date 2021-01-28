@@ -17,7 +17,9 @@ import { useContext } from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 import { Form, Field } from 'react-final-form';
 import axios from 'axios';
-import { Icons, FormGroup, Button } from '@drill4j/ui-kit';
+import {
+  Icons, FormGroup, Button, Spinner,
+} from '@drill4j/ui-kit';
 
 import {
   Fields, composeValidators, required, sizeLimit,
@@ -69,18 +71,19 @@ export const GeneralSettingsForm = generalSettingsForm(
           }) => (
             <>
               <InfoPanel className="d-flex justify-content-between align-items-center w-100 px-6">
-                <div className="d-flex align-items-center">
+                <div className="d-flex justify-content-center align-items-center text-center">
                   <InfoIcon />
                   Basic service group settings.
                 </div>
                 <SaveChangesButton
+                  className="d-flex align-items-center gx-1"
                   type="primary"
                   size="large"
                   onClick={handleSubmit}
                   disabled={submitting || pristine || invalid}
                   data-test="general-settings-form:save-changes-button"
                 >
-                  Save Changes
+                  {submitting && <Spinner disabled />} Save Changes
                 </SaveChangesButton>
               </InfoPanel>
               <Content>

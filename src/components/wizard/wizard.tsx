@@ -119,7 +119,7 @@ export const Wizard = wizard(({
                     data-test="wizard:finishng-button"
                     disabled={submitting || Boolean(errorMessage)}
                   >
-                    {submitting ? <WhiteSpinner /> : <Icons.Check height={10} width={14} viewBox="0 0 14 10" />}
+                    {submitting ? <Spinner disabled /> : <Icons.Check height={10} width={14} viewBox="0 0 14 10" />}
                     <span>Finish registration</span>
                   </Button>
                 )}
@@ -140,4 +140,3 @@ export const Wizard = wizard(({
 
 const StepName = wizard.stepName('span');
 const PreviousButton = wizard.previousButton(Button);
-const WhiteSpinner = wizard.whiteSpinner(Spinner);

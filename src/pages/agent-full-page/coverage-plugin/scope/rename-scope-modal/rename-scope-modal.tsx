@@ -18,7 +18,7 @@ import { BEM } from '@redneckz/react-bem-helper';
 import { Form, Field } from 'react-final-form';
 import { useParams } from 'react-router-dom';
 import {
-  Button, FormGroup, Popup, GeneralAlerts,
+  Button, FormGroup, Popup, GeneralAlerts, Spinner,
 } from '@drill4j/ui-kit';
 
 import {
@@ -84,14 +84,20 @@ export const RenameScopeModal = renameScopeModal(
             })(values as ScopeSummary)}
             validate={validateScope}
             initialValues={scope || {}}
-            render={({ handleSubmit }) => (
+            render={({ handleSubmit, submitting }) => (
               <div className="m-6">
                 <FormGroup label="Scope Name">
                   <Field name="name" component={Fields.Input} placeholder="Enter scope name" />
                 </FormGroup>
                 <div className="d-flex align-items-center g-4 w-100 mt-6">
-                  <Button type="primary" size="large" onClick={handleSubmit}>
-                    Save
+                  <Button
+                    className="d-flex align-items-center gx-1"
+                    type="primary"
+                    size="large"
+                    onClick={handleSubmit}
+                    disabled={submitting}
+                  >
+                    {submitting && <Spinner disabled />} Save
                   </Button>
                   <Button type="secondary" size="large" onClick={() => onToggle(false)}>
                     Cancel

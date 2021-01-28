@@ -17,7 +17,7 @@ import { useContext, useState } from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 import { useHistory, useParams } from 'react-router-dom';
 import {
-  Button, Popup, OverflowText, GeneralAlerts,
+  Button, Popup, OverflowText, GeneralAlerts, Spinner,
 } from '@drill4j/ui-kit';
 
 import { NotificationManagerContext } from 'notification-manager';
@@ -46,6 +46,7 @@ export const DeleteScopeModal = deleteScopeModal(
     const { push, location: { pathname = '' } } = useHistory();
     const { showMessage } = useContext(NotificationManagerContext);
     const [errorMessage, setErrorMessage] = useState('');
+    const [loading, setLoading] = useState(false);
 
     return (
       <Popup
@@ -75,8 +76,11 @@ export const DeleteScopeModal = deleteScopeModal(
             </Message>
             <div className="d-flex align-items-center w-100 mt-6">
               <DeleteScopeButton
+                className="d-flex align-items-center gx-1"
                 type="primary"
+                disabled={loading}
                 onClick={async () => {
+                  setLoading(true);
                   await deleteScope(agentId, pluginId, {
                     onSuccess: () => {
                       showMessage({ type: 'SUCCESS', text: 'Scope has been deleted' });
@@ -86,10 +90,11 @@ export const DeleteScopeModal = deleteScopeModal(
                     },
                     onError: setErrorMessage,
                   })(scope as ActiveScope);
+                  setLoading(false);
                 }}
                 data-test="delete-scope-modal:confirm-delete-button"
               >
-                Yes, Delete Scope
+                {loading && <Spinner disabled />} Yes, Delete Scope
               </DeleteScopeButton>
               <Button
                 type="secondary"

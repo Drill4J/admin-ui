@@ -138,6 +138,7 @@ export const SessionsManagementPane = manageSessionsPane(
                       startSessionDisabled={(invalid && !dirtySinceLastSubmit) || hasValidationErrors || submitting}
                       onToggle={onToggle}
                       handleSubmit={handleSubmit}
+                      submitting={submitting}
                     />
                   )}
                 </Footer>
