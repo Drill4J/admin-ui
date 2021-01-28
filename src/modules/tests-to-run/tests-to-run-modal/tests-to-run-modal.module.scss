@@ -59,14 +59,15 @@
   &__command-wrapper {
     &:hover {
       .test-to-run-modal__copy-icon {
-        display: initial;
+        display: block;
       }
     }
   }
 
   &__copy-icon {
+    position: absolute;
+    right: 24px;
     display: none;
-    margin-left: 36px;
     color: map-get($primary-blue, default);
     cursor: pointer;
 
