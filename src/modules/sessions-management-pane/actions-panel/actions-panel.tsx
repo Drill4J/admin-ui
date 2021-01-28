@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 import { BEM } from '@redneckz/react-bem-helper';
-import { Button, Icons } from '@drill4j/ui-kit';
+import { Button, Icons, Spinner } from '@drill4j/ui-kit';
 
 import { ActiveSession } from 'types/active-session';
 import { useSessionsPaneDispatch, useSessionsPaneState, setIsNewSession } from '../store';
@@ -28,12 +28,13 @@ interface Props {
   activeSessions: ActiveSession[];
   startSessionDisabled: boolean;
   onToggle: (value: boolean) => void;
-  handleSubmit: () => void
+  handleSubmit: () => void;
+  submitting: boolean;
 }
 
 export const ActionsPanel = actionsPanel(
   ({
-    className, activeSessions, onToggle, startSessionDisabled, handleSubmit,
+    className, activeSessions, onToggle, startSessionDisabled, handleSubmit, submitting,
   }: Props) => {
     const dispatch = useSessionsPaneDispatch();
     const { singleOperation, isNewSession } = useSessionsPaneState();
@@ -42,13 +43,14 @@ export const ActionsPanel = actionsPanel(
       <div className={className}>
         { isNewSession ? (
           <Button
+            className="d-flex align-items-center gx-1"
             type="primary"
             size="large"
             disabled={startSessionDisabled}
             onClick={handleSubmit}
             data-test="sessions-management-pane:start-session-button"
           >
-            Start Session
+            {submitting && <Spinner disabled />} Start Session
           </Button>
         ) : (
           <Button

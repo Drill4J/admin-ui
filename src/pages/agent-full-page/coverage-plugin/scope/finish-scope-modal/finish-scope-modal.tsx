@@ -17,7 +17,7 @@ import { useContext, useState } from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 import { useParams, useHistory } from 'react-router-dom';
 import {
-  Button, Inputs, Popup, OverflowText, GeneralAlerts, LinkButton,
+  Button, Inputs, Popup, OverflowText, GeneralAlerts, LinkButton, Spinner,
 } from '@drill4j/ui-kit';
 
 import { NotificationManagerContext } from 'notification-manager';
@@ -50,6 +50,7 @@ export const FinishScopeModal = finishScopeModal(
     const { agentId, buildVersion } = usePluginState();
     const [errorMessage, setErrorMessage] = useState('');
     const [ignoreScope, setIgnoreScope] = useState(false);
+    const [loading, setLoading] = useState(false);
     const testsCount = scope
       ? (scope.coverage.byTestType || []).reduce((acc, { summary: { testCount = 0 } }) => acc + testCount, 0)
       : 0;
@@ -99,10 +100,12 @@ export const FinishScopeModal = finishScopeModal(
               {!testTypes.length ? (
                 <>
                   <Button
+                    className="d-flex align-items-center gx-1"
                     type="primary"
                     size="large"
-                    disabled={testTypes.length > 0}
+                    disabled={testTypes.length > 0 || loading}
                     onClick={async () => {
+                      setLoading(true);
                       await finishScope(agentId, pluginId, {
                         onSuccess: () => {
                           showMessage({ type: 'SUCCESS', text: 'Scope has been finished' });
@@ -112,10 +115,11 @@ export const FinishScopeModal = finishScopeModal(
                       })({ prevScopeEnabled: !ignoreScope, savePrevScope: true });
                       isScopeInfoPage && !scope?.sessionsFinished &&
                         push(`/full-page/${agentId}/${buildVersion}/${pluginId}/dashboard`);
+                      setLoading(false);
                     }}
                     data-test="finish-scope-modal:finish-scope-button"
                   >
-                    {testsCount ? 'Finish Scope' : 'Finish and Delete'}
+                    {loading && <Spinner disabled />} {testsCount ? 'Finish Scope' : 'Finish and Delete'}
                   </Button>
                   <Button
                     type="secondary"

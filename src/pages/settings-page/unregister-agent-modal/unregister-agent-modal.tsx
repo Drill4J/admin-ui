@@ -17,7 +17,9 @@ import { useContext, useState } from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 import { useHistory } from 'react-router-dom';
 import axios from 'axios';
-import { Popup, Button, GeneralAlerts } from '@drill4j/ui-kit';
+import {
+  Popup, Button, GeneralAlerts, Spinner,
+} from '@drill4j/ui-kit';
 
 import { NotificationManagerContext } from 'notification-manager';
 
@@ -37,6 +39,7 @@ export const UnregisterAgentModal = unregisterAgentModal(({
 }: Props) => {
   const { showMessage } = useContext(NotificationManagerContext);
   const [errorMessage, setErrorMessage] = useState('');
+  const [loading, setLoading] = useState(false);
   const { push } = useHistory();
 
   return (
@@ -57,24 +60,30 @@ export const UnregisterAgentModal = unregisterAgentModal(({
             Are you sure you want to unregister the agent? All gathered data and settings will be
             lost.
           </Notification>
-          <ActionsPanel>
+          <div className="d-flex gx-4 mt-6">
             <Button
+              className="d-flex align-items-center gx-1"
               type="primary"
               size="large"
-              onClick={() => unregisterAgent(agentId, {
-                onSuccess: () => {
+              disabled={loading}
+              onClick={async () => {
+                setLoading(true);
+                try {
+                  await axios.delete(`/agents/${agentId}`);
                   showMessage({ type: 'SUCCESS', text: 'Agent has been deactivated' });
                   push('/agents');
-                },
-                onError: setErrorMessage,
-              })}
+                } catch ({ response: { data: { message } = {} } = {} }) {
+                  setErrorMessage(message || 'Internal service error');
+                }
+                setLoading(false);
+              }}
             >
-              Unregister
+              {loading && <Spinner disabled />}  Unregister
             </Button>
             <Button type="secondary" size="large" onClick={() => onToggle(false)}>
               Cancel
             </Button>
-          </ActionsPanel>
+          </div>
         </Content>
       </div>
     </Popup>
@@ -83,16 +92,3 @@ export const UnregisterAgentModal = unregisterAgentModal(({
 
 const Content = unregisterAgentModal.content('div');
 const Notification = unregisterAgentModal.notification('div');
-const ActionsPanel = unregisterAgentModal.actionsPanel('div');
-
-async function unregisterAgent(
-  agentId: string,
-  { onSuccess, onError }: { onSuccess?: () => void; onError?: (error: string) => void },
-) {
-  try {
-    await axios.delete(`/agents/${agentId}`);
-    onSuccess && onSuccess();
-  } catch ({ response: { data: { message } = {} } = {} }) {
-    onError && onError(message || 'Internal service error');
-  }
-}

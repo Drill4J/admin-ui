@@ -13,9 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
-import { Modal, Button } from '@drill4j/ui-kit';
+import { Modal, Button, Spinner } from '@drill4j/ui-kit';
 import { useParams } from 'react-router-dom';
 
 import { NotificationManagerContext } from 'notification-manager';
@@ -42,6 +42,7 @@ export const AddPluginsModal = addPluginModal(({
 }: Props) => {
   const { showMessage } = useContext(NotificationManagerContext);
   const { type } = useParams<{ type: 'service-group' | 'agent' }>();
+  const [loading, setLoading] = useState(false);
   const handleLoadPlugins = loadPlugins(
     `/${type === 'agent' ? 'agents' : 'service-groups'}/${agentId}/plugins`, {
       onSuccess: () => {
@@ -71,12 +72,17 @@ export const AddPluginsModal = addPluginModal(({
         </Content>
         <Actions>
           <Button
+            className="d-flex align-items-center gx-1"
             type="primary"
             size="large"
-            onClick={() => handleLoadPlugins(selectedPlugins)}
-            disabled={selectedPlugins.length === 0}
+            onClick={async () => {
+              setLoading(true);
+              await handleLoadPlugins(selectedPlugins);
+              setLoading(false);
+            }}
+            disabled={selectedPlugins.length === 0 || loading}
           >
-            Add plugin
+            {loading && <Spinner disabled />}Add plugin
           </Button>
           <Button type="secondary" size="large" onClick={() => onToggle(!isOpen)}>
             Cancel

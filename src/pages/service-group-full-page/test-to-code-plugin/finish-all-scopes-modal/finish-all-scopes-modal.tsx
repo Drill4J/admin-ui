@@ -16,7 +16,7 @@
 import { useContext, useState } from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 import {
-  Button, Popup, OverflowText, GeneralAlerts, LinkButton,
+  Button, Popup, OverflowText, GeneralAlerts, LinkButton, Spinner,
 } from '@drill4j/ui-kit';
 
 import { useActiveSessions } from 'modules';
@@ -44,6 +44,7 @@ export const FinishAllScopesModal = finishAllScopesModal(
     const { showMessage } = useContext(NotificationManagerContext);
     const [errorMessage, setErrorMessage] = useState('');
     const activeSessions = useActiveSessions('ServiceGroup', serviceGroupId) || [];
+    const [loading, setLoading] = useState(false);
 
     return (
       <Popup
@@ -83,9 +84,11 @@ export const FinishAllScopesModal = finishAllScopesModal(
             </Instructions>
             <div className="d-flex align-items-center w-100 mt-6">
               <FinishScopeButton
+                className="d-flex align-items-center gx-1"
                 type="primary"
                 disabled={activeSessions.length > 0}
                 onClick={async () => {
+                  setLoading(true);
                   await finishAllScopes(serviceGroupId, pluginId, {
                     onSuccess: () => {
                       showMessage({
@@ -96,9 +99,10 @@ export const FinishAllScopesModal = finishAllScopesModal(
                     },
                     onError: setErrorMessage,
                   })({ prevScopeEnabled: true, savePrevScope: true });
+                  setLoading(false);
                 }}
               >
-                Finish all scopes
+                {loading && <Spinner disabled />} Finish all scopes
               </FinishScopeButton>
               <Button type="secondary" size="large" onClick={() => onToggle(false)}>
                 Cancel
