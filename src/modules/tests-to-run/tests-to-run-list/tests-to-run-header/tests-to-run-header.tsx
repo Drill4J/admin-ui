@@ -140,13 +140,13 @@ const ComparedBuildVersion = testsToRunHeader.comparedBuildVersion(EllipsisOverf
 
 function getTotalDurationTooltipMessage(previousBuildAutoTestsCount: number) {
   return previousBuildAutoTestsCount
-    ? <span>Auto Tests total duration</span>
+    ? <span>Auto Tests total duration in the parent build</span>
     : <span>No data about Auto Tests duration in the parent build</span>;
 }
 
 function getEstimatedTimeSavedTooltipMessage(autoTestsCount: number) {
   return autoTestsCount
-    ? <span>The sum of the suggested Auto Tests<br /> duration in the parent build</span>
+    ? <span>Potentially saved time after running only<br />the suggested Auto Tests</span>
     : <span>No suggested Auto Tests to run in current build</span>;
 }
 
