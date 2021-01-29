@@ -23,8 +23,8 @@ import {
 import { NotificationManagerContext } from 'notification-manager';
 import { ActiveScope } from 'types/active-scope';
 import { deleteScope } from '../../api';
-import { ActiveSessionsPanel } from '../active-sessions-panel';
 import { usePluginState } from '../../../store';
+import { openModal, useCoveragePluginDispatch, useCoveragePluginState } from '../../store';
 
 import styles from './delete-scope-modal.module.scss';
 
@@ -47,6 +47,8 @@ export const DeleteScopeModal = deleteScopeModal(
     const { showMessage } = useContext(NotificationManagerContext);
     const [errorMessage, setErrorMessage] = useState('');
     const [loading, setLoading] = useState(false);
+    const { activeSessions: { testTypes = [] } } = useCoveragePluginState();
+    const dispatch = useCoveragePluginDispatch();
 
     return (
       <Popup
@@ -62,50 +64,76 @@ export const DeleteScopeModal = deleteScopeModal(
               {errorMessage}
             </GeneralAlerts>
           )}
-          {scope && scope.active && (
-            <ActiveSessionsPanel>
-              If you delete the scope now, these sessions will not be saved.
-            </ActiveSessionsPanel>
-          )}
-          <Content>
-            <Message>
-              {`You are about to ${
-                scope && scope.active ? 'delete an active scope' : 'delete a non-empty scope'
-              }. Are you sure you want to proceed? All scope
-              data will be lost.`}
-            </Message>
-            <div className="d-flex align-items-center w-100 mt-6">
-              <DeleteScopeButton
-                className="d-flex align-items-center gx-1"
-                type="primary"
-                disabled={loading}
-                onClick={async () => {
-                  setLoading(true);
-                  await deleteScope(agentId, pluginId, {
-                    onSuccess: () => {
-                      showMessage({ type: 'SUCCESS', text: 'Scope has been deleted' });
-                      onToggle(false);
-                      scope?.id && pathname.includes(scope.id)
-                        && push(`/full-page/${agentId}/${buildVersion}/${pluginId}/dashboard`);
-                    },
-                    onError: setErrorMessage,
-                  })(scope as ActiveScope);
-                  setLoading(false);
-                }}
-                data-test="delete-scope-modal:confirm-delete-button"
-              >
-                {loading && <Spinner disabled />} Yes, Delete Scope
-              </DeleteScopeButton>
-              <Button
-                type="secondary"
-                size="large"
-                onClick={() => onToggle(false)}
-                data-test="delete-scope-modal:cancel-modal-button"
-              >
-                Cancel
-              </Button>
+          <div className="mt-4 mx-6 mb-6">
+            <div className="fs-14 lh-20">
+              {scope && scope.active && !testTypes.length && (
+                <span>You are about to delete an active scope. Are you sure you <br />
+                  want to proceed? All scope data will be lost.
+                </span>
+              )}
+              {scope && scope.active && Boolean(testTypes.length) && (
+                <span>You are about to delete an active scope, but at least one active<br />
+                  session has been detected. First, you need to finish it in <br />
+                  <SessionManagementLink
+                    className=""
+                    onClick={() => dispatch(openModal('SessionsManagementModal', null))}
+                  >
+                    Sessions Management
+                  </SessionManagementLink>
+                </span>
+              )}
+              { scope && !scope.active && (
+                <span>You are about to delete a non-empty scope. Are you sure you want<br />
+                  to proceed? All scope data will be lost.
+                </span>
+              )}
             </div>
-          </Content>
+            <div className="d-flex align-items-center gx-4 w-100 mt-6">
+              {scope && scope.active && Boolean(testTypes.length)
+                ? (
+                  <Button
+                    onClick={() => onToggle(false)}
+                    type="secondary"
+                    size="large"
+                  >
+                    Ok, got it
+                  </Button>
+                )
+                : (
+                  <>
+                    <DeleteScopeButton
+                      className="d-flex align-items-center gx-1 px-4"
+                      type="primary"
+                      disabled={loading}
+                      onClick={async () => {
+                        setLoading(true);
+                        await deleteScope(agentId, pluginId, {
+                          onSuccess: () => {
+                            showMessage({ type: 'SUCCESS', text: 'Scope has been deleted' });
+                            onToggle(false);
+                            scope?.id && pathname.includes(scope.id)
+                          && push(`/full-page/${agentId}/${buildVersion}/${pluginId}/dashboard`);
+                          },
+                          onError: setErrorMessage,
+                        })(scope as ActiveScope);
+                        setLoading(false);
+                      }}
+                      data-test="delete-scope-modal:confirm-delete-button"
+                    >
+                      {loading && <Spinner disabled />} Yes, Delete Scope
+                    </DeleteScopeButton>
+                    <Button
+                      type="secondary"
+                      size="large"
+                      onClick={() => onToggle(false)}
+                      data-test="delete-scope-modal:cancel-modal-button"
+                    >
+                      Cancel
+                    </Button>
+                  </>
+                )}
+            </div>
+          </div>
         </div>
       </Popup>
     );
@@ -113,6 +141,5 @@ export const DeleteScopeModal = deleteScopeModal(
 );
 
 const Header = deleteScopeModal.header(OverflowText);
-const Content = deleteScopeModal.content('div');
-const Message = deleteScopeModal.message('div');
+const SessionManagementLink = deleteScopeModal.sessionManagementLink('span');
 const DeleteScopeButton = deleteScopeModal.deleteScopeButton(Button);

@@ -16,26 +16,20 @@
 @import '~common/style-guide/index';
 
 .delete-scope-modal {
-  width: 530px;
+  width: 480px;
 
   &__header {
     max-width: 460px;
   }
 
-  &__content {
-    margin: 24px;
-  }
-
-  &__message {
-    font-size: 14px;
-    line-height: 24px;
-  }
-
   &__delete-scope-button {
     min-height: 32px;
-    width: auto;
-    padding: 0 16px;
-    margin-right: 16px;
     font-size: 14px;
+  }
+
+  &__session-management-link {
+    color: map-get($primary-blue, default);
+    font-family: $semibold-font;
+    cursor: pointer;
   }
 }
