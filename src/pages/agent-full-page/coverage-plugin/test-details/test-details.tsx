@@ -52,8 +52,8 @@ export const TestDetails = testDetails(
               <Column
                 name="testName"
                 label="Name"
-                Cell={({ item: { id, name } }) => (
-                  <Cells.Compound cellName={name} cellAdditionalInfo={id} icon={<Icons.Test height={16} width={16} />} />
+                Cell={({ item: { name } }) => (
+                  <Cells.Compound cellName={name} cellAdditionalInfo="&ndash;" icon={<Icons.Test height={16} width={16} />} />
                 )}
                 align="start"
               />
