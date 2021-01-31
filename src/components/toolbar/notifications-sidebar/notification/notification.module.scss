@@ -53,8 +53,8 @@
   }
 
   &__build-version {
-    display: flex;
-    justify-content: space-between;
+    display: grid;
+    grid-template-columns: minmax(auto, 332px) 1fr;
     height: 20px;
     font-size: 12px;
     color: map-get($monochrome, black);

@@ -17,7 +17,7 @@ import { useRef } from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 import { useHistory, useParams } from 'react-router-dom';
 import {
-  Table, Column, Icons, Tooltip, EllipsisOverflowText,
+  Table, Column, Icons, Tooltip,
 } from '@drill4j/ui-kit';
 
 import { defaultAdminSocket } from 'common/connection';
@@ -65,7 +65,7 @@ export const BuildList = buildList(({ className }: Props) => {
                   }}
                   title={buildVersion}
                 >
-                  <EllipsisOverflowText>{buildVersion}</EllipsisOverflowText>
+                  <div className="text-ellipsis">{buildVersion}</div>
                   {baseline === buildVersion && (
                     <Tooltip
                       message={(

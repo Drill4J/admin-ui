@@ -14,7 +14,6 @@
  * limitations under the License.
  */
 import { BEM, div } from '@redneckz/react-bem-helper';
-import { EllipsisOverflowText } from '@drill4j/ui-kit';
 
 import styles from './test-to-code-name-cell.module.scss';
 
@@ -33,7 +32,11 @@ export const TestToCodeNameCell = testToCodeNameCell(
   }: Props) => (
     <div className={className}>
       <NameCell onClick={onClick} data-test="test-to-code-name-cell:name-cell">{name}</NameCell>
-      <AdditionalInformation data-test="test-to-code-name-cell:additional-information" title={additionalInformation}>
+      <AdditionalInformation
+        className="text-ellipsis"
+        data-test="test-to-code-name-cell:additional-information"
+        title={additionalInformation}
+      >
         {additionalInformation}
       </AdditionalInformation>
     </div>
@@ -43,4 +46,4 @@ export const TestToCodeNameCell = testToCodeNameCell(
 const NameCell = testToCodeNameCell.nameCell(div(
   { onClick: () => {}, 'data-test': '', title: '' } as { onClick?: () => void; 'data-test'?: string; title?: string; },
 ));
-const AdditionalInformation = testToCodeNameCell.additionalInformation(EllipsisOverflowText);
+const AdditionalInformation = testToCodeNameCell.additionalInformation('div');

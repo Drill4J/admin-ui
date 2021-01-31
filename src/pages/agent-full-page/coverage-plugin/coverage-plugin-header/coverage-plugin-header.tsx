@@ -16,9 +16,7 @@
 import { useContext, useState } from 'react';
 import { BEM, div } from '@redneckz/react-bem-helper';
 import { NavLink, useHistory, useParams } from 'react-router-dom';
-import {
-  Button, Icons, Tooltip, EllipsisOverflowText,
-} from '@drill4j/ui-kit';
+import { Button, Icons, Tooltip } from '@drill4j/ui-kit';
 
 import { QualityGatePane } from 'modules';
 import { NotificationManagerContext } from 'notification-manager';
@@ -97,7 +95,7 @@ export const CoveragePluginHeader = coveragePluginHeader(({ className, previousB
         <BaselinePanel>
           <div>Current build: </div>
           <div className="d-flex align-items-center w-100">
-            <CurrentBuildVersion title={buildVersion}>{buildVersion}</CurrentBuildVersion>
+            <CurrentBuildVersion className="text-ellipsis" title={buildVersion}>{buildVersion}</CurrentBuildVersion>
             <Tooltip message={<TooltipMessage>{info}</TooltipMessage>} position="top-center">
               <FlagWrapper
                 active={Boolean(isActiveBuild && previousBuildVersion)}
@@ -111,7 +109,7 @@ export const CoveragePluginHeader = coveragePluginHeader(({ className, previousB
           {previousBuildVersion
             ? (
               <ParentBuildVersion className="pr-6" to={`/full-page/${agentId}/${previousBuildVersion}/dashboard`}>
-                <EllipsisOverflowText title={previousBuildVersion}>{previousBuildVersion}</EllipsisOverflowText>
+                <div className="text-ellipsis" title={previousBuildVersion}>{previousBuildVersion}</div>
               </ParentBuildVersion>
             ) : <span>&ndash;</span>}
         </BaselinePanel>
@@ -228,7 +226,7 @@ export const CoveragePluginHeader = coveragePluginHeader(({ className, previousB
 
 const PluginName = coveragePluginHeader.pluginName('div');
 const BaselinePanel = coveragePluginHeader.baselinePanel('div');
-const CurrentBuildVersion = coveragePluginHeader.currentBuildVersion(EllipsisOverflowText);
+const CurrentBuildVersion = coveragePluginHeader.currentBuildVersion('div');
 const ParentBuildVersion = coveragePluginHeader.parentBuildVersion(NavLink);
 const FlagWrapper = coveragePluginHeader.flagWrapper(div({ onClick: () => {} } as { onClick: () => void; active: boolean }));
 const QualityGateLabel = coveragePluginHeader.qualityGateLabel('div');

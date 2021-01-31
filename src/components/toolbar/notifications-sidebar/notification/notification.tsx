@@ -45,7 +45,7 @@ export const Notification = notification(({
       <BuildVersion unread={!read}>
         <div className="d-flex align-items-center w-100">
           <NotificationStatusIndicator unread={!read} />
-          Build {buildVersion} arrived
+          <span className="text-ellipsis mr-1" title={`Build ${buildVersion}`}>Build {buildVersion}</span> arrived
         </div>
         <ButtonGroup className="d-flex justify-content-end align-items-center w-100">
           <MarkAsReadButton
