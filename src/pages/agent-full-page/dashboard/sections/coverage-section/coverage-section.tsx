@@ -15,7 +15,7 @@
  */
 import { BEM } from '@redneckz/react-bem-helper';
 import { NavLink, useParams } from 'react-router-dom';
-import { EllipsisOverflowText, Tooltip } from '@drill4j/ui-kit';
+import { Tooltip } from '@drill4j/ui-kit';
 
 import { percentFormatter } from 'utils';
 import { BuildSummary } from 'types/build-summary';
@@ -90,11 +90,11 @@ export const CoverageSection = coverageSection(({ className }: Props) => {
           Boolean(buildDiff) && !isFirstBuild && scopeCount > 0 && (
             <BuildInfo>
               {`${buildDiff > 0 ? '+' : '-'} ${percentFormatter(Math.abs(buildDiff))}% vs`}
-              <EllipsisOverflowText>
+              <div className="text-ellipsis">
                 <Link to={`/full-page/${agentId}/${previousBuildVersion}/dashboard`} title={`Build ${previousBuildVersion}`}>
                   &nbsp;Build {previousBuildVersion}
                 </Link>
-              </EllipsisOverflowText>
+              </div>
             </BuildInfo>
           ))}
       />
