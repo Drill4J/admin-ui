@@ -67,15 +67,16 @@ export const DeleteScopeModal = deleteScopeModal(
           <div className="mt-4 mx-6 mb-6">
             <div className="fs-14 lh-20">
               {scope && scope.active && !testTypes.length && (
-                <span>You are about to delete an active scope. Are you sure you <br />
+                <span>
+                  You are about to delete an active scope. Are you sure you <br />
                   want to proceed? All scope data will be lost.
                 </span>
               )}
               {scope && scope.active && Boolean(testTypes.length) && (
-                <span>You are about to delete an active scope, but at least one active<br />
+                <span>
+                  You are about to delete an active scope, but at least one active<br />
                   session has been detected. First, you need to finish it in <br />
                   <SessionManagementLink
-                    className=""
                     onClick={() => dispatch(openModal('SessionsManagementModal', null))}
                   >
                     Sessions Management
@@ -83,7 +84,8 @@ export const DeleteScopeModal = deleteScopeModal(
                 </span>
               )}
               { scope && !scope.active && (
-                <span>You are about to delete a non-empty scope. Are you sure you want<br />
+                <span>
+                  You are about to delete a non-empty scope. Are you sure you want
                   to proceed? All scope data will be lost.
                 </span>
               )}
