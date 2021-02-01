@@ -205,7 +205,7 @@ function saveChanges({
     id, packages = [], sessionIdHeaderName, targetHost,
   }: { id?: string } & SystemSettings) => {
     try {
-      await axios.put(`/${agentType === 'agent' ? 'agents' : 'service-groups'}/${id}/system-settings`, {
+      await axios.put(`/${agentType === 'agent' ? 'agents' : 'groups'}/${id}/system-settings`, {
         packages: packages.filter(Boolean),
         sessionIdHeaderName,
         targetHost,

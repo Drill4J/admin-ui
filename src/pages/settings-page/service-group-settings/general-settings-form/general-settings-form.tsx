@@ -144,7 +144,7 @@ async function saveChanges(
   },
 ) {
   try {
-    await axios.put(`/service-groups/${id}`, { name, description, environment });
+    await axios.put(`/groups/${id}`, { name, description, environment });
     onSuccess({ type: 'SUCCESS', text: 'New settings have been saved' });
   } catch ({ response: { data: { message } = {} } = {} }) {
     onError({

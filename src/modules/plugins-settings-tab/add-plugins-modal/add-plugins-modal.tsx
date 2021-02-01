@@ -44,7 +44,7 @@ export const AddPluginsModal = addPluginModal(({
   const { type } = useParams<{ type: 'service-group' | 'agent' }>();
   const [loading, setLoading] = useState(false);
   const handleLoadPlugins = loadPlugins(
-    `/${type === 'agent' ? 'agents' : 'service-groups'}/${agentId}/plugins`, {
+    `/${type === 'agent' ? 'agents' : 'groups'}/${agentId}/plugins`, {
       onSuccess: () => {
         onToggle(false);
         showMessage({ type: 'SUCCESS', text: 'Plugin has been added' });

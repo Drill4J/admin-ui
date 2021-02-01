@@ -48,7 +48,7 @@ export const TestsToRunUrl = testsToRunUrl(
         <CurlFlag> <CurlFlag color="red">-</CurlFlag>X <CurlFlag invisible>\</CurlFlag></CurlFlag>
         <span>
           <CurlFlag> GET </CurlFlag>{`${adminUrl}api/${agentType === 'ServiceGroup'
-            ? 'service-groups' : 'agents'}/${agentId}/plugins/${pluginId}/data/tests-to-run`}
+            ? 'groups' : 'agents'}/${agentId}/plugins/${pluginId}/data/tests-to-run`}
         </span>
       </div>
     </span>

@@ -47,7 +47,7 @@ export const ServiceGroupRegistrationPage = serviceGroupRegistrationPage(
     const { search } = useLocation();
     const [isCancelModalOpened, setIsCancelModalOpened] = useState(false);
     const { showMessage } = useContext(NotificationManagerContext);
-    const serviceGroup = useWsConnection<Agent>(defaultAdminSocket, `/service-groups/${serviceGroupId}`) || {};
+    const serviceGroup = useWsConnection<Agent>(defaultAdminSocket, `/groups/${serviceGroupId}`) || {};
     const { unregisteredAgentsCount } = queryString.parse(search);
     const isMounted = useRef(true);
     useEffect(() => () => {
@@ -150,7 +150,7 @@ async function registerServiceGroup({
   name = '',
   systemSettings,
 }: Agent) {
-  await axios.patch(`/service-groups/${id}`, {
+  await axios.patch(`/groups/${id}`, {
     plugins,
     name,
     systemSettings: {
