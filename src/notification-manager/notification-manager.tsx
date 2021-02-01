@@ -13,7 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { ReactNode, useState, createContext } from 'react';
+import {
+  ReactNode, useState, createContext, useMemo,
+} from 'react';
 import { MessagePanel } from '@drill4j/ui-kit';
 
 import { Message } from 'types/message';
@@ -51,7 +53,7 @@ export const NotificationManager = ({ children }: Props) => {
     );
   };
 
-  const contextValue = { showMessage: handleShowMessage, closeMessage: () => setMessage(null) };
+  const contextValue = useMemo(() => ({ showMessage: handleShowMessage, closeMessage: () => setMessage(null) }), []);
   return (
     <NotificationManagerContext.Provider value={contextValue}>
       {message && <MessagePanel message={message} onClose={() => setMessage(null)} />}
