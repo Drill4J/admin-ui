@@ -19,35 +19,11 @@
   width: 480px;
 
   &__message {
-    display: flex;
-    flex-direction: column;
-    padding: 16px 24px 24px 24px;
-    font-size: 14px;
-    line-height: 20px;
     overflow-wrap: break-word;
     color: map-get($monochrome, black);
   }
 
-  &__command-wrapper {
-    &:hover {
-      .get-suggested-tests-modal__copy-icon {
-        display: initial;
-      }
-    }
-  }
-
-  &__copy-icon {
-    display: none;
-    margin-left: auto;
-    color: map-get($primary-blue, default);
-    cursor: pointer;
-
-    &:active {
-      color: map-get($primary-blue, medium-tint);
-    }
-  }
-
-  &__close-button {
-    margin: 0 24px 24px auto;
+  &__copy-to-clipboard-button {
+    min-width: 154px;
   }
 }

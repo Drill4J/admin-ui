@@ -15,10 +15,8 @@
  */
 @import '~common/style-guide/index';
 
-.tests-to-run-url {
-  width: 370px;
-  font-size: 14px;
-  line-height: 20px;
+.get-suggested-tests-to-run-url {
+  width: 390px;
   color: map-get($primary-blue, default);
   word-break: break-all;
 

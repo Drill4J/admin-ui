@@ -36,12 +36,13 @@
   }
 
   &__notification-panel {
+    position: relative;
     display: flex;
     flex-direction: column;
     padding: 10px 24px;
     font-size: 14px;
     line-height: 20px;
-    background-color: map-get($monochrome, medium-tint);
+    background-color: map-get($monochrome, light-tint);
     overflow-wrap: break-word;
     color: map-get($monochrome, default);
 
@@ -56,18 +57,10 @@
     line-height: 20px;
   }
 
-  &__command-wrapper {
-    &:hover {
-      .test-to-run-modal__copy-icon {
-        display: block;
-      }
-    }
-  }
-
   &__copy-icon {
     position: absolute;
+    top: 60px;
     right: 24px;
-    display: none;
     color: map-get($primary-blue, default);
     cursor: pointer;
 

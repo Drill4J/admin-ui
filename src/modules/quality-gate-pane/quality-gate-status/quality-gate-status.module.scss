@@ -51,17 +51,10 @@
     }
   }
 
-  &__command-wrapper {
-    &:hover {
-      .quality-gate-status__copy-icon {
-        display: initial;
-      }
-    }
-  }
-
   &__copy-icon {
-    display: none;
-    margin-left: 36px;
+    position: absolute;
+    top: 252px;
+    right: 24px;
     color: map-get($primary-blue, default);
     cursor: pointer;
 

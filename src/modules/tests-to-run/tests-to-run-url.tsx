@@ -32,7 +32,10 @@ export const TestsToRunUrl = testsToRunUrl(
   ({
     className, agentId, pluginId, agentType,
   }: Props) => (
-    <span className={`${className} pr-3`}>
+    <span
+      className={`${className} ${agentType === 'ServiceGroup' ? 'fs-12' : 'fs-14'}`}
+      style={{ width: agentType === 'ServiceGroup' ? '300px' : undefined }}
+    >
       <div>
         <CurlFlag>curl <CurlFlag color="red">-</CurlFlag>i <CurlFlag color="red">-</CurlFlag>H </CurlFlag>
         &quot;accept: application/json&quot;<CurlFlag> \</CurlFlag>
