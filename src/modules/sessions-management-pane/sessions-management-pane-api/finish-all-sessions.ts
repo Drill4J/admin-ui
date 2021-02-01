@@ -32,7 +32,7 @@ export const finishAllSession = async (
   } catch ({ response: { data: { message } = {} } = {} }) {
     showGeneralAlertMessage && showGeneralAlertMessage({
       type: 'ERROR',
-      text: message || 'There is some issue with your action. Please try again.',
+      text: message || 'There is some issue with your action. Please try again later.',
     });
   }
 };

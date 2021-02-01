@@ -90,12 +90,12 @@ export const SessionsManagementPane = manageSessionsPane(
                   const { data: { fieldErrors = [] } = {}, message: errorMessage = '' } = error?.response?.data || {};
                   errorMessage && showGeneralAlertMessage({
                     type: 'ERROR',
-                    text: errorMessage || 'There is some issue with your action. Please try again.',
+                    text: errorMessage || 'There is some issue with your action. Please try again later.',
                   });
 
                   return handleFieldErrors(fieldErrors);
                 }
-                showGeneralAlertMessage({ type: 'ERROR', text: 'There is some issue with your action. Please try again.' });
+                showGeneralAlertMessage({ type: 'ERROR', text: 'There is some issue with your action. Please try again  later.' });
                 return error;
               }
             }}
