@@ -13,10 +13,4 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-@import '~common/style-guide/index';
-
-.service-group-settings {
-  &__tabs-panel {
-    margin: 0 24px;
-  }
-}
+export { JsSystemSettingsForm } from './js-system-settings-form';

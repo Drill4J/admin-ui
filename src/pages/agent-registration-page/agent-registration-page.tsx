@@ -1,27 +1,27 @@
 /*
- * Copyright 2020 EPAM Systems
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- * http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
+* Copyright 2020 EPAM Systems
+*
+* Licensed under the Apache License, Version 2.0 (the "License");
+* you may not use this file except in compliance with the License.
+* You may obtain a copy of the License at
+*
+* http://www.apache.org/licenses/LICENSE-2.0
+*
+* Unless required by applicable law or agreed to in writing, software
+* distributed under the License is distributed on an "AS IS" BASIS,
+* WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+* See the License for the specific language governing permissions and
+* limitations under the License.
+*/
 import {
   useContext, useEffect, useRef, useState,
 } from 'react';
-import { BEM } from '@redneckz/react-bem-helper';
 import { useParams, useHistory } from 'react-router-dom';
 import axios from 'axios';
 import {
   Icons, Button, GeneralAlerts,
 } from '@drill4j/ui-kit';
+import 'twin.macro';
 
 import {
   PageHeader, Wizard, Step,
@@ -33,128 +33,110 @@ import { useAgent } from 'hooks';
 import { NotificationManagerContext } from 'notification-manager';
 import { CancelAgentRegistrationModal, InstallPluginsStep, SystemSettingsStep } from 'modules';
 import { Agent } from 'types/agent';
-import { GeneralSettingsForm } from './general-settings-form';
+import { JavaGeneralRegistrationForm } from './java-general-registration-form';
+import { JsGeneralRegistrationForm } from './js-general-registration-form';
+import { JsSystemRegistrationForm } from './js-system-registration-form';
 
-import styles from './agent-registration-page.module.scss';
+export const AgentRegistrationPage = () => {
+  const { agentId = '' } = useParams<{ agentId: string }>();
+  const { push } = useHistory();
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const { buildVersion = '', plugins = [], ...agent } = useAgent(agentId) || {};
+  const [isCancelModalOpened, setIsCancelModalOpened] = useState(false);
+  const { showMessage } = useContext(NotificationManagerContext);
 
-interface Props {
-  className?: string;
-}
+  const isMounted = useRef(true);
+  useEffect(() => () => {
+    isMounted.current = false;
+  }, []);
 
-const agentRegistrationPage = BEM(styles);
-
-export const AgentRegistrationPage = agentRegistrationPage(
-  ({
-    className,
-  }: Props) => {
-    const { agentId = '' } = useParams<{ agentId: string }>();
-    const { push } = useHistory();
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const { buildVersion = '', plugins = [], ...agent } = useAgent(agentId) || {};
-    const [isCancelModalOpened, setIsCancelModalOpened] = useState(false);
-    const { showMessage } = useContext(NotificationManagerContext);
-
-    const isMounted = useRef(true);
-    useEffect(() => () => {
-      isMounted.current = false;
-    }, []);
-    return (
-      <div className={className}>
-        <PageHeader
-          title={(
-            <div className="flex items-center w-full">
-              <HeaderIcon height={20} width={20} />
-              {agentId ? 'Register New Agent' : 'Preregister Offline Agent'}
-            </div>
-          )}
-          actions={(
-            <div className="flex justify-end items-center w-full">
-              <Button type="secondary" size="large" onClick={() => setIsCancelModalOpened(true)}>
-                Abort {agentId ? 'Registration' : 'Preregistration'}
-              </Button>
-            </div>
+  return (
+    <div className="w-full overflow-hidden">
+      <PageHeader
+        title={(
+          <div className="flex items-center gap-x-4">
+            <Icons.Register height={20} width={20} />
+            {agentId ? `${agent.agentType} Agent Registration` : 'Offline Agent Preregistration'}
+          </div>
+        )}
+        actions={(
+          <div className="flex justify-end items-center w-full">
+            <Button type="secondary" size="large" onClick={() => setIsCancelModalOpened(true)}>
+              Abort {agentId ? 'Registration' : 'Preregistration'}
+            </Button>
+          </div>
+        )}
+      />
+      <Wizard
+        initialValues={agent}
+        onSubmit={async (data: Agent) => {
+          if (agentId) {
+            await registerAgent(data);
+            if (isMounted.current) {
+              push(`/full-page/${agentId}/${buildVersion}/dashboard`);
+            }
+            showMessage({ type: 'SUCCESS', text: 'Agent has been registered' });
+          } else {
+            await preregisterOfflineAgent(data);
+            push('/agents');
+            showMessage({ type: 'SUCCESS', text: 'Offline agent has been preregistered' });
+          }
+        }}
+      >
+        <Step
+          name="General Settings"
+          component={agent.agentType === 'Node.js' ? JsGeneralRegistrationForm : JavaGeneralRegistrationForm}
+          validate={composeValidators(
+            required('id', 'Agent ID'),
+            sizeLimit({
+              name: 'id', alias: 'Agent ID', min: 3, max: 32,
+            }),
+            required('name'),
+            sizeLimit({ name: 'name' }),
+            sizeLimit({ name: 'environment' }),
+            sizeLimit({ name: 'description', min: 3, max: 256 }),
           )}
         />
-        <Wizard
-          initialValues={agent}
-          onSubmit={async (data: Agent) => {
-            if (agentId) {
-              await registerAgent(data);
-              if (isMounted.current) {
-                push(`/full-page/${agentId}/${buildVersion}/dashboard`);
-              }
-              showMessage({ type: 'SUCCESS', text: 'Agent has been registered' });
-            } else {
-              await preregisterOfflineAgent(data);
-              push('/agents');
-              showMessage({ type: 'SUCCESS', text: 'Offline agent has been preregistered' });
-            }
-          }}
-        >
-          <Step
-            name="General Settings"
-            component={GeneralSettingsForm}
-            validate={composeValidators(
-              required('id', 'Agent ID'),
-              sizeLimit({
-                name: 'id', alias: 'Agent ID', min: 3, max: 32,
-              }),
-              required('name'),
-              sizeLimit({ name: 'name' }),
-              sizeLimit({ name: 'environment' }),
-              sizeLimit({ name: 'description', min: 3, max: 256 }),
-            )}
-          />
-          <Step
-            name="System settings"
-            component={() => (
-              <SystemSettingsStep infoPanel={(
+        <Step
+          name="System settings"
+          component={agent.agentType === 'Node.js' ? JsSystemRegistrationForm : SystemSettingsStep}
+          validate={agent.agentType === 'Node.js' ? undefined : composeValidators(
+            requiredArray('systemSettings.packages', 'Path prefix is required.'),
+            sizeLimit({
+              name: 'systemSettings.sessionIdHeaderName',
+              alias: 'Session header name',
+              min: 1,
+              max: 256,
+            }),
+          )}
+        />
+        <Step
+          name="Plugins"
+          component={({ formValues }) => (
+            <InstallPluginsStep
+              formValues={formValues}
+              infoPanel={(
                 <GeneralAlerts type="INFO">
-                  Provide information related to your application / project.
+                  Choose plugins to install on your agent. You will also be able to add them later on Agent’s page.
                 </GeneralAlerts>
               )}
-              />
-            )}
-            validate={composeValidators(
-              requiredArray('systemSettings.packages', 'Path prefix is required.'),
-              sizeLimit({
-                name: 'systemSettings.sessionIdHeaderName',
-                alias: 'Session header name',
-                min: 1,
-                max: 256,
-              }),
-            )}
-          />
-          <Step
-            name="Plugins"
-            component={({ formValues }) => (
-              <InstallPluginsStep
-                formValues={formValues}
-                infoPanel={(
-                  <GeneralAlerts type="INFO">
-                    Choose plugins to install on your agent. You will also be able to add them later on Agent’s page.
-                  </GeneralAlerts>
-                )}
-              />
-            )}
-          />
-        </Wizard>
-        {isCancelModalOpened && (
-          <CancelAgentRegistrationModal
-            isOpen={isCancelModalOpened}
-            onToggle={setIsCancelModalOpened}
-            header={`Abort ${agentId ? 'Registration' : 'Preregistration'}`}
-            message={`Are you sure you want to abort ${agentId
-              ? 'agent registration'
-              : 'offline agent preregistration'}? All your progress will be lost.`}
-          />
-        )}
-      </div>
-    );
-  },
-);
-
-const HeaderIcon = agentRegistrationPage.headerIcon(Icons.Register);
+            />
+          )}
+        />
+      </Wizard>
+      {isCancelModalOpened && (
+        <CancelAgentRegistrationModal
+          isOpen={isCancelModalOpened}
+          onToggle={setIsCancelModalOpened}
+          header={`Abort ${agentId ? 'Registration' : 'Preregistration'}`}
+          message={`Are you sure you want to abort ${agentId
+            ? 'agent registration'
+            : 'offline agent preregistration'}? All your progress will be lost.`}
+        />
+      )}
+    </div>
+  );
+};
 
 async function preregisterOfflineAgent({
   id,

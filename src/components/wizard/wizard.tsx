@@ -30,6 +30,7 @@ import {
   wizardReducer, previousStep, nextStep, state,
 } from './wizard-reducer';
 import { FormValidator } from '../../forms/form-validators';
+import 'twin.macro';
 
 import styles from './wizard.module.scss';
 
@@ -103,6 +104,7 @@ export const Wizard = wizard(({
                 )}
                 {currentStepIndex < steps.length - 1 ? (
                   <Button
+                    tw="w-28"
                     className="flex gap-x-2"
                     type="primary"
                     size="large"
@@ -115,6 +117,7 @@ export const Wizard = wizard(({
                   </Button>
                 ) : (
                   <Button
+                    tw="w-28"
                     className="flex gap-x-2"
                     type="primary"
                     size="large"
@@ -123,7 +126,7 @@ export const Wizard = wizard(({
                     disabled={submitting || Boolean(errorMessage)}
                   >
                     {submitting ? <Spinner disabled /> : <Icons.Check height={10} width={14} viewBox="0 0 14 10" />}
-                    <span>Finish registration</span>
+                    <span>Finish</span>
                   </Button>
                 )}
               </div>

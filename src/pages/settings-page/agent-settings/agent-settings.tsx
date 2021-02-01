@@ -13,54 +13,173 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { ReactNode, useState } from 'react';
-import { BEM } from '@redneckz/react-bem-helper';
+import {
+  ReactNode, useState, useContext, useRef, useEffect,
+} from 'react';
+import {
+  Button, Icons, Menu, Spinner,
+} from '@drill4j/ui-kit';
+import { useParams } from 'react-router-dom';
+import { FormSubscription } from 'final-form';
+import { Form } from 'react-final-form';
+import axios from 'axios';
 
-import { TabsPanel, Tab } from 'components';
+import { TabsPanel, Tab, PageHeader } from 'components';
+import { useAgent } from 'hooks';
 import { Agent } from 'types/agent';
+import { NotificationManagerContext } from 'notification-manager';
 import { PluginsSettingsTab, SystemSettingsForm } from 'modules';
-import { GeneralSettingsForm } from './general-settings-form';
-
-import styles from './agent-settings.module.scss';
-
-interface Props {
-  className?: string;
-  agent: Agent;
-}
+import { AGENT_STATUS } from 'common/constants';
+import {
+  composeValidators, required, requiredArray, sizeLimit,
+} from 'forms';
+import { JavaGeneralSettingsForm } from './java-general-settings-form';
+import { JsGeneralSettingsForm } from './js-general-settings-form';
+import { JsSystemSettingsForm } from './js-system-settings-form';
+import { AgentStatusToggle } from '../../agents-page/agent-status-toggle';
+import { UnregisterAgentModal } from '../unregister-agent-modal';
+import 'twin.macro';
 
 interface TabsComponent {
   name: string;
   component: ReactNode;
 }
 
-const agentSettings = BEM(styles);
-
-export const AgentSettings = agentSettings(({ className, agent }: Props) => {
+export const AgentSettings = () => {
   const [selectedTab, setSelectedTab] = useState('general');
-  const tabsComponents: TabsComponent[] = [
-    {
-      name: 'general',
-      component: <GeneralSettingsForm agent={agent} />,
-    },
-    {
-      name: 'system',
-      component: <SystemSettingsForm agent={agent} />,
-    },
-    {
-      name: 'plugins',
-      component: <PluginsSettingsTab agent={agent} />,
-    },
-  ];
+  const [isUnregisterModalOpen, setIsUnregisterModalOpen] = useState(false);
+  const { id = '' } = useParams<{ id: string }>();
+  const agent = useAgent(id) || {};
+  const { showMessage } = useContext(NotificationManagerContext);
+  const prevPristineRef = useRef(true);
   return (
-    <div className={className}>
-      <Tabs activeTab={selectedTab} onSelect={setSelectedTab}>
-        <Tab name="general">General</Tab>
-        <Tab name="system">System</Tab>
-        <Tab name="plugins">Plugins</Tab>
-      </Tabs>
-      {tabsComponents.find(({ name }) => name === selectedTab)?.component}
-    </div>
+    <Form
+      onSubmit={async ({
+        name, description, environment, systemSettings: {
+          packages = [], sessionIdHeaderName, targetHost,
+        } = {},
+      }: Agent) => {
+        try {
+          const systemSettings = agent.agentType === 'Java'
+            ? {
+              packages: packages.filter(Boolean),
+              sessionIdHeaderName,
+            }
+            : { targetHost };
+          await axios.patch(`/agents/${id}/info`, { name, description, environment });
+          await axios.put(`/agents/${id}/system-settings`, systemSettings);
+          showMessage({ type: 'SUCCESS', text: 'New settings have been saved' });
+        } catch ({ response: { data: { message } = {} } = {} }) {
+          showMessage({
+            type: 'ERROR',
+            text: 'On-submit error. Server problem or operation could not be processed in real-time',
+          });
+        }
+      }}
+      initialValues={agent}
+      validate={agent.agentType === 'Java'
+        ? composeValidators(
+          required('name'),
+          sizeLimit({ name: 'name' }),
+          sizeLimit({ name: 'environment' }),
+          sizeLimit({ name: 'description', min: 3, max: 256 }),
+          requiredArray('systemSettings.packages', 'Path prefix is required.'),
+          sizeLimit({
+            name: 'systemSettings.sessionIdHeaderName',
+            alias: 'Session header name',
+            min: 1,
+            max: 256,
+          }),
+        )
+        : composeValidators(
+          required('name'),
+          sizeLimit({ name: 'name' }),
+          sizeLimit({ name: 'environment' }),
+          sizeLimit({ name: 'description', min: 3, max: 256 }),
+        ) as any}
+      render={({
+        handleSubmit,
+        submitting,
+        invalid,
+        pristine,
+      }) => {
+        const tabsComponents: TabsComponent[] = [
+          {
+            name: 'general',
+            component: agent.agentType === 'Node.js' ? <JsGeneralSettingsForm /> : <JavaGeneralSettingsForm />,
+          },
+          {
+            name: 'system',
+            component: agent.agentType === 'Node.js'
+              ? <JsSystemSettingsForm />
+              : <SystemSettingsForm invalid={invalid} />,
+          },
+          {
+            name: 'plugins',
+            component: <PluginsSettingsTab agent={agent} />,
+          },
+        ];
+        useEffect(() => {
+          if (!pristine) {
+            prevPristineRef.current = pristine;
+          }
+        });
+        const prevPristine = prevPristineRef.current;
+        return (
+          <div tw="flex flex-col w-full">
+            <PageHeader
+              title={(
+                <div tw="flex gap-x-4 items-center">
+                  <Icons.Settings tw="text-monochrome-default" height={20} width={20} />
+                  {agent.agentType} Agent Settings
+                  <AgentStatusToggle tw="mt-2 leading-20" agent={agent} />
+                </div>
+              )}
+              actions={(
+                <div tw="flex justify-end items-center gap-x-4 w-full">
+                  <Button
+                    className="flex items-center gap-x-1"
+                    type="primary"
+                    size="large"
+                    onClick={handleSubmit}
+                    disabled={submitting || invalid || (pristine && prevPristine)}
+                    data-test="java-general-settings-form:save-changes-button"
+                  >
+                    {submitting && <Spinner disabled />} Save Changes
+                  </Button>
+                  {agent.status !== AGENT_STATUS.NOT_REGISTERED && (
+                    <Menu
+                      tw="flex justify-center w-4 h-4"
+                      items={[
+                        {
+                          label: 'Unregister',
+                          icon: 'Unregister',
+                          onClick: () => {
+                            setIsUnregisterModalOpen(true);
+                          },
+                        },
+                      ]}
+                    />
+                  )}
+                </div>
+              )}
+            />
+            <TabsPanel tw="mx-6" activeTab={selectedTab} onSelect={setSelectedTab}>
+              <Tab name="general">General</Tab>
+              <Tab name="system">System</Tab>
+              <Tab name="plugins">Plugins</Tab>
+            </TabsPanel>
+            {tabsComponents.find(({ name }) => name === selectedTab)?.component}
+            {isUnregisterModalOpen && (
+              <UnregisterAgentModal
+                isOpen={isUnregisterModalOpen}
+                onToggle={setIsUnregisterModalOpen}
+                agentId={id}
+              />
+            )}
+          </div>
+        );
+      }}
+    />
   );
-});
-
-const Tabs = agentSettings.tabsPanel(TabsPanel);
+};

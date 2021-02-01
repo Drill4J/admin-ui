@@ -22,6 +22,9 @@ module.exports = {
       spacing: {
         27: '6.75rem',
         88: '22rem',
+        97: '25rem',
+        98: '26rem',
+        100: '28rem',
       },
       height: {
         fit: 'fit-content',

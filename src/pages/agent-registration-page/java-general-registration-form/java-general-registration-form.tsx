@@ -13,70 +13,51 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { BEM } from '@redneckz/react-bem-helper';
 import { Field } from 'react-final-form';
 import { useParams } from 'react-router-dom';
-import { Icons, FormGroup, GeneralAlerts } from '@drill4j/ui-kit';
+import { FormGroup, GeneralAlerts } from '@drill4j/ui-kit';
+import { styled } from 'twin.macro';
 
 import { Fields } from 'forms';
-import { copyToClipboard } from 'utils';
-import { Agent } from 'types/agent';
 
-import styles from './general-settings-form.module.scss';
+const Content = styled.div`height: calc(100vh - 270px);`;
 
-interface Props {
-  className?: string;
-  formValues: Agent;
-}
-
-const generalSettingsForm = BEM(styles);
-
-export const GeneralSettingsForm = generalSettingsForm(({ className, formValues: { id = '', agentVersion = '' } }: Props) => {
+export const JavaGeneralRegistrationForm = () => {
   const { agentId = '' } = useParams<{ agentId: string }>();
   return (
-    <div className={className}>
+    <>
       <GeneralAlerts type="INFO">
         Set up basic agent settings.
       </GeneralAlerts>
-      <Content>
-        <FormGroup
-          label="Agent ID"
-          actions={<CopyAgentId onClick={() => copyToClipboard(id)} />}
-        >
+      <Content tw="flex flex-col items-center gap-y-6 pt-10 overflow-auto">
+        <FormGroup tw="w-97" label="Agent ID">
           <Field name="id" component={Fields.Input} placeholder="Enter agent's ID" disabled={Boolean(agentId)} />
         </FormGroup>
-        <FormGroup
-          label="Agent version"
-          actions={<CopyAgentId onClick={() => copyToClipboard(agentVersion)} />}
-        >
+        <FormGroup tw="w-97" label="Agent version">
           <Field name="agentVersion" component={Fields.Input} placeholder="n/a" disabled />
         </FormGroup>
-        <FormGroup label="Service Group">
+        <FormGroup tw="w-97" label="Service Group">
           <Field name="serviceGroup" component={Fields.Input} placeholder="n/a" disabled />
         </FormGroup>
-        <AgentName label="Agent name">
+        <FormGroup tw="w-97" label="Agent name">
           <Field name="name" component={Fields.Input} placeholder="Enter agent's name" />
-        </AgentName>
-        <FormGroup label="Environment" optional>
+        </FormGroup>
+        <FormGroup tw="w-97" label="Description" optional>
+          <Field
+            tw="h-20"
+            name="description"
+            component={Fields.Textarea}
+            placeholder="Add agent's description"
+          />
+        </FormGroup>
+        <FormGroup tw="w-97" label="Environment" optional>
           <Field
             name="environment"
             component={Fields.Input}
             placeholder="Specify an environment"
           />
         </FormGroup>
-        <Description label="Description" optional>
-          <Field
-            name="description"
-            component={Fields.Textarea}
-            placeholder="Add agent's description"
-          />
-        </Description>
       </Content>
-    </div>
+    </>
   );
-});
-
-const Content = generalSettingsForm.content('div');
-const CopyAgentId = generalSettingsForm.copyButton(Icons.Copy);
-const Description = generalSettingsForm.description(FormGroup);
-const AgentName = generalSettingsForm.agentName(FormGroup);
+};

@@ -107,3 +107,12 @@ export function positiveInteger(fieldName: string, fieldAlias?: string): FormVal
 export function isNumericString(value: string): boolean {
   return /^[0-9.]+$/.test(value) && !Number.isNaN(Number(value));
 }
+
+export function correctPattern(fieldName: string, pattern: RegExp, errorMessage: string): FormValidator {
+  return (valitationItem) => {
+    const value = get<string>(valitationItem, fieldName) || '';
+    return value.replace(pattern, '')
+      ? toError(fieldName, errorMessage)
+      : undefined;
+  };
+}

@@ -13,209 +13,90 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { useContext, useState } from 'react';
-import { BEM, div } from '@redneckz/react-bem-helper';
+import { useState } from 'react';
 import {
-  Icons, Tooltip, Button, FormGroup, Spinner,
+  Icons, Tooltip, GeneralAlerts, FormGroup,
 } from '@drill4j/ui-kit';
-import { Field, Form } from 'react-final-form';
-import axios from 'axios';
-import { useParams } from 'react-router-dom';
+import { Field } from 'react-final-form';
+import 'twin.macro';
 
-import {
-  Fields, requiredArray, composeValidators, sizeLimit,
-} from 'forms';
+import { Fields } from 'forms';
 import { UnlockingSystemSettingsFormModal } from 'modules';
 import { parsePackages, formatPackages } from 'utils';
-import { Agent } from 'types/agent';
-import { Message } from 'types/message';
-import { SystemSettings } from 'types/system-settings';
-import { NotificationManagerContext } from 'notification-manager';
-
-import styles from './system-settings-form.module.scss';
 
 interface Props {
-  className?: string;
-  agent: Agent;
+  invalid: boolean;
+  isServiceGroup?: boolean;
 }
 
-const systemSettingsForm = BEM(styles);
+export const SystemSettingsForm = ({ invalid, isServiceGroup }: Props) => {
+  const [unlocked, setUnlocked] = useState(false);
+  const [isUnlockingModalOpened, setIsUnlockingModalOpened] = useState(false);
 
-const validateSettings = composeValidators(
-  requiredArray('packages', 'Path prefix is required.'),
-  sizeLimit({
-    name: 'sessionIdHeaderName',
-    alias: 'Session header name',
-    min: 1,
-    max: 256,
-  }),
-);
-
-export const SystemSettingsForm = systemSettingsForm(
-  ({
-    className,
-    agent: {
-      id, systemSettings,
-    },
-  }: Props) => {
-    const [unlocked, setUnlocked] = useState(false);
-    const [isUnlockingModalOpened, setIsUnlockingModalOpened] = useState(false);
-    const { showMessage } = useContext(NotificationManagerContext);
-    const { type: agentType } = useParams<{ type: 'service-group' | 'agent' }>();
-
-    return (
-      <div className={className}>
-        <Form
-          onSubmit={saveChanges({
-            onSuccess: (message) => {
-              showMessage(message);
-              setUnlocked(false);
-            },
-            onError: (message) => showMessage(message),
-            agentType,
-          })}
-          initialValues={{ id, ...systemSettings }}
-          validate={validateSettings as any}
-          render={({
-            handleSubmit,
-            submitting,
-            pristine,
-            invalid,
-          }: {
-            handleSubmit: () => void;
-            submitting: boolean;
-            pristine: boolean;
-            invalid: boolean;
-          }) => (
-            <>
-              <InfoPanel className="flex justify-between items-center px-6">
-                <div className="flex items-center">
-                  <InfoIcon />
-                  Information related to your application / project.
-                </div>
-                <SaveChangesButton
-                  className="flex items-center gap-x-1"
-                  type="primary"
-                  size="large"
-                  onClick={handleSubmit}
-                  disabled={submitting || pristine || invalid}
-                  data-test="system-settings-form:save-changes-button"
-                >
-                  {submitting && <Spinner disabled />} Save Changes
-                </SaveChangesButton>
-              </InfoPanel>
-              <Content>
-                <FieldName className="flex items-center w-full mb-2">
-                  Project Package(s)
-                  <BlockerStatus
-                    unlocked={unlocked}
-                    onClick={() => {
-                      unlocked ? !invalid && setUnlocked(false) : setIsUnlockingModalOpened(true);
-                    }}
-                  >
-                    {unlocked ? (
-                      <Icons.Unlocked />
-                    ) : (
-                      <Tooltip
-                        message={(
-                          <SecuredMessage className="flex flex-col items-center w-full">
-                            <span>Secured from editing.</span>
-                            <span> Click to unlock.</span>
-                          </SecuredMessage>
-                        )}
-                      >
-                        <Icons.Locked />
-                      </Tooltip>
-                    )}
-                  </BlockerStatus>
-                </FieldName>
-                <div className="flex items-start w-full mb-4">
-                  <PackagesTextarea>
-                    <Field
-                      name="packages"
-                      component={ProjectPackages}
-                      parse={parsePackages}
-                      format={formatPackages}
-                      placeholder="e.g. com/example/mypackage&#10;foo/bar/baz&#10;and so on."
-                      disabled={!unlocked}
-                    />
-                  </PackagesTextarea>
-                  {unlocked && (
-                    <Instruction>
-                      Make sure you add application packages only, otherwise agent&apos;s performance will be affected.
-                      Use new line as a separator, &quot;!&quot; before package/class for excluding and use &quot;/&quot; in a package path.
-                    </Instruction>
+  return (
+    <div tw="space-y-10">
+      <GeneralAlerts type="INFO">
+        {isServiceGroup
+          ? 'System settings are related only to Java agents.'
+          : 'Information related to your application / project.'}
+      </GeneralAlerts>
+      <div tw="flex flex-col items-center gap-y-6">
+        <div>
+          <div tw="flex items-center gap-x-2 mb-2">
+            <span tw="font-bold text-14 leading-20 text-monochrome-black">Project Package(s)</span>
+            <div
+              className={`flex items-center ${unlocked ? 'text-red-default' : 'text-monochrome-default'}`}
+              onClick={() => {
+                unlocked ? !invalid && setUnlocked(false) : setIsUnlockingModalOpened(true);
+              }}
+            >
+              {unlocked ? (
+                <Icons.Unlocked />
+              ) : (
+                <Tooltip
+                  message={(
+                    <div tw="flex flex-col items-center w-full font-regular text-12 leading-16">
+                      <span>Secured from editing.</span>
+                      <span> Click to unlock.</span>
+                    </div>
                   )}
-                </div>
-                <HeaderMapping label="Header Mapping" optional>
-                  <Field
-                    name="sessionIdHeaderName"
-                    component={Fields.Input}
-                    placeholder="Enter session header name"
-                  />
-                </HeaderMapping>
-                <TargetHost label="Target Host" optional>
-                  <Field
-                    name="targetHost"
-                    component={Fields.Input}
-                    placeholder="Specify your target application host"
-                  />
-                </TargetHost>
-                {isUnlockingModalOpened && (
-                  <UnlockingSystemSettingsFormModal
-                    isOpen={isUnlockingModalOpened}
-                    onToggle={setIsUnlockingModalOpened}
-                    setUnlocked={setUnlocked}
-                  />
-                )}
-              </Content>
-            </>
+                >
+                  <Icons.Locked />
+                </Tooltip>
+              )}
+            </div>
+          </div>
+          <Field
+            tw="w-97 h-20"
+            name="systemSettings.packages"
+            component={Fields.Textarea}
+            parse={parsePackages}
+            format={formatPackages}
+            placeholder="e.g. com/example/mypackage&#10;foo/bar/baz&#10;and so on."
+            disabled={!unlocked}
+          />
+          {unlocked && (
+            <div tw="w-97 text-12 leading-16 text-monochrome-default">
+              Make sure you add application packages only, otherwise agent&apos;s performance will be affected.
+              Use new line as a separator, &quot;!&quot; before package/class for excluding and use &quot;/&quot; in a package path.
+            </div>
           )}
-        />
+        </div>
+        <FormGroup tw="w-97" label="Header Mapping" optional>
+          <Field
+            name="systemSettings.sessionIdHeaderName"
+            component={Fields.Input}
+            placeholder="Enter session header name"
+          />
+        </FormGroup>
+        {isUnlockingModalOpened && (
+          <UnlockingSystemSettingsFormModal
+            isOpen={isUnlockingModalOpened}
+            onToggle={setIsUnlockingModalOpened}
+            setUnlocked={setUnlocked}
+          />
+        )}
       </div>
-    );
-  },
-);
-
-const InfoPanel = systemSettingsForm.infoPanel('div');
-const InfoIcon = systemSettingsForm.infoIcon(Icons.Info);
-const SaveChangesButton = systemSettingsForm.saveChangesButton(Button);
-const Content = systemSettingsForm.content('div');
-const FieldName = systemSettingsForm.fieldName('div');
-const BlockerStatus = systemSettingsForm.blockerStatus(
-  div({ onClick: () => {} } as { unlocked: boolean; onClick: () => void }),
-);
-const SecuredMessage = systemSettingsForm.securedMessage('div');
-const PackagesTextarea = systemSettingsForm.packagesTextarea('div');
-const Instruction = systemSettingsForm.instructions('div');
-const ProjectPackages = systemSettingsForm.projectPackages(Fields.Textarea);
-const HeaderMapping = systemSettingsForm.headerMapping(FormGroup);
-const TargetHost = systemSettingsForm.targetHost(FormGroup);
-
-function saveChanges({
-  onSuccess,
-  onError,
-  agentType,
-}: {
-  onSuccess: (message: Message) => void;
-  onError: (message: Message) => void;
-  agentType: 'service-group' | 'agent';
-}) {
-  return async ({
-    id, packages = [], sessionIdHeaderName, targetHost,
-  }: { id?: string } & SystemSettings) => {
-    try {
-      await axios.put(`/${agentType === 'agent' ? 'agents' : 'groups'}/${id}/system-settings`, {
-        packages: packages.filter(Boolean),
-        sessionIdHeaderName,
-        targetHost,
-      });
-      onSuccess({ type: 'SUCCESS', text: 'New settings have been saved' });
-    } catch ({ response: { data: { message } = {} } = {} }) {
-      onError({
-        type: 'ERROR',
-        text: 'On-submit error. Server problem or operation could not be processed in real-time',
-      });
-    }
-  };
-}
+    </div>
+  );
+};

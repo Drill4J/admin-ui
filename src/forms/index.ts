@@ -23,4 +23,5 @@ export {
   numericLimits,
   positiveInteger,
   isNumericString,
+  correctPattern,
 } from './form-validators';

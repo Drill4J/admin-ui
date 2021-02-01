@@ -15,7 +15,7 @@
  */
 import { BEM, div } from '@redneckz/react-bem-helper';
 import { useHistory } from 'react-router-dom';
-import { Icons, Badge } from '@drill4j/ui-kit';
+import { Icons, Badge, Tooltip } from '@drill4j/ui-kit';
 
 import { AGENT_STATUS } from 'common/constants';
 import { Agent } from 'types/agent';
@@ -54,9 +54,15 @@ export const NameColumn = nameColumn(
       <div className={className}>
         <div className="flex items-center w-full">
           <AgentTypeIcon disabled={agentIsDisabled}>
-            {isServiceGroup ? <Icons.ServiceGroup /> : <AgentIcon />}
+            {isServiceGroup
+              ? <Icons.ServiceGroup />
+              : (
+                <Tooltip message={isOfflineAgent && 'Offline Agent'}>
+                  <AgentIcon />
+                </Tooltip>
+              )}
           </AgentTypeIcon>
-          {(status === AGENT_STATUS.NOT_REGISTERED || isOfflineAgent) && <NewAgentBadge color="green">New</NewAgentBadge>}
+          {(status === AGENT_STATUS.NOT_REGISTERED) && <NewAgentBadge color="green">New</NewAgentBadge>}
           {unregisteredAgentsCount > 0 && (
             <NewAgentBadge color="green">{`+${unregisteredAgentsCount}`}</NewAgentBadge>
           )}
