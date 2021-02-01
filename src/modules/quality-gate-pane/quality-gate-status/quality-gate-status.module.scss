@@ -37,6 +37,7 @@
   }
 
   &__info-panel {
+    position: relative;
     display: flex;
     flex-direction: column;
     padding: 8px 24px;
@@ -53,7 +54,7 @@
 
   &__copy-icon {
     position: absolute;
-    top: 252px;
+    top: 64px;
     right: 24px;
     color: map-get($primary-blue, default);
     cursor: pointer;
