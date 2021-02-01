@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 import { Icons } from '@drill4j/ui-kit';
 
@@ -44,6 +44,12 @@ export const QualityGateStatus = qualityGateStatus(
     pluginId,
   }: Props) => {
     const [copied, setCopied] = useState(false);
+    useEffect(() => {
+      const timeout = setTimeout(() => setCopied(false), 5000);
+      copied && timeout;
+      return () => clearTimeout(timeout);
+    }, [copied]);
+
     return (
       <div className={className}>
         <Conditions>

@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { BEM } from '@redneckz/react-bem-helper';
 import { nanoid } from 'nanoid';
@@ -46,6 +46,12 @@ export const TestsToRunModal = testsToRunModal(
     className, isOpen, onToggle,
   }: Props) => {
     const [copied, setCopied] = useState(false);
+    useEffect(() => {
+      const timeout = setTimeout(() => setCopied(false), 5000);
+      copied && timeout;
+      return () => clearTimeout(timeout);
+    }, [copied]);
+
     const { serviceGroupId = '', pluginId = '' } = useParams<{ serviceGroupId: string, pluginId: string }>();
     const { byType: testsToRun = {} } = usePluginData<GroupedTestToRun>('/group/data/tests-to-run', serviceGroupId, pluginId) || {};
     const allTests = Object.values(testsToRun).reduce((acc, tests) => [...acc, ...tests], []);

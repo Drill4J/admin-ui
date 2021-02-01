@@ -13,12 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 import { useParams } from 'react-router-dom';
 import { Button, Icons, Popup } from '@drill4j/ui-kit';
 
 import { copyToClipboard } from 'utils';
+import { clearTimeout, setTimeout } from 'timers';
 import { TestsToRunUrl } from '../../../tests-to-run-url';
 import { getTestsToRunURL } from '../../../get-tests-to-run-url';
 
@@ -38,6 +39,12 @@ export const GetSuggestedTestsModal = getSuggestedTestsModal(({
 }: Props) => {
   const { agentId = '', pluginId = '' } = useParams<{ agentId: string; pluginId: string; }>();
   const [copied, setCopied] = useState(false);
+  useEffect(() => {
+    const timeout = setTimeout(() => setCopied(false), 5000);
+    copied && timeout;
+    return () => clearTimeout(timeout);
+  }, [copied]);
+
   return (
     <Popup
       isOpen={isOpen}
@@ -57,7 +64,10 @@ export const GetSuggestedTestsModal = getSuggestedTestsModal(({
           <CopyToClipboardButton
             type="primary"
             size="large"
-            onClick={() => { copyToClipboard(getTestsToRunURL(agentId, pluginId, agentType)); setCopied(true); }}
+            onClick={() => {
+              copyToClipboard(getTestsToRunURL(agentId, pluginId, agentType));
+              setCopied(true);
+            }}
             data-test="get-suggested-tests-modal:copy-to-clipboard-button"
           >
             {copied
