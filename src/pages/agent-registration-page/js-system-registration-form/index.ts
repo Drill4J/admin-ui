@@ -13,10 +13,4 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-export interface CommonEntity {
-  id?: string;
-  name?: string;
-  environment?: string;
-  description?: string;
-  type?: string;
-}
+export { JsSystemRegistrationForm } from './js-system-registration-form';

@@ -13,13 +13,4 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-@import '~common/style-guide/index';
-
-.agent-registration-page {
-  height: 100%;
-  width: 100%;
-
-  &__header-icon {
-    margin-right: 16px;
-  }
-}
+export { JavaGeneralSettingsForm } from './java-general-settings-form';

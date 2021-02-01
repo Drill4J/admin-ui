@@ -13,4 +13,4 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-export { GeneralSettingsForm } from './general-settings-form';
+export { JsGeneralRegistrationForm } from './js-general-registration-form';

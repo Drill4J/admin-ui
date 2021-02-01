@@ -16,18 +16,18 @@
 import { useEffect, useState } from 'react';
 import { defaultAdminSocket } from 'common/connection';
 
-import { CommonEntity } from 'types/common-entity';
+import { ServiceGroupEntity } from 'types/service-group-entity';
 
-export function useCommonEntity(id: string, type: string) {
-  const [data, setData] = useState<CommonEntity | null>(null);
+export function useServiceGroup(id: string) {
+  const [data, setData] = useState<ServiceGroupEntity | null>(null);
 
   useEffect(() => {
-    function handleDataChange(newData: CommonEntity) {
+    function handleDataChange(newData: ServiceGroupEntity) {
       setData(newData);
     }
 
     const unsubscribe = defaultAdminSocket.subscribe(
-      `/api/${type === 'service-group' ? 'groups' : 'agents'}/${id}`,
+      `/api/groups/${id}`,
       handleDataChange,
     );
 

@@ -13,12 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { CommonEntity } from 'types/common-entity';
+import { ServiceGroupEntity } from 'types/service-group-entity';
 import { AgentStatus } from './agent-status';
 import { Plugin } from './plugin';
 import { SystemSettings } from './system-settings';
 
-export interface Agent extends CommonEntity {
+export interface Agent extends ServiceGroupEntity {
   status?: AgentStatus;
   drillAdminUrl?: string;
   address?: string;

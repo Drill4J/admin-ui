@@ -60,7 +60,7 @@ export const ServiceGroupRegistrationPage = serviceGroupRegistrationPage(
           title={(
             <div className="flex items-center w-full">
               <HeaderIcon height={20} width={20} />
-              Register New Agents
+              Service Group Registration
             </div>
           )}
           actions={(
@@ -83,14 +83,7 @@ export const ServiceGroupRegistrationPage = serviceGroupRegistrationPage(
         >
           <Step
             name="System settings"
-            component={() => (
-              <SystemSettingsStep infoPanel={(
-                <GeneralAlerts type="INFO">
-                  Provide information related to your application / project.
-                </GeneralAlerts>
-              )}
-              />
-            )}
+            component={SystemSettingsStep}
             validate={composeValidators(
               requiredArray('systemSettings.packages', 'Path prefix is required.'),
               sizeLimit({

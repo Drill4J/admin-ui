@@ -13,75 +13,76 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { BEM } from '@redneckz/react-bem-helper';
 import { useHistory } from 'react-router-dom';
-import { Icons, Button } from '@drill4j/ui-kit';
+import { Icons, Button, Tooltip } from '@drill4j/ui-kit';
+import 'twin.macro';
 
 import { AGENT_STATUS } from 'common/constants';
-import { CommonEntity } from 'types/common-entity';
+import { ServiceGroupEntity } from 'types/service-group-entity';
 import { Agent } from 'types/agent';
-import { ComponentPropsType } from 'types/component-props-type';
 
-import styles from './actions-column.module.scss';
-
-interface ServiceGroup extends CommonEntity {
+interface ServiceGroup extends ServiceGroupEntity {
   name: string;
   agents: Agent[];
 }
 
 interface Props {
-  className?: string;
   agent: Agent;
 }
 
-const actionsColumn = BEM(styles);
-
-export const ActionsColumn = actionsColumn(({ className, agent }: Props) => {
+export const ActionsColumn = ({ agent }: Props) => {
   const {
-    id: agentId = '', status, agentType = '',
+    id: agentId = '', status, agentType = '', group = '',
   } = agent;
   const { push } = useHistory();
   const { agents = [] } = agent as ServiceGroup;
   const unregisteredAgentsCount = agents.reduce(
     (acc, { status: agentStatus }) => (agentStatus === AGENT_STATUS.NOT_REGISTERED ? acc + 1 : acc), 0,
   );
-  const hasOfflineAgent = agents.some(({ status: agentStatus }) => agentStatus === AGENT_STATUS.OFFLINE);
+  const isJavaAgentsServiceGroup = agents.every((serviceGroupAgent) => serviceGroupAgent.agentType === 'Java');
 
   return (
-    <div className={className}>
-      <Content className="flex justify-end items-center w-full">
-        {(status === AGENT_STATUS.NOT_REGISTERED || unregisteredAgentsCount > 0) && (
-          <RegisterButton
+    <div className={`flex items-center gap-x-4 ${(status !== AGENT_STATUS.ONLINE && agentType !== 'ServiceGroup') && 'mr-8'}`}>
+      {(status === AGENT_STATUS.NOT_REGISTERED || unregisteredAgentsCount > 0) && (
+        <Tooltip
+          position="top-left"
+          message={agentType === 'ServiceGroup' && !isJavaAgentsServiceGroup && (
+            <div className="text-center">
+              Bulk registration is disabled for multi-type agents.
+              <br />
+              Please register your agents separately.
+            </div>
+          )}
+        >
+          <Button
             onClick={() => push(`/${
               agentType === 'ServiceGroup' ? 'bulk-registration' : 'registration'
             }/${agentId}?unregisteredAgentsCount=${unregisteredAgentsCount}`)}
             data-test="action-column:icons-register"
-            type="primary"
+            size="small"
+            type={agentType === 'ServiceGroup' || !group ? 'primary' : 'secondary'}
+            disabled={agentType === 'ServiceGroup' && !isJavaAgentsServiceGroup}
+            tw="flex items-center w-full gap-x-2"
           >
-            <div className="flex items-center w-full">
-              <RegisterIcon />
-              Register {unregisteredAgentsCount ? `(${unregisteredAgentsCount})` : ''}
-            </div>
-          </RegisterButton>
-        )}
-        <SettingsButton
-          onClick={() => push(
-            `/agents/${
-              agentType === 'ServiceGroup' ? 'service-group' : 'agent'
-            }/${agentId}/settings/`,
-          )}
-          height={16}
-          width={16}
-          data-test="action-column:icons-settings"
-          disabled={(status && status !== AGENT_STATUS.ONLINE) || hasOfflineAgent || unregisteredAgentsCount > 0}
-        />
-      </Content>
+            <Icons.Register />
+            Register {unregisteredAgentsCount ? `(${unregisteredAgentsCount})` : ''}
+          </Button>
+        </Tooltip>
+      )}
+      {((status === AGENT_STATUS.ONLINE && agentType !== 'ServiceGroup') || agentType === 'ServiceGroup') && (
+        <div tw="text-blue-default cursor-pointer">
+          <Icons.Settings
+            onClick={() => push(
+              `/agents/${
+                agentType === 'ServiceGroup' ? 'service-group' : 'agent'
+              }/${agentId}/settings/`,
+            )}
+            height={16}
+            width={16}
+            data-test="action-column:icons-settings"
+          />
+        </div>
+      )}
     </div>
   );
-});
-
-const Content = actionsColumn.content('div');
-const RegisterButton = actionsColumn.registerButton(Button);
-const SettingsButton: React.FC<ComponentPropsType<typeof Icons.Settings> & { disabled?: boolean}> =
-  actionsColumn.settingsButton(Icons.Settings);
-const RegisterIcon = actionsColumn.registerIcon(Icons.Register);
+};

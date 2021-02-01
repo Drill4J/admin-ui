@@ -16,7 +16,7 @@
 import { useState } from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 import { useHistory, useParams } from 'react-router-dom';
-import { Icons, Button } from '@drill4j/ui-kit';
+import { Icons, Button, GeneralAlerts } from '@drill4j/ui-kit';
 
 import { PluginListEntry } from 'components';
 import { Agent } from 'types/agent';
@@ -50,12 +50,9 @@ export const PluginsSettingsTab = pluginsSettingsTab(
 
     return (
       <div className={className}>
-        <InfoPanel className="flex justify-between items-center w-full px-6">
-          <div className="flex items-center w-full">
-            <InfoIcon />
-            {`Plugins installed on your ${agentType === 'agent' ? 'agent' : 'service group'}.`}
-          </div>
-        </InfoPanel>
+        <GeneralAlerts type="INFO">
+          {`Plugins installed on your ${agentType === 'agent' ? 'agent' : 'service group'}.`}
+        </GeneralAlerts>
         <Header>
           <span>
             Plugins
@@ -111,8 +108,6 @@ export const PluginsSettingsTab = pluginsSettingsTab(
   },
 );
 
-const InfoPanel = pluginsSettingsTab.infoPanel('div');
-const InfoIcon = pluginsSettingsTab.infoIcon(Icons.Info);
 const Content = pluginsSettingsTab.content('div');
 const Header = pluginsSettingsTab.header('div');
 const PluginsCount = pluginsSettingsTab.pluginsCount('span');

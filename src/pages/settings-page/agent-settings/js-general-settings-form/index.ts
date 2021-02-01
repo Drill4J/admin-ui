@@ -13,33 +13,4 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-@import '~common/style-guide/index';
-
-.actions-column {
-  color: map-get($primary-blue, default);
-
-  &__content {
-    gap: 16px;
-  }
-
-  &__register-button {
-    white-space: nowrap;
-    line-height: 22px;
-    padding: 2px 12px;
-    font-size: 12px;
-    cursor: pointer;
-  }
-
-  &__register-icon {
-    margin-right: 8px;
-  }
-
-  &__settings-button {
-    cursor: pointer;
-
-    &--disabled {
-      opacity: 0.25;
-      pointer-events: none;
-    }
-  }
-}
+export { JsGeneralSettingsForm } from './js-general-settings-form';
