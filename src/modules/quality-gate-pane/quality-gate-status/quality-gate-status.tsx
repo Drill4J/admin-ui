@@ -13,6 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+import { useState } from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 import { Icons } from '@drill4j/ui-kit';
 
@@ -41,69 +42,80 @@ export const QualityGateStatus = qualityGateStatus(
     },
     agentId,
     pluginId,
-  }: Props) => (
-    <div className={className}>
-      <Conditions>
-        {conditionSettingByType.coverage?.enabled && (
-          <Condition
-            passed={Boolean(qualityGate?.results?.coverage)}
-            type="coverage"
-            thresholdValue={conditionSettingByType.coverage.condition.value}
-          >
-            <CondtionStatus data-test="quality-gate-status:condition-status:coverage">
-              {qualityGate?.results?.coverage ? 'Passed' : 'Failed'}. Your coverage is&nbsp;
-              <Value data-test="quality-gate-status:condition-status:coverage">{percentFormatter(metrics?.coverage || 0)}</Value>
-              %
-            </CondtionStatus>
-          </Condition>
-        )}
-        {conditionSettingByType.risks?.enabled && (
-          <Condition
-            passed={Boolean(qualityGate?.results?.risks)}
-            type="risks"
-            thresholdValue={conditionSettingByType.risks.condition.value}
-          >
-            <CondtionStatus data-test="quality-gate-status:condition-status:risks">
-              {qualityGate?.results?.risks ? 'Passed' : 'Failed'}. You have&nbsp;
-              <Value data-test="quality-gate-status:condition-status:risks">{metrics?.risks}</Value>
-              &nbsp;risks
-            </CondtionStatus>
-          </Condition>
-        )}
-        {conditionSettingByType.tests?.enabled && (
-          <Condition
-            passed={Boolean(qualityGate?.results?.tests)}
-            type="testsToRun"
-            thresholdValue={conditionSettingByType.tests.condition.value}
-          >
-            <CondtionStatus data-test="quality-gate-status:condition-status:tests">
-              {qualityGate?.results?.tests ? 'Passed' : 'Failed'}. You have&nbsp;
-              <Value data-test="quality-gate-status:condition-status:tests">{metrics?.tests}</Value>
-              {qualityGate?.results?.tests ? ' Tests to run' : ' not executed tests to run'}
-            </CondtionStatus>
-          </Condition>
-        )}
-      </Conditions>
-      <InfoPanel data-test="quality-gate-status:info-panel">
-        <span>
-          This is quality gate configuration for this build.
-          Use this Curl in your command line to get JSON:
-        </span>
-        <CommandWrapper className="d-flex align-items-end">
+  }: Props) => {
+    const [copied, setCopied] = useState(false);
+    return (
+      <div className={className}>
+        <Conditions>
+          {conditionSettingByType.coverage?.enabled && (
+            <Condition
+              passed={Boolean(qualityGate?.results?.coverage)}
+              type="coverage"
+              thresholdValue={conditionSettingByType.coverage.condition.value}
+            >
+              <CondtionStatus data-test="quality-gate-status:condition-status:coverage">
+                {qualityGate?.results?.coverage ? 'Passed' : 'Failed'}. Your coverage is&nbsp;
+                <Value data-test="quality-gate-status:condition-status:coverage">{percentFormatter(metrics?.coverage || 0)}</Value>
+                %
+              </CondtionStatus>
+            </Condition>
+          )}
+          {conditionSettingByType.risks?.enabled && (
+            <Condition
+              passed={Boolean(qualityGate?.results?.risks)}
+              type="risks"
+              thresholdValue={conditionSettingByType.risks.condition.value}
+            >
+              <CondtionStatus data-test="quality-gate-status:condition-status:risks">
+                {qualityGate?.results?.risks ? 'Passed' : 'Failed'}. You have&nbsp;
+                <Value data-test="quality-gate-status:condition-status:risks">{metrics?.risks}</Value>
+                &nbsp;risks
+              </CondtionStatus>
+            </Condition>
+          )}
+          {conditionSettingByType.tests?.enabled && (
+            <Condition
+              passed={Boolean(qualityGate?.results?.tests)}
+              type="testsToRun"
+              thresholdValue={conditionSettingByType.tests.condition.value}
+            >
+              <CondtionStatus data-test="quality-gate-status:condition-status:tests">
+                {qualityGate?.results?.tests ? 'Passed' : 'Failed'}. You have&nbsp;
+                <Value data-test="quality-gate-status:condition-status:tests">{metrics?.tests}</Value>
+                {qualityGate?.results?.tests ? ' Tests to run' : ' not executed tests to run'}
+              </CondtionStatus>
+            </Condition>
+          )}
+        </Conditions>
+        <InfoPanel data-test="quality-gate-status:info-panel">
+          <span>
+            This is quality gate configuration for this build.
+            Use this Curl in your command line to get JSON:
+          </span>
           <QualityGateConfigurationUrl agentId={agentId} pluginId={pluginId} />
-          <CopyIcon
-            data-test="quality-gate-status:copy-icon"
-            onClick={() => copyToClipboard(getQualityGateConfigurationUrl(agentId, pluginId))}
-          />
-        </CommandWrapper>
-      </InfoPanel>
-    </div>
-  ),
+          <CopyIcon>
+            {copied
+              ? (
+                <div className="d-flex align-items-center gx-1 fs-10 lh-16 primary-blue-default">
+                  <span className="monochrome-black">Copied to clipboard.</span>
+                  <Icons.Check height={10} width={14} viewBox="0 0 14 10" />
+                </div>
+              )
+              : (
+                <Icons.Copy
+                  data-test="quality-gate-status:copy-icon"
+                  onClick={() => { copyToClipboard(getQualityGateConfigurationUrl(agentId, pluginId)); setCopied(true); }}
+                />
+              )}
+          </CopyIcon>
+        </InfoPanel>
+      </div>
+    );
+  },
 );
 
 const Conditions = qualityGateStatus.conditions('div');
 const CondtionStatus = qualityGateStatus.condtionStatus('div');
 const Value = qualityGateStatus.value('span');
 const InfoPanel = qualityGateStatus.infoPanel('div');
-const CommandWrapper = qualityGateStatus.commandWrapper('div');
-const CopyIcon = qualityGateStatus.copyIcon(Icons.Copy);
+const CopyIcon = qualityGateStatus.copyIcon('div');

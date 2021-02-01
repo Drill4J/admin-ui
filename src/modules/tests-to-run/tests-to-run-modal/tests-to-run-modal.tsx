@@ -45,6 +45,7 @@ export const TestsToRunModal = testsToRunModal(
   ({
     className, isOpen, onToggle,
   }: Props) => {
+    const [copied, setCopied] = useState(false);
     const { serviceGroupId = '', pluginId = '' } = useParams<{ serviceGroupId: string, pluginId: string }>();
     const { byType: testsToRun = {} } = usePluginData<GroupedTestToRun>('/group/data/tests-to-run', serviceGroupId, pluginId) || {};
     const allTests = Object.values(testsToRun).reduce((acc, tests) => [...acc, ...tests], []);
@@ -73,10 +74,22 @@ export const TestsToRunModal = testsToRunModal(
               These are recommendations for this build updates only.
               Use this Curl in your command line to get JSON:
             </span>
-            <CommandWrapper className="d-flex align-items-end w-100">
-              <TestsToRunUrl agentId={serviceGroupId} pluginId={pluginId} agentType="ServiceGroup" />
-              <CopyIcon onClick={() => copyToClipboard(getTestsToRunURL(serviceGroupId, pluginId, 'ServiceGroup'))} />
-            </CommandWrapper>
+            <TestsToRunUrl agentId={serviceGroupId} pluginId={pluginId} agentType="ServiceGroup" />
+            <CopyIcon>
+              {copied
+                ? (
+                  <div className="d-flex align-items-center gx-1 fs-10 lh-16 primary-blue-default">
+                    <span className="monochrome-black">Copied to clipboard.</span>
+                    <Icons.Check height={10} width={14} viewBox="0 0 14 10" />
+                  </div>
+                )
+                : (
+                  <Icons.Copy
+                    data-test="quality-gate-status:copy-icon"
+                    onClick={() => { copyToClipboard(getTestsToRunURL(serviceGroupId, pluginId, 'ServiceGroup')); setCopied(true); }}
+                  />
+                )}
+            </CopyIcon>
           </NotificaitonPanel>
           <Content>
             <Filter
@@ -116,5 +129,4 @@ const MethodsList = testsToRunModal.methodsList('div');
 const MethodsListItem = testsToRunModal.methodsListItem('div');
 const MethodInfo = testsToRunModal.methodsInfo('div');
 const MethodsListItemIcon = testsToRunModal.methodsListItemIcon('div');
-const CommandWrapper = testsToRunModal.commandWrapper('div');
-const CopyIcon = testsToRunModal.copyIcon(Icons.Copy);
+const CopyIcon = testsToRunModal.copyIcon('div');

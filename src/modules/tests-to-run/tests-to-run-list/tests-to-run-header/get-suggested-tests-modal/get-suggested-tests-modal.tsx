@@ -13,9 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+import { useState } from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 import { useParams } from 'react-router-dom';
-import { Button, Popup, Icons } from '@drill4j/ui-kit';
+import { Button, Icons, Popup } from '@drill4j/ui-kit';
 
 import { copyToClipboard } from 'utils';
 import { TestsToRunUrl } from '../../../tests-to-run-url';
@@ -36,6 +37,7 @@ export const GetSuggestedTestsModal = getSuggestedTestsModal(({
   className, isOpen, onToggle, agentType,
 }: Props) => {
   const { agentId = '', pluginId = '' } = useParams<{ agentId: string; pluginId: string; }>();
+  const [copied, setCopied] = useState(false);
   return (
     <Popup
       isOpen={isOpen}
@@ -43,29 +45,43 @@ export const GetSuggestedTestsModal = getSuggestedTestsModal(({
       header="Get Suggested Tests"
       closeOnFadeClick
     >
-      <div className={className}>
-        <Message data-test="get-suggested-tests-modal:message">
-          <span>These are recommendations for this build updates only.</span>
-          <span>Use this Curl in your command line to get JSON:</span>
-          <CommandWrapper className="d-flex align-items-end w-100 my-6">
-            <TestsToRunUrl agentId={agentId} pluginId={pluginId} agentType={agentType} />
-            <CopyIcon onClick={() => copyToClipboard(getTestsToRunURL(agentId, pluginId, agentType))} />
-          </CommandWrapper>
+      <div className={`${className} d-flex flex-column pt-4 px-6 pb-6 gy-7`}>
+        <Message className="d-flex flex-column gy-4 fs-14 lh-20" data-test="get-suggested-tests-modal:message">
+          <span>
+            These are recommendations for this build updates only.<br />
+            Use this Curl in your command line to get JSON:
+          </span>
+          <TestsToRunUrl agentId={agentId} pluginId={pluginId} agentType={agentType} />
         </Message>
-        <CloseButton
-          type="secondary"
-          size="large"
-          onClick={() => onToggle(false)}
-          data-test="get-suggested-tests-modal:close-button"
-        >
-          Close
-        </CloseButton>
+        <div className="d-flex justify-content-end gx-4">
+          <CopyToClipboardButton
+            type="primary"
+            size="large"
+            onClick={() => { copyToClipboard(getTestsToRunURL(agentId, pluginId, agentType)); setCopied(true); }}
+            data-test="get-suggested-tests-modal:copy-to-clipboard-button"
+          >
+            {copied
+              ? (
+                <div className="d-flex justify-content-center align-items-center gx-2 w-100">
+                  <Icons.Check height={10} width={14} viewBox="0 0 14 10" />
+                  Copied
+                </div>
+              )
+              : 'Copy to Clipboard'}
+          </CopyToClipboardButton>
+          <Button
+            type="secondary"
+            size="large"
+            onClick={() => onToggle(false)}
+            data-test="get-suggested-tests-modal:close-button"
+          >
+            Close
+          </Button>
+        </div>
       </div>
     </Popup>
   );
 });
 
 const Message = getSuggestedTestsModal.message('div');
-const CommandWrapper = getSuggestedTestsModal.commandWrapper('div');
-const CopyIcon = getSuggestedTestsModal.copyIcon(Icons.Copy);
-const CloseButton = getSuggestedTestsModal.closeButton(Button);
+const CopyToClipboardButton = getSuggestedTestsModal.copyToClipboardButton(Button);
