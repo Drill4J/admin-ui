@@ -35,10 +35,6 @@
     color: map-get($primary-blue, default);
     font-family: $regular-font;
     text-transform: lowercase;
-
-    &::first-letter {
-      text-transform: capitalize;
-    }
   }
 
   &__content {

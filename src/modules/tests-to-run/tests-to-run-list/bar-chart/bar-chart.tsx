@@ -168,7 +168,7 @@ export const BarChart = barChart(({
         <input
           style={{ width: `${visibleBarsCount > testsToRunHistory.length ? 0 : width}px` }}
           type="range"
-          min={visibleBarsCount}
+          min={visibleBarsCount > testsToRunHistory.length ? 0 : visibleBarsCount}
           value={slice || bars.length}
           max={testsToRunHistory.length}
           onChange={(event) => setSlice(Number(event.currentTarget.value))}
