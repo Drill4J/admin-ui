@@ -17,18 +17,10 @@
 
 .notifications {
   &__content {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    padding: 0px 16px;
     height: 80px;
     font-size: 12px;
     color: map-get($monochrome, default);
     border-bottom: 1px solid map-get($monochrome, medium-tint);
-
-    & > *:not(:last-child) {
-      margin-bottom: 4px;
-    }
   }
 
   &:hover {
@@ -54,9 +46,10 @@
 
   &__build-version {
     display: grid;
-    grid-template-columns: minmax(auto, 332px) 1fr;
+    grid-template-columns: 288px 48px;
+    gap: 16px;
     height: 20px;
-    font-size: 12px;
+    font-size: 14px;
     color: map-get($monochrome, black);
 
     &--unread {
@@ -66,8 +59,7 @@
 
   &__notification-status-indicator {
     height: 8px;
-    width: 8px;
-    margin-right: 8px;
+    min-width: 8px;
     border-radius: 4px;
     background-color: map-get($monochrome, medium-tint);
 
@@ -78,11 +70,10 @@
 
   &__button-group {
     display: none;
-    width: 48px;
     color: map-get($primary-blue, default);
 
-    & > * {
-      margin-left: 16px;
+    &:hover {
+      display: flex;
     }
   }
 
@@ -129,11 +120,6 @@
 
     &:active {
       color: map-get($primary-blue, shade);
-    }
-
-    &::after {
-      content: '\2022';
-      margin: 0px 4px;
     }
   }
 
