@@ -65,7 +65,6 @@ export const TestsToRunList = testsToRunList(({ className, agentType = 'Agent' }
   const { AUTO } = previousBuildTests
     .reduce((test, testType) => ({ ...test, [testType.type]: testType }), {}) as TestsInfo;
   const previousBuildAutoTestsCount = AUTO?.summary?.testCount || 0;
-
   return (
     <div className={className}>
       <TestsToRunHeader
