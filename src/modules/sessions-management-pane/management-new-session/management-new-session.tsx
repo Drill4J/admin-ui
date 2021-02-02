@@ -31,11 +31,14 @@ interface Props {
   className?: string;
   agentId: string;
   serviceGroupId: string;
+  hasGlobalSession: boolean;
 }
 
 const managementNewSession = BEM(styles);
 
-export const ManagementNewSession = managementNewSession(({ className, agentId, serviceGroupId }: Props) => (
+export const ManagementNewSession = managementNewSession(({
+  className, agentId, serviceGroupId, hasGlobalSession,
+}: Props) => (
   <div className={className}>
     <GeneralAlerts type="INFO">
       <span data-test="management-new-session:info-general-alert">
@@ -69,15 +72,29 @@ export const ManagementNewSession = managementNewSession(({ className, agentId, 
         render={({ input, meta }) => (
           <div className="d-flex align-items-center g-2">
             <Fields.Checkbox
+              disabled={hasGlobalSession}
               input={input}
               meta={meta}
               label="Set as global session"
             />
             <Tooltip
               message={(
-                <div className="d-flex flex-column justify-content-center align-items-center w-100">
-                  <div>Session that tracks all of the executions on your JVM</div>
-                  <div>(e.g. background tasks)</div>
+                <div className="text-center">
+                  {hasGlobalSession
+                    ? (
+                      <>
+                        Only one active global session is allowed.
+                        <br />
+                        Please finish the active one in order to start new.
+                      </>
+                    )
+                    : (
+                      <>
+                        Session that tracks all of the executions on your JVM
+                        <br />
+                        (e.g. background tasks)
+                      </>
+                    )}
                 </div>
               )}
             >
