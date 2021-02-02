@@ -13,6 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+import { useEffect } from 'react';
 import { Form } from 'react-final-form';
 import { useParams } from 'react-router-dom';
 import { BEM } from '@redneckz/react-bem-helper';
@@ -69,6 +70,8 @@ export const SessionsManagementPane = manageSessionsPane(
     const agentType = serviceGroupId ? 'ServiceGroup' : 'Agent';
     const id = agentId || serviceGroupId;
     const activeSessions = useActiveSessions(agentType, id, buildVersion) || [];
+    const hasGlobalSession = activeSessions.some(({ isGlobal }) => isGlobal);
+    useEffect(() => showGeneralAlertMessage(null), [isNewSession]);
 
     return (
       <Modal isOpen={isOpen} onToggle={onToggle}>
@@ -112,7 +115,8 @@ export const SessionsManagementPane = manageSessionsPane(
                     {generalAlertMessage.text}
                   </GeneralAlerts>
                 )}
-                {isNewSession && <ManagementNewSession agentId={agentId} serviceGroupId={serviceGroupId} />}
+                {isNewSession &&
+                <ManagementNewSession agentId={agentId} serviceGroupId={serviceGroupId} hasGlobalSession={hasGlobalSession} />}
                 {!isNewSession && activeSessions.length > 0 && (
                   <>
                     <ManagementActiveSessions activeSessions={activeSessions} />
