@@ -20,10 +20,6 @@
   flex-direction: column;
   height: 100%;
 
-  &__content {
-    padding: 0 64px;
-  }
-
   &__title {
     color: map-get($monochrome, black);
     font-size: 32px;

@@ -52,9 +52,9 @@ export const LoginPage = loginPage(({ className }: Props) => {
   return (
     <LoginLayout>
       <div className={className}>
-        <Content className="d-flex flex-column justify-content-center align-items-center w-100 h-100">
+        <div className="d-flex flex-column justify-content-center align-items-center w-100 h-100">
           <Title>Welcome to Drill4J</Title>
-          <SubTitle>Click &quot;Continue as a guest&quot; to entry Admin Panel with admin privilege</SubTitle>
+          <SubTitle className="px-16">Click &quot;Continue as a guest&quot; to entry Admin Panel with admin privilege</SubTitle>
           {error && <Error type="ERROR">{`${error}`}</Error>}
           <SignInForm>
             <Inputs.Text placeholder="User ID" disabled />
@@ -67,14 +67,13 @@ export const LoginPage = loginPage(({ className }: Props) => {
           <LoginAsGuestButton type="secondary" size="large" onClick={handleLogin}>
             Continue as a guest (read only)
           </LoginAsGuestButton>
-        </Content>
+        </div>
         <Copyright>{`© ${new Date().getFullYear()} Drill4J. All rights reserved.`}</Copyright>
       </div>
     </LoginLayout>
   );
 });
 
-const Content = loginPage.content('div');
 const Title = loginPage.title('div');
 const SubTitle = loginPage.subTitle('div');
 const Error = loginPage.error(GeneralAlerts);
