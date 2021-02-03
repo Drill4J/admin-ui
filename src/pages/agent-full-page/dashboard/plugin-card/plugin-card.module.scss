@@ -27,14 +27,12 @@
     font-family: $semibold-font;
     border-bottom: 1px solid map-get($monochrome, medium-tint);
     color: map-get($monochrome, default);
-    text-transform: uppercase;
   }
 
   &__link {
     text-decoration: none;
     color: map-get($primary-blue, default);
     font-family: $regular-font;
-    text-transform: lowercase;
   }
 
   &__content {
