@@ -55,7 +55,12 @@ export const AgentsPage = agentsPage(({ className }: Props) => {
         title="Agents"
         itemsCount={agentsList.length}
         actions={(
-          <Button type="secondary" size="large" onClick={() => push('/preregister/offline-agent')}>
+          <Button
+            className="d-flex gx-2"
+            type="secondary"
+            size="large"
+            onClick={() => push('/preregister/offline-agent')}
+          >
             <Icons.Register />
             <span>Preregister Offline Agent</span>
           </Button>

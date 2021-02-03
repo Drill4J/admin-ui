@@ -121,6 +121,7 @@ export const ScopeInfo = scopeInfo(
               <div className="d-flex justify-content-end align-items-center w-100">
                 {active && status === AGENT_STATUS.ONLINE && (
                   <FinishScopeButton
+                    className="d-flex gx-2"
                     type="primary"
                     size="large"
                     onClick={() => dispatch(openModal('FinishScopeModal', scope))}

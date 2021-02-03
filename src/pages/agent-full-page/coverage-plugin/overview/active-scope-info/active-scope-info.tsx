@@ -53,6 +53,7 @@ export const ActiveScopeInfo = activeScopeInfo(({
         <SessionIndicator active={loading} />
       </div>
       <FinishScopeButton
+        className="d-flex gx-2"
         type="primary"
         size="large"
         onClick={() => dispatch(openModal('FinishScopeModal', scope))}
