@@ -4,7 +4,7 @@
   "license": "Apache-2.0",
   "private": true,
   "dependencies": {
-    "@drill4j/ui-kit": "0.1.61",
+    "@drill4j/ui-kit": "0.1.62",
     "@redneckz/react-bem-helper": "2.0.4",
     "@redneckz/react-devirt": "0.0.6",
     "@types/jest": "26.0.14",

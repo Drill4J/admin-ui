@@ -91,6 +91,7 @@ export const Wizard = wizard(({
               <div className="d-flex justify-content-end align-items-center w-100">
                 {currentStepIndex > 0 && (
                   <PreviousButton
+                    className="d-flex gx-2"
                     type="secondary"
                     size="large"
                     onClick={() => dispatch(previousStep())}
@@ -102,6 +103,7 @@ export const Wizard = wizard(({
                 )}
                 {currentStepIndex < steps.length - 1 ? (
                   <Button
+                    className="d-flex gx-2"
                     type="primary"
                     size="large"
                     onClick={() => dispatch(nextStep())}
@@ -113,6 +115,7 @@ export const Wizard = wizard(({
                   </Button>
                 ) : (
                   <Button
+                    className="d-flex gx-2"
                     type="primary"
                     size="large"
                     onClick={handleSubmit}

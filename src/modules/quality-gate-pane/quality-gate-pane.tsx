@@ -173,6 +173,7 @@ export const QualityGatePane = qualityGatePane(
                     )}
                   {configured && isEditing && (
                     <Button
+                      className="d-flex gx-2"
                       type="secondary"
                       size="large"
                       onClick={() => setIsEditing(false)}

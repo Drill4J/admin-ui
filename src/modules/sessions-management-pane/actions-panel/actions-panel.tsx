@@ -65,6 +65,7 @@ export const ActionsPanel = actionsPanel(
         )}
         { activeSessions.length > 0 && isNewSession && (
           <Button
+            className="d-flex gx-2"
             type="secondary"
             size="large"
             onClick={() => dispatch(setIsNewSession(false))}
