@@ -161,7 +161,7 @@ export const QualityGatePane = qualityGatePane(
                   )
                     : (
                       <Button
-                        className="flex items-center gx-1"
+                        className="flex items-center gap-x-1"
                         type="primary"
                         size="large"
                         disabled={invalid || pristine || submitting}
@@ -173,7 +173,7 @@ export const QualityGatePane = qualityGatePane(
                     )}
                   {configured && isEditing && (
                     <Button
-                      className="flex gx-2"
+                      className="flex gap-x-2"
                       type="secondary"
                       size="large"
                       onClick={() => setIsEditing(false)}

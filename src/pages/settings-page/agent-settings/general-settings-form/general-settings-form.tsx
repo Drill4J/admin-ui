@@ -76,7 +76,7 @@ export const GeneralSettingsForm = generalSettingsForm(
                   Basic agent settings.
                 </div>
                 <SaveChangesButton
-                  className="flex items-center gx-1"
+                  className="flex items-center gap-x-1"
                   type="primary"
                   size="large"
                   onClick={handleSubmit}

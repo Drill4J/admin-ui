@@ -91,7 +91,7 @@ export const Wizard = wizard(({
               <div className="flex justify-end items-center w-full">
                 {currentStepIndex > 0 && (
                   <PreviousButton
-                    className="flex gx-2"
+                    className="flex gap-x-2"
                     type="secondary"
                     size="large"
                     onClick={() => dispatch(previousStep())}
@@ -103,7 +103,7 @@ export const Wizard = wizard(({
                 )}
                 {currentStepIndex < steps.length - 1 ? (
                   <Button
-                    className="flex gx-2"
+                    className="flex gap-x-2"
                     type="primary"
                     size="large"
                     onClick={() => dispatch(nextStep())}
@@ -115,7 +115,7 @@ export const Wizard = wizard(({
                   </Button>
                 ) : (
                   <Button
-                    className="flex gx-2"
+                    className="flex gap-x-2"
                     type="primary"
                     size="large"
                     onClick={handleSubmit}

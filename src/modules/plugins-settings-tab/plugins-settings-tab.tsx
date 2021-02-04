@@ -62,7 +62,7 @@ export const PluginsSettingsTab = pluginsSettingsTab(
             <PluginsCount>{installedPlugins.length}</PluginsCount>
           </span>
           <AddPluginButton
-            className="flex gx-2"
+            className="flex gap-x-2"
             type="secondary"
             onClick={() => setIsAddPluginOpen(!isAddPluginOpen)}
             data-test={`${agentType}-info-page:add-plugin-button`}

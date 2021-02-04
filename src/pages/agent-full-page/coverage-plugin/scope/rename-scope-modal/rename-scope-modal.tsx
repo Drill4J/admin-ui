@@ -91,7 +91,7 @@ export const RenameScopeModal = renameScopeModal(
                 </FormGroup>
                 <div className="flex items-center g-4 w-full mt-6">
                   <Button
-                    className="flex items-center gx-1"
+                    className="flex items-center gap-x-1"
                     type="primary"
                     size="large"
                     onClick={handleSubmit}

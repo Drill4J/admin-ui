@@ -41,7 +41,7 @@ export const SelectableList = selectableList(
         id = '', available, description, version, name,
       }) => (
         <Element key={id} selected={selectedRows.includes(id)}>
-          <Plugin className="flex items-center gx-4 p-4 w-full">
+          <Plugin className="flex items-center gap-x-4 p-4 w-full">
             {available && (
               <Inputs.Checkbox
                 onChange={() => {

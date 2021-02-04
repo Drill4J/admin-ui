@@ -69,7 +69,7 @@ export const BaselineBuildModal = baselineBuildModal(({
               </span>
             </Message>
           )}
-          <div className="flex gx-4">
+          <div className="flex gap-x-4">
             <Button
               type="primary"
               size="large"

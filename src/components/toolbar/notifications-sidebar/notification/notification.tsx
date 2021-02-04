@@ -37,7 +37,7 @@ export const Notification = notification(({
   onError,
 }: Props) => (
   <div className={className}>
-    <Content className="flex flex-column justify-center gy-2 px-6">
+    <Content className="flex flex-column justify-center gap-y-2 px-6">
       <div className="flex justify-between items-center w-full">
         <span>{agentId}</span>
         <SinceNotificationArrived>{format(createdAt || Date.now())}</SinceNotificationArrived>
@@ -47,7 +47,7 @@ export const Notification = notification(({
           <NotificationStatusIndicator className="mr-2" unread={!read} />
           <div className="text-ellipsis mr-1" title={`Build ${buildVersion}`}>Build {buildVersion}</div>arrived
         </div>
-        <ButtonGroup className="justify-end gx-4 items-center">
+        <ButtonGroup className="justify-end gap-x-4 items-center">
           <MarkAsReadButton
             onClick={() => readNotification(id, { onError })}
             read={read}
@@ -63,7 +63,7 @@ export const Notification = notification(({
           </DeleteNotificationButton>
         </ButtonGroup>
       </BuildVersion>
-      <div className="flex gx-4 text-bold">
+      <div className="flex gap-x-4 text-bold">
         <LinkToDashboard
           href={`/full-page/${agentId}/${buildVersion}/dashboard`}
           target="_blank"

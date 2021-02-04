@@ -84,7 +84,7 @@ export const FinishAllScopesModal = finishAllScopesModal(
             </Instructions>
             <div className="flex items-center w-full mt-6">
               <FinishScopeButton
-                className="flex items-center gx-1"
+                className="flex items-center gap-x-1"
                 type="primary"
                 disabled={activeSessions.length > 0}
                 onClick={async () => {
