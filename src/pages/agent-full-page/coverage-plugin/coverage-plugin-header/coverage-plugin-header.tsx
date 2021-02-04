@@ -160,7 +160,11 @@ export const CoveragePluginHeader = coveragePluginHeader(({ className, previousB
           previousBuild={{ previousBuildVersion, previousBuildTests }}
         >
           {risksCount > 0 ? (
-            <Count onClick={() => setIsRisksModalOpen(true)} data-test="action-section:count:risks">
+            <Count
+              className="d-flex align-items-center w-100"
+              onClick={() => setIsRisksModalOpen(true)}
+              data-test="action-section:count:risks"
+            >
               {risksCount}
               <LinkIcon width={8} height={8} />
             </Count>
