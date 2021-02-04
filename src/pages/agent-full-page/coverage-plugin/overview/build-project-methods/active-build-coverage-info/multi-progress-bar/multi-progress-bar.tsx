@@ -44,7 +44,7 @@ export const MultiProgressBar = multiProgressBar(({
       <Tooltip
         message={(
           <Message>
-            <span className="bold">{percentFormatter(buildCodeCoverage)}%</span> of current build has <br />
+            <span className="text-bold">{percentFormatter(buildCodeCoverage)}%</span> of current build has <br />
             already been covered by tests
           </Message>
         )}

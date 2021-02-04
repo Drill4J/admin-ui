@@ -63,7 +63,7 @@ export const Notification = notification(({
           </DeleteNotificationButton>
         </ButtonGroup>
       </BuildVersion>
-      <div className="flex gx-4 bold">
+      <div className="flex gx-4 text-bold">
         <LinkToDashboard
           href={`/full-page/${agentId}/${buildVersion}/dashboard`}
           target="_blank"
