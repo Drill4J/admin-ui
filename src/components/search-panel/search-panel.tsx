@@ -33,7 +33,7 @@ export const SearchPanel = ({
       <Form
         onSubmit={({ search = '' }) => onSearch(search)}
         render={({ handleSubmit, form }) => (
-          <div className="py-2 h-40px">
+          <div className="py-2 h-10">
             <form onSubmit={handleSubmit}>
               <Field
                 name="search"
