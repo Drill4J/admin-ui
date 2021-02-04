@@ -60,7 +60,7 @@ export const TestsToRunHeader = testsToRunHeader(({
   return (
     <>
       <div className={className}>
-        <div className="d-flex justify-content-between items-center w-full">
+        <div className="flex justify-content-between items-center w-full">
           <div>
             <Title data-test="tests-to-run-header:title">
               Tests to Run

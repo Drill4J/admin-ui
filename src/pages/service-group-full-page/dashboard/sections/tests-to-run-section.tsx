@@ -43,7 +43,7 @@ export const TestsToRunSection = ({ testsToRun: { count = 0, byType = {} } = {} 
       info={count}
       graph={(
         <Tooltip message={<SectionTooltip data={tooltipData} hideValue />}>
-          <div className="d-flex items-center w-full">
+          <div className="flex items-center w-full">
             {Object.keys(TESTS_TO_RUN_TYPES_COLOR).map((testType) => (
               <SingleBar
                 key={testType}

@@ -52,15 +52,15 @@ export const GetSuggestedTestsModal = getSuggestedTestsModal(({
       header="Get Suggested Tests"
       closeOnFadeClick
     >
-      <div className={`${className} d-flex flex-column pt-4 px-6 pb-6 gy-7`}>
-        <Message className="d-flex flex-column gy-4 fs-14 lh-20" data-test="get-suggested-tests-modal:message">
+      <div className={`${className} flex flex-column pt-4 px-6 pb-6 gy-7`}>
+        <Message className="flex flex-column gy-4 fs-14 lh-20" data-test="get-suggested-tests-modal:message">
           <span>
             These are recommendations for this build updates only.<br />
             Use this Curl in your command line to get JSON:
           </span>
           <TestsToRunUrl agentId={agentId} pluginId={pluginId} agentType={agentType} />
         </Message>
-        <div className="d-flex justify-content-end gx-4">
+        <div className="flex justify-content-end gx-4">
           <CopyToClipboardButton
             type="primary"
             size="large"
@@ -72,7 +72,7 @@ export const GetSuggestedTestsModal = getSuggestedTestsModal(({
           >
             {copied
               ? (
-                <div className="d-flex justify-content-center items-center gx-2 w-full">
+                <div className="flex justify-content-center items-center gx-2 w-full">
                   <Icons.Check height={10} width={14} viewBox="0 0 14 10" />
                   Copied
                 </div>

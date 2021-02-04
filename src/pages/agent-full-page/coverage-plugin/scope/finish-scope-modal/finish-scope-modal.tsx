@@ -96,11 +96,11 @@ export const FinishScopeModal = finishScopeModal(
               label="Ignore scope in build stats"
               disabled={!testsCount || testTypes.length > 0}
             />
-            <div className="d-flex items-center gx-4 w-full mt-9">
+            <div className="flex items-center gx-4 w-full mt-9">
               {!testTypes.length ? (
                 <>
                   <Button
-                    className="d-flex items-center gx-1"
+                    className="flex items-center gx-1"
                     type="primary"
                     size="large"
                     disabled={testTypes.length > 0 || loading}

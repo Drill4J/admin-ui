@@ -49,7 +49,7 @@ export const ActionsColumn = actionsColumn(({ className, agent }: Props) => {
 
   return (
     <div className={className}>
-      <Content className="d-flex justify-content-end items-center w-full">
+      <Content className="flex justify-content-end items-center w-full">
         {(status === AGENT_STATUS.NOT_REGISTERED || unregisteredAgentsCount > 0) && (
           <RegisterButton
             onClick={() => push(`/${
@@ -58,7 +58,7 @@ export const ActionsColumn = actionsColumn(({ className, agent }: Props) => {
             data-test="action-column:icons-register"
             type="primary"
           >
-            <div className="d-flex items-center w-full">
+            <div className="flex items-center w-full">
               <RegisterIcon />
               Register {unregisteredAgentsCount ? `(${unregisteredAgentsCount})` : ''}
             </div>

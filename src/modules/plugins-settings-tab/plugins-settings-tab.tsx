@@ -50,8 +50,8 @@ export const PluginsSettingsTab = pluginsSettingsTab(
 
     return (
       <div className={className}>
-        <InfoPanel className="d-flex justify-content-between items-center w-full px-6">
-          <div className="d-flex items-center w-full">
+        <InfoPanel className="flex justify-content-between items-center w-full px-6">
+          <div className="flex items-center w-full">
             <InfoIcon />
             {`Plugins installed on your ${agentType === 'agent' ? 'agent' : 'service group'}.`}
           </div>
@@ -62,7 +62,7 @@ export const PluginsSettingsTab = pluginsSettingsTab(
             <PluginsCount>{installedPlugins.length}</PluginsCount>
           </span>
           <AddPluginButton
-            className="d-flex gx-2"
+            className="flex gx-2"
             type="secondary"
             onClick={() => setIsAddPluginOpen(!isAddPluginOpen)}
             data-test={`${agentType}-info-page:add-plugin-button`}
@@ -84,7 +84,7 @@ export const PluginsSettingsTab = pluginsSettingsTab(
                   : push(`/service-group-full-page/${id}/${pluginId}`))}
                 icon={name as keyof typeof Icons}
               >
-                <div className="d-flex items-center w-full">
+                <div className="flex items-center w-full">
                   <PluginName>{name}&nbsp;</PluginName>
                   {version && <PluginVersion>({version})</PluginVersion>}
                 </div>

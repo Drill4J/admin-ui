@@ -37,13 +37,13 @@ export const Notification = notification(({
   onError,
 }: Props) => (
   <div className={className}>
-    <Content className="d-flex flex-column justify-content-center gy-2 px-6">
-      <div className="d-flex justify-content-between items-center w-full">
+    <Content className="flex flex-column justify-content-center gy-2 px-6">
+      <div className="flex justify-content-between items-center w-full">
         <span>{agentId}</span>
         <SinceNotificationArrived>{format(createdAt || Date.now())}</SinceNotificationArrived>
       </div>
       <BuildVersion unread={!read}>
-        <div className="d-flex items-center">
+        <div className="flex items-center">
           <NotificationStatusIndicator className="mr-2" unread={!read} />
           <div className="text-ellipsis mr-1" title={`Build ${buildVersion}`}>Build {buildVersion}</div>arrived
         </div>
@@ -63,7 +63,7 @@ export const Notification = notification(({
           </DeleteNotificationButton>
         </ButtonGroup>
       </BuildVersion>
-      <div className="d-flex gx-4 bold">
+      <div className="flex gx-4 bold">
         <LinkToDashboard
           href={`/full-page/${agentId}/${buildVersion}/dashboard`}
           target="_blank"

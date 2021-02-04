@@ -52,7 +52,7 @@ export const QualityGateConfigurationUrl = qualityGateConfigurationUrl(
         &quot;content-type: application/json&quot;
         <CurlFlag> \</CurlFlag>
       </div>
-      <div className="d-flex items-start">
+      <div className="flex items-start">
         <CurlFlag>
           &nbsp;
           <CurlFlag color="red">

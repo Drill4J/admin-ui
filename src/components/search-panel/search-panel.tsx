@@ -29,7 +29,7 @@ export const SearchPanel = ({
   onSearch, searchQuery, searchResult, children, placeholder,
 }: Props) => (
   <div>
-    <div className="d-flex items-center w-full">
+    <div className="flex items-center w-full">
       <Form
         onSubmit={({ search = '' }) => onSearch(search)}
         render={({ handleSubmit, form }) => (
@@ -46,7 +46,7 @@ export const SearchPanel = ({
         )}
       />
       <div
-        className={`d-flex items-center w-full ml-4 ${searchQuery
+        className={`flex items-center w-full ml-4 ${searchQuery
           ? 'justify-content-between'
           : 'justify-content-end'} fs-12 lh-20 monochrome-default`}
       >

@@ -88,13 +88,13 @@ export const SystemSettingsForm = systemSettingsForm(
             invalid: boolean;
           }) => (
             <>
-              <InfoPanel className="d-flex justify-content-between items-center px-6">
-                <div className="d-flex items-center">
+              <InfoPanel className="flex justify-content-between items-center px-6">
+                <div className="flex items-center">
                   <InfoIcon />
                   Information related to your application / project.
                 </div>
                 <SaveChangesButton
-                  className="d-flex items-center gx-1"
+                  className="flex items-center gx-1"
                   type="primary"
                   size="large"
                   onClick={handleSubmit}
@@ -105,7 +105,7 @@ export const SystemSettingsForm = systemSettingsForm(
                 </SaveChangesButton>
               </InfoPanel>
               <Content>
-                <FieldName className="d-flex items-center w-full mb-2">
+                <FieldName className="flex items-center w-full mb-2">
                   Project Package(s)
                   <BlockerStatus
                     unlocked={unlocked}
@@ -118,7 +118,7 @@ export const SystemSettingsForm = systemSettingsForm(
                     ) : (
                       <Tooltip
                         message={(
-                          <SecuredMessage className="d-flex flex-column items-center w-full">
+                          <SecuredMessage className="flex flex-column items-center w-full">
                             <span>Secured from editing.</span>
                             <span> Click to unlock.</span>
                           </SecuredMessage>
@@ -129,7 +129,7 @@ export const SystemSettingsForm = systemSettingsForm(
                     )}
                   </BlockerStatus>
                 </FieldName>
-                <div className="d-flex items-start w-full mb-4">
+                <div className="flex items-start w-full mb-4">
                   <PackagesTextarea>
                     <Field
                       name="packages"

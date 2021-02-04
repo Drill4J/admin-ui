@@ -81,8 +81,8 @@ export const MethodsList = methodsList(({ className, coveredMethods }: Props) =>
               itemCount={methods.length}
               renderItem={({ index, style }) => (
                 <Method key={`${methods[index].name}${index}`} style={style as Record<symbol, string>}>
-                  <div className="d-flex items-center w-full h-20px">
-                    <div className="d-flex items-center w-full">
+                  <div className="flex items-center w-full h-20px">
+                    <div className="flex items-center w-full">
                       <MethodsListItemIcon>
                         <Icons.Function />
                       </MethodsListItemIcon>

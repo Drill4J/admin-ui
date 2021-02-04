@@ -68,7 +68,7 @@ export const ScopesList = scopesList(({ className }: Props) => {
   return (
     <div className={className}>
       <Content>
-        <Title className="d-flex items-center w-full">
+        <Title className="flex items-center w-full">
           All Scopes
           <ScopesCount>{scopesData.length}</ScopesCount>
         </Title>
@@ -89,7 +89,7 @@ export const ScopesList = scopesList(({ className }: Props) => {
                   >
                     <ScopeName title={value}>{value}</ScopeName>
                     {status === AGENT_STATUS.ONLINE && (
-                      <div className="d-flex items-center w-full">
+                      <div className="flex items-center w-full">
                         <ScopeTimer started={started} finished={finished} active={active} size="small" />
                         {active && <ActiveBadge>Active</ActiveBadge>}
                         {!enabled && <IgnoreBadge>Ignored</IgnoreBadge>}
