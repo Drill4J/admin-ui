@@ -129,7 +129,7 @@ export const SystemSettingsForm = systemSettingsForm(
                     )}
                   </BlockerStatus>
                 </FieldName>
-                <div className="d-flex align-items-start w-full mb-4">
+                <div className="d-flex items-start w-full mb-4">
                   <PackagesTextarea>
                     <Field
                       name="packages"

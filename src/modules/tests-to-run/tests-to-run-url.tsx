@@ -44,7 +44,7 @@ export const TestsToRunUrl = testsToRunUrl(
         <CurlFlag> <CurlFlag color="red">-</CurlFlag>H </CurlFlag>
         &quot;content-type: application/json&quot;<CurlFlag> \</CurlFlag>
       </div>
-      <div className="d-flex align-items-start">
+      <div className="d-flex items-start">
         <CurlFlag> <CurlFlag color="red">-</CurlFlag>X <CurlFlag invisible>\</CurlFlag></CurlFlag>
         <span>
           <CurlFlag> GET </CurlFlag>{`${adminUrl}api/${agentType === 'ServiceGroup'

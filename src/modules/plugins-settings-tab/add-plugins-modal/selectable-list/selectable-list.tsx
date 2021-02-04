@@ -55,7 +55,7 @@ export const SelectableList = selectableList(
             <PluginsIcon selected={selectedRows.includes(id)}>
               <Icons.Test2Code />
             </PluginsIcon>
-            <div className="d-flex flex-column align-items-start">
+            <div className="d-flex flex-column items-start">
               <div className="d-flex items-center w-full">
                 <PluginName>{name}</PluginName>
                 {!available && <PluginRelation color="gray">Installed</PluginRelation>}

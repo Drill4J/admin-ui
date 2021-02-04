@@ -62,7 +62,7 @@ export const ActiveScopeInfo = activeScopeInfo(({
         <Icons.Complete />
         <span>Finish Scope</span>
       </FinishScopeButton>
-      <div className="d-flex flex-column align-items-start g-3 w-full mt-6">
+      <div className="d-flex flex-column items-start g-3 w-full mt-6">
         <Link
           to={`/full-page/${agentId}/${buildVersion}/${pluginId}/scopes/${scopeId}`}
           data-test="active-scope-info:scope-details-link"

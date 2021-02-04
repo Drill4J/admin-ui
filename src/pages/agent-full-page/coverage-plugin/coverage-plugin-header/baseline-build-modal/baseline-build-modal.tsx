@@ -61,7 +61,7 @@ export const BaselineBuildModal = baselineBuildModal(({
               )}
           </Message>
           {!isBaseline && (
-            <Message className="d-flex align-items-start g-2 w-full">
+            <Message className="d-flex items-start g-2 w-full">
               <Checkbox checked={isConfirmed} onChange={() => setIsConfirmed(!isConfirmed)} />
               <span>
                 I understand that it is necessary to run full regression to be <br />
