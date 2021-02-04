@@ -65,7 +65,7 @@ export const LoginPage = loginPage(({ className }: Props) => {
           </LoginButton>
           <ForgotPasswordLink>Forgot your password?</ForgotPasswordLink>
           <LoginAsGuestButton type="secondary" size="large" onClick={handleLogin}>
-            Continue as a guest (read only)
+            Continue as a guest (with admin rights)
           </LoginAsGuestButton>
         </div>
         <Copyright>{`© ${new Date().getFullYear()} Drill4J. All rights reserved.`}</Copyright>

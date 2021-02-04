@@ -20,6 +20,7 @@ import { MessagePanel } from '@drill4j/ui-kit';
 
 import { Message } from 'types/message';
 import { defaultAdminSocket } from 'common/connection';
+import { useLocation } from 'react-router-dom';
 
 interface Props {
   className?: string;
@@ -35,6 +36,7 @@ export const NotificationManagerContext = createContext<ContextType>({ showMessa
 
 export const NotificationManager = ({ children }: Props) => {
   const [message, setMessage] = useState<Message | null>();
+  const { pathname = '' } = useLocation();
 
   function handleShowMessage(incomingMessage: Message) {
     if (incomingMessage.type === 'SUCCESS') {
@@ -56,7 +58,7 @@ export const NotificationManager = ({ children }: Props) => {
   const contextValue = useMemo(() => ({ showMessage: handleShowMessage, closeMessage: () => setMessage(null) }), []);
   return (
     <NotificationManagerContext.Provider value={contextValue}>
-      {message && <MessagePanel message={message} onClose={() => setMessage(null)} />}
+      {message && pathname !== '/login' && <MessagePanel message={message} onClose={() => setMessage(null)} />}
       {children}
     </NotificationManagerContext.Provider>
   );
