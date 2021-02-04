@@ -38,7 +38,7 @@ export const Notification = notification(({
 }: Props) => (
   <div className={className}>
     <Content className="flex flex-column justify-content-center gy-2 px-6">
-      <div className="flex justify-content-between items-center w-full">
+      <div className="flex justify-between items-center w-full">
         <span>{agentId}</span>
         <SinceNotificationArrived>{format(createdAt || Date.now())}</SinceNotificationArrived>
       </div>

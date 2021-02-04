@@ -37,7 +37,7 @@ export const BuildCoverageInfo = buildCoverageInfo(({
   const buildDiff = percentFormatter(buildCodeCoverage) - percentFormatter(previousBuildCodeCoverage);
   return (
     <div className={className}>
-      <div className="flex justify-content-between items-center w-full">
+      <div className="flex justify-between items-center w-full">
         <Title data-test="build-coverage-info:title">BUILD COVERAGE</Title>
         <Link
           to={`/full-page/${agentId}/${buildVersion}/${pluginId}/scopes/`}

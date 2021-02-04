@@ -115,7 +115,7 @@ export const QualityGatePane = qualityGatePane(
               values, handleSubmit, invalid, pristine, submitting,
             }) => (
               <>
-                <Header className="flex justify-content-between items-center px-6">
+                <Header className="flex justify-between items-center px-6">
                   <Title data-test="quality-gate-pane:header-title">Quality Gate</Title>
                   {configured && !isEditing && (
                     <StatusIconWrapper type={qualityGate.status}>

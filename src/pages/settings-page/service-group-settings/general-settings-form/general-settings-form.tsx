@@ -70,7 +70,7 @@ export const GeneralSettingsForm = generalSettingsForm(
             invalid: boolean;
           }) => (
             <>
-              <InfoPanel className="flex justify-content-between items-center w-full px-6">
+              <InfoPanel className="flex justify-between items-center w-full px-6">
                 <div className="flex justify-content-center items-center text-center">
                   <InfoIcon />
                   Basic service group settings.

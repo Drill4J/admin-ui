@@ -59,7 +59,7 @@ export const SessionInfo = sessionInfo(
           />
         ) : (
           <>
-            <div className="flex justify-content-between items-center w-full">
+            <div className="flex justify-between items-center w-full">
               <SessionId disabled={disabled} data-test="session-info:session-id" title={sessionId}>{sessionId}</SessionId>
               <ActionsPanel>
                 <LinkButton

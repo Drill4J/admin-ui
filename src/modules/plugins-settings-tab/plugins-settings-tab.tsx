@@ -50,7 +50,7 @@ export const PluginsSettingsTab = pluginsSettingsTab(
 
     return (
       <div className={className}>
-        <InfoPanel className="flex justify-content-between items-center w-full px-6">
+        <InfoPanel className="flex justify-between items-center w-full px-6">
           <div className="flex items-center w-full">
             <InfoIcon />
             {`Plugins installed on your ${agentType === 'agent' ? 'agent' : 'service group'}.`}

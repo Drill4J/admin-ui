@@ -47,7 +47,7 @@ export const SearchPanel = ({
       />
       <div
         className={`flex items-center w-full ml-4 ${searchQuery
-          ? 'justify-content-between'
+          ? 'justify-between'
           : 'justify-content-end'} fs-12 lh-20 monochrome-default`}
       >
         {searchQuery && <span data-test="search-panel:search-result">{searchResult} result{searchResult > 1 ? 's' : ''}</span>}

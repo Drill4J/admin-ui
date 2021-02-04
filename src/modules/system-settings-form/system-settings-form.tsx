@@ -88,7 +88,7 @@ export const SystemSettingsForm = systemSettingsForm(
             invalid: boolean;
           }) => (
             <>
-              <InfoPanel className="flex justify-content-between items-center px-6">
+              <InfoPanel className="flex justify-between items-center px-6">
                 <div className="flex items-center">
                   <InfoIcon />
                   Information related to your application / project.
