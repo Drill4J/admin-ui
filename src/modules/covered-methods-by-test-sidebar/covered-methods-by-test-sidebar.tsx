@@ -52,11 +52,11 @@ export const CoveredMethodsByTestSidebar = coveredMethodsByTestSidebar(
             <MethodsCount>{allMethods.length}</MethodsCount>
           </Header>
           <Info>
-            <div className="d-flex align-items-center w-100">
+            <div className="d-flex align-items-center w-full">
               <MethodInfoLabel>Test</MethodInfoLabel>
               <MethodInfoValue title={testName}>{testName}</MethodInfoValue>
             </div>
-            <div className="d-flex align-items-center w-100">
+            <div className="d-flex align-items-center w-full">
               <MethodInfoLabel>Type</MethodInfoLabel>
               <MethodInfoValue>{capitalize(testType.toLowerCase())}</MethodInfoValue>
             </div>

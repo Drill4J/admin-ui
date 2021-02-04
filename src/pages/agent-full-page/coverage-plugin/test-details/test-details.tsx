@@ -45,7 +45,7 @@ export const TestDetails = testDetails(
       <div className={className}>
         {tests.length > 0 ? (
           <>
-            <Title className="d-flex align-items-center w-100">
+            <Title className="d-flex align-items-center w-full">
               Tests
             </Title>
             <Table data={tests} idKey="name" gridTemplateColumns="calc(100% - 664px) 130px 76px 152px 186px 120px">

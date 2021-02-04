@@ -70,7 +70,7 @@ export const GeneralSettingsForm = generalSettingsForm(
             invalid: boolean;
           }) => (
             <>
-              <InfoPanel className="d-flex justify-content-between align-items-center w-100 px-6">
+              <InfoPanel className="d-flex justify-content-between align-items-center w-full px-6">
                 <div className="d-flex align-items-center">
                   <InfoIcon />
                   Basic agent settings.

@@ -39,7 +39,7 @@ export const PluginsLayout = pluginsLayout(
       {breadcrumbs && <BreadcrumbsWrapper>{breadcrumbs}</BreadcrumbsWrapper>}
       <WithSidebarWrapper>
         <SidebarWrapper>{sidebar}</SidebarWrapper>
-        <OverflowWrapper className="d-flex align-items-start flex-column w-100">
+        <OverflowWrapper className="d-flex align-items-start flex-column w-full">
           <Content>{children}</Content>
           <Footer>{footer}</Footer>
         </OverflowWrapper>

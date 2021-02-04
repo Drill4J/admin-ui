@@ -107,7 +107,7 @@ export const BarChart = barChart(({
             const hasUncompletedTests = completed > 0 && completed < total;
             return (
               <Tooltip message={(hasUncompletedTests && buildVersion !== activeBuildVersion) && (
-                <div className="d-flex flex-column align-items-center w-100">
+                <div className="d-flex flex-column align-items-center w-full">
                   <span>Not all the suggested Auto Tests</span>
                   <span>were run in this build</span>
                 </div>
@@ -124,7 +124,7 @@ export const BarChart = barChart(({
                         </SavedTimePercent>
                       )}
                       {Boolean(total) && !isAllAutoTestsDone && (
-                        <div className="d-flex flex-column align-items-center w-100">
+                        <div className="d-flex flex-column align-items-center w-full">
                           <span>
                             {`${completed
                               ? 'Not all'

@@ -105,7 +105,7 @@ export const SystemSettingsForm = systemSettingsForm(
                 </SaveChangesButton>
               </InfoPanel>
               <Content>
-                <FieldName className="d-flex align-items-center w-100 mb-2">
+                <FieldName className="d-flex align-items-center w-full mb-2">
                   Project Package(s)
                   <BlockerStatus
                     unlocked={unlocked}
@@ -118,7 +118,7 @@ export const SystemSettingsForm = systemSettingsForm(
                     ) : (
                       <Tooltip
                         message={(
-                          <SecuredMessage className="d-flex flex-column align-items-center w-100">
+                          <SecuredMessage className="d-flex flex-column align-items-center w-full">
                             <span>Secured from editing.</span>
                             <span> Click to unlock.</span>
                           </SecuredMessage>
@@ -129,7 +129,7 @@ export const SystemSettingsForm = systemSettingsForm(
                     )}
                   </BlockerStatus>
                 </FieldName>
-                <div className="d-flex align-items-start w-100 mb-4">
+                <div className="d-flex align-items-start w-full mb-4">
                   <PackagesTextarea>
                     <Field
                       name="packages"

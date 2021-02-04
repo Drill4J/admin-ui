@@ -32,7 +32,7 @@ export const PluginCard = pluginCard(({
   className, label, children, pluginLink,
 }: Props) => (
   <div className={className}>
-    <Header className="d-flex align-items-center justify-content-between w-100 p-4">
+    <Header className="d-flex align-items-center justify-content-between w-full p-4">
       <span>{label}</span>
       <PluginLink to={pluginLink}>View more &gt;</PluginLink>
     </Header>

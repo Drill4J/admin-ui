@@ -38,7 +38,7 @@ export const Notification = notification(({
 }: Props) => (
   <div className={className}>
     <Content className="d-flex flex-column justify-content-center gy-2 px-6">
-      <div className="d-flex justify-content-between align-items-center w-100">
+      <div className="d-flex justify-content-between align-items-center w-full">
         <span>{agentId}</span>
         <SinceNotificationArrived>{format(createdAt || Date.now())}</SinceNotificationArrived>
       </div>

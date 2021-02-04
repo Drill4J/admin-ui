@@ -42,7 +42,7 @@ export const RisksSection = ({ risks: { modified: modifiedMethodsCount = 0, new:
       info={total}
       graph={(
         <Tooltip message={<SectionTooltip data={tooltipData} hideValue />}>
-          <div className="d-flex align-items-center w-100">
+          <div className="d-flex align-items-center w-full">
             <SingleBar
               width={64}
               height={128}

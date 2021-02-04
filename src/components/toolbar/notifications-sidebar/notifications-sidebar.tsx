@@ -51,7 +51,7 @@ export const NotificationsSidebar = notificationsSidebar(
           </Header>
           {notifications.length > 0 ? (
             <Content>
-              <ActionsPanel className="d-flex justify-content-end align-items-center w-100">
+              <ActionsPanel className="d-flex justify-content-end align-items-center w-full">
                 <span
                   onClick={() => readAllNotifications({ onError: setErrorMessage })}
                   data-test="notification-sidebar:mark-all-as-read"

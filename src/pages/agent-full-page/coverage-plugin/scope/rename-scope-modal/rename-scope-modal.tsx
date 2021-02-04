@@ -89,7 +89,7 @@ export const RenameScopeModal = renameScopeModal(
                 <FormGroup label="Scope Name">
                   <Field name="name" component={Fields.Input} placeholder="Enter scope name" />
                 </FormGroup>
-                <div className="d-flex align-items-center g-4 w-100 mt-6">
+                <div className="d-flex align-items-center g-4 w-full mt-6">
                   <Button
                     className="d-flex align-items-center gx-1"
                     type="primary"

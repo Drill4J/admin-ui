@@ -46,7 +46,7 @@ export const ActiveScopeInfo = activeScopeInfo(({
   return (
     <div className={className}>
       <Title>ACTIVE SCOPE COVERAGE</Title>
-      <div className="d-flex align-items-center gx-2 w-100 h-40px mt-6 mb-3 ">
+      <div className="d-flex align-items-center gx-2 w-full h-40px mt-6 mb-3 ">
         <ScopeCoverage data-test="active-scope-info:scope-coverage">
           {`${percentFormatter(percentage)}%`}
         </ScopeCoverage>
@@ -62,7 +62,7 @@ export const ActiveScopeInfo = activeScopeInfo(({
         <Icons.Complete />
         <span>Finish Scope</span>
       </FinishScopeButton>
-      <div className="d-flex flex-column align-items-start g-3 w-100 mt-6">
+      <div className="d-flex flex-column align-items-start g-3 w-full mt-6">
         <Link
           to={`/full-page/${agentId}/${buildVersion}/${pluginId}/scopes/${scopeId}`}
           data-test="active-scope-info:scope-details-link"

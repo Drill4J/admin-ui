@@ -49,7 +49,7 @@ export const BuildList = buildList(({ className }: Props) => {
     <div className={className}>
       <Content>
         <div ref={node}>
-          <Title className="d-flex align-items-center w-100">
+          <Title className="d-flex align-items-center w-full">
             <span>All builds </span>
             <BuildCount>{buildVersions.length}</BuildCount>
           </Title>

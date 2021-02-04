@@ -96,7 +96,7 @@ export const FinishScopeModal = finishScopeModal(
               label="Ignore scope in build stats"
               disabled={!testsCount || testTypes.length > 0}
             />
-            <div className="d-flex align-items-center gx-4 w-100 mt-9">
+            <div className="d-flex align-items-center gx-4 w-full mt-9">
               {!testTypes.length ? (
                 <>
                   <Button

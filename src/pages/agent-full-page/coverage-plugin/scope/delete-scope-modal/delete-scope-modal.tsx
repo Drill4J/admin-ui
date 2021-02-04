@@ -90,7 +90,7 @@ export const DeleteScopeModal = deleteScopeModal(
                 </span>
               )}
             </div>
-            <div className="d-flex align-items-center gx-4 w-100 mt-6">
+            <div className="d-flex align-items-center gx-4 w-full mt-6">
               {scope && scope.active && Boolean(testTypes.length)
                 ? (
                   <Button

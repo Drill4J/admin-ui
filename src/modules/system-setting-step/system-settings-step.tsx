@@ -34,7 +34,7 @@ export const SystemSettingsStep = systemSettingsStep(({ className, infoPanel }: 
     {infoPanel}
     <Content>
       <FieldName>Project Package(s)</FieldName>
-      <div className="d-flex align-items-start w-100">
+      <div className="d-flex align-items-start w-full">
         <PackagesTextarea>
           <Field
             name="systemSettings.packages"

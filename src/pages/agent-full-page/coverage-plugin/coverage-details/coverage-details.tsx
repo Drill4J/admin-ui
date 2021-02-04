@@ -137,7 +137,7 @@ export const CoverageDetails = coverageDetails(
             <Column
               name="coverage"
               label={(
-                <div className="d-flex justify-content-end align-items-center w-100">
+                <div className="d-flex justify-content-end align-items-center w-full">
                   Coverage, %<CoverageIcon width={16} height={16} />
                 </div>
               )}

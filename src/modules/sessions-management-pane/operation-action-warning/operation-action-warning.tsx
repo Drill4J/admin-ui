@@ -35,7 +35,7 @@ export const OperationActionWarning = operationActionWarning(({
 } : Props) => {
   const ConfirmButton = operationType === 'abort' ? NegativeActionButton : Button;
   return (
-    <div className={`${className} d-flex align-items-center w-100`} data-test="operation-action-warning">
+    <div className={`${className} d-flex align-items-center w-full`} data-test="operation-action-warning">
       <span>{children}</span>
       <Actions>
         <Button

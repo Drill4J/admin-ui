@@ -75,7 +75,7 @@ export const TestsToRunList = testsToRunList(({ className, agentType = 'Agent' }
         previousBuildTestsDuration={totalDuration}
         previousBuildAutoTestsCount={previousBuildAutoTestsCount}
       />
-      <div className="d-flex justify-content-between align-items-start w-100">
+      <div className="d-flex justify-content-between align-items-start w-full">
         <BarTitle data-test="tests-to-run-list:bar-title">SAVED TIME HISTORY</BarTitle>
         <Legend
           legendItems={[

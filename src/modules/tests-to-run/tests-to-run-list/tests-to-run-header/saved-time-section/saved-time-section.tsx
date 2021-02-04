@@ -36,10 +36,10 @@ export const SavedTimeSection = savedTimeSection(
     <div className={className}>
       <Content data-test={`information-section:${label}`}>
         <Tooltip
-          message={message && <div className="d-flex align-items-center w-100 text-center">{message}</div>}
+          message={message && <div className="d-flex align-items-center w-full text-center">{message}</div>}
         >
           <Title>{label}</Title>
-          <Value className="d-flex align-items-center g-2 mt-2 w-100">
+          <Value className="d-flex align-items-center g-2 mt-2 w-full">
             <Duration>{previousBuildAutoTestsCount ? children : 'n/a'}</Duration>
             {typeof percentage === 'number' && <Percentage>{percentage}%</Percentage>}
           </Value>

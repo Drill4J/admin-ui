@@ -82,7 +82,7 @@ export const FinishAllScopesModal = finishAllScopesModal(
               <div>Empty scopes will be deleted</div>
               <div>New scopes will be started automatically</div>
             </Instructions>
-            <div className="d-flex align-items-center w-100 mt-6">
+            <div className="d-flex align-items-center w-full mt-6">
               <FinishScopeButton
                 className="d-flex align-items-center gx-1"
                 type="primary"
