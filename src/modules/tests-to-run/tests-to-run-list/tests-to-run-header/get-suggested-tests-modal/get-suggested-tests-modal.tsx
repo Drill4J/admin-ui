@@ -72,7 +72,7 @@ export const GetSuggestedTestsModal = getSuggestedTestsModal(({
           >
             {copied
               ? (
-                <div className="flex justify-content-center items-center gx-2 w-full">
+                <div className="flex justify-center items-center gx-2 w-full">
                   <Icons.Check height={10} width={14} viewBox="0 0 14 10" />
                   Copied
                 </div>
