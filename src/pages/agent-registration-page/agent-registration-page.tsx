@@ -68,7 +68,7 @@ export const AgentRegistrationPage = agentRegistrationPage(
             </div>
           )}
           actions={(
-            <div className="flex justify-content-end items-center w-full">
+            <div className="flex justify-end items-center w-full">
               <Button type="secondary" size="large" onClick={() => setIsCancelModalOpened(true)}>
                 Abort {agentId ? 'Registration' : 'Preregistration'}
               </Button>

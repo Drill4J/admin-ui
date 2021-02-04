@@ -49,7 +49,7 @@ export const ActionsColumn = actionsColumn(({ className, agent }: Props) => {
 
   return (
     <div className={className}>
-      <Content className="flex justify-content-end items-center w-full">
+      <Content className="flex justify-end items-center w-full">
         {(status === AGENT_STATUS.NOT_REGISTERED || unregisteredAgentsCount > 0) && (
           <RegisterButton
             onClick={() => push(`/${

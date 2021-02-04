@@ -61,7 +61,7 @@ export const SettingsPage = settingsPage(
           )}
           actions={
             (type as string) !== 'service-group' && (
-              <div className="flex justify-content-end items-center w-full">
+              <div className="flex justify-end items-center w-full">
                 {(data as Agent).status !== AGENT_STATUS.NOT_REGISTERED && (
                   <Menu
                     bordered

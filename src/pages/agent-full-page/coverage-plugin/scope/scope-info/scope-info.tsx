@@ -118,7 +118,7 @@ export const ScopeInfo = scopeInfo(
                   <ScopeStatus active={active} loading={loading} enabled={enabled} started={started} finished={finished} />
                 </div>
               )}
-              <div className="flex justify-content-end items-center w-full">
+              <div className="flex justify-end items-center w-full">
                 {active && status === AGENT_STATUS.ONLINE && (
                   <FinishScopeButton
                     className="flex gx-2"

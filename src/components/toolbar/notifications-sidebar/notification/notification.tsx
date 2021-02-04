@@ -47,7 +47,7 @@ export const Notification = notification(({
           <NotificationStatusIndicator className="mr-2" unread={!read} />
           <div className="text-ellipsis mr-1" title={`Build ${buildVersion}`}>Build {buildVersion}</div>arrived
         </div>
-        <ButtonGroup className="justify-content-end gx-4 items-center">
+        <ButtonGroup className="justify-end gx-4 items-center">
           <MarkAsReadButton
             onClick={() => readNotification(id, { onError })}
             read={read}

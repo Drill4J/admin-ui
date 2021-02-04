@@ -88,7 +88,7 @@ export const Wizard = wizard(({
               <StepName>
                 {`${currentStepIndex + 1} of ${Children.count(children)}. ${name} `}
               </StepName>
-              <div className="flex justify-content-end items-center w-full">
+              <div className="flex justify-end items-center w-full">
                 {currentStepIndex > 0 && (
                   <PreviousButton
                     className="flex gx-2"

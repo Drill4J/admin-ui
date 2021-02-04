@@ -114,7 +114,7 @@ export const CoveragePluginHeader = coveragePluginHeader(({ className, previousB
             ) : <span>&ndash;</span>}
         </BaselinePanel>
       )}
-      <div className="flex justify-content-end items-center">
+      <div className="flex justify-end items-center">
         {activeBuildVersion === buildVersion && agentStatus === AGENT_STATUS.ONLINE && (
           <QualityGateSection>
             <div className="flex items-center w-full">

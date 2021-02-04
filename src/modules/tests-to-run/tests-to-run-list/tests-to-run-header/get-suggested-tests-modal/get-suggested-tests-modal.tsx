@@ -60,7 +60,7 @@ export const GetSuggestedTestsModal = getSuggestedTestsModal(({
           </span>
           <TestsToRunUrl agentId={agentId} pluginId={pluginId} agentType={agentType} />
         </Message>
-        <div className="flex justify-content-end gx-4">
+        <div className="flex justify-end gx-4">
           <CopyToClipboardButton
             type="primary"
             size="large"
