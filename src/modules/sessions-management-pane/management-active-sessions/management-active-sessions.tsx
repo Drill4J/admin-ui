@@ -38,7 +38,7 @@ export const ManagementActiveSessions = managementActiveSessions(({ className, a
   return (
     <div className={className} data-test="management-active-sessions:search-panel">
       <Content>
-        <div className="d-flex justify-content-between align-items-center w-full">
+        <div className="d-flex justify-content-between items-center w-full">
           <span>
             Active Sessions
             <Count>{activeSessions.length}</Count>

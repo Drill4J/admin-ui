@@ -59,7 +59,7 @@ export const RisksModal = ({ isOpen, onToggle, filter = 'all' }: Props) => {
           <span>Risks</span>
           <h2>{risks.length}</h2>
         </Header>
-        <NotificationPanel className="d-flex align-items-center">
+        <NotificationPanel className="d-flex items-center">
           Risks are not covered
           <Bold>New</Bold>
           and

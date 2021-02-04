@@ -46,16 +46,16 @@ export const PluginHeader = pluginHeader(({ className, agentName, agentStatus }:
   return (
     <div className={className}>
       <Content>
-        <div className="d-flex align-items-center w-full">
+        <div className="d-flex items-center w-full">
           <LogoWrapper recording={buildVersion === activeBuildVersion && loading}>
             <Logo />
           </LogoWrapper>
           <AgentInfo>
             <AgentName>{agentName}</AgentName>
-            <div className="d-flex align-items-center w-full">
+            <div className="d-flex items-center w-full">
               <AgentStatusWrapper status={agentStatus}>{capitalize(agentStatus)}</AgentStatusWrapper>
               <div
-                className="d-flex align-items-center w-full ml-2"
+                className="d-flex items-center w-full ml-2"
               >
                 {agentStatus === AGENT_STATUS.BUSY && <Spinner />}
               </div>

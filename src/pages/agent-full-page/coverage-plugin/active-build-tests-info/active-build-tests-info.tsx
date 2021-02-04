@@ -57,7 +57,7 @@ export const ActiveBuildTestsInfo = activeBuildTestsInfo(({ className, testsInfo
 
   return (
     <div className={className} ref={ref}>
-      <div className="d-flex justify-content-between align-items-center w-full">
+      <div className="d-flex justify-content-between items-center w-full">
         <Title data-test="active-build-tests-info:title">TESTS EXECUTION</Title>
         <Legend legendItems={[
           { label: 'Auto', color: DATA_VISUALIZATION_COLORS.AUTO },

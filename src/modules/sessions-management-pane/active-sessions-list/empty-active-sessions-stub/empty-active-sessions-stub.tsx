@@ -27,7 +27,7 @@ const emptyActiveSessionsStub = BEM(styles);
 export const EmptyActiveSessionsStub = emptyActiveSessionsStub(
   ({ className }: Props) => (
     <div className={className}>
-      <div className="d-flex flex-column align-items-center w-full">
+      <div className="d-flex flex-column items-center w-full">
         <Icons.Test width={120} height={134} viewBox="0 0 18 20" data-test="empty-active-sessions-stub:test-icon" />
         <Title data-test="empty-active-sessions-stub:title">There are no active sessions</Title>
         <Message data-test="empty-active-sessions-stub:message">You can use this menu to start new.</Message>

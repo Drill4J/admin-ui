@@ -72,7 +72,7 @@ export const AddPluginsModal = addPluginModal(({
         </Content>
         <Actions>
           <Button
-            className="d-flex align-items-center gx-1"
+            className="d-flex items-center gx-1"
             type="primary"
             size="large"
             onClick={async () => {

@@ -34,7 +34,7 @@ export const Header = header(
       </LogoWrapper>
       <Content>
         <Title>New Build has Arrived!</Title>
-        <BaselineBuildInfo className="d-flex align-items-center w-full mt-4">
+        <BaselineBuildInfo className="d-flex items-center w-full mt-4">
           Baseline build:&nbsp;
           <BaselineBuild className="text-ellipsis" title={baselineBuild}>{baselineBuild}</BaselineBuild>
         </BaselineBuildInfo>

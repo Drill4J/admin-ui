@@ -62,7 +62,7 @@ export const UnregisterAgentModal = unregisterAgentModal(({
           </Notification>
           <div className="d-flex gx-4 mt-6">
             <Button
-              className="d-flex align-items-center gx-1"
+              className="d-flex items-center gx-1"
               type="primary"
               size="large"
               disabled={loading}

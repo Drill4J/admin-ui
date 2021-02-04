@@ -69,11 +69,11 @@ export const QualityGateSettings = qualityGateSettings(
             parse={(value: string) => inputLengthRestriction(value, 7)}
           >
             <Condtion>
-              <div className="d-flex align-items-center w-full" data-test="quality-gate-settings:condtion:risks">
+              <div className="d-flex items-center w-full" data-test="quality-gate-settings:condtion:risks">
                 Risks
                 <RisksInfoIcon
                   message={(
-                    <div className="d-flex flex-column align-items-center w-full">
+                    <div className="d-flex flex-column items-center w-full">
                       <span>Try to cover all of your risks in current build.</span>
                       <span>Uncovered risks won’t be counted in your next build.</span>
                     </div>

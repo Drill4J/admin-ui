@@ -94,7 +94,7 @@ export const CoveragePluginHeader = coveragePluginHeader(({ className, previousB
       {agentStatus === AGENT_STATUS.ONLINE && (
         <BaselinePanel>
           <div>Current build: </div>
-          <div className="d-flex align-items-center w-full">
+          <div className="d-flex items-center w-full">
             <CurrentBuildVersion className="text-ellipsis" title={buildVersion}>{buildVersion}</CurrentBuildVersion>
             <Tooltip message={<TooltipMessage>{info}</TooltipMessage>} position="top-center">
               <FlagWrapper
@@ -114,10 +114,10 @@ export const CoveragePluginHeader = coveragePluginHeader(({ className, previousB
             ) : <span>&ndash;</span>}
         </BaselinePanel>
       )}
-      <div className="d-flex justify-content-end align-items-center">
+      <div className="d-flex justify-content-end items-center">
         {activeBuildVersion === buildVersion && agentStatus === AGENT_STATUS.ONLINE && (
           <QualityGateSection>
-            <div className="d-flex align-items-center w-full">
+            <div className="d-flex items-center w-full">
               <QualityGateLabel data-test="coverage-plugin-header:quality-gate-label">
                 QUALITY GATE
               </QualityGateLabel>
@@ -161,7 +161,7 @@ export const CoveragePluginHeader = coveragePluginHeader(({ className, previousB
         >
           {risksCount > 0 ? (
             <Count
-              className="d-flex align-items-center w-full"
+              className="d-flex items-center w-full"
               onClick={() => setIsRisksModalOpen(true)}
               data-test="action-section:count:risks"
             >
@@ -170,7 +170,7 @@ export const CoveragePluginHeader = coveragePluginHeader(({ className, previousB
             </Count>
           ) : (
             <NoRisksCount
-              className="d-flex align-items-center w-full"
+              className="d-flex items-center w-full"
               data-test="action-section:no-risks-count"
             >
               {risksCount}
@@ -183,7 +183,7 @@ export const CoveragePluginHeader = coveragePluginHeader(({ className, previousB
         >
           {previousBuildTests.length > 0 ? (
             <Count
-              className="d-flex align-items-center w-full"
+              className="d-flex items-center w-full"
               onClick={() => push(`/full-page/${agentId}/${buildVersion}/${pluginId}/tests-to-run`)}
               data-test="action-section:count:tests-to-run"
             >

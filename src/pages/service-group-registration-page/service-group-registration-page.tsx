@@ -58,13 +58,13 @@ export const ServiceGroupRegistrationPage = serviceGroupRegistrationPage(
       <div className={className}>
         <PageHeader
           title={(
-            <div className="d-flex align-items-center w-full">
+            <div className="d-flex items-center w-full">
               <HeaderIcon height={20} width={20} />
               Register New Agents
             </div>
           )}
           actions={(
-            <div className="d-flex justify-content-end align-items-center w-full">
+            <div className="d-flex justify-content-end items-center w-full">
               <Button type="secondary" size="large" onClick={() => setIsCancelModalOpened(true)}>
                 Abort Registration
               </Button>

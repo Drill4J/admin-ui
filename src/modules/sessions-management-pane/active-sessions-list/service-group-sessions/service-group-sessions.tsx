@@ -40,7 +40,7 @@ export const ServiceGroupSessions = serviceGroupSessions(({ className, activeSes
       {serviceGroupAgentsIds.map((agentId) => (
         <div key={agentId}>
           <ServiceGroupAgentPanel
-            className="d-flex align-items-center w-full px-6 py-1"
+            className="d-flex items-center w-full px-6 py-1"
             data-test="service-group-sessions:service-group-agent-panel"
             disabled={Boolean(singleOperation.id) || bulkOperation.isProcessing}
           >

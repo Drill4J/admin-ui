@@ -113,12 +113,12 @@ export const ScopeInfo = scopeInfo(
             <Header>
               <ScopeName data-test="scope-info:scope-name" title={name}>{name}</ScopeName>
               {status === AGENT_STATUS.ONLINE && (
-                <div className="d-flex align-items-center w-full">
+                <div className="d-flex items-center w-full">
                   {active && <ScopeSessionIndicator active={loading} />}
                   <ScopeStatus active={active} loading={loading} enabled={enabled} started={started} finished={finished} />
                 </div>
               )}
-              <div className="d-flex justify-content-end align-items-center w-full">
+              <div className="d-flex justify-content-end items-center w-full">
                 {active && status === AGENT_STATUS.ONLINE && (
                   <FinishScopeButton
                     className="d-flex gx-2"
@@ -135,7 +135,7 @@ export const ScopeInfo = scopeInfo(
                   && <Menu items={menuActions as MenuItemType[]} />}
               </div>
             </Header>
-            <RoutingTabsPanel className="d-flex align-items-center w-full">
+            <RoutingTabsPanel className="d-flex items-center w-full">
               <TabsPanel activeTab={selectedTab} onSelect={setSelectedTab}>
                 <Tab name="coverage">
                   <TabIconWrapper>

@@ -30,8 +30,8 @@ const sectionTooltip = BEM(styles);
 export const SectionTooltip = sectionTooltip(({ className, data, hideValue }: Props) => (
   <div className={className}>
     {Object.keys(data).map((label) => (
-      <div className="d-flex justify-content-between align-items-center w-full" key={label}>
-        <div className="d-flex align-items-center w-full">
+      <div className="d-flex justify-content-between items-center w-full" key={label}>
+        <div className="d-flex items-center w-full">
           <TooltipItemIcon style={{ backgroundColor: data[label].color }} />
           {`${camelToTitle(label)} (${data[label].count || 0})`}
         </div>

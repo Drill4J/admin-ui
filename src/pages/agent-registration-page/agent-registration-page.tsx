@@ -62,13 +62,13 @@ export const AgentRegistrationPage = agentRegistrationPage(
       <div className={className}>
         <PageHeader
           title={(
-            <div className="d-flex align-items-center w-full">
+            <div className="d-flex items-center w-full">
               <HeaderIcon height={20} width={20} />
               {agentId ? 'Register New Agent' : 'Preregister Offline Agent'}
             </div>
           )}
           actions={(
-            <div className="d-flex justify-content-end align-items-center w-full">
+            <div className="d-flex justify-content-end items-center w-full">
               <Button type="secondary" size="large" onClick={() => setIsCancelModalOpened(true)}>
                 Abort {agentId ? 'Registration' : 'Preregistration'}
               </Button>

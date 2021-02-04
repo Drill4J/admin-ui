@@ -84,11 +84,11 @@ export const Wizard = wizard(({
           values: Agent;
         }) => (
           <>
-            <div className="d-flex align-items-center w-full px-6 py-4">
+            <div className="d-flex items-center w-full px-6 py-4">
               <StepName>
                 {`${currentStepIndex + 1} of ${Children.count(children)}. ${name} `}
               </StepName>
-              <div className="d-flex justify-content-end align-items-center w-full">
+              <div className="d-flex justify-content-end items-center w-full">
                 {currentStepIndex > 0 && (
                   <PreviousButton
                     className="d-flex gx-2"

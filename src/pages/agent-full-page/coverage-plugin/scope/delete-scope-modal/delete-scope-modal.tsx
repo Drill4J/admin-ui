@@ -90,7 +90,7 @@ export const DeleteScopeModal = deleteScopeModal(
                 </span>
               )}
             </div>
-            <div className="d-flex align-items-center gx-4 w-full mt-6">
+            <div className="d-flex items-center gx-4 w-full mt-6">
               {scope && scope.active && Boolean(testTypes.length)
                 ? (
                   <Button
@@ -104,7 +104,7 @@ export const DeleteScopeModal = deleteScopeModal(
                 : (
                   <>
                     <DeleteScopeButton
-                      className="d-flex align-items-center gx-1 px-4"
+                      className="d-flex items-center gx-1 px-4"
                       type="primary"
                       disabled={loading}
                       onClick={async () => {

@@ -43,7 +43,7 @@ export const ActionsPanel = actionsPanel(
       <div className={className}>
         { isNewSession ? (
           <Button
-            className="d-flex align-items-center gx-1"
+            className="d-flex items-center gx-1"
             type="primary"
             size="large"
             disabled={startSessionDisabled}

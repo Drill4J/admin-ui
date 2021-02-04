@@ -30,10 +30,10 @@ const testToCodeCoverageCell = BEM(styles);
 export const TestToCodeCoverageCell = testToCodeCoverageCell(({ className, value = 0 }: Props) => (
   <div className={className}>
     <Content>
-      <Value className="d-flex align-items-center w-full" data-test="dashboard-coverage-cell:value">
+      <Value className="d-flex items-center w-full" data-test="dashboard-coverage-cell:value">
         {value === undefined ? (
           <Tooltip message={(
-            <div className="d-flex flex-column align-items-center w-full">
+            <div className="d-flex flex-column items-center w-full">
               <div>Test2Code plugin</div>
               <div>is not installed</div>
             </div>

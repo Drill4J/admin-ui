@@ -84,7 +84,7 @@ export const TestsToRunModal = testsToRunModal(
             <CopyIcon>
               {copied
                 ? (
-                  <div className="d-flex align-items-center gx-1 fs-10 lh-16 primary-blue-default">
+                  <div className="d-flex items-center gx-1 fs-10 lh-16 primary-blue-default">
                     <span className="monochrome-black">Copied to clipboard.</span>
                     <Icons.Check height={10} width={14} viewBox="0 0 14 10" />
                   </div>

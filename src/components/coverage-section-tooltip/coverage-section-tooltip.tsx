@@ -30,14 +30,14 @@ export const CoverageSectionTooltip = coverageSectionTooltip((
   { className, data: { totalCovered: { covered, total }, ...testTypes } }: Props,
 ) => (
   <div className={className}>
-    <div className="d-flex justify-content-between align-items-center w-full">
-      <div className="d-flex align-items-center w-full">
+    <div className="d-flex justify-content-between items-center w-full">
+      <div className="d-flex items-center w-full">
         <TooltipItemTotal>total covered: {`${covered}/${total}`}</TooltipItemTotal>
         <TooltipItemTotalValue>{`${percentFormatter((covered / total) * 100)}%`}</TooltipItemTotalValue>
       </div>
     </div>
     {Object.keys(testTypes).map((testType) => (
-      <div className="d-flex justify-content-between align-items-center w-full" key={testType}>
+      <div className="d-flex justify-content-between items-center w-full" key={testType}>
         <TooltipItemDetails>
           {`${camelToTitle(testType)} (${testTypes[testType]
             .covered || 0}/${testTypes[testType].total || 0}`})

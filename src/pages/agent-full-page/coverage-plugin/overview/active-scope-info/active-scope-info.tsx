@@ -46,7 +46,7 @@ export const ActiveScopeInfo = activeScopeInfo(({
   return (
     <div className={className}>
       <Title>ACTIVE SCOPE COVERAGE</Title>
-      <div className="d-flex align-items-center gx-2 w-full h-40px mt-6 mb-3 ">
+      <div className="d-flex items-center gx-2 w-full h-40px mt-6 mb-3 ">
         <ScopeCoverage data-test="active-scope-info:scope-coverage">
           {`${percentFormatter(percentage)}%`}
         </ScopeCoverage>

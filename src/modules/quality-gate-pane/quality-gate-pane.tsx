@@ -115,7 +115,7 @@ export const QualityGatePane = qualityGatePane(
               values, handleSubmit, invalid, pristine, submitting,
             }) => (
               <>
-                <Header className="d-flex justify-content-between align-items-center px-6">
+                <Header className="d-flex justify-content-between items-center px-6">
                   <Title data-test="quality-gate-pane:header-title">Quality Gate</Title>
                   {configured && !isEditing && (
                     <StatusIconWrapper type={qualityGate.status}>
@@ -161,7 +161,7 @@ export const QualityGatePane = qualityGatePane(
                   )
                     : (
                       <Button
-                        className="d-flex align-items-center gx-1"
+                        className="d-flex items-center gx-1"
                         type="primary"
                         size="large"
                         disabled={invalid || pristine || submitting}

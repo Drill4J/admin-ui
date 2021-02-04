@@ -45,7 +45,7 @@ export const BaselineBuildModal = baselineBuildModal(({
     >
       <div className={className}>
         <div className="d-flex flex-column g-6 pt-4 px-6 pb-6">
-          <Message className="d-flex align-items-center w-full">
+          <Message className="d-flex items-center w-full">
             {isBaseline
               ? (
                 <>
