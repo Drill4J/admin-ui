@@ -76,7 +76,7 @@ export const ActiveBuildCoverageInfo = activeBuildCoverageInfo(({
         </BuildCoveragePercentage>
         {finishedScopesCount > 0 && previousBuildVersion && (
           <span data-test="active-build-coverage-info:comparing">
-            <span className="text-bold">
+            <span className="font-bold">
               {buildDiff >= 0 ? '+' : '-'}
               {percentFormatter(Math.abs(buildDiff))}%
               &nbsp;

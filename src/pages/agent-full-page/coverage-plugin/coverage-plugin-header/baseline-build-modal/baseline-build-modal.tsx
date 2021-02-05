@@ -44,7 +44,7 @@ export const BaselineBuildModal = baselineBuildModal(({
       closeOnFadeClick
     >
       <div className={className}>
-        <div className="flex flex-col g-6 pt-4 px-6 pb-6">
+        <div className="flex flex-col gap-6 pt-4 px-6 pb-6">
           <Message className="flex items-center w-full">
             {isBaseline
               ? (
@@ -61,7 +61,7 @@ export const BaselineBuildModal = baselineBuildModal(({
               )}
           </Message>
           {!isBaseline && (
-            <Message className="flex items-start g-2 w-full">
+            <Message className="flex items-start gap-2 w-full">
               <Checkbox checked={isConfirmed} onChange={() => setIsConfirmed(!isConfirmed)} />
               <span>
                 I understand that it is necessary to run full regression to be <br />

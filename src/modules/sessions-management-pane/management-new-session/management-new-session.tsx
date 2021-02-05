@@ -70,7 +70,7 @@ export const ManagementNewSession = managementNewSession(({
         name="isGlobal"
         type="checkbox"
         render={({ input, meta }) => (
-          <div className="flex items-center g-2">
+          <div className="flex items-center gap-2">
             <Fields.Checkbox
               disabled={hasGlobalSession}
               input={input}

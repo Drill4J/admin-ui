@@ -39,7 +39,7 @@ export const SavedTimeSection = savedTimeSection(
           message={message && <div className="flex items-center w-full text-center">{message}</div>}
         >
           <Title>{label}</Title>
-          <Value className="flex items-center g-2 mt-2 w-full">
+          <Value className="flex items-center gap-2 mt-2 w-full">
             <Duration>{previousBuildAutoTestsCount ? children : 'n/a'}</Duration>
             {typeof percentage === 'number' && <Percentage>{percentage}%</Percentage>}
           </Value>

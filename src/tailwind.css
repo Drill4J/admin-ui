@@ -3,6 +3,10 @@
 @tailwind utilities;
 
 @layer base {
+  body {
+    font-family: "OpenSans", sans-serif;
+  }
+
   button:focus {
     outline: none;
   }
