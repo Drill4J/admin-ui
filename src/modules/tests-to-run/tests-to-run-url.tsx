@@ -33,7 +33,7 @@ export const TestsToRunUrl = testsToRunUrl(
     className, agentId, pluginId, agentType,
   }: Props) => (
     <span
-      className={`${className} ${agentType === 'ServiceGroup' ? 'fs-12' : 'fs-14'}`}
+      className={`${className} ${agentType === 'ServiceGroup' ? 'text-12' : 'text-14'}`}
       style={{ width: agentType === 'ServiceGroup' ? '300px' : undefined }}
     >
       <div>

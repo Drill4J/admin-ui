@@ -64,7 +64,7 @@ export const RenameScopeModal = renameScopeModal(
       <Popup
         isOpen={isOpen}
         onToggle={onToggle}
-        header={<div className="fs-20">Rename Scope</div>}
+        header={<div className="text-20">Rename Scope</div>}
         type="info"
         closeOnFadeClick
       >
