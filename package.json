@@ -14,7 +14,6 @@
     "@types/react-router-dom": "5.1.5",
     "autoprefixer": "^10.2.4",
     "axios": "^0.21.1",
-    "bootstrap": "^4.5.3",
     "final-form": "4.20.1",
     "lodash.assignwith": "4.2.0",
     "nanoid": "3.1.12",

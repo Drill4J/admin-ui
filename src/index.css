@@ -545,6 +545,12 @@ button:focus {
   outline: none;
 }
 
+.text-ellipsis {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 .container {
   width: 100%;
 }
