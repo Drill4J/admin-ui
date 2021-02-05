@@ -31,7 +31,7 @@ export const AgentStatusToggle = ({ className, agent }: Props) => {
   const { showMessage } = useContext(NotificationManagerContext);
   return (
     <div className={className}>
-      <div className="d-flex align-items-center w-100" data-test="agent-status-toggle">
+      <div className="flex items-center w-full" data-test="agent-status-toggle">
         <Inputs.Toggler
           value={agent.status === AGENT_STATUS.ONLINE || agent.status === AGENT_STATUS.BUSY}
           label={toggleLabel(agent.status)}

@@ -19,7 +19,7 @@ import { PageSwitcher } from './routes';
 import { NotificationManager } from './notification-manager';
 import { configureAxios } from './common/connection';
 
-import './app.scss';
+import './index.css';
 
 if (process.env.REACT_APP_ENV === 'development') {
   devirt();

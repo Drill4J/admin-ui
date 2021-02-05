@@ -29,11 +29,11 @@ export const SearchPanel = ({
   onSearch, searchQuery, searchResult, children, placeholder,
 }: Props) => (
   <div>
-    <div className="d-flex align-items-center w-100">
+    <div className="flex items-center w-full">
       <Form
         onSubmit={({ search = '' }) => onSearch(search)}
         render={({ handleSubmit, form }) => (
-          <div className="py-2 h-40px">
+          <div className="py-2 h-10">
             <form onSubmit={handleSubmit}>
               <Field
                 name="search"
@@ -46,9 +46,9 @@ export const SearchPanel = ({
         )}
       />
       <div
-        className={`d-flex align-items-center w-100 ml-4 ${searchQuery
-          ? 'justify-content-between'
-          : 'justify-content-end'} fs-12 lh-20 monochrome-default`}
+        className={`flex items-center w-full ml-4 ${searchQuery
+          ? 'justify-between'
+          : 'justify-end'} text-12 leading-20 monochrome-default`}
       >
         {searchQuery && <span data-test="search-panel:search-result">{searchResult} result{searchResult > 1 ? 's' : ''}</span>}
         <span data-test="search-panel:displaying-results-count">

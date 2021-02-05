@@ -41,7 +41,7 @@ export const SelectableList = selectableList(
         id = '', available, description, version, name,
       }) => (
         <Element key={id} selected={selectedRows.includes(id)}>
-          <Plugin className="d-flex align-items-center gx-4 p-4 w-100">
+          <Plugin className="flex items-center gap-x-4 p-4 w-full">
             {available && (
               <Inputs.Checkbox
                 onChange={() => {
@@ -55,8 +55,8 @@ export const SelectableList = selectableList(
             <PluginsIcon selected={selectedRows.includes(id)}>
               <Icons.Test2Code />
             </PluginsIcon>
-            <div className="d-flex flex-column align-items-start">
-              <div className="d-flex align-items-center w-100">
+            <div className="flex flex-col items-start">
+              <div className="flex items-center w-full">
                 <PluginName>{name}</PluginName>
                 {!available && <PluginRelation color="gray">Installed</PluginRelation>}
                 {version && <PluginVersion>{version}</PluginVersion>}

@@ -47,7 +47,7 @@ export const SettingsPage = settingsPage(
       <div className={className}>
         <PageHeader
           title={(
-            <div className="d-flex align-items-center w-100">
+            <div className="flex items-center w-full">
               <HeaderIcon height={24} width={24} />
               {(type as string) === 'service-group' ? (
                 'Service Group Settings'
@@ -61,7 +61,7 @@ export const SettingsPage = settingsPage(
           )}
           actions={
             (type as string) !== 'service-group' && (
-              <div className="d-flex justify-content-end align-items-center w-100">
+              <div className="flex justify-end items-center w-full">
                 {(data as Agent).status !== AGENT_STATUS.NOT_REGISTERED && (
                   <Menu
                     bordered

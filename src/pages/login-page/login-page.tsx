@@ -52,7 +52,7 @@ export const LoginPage = loginPage(({ className }: Props) => {
   return (
     <LoginLayout>
       <div className={className}>
-        <div className="d-flex flex-column justify-content-center align-items-center w-100 h-100">
+        <div className="flex flex-col justify-center items-center w-full h-full">
           <Title>Welcome to Drill4J</Title>
           <SubTitle className="px-16">Click &quot;Continue as a guest&quot; to entry Admin Panel with admin privilege</SubTitle>
           {error && <Error type="ERROR">{`${error}`}</Error>}

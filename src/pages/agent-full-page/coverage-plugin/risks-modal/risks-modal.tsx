@@ -53,13 +53,13 @@ export const RisksModal = ({ isOpen, onToggle, filter = 'all' }: Props) => {
 
   return (
     <Modal isOpen={isOpen} onToggle={onToggle}>
-      <div className="d-flex flex-column h-100">
+      <div className="flex flex-col h-full">
         <Header>
           <Icons.Test height={20} width={18} viewBox="0 0 18 20" />
           <span>Risks</span>
           <h2>{risks.length}</h2>
         </Header>
-        <NotificationPanel className="d-flex align-items-center">
+        <NotificationPanel className="flex items-center">
           Risks are not covered
           <Bold>New</Bold>
           and

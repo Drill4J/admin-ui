@@ -65,7 +65,7 @@ export const DeleteScopeModal = deleteScopeModal(
             </GeneralAlerts>
           )}
           <div className="mt-4 mx-6 mb-6">
-            <div className="fs-14 lh-20">
+            <div className="text-14 leading-20">
               {scope && scope.active && !testTypes.length && (
                 <span>
                   You are about to delete an active scope. Are you sure you <br />
@@ -90,7 +90,7 @@ export const DeleteScopeModal = deleteScopeModal(
                 </span>
               )}
             </div>
-            <div className="d-flex align-items-center gx-4 w-100 mt-6">
+            <div className="flex items-center gap-x-4 w-full mt-6">
               {scope && scope.active && Boolean(testTypes.length)
                 ? (
                   <Button
@@ -104,7 +104,7 @@ export const DeleteScopeModal = deleteScopeModal(
                 : (
                   <>
                     <DeleteScopeButton
-                      className="d-flex align-items-center gx-1 px-4"
+                      className="flex items-center gap-x-1 px-4"
                       type="primary"
                       disabled={loading}
                       onClick={async () => {

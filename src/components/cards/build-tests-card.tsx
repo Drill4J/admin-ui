@@ -31,8 +31,8 @@ export const BuildTestsCard = BEM(styles)(({
 }: Props) => {
   const { summary: { testCount = 0, coverage: { percentage = 0 } = {} } = {} } = testTypeSummary || {};
   return (
-    <div className={`${className} d-flex flex-column justify-content-between align-items-center w-100`}>
-      <div className="d-flex justify-content-between align-items-center w-100">
+    <div className={`${className} flex flex-col justify-between items-center w-full`}>
+      <div className="flex justify-between items-center w-full">
         <Label data-test={`build-tests-card:label:${label}`}>{label}</Label>
         <TotalCount data-test={`build-tests-card:total-count:${label}`}>{testCount}</TotalCount>
       </div>

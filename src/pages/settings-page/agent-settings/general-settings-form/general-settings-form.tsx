@@ -70,13 +70,13 @@ export const GeneralSettingsForm = generalSettingsForm(
             invalid: boolean;
           }) => (
             <>
-              <InfoPanel className="d-flex justify-content-between align-items-center w-100 px-6">
-                <div className="d-flex align-items-center">
+              <InfoPanel className="flex justify-between items-center w-full px-6">
+                <div className="flex items-center">
                   <InfoIcon />
                   Basic agent settings.
                 </div>
                 <SaveChangesButton
-                  className="d-flex align-items-center gx-1"
+                  className="flex items-center gap-x-1"
                   type="primary"
                   size="large"
                   onClick={handleSubmit}

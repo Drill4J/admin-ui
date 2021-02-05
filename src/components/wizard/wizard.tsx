@@ -84,14 +84,14 @@ export const Wizard = wizard(({
           values: Agent;
         }) => (
           <>
-            <div className="d-flex align-items-center w-100 px-6 py-4">
+            <div className="flex items-center w-full px-6 py-4">
               <StepName>
                 {`${currentStepIndex + 1} of ${Children.count(children)}. ${name} `}
               </StepName>
-              <div className="d-flex justify-content-end align-items-center w-100">
+              <div className="flex justify-end items-center w-full">
                 {currentStepIndex > 0 && (
                   <PreviousButton
-                    className="d-flex gx-2"
+                    className="flex gap-x-2"
                     type="secondary"
                     size="large"
                     onClick={() => dispatch(previousStep())}
@@ -103,7 +103,7 @@ export const Wizard = wizard(({
                 )}
                 {currentStepIndex < steps.length - 1 ? (
                   <Button
-                    className="d-flex gx-2"
+                    className="flex gap-x-2"
                     type="primary"
                     size="large"
                     onClick={() => dispatch(nextStep())}
@@ -115,7 +115,7 @@ export const Wizard = wizard(({
                   </Button>
                 ) : (
                   <Button
-                    className="d-flex gx-2"
+                    className="flex gap-x-2"
                     type="primary"
                     size="large"
                     onClick={handleSubmit}

@@ -55,7 +55,7 @@ export const ActiveBuildCoverageInfo = activeBuildCoverageInfo(({
   const buildDiff = percentFormatter(buildCodeCoverage) - percentFormatter(previousBuildCodeCoverage);
   return (
     <div className={className}>
-      <div className="d-flex justify-content-between align-items-center w-100">
+      <div className="flex justify-between items-center w-full">
         <Title data-test="active-build-coverage-info:title">BUILD COVERAGE</Title>
         <Legend legendItems={[
           { label: 'Build', color: DATA_VISUALIZATION_COLORS.BUILD_COVER },
@@ -76,7 +76,7 @@ export const ActiveBuildCoverageInfo = activeBuildCoverageInfo(({
         </BuildCoveragePercentage>
         {finishedScopesCount > 0 && previousBuildVersion && (
           <span data-test="active-build-coverage-info:comparing">
-            <span className="bold">
+            <span className="font-bold">
               {buildDiff >= 0 ? '+' : '-'}
               {percentFormatter(Math.abs(buildDiff))}%
               &nbsp;

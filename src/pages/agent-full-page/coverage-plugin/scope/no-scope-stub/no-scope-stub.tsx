@@ -26,7 +26,7 @@ const noScopeStub = BEM(styles);
 
 export const NoScopeStub = noScopeStub(({ className }: Props) => (
   <div className={className}>
-    <div className="d-flex flex-column align-items-center w-100">
+    <div className="flex flex-col items-center w-full">
       <Icons.Scope width={157} height={157} data-test="no-scope-stub:test-icon" />
       <Title data-test="no-scope-stub:title">No scopes found</Title>
       <Message data-test="no-scope-stub:message">There are no scopes with finished test sessions in this build.</Message>

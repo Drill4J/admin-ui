@@ -60,9 +60,9 @@ export const UnregisterAgentModal = unregisterAgentModal(({
             Are you sure you want to unregister the agent? All gathered data and settings will be
             lost.
           </Notification>
-          <div className="d-flex gx-4 mt-6">
+          <div className="flex gap-x-4 mt-6">
             <Button
-              className="d-flex align-items-center gx-1"
+              className="flex items-center gap-x-1"
               type="primary"
               size="large"
               disabled={loading}

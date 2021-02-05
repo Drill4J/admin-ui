@@ -64,7 +64,7 @@ export const RenameScopeModal = renameScopeModal(
       <Popup
         isOpen={isOpen}
         onToggle={onToggle}
-        header={<div className="fs-20">Rename Scope</div>}
+        header={<div className="text-20">Rename Scope</div>}
         type="info"
         closeOnFadeClick
       >
@@ -89,9 +89,9 @@ export const RenameScopeModal = renameScopeModal(
                 <FormGroup label="Scope Name">
                   <Field name="name" component={Fields.Input} placeholder="Enter scope name" />
                 </FormGroup>
-                <div className="d-flex align-items-center g-4 w-100 mt-6">
+                <div className="flex items-center gap-4 w-full mt-6">
                   <Button
-                    className="d-flex align-items-center gx-1"
+                    className="flex items-center gap-x-1"
                     type="primary"
                     size="large"
                     onClick={handleSubmit}

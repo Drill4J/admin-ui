@@ -70,13 +70,13 @@ export const GeneralSettingsForm = generalSettingsForm(
             invalid: boolean;
           }) => (
             <>
-              <InfoPanel className="d-flex justify-content-between align-items-center w-100 px-6">
-                <div className="d-flex justify-content-center align-items-center text-center">
+              <InfoPanel className="flex justify-between items-center w-full px-6">
+                <div className="flex justify-center items-center text-center">
                   <InfoIcon />
                   Basic service group settings.
                 </div>
                 <SaveChangesButton
-                  className="d-flex align-items-center gx-1"
+                  className="flex items-center gap-x-1"
                   type="primary"
                   size="large"
                   onClick={handleSubmit}

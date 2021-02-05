@@ -33,7 +33,7 @@ export const TestsToRunUrl = testsToRunUrl(
     className, agentId, pluginId, agentType,
   }: Props) => (
     <span
-      className={`${className} ${agentType === 'ServiceGroup' ? 'fs-12' : 'fs-14'}`}
+      className={`${className} ${agentType === 'ServiceGroup' ? 'text-12' : 'text-14'}`}
       style={{ width: agentType === 'ServiceGroup' ? '300px' : undefined }}
     >
       <div>
@@ -44,7 +44,7 @@ export const TestsToRunUrl = testsToRunUrl(
         <CurlFlag> <CurlFlag color="red">-</CurlFlag>H </CurlFlag>
         &quot;content-type: application/json&quot;<CurlFlag> \</CurlFlag>
       </div>
-      <div className="d-flex align-items-start">
+      <div className="flex items-start">
         <CurlFlag> <CurlFlag color="red">-</CurlFlag>X <CurlFlag invisible>\</CurlFlag></CurlFlag>
         <span>
           <CurlFlag> GET </CurlFlag>{`${adminUrl}api/${agentType === 'ServiceGroup'

@@ -541,6 +541,20 @@ video {
   height: auto;
 }
 
+body {
+  font-family: "OpenSans", sans-serif;
+}
+
+button:focus {
+  outline: none;
+}
+
+.text-ellipsis {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 .container {
   width: 100%;
 }

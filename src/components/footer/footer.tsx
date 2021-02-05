@@ -68,7 +68,7 @@ export const Footer = footer(({ className }: Props) => {
   return (
     <div className={className}>
       <ContentWrapper>
-        <Content className="d-flex justify-content-between align-items-center w-100">
+        <Content className="flex justify-between items-center w-full">
           <AdminInfo>
             <span>
               {`© Drill4J ${new Date().getFullYear()}`}

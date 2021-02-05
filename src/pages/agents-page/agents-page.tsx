@@ -56,7 +56,7 @@ export const AgentsPage = agentsPage(({ className }: Props) => {
         itemsCount={agentsList.length}
         actions={(
           <Button
-            className="d-flex gx-2"
+            className="flex gap-x-2"
             type="secondary"
             size="large"
             onClick={() => push('/preregister/offline-agent')}

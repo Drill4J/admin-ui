@@ -43,7 +43,7 @@ export const ActionsPanel = actionsPanel(
       <div className={className}>
         { isNewSession ? (
           <Button
-            className="d-flex align-items-center gx-1"
+            className="flex items-center gap-x-1"
             type="primary"
             size="large"
             disabled={startSessionDisabled}
@@ -65,7 +65,7 @@ export const ActionsPanel = actionsPanel(
         )}
         { activeSessions.length > 0 && isNewSession && (
           <Button
-            className="d-flex gx-2"
+            className="flex gap-x-2"
             type="secondary"
             size="large"
             onClick={() => dispatch(setIsNewSession(false))}

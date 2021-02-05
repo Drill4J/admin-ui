@@ -62,7 +62,7 @@ export const InstallPluginsStep = installPluginsStep(
                   },
                 })}
               >
-                <PluginInfo className="d-flex align-items-center w-100 mb-3">
+                <PluginInfo className="flex items-center w-full mb-3">
                   <PluginName>{name}&nbsp;</PluginName>
                   {version && <PluginVersion>({version})</PluginVersion>}
                 </PluginInfo>

@@ -47,7 +47,7 @@ export const TestsSection = () => {
       additionalInfo={`${finishedScopesCount} scopes`}
       graph={(
         <Tooltip message={<SectionTooltip data={tooltipData} />}>
-          <div className="d-flex align-items-center w-100">
+          <div className="flex items-center w-full">
             {Object.keys(TESTS_TYPES_COLOR).map((testType) => (
               <SingleBar
                 key={testType}

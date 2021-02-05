@@ -102,7 +102,7 @@ export const QualityGateStatus = qualityGateStatus(
           <CopyIcon>
             {copied
               ? (
-                <div className="d-flex align-items-center gx-1 fs-10 lh-16 primary-blue-default">
+                <div className="flex items-center gap-x-1 text-10 leading-16 primary-blue-default">
                   <span className="monochrome-black">Copied to clipboard.</span>
                   <Icons.Check height={10} width={14} viewBox="0 0 14 10" />
                 </div>
