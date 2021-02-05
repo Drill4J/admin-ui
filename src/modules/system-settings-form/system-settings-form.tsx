@@ -118,7 +118,7 @@ export const SystemSettingsForm = systemSettingsForm(
                     ) : (
                       <Tooltip
                         message={(
-                          <SecuredMessage className="flex flex-column items-center w-full">
+                          <SecuredMessage className="flex flex-col items-center w-full">
                             <span>Secured from editing.</span>
                             <span> Click to unlock.</span>
                           </SecuredMessage>

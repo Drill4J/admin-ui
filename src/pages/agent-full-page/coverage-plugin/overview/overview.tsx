@@ -70,7 +70,7 @@ export const Overview = overview(({ className }: Props) => {
         </TabsPanel>
       </RoutingTabsPanel>
       <InfoPanel>
-        <SummaryPanel className="flex flex-column items-stretch w-full">
+        <SummaryPanel className="flex flex-col items-stretch w-full">
           {selectedTab === 'methods'
             ? (
               <BuildProjectMethods

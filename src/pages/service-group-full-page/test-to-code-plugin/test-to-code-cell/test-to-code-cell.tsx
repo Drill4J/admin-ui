@@ -35,7 +35,7 @@ export const TestToCodeCell = testToCodeCell(({
       <Value onClick={onClick} clickable={Boolean(onClick)} data-test={`dashboard-cell:value:${testContext}`}>
         {value === undefined ? (
           <Tooltip message={(
-            <div className="flex flex-column items-center w-full">
+            <div className="flex flex-col items-center w-full">
               <div>Test2Code plugin</div>
               <div>is not installed</div>
             </div>

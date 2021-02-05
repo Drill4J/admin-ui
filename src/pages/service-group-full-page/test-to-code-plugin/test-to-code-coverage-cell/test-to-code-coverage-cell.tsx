@@ -33,7 +33,7 @@ export const TestToCodeCoverageCell = testToCodeCoverageCell(({ className, value
       <Value className="flex items-center w-full" data-test="dashboard-coverage-cell:value">
         {value === undefined ? (
           <Tooltip message={(
-            <div className="flex flex-column items-center w-full">
+            <div className="flex flex-col items-center w-full">
               <div>Test2Code plugin</div>
               <div>is not installed</div>
             </div>

@@ -31,7 +31,7 @@ interface Props {
 export const BuildMethodsCard = BEM(styles)(({
   className, children, covered = 0, totalCount = 0, label, testContext,
 }: Props) => (
-  <div className={`${className} flex flex-column justify-between items-center w-full`}>
+  <div className={`${className} flex flex-col justify-between items-center w-full`}>
     <div className="flex justify-between items-center w-full">
       <Label data-test={`build-methods-card:label:${label}`}>{label}</Label>
       <TotalCount data-test={`build-methods-card:total-count:${label}`}>{totalCount}</TotalCount>

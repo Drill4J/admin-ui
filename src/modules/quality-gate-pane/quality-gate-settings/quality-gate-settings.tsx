@@ -73,7 +73,7 @@ export const QualityGateSettings = qualityGateSettings(
                 Risks
                 <RisksInfoIcon
                   message={(
-                    <div className="flex flex-column items-center w-full">
+                    <div className="flex flex-col items-center w-full">
                       <span>Try to cover all of your risks in current build.</span>
                       <span>Uncovered risks won’t be counted in your next build.</span>
                     </div>

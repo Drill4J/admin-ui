@@ -44,7 +44,7 @@ export const BaselineBuildModal = baselineBuildModal(({
       closeOnFadeClick
     >
       <div className={className}>
-        <div className="flex flex-column g-6 pt-4 px-6 pb-6">
+        <div className="flex flex-col g-6 pt-4 px-6 pb-6">
           <Message className="flex items-center w-full">
             {isBaseline
               ? (

@@ -53,7 +53,7 @@ export const RisksModal = ({ isOpen, onToggle, filter = 'all' }: Props) => {
 
   return (
     <Modal isOpen={isOpen} onToggle={onToggle}>
-      <div className="flex flex-column h-full">
+      <div className="flex flex-col h-full">
         <Header>
           <Icons.Test height={20} width={18} viewBox="0 0 18 20" />
           <span>Risks</span>
