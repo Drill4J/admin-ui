@@ -53,7 +53,7 @@ export const GetSuggestedTestsModal = getSuggestedTestsModal(({
       closeOnFadeClick
     >
       <div className={`${className} flex flex-column pt-4 px-6 pb-6 gap-y-7`}>
-        <Message className="flex flex-column gap-y-4 text-14 lh-20" data-test="get-suggested-tests-modal:message">
+        <Message className="flex flex-column gap-y-4 text-14 leading-20" data-test="get-suggested-tests-modal:message">
           <span>
             These are recommendations for this build updates only.<br />
             Use this Curl in your command line to get JSON:

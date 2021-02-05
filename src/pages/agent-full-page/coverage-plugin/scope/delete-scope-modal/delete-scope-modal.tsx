@@ -65,7 +65,7 @@ export const DeleteScopeModal = deleteScopeModal(
             </GeneralAlerts>
           )}
           <div className="mt-4 mx-6 mb-6">
-            <div className="text-14 lh-20">
+            <div className="text-14 leading-20">
               {scope && scope.active && !testTypes.length && (
                 <span>
                   You are about to delete an active scope. Are you sure you <br />
