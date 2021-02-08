@@ -15,6 +15,7 @@
  */
 import { BEM } from '@redneckz/react-bem-helper';
 import { Legend, ProgressBarLegends } from '@drill4j/ui-kit';
+import 'twin.macro';
 
 import { percentFormatter } from 'utils';
 import { ActiveScope } from 'types/active-scope';
@@ -76,7 +77,7 @@ export const ActiveBuildCoverageInfo = activeBuildCoverageInfo(({
         </BuildCoveragePercentage>
         {finishedScopesCount > 0 && previousBuildVersion && (
           <span data-test="active-build-coverage-info:comparing">
-            <span className="font-bold">
+            <span tw="font-bold">
               {buildDiff >= 0 ? '+' : '-'}
               {percentFormatter(Math.abs(buildDiff))}%
               &nbsp;

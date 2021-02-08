@@ -17,6 +17,7 @@ import { useContext, useState } from 'react';
 import { BEM, div } from '@redneckz/react-bem-helper';
 import { NavLink, useHistory, useParams } from 'react-router-dom';
 import { Button, Icons, Tooltip } from '@drill4j/ui-kit';
+import 'twin.macro';
 
 import { QualityGatePane } from 'modules';
 import { NotificationManagerContext } from 'notification-manager';
@@ -125,7 +126,7 @@ export const CoveragePluginHeader = coveragePluginHeader(({ className, previousB
                 <Tooltip
                   message={(
                     <>
-                      <div>Configure quality gate conditions to</div>
+                      <div tw="text-center">Configure quality gate conditions to</div>
                       <div>define whether your build passes or not.</div>
                     </>
                   )}
