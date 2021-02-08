@@ -18,7 +18,14 @@ module.exports = {
   purge: ['./src/**/*.{js,jsx,ts,tsx}', './public/index.html'],
   darkMode: false,
   theme: {
-    extend: {},
+    extend: {
+      spacing: {
+        27: '6.75rem',
+      },
+      height: {
+        fit: 'fit-content',
+      },
+    },
     colors: {
       transparent: 'transparent',
       blue: {
@@ -78,10 +85,34 @@ module.exports = {
       light: ['OpenSans-Light', 'sans-serif'],
     },
     fontSize: {
-      10: '10px', 12: '12px', 14: '14px', 16: '16px', 18: '18px', 20: '20px', 22: '22px', 24: '24px', 26: '26px', 28: '28px', 30: '30px',
+      10: '10px',
+      12: '12px',
+      14: '14px',
+      16: '16px',
+      18: '18px',
+      20: '20px',
+      22: '22px',
+      24: '24px',
+      26: '26px',
+      28: '28px',
+      30: '30px',
+      32: '32px',
+      48: '48px',
     },
     lineHeight: {
-      10: '10px', 12: '12px', 14: '14px', 16: '16px', 18: '18px', 20: '20px', 22: '22px', 24: '24px', 26: '26px', 28: '28px', 30: '30px',
+      10: '10px',
+      12: '12px',
+      14: '14px',
+      16: '16px',
+      18: '18px',
+      20: '20px',
+      22: '22px',
+      24: '24px',
+      26: '26px',
+      28: '28px',
+      30: '30px',
+      32: '32px',
+      48: '48px',
     },
   },
   variants: {

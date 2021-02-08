@@ -55,7 +55,9 @@ export const MultiProgressBar = multiProgressBar(({
         <Tooltip
           message={(
             <Message>
-              <b>{percentFormatter(overlappingCode)}%</b> of current build coverage <br /> has been overlapped in active scope
+              <span tw="font-bold">
+                {percentFormatter(overlappingCode)}%
+              </span> of current build coverage <br /> has been overlapped in active scope
             </Message>
           )}
         >
