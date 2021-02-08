@@ -13,37 +13,36 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { BEM } from '@redneckz/react-bem-helper';
+import 'twin.macro';
 
 import { spacesToDashes } from 'utils';
 
-import styles from './dashboard-section.module.scss';
-
 interface Props {
-  className?: string;
   graph?: React.ReactNode | React.ReactNode[];
   info?: React.ReactNode;
   label?: string;
   additionalInfo?: React.ReactNode;
 }
 
-const dashboardSection = BEM(styles);
-
-export const DashboardSection = dashboardSection(({
-  className, graph, info, label = '', additionalInfo,
+export const DashboardSection = ({
+  graph, info, label = '', additionalInfo,
 }: Props) => (
-  <div className={className}>
-    <Info>
-      <Label>{label}</Label>
-      <MainInfo data-test={`dashboard:${spacesToDashes(label)}:main-info`}>{info}</MainInfo>
-      <AdditionalInfo data-test={`dashboard:${spacesToDashes(label)}:additional-info`}>{additionalInfo}</AdditionalInfo>
-    </Info>
-    <Graph>{graph}</Graph>
+  <div tw="flex gap-x-4 w-full">
+    <div tw="w-1/2">
+      <div tw="mb-4 font-regular text-14 leading-20 text-monochrome-default">{label}</div>
+      <div
+        tw="mb-6 font-light text-48 leading-48 text-monochrome-black"
+        data-test={`dashboard:${spacesToDashes(label)}:main-info`}
+      >
+        {info}
+      </div>
+      <div
+        tw="text-12 leading-20 text-monochrome-default"
+        data-test={`dashboard:${spacesToDashes(label)}:additional-info`}
+      >
+        {additionalInfo}
+      </div>
+    </div>
+    <div tw="w-1/2 flex justify-end cursor-pointer">{graph}</div>
   </div>
-));
-
-const Label = dashboardSection.label('div');
-const Info = dashboardSection.info('div');
-const MainInfo = dashboardSection.mainInfo('div');
-const AdditionalInfo = dashboardSection.additionalInfo('div');
-const Graph = dashboardSection.graph('div');
+);

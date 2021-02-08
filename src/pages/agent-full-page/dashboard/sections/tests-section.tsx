@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 import { Tooltip } from '@drill4j/ui-kit';
+import 'twin.macro';
 
 import { SingleBar, DashboardSection, SectionTooltip } from 'components';
 import { TESTS_TYPES_COLOR } from 'common/constants';
@@ -47,7 +48,7 @@ export const TestsSection = () => {
       additionalInfo={`${finishedScopesCount} scopes`}
       graph={(
         <Tooltip message={<SectionTooltip data={tooltipData} />}>
-          <div className="flex items-center w-full">
+          <div tw="flex items-center w-full">
             {Object.keys(TESTS_TYPES_COLOR).map((testType) => (
               <SingleBar
                 key={testType}

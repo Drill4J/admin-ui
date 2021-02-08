@@ -13,37 +13,34 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { BEM } from '@redneckz/react-bem-helper';
 import { Link } from 'react-router-dom';
 import { Icons } from '@drill4j/ui-kit';
+import tw, { styled } from 'twin.macro';
 
 import { camelToSpaces } from 'utils';
 
-import styles from './no-plugins-stub.module.scss';
-
 interface Props {
-  className?: string;
   agentId?: string;
   agentType: 'Agent' | 'ServiceGroup';
 }
 
-const noPluginsStub = BEM(styles);
+const AgentInfoLink = styled(Link)`
+  ${tw`block mt-1 text-14 font-bold text-blue-default no-underline`}
+  :first-letter {
+    text-transform: uppercase;
+  }
+`;
 
-export const NoPluginsStub = noPluginsStub(({ className, agentId = '', agentType }: Props) => (
-  <div className={className}>
-    <Icon height={160} width={160} />
-    <Title>No data available</Title>
-    <Message>
+export const NoPluginsStub = ({ agentId = '', agentType }: Props) => (
+  <div tw="flex flex-col flex-grow justify-center items-center border-t border-monochrome-medium-tint text-monochrome-default">
+    <Icons.Plugins tw="mb-10" height={160} width={160} />
+    <div tw="text-24 leading-32">No data available</div>
+    <div tw="mt-2 text-14 leading-20 text-center">
       <div>There are no enabled plugins on this {camelToSpaces(agentType)} to collect the data from.</div>
       <div>To install a plugin go to</div>
-    </Message>
+    </div>
     <AgentInfoLink to={`/agents/${agentType === 'Agent' ? 'agent' : 'service-group'}/${agentId}/settings`}>
       {camelToSpaces(agentType)} settings page
     </AgentInfoLink>
   </div>
-));
-
-const Icon = noPluginsStub.icon(Icons.Plugins);
-const Title = noPluginsStub.title('div');
-const Message = noPluginsStub.message('div');
-const AgentInfoLink = noPluginsStub.link(Link);
+);

@@ -16,6 +16,7 @@
 import { BEM } from '@redneckz/react-bem-helper';
 import { NavLink, useParams } from 'react-router-dom';
 import { Tooltip } from '@drill4j/ui-kit';
+import tw, { styled } from 'twin.macro';
 
 import { percentFormatter } from 'utils';
 import { BuildSummary } from 'types/build-summary';
@@ -26,15 +27,17 @@ import { SingleBar, CoverageSectionTooltip, DashboardSection } from 'components'
 import { useBuildVersion } from 'hooks';
 import { usePreviousBuildCoverage } from '../../../coverage-plugin/use-previous-build-coverage';
 
-import styles from './coverage-section.module.scss';
+const Baseline = styled.div`
+  ${tw`absolute w-27 border-t border-dashed border-monochrome-shade`}`;
 
-interface Props {
-  className?: string;
-}
+const BuildInfo = styled.div`
+  ${tw`grid items-center`}
+  & {
+    grid-template-columns: max-content 1fr;
+  }
+`;
 
-const coverageSection = BEM(styles);
-
-export const CoverageSection = coverageSection(({ className }: Props) => {
+export const CoverageSection = () => {
   const { version: previousBuildVersion = '' } = useBuildVersion<ParentBuild>('/data/parent') || {};
   const { percentage: previousBuildCodeCoverage = 0 } = usePreviousBuildCoverage(previousBuildVersion) || {};
   const { coverage: buildCodeCoverage = 0, scopeCount = 0 } = useBuildVersion<BuildSummary>('/build/summary') || {};
@@ -71,38 +74,42 @@ export const CoverageSection = coverageSection(({ className }: Props) => {
   const isFirstBuild = !previousBuildVersion;
 
   return (
-    <div className={className}>
+    <div>
       <DashboardSection
         label="Build Coverage"
         info={`${percentFormatter(buildCodeCoverage)}%`}
         graph={(
-          <BarTooltip message={<CoverageSectionTooltip data={tooltipData} />}>
+          <Tooltip tw="relative" message={<CoverageSectionTooltip data={tooltipData} />}>
             <SingleBar
               width={108}
               height={128}
               color={COVERAGE_TYPES_COLOR.TOTAL}
               percent={percentFormatter(buildCodeCoverage)}
             />
-            {!isFirstBuild && <BaselineBuild style={{ bottom: `${previousBuildCodeCoverage}%` }} />}
-          </BarTooltip>
+            {!isFirstBuild && (
+              <div
+                tw="absolute w-27 border-t border-dashed border-monochrome-shade"
+                style={{ bottom: `${previousBuildCodeCoverage}%` }}
+              />
+            )}
+          </Tooltip>
         )}
         additionalInfo={(
           Boolean(buildDiff) && !isFirstBuild && scopeCount > 0 && (
             <BuildInfo>
               {`${buildDiff > 0 ? '+' : '-'} ${percentFormatter(Math.abs(buildDiff))}% vs`}
               <div className="text-ellipsis">
-                <Link to={`/full-page/${agentId}/${previousBuildVersion}/dashboard`} title={`Build ${previousBuildVersion}`}>
+                <NavLink
+                  tw="font-bold text-blue-default leading-16 no-underline"
+                  to={`/full-page/${agentId}/${previousBuildVersion}/dashboard`}
+                  title={`Build ${previousBuildVersion}`}
+                >
                   &nbsp;Build {previousBuildVersion}
-                </Link>
+                </NavLink>
               </div>
             </BuildInfo>
           ))}
       />
     </div>
   );
-});
-
-const Link = coverageSection.link(NavLink);
-const BuildInfo = coverageSection.buildInfo('div');
-const BaselineBuild = coverageSection.baselineBuild('div');
-const BarTooltip = coverageSection.barTooltip(Tooltip);
+};

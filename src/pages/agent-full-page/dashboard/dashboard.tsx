@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { BEM } from '@redneckz/react-bem-helper';
+import 'twin.macro';
 
 import { NoPluginsStub } from 'modules';
 import { Agent } from 'types/agent';
@@ -23,24 +23,19 @@ import {
   CoverageSection, TestsSection, RisksSection, TestsToRunSection,
 } from './sections';
 
-import styles from './dashboard.module.scss';
-
 interface Props {
-  className?: string;
   agent: Agent;
 }
 
-const dashboard = BEM(styles);
-
-export const Dashboard = dashboard(({ className, agent }: Props) => {
+export const Dashboard = ({ agent }: Props) => {
   const { id: agentId, plugins = [] } = agent;
   const { buildVersion } = usePluginState();
   const installedPlugins = plugins.filter(plugin => !plugin.available);
 
   return (
-    <div className={className}>
-      <Header>Dashboard</Header>
-      <Content>
+    <div tw="flex flex-col h-full w-full">
+      <div tw="mt-5 mx-6 mb-7 text-24 leading-32 font-light">Dashboard</div>
+      <div tw="flex flex-grow mx-6">
         {installedPlugins.length > 0 ? (
           <>
             {installedPlugins.map(({ id, name }) => (
@@ -57,10 +52,7 @@ export const Dashboard = dashboard(({ className, agent }: Props) => {
             ))}
           </>
         ) : <NoPluginsStub agentId={agent.id} agentType="Agent" />}
-      </Content>
+      </div>
     </div>
   );
-});
-
-const Header = dashboard.header('div');
-const Content = dashboard.content('div');
+};

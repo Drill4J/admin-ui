@@ -52,11 +52,11 @@ export const BuildCoverageInfo = buildCoverageInfo(({
         </BuildCoveragePercentage>
         {previousBuildVersion && (
           <span data-test="build-coverage-info:comparing">
-            <b>
+            <span tw="font-bold">
               {buildDiff >= 0 ? '+ ' : '- '}
               {percentFormatter(Math.abs(buildDiff))}%
               &nbsp;
-            </b>
+            </span>
             сompared to the parent build
           </span>
         )}

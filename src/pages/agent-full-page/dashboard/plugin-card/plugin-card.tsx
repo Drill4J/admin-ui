@@ -14,37 +14,31 @@
  * limitations under the License.
  */
 import { Children, ReactNode } from 'react';
-import { BEM } from '@redneckz/react-bem-helper';
 import { Link } from 'react-router-dom';
-
-import styles from './plugin-card.module.scss';
+import tw, { styled } from 'twin.macro';
 
 interface Props {
-  className?: string;
   label?: ReactNode;
   children?: ReactNode[];
   pluginLink: string;
 }
 
-const pluginCard = BEM(styles);
+const Sections = styled.div`
+  ${tw`flex flex-row`}
+  & > *:not(:last-child) {
+      ${tw`border-r border-monochrome-medium-tint`}
+  }`;
 
-export const PluginCard = pluginCard(({
-  className, label, children, pluginLink,
-}: Props) => (
-  <div className={className}>
-    <Header className="flex justify-between items-center w-full p-4">
-      <span className="text-uppercase">{label}</span>
-      <PluginLink to={pluginLink}>View more &gt;</PluginLink>
-    </Header>
-    <Content>
+export const PluginCard = ({ label, children, pluginLink }: Props) => (
+  <div tw="w-full h-fit border border-monochrome-medium-tint">
+    <div tw="flex justify-between w-full p-4 border-b border-monochrome-medium-tint text-14 leading-20">
+      <span tw="font-bold text-monochrome-default uppercase">{label}</span>
+      <Link tw="font-regular text-blue-default no-underline" to={pluginLink}>View more &gt;</Link>
+    </div>
+    <Sections>
       {Children.map(children, (child) => (
-        <CardSection>{child}</CardSection>
+        <div tw="w-full p-4">{child}</div>
       ))}
-    </Content>
+    </Sections>
   </div>
-));
-
-const Header = pluginCard.header('div');
-const PluginLink = pluginCard.link(Link);
-const Content = pluginCard.content('div');
-const CardSection = pluginCard.section('div');
+);

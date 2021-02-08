@@ -13,11 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { BEM, span } from '@redneckz/react-bem-helper';
+import tw, { styled } from 'twin.macro';
 
 import { percentFormatter, camelToTitle } from 'utils';
-
-import styles from './section-tooltip.module.scss';
 
 interface Props {
   className?: string;
@@ -25,25 +23,23 @@ interface Props {
   hideValue?: boolean;
 }
 
-const sectionTooltip = BEM(styles);
+const Icon = styled.span`
+  ${tw`w-2 h-2 mr-2 rounded`}
+  ${({ color }) => `background-color: ${color}`}
+`;
 
-export const SectionTooltip = sectionTooltip(({ className, data, hideValue }: Props) => (
-  <div className={className}>
+export const SectionTooltip = ({ data, hideValue }: Props) => (
+  <div tw="flex flex-col">
     {Object.keys(data).map((label) => (
-      <div className="flex justify-between items-center w-full" key={label}>
-        <div className="flex items-center w-full">
-          <TooltipItemIcon style={{ backgroundColor: data[label].color }} />
+      <div tw="flex justify-between items-center w-full" key={label}>
+        <div tw="flex items-center w-full">
+          <Icon color={data[label].color} />
           {`${camelToTitle(label)} (${data[label].count || 0})`}
         </div>
         {!hideValue && (
-          <TooltipItemValue>{`${percentFormatter(data[label].value || 0)}%`}</TooltipItemValue>
+          <span tw="ml-8 font-regular leading-20 text-right text-monochrome-default">{`${percentFormatter(data[label].value || 0)}%`}</span>
         )}
       </div>
     ))}
   </div>
-));
-
-const TooltipItemIcon = sectionTooltip.tooltipItemIcon(
-  span({ style: {} } as { style?: { [key: string]: string } }),
 );
-const TooltipItemValue = sectionTooltip.tooltipItemValue('span');
