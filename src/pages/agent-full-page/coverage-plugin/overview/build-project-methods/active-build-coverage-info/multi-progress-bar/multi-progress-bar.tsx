@@ -18,6 +18,7 @@ import { BEM } from '@redneckz/react-bem-helper';
 import {
   MainProgressBar, AdditionalProgressBar, StripedProgressBar, Tooltip, useElementSize,
 } from '@drill4j/ui-kit';
+import 'twin.macro';
 
 import { percentFormatter } from 'utils';
 
@@ -44,7 +45,7 @@ export const MultiProgressBar = multiProgressBar(({
       <Tooltip
         message={(
           <Message>
-            <span className="font-bold">{percentFormatter(buildCodeCoverage)}%</span> of current build has <br />
+            <span tw="font-bold">{percentFormatter(buildCodeCoverage)}%</span> of current build has <br />
             already been covered by tests
           </Message>
         )}

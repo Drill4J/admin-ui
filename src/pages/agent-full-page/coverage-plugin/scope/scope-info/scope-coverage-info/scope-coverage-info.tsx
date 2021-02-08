@@ -17,6 +17,7 @@ import { BEM } from '@redneckz/react-bem-helper';
 import {
   MainProgressBar, ProgressBarLegends,
 } from '@drill4j/ui-kit';
+import 'twin.macro';
 
 import { percentFormatter } from 'utils';
 import { ActiveScope } from 'types/active-scope';
@@ -40,10 +41,12 @@ export const ScopeCoverageInfo = scopeCoverageInfo(({ className, scope }: Props)
       <Title data-test="active-scope-info:title">SCOPE COVERAGE</Title>
       <CoverageInfo>
         <ScopeCoverage data-test="active-scope-info:scope-coverage">{`${percentFormatter((coveragePercentage))}%`}</ScopeCoverage>
-        <b data-test="active-scope-info:overlap-coverage">{`${percentFormatter(overlapCoverage)}%`}</b>&nbsp;overlapped with build.&nbsp;
-        <b data-test="active-scope-info:unique-coverage">
+        <span tw="font-bold" data-test="active-scope-info:overlap-coverage">
+          {`${percentFormatter(overlapCoverage)}%`}
+        </span>&nbsp;overlapped with build.&nbsp;
+        <span tw="font-bold" data-test="active-scope-info:unique-coverage">
           {`${percentFormatter(uniqueCodeCoverage)}%`}
-        </b>&nbsp;of new coverage
+        </span>&nbsp;of new coverage
       </CoverageInfo>
       <MainProgressBar type="primary" value={`${coveragePercentage}%`} />
       <ProgressBarLegends />

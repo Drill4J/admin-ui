@@ -27,9 +27,6 @@ import { SingleBar, CoverageSectionTooltip, DashboardSection } from 'components'
 import { useBuildVersion } from 'hooks';
 import { usePreviousBuildCoverage } from '../../../coverage-plugin/use-previous-build-coverage';
 
-const Baseline = styled.div`
-  ${tw`absolute w-27 border-t border-dashed border-monochrome-shade`}`;
-
 const BuildInfo = styled.div`
   ${tw`grid items-center`}
   & {
