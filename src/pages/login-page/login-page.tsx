@@ -14,25 +14,24 @@
  * limitations under the License.
  */
 import { useState } from 'react';
-import { BEM } from '@redneckz/react-bem-helper';
 import { useHistory } from 'react-router-dom';
 import axios from 'axios';
 import {
   Inputs, Button, GeneralAlerts,
 } from '@drill4j/ui-kit';
+import tw, { styled } from 'twin.macro';
 
 import { LoginLayout } from 'layouts';
 import { TOKEN_HEADER, TOKEN_KEY } from 'common/constants';
 
-import styles from './login-page.module.scss';
+const SignInForm = styled.div`
+  ${tw`flex flex-col gap-y-6 mt-6`}
+  & > * {
+    ${tw`h-10 w-88`}
+  }
+`;
 
-interface Props {
-  className?: string;
-}
-
-const loginPage = BEM(styles);
-
-export const LoginPage = loginPage(({ className }: Props) => {
+export const LoginPage = () => {
   const [error, setError] = useState<string | null>(null);
   const { push } = useHistory();
 
@@ -51,34 +50,29 @@ export const LoginPage = loginPage(({ className }: Props) => {
 
   return (
     <LoginLayout>
-      <div className={className}>
+      <div tw="flex flex-col h-full">
         <div className="flex flex-col justify-center items-center w-full h-full">
-          <Title>Welcome to Drill4J</Title>
-          <SubTitle className="px-16">Click &quot;Continue as a guest&quot; to entry Admin Panel with admin privilege</SubTitle>
-          {error && <Error type="ERROR">{`${error}`}</Error>}
+          <div tw="text-32 leading-40 text-monochrome-black">Welcome to Drill4J</div>
+          <div tw="mt-2 px-16 text-16 leading-24 text-monochrome-default text-center">
+            Click &quot;Continue as a guest&quot; to entry Admin Panel with admin privilege
+          </div>
+          {error && (<GeneralAlerts tw="w-full mt-4" type="ERROR">{`${error}`}</GeneralAlerts>)}
           <SignInForm>
             <Inputs.Text placeholder="User ID" disabled />
             <Inputs.Text placeholder="Password" disabled />
           </SignInForm>
-          <LoginButton type="primary" size="large" disabled>
+          <Button tw="flex justify-center w-88 mt-6" type="primary" size="large" disabled>
             Sign in
-          </LoginButton>
-          <ForgotPasswordLink>Forgot your password?</ForgotPasswordLink>
-          <LoginAsGuestButton type="secondary" size="large" onClick={handleLogin}>
+          </Button>
+          <div tw="mt-6 font-bold text-14 leading-20 text-blue-default opacity-25">Forgot your password?</div>
+          <Button tw="flex justify-center w-88 mt-10 " type="secondary" size="large" onClick={handleLogin}>
             Continue as a guest (with admin rights)
-          </LoginAsGuestButton>
+          </Button>
         </div>
-        <Copyright>{`© ${new Date().getFullYear()} Drill4J. All rights reserved.`}</Copyright>
+        <div tw="mb-6 font-regular text-12 leading-24 text-monochrome-default text-center">
+          {`© ${new Date().getFullYear()} Drill4J. All rights reserved.`}
+        </div>
       </div>
     </LoginLayout>
   );
-});
-
-const Title = loginPage.title('div');
-const SubTitle = loginPage.subTitle('div');
-const Error = loginPage.error(GeneralAlerts);
-const SignInForm = loginPage.signInForm('div');
-const ForgotPasswordLink = loginPage.forgotPassword('div');
-const LoginButton = loginPage.loginButton(Button);
-const LoginAsGuestButton = loginPage.loginAsGuestButton(Button);
-const Copyright = loginPage.copyright('div');
+};
