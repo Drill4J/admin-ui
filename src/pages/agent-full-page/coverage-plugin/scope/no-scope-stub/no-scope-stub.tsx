@@ -13,26 +13,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { BEM } from '@redneckz/react-bem-helper';
 import { Icons } from '@drill4j/ui-kit';
+import 'twin.macro';
 
-import styles from './no-scope-stub.module.scss';
-
-interface Props {
-  className?: string;
-}
-
-const noScopeStub = BEM(styles);
-
-export const NoScopeStub = noScopeStub(({ className }: Props) => (
-  <div className={className}>
-    <div className="flex flex-col items-center w-full">
-      <Icons.Scope width={157} height={157} data-test="no-scope-stub:test-icon" />
-      <Title data-test="no-scope-stub:title">No scopes found</Title>
-      <Message data-test="no-scope-stub:message">There are no scopes with finished test sessions in this build.</Message>
+export const NoScopeStub = () => (
+  <div tw="flex flex-col justify-center items-center  w-full h-full">
+    <Icons.Scope tw="text-monochrome-medium-tint" width={157} height={157} data-test="no-scope-stub:test-icon" />
+    <div tw="mt-10 mb-2 text-24 leading-32 text-monochrome-default" data-test="no-scope-stub:title">No scopes found</div>
+    <div
+      tw="text-14 leading-20 text-monochrome-default"
+      data-test="no-scope-stub:message"
+    >
+      There are no scopes with finished test sessions in this build.
     </div>
   </div>
-));
-
-const Title = noScopeStub.title('div');
-const Message = noScopeStub.message('div');
+);
