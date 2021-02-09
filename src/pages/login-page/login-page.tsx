@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { useState } from 'react';
+import { useLayoutEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import axios from 'axios';
 import {
@@ -42,11 +42,17 @@ export const LoginPage = () => {
       if (authToken) {
         localStorage.setItem(TOKEN_KEY, authToken);
       }
-      push('/');
+      window.location.reload();
     } catch ({ response: { data: { message = '' } = {} } = {} }) {
       setError(message || 'There was some issue with an authentication. Please try again later.');
     }
   }
+
+  useLayoutEffect(() => {
+    if (localStorage.getItem(TOKEN_KEY)) {
+      push('/');
+    }
+  }, []);
 
   return (
     <LoginLayout>
