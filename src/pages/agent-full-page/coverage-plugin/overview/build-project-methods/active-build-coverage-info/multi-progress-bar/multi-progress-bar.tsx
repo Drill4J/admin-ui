@@ -74,7 +74,7 @@ export const MultiProgressBar = multiProgressBar(({
         <Tooltip
           message={(
             <Message>
-              Active scope additionally covered <b>+{percentFormatter(uniqueCodeCoverage)}%</b>. <br />
+              Active scope additionally covered <span tw="font-bold">+{percentFormatter(uniqueCodeCoverage)}%</span>. <br />
               Finish your scope to add it to your total build coverage.
             </Message>
           )}
