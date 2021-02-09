@@ -21,6 +21,7 @@ module.exports = {
     extend: {
       spacing: {
         27: '6.75rem',
+        88: '22rem',
       },
       height: {
         fit: 'fit-content',
@@ -97,6 +98,7 @@ module.exports = {
       28: '28px',
       30: '30px',
       32: '32px',
+      40: '40px',
       48: '48px',
     },
     lineHeight: {
@@ -112,6 +114,7 @@ module.exports = {
       28: '28px',
       30: '30px',
       32: '32px',
+      40: '40px',
       48: '48px',
     },
   },
