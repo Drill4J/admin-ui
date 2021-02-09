@@ -43,7 +43,7 @@ export const PluginsSettingsTab = pluginsSettingsTab(
     const [isAddPluginOpen, setIsAddPluginOpen] = useState(false);
     const { type: agentType } = useParams<{ type: 'service-group' | 'agent' }>();
     const { push } = useHistory();
-    const pluginsTopic = `/${agentType === 'agent' ? 'agents' : 'service-groups'}/${id}/plugins`;
+    const pluginsTopic = `/${agentType === 'agent' ? 'agents' : 'groups'}/${id}/plugins`;
     const plugins = useWsConnection<Plugin[]>(defaultAdminSocket, pluginsTopic) || [];
     const installedPlugins = plugins.filter((plugin) => !plugin.available);
     const [selectedPlugins, setSelectedPlugins] = useState<string[]>([]);

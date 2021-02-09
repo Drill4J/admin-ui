@@ -44,9 +44,9 @@ export const AgentsPage = agentsPage(({ className }: Props) => {
     ...serviceGroups.map((serviceGroup) => ({
       ...serviceGroup,
       agentType: 'ServiceGroup',
-      agents: agentsList.filter((agent) => agent.serviceGroup === serviceGroup.id),
+      agents: agentsList.filter((agent) => agent.group === serviceGroup.id),
     })),
-    ...agentsList.filter(({ serviceGroup }) => !serviceGroup),
+    ...agentsList.filter(({ group }) => !group),
   ];
 
   return (

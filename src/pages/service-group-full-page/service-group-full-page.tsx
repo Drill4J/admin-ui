@@ -68,7 +68,7 @@ export const ServiceGroupFullPage = serviceGroupFullPage(
     const { pathname } = useLocation();
     const plugins = useWsConnection<Plugin[]>(
       defaultAdminSocket,
-      `/service-groups/${id}/plugins`,
+      `/groups/${id}/plugins`,
     ) || [];
     const serviceGroup = usePluginData<ServiceGroupSummary>('/group/summary', id, pluginId) || {};
     const path = '/:page/:serviceGroupId/:activeLink';

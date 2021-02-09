@@ -27,7 +27,7 @@ export interface Agent extends CommonEntity {
   buildVersion?: string;
   buildVersions?: string[];
   buildAlias?: string;
-  serviceGroup?: string;
+  group?: string;
   agentType?: string;
   agentVersion?: string;
   systemSettings?: SystemSettings;

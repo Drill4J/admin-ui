@@ -22,7 +22,7 @@ export const finishAllSession = async (
   showGeneralAlertMessage: (message: Message) => void,
 ): Promise<void> => {
   try {
-    await axios.post(`/${agentType === 'ServiceGroup' ? 'service-groups' : 'agents'}/${agentId}/plugins/${pluginId}/dispatch-action`, {
+    await axios.post(`/${agentType === 'ServiceGroup' ? 'groups' : 'agents'}/${agentId}/plugins/${pluginId}/dispatch-action`, {
       type: 'STOP_ALL',
     });
     showGeneralAlertMessage && showGeneralAlertMessage({
