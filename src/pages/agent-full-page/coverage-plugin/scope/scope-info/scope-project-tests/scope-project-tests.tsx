@@ -31,7 +31,7 @@ interface Props {
 const scopeProjectTests = BEM(styles);
 
 export const ScopeProjectTests = scopeProjectTests(({ className, scopeId }: Props) => {
-  const { byTestType = [] } = useBuildVersion<BuildCoverage>(`/scope/${scopeId}/coverage`) || {};
+  const { byTestType = [] } = useBuildVersion<BuildCoverage>(`/build/scopes/${scopeId}/coverage`) || {};
   const testsInfo: TestsInfo = byTestType.reduce((test, testType) => ({ ...test, [testType.type]: testType }), {});
 
   return (
