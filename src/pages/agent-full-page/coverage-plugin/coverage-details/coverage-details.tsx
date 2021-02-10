@@ -45,7 +45,11 @@ export const CoverageDetails = coverageDetails(
   ({
     className, associatedTestsTopic, classesTopicPrefix, topic,
   }: Props) => {
-    const [selectedId, setSelectedId] = useState('');
+    const [selectedAssocTests, setSelectedAssocTests] = useState<null | {
+      id: string,
+      assocTestsCount: number,
+      treeLevel: number,
+    }>(null);
     const dispatch = useTableActionsDispatch();
     const { search, sort } = useTableActionsState();
     const {
@@ -60,21 +64,6 @@ export const CoverageDetails = coverageDetails(
       <Column name="coverage" Cell={CoverageCell} />,
       <Column name="totalMethodsCount" testContext="total-methods-count" />,
       <Column name="coveredMethodsCount" testContext="covered-methods-count" />,
-      <Column
-        name="assocTestsCount"
-        label="Associated tests"
-        Cell={({ value = '', item: { id = '' } = {} }: CellProps<string, { id?: string }>) => (
-          <Cells.Clickable
-            onClick={() => {
-              setSelectedId(id);
-            }}
-            data-test="coverage-details:associated-tests-count"
-            disabled={!value}
-          >
-            {value || 'n/a'}
-          </Cells.Clickable>
-        )}
-      />,
     ];
 
     return (
@@ -108,6 +97,24 @@ export const CoverageDetails = coverageDetails(
                 align="start"
               />,
               ...expandedColumns,
+              <Column
+                name="assocTestsCount"
+                label="Associated tests"
+                Cell={({
+                  value = '',
+                  item: { id = '', assocTestsCount = 0 } = {},
+                }: CellProps<string, { id?: string; assocTestsCount?: number }>) => (
+                  <Cells.Clickable
+                    onClick={() => {
+                      setSelectedAssocTests({ id, assocTestsCount, treeLevel: 2 });
+                    }}
+                    data-test="coverage-details:associated-tests-count"
+                    disabled={!value}
+                  >
+                    {value || 'n/a'}
+                  </Cells.Clickable>
+                )}
+              />,
             ]}
             secondLevelExpand={[
               <Column
@@ -118,6 +125,24 @@ export const CoverageDetails = coverageDetails(
                 align="start"
               />,
               ...expandedColumns,
+              <Column
+                name="assocTestsCount"
+                label="Associated tests"
+                Cell={({
+                  value = '',
+                  item: { id = '', assocTestsCount = 0 } = {},
+                }: CellProps<string, { id?: string; assocTestsCount?: number }>) => (
+                  <Cells.Clickable
+                    onClick={() => {
+                      setSelectedAssocTests({ id, assocTestsCount, treeLevel: 3 });
+                    }}
+                    data-test="coverage-details:associated-tests-count"
+                    disabled={!value}
+                  >
+                    {value || 'n/a'}
+                  </Cells.Clickable>
+                )}
+              />,
             ]}
             expandedContentKey="name"
             hasSecondLevelExpand
@@ -148,10 +173,13 @@ export const CoverageDetails = coverageDetails(
             <Column
               name="assocTestsCount"
               label="Associated tests"
-              Cell={({ value = '', item: { id = '' } = {} }: CellProps<string, { id?: string; }>) => (
+              Cell={({
+                value = '',
+                item: { id = '', assocTestsCount = 0 } = {},
+              }: CellProps<string, { id?: string; assocTestsCount?: number }>) => (
                 <Cells.Clickable
                   onClick={() => {
-                    setSelectedId(id);
+                    setSelectedAssocTests({ id, assocTestsCount, treeLevel: 1 });
                   }}
                   data-test="coverage-details:associated-tests-count"
                   disabled={!value}
@@ -163,11 +191,11 @@ export const CoverageDetails = coverageDetails(
           </ExpandableTable>
           <div ref={ref} />
         </>
-        {selectedId && (
+        {selectedAssocTests !== null && (
           <AssociatedTestModal
-            id={selectedId}
-            isOpen={Boolean(selectedId)}
-            onToggle={() => setSelectedId('')}
+            selectedAssocTests={selectedAssocTests}
+            isOpen={Boolean(selectedAssocTests.id)}
+            onToggle={() => setSelectedAssocTests(null)}
             associatedTestsTopic={associatedTestsTopic}
           />
         )}

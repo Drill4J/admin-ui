@@ -23,7 +23,9 @@
   &__content {
     display: flex;
     flex-direction: column;
-    padding: 16px 24px;
+    justify-content: center;
+    min-height: 64px;
+    padding: 8px 24px;
   }
 
   &__item-wrapper {
@@ -43,13 +45,9 @@
   }
 
   &__value {
-    display: flex;
-    align-items: center;
     margin-left: 16px;
     line-height: 32px;
     color: map-get($monochrome, default);
     font-size: 14px;
-    word-break: break-all;
-    cursor: pointer;
   }
 }

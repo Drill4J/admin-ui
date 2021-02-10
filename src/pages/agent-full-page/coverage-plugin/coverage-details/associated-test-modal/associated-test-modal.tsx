@@ -25,7 +25,7 @@ import styles from './associated-test-modal.module.scss';
 
 interface Props {
   className?: string;
-  id?: string;
+  selectedAssocTests: { id: string; assocTestsCount: number; treeLevel: number };
   isOpen: boolean;
   onToggle: (arg: boolean) => void;
   associatedTestsTopic: string;
@@ -35,12 +35,12 @@ const associatedTestModal = BEM(styles);
 
 export const AssociatedTestModal = associatedTestModal(
   ({
-    className, isOpen, onToggle, id, associatedTestsTopic,
+    className, isOpen, onToggle, selectedAssocTests, associatedTestsTopic,
   }: Props) => {
     const associatedTests = useBuildVersion<AssociatedTests[]>(associatedTestsTopic) || [];
     const {
       tests = [], packageName = '', className: testClassName = '', methodName = '',
-    } = associatedTests.find((test) => test.id === id) || {};
+    } = associatedTests.find((test) => test.id === selectedAssocTests.id) || {};
     const testsMap = tests.reduce((acc, { type = '', name = '' }) =>
       ({ ...acc, [type]: acc[type] ? [...acc[type], name] : [name] }), {} as { [testType: string]: string[] });
 
@@ -49,14 +49,15 @@ export const AssociatedTestModal = associatedTestModal(
         <div className={className}>
           <Header>
             <ModalName>Associated tests</ModalName>
-            <TestsCount>{tests.length}</TestsCount>
+            <TestsCount>{selectedAssocTests.assocTestsCount}</TestsCount>
           </Header>
           <ItemInfo
             packageName={packageName}
             testClassName={testClassName}
             methodName={methodName}
+            treeLevel={selectedAssocTests.treeLevel}
           />
-          <TestsList associatedTests={testsMap} />
+          <TestsList associatedTests={{ testsMap, assocTestsCount: selectedAssocTests.assocTestsCount }} />
         </div>
       </Modal>
     );
