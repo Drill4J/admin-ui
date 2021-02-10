@@ -20,10 +20,12 @@ module.exports = {
   theme: {
     extend: {
       spacing: {
+        21: '5.25rem',
         27: '6.75rem',
         29: '7.25rem',
         30: '7.5rem',
         31: '7.75rem',
+        34: '8.5rem',
         42: '9.5rem',
         43: '9.75rem',
         88: '22rem',
@@ -34,6 +36,9 @@ module.exports = {
       height: {
         fit: 'fit-content',
       },
+    },
+    minWidth: {
+      '32px': '32px',
     },
     colors: {
       transparent: 'transparent',
@@ -122,6 +127,9 @@ module.exports = {
       28: '28px',
       30: '30px',
       32: '32px',
+      34: '34px',
+      36: '36px',
+      38: '38px',
       40: '40px',
       48: '48px',
     },

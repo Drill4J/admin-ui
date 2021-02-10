@@ -39,7 +39,7 @@ export const TestDetails = testDetails(
   ({
     className, tests, topicCoveredMethodsByTest,
   }: Props) => {
-    const [selectedTest, setSelectedTest] = useState('');
+    const [selectedTest, setSelectedTest] = useState<null | { id: string; covered: number }>(null);
 
     return (
       <div className={className}>
@@ -87,11 +87,9 @@ export const TestDetails = testDetails(
               <Column
                 name="coverage.methodCount.covered"
                 label="Methods covered"
-                Cell={({ value, item: { id = '' } = {} }) => (
+                Cell={({ value, item: { id = '', coverage: { methodCount: { covered = 0 } = {} } = {} } = {} }) => (
                   <Cells.Clickable
-                    onClick={() => {
-                      setSelectedTest(id);
-                    }}
+                    onClick={() => setSelectedTest({ id, covered })}
                     data-test="test-actions:view-curl:id"
                     disabled={!value}
                   >
@@ -109,11 +107,11 @@ export const TestDetails = testDetails(
         ) : (
           <NoTestsStub />
         )}
-        {Boolean(selectedTest) && (
+        {selectedTest !== null && (
           <CoveredMethodsByTestSidebar
             isOpen={Boolean(selectedTest)}
-            onToggle={() => setSelectedTest('')}
-            testId={selectedTest}
+            onToggle={() => setSelectedTest(null)}
+            testInfo={selectedTest}
             topicCoveredMethodsByTest={topicCoveredMethodsByTest}
           />
         )}

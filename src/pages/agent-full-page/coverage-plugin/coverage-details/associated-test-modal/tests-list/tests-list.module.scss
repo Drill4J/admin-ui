@@ -43,6 +43,10 @@
     word-break: normal;
     word-wrap: normal;
     font-size: 14px;
+
+    &:first-child {
+      margin-top: 8px;
+    }
   }
 
   &__test-info {
@@ -55,6 +59,7 @@
   &__test-name {
     margin-left: 16px;
     font-size: 14px;
+    line-height: 20px;
     color: map-get($monochrome, black);
   }
 
@@ -67,6 +72,7 @@
   &__test-item-icon {
     display: flex;
     align-self: center;
-    height: 16px;
+    min-height: 16px;
+    min-width: 12px;
   }
 }

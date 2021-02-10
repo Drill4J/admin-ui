@@ -13,64 +13,55 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { BEM, capitalize } from '@redneckz/react-bem-helper';
-import { Modal, OverflowText } from '@drill4j/ui-kit';
+import { capitalize } from '@redneckz/react-bem-helper';
+import { Modal } from '@drill4j/ui-kit';
 
 import { MethodCoveredByTest } from 'types/method-covered-by-test';
 import { useBuildVersion } from 'hooks';
+import tw, { styled } from 'twin.macro';
 import { MethodsList } from './methods-list';
 
-import styles from './covered-methods-by-test-sidebar.module.scss';
-
 interface Props {
-  className?: string;
   isOpen: boolean;
   onToggle: (value: boolean) => void;
-  testId: string;
+  testInfo: { id: string; covered: number };
   topicCoveredMethodsByTest: string;
 }
 
-const coveredMethodsByTestSidebar = BEM(styles);
+const MethodInfoValue = styled.div(({ sceleton }: { sceleton?: boolean }) =>
+  [tw`text-monochrome-default text-14 break-all`, sceleton && tw`h-4 w-full bg-monochrome-medium-tint rounded`]);
 
-export const CoveredMethodsByTestSidebar = coveredMethodsByTestSidebar(
-  ({
-    className, isOpen, onToggle, testId, topicCoveredMethodsByTest,
-  }: Props) => {
-    const coveredMethodsByTest = useBuildVersion<MethodCoveredByTest[]>(topicCoveredMethodsByTest) || [];
-    const filteredMethods = coveredMethodsByTest.find(({ id }) => id === testId) || {};
-    const {
-      testName = '',
-      testType = '',
-      allMethods = [],
-    } = filteredMethods;
+const MethodInfoLabel = styled.div(tw`min-w-32px text-left text-14 leading-32 font-bold text-monochrome-black`);
 
-    return (
-      <Modal isOpen={isOpen} onToggle={onToggle}>
-        <div className={className}>
-          <Header>
-            <ModalName>Covered methods</ModalName>
-            <MethodsCount>{allMethods.length}</MethodsCount>
-          </Header>
-          <Info>
-            <div className="flex items-center w-full">
-              <MethodInfoLabel>Test</MethodInfoLabel>
-              <MethodInfoValue title={testName}>{testName}</MethodInfoValue>
-            </div>
-            <div className="flex items-center w-full">
-              <MethodInfoLabel>Type</MethodInfoLabel>
-              <MethodInfoValue>{capitalize(testType.toLowerCase())}</MethodInfoValue>
-            </div>
-          </Info>
-          <MethodsList coveredMethods={filteredMethods} />
-        </div>
-      </Modal>
-    );
-  },
-);
-
-const Header = coveredMethodsByTestSidebar.header('div');
-const Info = coveredMethodsByTestSidebar.info('div');
-const ModalName = coveredMethodsByTestSidebar.modalName('span');
-const MethodsCount = coveredMethodsByTestSidebar.methodsCount('span');
-const MethodInfoLabel = coveredMethodsByTestSidebar.methodInfoLabel('div');
-const MethodInfoValue = coveredMethodsByTestSidebar.methodInfoValue(OverflowText);
+export const CoveredMethodsByTestSidebar = ({
+  isOpen, onToggle, testInfo, topicCoveredMethodsByTest,
+}: Props) => {
+  const coveredMethodsByTest = useBuildVersion<MethodCoveredByTest[]>(topicCoveredMethodsByTest) || [];
+  const filteredMethods = coveredMethodsByTest.find(({ id }) => id === testInfo.id) || {};
+  const {
+    testName = '',
+    testType = '',
+  } = filteredMethods;
+  const showSceleton = !coveredMethodsByTest.length;
+  return (
+    <Modal isOpen={isOpen} onToggle={onToggle}>
+      <div tw="flex flex-col h-full">
+        <header tw="flex gap-2 items-center h-16 pl-6 pr-6 leading-32 border-b-0 border-monochrome-light-tint">
+          <div tw="text-20 text-monochrome-black">Covered methods</div>
+          <div tw="text-monochrome-default text-16 leading-24" style={{ height: '20px' }}>{testInfo.covered}</div>
+        </header>
+        <section tw="h-20 pt-2 pb-2 pr-6 pl-6 bg-monochrome-light-tint border-b-0 border-monochrome-medium-tint">
+          <div tw="flex items-center w-full gap-4">
+            <MethodInfoLabel>Test</MethodInfoLabel>
+            <MethodInfoValue sceleton={showSceleton} className="text-ellipsis" title={testName}>{testName}</MethodInfoValue>
+          </div>
+          <div tw="flex items-center w-full gap-4">
+            <MethodInfoLabel>Type</MethodInfoLabel>
+            <MethodInfoValue sceleton={showSceleton} className="text-ellipsis">{capitalize(testType.toLowerCase())}</MethodInfoValue>
+          </div>
+        </section>
+        <MethodsList methods={{ coveredMethods: filteredMethods, covered: testInfo.covered }} />
+      </div>
+    </Modal>
+  );
+};

@@ -17,23 +17,24 @@ import { useRef, useState } from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 import VirtualList from 'react-tiny-virtual-list';
 import {
-  Inputs, OverflowText, Icons,
+  Inputs, Icons,
 } from '@drill4j/ui-kit';
 
 import { useElementSize } from 'hooks';
 import { MethodCoveredByTest } from 'types/method-covered-by-test';
 import { CoverageRateIcon } from 'components';
+import 'twin.macro';
 
 import styles from './methods-list.module.scss';
 
 interface Props {
   className?: string;
-  coveredMethods: MethodCoveredByTest;
+  methods: { coveredMethods: MethodCoveredByTest, covered: number };
 }
 
 const methodsList = BEM(styles);
 
-export const MethodsList = methodsList(({ className, coveredMethods }: Props) => {
+export const MethodsList = methodsList(({ className, methods: { coveredMethods, covered } }: Props) => {
   const {
     newMethods = [], modifiedMethods = [], unaffectedMethods = [], allMethods = [],
   } = coveredMethods;
@@ -78,21 +79,41 @@ export const MethodsList = methodsList(({ className, coveredMethods }: Props) =>
             <VirtualList
               itemSize={56}
               height={Math.ceil(methodsListHeight)}
-              itemCount={methods.length}
+              itemCount={covered}
               renderItem={({ index, style }) => (
-                <Method key={`${methods[index].name}${index}`} style={style as Record<symbol, string>}>
-                  <div className="flex items-center w-full h-20px">
-                    <div className="flex items-center w-full">
-                      <MethodsListItemIcon>
-                        <Icons.Function />
-                      </MethodsListItemIcon>
-                      <MethodName title={methods[index].name as string}>{methods[index].name}</MethodName>
+                <Method key={`${methods[index]?.name}${index}`} style={style as Record<symbol, string>}>
+                  {methods.length > 0 && (
+                    <>
+                      <div className="flex items-center w-full h-20px">
+                        <div className="flex items-center w-full">
+                          <MethodsListItemIcon>
+                            <Icons.Function />
+                          </MethodsListItemIcon>
+                          <MethodName className="text-ellipsis" title={methods[index]?.name as string}>{methods[index]?.name}</MethodName>
+                        </div>
+                        <CoverageIcon>
+                          <CoverageRateIcon coverageRate={methods[index].coverageRate} />
+                        </CoverageIcon>
+                      </div>
+                      <MethodsPackage
+                        className="text-ellipsis"
+                        title={methods[index].ownerClass}
+                      >
+                        {methods[index].ownerClass}
+                      </MethodsPackage>
+                    </>
+                  )}
+                  {Object.keys(coveredMethods).length === 0 && (
+                    <div tw="flex space-x-2 animate-pulse">
+                      <div tw="rounded-full bg-monochrome-medium-tint h-6 w-6" />
+                      <div tw="flex-1 space-y-4 py-1">
+                        <div tw="space-y-2">
+                          <div tw="h-4 bg-monochrome-medium-tint rounded w-34" />
+                          <div tw="h-3 bg-monochrome-medium-tint rounded" />
+                        </div>
+                      </div>
                     </div>
-                    <CoverageIcon>
-                      <CoverageRateIcon coverageRate={methods[index].coverageRate} />
-                    </CoverageIcon>
-                  </div>
-                  <MethodsPackage title={methods[index].ownerClass}>{methods[index].ownerClass}</MethodsPackage>
+                  )}
                 </Method>
               )}
             />
@@ -107,7 +128,7 @@ const Content = methodsList.content('div');
 const Filter = methodsList.filter(Inputs.Dropdown);
 const Methods = methodsList.methods('div');
 const Method = methodsList.method('div');
-const MethodName = methodsList.methodName(OverflowText);
-const MethodsPackage = methodsList.methodPackage(OverflowText);
+const MethodName = methodsList.methodName('div');
+const MethodsPackage = methodsList.methodPackage('div');
 const MethodsListItemIcon = methodsList.methodIcon('div');
 const CoverageIcon = methodsList.coverageIcon('div');

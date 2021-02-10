@@ -47,7 +47,7 @@ interface Props {
 const testsToRunList = BEM(styles);
 
 export const TestsToRunList = testsToRunList(({ className, agentType = 'Agent' }: Props) => {
-  const [selectedTest, setSelectedTest] = useState('');
+  const [selectedTest, setSelectedTest] = useState<null | { id: string; covered: number }>(null);
   const [search, setSearch] = useState<Search[]>([{ field: 'name', value: '', op: 'CONTAINS' }]);
   const {
     items: testsToRun = [],
@@ -138,10 +138,10 @@ export const TestsToRunList = testsToRunList(({ className, agentType = 'Agent' }
             <Column
               name="coverage.methodCount.covered"
               label="Methods covered"
-              Cell={({ value, item: { id = '', toRun } }) => (
+              Cell={({ value, item: { id = '', toRun = false, coverage: { methodCount: { covered = 0 } = {} } = {} } = {} }) => (
                 toRun ? null : (
                   <Cells.Clickable
-                    onClick={() => setSelectedTest(id)}
+                    onClick={() => setSelectedTest({ id, covered })}
                     disabled={!value}
                   >
                     {value}
@@ -158,11 +158,11 @@ export const TestsToRunList = testsToRunList(({ className, agentType = 'Agent' }
         </div>
       </div>
       {!testsToRun.length && <NoTestsToRunStub />}
-      {Boolean(selectedTest) && (
+      {selectedTest !== null && (
         <CoveredMethodsByTestSidebar
           isOpen={Boolean(selectedTest)}
-          onToggle={() => setSelectedTest('')}
-          testId={selectedTest}
+          onToggle={() => setSelectedTest(null)}
+          testInfo={selectedTest}
           topicCoveredMethodsByTest="/build/tests/covered-methods"
         />
       )}
