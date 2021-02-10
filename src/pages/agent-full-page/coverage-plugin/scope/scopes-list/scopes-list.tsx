@@ -56,7 +56,7 @@ export const ScopesList = () => {
   const { push } = useHistory();
   const dispatch = useCoveragePluginDispatch();
   const activeScope = useActiveScope();
-  const scopes = useBuildVersion<ScopeSummary[]>('/scopes') || [];
+  const scopes = useBuildVersion<ScopeSummary[]>('/build/scopes/finished') || [];
   scopes.sort(
     ({ started: firstStartedDate }, { started: secondStartedDate }) => secondStartedDate - firstStartedDate,
   );

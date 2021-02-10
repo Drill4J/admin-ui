@@ -61,8 +61,8 @@ export const ScopeInfo = scopeInfo(
     const { buildVersion: activeBuildVersion = '', status } = useAgent(agentId) || {};
     const { pluginId = '', scopeId = '', buildVersion } = useParams<{ pluginId: string, scopeId: string, buildVersion: string }>();
     const dispatch = useCoveragePluginDispatch();
-    const scope = useBuildVersion<ActiveScope>(`/scope/${scopeId}`);
-    const tests = useBuildVersion<TestCoverageInfo[]>(`/scope/${scopeId}/tests`) || [];
+    const scope = useBuildVersion<ActiveScope>(`/build/scopes/${scopeId}`);
+    const tests = useBuildVersion<TestCoverageInfo[]>(`/build/scopes/${scopeId}/tests`) || [];
     const {
       name = '', active = false, enabled = false, started = 0, finished = 0,
     } = scope || {};
@@ -157,9 +157,9 @@ export const ScopeInfo = scopeInfo(
                   <ScopeProjectMethods scope={scope} />
                   <TableActionsProvider>
                     <CoverageDetails
-                      topic={`/scope/${scopeId}/coverage/packages`}
-                      associatedTestsTopic={`/scope/${scopeId}/associated-tests`}
-                      classesTopicPrefix={`scope/${scopeId}`}
+                      topic={`/build/scopes/${scopeId}/coverage/packages`}
+                      associatedTestsTopic={`/build/scopes/${scopeId}/associated-tests`}
+                      classesTopicPrefix={`build/scopes/${scopeId}`}
                     />
                   </TableActionsProvider>
                 </>
@@ -168,7 +168,7 @@ export const ScopeInfo = scopeInfo(
                   <ScopeProjectTests scopeId={scopeId} />
                   <TestDetails
                     tests={tests}
-                    topicCoveredMethodsByTest={`/scope/${scopeId}/tests/covered-methods`}
+                    topicCoveredMethodsByTest={`/build/scopes/${scopeId}/tests/covered-methods`}
                   />
                 </>
               )}

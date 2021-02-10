@@ -41,7 +41,7 @@ const scopeProjectMethods = BEM(styles);
 export const ScopeProjectMethods = scopeProjectMethods(({ className, scope }: Props) => {
   const {
     all, new: newMethods, modified, risks,
-  } = useBuildVersion<Methods>(`/scope/${scope?.id}/methods`) || {};
+  } = useBuildVersion<Methods>(`/build/scopes/${scope?.id}/methods`) || {};
   const [risksFilter, setRisksFilter] = useState('');
 
   return (
