@@ -13,18 +13,4 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-@import '~common/style-guide/index';
-
-.clickable-cell {
-  display: inline-flex;
-  line-height: 16px;
-  font-family: $semibold-font;
-  text-decoration: underline;
-  cursor: pointer;
-
-  &--disabled {
-    text-decoration: none;
-    cursor: default;
-    pointer-events: none;
-  }
-}
+export { RisksList } from './risks-list';

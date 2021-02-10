@@ -23,6 +23,7 @@ import { Tests } from './tests';
 import { CoveragePluginModals } from './covarage-plugin-modals';
 import { CoveragePluginProvider } from './store';
 import { InitialDataController } from './initial-data-controller';
+import { RisksList } from '../risks-list';
 
 import styles from './coverage-plugin.module.scss';
 
@@ -62,6 +63,11 @@ export const CoveragePlugin = coveragePlugin(({ className }: Props) => (
               <Route
                 path="/full-page/:agentId/:buildVersion/:pluginId/tests-to-run"
                 component={TestsToRunList}
+                exact
+              />
+              <Route
+                path="/full-page/:agentId/:buildVersion/:pluginId/risks"
+                component={RisksList}
                 exact
               />
             </Switch>

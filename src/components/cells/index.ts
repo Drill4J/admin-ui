@@ -18,6 +18,7 @@ import { CompoundCell } from './compound-cell';
 import { CoverageCell } from './coverage-cell';
 import { ClickableCell } from './clickable-cell';
 import { TestStatusCell } from './test-status-cell';
+import { MethodCoverageCell } from './method-coverage-cell';
 
 export const Cells = {
   Duration: DurationCell,
@@ -25,4 +26,5 @@ export const Cells = {
   Clickable: ClickableCell,
   Coverage: CoverageCell,
   TestStatus: TestStatusCell,
+  MethodCoverage: MethodCoverageCell,
 };
