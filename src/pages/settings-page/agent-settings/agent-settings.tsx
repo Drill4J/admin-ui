@@ -17,10 +17,9 @@ import {
   ReactNode, useState, useContext, useRef, useEffect,
 } from 'react';
 import {
-  Button, Icons, Menu, Spinner,
+  Button, Icons, Spinner,
 } from '@drill4j/ui-kit';
 import { useParams } from 'react-router-dom';
-import { FormSubscription } from 'final-form';
 import { Form } from 'react-final-form';
 import axios from 'axios';
 
@@ -29,7 +28,6 @@ import { useAgent } from 'hooks';
 import { Agent } from 'types/agent';
 import { NotificationManagerContext } from 'notification-manager';
 import { PluginsSettingsTab, SystemSettingsForm } from 'modules';
-import { AGENT_STATUS } from 'common/constants';
 import {
   composeValidators, required, requiredArray, sizeLimit,
 } from 'forms';
@@ -37,7 +35,6 @@ import { JavaGeneralSettingsForm } from './java-general-settings-form';
 import { JsGeneralSettingsForm } from './js-general-settings-form';
 import { JsSystemSettingsForm } from './js-system-settings-form';
 import { AgentStatusToggle } from '../../agents-page/agent-status-toggle';
-import { UnregisterAgentModal } from '../unregister-agent-modal';
 import 'twin.macro';
 
 interface TabsComponent {
@@ -47,7 +44,6 @@ interface TabsComponent {
 
 export const AgentSettings = () => {
   const [selectedTab, setSelectedTab] = useState('general');
-  const [isUnregisterModalOpen, setIsUnregisterModalOpen] = useState(false);
   const { id = '' } = useParams<{ id: string }>();
   const agent = useAgent(id) || {};
   const { showMessage } = useContext(NotificationManagerContext);
@@ -136,32 +132,16 @@ export const AgentSettings = () => {
                 </div>
               )}
               actions={(
-                <div tw="flex justify-end items-center gap-x-4 w-full">
-                  <Button
-                    className="flex items-center gap-x-1"
-                    type="primary"
-                    size="large"
-                    onClick={handleSubmit}
-                    disabled={submitting || invalid || (pristine && prevPristine)}
-                    data-test="java-general-settings-form:save-changes-button"
-                  >
-                    {submitting && <Spinner disabled />} Save Changes
-                  </Button>
-                  {agent.status !== AGENT_STATUS.NOT_REGISTERED && (
-                    <Menu
-                      tw="flex justify-center w-4 h-4"
-                      items={[
-                        {
-                          label: 'Unregister',
-                          icon: 'Unregister',
-                          onClick: () => {
-                            setIsUnregisterModalOpen(true);
-                          },
-                        },
-                      ]}
-                    />
-                  )}
-                </div>
+                <Button
+                  className="flex items-center gap-x-1"
+                  type="primary"
+                  size="large"
+                  onClick={handleSubmit}
+                  disabled={submitting || invalid || (pristine && prevPristine)}
+                  data-test="java-general-settings-form:save-changes-button"
+                >
+                  {submitting && <Spinner disabled />} Save Changes
+                </Button>
               )}
             />
             <TabsPanel tw="mx-6" activeTab={selectedTab} onSelect={setSelectedTab}>
@@ -170,13 +150,6 @@ export const AgentSettings = () => {
               <Tab name="plugins">Plugins</Tab>
             </TabsPanel>
             {tabsComponents.find(({ name }) => name === selectedTab)?.component}
-            {isUnregisterModalOpen && (
-              <UnregisterAgentModal
-                isOpen={isUnregisterModalOpen}
-                onToggle={setIsUnregisterModalOpen}
-                agentId={id}
-              />
-            )}
           </div>
         );
       }}
