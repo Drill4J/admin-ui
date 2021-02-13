@@ -86,6 +86,7 @@ export const ServiceGroupSettings = () => {
         pristine,
         invalid,
       }) => {
+        const ref = useRef<HTMLFormElement>(null);
         const tabsComponents: TabsComponent[] = [
           {
             name: 'general',
@@ -110,9 +111,20 @@ export const ServiceGroupSettings = () => {
             prevPristineRef.current = pristine;
           }
         });
+        useEffect(() => {
+          const listener = (event: KeyboardEvent) => {
+            if ((event.ctrlKey || event.metaKey) && event.keyCode === 13) {
+              handleSubmit();
+            }
+          };
+          ref && ref.current && ref.current.addEventListener('keydown', listener);
+          return () => {
+            ref && ref.current && ref.current.removeEventListener('keydown', listener);
+          };
+        }, []);
         const prevPristine = prevPristineRef.current;
         return (
-          <div tw="flex flex-col w-full">
+          <form ref={ref} tw="flex flex-col w-full">
             <PageHeader
               title={(
                 <div tw="flex items-center gap-x-4 w-full ">
@@ -139,7 +151,7 @@ export const ServiceGroupSettings = () => {
               <Tab name="plugins">Plugins</Tab>
             </TabsPanel>
             {tabsComponents.find(({ name }) => name === selectedTab)?.component}
-          </div>
+          </form>
         );
       }}
     />

@@ -85,7 +85,7 @@ export const RenameScopeModal = renameScopeModal(
             validate={validateScope}
             initialValues={scope || {}}
             render={({ handleSubmit, submitting }) => (
-              <div className="m-6">
+              <form onSubmit={handleSubmit} className="m-6">
                 <FormGroup label="Scope Name">
                   <Field name="name" component={Fields.Input} placeholder="Enter scope name" />
                 </FormGroup>
@@ -103,7 +103,7 @@ export const RenameScopeModal = renameScopeModal(
                     Cancel
                   </Button>
                 </div>
-              </div>
+              </form>
             )}
           />
         </div>
