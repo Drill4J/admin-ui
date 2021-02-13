@@ -47,6 +47,7 @@ export const AgentSettings = () => {
   const agent = useAgent(id) || {};
   const { showMessage } = useContext(NotificationManagerContext);
   const prevPristineRef = useRef(true);
+
   return (
     <Form
       onSubmit={async ({
@@ -100,6 +101,7 @@ export const AgentSettings = () => {
         invalid,
         pristine,
       }) => {
+        const ref = useRef<HTMLFormElement>(null);
         const tabsComponents: TabsComponent[] = [
           {
             name: 'general',
@@ -127,9 +129,21 @@ export const AgentSettings = () => {
             prevPristineRef.current = pristine;
           }
         });
+
+        useEffect(() => {
+          const listener = (event: KeyboardEvent) => {
+            if ((event.ctrlKey || event.metaKey) && event.keyCode === 13) {
+              handleSubmit();
+            }
+          };
+          ref && ref.current && ref.current.addEventListener('keydown', listener);
+          return () => {
+            ref && ref.current && ref.current.removeEventListener('keydown', listener);
+          };
+        }, []);
         const prevPristine = prevPristineRef.current;
         return (
-          <div tw="flex flex-col w-full">
+          <form tw="flex flex-col w-full" ref={ref}>
             <PageHeader
               title={(
                 <div tw="flex gap-x-4 items-center">
@@ -157,7 +171,7 @@ export const AgentSettings = () => {
               <Tab name="plugins">Plugins</Tab>
             </TabsPanel>
             {tabsComponents.find(({ name }) => name === selectedTab)?.component}
-          </div>
+          </form>
         );
       }}
     />
