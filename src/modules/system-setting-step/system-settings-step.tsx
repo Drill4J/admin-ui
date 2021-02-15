@@ -23,7 +23,7 @@ import { parsePackages, formatPackages } from 'utils';
 export const SystemSettingsStep = () => (
   <div tw="space-y-10">
     <GeneralAlerts type="INFO">
-      System settings are related only to Java agents.
+      Provide information related to your application / project.
     </GeneralAlerts>
     <div tw="flex flex-col items-center gap-y-6">
       <div tw="space-y-2">
