@@ -89,6 +89,7 @@ export const AgentSettings = () => {
         )
         : composeValidators(
           required('name'),
+          required('systemSettings.targetHost', 'Target Host'),
           sizeLimit({ name: 'name' }),
           sizeLimit({ name: 'environment' }),
           sizeLimit({ name: 'description', min: 3, max: 256 }),
