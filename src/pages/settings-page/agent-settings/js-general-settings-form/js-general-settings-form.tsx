@@ -39,6 +39,7 @@ export const JsGeneralSettingsForm = () => (
       </FormGroup>
       <FormGroup tw="w-97" label="Description" optional>
         <Field
+          tw="h-20"
           name="description"
           component={Fields.Textarea}
           placeholder="Add agent's description"

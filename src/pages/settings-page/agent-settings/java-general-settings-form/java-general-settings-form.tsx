@@ -37,18 +37,19 @@ export const JavaGeneralSettingsForm = () => (
       <FormGroup tw="w-97" label="Agent name">
         <Field name="name" component={Fields.Input} placeholder="Enter agent's name" />
       </FormGroup>
+      <FormGroup tw="w-97" label="Description" optional>
+        <Field
+          tw="h-20"
+          name="description"
+          component={Fields.Textarea}
+          placeholder="Add agent's description"
+        />
+      </FormGroup>
       <FormGroup tw="w-97" label="Environment" optional>
         <Field
           name="environment"
           component={Fields.Input}
           placeholder="Specify an environment"
-        />
-      </FormGroup>
-      <FormGroup tw="w-97" label="Description" optional>
-        <Field
-          name="description"
-          component={Fields.Textarea}
-          placeholder="Add agent's description"
         />
       </FormGroup>
     </div>
