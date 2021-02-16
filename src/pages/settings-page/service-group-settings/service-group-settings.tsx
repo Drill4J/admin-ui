@@ -115,14 +115,14 @@ export const ServiceGroupSettings = () => {
               )}
               actions={(
                 <Button
-                  className="flex items-center gap-x-1"
+                  className="flex justify-center items-center gap-x-1 w-32"
                   type="primary"
                   size="large"
                   onClick={handleSubmit}
                   disabled={submitting || invalid || (pristine && prevPristine)}
                   data-test="java-general-settings-form:save-changes-button"
                 >
-                  {submitting && <Spinner disabled />} Save Changes
+                  {submitting ? <Spinner disabled /> : 'Save Changes'}
                 </Button>
               )}
             />

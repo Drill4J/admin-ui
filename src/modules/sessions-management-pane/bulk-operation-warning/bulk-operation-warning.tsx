@@ -13,6 +13,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+import { useState } from 'react';
+
 import { Message } from 'types/message';
 import { useSessionsPaneDispatch, useSessionsPaneState, setBulkOperation } from '../store';
 import { OperationActionWarning } from '../operation-action-warning';
@@ -30,28 +32,33 @@ export const BulkOperationWarning = ({
 }: Props) => {
   const dispatch = useSessionsPaneDispatch();
   const { bulkOperation: { operationType } } = useSessionsPaneState();
+  const [loading, setLoading] = useState(false);
 
   return (
     <>
       {operationType === 'abort' ? (
         <OperationActionWarning
-          handleConfirm={() => {
-            abortAllSession({ agentType, pluginId, agentId }, showGeneralAlertMessage);
+          handleConfirm={async () => {
+            setLoading(true);
+            await abortAllSession({ agentType, pluginId, agentId }, showGeneralAlertMessage);
             dispatch(setBulkOperation('abort', false));
           }}
           handleDecline={() => dispatch(setBulkOperation(operationType, false))}
           operationType="abort"
+          loading={loading}
         >
           Are you sure you want to abort all sessions? All your progress will be lost.
         </OperationActionWarning>
       ) : (
         <OperationActionWarning
-          handleConfirm={() => {
-            finishAllSession({ agentType, pluginId, agentId }, showGeneralAlertMessage);
+          handleConfirm={async () => {
+            setLoading(true);
+            await finishAllSession({ agentType, pluginId, agentId }, showGeneralAlertMessage);
             dispatch(setBulkOperation('finish', false));
           }}
           handleDecline={() => dispatch(setBulkOperation('finish', false))}
           operationType="finish"
+          loading={loading}
         >
           Are you sure you want to finish all sessions?
         </OperationActionWarning>

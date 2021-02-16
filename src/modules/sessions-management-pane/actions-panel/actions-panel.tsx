@@ -43,14 +43,14 @@ export const ActionsPanel = actionsPanel(
       <div className={className}>
         { isNewSession ? (
           <Button
-            className="flex items-center gap-x-1"
+            className="flex justify-center items-center gap-x-1 w-31"
             type="primary"
             size="large"
-            disabled={startSessionDisabled}
+            disabled={startSessionDisabled || submitting}
             onClick={handleSubmit}
             data-test="sessions-management-pane:start-session-button"
           >
-            {submitting && <Spinner disabled />} Start Session
+            {submitting ? <Spinner disabled /> : 'Start Session'}
           </Button>
         ) : (
           <Button

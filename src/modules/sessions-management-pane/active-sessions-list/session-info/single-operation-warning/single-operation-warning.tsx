@@ -13,6 +13,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+import { useState } from 'react';
+
 import { Message } from 'types/message';
 import { setSingleOperation, useSessionsPaneDispatch, useSessionsPaneState } from '../../../store';
 import { OperationActionWarning } from '../../../operation-action-warning';
@@ -30,28 +32,33 @@ export const SingleOperationWarning = ({
 }: Props) => {
   const dispatch = useSessionsPaneDispatch();
   const { singleOperation: { operationType } } = useSessionsPaneState();
+  const [loading, setLoading] = useState(false);
 
   return (
     <>
       {operationType === 'abort' ? (
         <OperationActionWarning
-          handleConfirm={() => {
-            abortSession(agentId, pluginId, showGeneralAlertMessage)(sessionId);
+          handleConfirm={async () => {
+            setLoading(true);
+            await abortSession(agentId, pluginId, showGeneralAlertMessage)(sessionId);
             dispatch(setSingleOperation('abort', ''));
           }}
           handleDecline={() => dispatch(setSingleOperation(operationType, ''))}
           operationType="abort"
+          loading={loading}
         >
           Are you sure you want to abort this session? All your progress will be lost.
         </OperationActionWarning>
       ) : (
         <OperationActionWarning
-          handleConfirm={() => {
-            finishSession(agentId, pluginId, showGeneralAlertMessage)(sessionId);
+          handleConfirm={async () => {
+            setLoading(true);
+            await finishSession(agentId, pluginId, showGeneralAlertMessage)(sessionId);
             dispatch(setSingleOperation('finish', ''));
           }}
           handleDecline={() => dispatch(setSingleOperation('finish', ''))}
           operationType="finish"
+          loading={loading}
         >
           Are you sure you want to finish this session?
         </OperationActionWarning>

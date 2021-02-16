@@ -84,9 +84,9 @@ export const FinishAllScopesModal = finishAllScopesModal(
             </Instructions>
             <div className="flex items-center w-full mt-6">
               <FinishScopeButton
-                className="flex items-center gap-x-1"
+                className="flex justify-center items-center gap-x-1 w-36"
                 type="primary"
-                disabled={activeSessions.length > 0}
+                disabled={activeSessions.length > 0 || loading}
                 onClick={async () => {
                   setLoading(true);
                   await finishAllScopes(serviceGroupId, pluginId, {
@@ -102,7 +102,7 @@ export const FinishAllScopesModal = finishAllScopesModal(
                   setLoading(false);
                 }}
               >
-                {loading && <Spinner disabled />} Finish all scopes
+                {loading ? <Spinner disabled /> : 'Finish all scopes'}
               </FinishScopeButton>
               <Button type="secondary" size="large" onClick={() => onToggle(false)}>
                 Cancel

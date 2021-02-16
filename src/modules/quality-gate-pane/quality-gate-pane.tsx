@@ -161,14 +161,14 @@ export const QualityGatePane = qualityGatePane(
                   )
                     : (
                       <Button
-                        className="flex items-center gap-x-1"
+                        className="flex justify-center items-center gap-x-1 w-16"
                         type="primary"
                         size="large"
                         disabled={invalid || pristine || submitting}
                         onClick={handleSubmit}
                         data-test="quality-gate-pane:save-button"
                       >
-                        {submitting && <Spinner disabled />} Save
+                        {submitting ? <Spinner disabled /> : 'Save'}
                       </Button>
                     )}
                   {configured && isEditing && (
