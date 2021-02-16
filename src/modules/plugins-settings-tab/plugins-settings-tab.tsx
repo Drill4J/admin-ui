@@ -51,7 +51,7 @@ export const PluginsSettingsTab = pluginsSettingsTab(
     return (
       <div className={className}>
         <GeneralAlerts type="INFO">
-          {`Plugins installed on your ${agentType === 'agent' ? 'agent' : 'service group'}.`}
+          {`Installed plugins on your ${agentType === 'agent' ? 'agent' : 'service group'}.`}
         </GeneralAlerts>
         <Header>
           <span>
