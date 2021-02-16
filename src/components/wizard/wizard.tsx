@@ -14,18 +14,19 @@
  * limitations under the License.
  */
 import {
-  Children, ComponentType, ReactElement, useReducer, useState, Component,
+  Children, ComponentType, ReactElement, useReducer, useState, Component, useContext,
 } from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 import { Form } from 'react-final-form';
 import {
-  Icons, Button, GeneralAlerts, Spinner,
+  Icons, Button, Spinner,
 } from '@drill4j/ui-kit';
 
 import { Agent } from 'types/agent';
 
 import { useWsConnection } from 'hooks';
 import { defaultAdminSocket } from 'common/connection';
+import { NotificationManagerContext } from 'notification-manager';
 import {
   wizardReducer, previousStep, nextStep, state,
 } from './wizard-reducer';
@@ -43,7 +44,7 @@ export interface StepProps {
 interface Props {
   className?: string;
   initialValues: Agent;
-  onSubmit: (val: Record<string, unknown>, onError: (message: string) => void) => Promise<void>;
+  onSubmit: (val: Record<string, unknown>) => Promise<void>;
   children: ReactElement<StepProps>[];
 }
 
@@ -56,10 +57,12 @@ export const Wizard = wizard(({
   className, children, initialValues, onSubmit,
 }: Props) => {
   const [{ currentStepIndex }, dispatch] = useReducer(wizardReducer, state);
-  const [errorMessage, setErrorMessage] = useState('');
+  const [error, setError] = useState(false);
   const steps = Children.toArray(children);
   const { name, validate, component: StepComponent } = (steps[currentStepIndex] as Component<StepProps>).props;
   const availablePlugins = useWsConnection<Plugin[]>(defaultAdminSocket, '/plugins') || [];
+  const { showMessage } = useContext(NotificationManagerContext);
+
   return (
     <div className={className}>
       <Form
@@ -67,9 +70,13 @@ export const Wizard = wizard(({
         keepDirtyOnReinitialize
         onSubmit={async (values) => {
           try {
-            await onSubmit(values, setErrorMessage);
+            await onSubmit(values);
           } catch ({ response: { data: { message } = {} } = {} }) {
-            setErrorMessage(message || 'On-submit error. Server problem or operation could not be processed in real-time.');
+            setError(true);
+            showMessage({
+              type: 'ERROR',
+              text: message || 'On-submit error. Server problem or operation could not be processed in real-time.',
+            });
           }
         }}
         validate={validate}
@@ -123,7 +130,7 @@ export const Wizard = wizard(({
                     size="large"
                     onClick={handleSubmit}
                     data-test="wizard:finishng-button"
-                    disabled={submitting || Boolean(errorMessage)}
+                    disabled={submitting || error}
                   >
                     {submitting ? <Spinner disabled /> : <Icons.Check height={10} width={14} viewBox="0 0 14 10" />}
                     <span>Finish</span>
@@ -131,11 +138,6 @@ export const Wizard = wizard(({
                 )}
               </div>
             </div>
-            {errorMessage && (
-              <GeneralAlerts type="ERROR">
-                {errorMessage}
-              </GeneralAlerts>
-            )}
             <StepComponent formValues={values} />
           </>
         )}
