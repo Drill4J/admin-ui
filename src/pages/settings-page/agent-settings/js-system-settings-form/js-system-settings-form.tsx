@@ -22,7 +22,7 @@ import { Fields } from 'forms';
 export const JsSystemSettingsForm = () => (
   <div tw="space-y-10">
     <GeneralAlerts type="INFO">
-      Provide information related to your application / project.
+      Information related to your application / project.
     </GeneralAlerts>
     <div tw="flex justify-center">
       <div tw="w-97 space-y-2">
