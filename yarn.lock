@@ -1126,10 +1126,10 @@
   resolved "https://registry.yarnpkg.com/@csstools/normalize.css/-/normalize.css-10.1.0.tgz#f0950bba18819512d42f7197e56c518aa491cf18"
   integrity sha512-ij4wRiunFfaJxjB0BdrYHIH8FxBJpOwNPhhAcunlmPdXudL1WQV1qoP9un6JsEBAgQH+7UXyyjh0g7jTxXK6tg==
 
-"@drill4j/ui-kit@0.1.63":
-  version "0.1.63"
-  resolved "https://registry.yarnpkg.com/@drill4j/ui-kit/-/ui-kit-0.1.63.tgz#bb264d0a1e0fba7513314e9048bdc0a3c598e4a2"
-  integrity sha512-fORdxrflOdTO00RHuohaogLf7RDDA1VewK5J5SkmFEpQd/glWWA0P+xd1kVDi2NPrEtYqM3Ik9YtK6FuaXSE7A==
+"@drill4j/ui-kit@0.1.64":
+  version "0.1.64"
+  resolved "https://registry.yarnpkg.com/@drill4j/ui-kit/-/ui-kit-0.1.64.tgz#85b7045b414fb3ea13b044e9750fcbe1f643b083"
+  integrity sha512-QYk8s5ObwvNYT4CNyeciNkCROQ22DGyTqjXAop5KQfoCuwt3MQoChsE/Z/rPG67Tazyb/aC928Z96y4hxuLL6Q==
   dependencies:
     "@redneckz/react-bem-helper" "^2.0.4"
     "@types/nanoid" "^2.1.0"

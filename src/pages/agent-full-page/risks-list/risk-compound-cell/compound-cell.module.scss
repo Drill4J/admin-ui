@@ -15,16 +15,29 @@
  */
 @import '~common/style-guide/index';
 
-.clickable-cell {
-  display: inline-flex;
-  line-height: 16px;
-  font-family: $semibold-font;
-  text-decoration: underline;
-  cursor: pointer;
+.compound-cell {
+  display: flex;
+  gap: 8px;
+  padding: 8px 0;
+  color: map-get($monochrome, black);
 
-  &--disabled {
-    text-decoration: none;
-    cursor: default;
-    pointer-events: none;
+  &__cell-content {
+    width: 100%;
+    font-family: $semibold-font;
+  }
+
+  &__cell-name {
+    height: 16px;
+    line-height: 16px;
+    font-family: $semibold-font;
+  }
+
+  &__cell-additional-info {
+    margin-top: 4px;
+    height: 20px;
+    line-height: 20px;
+    font-size: 12px;
+    font-family: $regular-font;
+    color: map-get($monochrome, default);
   }
 }
