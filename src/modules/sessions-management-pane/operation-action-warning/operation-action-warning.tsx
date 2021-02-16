@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 import { BEM } from '@redneckz/react-bem-helper';
-import { Button, NegativeActionButton } from '@drill4j/ui-kit';
+import { Button, NegativeActionButton, Spinner } from '@drill4j/ui-kit';
 
 import { OperationType } from '../store/reducer';
 
@@ -26,12 +26,13 @@ interface Props {
   handleConfirm: () => void;
   children: React.ReactNode;
   operationType: OperationType;
+  loading: boolean;
 }
 
 const operationActionWarning = BEM(styles);
 
 export const OperationActionWarning = operationActionWarning(({
-  className, handleConfirm, handleDecline, children, operationType,
+  className, handleConfirm, handleDecline, children, operationType, loading,
 } : Props) => {
   const ConfirmButton = operationType === 'abort' ? NegativeActionButton : Button;
   return (
@@ -51,8 +52,9 @@ export const OperationActionWarning = operationActionWarning(({
           size="small"
           onClick={handleConfirm}
           data-test="operation-action-warning:yes-button"
+          disabled={loading}
         >
-          Yes
+          {loading ? <Spinner disabled /> : 'Yes'}
         </ConfirmButton>
       </Actions>
     </div>

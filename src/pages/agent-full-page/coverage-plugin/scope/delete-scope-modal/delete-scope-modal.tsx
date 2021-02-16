@@ -104,7 +104,7 @@ export const DeleteScopeModal = deleteScopeModal(
                 : (
                   <>
                     <DeleteScopeButton
-                      className="flex items-center gap-x-1 px-4"
+                      className="flex justify-center items-center gap-x-1 px-4 w-43"
                       type="primary"
                       disabled={loading}
                       onClick={async () => {
@@ -122,7 +122,7 @@ export const DeleteScopeModal = deleteScopeModal(
                       }}
                       data-test="delete-scope-modal:confirm-delete-button"
                     >
-                      {loading && <Spinner disabled />} Yes, Delete Scope
+                      {loading ? <Spinner disabled /> : 'Yes, Delete Scope'}
                     </DeleteScopeButton>
                     <Button
                       type="secondary"

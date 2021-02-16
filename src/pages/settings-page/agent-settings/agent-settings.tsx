@@ -16,9 +16,7 @@
 import {
   ReactNode, useState, useContext, useRef, useEffect,
 } from 'react';
-import {
-  Button, Icons, Spinner,
-} from '@drill4j/ui-kit';
+import { Button, Icons, Spinner } from '@drill4j/ui-kit';
 import { useParams } from 'react-router-dom';
 import { Form } from 'react-final-form';
 import axios from 'axios';
@@ -134,14 +132,14 @@ export const AgentSettings = () => {
               )}
               actions={(
                 <Button
-                  className="flex items-center gap-x-1"
+                  className="flex justify-center items-center gap-x-1 w-32"
                   type="primary"
                   size="large"
                   onClick={handleSubmit}
                   disabled={submitting || invalid || (pristine && prevPristine)}
                   data-test="java-general-settings-form:save-changes-button"
                 >
-                  {submitting && <Spinner disabled />} Save Changes
+                  {submitting ? <Spinner disabled /> : 'Save Changes'}
                 </Button>
               )}
             />

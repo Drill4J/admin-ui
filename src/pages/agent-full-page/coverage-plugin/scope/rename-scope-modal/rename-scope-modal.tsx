@@ -91,13 +91,13 @@ export const RenameScopeModal = renameScopeModal(
                 </FormGroup>
                 <div className="flex items-center gap-4 w-full mt-6">
                   <Button
-                    className="flex items-center gap-x-1"
+                    className="flex justify-center items-center gap-x-1 w-16"
                     type="primary"
                     size="large"
                     onClick={handleSubmit}
                     disabled={submitting}
                   >
-                    {submitting && <Spinner disabled />} Save
+                    {submitting ? <Spinner disabled /> : 'Save'}
                   </Button>
                   <Button type="secondary" size="large" onClick={() => onToggle(false)}>
                     Cancel

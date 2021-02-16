@@ -100,7 +100,7 @@ export const FinishScopeModal = finishScopeModal(
               {!testTypes.length ? (
                 <>
                   <Button
-                    className="flex items-center gap-x-1"
+                    className={`flex justify-center items-center gap-x-1 ${testsCount ? 'w-30' : 'w-40'}`}
                     type="primary"
                     size="large"
                     disabled={testTypes.length > 0 || loading}
@@ -119,7 +119,9 @@ export const FinishScopeModal = finishScopeModal(
                     }}
                     data-test="finish-scope-modal:finish-scope-button"
                   >
-                    {loading && <Spinner disabled />} {testsCount ? 'Finish Scope' : 'Finish and Delete'}
+                    {loading && <Spinner disabled />}
+                    {!loading && Boolean(testsCount) && 'Finish Scope' }
+                    {!loading && !testsCount && 'Finish and Delete' }
                   </Button>
                   <Button
                     type="secondary"

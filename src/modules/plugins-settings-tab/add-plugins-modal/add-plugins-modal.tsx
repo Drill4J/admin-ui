@@ -72,7 +72,7 @@ export const AddPluginsModal = addPluginModal(({
         </Content>
         <Actions>
           <Button
-            className="flex items-center gap-x-1"
+            className="flex justify-center items-center gap-x-1 w-27"
             type="primary"
             size="large"
             onClick={async () => {
@@ -82,7 +82,7 @@ export const AddPluginsModal = addPluginModal(({
             }}
             disabled={selectedPlugins.length === 0 || loading}
           >
-            {loading && <Spinner disabled />}Add plugin
+            {loading ? <Spinner disabled /> : 'Add plugin'}
           </Button>
           <Button type="secondary" size="large" onClick={() => onToggle(!isOpen)}>
             Cancel
