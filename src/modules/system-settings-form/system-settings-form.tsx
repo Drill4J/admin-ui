@@ -27,10 +27,13 @@ import { parsePackages, formatPackages } from 'utils';
 interface Props {
   invalid: boolean;
   isServiceGroup?: boolean;
+  unlockedPackages: boolean;
+  setUnlockedPackages: (unlocked: boolean) => void;
 }
 
-export const SystemSettingsForm = ({ invalid, isServiceGroup }: Props) => {
-  const [unlocked, setUnlocked] = useState(false);
+export const SystemSettingsForm = ({
+  invalid, isServiceGroup, unlockedPackages, setUnlockedPackages,
+}: Props) => {
   const [isUnlockingModalOpened, setIsUnlockingModalOpened] = useState(false);
 
   return (
@@ -45,12 +48,12 @@ export const SystemSettingsForm = ({ invalid, isServiceGroup }: Props) => {
           <div tw="flex items-center gap-x-2 mb-2">
             <span tw="font-bold text-14 leading-20 text-monochrome-black">Project Package(s)</span>
             <div
-              className={`flex items-center ${unlocked ? 'text-red-default' : 'text-monochrome-default'}`}
+              className={`flex items-center ${unlockedPackages ? 'text-red-default' : 'text-monochrome-default'}`}
               onClick={() => {
-                unlocked ? !invalid && setUnlocked(false) : setIsUnlockingModalOpened(true);
+                unlockedPackages ? !invalid && setUnlockedPackages(false) : setIsUnlockingModalOpened(true);
               }}
             >
-              {unlocked ? (
+              {unlockedPackages ? (
                 <Icons.Unlocked />
               ) : (
                 <Tooltip
@@ -73,9 +76,9 @@ export const SystemSettingsForm = ({ invalid, isServiceGroup }: Props) => {
             parse={parsePackages}
             format={formatPackages}
             placeholder="e.g. com/example/mypackage&#10;foo/bar/baz&#10;and so on."
-            disabled={!unlocked}
+            disabled={!unlockedPackages}
           />
-          {unlocked && (
+          {unlockedPackages && (
             <div tw="w-97 text-12 leading-16 text-monochrome-default">
               Make sure you add application packages only, otherwise agent&apos;s performance will be affected.
               Use new line as a separator, &quot;!&quot; before package/class for excluding and use &quot;/&quot; in a package path.
@@ -93,7 +96,7 @@ export const SystemSettingsForm = ({ invalid, isServiceGroup }: Props) => {
           <UnlockingSystemSettingsFormModal
             isOpen={isUnlockingModalOpened}
             onToggle={setIsUnlockingModalOpened}
-            setUnlocked={setUnlocked}
+            setUnlocked={setUnlockedPackages}
           />
         )}
       </div>

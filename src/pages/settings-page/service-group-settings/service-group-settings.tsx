@@ -38,6 +38,7 @@ interface TabsComponent {
 }
 
 export const ServiceGroupSettings = () => {
+  const [unlockedPackages, setUnlockedPackages] = useState(false);
   const [selectedTab, setSelectedTab] = useState('general');
   const { id = '' } = useParams<{ id: string }>();
   const serviceGroup = useServiceGroup(id) || {};
@@ -57,6 +58,7 @@ export const ServiceGroupSettings = () => {
           });
           await axios.put(`/groups/${id}`, { name, description, environment });
           showMessage({ type: 'SUCCESS', text: 'New settings have been saved' });
+          setUnlockedPackages(false);
         } catch ({ response: { data: { message } = {} } = {} }) {
           showMessage({
             type: 'ERROR',
@@ -91,7 +93,12 @@ export const ServiceGroupSettings = () => {
           },
           {
             name: 'system',
-            component: <SystemSettingsForm invalid={invalid} isServiceGroup />,
+            component: <SystemSettingsForm
+              invalid={invalid}
+              isServiceGroup
+              setUnlockedPackages={setUnlockedPackages}
+              unlockedPackages={unlockedPackages}
+            />,
           },
           {
             name: 'plugins',
