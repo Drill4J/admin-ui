@@ -41,6 +41,7 @@ interface TabsComponent {
 }
 
 export const AgentSettings = () => {
+  const [unlockedPackages, setUnlockedPackages] = useState(false);
   const [selectedTab, setSelectedTab] = useState('general');
   const { id = '' } = useParams<{ id: string }>();
   const agent = useAgent(id) || {};
@@ -63,6 +64,7 @@ export const AgentSettings = () => {
           await axios.patch(`/agents/${id}/info`, { name, description, environment });
           await axios.put(`/agents/${id}/system-settings`, systemSettings);
           showMessage({ type: 'SUCCESS', text: 'New settings have been saved' });
+          setUnlockedPackages(false);
         } catch ({ response: { data: { message } = {} } = {} }) {
           showMessage({
             type: 'ERROR',
@@ -107,7 +109,13 @@ export const AgentSettings = () => {
             name: 'system',
             component: agent.agentType === 'Node.js'
               ? <JsSystemSettingsForm />
-              : <SystemSettingsForm invalid={invalid} />,
+              : (
+                <SystemSettingsForm
+                  invalid={invalid}
+                  setUnlockedPackages={setUnlockedPackages}
+                  unlockedPackages={unlockedPackages}
+                />
+              ),
           },
           {
             name: 'plugins',
