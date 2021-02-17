@@ -32,7 +32,7 @@ export const ServiceGroupGeneralSettingsForm = () => (
         <Field
           name="name"
           component={Fields.Input}
-          placeholder="Give Service Group a name"
+          placeholder="Enter service group's name"
         />
       </FormGroup>
       <FormGroup tw="w-97" label="Description" optional>
@@ -40,7 +40,7 @@ export const ServiceGroupGeneralSettingsForm = () => (
           tw="h-20"
           name="description"
           component={Fields.Textarea}
-          placeholder="Add Service Group's description"
+          placeholder="Add service group's description"
         />
       </FormGroup>
       <FormGroup tw="w-97" label="Environment" optional>

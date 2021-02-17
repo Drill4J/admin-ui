@@ -35,7 +35,7 @@ export const JavaGeneralSettingsForm = () => (
         <Field name="serviceGroup" component={Fields.Input} placeholder="n/a" disabled />
       </FormGroup>
       <FormGroup tw="w-97" label="Agent name">
-        <Field name="name" component={Fields.Input} placeholder="Give agent a name" />
+        <Field name="name" component={Fields.Input} placeholder="Enter agent's name" />
       </FormGroup>
       <FormGroup tw="w-97" label="Environment" optional>
         <Field
