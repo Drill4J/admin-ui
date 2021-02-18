@@ -125,14 +125,12 @@ export const ServiceGroupRegistrationPage = () => {
           )}
         />
       </Wizard>
-      {isCancelModalOpened && (
-        <CancelAgentRegistrationModal
-          isOpen={isCancelModalOpened}
-          onToggle={setIsCancelModalOpened}
-          header="Abort Registration"
-          message="Are you sure you want to abort agent registration? All your progress will be lost."
-        />
-      )}
+      <CancelAgentRegistrationModal
+        isOpen={isCancelModalOpened}
+        onToggle={setIsCancelModalOpened}
+        header="Abort Registration"
+        message="Are you sure you want to abort agent registration? All your progress will be lost."
+      />
     </div>
   );
 };
