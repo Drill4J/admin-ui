@@ -17,6 +17,7 @@ import { ReactNode, useState } from 'react';
 import { BEM, div } from '@redneckz/react-bem-helper';
 import { useHistory } from 'react-router-dom';
 import { Icons } from '@drill4j/ui-kit';
+import 'twin.macro';
 
 import { TOKEN_KEY } from 'common/constants';
 import { useWsConnection } from 'hooks';
@@ -44,16 +45,19 @@ export const Toolbar = toolbar(({ className, breadcrumbs }: Props) => {
       <Content>
         <BreadcrumbsWrapper>{breadcrumbs}</BreadcrumbsWrapper>
         <UserInfo>
-          <IconNotification
-            onClick={() => setIsNotificationPaneOpen(!isNotificationPaneOpen)}
-            data-test="tolbar:icon-notification"
-          />
+          <span className="link">
+            <Icons.Notification
+              onClick={() => setIsNotificationPaneOpen(!isNotificationPaneOpen)}
+              data-test="tolbar:icon-notification"
+            />
+          </span>
           <NotificationCount unread={unreadNotifications.length > 0} data-test="tolbar:notification-count">
             {unreadNotifications.length}
           </NotificationCount>
           <Divider />
           Signed in as Guest
           <SingOut
+            className="link"
             onClick={() => {
               localStorage.removeItem(TOKEN_KEY);
               push('/login');
@@ -79,7 +83,6 @@ const Content = toolbar.content('div');
 const BreadcrumbsWrapper = toolbar.breadcrumbs('div');
 const Divider = toolbar.divider('span');
 const UserInfo = toolbar.userInfo('div');
-const IconNotification = toolbar.iconNotification(Icons.Notification);
 const NotificationCount = toolbar.notificationCount(div({} as {unread?: boolean}));
 const SingOut = toolbar.signOut(
   div({ onClick: () => {}, 'data-test': '' } as { 'data-test': string }),

@@ -49,11 +49,6 @@
     color: map-get($monochrome, default);
   }
 
-  &__icon-notification {
-    color: map-get($primary-blue, default);
-    cursor: pointer;
-  }
-
   &__notification-count {
     display: flex;
     justify-content: center;

@@ -82,7 +82,7 @@ export const PluginsSettingsTab = pluginsSettingsTab(
                 icon={name as keyof typeof Icons}
               >
                 <div className="flex items-center w-full">
-                  <PluginName>{name}&nbsp;</PluginName>
+                  <PluginName className="link">{name}&nbsp;</PluginName>
                   {version && <PluginVersion>({version})</PluginVersion>}
                 </div>
               </PluginListEntry>

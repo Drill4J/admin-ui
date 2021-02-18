@@ -546,17 +546,11 @@ video {
 }
 
 body {
-  font-family: "OpenSans", sans-serif;
+  font-family: 'OpenSans', sans-serif;
 }
 
 button:focus {
   outline: none;
-}
-
-.text-ellipsis {
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
 }
 
 .container {
@@ -25412,6 +25406,26 @@ button:focus {
 
 .animate-bounce {
   animation: bounce 1s infinite;
+}
+
+.text-ellipsis {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.link {
+  background-color: transparent;
+  color: #007fff;
+  cursor: pointer;
+}
+
+.link:hover {
+  color: #3399ff;
+}
+
+.link:active {
+  color: #006cd8;
 }
 
 @media (min-width: 640px) {

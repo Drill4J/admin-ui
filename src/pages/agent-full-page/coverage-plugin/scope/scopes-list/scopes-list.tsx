@@ -30,7 +30,7 @@ import { useActiveScope, useAgent, useBuildVersion } from 'hooks';
 import { AGENT_STATUS } from 'common/constants';
 import { toggleScope } from '../../api';
 import { usePluginState } from '../../../store';
-import { useCoveragePluginDispatch, useCoveragePluginState, openModal } from '../../store';
+import { useCoveragePluginDispatch, openModal } from '../../store';
 import { ScopeTimer } from '../scope-timer';
 import { NoScopeStub } from '../no-scope-stub';
 
@@ -47,9 +47,6 @@ const Title = styled.div`
 
 export const ScopesList = () => {
   const { showMessage } = useContext(NotificationManagerContext);
-  const {
-    activeSessions: { testTypes = [] },
-  } = useCoveragePluginState();
   const { agentId } = usePluginState();
   const { buildVersion: activeBuildVersion = '', status } = useAgent(agentId) || {};
   const { pluginId = '', buildVersion = '' } = useParams<{ pluginId: string; buildVersion: string }>();
@@ -80,11 +77,11 @@ export const ScopesList = () => {
                 },
               }) => (
                 <span
-                  tw="font-bold text-14 leading-20 text-blue-default cursor-pointer"
+                  tw="font-bold text-14 leading-20 cursor-pointer"
                   onClick={() => push(`/full-page/${agentId}/${buildVersion}/${pluginId}/scopes/${id}`)}
                   data-test="scopes-list:scope-name"
                 >
-                  <div className="text-ellipsis" title={value}>{value}</div>
+                  <div className="link text-ellipsis" title={value}>{value}</div>
                   {status === AGENT_STATUS.ONLINE && (
                     <div tw="flex gap-x-2 items-center w-full text-12">
                       <ScopeTimer started={started} finished={finished} active={active} size="small" />

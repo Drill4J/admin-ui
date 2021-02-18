@@ -67,6 +67,7 @@ export const NameColumn = nameColumn(
             <NewAgentBadge color="green">{`+${unregisteredAgentsCount}`}</NewAgentBadge>
           )}
           <AgentName
+            className="link"
             onClick={() => push(
               isServiceGroup
                 ? `/service-group-full-page/${id}/service-group-dashboard`

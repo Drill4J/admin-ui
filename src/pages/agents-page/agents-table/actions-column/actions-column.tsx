@@ -70,7 +70,7 @@ export const ActionsColumn = ({ agent }: Props) => {
         </Tooltip>
       )}
       {((status === AGENT_STATUS.ONLINE && agentType !== 'ServiceGroup') || agentType === 'ServiceGroup') && (
-        <div tw="text-blue-default cursor-pointer">
+        <div className="link text-blue-default cursor-pointer">
           <Icons.Settings
             onClick={() => push(
               `/agents/${
