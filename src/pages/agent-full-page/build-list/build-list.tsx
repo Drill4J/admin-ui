@@ -31,7 +31,7 @@ import { setBuildVersion, usePluginDispatch } from '../store';
 const NameCell = styled.div`
   ${tw`grid gap-x-2 h-12 items-center`}
   grid-template-columns: minmax(auto, max-content) max-content;
-  ${tw`font-bold text-14 text-blue-default cursor-pointer`}
+  ${tw`font-bold text-14`}
 `;
 
 export const BuildList = () => {
@@ -62,7 +62,7 @@ export const BuildList = () => {
                 }}
                 title={buildVersion}
               >
-                <div className="text-ellipsis">{buildVersion}</div>
+                <div className="link text-ellipsis">{buildVersion}</div>
                 {baseline === buildVersion && (
                   <Tooltip
                     message={(

@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { BEM } from '@redneckz/react-bem-helper';
 import { NavLink, useParams } from 'react-router-dom';
 import { Tooltip } from '@drill4j/ui-kit';
 import tw, { styled } from 'twin.macro';
@@ -97,7 +96,7 @@ export const CoverageSection = () => {
               {`${buildDiff > 0 ? '+' : '-'} ${percentFormatter(Math.abs(buildDiff))}% vs`}
               <div className="text-ellipsis">
                 <NavLink
-                  tw="font-bold text-blue-default leading-16 no-underline"
+                  className="font-bold link leading-16 no-underline"
                   to={`/full-page/${agentId}/${previousBuildVersion}/dashboard`}
                   title={`Build ${previousBuildVersion}`}
                 >

@@ -62,11 +62,13 @@ export const PluginHeader = pluginHeader(({ className, agentName, agentStatus }:
             </div>
           </AgentInfo>
         </div>
-        <SettingsButton
-          onClick={() => push(`/agents/agent/${agentId}/settings`)}
-          disabled={agentStatus === AGENT_STATUS.OFFLINE}
-          data-test="plugin-header:settings-button"
-        />
+        <span className="link">
+          <SettingsButton
+            onClick={() => push(`/agents/agent/${agentId}/settings`)}
+            disabled={agentStatus === AGENT_STATUS.OFFLINE}
+            data-test="plugin-header:settings-button"
+          />
+        </span>
       </Content>
     </div>
   );

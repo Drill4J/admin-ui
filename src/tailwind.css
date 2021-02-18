@@ -4,16 +4,32 @@
 
 @layer base {
   body {
-    font-family: "OpenSans", sans-serif;
+    font-family: 'OpenSans', sans-serif;
   }
 
   button:focus {
     outline: none;
   }
+}
 
+@layer utilities {
   .text-ellipsis {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+  }
+
+  .link {
+    background-color: transparent;
+    color: #007fff;
+    cursor: pointer;
+  }
+
+  .link:hover {
+    color: #3399ff;
+  }
+
+  .link:active {
+    color: #006cd8;
   }
 }
