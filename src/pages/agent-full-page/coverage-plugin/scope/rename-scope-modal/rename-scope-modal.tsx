@@ -84,7 +84,7 @@ export const RenameScopeModal = renameScopeModal(
             })(values as ScopeSummary)}
             validate={validateScope}
             initialValues={scope || {}}
-            render={({ handleSubmit, submitting }) => (
+            render={({ handleSubmit, submitting, pristine }) => (
               <form onSubmit={handleSubmit} className="m-6">
                 <FormGroup label="Scope Name">
                   <Field name="name" component={Fields.Input} placeholder="Enter scope name" />
@@ -95,7 +95,7 @@ export const RenameScopeModal = renameScopeModal(
                     type="primary"
                     size="large"
                     onClick={handleSubmit}
-                    disabled={submitting}
+                    disabled={submitting || pristine}
                   >
                     {submitting ? <Spinner disabled /> : 'Save'}
                   </Button>
