@@ -112,7 +112,6 @@ export const Wizard = wizard(({
                 {currentStepIndex < steps.length - 1 ? (
                   <Button
                     tw="w-28"
-                    className="flex gap-x-2"
                     type="primary"
                     size="large"
                     onClick={() => dispatch(nextStep())}
