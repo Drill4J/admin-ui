@@ -39,12 +39,14 @@ export const ActionsColumn = ({ agent }: Props) => {
   const unregisteredAgentsCount = agents.reduce(
     (acc, { status: agentStatus }) => (agentStatus === AGENT_STATUS.NOT_REGISTERED ? acc + 1 : acc), 0,
   );
+  const hasOfflineAgent = agents.some(({ status: agentStatus }) => agentStatus === AGENT_STATUS.OFFLINE);
   const isJavaAgentsServiceGroup = agents.every((serviceGroupAgent) => serviceGroupAgent.agentType === 'Java');
 
   return (
-    <div className={`flex items-center gap-x-4 ${(status !== AGENT_STATUS.ONLINE && agentType !== 'ServiceGroup') && 'mr-8'}`}>
+    <div className="flex items-center">
       {(status === AGENT_STATUS.NOT_REGISTERED || unregisteredAgentsCount > 0) && (
         <Tooltip
+          tw="mr-8"
           position="top-left"
           message={agentType === 'ServiceGroup' && !isJavaAgentsServiceGroup && (
             <div className="text-center">
@@ -69,7 +71,8 @@ export const ActionsColumn = ({ agent }: Props) => {
           </Button>
         </Tooltip>
       )}
-      {((status === AGENT_STATUS.ONLINE && agentType !== 'ServiceGroup') || agentType === 'ServiceGroup') && (
+      {((status === AGENT_STATUS.ONLINE && agentType !== 'ServiceGroup') ||
+        (!hasOfflineAgent && !unregisteredAgentsCount && agentType === 'ServiceGroup')) && (
         <div className="link text-blue-default cursor-pointer">
           <Icons.Settings
             onClick={() => push(
