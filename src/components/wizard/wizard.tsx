@@ -46,6 +46,7 @@ interface Props {
   initialValues: Agent;
   onSubmit: (val: Record<string, unknown>) => Promise<void>;
   children: ReactElement<StepProps>[];
+  onSuccessMessage: string;
 }
 
 const wizard = BEM(styles);
@@ -54,7 +55,7 @@ const wizard = BEM(styles);
 export const Step = (props: StepProps) => null;
 
 export const Wizard = wizard(({
-  className, children, initialValues, onSubmit,
+  className, children, initialValues, onSubmit, onSuccessMessage,
 }: Props) => {
   const [{ currentStepIndex }, dispatch] = useReducer(wizardReducer, state);
   const [error, setError] = useState(false);
@@ -71,6 +72,7 @@ export const Wizard = wizard(({
         onSubmit={async (values) => {
           try {
             await onSubmit(values);
+            showMessage({ type: 'SUCCESS', text: onSuccessMessage });
           } catch ({ response: { data: { message } = {} } = {} }) {
             setError(true);
             showMessage({

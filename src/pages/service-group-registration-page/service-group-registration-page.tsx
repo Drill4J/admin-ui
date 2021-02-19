@@ -72,8 +72,8 @@ export const ServiceGroupRegistrationPage = () => {
           if (isMounted.current) {
             push(`/service-group-full-page/${serviceGroupId}/service-group-dashboard`);
           }
-          showMessage({ type: 'SUCCESS', text: 'Multiple agents registration has been finished.' });
         }}
+        onSuccessMessage="Multiple agents registration has been finished."
       >
         <Step
           name="General settings"
