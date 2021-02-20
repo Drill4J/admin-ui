@@ -176,7 +176,10 @@ export const BarChart = barChart(({
           id="custom-scroll-bar"
           type="range"
           min={visibleBarsCount > testsToRunHistory.length ? 0 : visibleBarsCount}
-          style={{ width: `${visibleBarsCount <= 0 || visibleBarsCount >= testsToRunHistory.length ? 0 : width - 30}px` }}
+          style={{
+            width: `${visibleBarsCount <= 0 || visibleBarsCount >= testsToRunHistory.length ? 0 : width - 30}px`,
+            marginBottom: `${visibleBarsCount <= 0 || visibleBarsCount >= testsToRunHistory.length ? 0 : 8}px`,
+          }}
           value={slice || bars.length}
           max={testsToRunHistory.length}
           onChange={(event) => setSlice(Number(event.currentTarget.value))}
