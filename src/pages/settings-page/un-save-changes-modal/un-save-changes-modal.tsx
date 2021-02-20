@@ -18,18 +18,25 @@ import 'twin.macro';
 
 interface Props {
   isOpen: boolean;
-  onToggle: (arg: boolean) => void;
+  onToggle: () => void;
+  selectTab: () => void;
 }
 
-export const UnSaveChangeModal = ({ isOpen, onToggle }: Props) => (
+export const UnSaveChangeModal = ({ isOpen, onToggle, selectTab }: Props) => (
   <Popup isOpen={isOpen} onToggle={onToggle} header="Unsave changes">
     <div tw="pt-5 px-6 pb-6 w-108">
       <div tw="mb-6 text-14 leading-20 text-monochrome-black">
         There are unsaved changes. If you would like to keep changes,<br /> press the “Continue Editing” button.
       </div>
       <div tw="flex gap-x-4">
-        <Button type="primary" size="large" onClick={() => onToggle(false)}>Continue Editing</Button>
-        <Button type="secondary" size="large" onClick={() => onToggle(false)}>Leave Without Saving</Button>
+        <Button type="primary" size="large" onClick={onToggle}>Continue Editing</Button>
+        <Button
+          type="secondary"
+          size="large"
+          onClick={selectTab}
+        >
+          Leave Without Saving
+        </Button>
       </div>
     </div>
   </Popup>

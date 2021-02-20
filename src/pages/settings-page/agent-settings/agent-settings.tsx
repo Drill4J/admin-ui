@@ -26,6 +26,7 @@ import { GeneralSettingsForm } from './general-settings-form';
 import { JsSystemSettingsForm } from './js-system-settings-form';
 import { AgentStatusToggle } from '../../agents-page/agent-status-toggle';
 import 'twin.macro';
+import { UnSaveChangeModal } from '../un-save-changes-modal';
 
 interface TabsComponent {
   name: string;
@@ -34,19 +35,21 @@ interface TabsComponent {
 
 export const AgentSettings = () => {
   const [selectedTab, setSelectedTab] = useState('general');
+  const [nextSelectTab, setNextSelectTab] = useState('');
+  const [pristineSettings, setPristineSettings] = useState(false);
   const { id = '' } = useParams<{ id: string }>();
   const agent = useAgent(id) || {};
 
   const tabsComponents: TabsComponent[] = [
     {
       name: 'general',
-      component: <GeneralSettingsForm agent={agent} />,
+      component: <GeneralSettingsForm agent={agent} setPristineSettings={setPristineSettings} />,
     },
     {
       name: 'system',
       component: agent.agentType === 'Node.js'
-        ? <JsSystemSettingsForm agent={agent} />
-        : <SystemSettingsForm agent={agent} />,
+        ? <JsSystemSettingsForm agent={agent} setPristineSettings={setPristineSettings} />
+        : <SystemSettingsForm agent={agent} setPristineSettings={setPristineSettings} />,
     },
     {
       name: 'plugins',
@@ -65,12 +68,24 @@ export const AgentSettings = () => {
           </div>
         )}
       />
-      <TabsPanel tw="mx-6" activeTab={selectedTab} onSelect={setSelectedTab}>
+      <TabsPanel
+        tw="mx-6"
+        activeTab={selectedTab}
+        onSelect={(tab) => (pristineSettings ? setSelectedTab(tab) : setNextSelectTab(tab))}
+      >
         <Tab name="general">General</Tab>
         <Tab name="system">System</Tab>
         <Tab name="plugins">Plugins</Tab>
       </TabsPanel>
       {tabsComponents.find(({ name }) => name === selectedTab)?.component}
+      <UnSaveChangeModal
+        isOpen={Boolean(nextSelectTab)}
+        onToggle={() => setNextSelectTab('')}
+        selectTab={() => {
+          setSelectedTab(nextSelectTab);
+          setNextSelectTab('');
+        }}
+      />
     </div>
   );
 };

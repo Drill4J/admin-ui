@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import {
@@ -29,16 +29,17 @@ import {
 import { UnlockingSystemSettingsFormModal } from 'modules';
 import { parsePackages, formatPackages } from 'utils';
 import { Agent } from 'types/agent';
-import { useFormSubmit } from 'hooks';
+import { useFormHandleSubmit } from 'hooks';
 import { NotificationManagerContext } from 'notification-manager';
 
 interface Props {
   agent: Agent
   isServiceGroup?: boolean;
+  setPristineSettings: (pristine: boolean) => void;
 }
 
 export const SystemSettingsForm = ({
-  isServiceGroup, agent,
+  isServiceGroup, agent, setPristineSettings,
 }: Props) => {
   const [unlockedPackages, setUnlockedPackages] = useState(false);
   const [isUnlockingModalOpened, setIsUnlockingModalOpened] = useState(false);
@@ -74,10 +75,14 @@ export const SystemSettingsForm = ({
         }),
       ) as any}
       render={(props) => {
-        const ref = useFormSubmit(props);
+        const ref = useFormHandleSubmit(props);
         const {
           handleSubmit, submitting, pristine, invalid,
         } = props || {};
+
+        useEffect(() => {
+          setPristineSettings(pristine);
+        }, [pristine]);
 
         return (
           <form ref={ref} tw="space-y-10">

@@ -13,7 +13,7 @@
 * See the License for the specific language governing permissions and
 * limitations under the License.
 */
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import { Field, Form } from 'react-final-form';
@@ -27,13 +27,14 @@ import {
 } from 'forms';
 import { NotificationManagerContext } from 'notification-manager';
 import { Agent } from 'types/agent';
-import { useFormSubmit } from 'hooks';
+import { useFormHandleSubmit } from 'hooks';
 
 interface Props {
-  agent: Agent
+  agent: Agent;
+  setPristineSettings: (pristine: boolean) => void;
 }
 
-export const JsSystemSettingsForm = ({ agent }: Props) => {
+export const JsSystemSettingsForm = ({ agent, setPristineSettings }: Props) => {
   const { id = '' } = useParams<{ id: string }>();
   const { showMessage } = useContext(NotificationManagerContext);
 
@@ -55,10 +56,14 @@ export const JsSystemSettingsForm = ({ agent }: Props) => {
         required('systemSettings.targetHost', 'Target Host'),
       ) as any}
       render={(props) => {
-        const ref = useFormSubmit(props);
+        const ref = useFormHandleSubmit(props);
         const {
           handleSubmit, submitting, pristine, invalid,
         } = props || {};
+
+        useEffect(() => {
+          setPristineSettings(pristine);
+        }, [pristine]);
 
         return (
           <form ref={ref} tw="space-y-10">

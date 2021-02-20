@@ -35,7 +35,7 @@ export const TabsPanel = tabsPanel((props: Props) => {
   return (
     <div className={className}>
       {Children.map(children, (child: ReactElement, index: number) => cloneElement(child, {
-        onClick: () => onSelect && onSelect(child.props.name || index),
+        onClick: () => activeTab !== child.props.name && onSelect && onSelect(child.props.name || index),
         active: (child.props.name || index) === activeTab,
       }))}
     </div>

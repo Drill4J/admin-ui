@@ -16,7 +16,7 @@
 import { useEffect, useRef } from 'react';
 import { FormRenderProps } from 'react-final-form';
 
-export function useFormSubmit({
+export function useFormHandleSubmit({
   handleSubmit, invalid, pristine, submitting,
 }: FormRenderProps) {
   const node = useRef<HTMLFormElement>(null);

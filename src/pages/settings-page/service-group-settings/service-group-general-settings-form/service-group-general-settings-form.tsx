@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import { Field, Form } from 'react-final-form';
@@ -27,13 +27,14 @@ import {
 } from 'forms';
 import { ServiceGroupEntity } from 'types/service-group-entity';
 import { NotificationManagerContext } from 'notification-manager';
-import { useFormSubmit } from 'hooks';
+import { useFormHandleSubmit } from 'hooks';
 
 interface Props {
-  serviceGroup: ServiceGroupEntity
+  serviceGroup: ServiceGroupEntity;
+  setPristineSettings: (pristine: boolean) => void;
 }
 
-export const ServiceGroupGeneralSettingsForm = ({ serviceGroup }: Props) => {
+export const ServiceGroupGeneralSettingsForm = ({ serviceGroup, setPristineSettings }: Props) => {
   const { showMessage } = useContext(NotificationManagerContext);
   const { id = '' } = useParams<{ id: string }>();
 
@@ -58,10 +59,14 @@ export const ServiceGroupGeneralSettingsForm = ({ serviceGroup }: Props) => {
         sizeLimit({ name: 'description', min: 3, max: 256 }),
       ) as any}
       render={(props) => {
-        const ref = useFormSubmit(props);
+        const ref = useFormHandleSubmit(props);
         const {
           handleSubmit, submitting, pristine, invalid,
         } = props || {};
+
+        useEffect(() => {
+          setPristineSettings(pristine);
+        }, [pristine]);
 
         return (
           <form ref={ref} tw="space-y-10">
