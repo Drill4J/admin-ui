@@ -19,10 +19,10 @@ import 'twin.macro';
 interface Props {
   isOpen: boolean;
   onToggle: () => void;
-  selectTab: () => void;
+  onConfirmAction: () => void;
 }
 
-export const UnSaveChangeModal = ({ isOpen, onToggle, selectTab }: Props) => (
+export const UnSaveChangeModal = ({ isOpen, onToggle, onConfirmAction }: Props) => (
   <Popup isOpen={isOpen} onToggle={onToggle} header="Unsave changes">
     <div tw="pt-5 px-6 pb-6 w-108">
       <div tw="mb-6 text-14 leading-20 text-monochrome-black">
@@ -33,7 +33,7 @@ export const UnSaveChangeModal = ({ isOpen, onToggle, selectTab }: Props) => (
         <Button
           type="secondary"
           size="large"
-          onClick={selectTab}
+          onClick={onConfirmAction}
         >
           Leave Without Saving
         </Button>

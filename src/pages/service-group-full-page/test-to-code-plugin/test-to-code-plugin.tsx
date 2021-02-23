@@ -140,7 +140,7 @@ export const TestToCodePlugin = testToCodePlugin(
                   {
                     label: 'Settings',
                     icon: 'Settings',
-                    onClick: () => push(`/agents/agent/${agentId}/settings`),
+                    onClick: () => push(`/agents/agent/${agentId}/settings/general`),
                   },
                 ]}
               />

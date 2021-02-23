@@ -13,11 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import {
-  ReactNode, useState,
-} from 'react';
+import { useEffect, useState } from 'react';
 import { Icons } from '@drill4j/ui-kit';
-import { useParams } from 'react-router-dom';
+import {
+  useParams, Prompt, Switch, Route, useHistory,
+} from 'react-router-dom';
 
 import { TabsPanel, Tab, PageHeader } from 'components';
 import { useAgent } from 'hooks';
@@ -28,34 +28,22 @@ import { AgentStatusToggle } from '../../agents-page/agent-status-toggle';
 import 'twin.macro';
 import { UnSaveChangeModal } from '../un-save-changes-modal';
 
-interface TabsComponent {
-  name: string;
-  component: ReactNode;
-}
-
 export const AgentSettings = () => {
   const [selectedTab, setSelectedTab] = useState('general');
-  const [nextSelectTab, setNextSelectTab] = useState('');
   const [pristineSettings, setPristineSettings] = useState(false);
+  const [nextLocation, setNextLocation] = useState('');
   const { id = '' } = useParams<{ id: string }>();
   const agent = useAgent(id) || {};
+  const { push } = useHistory();
+  const SystemSettings = agent.agentType === 'Node.js' ? JsSystemSettingsForm : SystemSettingsForm;
 
-  const tabsComponents: TabsComponent[] = [
-    {
-      name: 'general',
-      component: <GeneralSettingsForm agent={agent} setPristineSettings={setPristineSettings} />,
-    },
-    {
-      name: 'system',
-      component: agent.agentType === 'Node.js'
-        ? <JsSystemSettingsForm agent={agent} setPristineSettings={setPristineSettings} />
-        : <SystemSettingsForm agent={agent} setPristineSettings={setPristineSettings} />,
-    },
-    {
-      name: 'plugins',
-      component: <PluginsSettingsTab agent={agent} />,
-    },
-  ];
+  useEffect(() => {
+    if (nextLocation) {
+      setSelectedTab(String(nextLocation.split('/').pop()));
+      push(nextLocation);
+      setNextLocation('');
+    }
+  }, [pristineSettings]);
 
   return (
     <div tw="flex flex-col w-full">
@@ -71,19 +59,39 @@ export const AgentSettings = () => {
       <TabsPanel
         tw="mx-6"
         activeTab={selectedTab}
-        onSelect={(tab) => (pristineSettings ? setSelectedTab(tab) : setNextSelectTab(tab))}
+        onSelect={(tab) => {
+          pristineSettings && setSelectedTab(tab);
+          push(`/agents/agent/${id}/settings/${tab}`);
+        }}
       >
         <Tab name="general">General</Tab>
         <Tab name="system">System</Tab>
         <Tab name="plugins">Plugins</Tab>
       </TabsPanel>
-      {tabsComponents.find(({ name }) => name === selectedTab)?.component}
+      <Switch>
+        <Route
+          path="/agents/agent/:id/settings/general"
+          render={() => <GeneralSettingsForm agent={agent} setPristineSettings={setPristineSettings} />}
+        />
+        <Route
+          path="/agents/agent/:id/settings/plugins"
+          render={() => <PluginsSettingsTab agent={agent} />}
+        />
+        <Route
+          path="/agents/agent/:id/settings/system"
+          render={() => <SystemSettings agent={agent} setPristineSettings={setPristineSettings} />}
+        />
+      </Switch>
       <UnSaveChangeModal
-        isOpen={Boolean(nextSelectTab)}
-        onToggle={() => setNextSelectTab('')}
-        selectTab={() => {
-          setSelectedTab(nextSelectTab);
-          setNextSelectTab('');
+        isOpen={Boolean(nextLocation)}
+        onToggle={() => setNextLocation('')}
+        onConfirmAction={() => setPristineSettings(true)}
+      />
+      <Prompt
+        when={!pristineSettings}
+        message={(location) => {
+          setNextLocation(location.pathname);
+          return false;
         }}
       />
     </div>

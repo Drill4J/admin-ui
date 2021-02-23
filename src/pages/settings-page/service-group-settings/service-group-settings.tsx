@@ -13,8 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import {
+  useParams, Switch, useHistory, Route, Prompt,
+} from 'react-router-dom';
 import { Icons } from '@drill4j/ui-kit';
 import 'twin.macro';
 
@@ -24,39 +26,21 @@ import { PluginsSettingsTab, SystemSettingsForm } from 'modules';
 import { ServiceGroupGeneralSettingsForm } from './service-group-general-settings-form';
 import { UnSaveChangeModal } from '../un-save-changes-modal';
 
-interface TabsComponent {
-  name: string;
-  component: React.ReactNode;
-}
-
 export const ServiceGroupSettings = () => {
   const [selectedTab, setSelectedTab] = useState('general');
   const [pristineSettings, setPristineSettings] = useState(false);
-  const [nextSelectTab, setNextSelectTab] = useState('');
+  const [nextLocation, setNextLocation] = useState('');
   const { id = '' } = useParams<{ id: string }>();
   const serviceGroup = useServiceGroup(id) || {};
+  const { push } = useHistory();
 
-  const tabsComponents: TabsComponent[] = [
-    {
-      name: 'general',
-      component: <ServiceGroupGeneralSettingsForm
-        serviceGroup={serviceGroup}
-        setPristineSettings={setPristineSettings}
-      />,
-    },
-    {
-      name: 'system',
-      component: <SystemSettingsForm
-        setPristineSettings={setPristineSettings}
-        agent={serviceGroup}
-        isServiceGroup
-      />,
-    },
-    {
-      name: 'plugins',
-      component: <PluginsSettingsTab agent={serviceGroup} />,
-    },
-  ];
+  useEffect(() => {
+    if (nextLocation) {
+      setSelectedTab(String(nextLocation.split('/').pop()));
+      push(nextLocation);
+      setNextLocation('');
+    }
+  }, [pristineSettings]);
 
   return (
     <div tw="flex flex-col w-full">
@@ -72,24 +56,38 @@ export const ServiceGroupSettings = () => {
         tw="mx-6"
         activeTab={selectedTab}
         onSelect={(tab) => {
-          if (!pristineSettings) {
-            setNextSelectTab(tab);
-          } else {
-            setSelectedTab(tab);
-          }
+          pristineSettings && setSelectedTab(tab);
+          push(`/agents/service-group/${id}/settings/${tab}`);
         }}
       >
         <Tab name="general">General</Tab>
         <Tab name="system">System</Tab>
         <Tab name="plugins">Plugins</Tab>
       </TabsPanel>
-      {tabsComponents.find(({ name }) => name === selectedTab)?.component}
+      <Switch>
+        <Route
+          path="/agents/service-group/:id/settings/general"
+          render={() => <ServiceGroupGeneralSettingsForm serviceGroup={serviceGroup} setPristineSettings={setPristineSettings} />}
+        />
+        <Route
+          path="/agents/service-group/:id/settings/system"
+          render={() => <SystemSettingsForm agent={serviceGroup} setPristineSettings={setPristineSettings} isServiceGroup />}
+        />
+        <Route
+          path="/agents/service-group/:id/settings/plugins"
+          render={() => <PluginsSettingsTab agent={serviceGroup} />}
+        />
+      </Switch>
       <UnSaveChangeModal
-        isOpen={Boolean(nextSelectTab)}
-        onToggle={() => setNextSelectTab('')}
-        selectTab={() => {
-          setSelectedTab(nextSelectTab);
-          setNextSelectTab('');
+        isOpen={Boolean(nextLocation)}
+        onToggle={() => setNextLocation('')}
+        onConfirmAction={() => setPristineSettings(true)}
+      />
+      <Prompt
+        when={!pristineSettings}
+        message={(location) => {
+          setNextLocation(location.pathname);
+          return false;
         }}
       />
     </div>

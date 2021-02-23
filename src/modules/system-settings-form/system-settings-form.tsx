@@ -33,7 +33,7 @@ import { useFormHandleSubmit } from 'hooks';
 import { NotificationManagerContext } from 'notification-manager';
 
 interface Props {
-  agent: Agent
+  agent: Agent;
   isServiceGroup?: boolean;
   setPristineSettings: (pristine: boolean) => void;
 }
