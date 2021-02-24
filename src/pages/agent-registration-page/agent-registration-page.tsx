@@ -75,13 +75,12 @@ export const AgentRegistrationPage = () => {
             if (isMounted.current) {
               push(`/full-page/${agentId}/${buildVersion}/dashboard`);
             }
-            showMessage({ type: 'SUCCESS', text: 'Agent has been registered' });
           } else {
             await preregisterOfflineAgent(data);
             push('/agents');
-            showMessage({ type: 'SUCCESS', text: 'Offline agent has been preregistered' });
           }
         }}
+        onSuccessMessage={agentId ? 'Agent has been registered' : 'Offline agent has been preregistered'}
       >
         <Step
           name="General Settings"

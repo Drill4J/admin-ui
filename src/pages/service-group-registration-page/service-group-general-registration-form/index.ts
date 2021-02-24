@@ -13,17 +13,4 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-@import '~common/style-guide/index';
-
-.service-group-registration-page {
-  width: 100%;
-  min-width: 850px;
-
-  &__header-icon {
-    margin-right: 16px;
-  }
-
-  &__agents-info {
-    font-family: $semibold-font;
-  }
-}
+export { ServiceGroupGeneralRegistrationForm } from './service-group-general-registration-form';
