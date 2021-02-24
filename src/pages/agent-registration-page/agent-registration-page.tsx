@@ -14,7 +14,7 @@
 * limitations under the License.
 */
 import {
-  useContext, useEffect, useRef, useState,
+  useEffect, useRef, useState,
 } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
 import axios from 'axios';
@@ -30,7 +30,6 @@ import {
   requiredArray, composeValidators, required, sizeLimit,
 } from 'forms';
 import { useAgent } from 'hooks';
-import { NotificationManagerContext } from 'notification-manager';
 import { CancelAgentRegistrationModal, InstallPluginsStep, SystemSettingsStep } from 'modules';
 import { Agent } from 'types/agent';
 import { JavaGeneralRegistrationForm } from './java-general-registration-form';
@@ -43,7 +42,6 @@ export const AgentRegistrationPage = () => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { buildVersion = '', plugins = [], ...agent } = useAgent(agentId) || {};
   const [isCancelModalOpened, setIsCancelModalOpened] = useState(false);
-  const { showMessage } = useContext(NotificationManagerContext);
 
   const isMounted = useRef(true);
   useEffect(() => () => {
