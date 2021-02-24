@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 import {
   Icons, Column, Table,
@@ -23,6 +23,7 @@ import { capitalize } from 'utils';
 import { TestCoverageInfo } from 'types/test-coverage-info';
 import { Cells } from 'components';
 import { CoveredMethodsByTestSidebar } from 'modules';
+import { useVisibleElementsCount } from 'hooks';
 import { NoTestsStub } from './no-tests-stub';
 
 import styles from './test-details.module.scss';
@@ -40,7 +41,8 @@ export const TestDetails = testDetails(
     className, tests, topicCoveredMethodsByTest,
   }: Props) => {
     const [selectedTest, setSelectedTest] = useState<null | { id: string; covered: number }>(null);
-
+    const ref = useRef<HTMLDivElement>(null);
+    const visibleElementsCount = useVisibleElementsCount(ref, 10, 10);
     return (
       <div className={className}>
         {tests.length > 0 ? (
@@ -48,7 +50,11 @@ export const TestDetails = testDetails(
             <Title className="flex items-center w-full">
               Tests
             </Title>
-            <Table data={tests} idKey="name" gridTemplateColumns="calc(100% - 664px) 130px 76px 152px 186px 120px">
+            <Table
+              data={tests.slice(0, visibleElementsCount)}
+              idKey="name"
+              gridTemplateColumns="calc(100% - 664px) 130px 76px 152px 186px 120px"
+            >
               <Column
                 name="testName"
                 label="Name"
@@ -115,6 +121,7 @@ export const TestDetails = testDetails(
             topicCoveredMethodsByTest={topicCoveredMethodsByTest}
           />
         )}
+        <div ref={ref} />
       </div>
     );
   },

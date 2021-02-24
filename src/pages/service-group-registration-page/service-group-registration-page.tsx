@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 import {
-  useContext, useEffect, useRef, useState,
+  useEffect, useRef, useState,
 } from 'react';
 import { useParams, useHistory, useLocation } from 'react-router-dom';
 import axios from 'axios';
@@ -31,7 +31,6 @@ import {
   composeValidators, required, requiredArray, sizeLimit,
 } from 'forms';
 import { defaultAdminSocket } from 'common/connection';
-import { NotificationManagerContext } from 'notification-manager';
 import { Agent } from 'types/agent';
 import { ServiceGroupGeneralRegistrationForm } from './service-group-general-registration-form';
 
@@ -40,7 +39,6 @@ export const ServiceGroupRegistrationPage = () => {
   const { serviceGroupId = '' } = useParams<{ serviceGroupId: string }>();
   const { search } = useLocation();
   const [isCancelModalOpened, setIsCancelModalOpened] = useState(false);
-  const { showMessage } = useContext(NotificationManagerContext);
   const serviceGroup = useWsConnection<Agent>(defaultAdminSocket, `/groups/${serviceGroupId}`) || {};
   const { unregisteredAgentsCount } = queryString.parse(search);
   const isMounted = useRef(true);
