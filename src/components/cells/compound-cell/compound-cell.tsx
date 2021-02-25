@@ -13,37 +13,28 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { BEM } from '@redneckz/react-bem-helper';
-import { OverflowText } from '@drill4j/ui-kit';
-
-import styles from './compound-cell.module.scss';
+import 'twin.macro';
 
 interface Props {
-  className?: string;
   cellName: string;
   cellAdditionalInfo?: string;
   icon?: React.ReactNode;
 }
 
-const compoundCell = BEM(styles);
-
-export const CompoundCell = compoundCell(({
-  className, icon, cellName, cellAdditionalInfo,
+export const CompoundCell = ({
+  icon, cellName, cellAdditionalInfo,
 }: Props) => (
-  <div className={className}>
+  <div tw="flex gap-2 py-2 text-monochrome-black">
     <div>{icon}</div>
-    <CellContent>
-      <CellName data-test="compound-cell:name" title={cellName}>{cellName}</CellName>
-      <CellAdditionalInfo
+    <div className="text-ellipsis">
+      <div className="text-ellipsis font-bold h-4 leading-16" data-test="compound-cell:name" title={cellName}>{cellName}</div>
+      <div
+        className="text-ellipsis h-5 mt-1 leading-20 text-12 font-regular text-monochrome-default"
         data-test="compound-cell:additional-info"
         title={cellAdditionalInfo}
       >
         {cellAdditionalInfo}
-      </CellAdditionalInfo>
-    </CellContent>
+      </div>
+    </div>
   </div>
-));
-
-const CellContent = compoundCell.cellContent('div');
-const CellName = compoundCell.cellName(OverflowText);
-const CellAdditionalInfo = compoundCell.cellAdditionalInfo(OverflowText);
+);

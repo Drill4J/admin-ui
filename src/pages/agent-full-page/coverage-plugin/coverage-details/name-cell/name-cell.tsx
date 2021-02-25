@@ -14,7 +14,6 @@
  * limitations under the License.
  */
 import { BEM } from '@redneckz/react-bem-helper';
-import { OverflowText } from '@drill4j/ui-kit';
 
 import { CellProps } from '../table/table-types';
 
@@ -33,9 +32,8 @@ export const NameCell = nameCell(({
 }: Props) => (
   <span className={className}>
     {icon && <Prefix>{icon}</Prefix>}
-    <Content data-test={`name-cell:content:${testContext}`}>{value}</Content>
+    <div className="text-ellipsis text-14 text-monochrome-black" data-test={`name-cell:content:${testContext}`} title={value}>{value}</div>
   </span>
 ));
 
 const Prefix = nameCell.prefix('div');
-const Content = nameCell.content(OverflowText);

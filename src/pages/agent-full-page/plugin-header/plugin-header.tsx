@@ -51,7 +51,7 @@ export const PluginHeader = pluginHeader(({ className, agentName, agentStatus }:
             <Logo />
           </LogoWrapper>
           <AgentInfo>
-            <AgentName>{agentName}</AgentName>
+            <AgentName className="text-ellipsis" title={agentName}>{agentName}</AgentName>
             <div className="flex items-center w-full">
               <AgentStatusWrapper status={agentStatus}>{capitalize(agentStatus)}</AgentStatusWrapper>
               <div

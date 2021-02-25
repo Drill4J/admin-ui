@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 import { BEM } from '@redneckz/react-bem-helper';
-import { OverflowText, ExpandableTable, Column } from '@drill4j/ui-kit';
+import { ExpandableTable, Column } from '@drill4j/ui-kit';
 
 import { AGENT_STATUS } from 'common/constants';
 import { Agent } from 'types/agent';
@@ -47,7 +47,7 @@ export const AgentsTable = agentsTable(({ className, agents }: Props) => (
         <Column
           name="description"
           label="Description"
-          Cell={({ value }) => <OverflowText>{value.substr(0, 150)}</OverflowText>}
+          Cell={({ value }) => <div className="text-ellipsis" title={value}>{value}</div>}
           align="start"
         />,
         <Column name="agentType" label="Type" align="start" />,
@@ -55,7 +55,7 @@ export const AgentsTable = agentsTable(({ className, agents }: Props) => (
           name="environment"
           label="Environment"
           Cell={({ value, item }) => (
-            <OverflowText title={value}>{item.status === AGENT_STATUS.NOT_REGISTERED ? 'n/a' : value}</OverflowText>
+            <div className="text-ellipsis" title={value}>{item.status === AGENT_STATUS.NOT_REGISTERED ? 'n/a' : value}</div>
           )}
           align="start"
         />,
@@ -71,14 +71,14 @@ export const AgentsTable = agentsTable(({ className, agents }: Props) => (
         />,
       ]}
       expandedContentKey="agents"
-      gridTemplateColumns="32px calc(100% - 862px) 250px 150px 120px 120px 190px"
-      gridExpandedTemplateColumns="32px calc(100% - 862px) 250px 150px 120px 120px 190px"
+      gridTemplateColumns="32px minmax(calc(100% - 862px), 300px) 250px 150px 120px 120px 190px"
+      gridExpandedTemplateColumns="32px minmax(calc(100% - 862px), 300px) 250px 150px 120px 120px 190px"
     >
       <Column name="name" label="Name" Cell={({ item }) => <NameColumn agent={item} />} align="start" />
       <Column
         name="description"
         label="Description"
-        Cell={({ value }) => <OverflowText>{value.substr(0, 150)}</OverflowText>}
+        Cell={({ value }) => <div className="text-ellipsis" title={value}>{value}</div>}
         align="start"
       />
       <Column name="agentType" label="Type" align="start" />
@@ -86,7 +86,7 @@ export const AgentsTable = agentsTable(({ className, agents }: Props) => (
         name="environment"
         label="Environment"
         Cell={({ value, item }) => (
-          <OverflowText title={value}>{item.status === AGENT_STATUS.NOT_REGISTERED ? 'n/a' : value}</OverflowText>
+          <div className="text-ellipsis" title={value}>{item.status === AGENT_STATUS.NOT_REGISTERED ? 'n/a' : value}</div>
         )}
         align="start"
       />
