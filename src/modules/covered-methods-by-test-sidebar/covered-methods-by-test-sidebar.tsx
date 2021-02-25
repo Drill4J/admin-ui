@@ -29,7 +29,7 @@ interface Props {
 }
 
 const MethodInfoValue = styled.div(({ sceleton }: { sceleton?: boolean }) =>
-  [tw`text-monochrome-default text-14 break-all`, sceleton && tw`h-4 w-full bg-monochrome-medium-tint rounded`]);
+  [tw`text-monochrome-default text-14 break-all`, sceleton && tw`h-4 animate-pulse w-full bg-monochrome-medium-tint rounded`]);
 
 const MethodInfoLabel = styled.div(tw`min-w-32px text-left text-14 leading-32 font-bold text-monochrome-black`);
 
