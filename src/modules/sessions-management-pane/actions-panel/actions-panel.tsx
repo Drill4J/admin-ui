@@ -56,7 +56,10 @@ export const ActionsPanel = actionsPanel(
           <Button
             type="primary"
             size="large"
-            onClick={() => dispatch(setIsNewSession(true))}
+            onClick={(e) => {
+              e.preventDefault();
+              dispatch(setIsNewSession(true));
+            }}
             data-test="sessions-management-pane:start-new-session-button"
             disabled={Boolean(singleOperation.id)}
           >
