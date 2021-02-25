@@ -14,8 +14,11 @@
  * limitations under the License.
  */
 import { ReactElement, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
+
 import { ActiveSessions } from 'types/active-sessions';
-import { useBuildVersion } from 'hooks';
+import { useAgent, useBuildVersion } from 'hooks';
+import { AGENT_STATUS } from 'common/constants';
 import { useCoveragePluginDispatch, setActiveSessions } from './store';
 import { usePluginDispatch, setLoading } from '../store';
 
@@ -25,15 +28,18 @@ interface Props {
 
 export const InitialDataController = ({ children }: Props) => {
   const activeSessions = useBuildVersion<ActiveSessions>('/active-scope/summary/active-sessions') || {};
+  const { agentId } = useParams<{ agentId: string }>();
+  const { status } = useAgent(agentId) || {};
   const dispatch = useCoveragePluginDispatch();
   const pluginDispatch = usePluginDispatch();
 
   useEffect(() => {
     dispatch(setActiveSessions(activeSessions));
-    pluginDispatch(setLoading(Boolean(activeSessions.count)));
+
+    pluginDispatch(setLoading(Boolean(activeSessions.count) && status === AGENT_STATUS.ONLINE));
 
     return () => pluginDispatch(setLoading(false));
     // eslint-disable-next-line
-  }, [activeSessions.count]);
+  }, [activeSessions.count, status]);
   return children as ReactElement;
 };
