@@ -52,7 +52,7 @@ export const NameColumn = nameColumn(
 
     return (
       <div className={className}>
-        <div className="flex items-center w-full">
+        <div className="flex items-center gap-x-4 text-ellipsis">
           <AgentTypeIcon disabled={agentIsDisabled}>
             {isServiceGroup
               ? <Icons.ServiceGroup />
@@ -67,7 +67,7 @@ export const NameColumn = nameColumn(
             <NewAgentBadge color="green">{`+${unregisteredAgentsCount}`}</NewAgentBadge>
           )}
           <AgentName
-            className="link"
+            className="link text-ellipsis"
             onClick={() => push(
               isServiceGroup
                 ? `/service-group-full-page/${id}/service-group-dashboard`
@@ -75,6 +75,7 @@ export const NameColumn = nameColumn(
             )}
             disabled={agentIsDisabled}
             data-test="name-column"
+            title={isServiceGroup ? `${name || id} (${agents.length})` : name || id}
           >
             {isServiceGroup ? `${name || id} (${agents.length})` : name || id}
           </AgentName>
@@ -87,9 +88,10 @@ export const NameColumn = nameColumn(
 const AgentTypeIcon = nameColumn.agentTypeIcon('div');
 const NewAgentBadge = nameColumn.newAgentBadge(Badge);
 const AgentName = nameColumn.agentName(
-  div({ onClick: () => {}, 'data-test': '' } as {
+  div({ onClick: () => {}, 'data-test': '', title: '' } as {
     onClick: () => void;
     disabled: boolean;
     'data-test': string;
+    title?: string;
   }),
 );
