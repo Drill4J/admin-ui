@@ -77,8 +77,8 @@ export const ServiceGroupRegistrationPage = () => {
           name="General settings"
           component={ServiceGroupGeneralRegistrationForm}
           validate={composeValidators(
-            required('name'),
-            sizeLimit({ name: 'name' }),
+            required('name', 'Service Group Name'),
+            sizeLimit({ name: 'name', alias: 'Service Group Name' }),
             sizeLimit({ name: 'environment' }),
             sizeLimit({ name: 'description', min: 3, max: 256 }),
           )}
