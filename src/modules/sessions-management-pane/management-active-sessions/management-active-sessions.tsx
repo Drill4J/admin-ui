@@ -62,14 +62,12 @@ export const ManagementActiveSessions = managementActiveSessions(({ className, a
             </LinkButton>
           </ActionsPanel>
         </div>
-        <form>
-          <Field
-            name="id"
-            component={Fields.Search}
-            placeholder="Search session by ID"
-            disabled
-          />
-        </form>
+        <Field
+          name="id"
+          component={Fields.Search}
+          placeholder="Search session by ID"
+          disabled
+        />
       </Content>
     </div>
   );
