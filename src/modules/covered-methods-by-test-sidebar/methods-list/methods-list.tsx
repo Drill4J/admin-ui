@@ -108,7 +108,7 @@ export const MethodsList = methodsList(({ className, methods: { coveredMethods, 
                       <div tw="rounded-full bg-monochrome-medium-tint h-6 w-6" />
                       <div tw="flex-1 space-y-4 py-1">
                         <div tw="space-y-2">
-                          <div tw="h-4 bg-monochrome-medium-tint rounded w-34" />
+                          <div tw="h-4 bg-monochrome-medium-tint rounded" />
                           <div tw="h-3 bg-monochrome-medium-tint rounded" />
                         </div>
                       </div>
