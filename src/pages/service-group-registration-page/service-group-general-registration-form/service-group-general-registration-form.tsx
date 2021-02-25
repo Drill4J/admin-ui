@@ -26,7 +26,7 @@ const Content = styled.div`height: calc(100vh - ${HEADERS_HEIGHT}px);`;
 export const ServiceGroupGeneralRegistrationForm = () => (
   <>
     <GeneralAlerts type="INFO">
-      Set up basic agent settings.
+      Set up basic Service Group settings.
     </GeneralAlerts>
     <Content tw="flex flex-col items-center gap-y-6 pt-10 overflow-auto">
       <FormGroup tw="w-97" label="Service Group ID">
