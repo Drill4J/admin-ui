@@ -34,7 +34,7 @@ export const PluginCard = pluginCard(({
   <div className={className}>
     <Header className="flex items-center justify-between w-full p-4">
       <span>{label}</span>
-      <PluginLink to={pluginLink}>View more &gt;</PluginLink>
+      <Link className="font-regular link no-underline" to={pluginLink}>View more &gt;</Link>
     </Header>
     <Content>
       {Children.map(children, (child) => (
@@ -45,6 +45,5 @@ export const PluginCard = pluginCard(({
 ));
 
 const Header = pluginCard.header('div');
-const PluginLink = pluginCard.link(Link);
 const Content = pluginCard.content('div');
 const CardSection = pluginCard.section('div');

@@ -21,18 +21,20 @@
   }
 
   :not(:first-child) {
+    &:before {
+      padding: 0 8px;
+      color: map-get($monochrome, default);
+      content: '/';
+    }
+  }
+
+  :not(:last-child) {
     &:hover {
       color: map-get($primary-blue, medium-tint);
     }
 
     &:active {
       color: map-get($primary-blue, shade);
-    }
-
-    &:before {
-      padding: 0 8px;
-      color: map-get($monochrome, default);
-      content: '/';
     }
   }
 

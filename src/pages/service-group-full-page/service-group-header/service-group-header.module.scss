@@ -52,9 +52,4 @@
   &__agents-count {
     color: map-get($monochrome, default);
   }
-
-  &__settings-button {
-    color: map-get($primary-blue, default);
-    cursor: pointer;
-  }
 }

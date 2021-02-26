@@ -40,6 +40,7 @@ export const BuildCoverageInfo = buildCoverageInfo(({
       <div className="flex justify-between items-center w-full">
         <Title data-test="build-coverage-info:title">BUILD COVERAGE</Title>
         <Link
+          className="link"
           to={`/full-page/${agentId}/${buildVersion}/${pluginId}/scopes/`}
           data-test="build-coverage-info:all-scopes-link"
         >
