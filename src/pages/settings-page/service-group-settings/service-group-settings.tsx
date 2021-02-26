@@ -27,16 +27,14 @@ import { ServiceGroupGeneralSettingsForm } from './service-group-general-setting
 import { UnSaveChangeModal } from '../un-save-changes-modal';
 
 export const ServiceGroupSettings = () => {
-  const [selectedTab, setSelectedTab] = useState('general');
   const [pristineSettings, setPristineSettings] = useState(false);
   const [nextLocation, setNextLocation] = useState('');
-  const { id = '' } = useParams<{ id: string }>();
+  const { id = '', tab: selectedTab = '' } = useParams<{ id: string; tab: string }>();
   const serviceGroup = useServiceGroup(id) || {};
   const { push } = useHistory();
 
   useEffect(() => {
     if (nextLocation) {
-      setSelectedTab(String(nextLocation.split('/').pop()));
       push(nextLocation);
       setNextLocation('');
     }
@@ -55,10 +53,9 @@ export const ServiceGroupSettings = () => {
       <TabsPanel
         tw="mx-6"
         activeTab={selectedTab}
-        onSelect={(tab) => {
-          pristineSettings && setSelectedTab(tab);
-          push(`/agents/service-group/${id}/settings/${tab}`);
-        }}
+        onSelect={(tab) => (pristineSettings
+          ? push(`/agents/service-group/${id}/settings/${tab}`)
+          : setNextLocation(`/agents/service-group/${id}/settings/${tab}`))}
       >
         <Tab name="general">General</Tab>
         <Tab name="system">System</Tab>

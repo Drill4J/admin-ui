@@ -29,17 +29,15 @@ import 'twin.macro';
 import { UnSaveChangeModal } from '../un-save-changes-modal';
 
 export const AgentSettings = () => {
-  const [selectedTab, setSelectedTab] = useState('general');
   const [pristineSettings, setPristineSettings] = useState(false);
   const [nextLocation, setNextLocation] = useState('');
-  const { id = '' } = useParams<{ id: string }>();
+  const { id = '', tab: selectedTab = '' } = useParams<{ id: string; tab: string }>();
   const agent = useAgent(id) || {};
   const { push } = useHistory();
   const SystemSettings = agent.agentType === 'Node.js' ? JsSystemSettingsForm : SystemSettingsForm;
 
   useEffect(() => {
     if (nextLocation) {
-      setSelectedTab(String(nextLocation.split('/').pop()));
       push(nextLocation);
       setNextLocation('');
     }
@@ -59,10 +57,9 @@ export const AgentSettings = () => {
       <TabsPanel
         tw="mx-6"
         activeTab={selectedTab}
-        onSelect={(tab) => {
-          pristineSettings && setSelectedTab(tab);
-          push(`/agents/agent/${id}/settings/${tab}`);
-        }}
+        onSelect={(tab) => (pristineSettings
+          ? push(`/agents/agent/${id}/settings/${tab}`)
+          : setNextLocation(`/agents/agent/${id}/settings/${tab}`))}
       >
         <Tab name="general">General</Tab>
         <Tab name="system">System</Tab>
@@ -74,12 +71,12 @@ export const AgentSettings = () => {
           render={() => <GeneralSettingsForm agent={agent} setPristineSettings={setPristineSettings} />}
         />
         <Route
-          path="/agents/agent/:id/settings/plugins"
-          render={() => <PluginsSettingsTab agent={agent} />}
-        />
-        <Route
           path="/agents/agent/:id/settings/system"
           render={() => <SystemSettings agent={agent} setPristineSettings={setPristineSettings} />}
+        />
+        <Route
+          path="/agents/agent/:id/settings/plugins"
+          render={() => <PluginsSettingsTab agent={agent} />}
         />
       </Switch>
       <UnSaveChangeModal
