@@ -52,7 +52,7 @@ export const PageSwitcher = () => (
     >
       <Switch>
         <PrivateRoute exact path="/agents" component={AgentsPage} />
-        <PrivateRoute exact path="/agents/:type/:id/settings" component={SettingsPage} />
+        <PrivateRoute exact path="/agents/:type/:id/settings/:tab" component={SettingsPage} />
         <PrivateRoute exact path="/plugins" component={PluginsPage} />
         <PrivateRoute exact path="/logs" component={LogsPage} />
         <PrivateRoute exact path="/settings" component={ApplicationSettingsPage} />

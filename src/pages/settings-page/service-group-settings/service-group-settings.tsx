@@ -13,148 +13,81 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+import { useState } from 'react';
 import {
-  useState, useContext, useEffect, useRef,
-} from 'react';
-import { useParams } from 'react-router-dom';
-import { Form } from 'react-final-form';
-import { Button, Icons, Spinner } from '@drill4j/ui-kit';
-import axios from 'axios';
+  useParams, Switch, useHistory, Route, Prompt,
+} from 'react-router-dom';
+import { Icons } from '@drill4j/ui-kit';
+import 'twin.macro';
 
 import { useServiceGroup } from 'hooks';
 import { TabsPanel, Tab, PageHeader } from 'components';
-import { NotificationManagerContext } from 'notification-manager';
-import {
-  composeValidators, required, requiredArray, sizeLimit,
-} from 'forms';
 import { PluginsSettingsTab, SystemSettingsForm } from 'modules';
-import { ServiceGroupEntity } from 'types/service-group-entity';
 import { ServiceGroupGeneralSettingsForm } from './service-group-general-settings-form';
-import 'twin.macro';
-
-interface TabsComponent {
-  name: string;
-  component: React.ReactNode;
-}
+import { UnSaveChangeModal } from '../un-save-changes-modal';
 
 export const ServiceGroupSettings = () => {
-  const [unlockedPackages, setUnlockedPackages] = useState(false);
-  const [selectedTab, setSelectedTab] = useState('general');
-  const { id = '' } = useParams<{ id: string }>();
+  const [pristineSettings, setPristineSettings] = useState(false);
+  const [nextLocation, setNextLocation] = useState('');
+  const { id = '', tab: selectedTab = '' } = useParams<{ id: string; tab: string }>();
   const serviceGroup = useServiceGroup(id) || {};
-  const { showMessage } = useContext(NotificationManagerContext);
-  const prevPristineRef = useRef(true);
+  const { push } = useHistory();
+
   return (
-    <Form
-      onSubmit={async ({
-        name, description, environment, systemSettings: {
-          packages = [], sessionIdHeaderName = '', targetHost,
-        } = {},
-      }: ServiceGroupEntity) => {
-        try {
-          await axios.put(`/groups/${id}/system-settings`, {
-            packages: packages.filter(Boolean),
-            sessionIdHeaderName,
-            targetHost,
-          });
-          await axios.put(`/groups/${id}`, { name, description, environment });
-          showMessage({ type: 'SUCCESS', text: 'New settings have been saved' });
-          setUnlockedPackages(false);
-        } catch ({ response: { data: { message } = {} } = {} }) {
-          showMessage({
-            type: 'ERROR',
-            text: 'On-submit error. Server problem or operation could not be processed in real-time',
-          });
-        }
-      }}
-      initialValues={serviceGroup}
-      validate={composeValidators(
-        required('name', 'Service Group Name'),
-        sizeLimit({ name: 'name', alias: 'Service Group Name' }),
-        sizeLimit({ name: 'environment' }),
-        sizeLimit({ name: 'description', min: 3, max: 256 }),
-        requiredArray('systemSettings.packages', 'Path prefix is required.'),
-        sizeLimit({
-          name: 'systemSettings.sessionIdHeaderName',
-          alias: 'Session header name',
-          min: 1,
-          max: 256,
-        }),
-      ) as any}
-      render={({
-        handleSubmit,
-        submitting,
-        pristine,
-        invalid,
-      }) => {
-        const ref = useRef<HTMLFormElement>(null);
-        const tabsComponents: TabsComponent[] = [
-          {
-            name: 'general',
-            component: <ServiceGroupGeneralSettingsForm />,
-          },
-          {
-            name: 'system',
-            component: <SystemSettingsForm
-              invalid={invalid}
-              isServiceGroup
-              setUnlockedPackages={setUnlockedPackages}
-              unlockedPackages={unlockedPackages}
-            />,
-          },
-          {
-            name: 'plugins',
-            component: <PluginsSettingsTab agent={serviceGroup} />,
-          },
-        ];
-        useEffect(() => {
-          if (!pristine) {
-            prevPristineRef.current = pristine;
+    <div tw="flex flex-col w-full">
+      <PageHeader
+        title={(
+          <div tw="flex items-center gap-x-4 w-full ">
+            <Icons.Settings tw="text-monochrome-default" height={20} width={20} />
+            Service Group Settings
+          </div>
+        )}
+      />
+      <TabsPanel
+        tw="mx-6"
+        activeTab={selectedTab}
+        onSelect={(tab) => (pristineSettings
+          ? push(`/agents/service-group/${id}/settings/${tab}`, { pristineSettings })
+          : setNextLocation(`/agents/service-group/${id}/settings/${tab}`))}
+      >
+        <Tab name="general">General</Tab>
+        <Tab name="system">System</Tab>
+        <Tab name="plugins">Plugins</Tab>
+      </TabsPanel>
+      <Switch>
+        <Route
+          path="/agents/service-group/:id/settings/general"
+          render={() => <ServiceGroupGeneralSettingsForm serviceGroup={serviceGroup} setPristineSettings={setPristineSettings} />}
+        />
+        <Route
+          path="/agents/service-group/:id/settings/system"
+          render={() => <SystemSettingsForm agent={serviceGroup} setPristineSettings={setPristineSettings} isServiceGroup />}
+        />
+        <Route
+          path="/agents/service-group/:id/settings/plugins"
+          render={() => <PluginsSettingsTab agent={serviceGroup} />}
+        />
+      </Switch>
+      <UnSaveChangeModal
+        isOpen={Boolean(nextLocation)}
+        onToggle={() => setNextLocation('')}
+        onConfirmAction={() => {
+          push(nextLocation, { pristineSettings: true });
+          setNextLocation('');
+        }}
+      />
+      <Prompt
+        when={!pristineSettings}
+        message={({ pathname, state }) => {
+          const { pristineSettings: pristine = false } = state as { pristineSettings: boolean } || {};
+          if (pristine) {
+            setPristineSettings(true);
+            return true;
           }
-        });
-        useEffect(() => {
-          const listener = (event: KeyboardEvent) => {
-            if ((event.ctrlKey || event.metaKey) && event.keyCode === 13) {
-              handleSubmit();
-            }
-          };
-          ref && ref.current && ref.current.addEventListener('keydown', listener);
-          return () => {
-            ref && ref.current && ref.current.removeEventListener('keydown', listener);
-          };
-        }, []);
-        const prevPristine = prevPristineRef.current;
-        return (
-          <form ref={ref} tw="flex flex-col w-full">
-            <PageHeader
-              title={(
-                <div tw="flex items-center gap-x-4 w-full ">
-                  <Icons.Settings tw="text-monochrome-default" height={20} width={20} />
-                  Service Group Settings
-                </div>
-              )}
-              actions={(
-                <Button
-                  className="flex justify-center items-center gap-x-1 w-32"
-                  type="primary"
-                  size="large"
-                  onClick={handleSubmit}
-                  disabled={submitting || invalid || (pristine && prevPristine)}
-                  data-test="java-general-settings-form:save-changes-button"
-                >
-                  {submitting ? <Spinner disabled /> : 'Save Changes'}
-                </Button>
-              )}
-            />
-            <TabsPanel tw="mx-6" activeTab={selectedTab} onSelect={setSelectedTab}>
-              <Tab name="general">General</Tab>
-              <Tab name="system">System</Tab>
-              <Tab name="plugins">Plugins</Tab>
-            </TabsPanel>
-            {tabsComponents.find(({ name }) => name === selectedTab)?.component}
-          </form>
-        );
-      }}
-    />
+          setNextLocation(pathname);
+          return false;
+        }}
+      />
+    </div>
   );
 };

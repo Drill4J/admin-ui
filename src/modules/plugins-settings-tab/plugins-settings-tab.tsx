@@ -35,78 +35,73 @@ interface Props {
 
 const pluginsSettingsTab = BEM(styles);
 
-export const PluginsSettingsTab = pluginsSettingsTab(
-  ({
-    className,
-    agent: { id = '', buildVersion = '' },
-  }: Props) => {
-    const [isAddPluginOpen, setIsAddPluginOpen] = useState(false);
-    const { type: agentType } = useParams<{ type: 'service-group' | 'agent' }>();
-    const { push } = useHistory();
-    const pluginsTopic = `/${agentType === 'agent' ? 'agents' : 'groups'}/${id}/plugins`;
-    const plugins = useWsConnection<Plugin[]>(defaultAdminSocket, pluginsTopic) || [];
-    const installedPlugins = plugins.filter((plugin) => !plugin.available);
-    const [selectedPlugins, setSelectedPlugins] = useState<string[]>([]);
+export const PluginsSettingsTab = pluginsSettingsTab(({ className, agent: { id = '', buildVersion = '' } }: Props) => {
+  const [isAddPluginOpen, setIsAddPluginOpen] = useState(false);
+  const { type: agentType } = useParams<{ type: 'service-group' | 'agent' }>();
+  const { push } = useHistory();
+  const pluginsTopic = `/${agentType === 'agent' ? 'agents' : 'groups'}/${id}/plugins`;
+  const plugins = useWsConnection<Plugin[]>(defaultAdminSocket, pluginsTopic) || [];
+  const installedPlugins = plugins.filter((plugin) => !plugin.available);
+  const [selectedPlugins, setSelectedPlugins] = useState<string[]>([]);
 
-    return (
-      <div className={className}>
-        <GeneralAlerts type="INFO">
-          {`Installed plugins on your ${agentType === 'agent' ? 'agent' : 'service group'}.`}
-        </GeneralAlerts>
-        <Header>
-          <span>
-            Plugins
-            <PluginsCount>{installedPlugins.length}</PluginsCount>
-          </span>
-          <AddPluginButton
-            className="flex gap-x-2"
-            type="secondary"
-            onClick={() => setIsAddPluginOpen(!isAddPluginOpen)}
-            data-test={`${agentType}-info-page:add-plugin-button`}
-          >
-            <Icons.Add />
-            <span>Add plugin</span>
-          </AddPluginButton>
-        </Header>
-        <Content>
-          {installedPlugins.length > 0 ? (
-            installedPlugins.map(({
-              id: pluginId, name, description, version,
-            }) => (
-              <PluginListEntry
-                key={id}
-                description={description}
-                onClick={() => (agentType === 'agent'
-                  ? push(`/full-page/${id}/${buildVersion}/${pluginId}/dashboard`)
-                  : push(`/service-group-full-page/${id}/${pluginId}`))}
-                icon={name as keyof typeof Icons}
-              >
-                <div className="flex items-center w-full">
-                  <PluginName className="link">{name}&nbsp;</PluginName>
-                  {version && <PluginVersion>({version})</PluginVersion>}
-                </div>
-              </PluginListEntry>
-            ))
-          ) : (
-            <NoPluginsStub>
-              {`There are no plugins installed on this ${agentType === 'agent' ? 'agent' : 'service group'} at the moment.`}
-            </NoPluginsStub>
-          )}
-        </Content>
-        {isAddPluginOpen && (
-          <AddPluginsModal
-            isOpen={isAddPluginOpen}
-            onToggle={setIsAddPluginOpen}
-            plugins={plugins}
-            agentId={id}
-            selectedPlugins={selectedPlugins}
-            setSelectedPlugins={setSelectedPlugins}
-          />
+  return (
+    <div className={className}>
+      <GeneralAlerts type="INFO">
+        {`Installed plugins on your ${agentType === 'agent' ? 'agent' : 'service group'}.`}
+      </GeneralAlerts>
+      <Header>
+        <span>
+          Plugins
+          <PluginsCount>{installedPlugins.length}</PluginsCount>
+        </span>
+        <AddPluginButton
+          className="flex gap-x-2"
+          type="secondary"
+          onClick={() => setIsAddPluginOpen(!isAddPluginOpen)}
+          data-test={`${agentType}-info-page:add-plugin-button`}
+        >
+          <Icons.Add />
+          <span>Add plugin</span>
+        </AddPluginButton>
+      </Header>
+      <Content>
+        {installedPlugins.length > 0 ? (
+          installedPlugins.map(({
+            id: pluginId, name, description, version,
+          }) => (
+            <PluginListEntry
+              key={id}
+              description={description}
+              onClick={() => (agentType === 'agent'
+                ? push(`/full-page/${id}/${buildVersion}/${pluginId}/dashboard`)
+                : push(`/service-group-full-page/${id}/${pluginId}`))}
+              icon={name as keyof typeof Icons}
+            >
+              <div className="flex items-center w-full">
+                <PluginName className="link">{name}&nbsp;</PluginName>
+                {version && <PluginVersion>({version})</PluginVersion>}
+              </div>
+            </PluginListEntry>
+          ))
+        ) : (
+          <NoPluginsStub>
+            {`There are no plugins installed on this ${agentType === 'agent' ? 'agent' : 'service group'} at the moment.`}
+          </NoPluginsStub>
         )}
-      </div>
-    );
-  },
-);
+      </Content>
+      {isAddPluginOpen && (
+        <AddPluginsModal
+          isOpen={isAddPluginOpen}
+          onToggle={setIsAddPluginOpen}
+          plugins={plugins}
+          agentId={id}
+          selectedPlugins={selectedPlugins}
+          setSelectedPlugins={setSelectedPlugins}
+        />
+      )}
+    </div>
+  );
+});
 
 const Content = pluginsSettingsTab.content('div');
 const Header = pluginsSettingsTab.header('div');

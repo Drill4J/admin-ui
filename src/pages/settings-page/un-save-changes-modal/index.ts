@@ -13,4 +13,4 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-export { JsGeneralSettingsForm } from './js-general-settings-form';
+export { UnSaveChangeModal } from './un-save-changes-modal';

@@ -13,15 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { useParams } from 'react-router-dom';
+import { Switch, Route } from 'react-router-dom';
 import { AgentSettings } from './agent-settings';
 import { ServiceGroupSettings } from './service-group-settings';
 
-export const SettingsPage = () => {
-  const { type } = useParams<{ id: string, type: 'service-group' | 'agent'}>();
-  return (
-    type === 'service-group'
-      ? <ServiceGroupSettings />
-      : <AgentSettings />
-  );
-};
+export const SettingsPage = () => (
+  <Switch>
+    <Route
+      component={AgentSettings}
+      path="/agents/agent/:id/settings/:tab"
+    />
+    <Route
+      component={ServiceGroupSettings}
+      path="/agents/service-group/:id/settings/:tab"
+    />
+  </Switch>
+);

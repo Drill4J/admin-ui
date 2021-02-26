@@ -14,8 +14,8 @@
  * limitations under the License.
  */
 import { useContext, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
 import axios from 'axios';
+import { useParams } from 'react-router-dom';
 import { Field, Form } from 'react-final-form';
 import {
   Button, FormGroup, GeneralAlerts, Spinner,
@@ -25,24 +25,24 @@ import 'twin.macro';
 import {
   composeValidators, Fields, required, sizeLimit,
 } from 'forms';
-import { ServiceGroupEntity } from 'types/service-group-entity';
+import { Agent } from 'types/agent';
 import { NotificationManagerContext } from 'notification-manager';
 import { useFormHandleSubmit } from 'hooks';
 
 interface Props {
-  serviceGroup: ServiceGroupEntity;
+  agent: Agent;
   setPristineSettings: (pristine: boolean) => void;
 }
 
-export const ServiceGroupGeneralSettingsForm = ({ serviceGroup, setPristineSettings }: Props) => {
-  const { showMessage } = useContext(NotificationManagerContext);
+export const GeneralSettingsForm = ({ agent, setPristineSettings }: Props) => {
   const { id = '' } = useParams<{ id: string }>();
+  const { showMessage } = useContext(NotificationManagerContext);
 
   return (
     <Form
-      onSubmit={async ({ name, description, environment }: ServiceGroupEntity) => {
+      onSubmit={async ({ name, description, environment }: Agent) => {
         try {
-          await axios.put(`/groups/${id}`, { name, description, environment });
+          await axios.patch(`/agents/${id}/info`, { name, description, environment });
           showMessage({ type: 'SUCCESS', text: 'New settings have been saved' });
         } catch ({ response: { data: { message } = {} } = {} }) {
           showMessage({
@@ -51,10 +51,10 @@ export const ServiceGroupGeneralSettingsForm = ({ serviceGroup, setPristineSetti
           });
         }
       }}
-      initialValues={serviceGroup}
+      initialValues={agent}
       validate={composeValidators(
-        required('name', 'Service Group Name'),
-        sizeLimit({ name: 'name', alias: 'Service Group Name' }),
+        required('name'),
+        sizeLimit({ name: 'name' }),
         sizeLimit({ name: 'environment' }),
         sizeLimit({ name: 'description', min: 3, max: 256 }),
       ) as any}
@@ -71,25 +71,27 @@ export const ServiceGroupGeneralSettingsForm = ({ serviceGroup, setPristineSetti
         return (
           <form ref={ref} tw="space-y-10">
             <GeneralAlerts type="INFO">
-              Basic service group settings.
+              Basic agent settings.
             </GeneralAlerts>
             <div tw="flex flex-col items-center gap-y-6">
-              <FormGroup tw="w-97" label="Service Group ID">
+              <FormGroup tw="w-97" label="Agent ID">
                 <Field name="id" component={Fields.Input} disabled />
               </FormGroup>
-              <FormGroup tw="w-97" label="Service Group Name">
-                <Field
-                  name="name"
-                  component={Fields.Input}
-                  placeholder="Enter service group's name"
-                />
+              <FormGroup tw="w-97" label="Agent version">
+                <Field name="agentVersion" component={Fields.Input} placeholder="n/a" disabled />
+              </FormGroup>
+              <FormGroup tw="w-97" label="Service Group">
+                <Field name="serviceGroup" component={Fields.Input} placeholder="n/a" disabled />
+              </FormGroup>
+              <FormGroup tw="w-97" label="Agent name">
+                <Field name="name" component={Fields.Input} placeholder="Enter agent's name" />
               </FormGroup>
               <FormGroup tw="w-97" label="Description" optional>
                 <Field
                   tw="h-20"
                   name="description"
                   component={Fields.Textarea}
-                  placeholder="Add service group's description"
+                  placeholder="Add agent's description"
                 />
               </FormGroup>
               <FormGroup tw="w-97" label="Environment" optional>
@@ -105,7 +107,7 @@ export const ServiceGroupGeneralSettingsForm = ({ serviceGroup, setPristineSetti
                 size="large"
                 onClick={handleSubmit}
                 disabled={submitting || invalid || pristine}
-                data-test="js-system-settings-form:save-changes-button"
+                data-test="general-settings-form:save-changes-button"
               >
                 {submitting ? <Spinner disabled /> : 'Save Changes'}
               </Button>

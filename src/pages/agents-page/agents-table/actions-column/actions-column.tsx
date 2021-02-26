@@ -78,7 +78,7 @@ export const ActionsColumn = ({ agent }: Props) => {
             onClick={() => push(
               `/agents/${
                 agentType === 'ServiceGroup' ? 'service-group' : 'agent'
-              }/${agentId}/settings/`,
+              }/${agentId}/settings/general`,
             )}
             height={16}
             width={16}

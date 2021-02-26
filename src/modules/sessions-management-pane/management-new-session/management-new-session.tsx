@@ -46,7 +46,7 @@ export const ManagementNewSession = managementNewSession(({
         {agentId
           ? (
             <SettingsLink
-              to={`/agents/agent/${agentId}/settings/`}
+              to={`/agents/agent/${agentId}/settings/general`}
               data-test="management-new-session:settings-link:agent"
             >
               Agent Settings
