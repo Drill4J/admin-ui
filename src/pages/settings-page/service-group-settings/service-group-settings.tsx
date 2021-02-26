@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import {
   useParams, Switch, useHistory, Route, Prompt,
 } from 'react-router-dom';
@@ -33,13 +33,6 @@ export const ServiceGroupSettings = () => {
   const serviceGroup = useServiceGroup(id) || {};
   const { push } = useHistory();
 
-  useEffect(() => {
-    if (nextLocation) {
-      push(nextLocation);
-      setNextLocation('');
-    }
-  }, [pristineSettings]);
-
   return (
     <div tw="flex flex-col w-full">
       <PageHeader
@@ -54,7 +47,7 @@ export const ServiceGroupSettings = () => {
         tw="mx-6"
         activeTab={selectedTab}
         onSelect={(tab) => (pristineSettings
-          ? push(`/agents/service-group/${id}/settings/${tab}`)
+          ? push(`/agents/service-group/${id}/settings/${tab}`, { pristineSettings })
           : setNextLocation(`/agents/service-group/${id}/settings/${tab}`))}
       >
         <Tab name="general">General</Tab>
@@ -78,12 +71,20 @@ export const ServiceGroupSettings = () => {
       <UnSaveChangeModal
         isOpen={Boolean(nextLocation)}
         onToggle={() => setNextLocation('')}
-        onConfirmAction={() => setPristineSettings(true)}
+        onConfirmAction={() => {
+          push(nextLocation, { pristineSettings: true });
+          setNextLocation('');
+        }}
       />
       <Prompt
         when={!pristineSettings}
-        message={(location) => {
-          setNextLocation(location.pathname);
+        message={({ pathname, state }) => {
+          const { pristineSettings: pristine = false } = state as { pristineSettings: boolean } || {};
+          if (pristine) {
+            setPristineSettings(true);
+            return true;
+          }
+          setNextLocation(pathname);
           return false;
         }}
       />
