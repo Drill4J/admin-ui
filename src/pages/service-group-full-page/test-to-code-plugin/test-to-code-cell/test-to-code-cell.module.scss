@@ -28,6 +28,14 @@
 
     &--clickable {
       cursor: pointer;
+
+      &:hover {
+        color: map-get($primary-blue, medium-tint);
+      }
+
+      &:active {
+        color: map-get($primary-blue, shade);
+      }
     }
   }
 

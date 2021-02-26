@@ -47,12 +47,14 @@ export const ServiceGroupHeader = serviceGroupHeader(
               Agents&nbsp;<AgentsCount>{summaries.length}</AgentsCount>
             </AgentsCountInfo>
           </AgentInfo>
-          <SettingsButton
-            width={32}
-            height={32}
-            onClick={() => push(`/agents/service-group/${id}/settings`)}
-            data-test="service-group-header:settings-button"
-          />
+          <div className="link">
+            <Icons.Settings
+              width={32}
+              height={32}
+              onClick={() => push(`/agents/service-group/${id}/settings`)}
+              data-test="service-group-header:settings-button"
+            />
+          </div>
         </Content>
       </div>
     );
@@ -65,4 +67,3 @@ const AgentInfo = serviceGroupHeader.agentInfo('div');
 const ServiceGroupName = serviceGroupHeader.serviceGroupName('div');
 const AgentsCountInfo = serviceGroupHeader.agentsCountInfo('div');
 const AgentsCount = serviceGroupHeader.agentsCount('span');
-const SettingsButton = serviceGroupHeader.settingsButton(Icons.Settings);

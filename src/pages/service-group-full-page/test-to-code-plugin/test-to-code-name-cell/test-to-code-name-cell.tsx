@@ -31,9 +31,16 @@ export const TestToCodeNameCell = testToCodeNameCell(
     className, name, additionalInformation, onClick,
   }: Props) => (
     <div className={className}>
-      <NameCell onClick={onClick} data-test="test-to-code-name-cell:name-cell">{name}</NameCell>
+      <NameCell
+        className="text-ellipsis link"
+        onClick={onClick}
+        data-test="test-to-code-name-cell:name-cell"
+        title={name}
+      >
+        {name}
+      </NameCell>
       <AdditionalInformation
-        className="text-ellipsis"
+        className="text-ellipsis link"
         data-test="test-to-code-name-cell:additional-information"
         title={additionalInformation}
       >
