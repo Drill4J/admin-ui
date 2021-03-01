@@ -52,7 +52,7 @@ export const NameColumn = nameColumn(
 
     return (
       <div className={className}>
-        <div className="flex items-center gap-x-4 text-ellipsis">
+        <div className="flex items-center gap-x-2 text-ellipsis">
           <AgentTypeIcon disabled={agentIsDisabled}>
             {isServiceGroup
               ? <Icons.ServiceGroup />
