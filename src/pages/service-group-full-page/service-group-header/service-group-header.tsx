@@ -51,7 +51,7 @@ export const ServiceGroupHeader = serviceGroupHeader(
             <Icons.Settings
               width={32}
               height={32}
-              onClick={() => push(`/agents/service-group/${id}/settings`)}
+              onClick={() => push(`/agents/service-group/${id}/settings/general`)}
               data-test="service-group-header:settings-button"
             />
           </div>
