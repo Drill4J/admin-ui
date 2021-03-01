@@ -16,6 +16,7 @@
 import { useRef, useState } from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 import { Icons } from '@drill4j/ui-kit';
+import 'twin.macro';
 
 import { ClassCoverage } from 'types/class-coverage';
 import { FilterList } from 'types/filter-list';
@@ -120,7 +121,7 @@ export const CoverageDetails = coverageDetails(
               <Column
                 name="name"
                 Cell={({ item: { name = '', decl = '' } = {} }: CellProps<unknown, { name?: string, decl?: string }>) => (
-                  <Cells.Compound key={name} cellName={name} cellAdditionalInfo={decl} icon={<Icons.Function />} />
+                  <div tw="pr-4"><Cells.Compound key={name} cellName={name} cellAdditionalInfo={decl} icon={<Icons.Function />} /></div>
                 )}
                 align="start"
               />,
