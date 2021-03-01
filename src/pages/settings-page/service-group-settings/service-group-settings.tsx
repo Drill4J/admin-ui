@@ -27,7 +27,7 @@ import { ServiceGroupGeneralSettingsForm } from './service-group-general-setting
 import { UnSaveChangeModal } from '../un-save-changes-modal';
 
 export const ServiceGroupSettings = () => {
-  const [pristineSettings, setPristineSettings] = useState(false);
+  const [pristineSettings, setPristineSettings] = useState(true);
   const [nextLocation, setNextLocation] = useState('');
   const { id = '', tab: selectedTab = '' } = useParams<{ id: string; tab: string }>();
   const serviceGroup = useServiceGroup(id) || {};

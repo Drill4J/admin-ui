@@ -29,7 +29,7 @@ import 'twin.macro';
 import { UnSaveChangeModal } from '../un-save-changes-modal';
 
 export const AgentSettings = () => {
-  const [pristineSettings, setPristineSettings] = useState(false);
+  const [pristineSettings, setPristineSettings] = useState(true);
   const [nextLocation, setNextLocation] = useState('');
   const { id = '', tab: selectedTab = '' } = useParams<{ id: string; tab: string }>();
   const agent = useAgent(id) || {};

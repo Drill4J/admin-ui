@@ -142,16 +142,18 @@ export const SystemSettingsForm = ({
                   placeholder="Enter session header name"
                 />
               </FormGroup>
-              <Button
-                className="flex justify-center items-center gap-x-1 w-32"
-                type="primary"
-                size="large"
-                onClick={handleSubmit}
-                disabled={submitting || invalid || pristine}
-                data-test="system-settings-form:save-changes-button"
-              >
-                {submitting ? <Spinner disabled /> : 'Save Changes'}
-              </Button>
+              <div tw="w-97 mt-4">
+                <Button
+                  className="flex justify-center items-center gap-x-1 w-32"
+                  type="primary"
+                  size="large"
+                  onClick={handleSubmit}
+                  disabled={submitting || invalid || pristine}
+                  data-test="system-settings-form:save-changes-button"
+                >
+                  {submitting ? <Spinner disabled /> : 'Save Changes'}
+                </Button>
+              </div>
               <UnlockingSystemSettingsFormModal
                 isOpen={isUnlockingModalOpened}
                 onToggle={setIsUnlockingModalOpened}
