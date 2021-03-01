@@ -15,7 +15,9 @@
  */
 import { useState } from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
-import { useHistory, useParams } from 'react-router-dom';
+import {
+  matchPath, useHistory, useLocation,
+} from 'react-router-dom';
 import { Icons, Button, GeneralAlerts } from '@drill4j/ui-kit';
 
 import { PluginListEntry } from 'components';
@@ -37,7 +39,10 @@ const pluginsSettingsTab = BEM(styles);
 
 export const PluginsSettingsTab = pluginsSettingsTab(({ className, agent: { id = '', buildVersion = '' } }: Props) => {
   const [isAddPluginOpen, setIsAddPluginOpen] = useState(false);
-  const { type: agentType } = useParams<{ type: 'service-group' | 'agent' }>();
+  const { pathname } = useLocation();
+  const { params: { type: agentType = '' } = {} } = matchPath<{ type: 'service-group' | 'agent' }>(pathname, {
+    path: '/agents/:type/:id/settings/:tab',
+  }) || {};
   const { push } = useHistory();
   const pluginsTopic = `/${agentType === 'agent' ? 'agents' : 'groups'}/${id}/plugins`;
   const plugins = useWsConnection<Plugin[]>(defaultAdminSocket, pluginsTopic) || [];

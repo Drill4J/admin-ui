@@ -16,7 +16,7 @@
 import { useContext, useState } from 'react';
 import { BEM } from '@redneckz/react-bem-helper';
 import { Modal, Button, Spinner } from '@drill4j/ui-kit';
-import { useParams } from 'react-router-dom';
+import { matchPath, useLocation } from 'react-router-dom';
 
 import { NotificationManagerContext } from 'notification-manager';
 import { Plugin } from 'types/plugin';
@@ -41,7 +41,10 @@ export const AddPluginsModal = addPluginModal(({
   className, isOpen, onToggle, plugins, agentId, setSelectedPlugins, selectedPlugins,
 }: Props) => {
   const { showMessage } = useContext(NotificationManagerContext);
-  const { type } = useParams<{ type: 'service-group' | 'agent' }>();
+  const { pathname } = useLocation();
+  const { params: { type = '' } = {} } = matchPath<{ type: 'service-group' | 'agent' }>(pathname, {
+    path: '/agents/:type/:id/settings/:tab',
+  }) || {};
   const [loading, setLoading] = useState(false);
   const handleLoadPlugins = loadPlugins(
     `/${type === 'agent' ? 'agents' : 'groups'}/${agentId}/plugins`, {

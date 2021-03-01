@@ -62,7 +62,7 @@ export const Breadcrumbs = breadcrumbs(({ className }: Props) => {
   } = matchPath<MatchType>(pathname, {
     path: [
       '/:registrationType/:agentId',
-      '/agents/:agentType/:agentId/:settings',
+      '/agents/:agentType/:agentId/:settings/:tab',
       '/service-group-full-page/:serviceGroupId/:pluginId',
       '/full-page/:agentId/:buildVersion/',
       '/full-page/:agentId/:buildVersion/:pluginId/',
