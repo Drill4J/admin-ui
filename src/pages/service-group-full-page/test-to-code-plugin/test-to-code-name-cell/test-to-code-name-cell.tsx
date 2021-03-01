@@ -40,7 +40,7 @@ export const TestToCodeNameCell = testToCodeNameCell(
         {name}
       </NameCell>
       <AdditionalInformation
-        className="text-ellipsis link"
+        className="text-ellipsis"
         data-test="test-to-code-name-cell:additional-information"
         title={additionalInformation}
       >
