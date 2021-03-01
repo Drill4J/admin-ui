@@ -48,11 +48,12 @@ export const SystemSettingsForm = ({
 
   return (
     <Form
-      onSubmit={async ({ systemSettings: { sessionIdHeaderName, packages = [] } = {} }: Agent) => {
+      onSubmit={async ({ systemSettings: { sessionIdHeaderName, packages = [], targetHost } = {} }: Agent) => {
         try {
           const systemSettings = {
             packages: packages.filter(Boolean),
             sessionIdHeaderName,
+            targetHost,
           };
           await axios.put(`/${isServiceGroup ? 'groups' : 'agents'}/${id}/system-settings`, systemSettings);
           showMessage({ type: 'SUCCESS', text: 'New settings have been saved' });

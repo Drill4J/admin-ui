@@ -113,6 +113,7 @@ export const Wizard = wizard(({
                 )}
                 {currentStepIndex < steps.length - 1 ? (
                   <Button
+                    className="flex gap-x-2"
                     tw="w-28"
                     type="primary"
                     size="large"
