@@ -54,7 +54,7 @@ export const ManagementNewSession = managementNewSession(({
           )
           : (
             <SettingsLink
-              to={`/agents/service-group/${serviceGroupId}/settings/`}
+              to={`/agents/service-group/${serviceGroupId}/settings/general`}
               data-test="management-new-session:settings-link:service-group"
             >
               Service Group Settings

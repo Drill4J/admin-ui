@@ -39,7 +39,7 @@ export const NoPluginsStub = ({ agentId = '', agentType }: Props) => (
       <div>There are no enabled plugins on this {camelToSpaces(agentType)} to collect the data from.</div>
       <div>To install a plugin go to</div>
     </div>
-    <AgentInfoLink to={`/agents/${agentType === 'Agent' ? 'agent' : 'service-group'}/${agentId}/settings`}>
+    <AgentInfoLink to={`/agents/${agentType === 'Agent' ? 'agent' : 'service-group'}/${agentId}/settings/general`}>
       {camelToSpaces(agentType)} settings page
     </AgentInfoLink>
   </div>

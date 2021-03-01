@@ -88,7 +88,7 @@ export const Breadcrumbs = breadcrumbs(({ className }: Props) => {
     { label: 'Agents', link: agentId || serviceGroupId ? '/' : '' },
     {
       label: `${agentType === 'service-group' ? 'Service Group' : 'Agent'} Settings`,
-      link: settings ? `/agents/${agentType}/${agentId}/settings` : '',
+      link: settings ? `/agents/${agentType}/${agentId}/settings/general` : '',
     },
     {
       label: registrationLabel(),
