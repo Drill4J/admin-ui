@@ -37,10 +37,10 @@ interface Props {
 
 const pluginsSettingsTab = BEM(styles);
 
-export const PluginsSettingsTab = pluginsSettingsTab(({ className, agent: { id = '', buildVersion = '' } }: Props) => {
+export const PluginsSettingsTab = pluginsSettingsTab(({ className, agent: { buildVersion = '' } }: Props) => {
   const [isAddPluginOpen, setIsAddPluginOpen] = useState(false);
   const { pathname } = useLocation();
-  const { params: { type: agentType = '' } = {} } = matchPath<{ type: 'service-group' | 'agent' }>(pathname, {
+  const { params: { type: agentType = '', id = '' } = {} } = matchPath<{ type: 'service-group' | 'agent', id: string }>(pathname, {
     path: '/agents/:type/:id/settings/:tab',
   }) || {};
   const { push } = useHistory();

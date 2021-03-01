@@ -84,16 +84,18 @@ export const JsSystemSettingsForm = ({ agent, setPristineSettings }: Props) => {
                   placeholder="http://example.com"
                 />
               </div>
-              <Button
-                className="flex justify-center items-center gap-x-1 w-32"
-                type="primary"
-                size="large"
-                onClick={handleSubmit}
-                disabled={submitting || invalid || pristine}
-                data-test="js-system-settings-form:save-changes-button"
-              >
-                {submitting ? <Spinner disabled /> : 'Save Changes'}
-              </Button>
+              <div tw="w-97 mt-4">
+                <Button
+                  className="flex justify-center items-center gap-x-1 w-32"
+                  type="primary"
+                  size="large"
+                  onClick={handleSubmit}
+                  disabled={submitting || invalid || pristine}
+                  data-test="js-system-settings-form:save-changes-button"
+                >
+                  {submitting ? <Spinner disabled /> : 'Save Changes'}
+                </Button>
+              </div>
             </div>
           </form>
         );

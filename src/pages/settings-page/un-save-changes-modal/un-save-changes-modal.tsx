@@ -23,7 +23,7 @@ interface Props {
 }
 
 export const UnSaveChangeModal = ({ isOpen, onToggle, onConfirmAction }: Props) => (
-  <Popup isOpen={isOpen} onToggle={onToggle} header="Unsave changes">
+  <Popup isOpen={isOpen} onToggle={onToggle} header="Unsaved Changes">
     <div tw="pt-5 px-6 pb-6 w-108">
       <div tw="mb-6 text-14 leading-20 text-monochrome-black">
         There are unsaved changes. If you would like to keep changes,<br /> press the “Continue Editing” button.
