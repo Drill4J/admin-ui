@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 import { BEM } from '@redneckz/react-bem-helper';
-import { NavLink, useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { Button, Icons, SessionIndicator } from '@drill4j/ui-kit';
 
 import { percentFormatter } from 'utils';
@@ -62,32 +62,33 @@ export const ActiveScopeInfo = activeScopeInfo(({
         <Icons.Complete />
         <span>Finish Scope</span>
       </FinishScopeButton>
-      <div className="flex flex-col items-start gap-y-3 w-full mt-6">
+      <div className="flex flex-col items-start gap-y-3 w-full mt-6 font-bold leading-20">
         <Link
+          className="link"
           to={`/full-page/${agentId}/${buildVersion}/${pluginId}/scopes/${scopeId}`}
           data-test="active-scope-info:scope-details-link"
         >
           Scope Details
         </Link>
         <Link
+          className="link"
           to={`/full-page/${agentId}/${buildVersion}/${pluginId}/scopes/`}
           data-test="active-scope-info:all-scopes-link"
         >
           All Scopes
         </Link>
-        <ButtonLink
+        <Button
+          className="link"
           onClick={() => dispatch(openModal('SessionsManagementModal', null))}
           data-test="active-scope-info:sessions-management-link"
         >
           Sessions Management
-        </ButtonLink>
+        </Button>
       </div>
     </div>
   );
 });
 
 const Title = activeScopeInfo.title('div');
-const Link = activeScopeInfo.link(NavLink);
-const ButtonLink = activeScopeInfo.buttonLink('div');
 const ScopeCoverage = activeScopeInfo.scopeCoverage('div');
 const FinishScopeButton = activeScopeInfo.finishScopeButton(Button);

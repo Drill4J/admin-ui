@@ -27,20 +27,6 @@
     font-size: 12px;
   }
 
-  &__link,
-  &__button-link {
-    font-family: $semibold-font;
-    color: map-get($primary-blue, default);
-    letter-spacing: 0;
-    line-height: 20px;
-    text-decoration: none;
-    cursor: pointer;
-
-    &:hover {
-      color: map-get($primary-blue, medium-tint);
-    }
-  }
-
   &__finish-scope-button {
     display: flex;
     justify-content: center;
