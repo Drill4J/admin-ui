@@ -84,8 +84,8 @@ export const AgentRegistrationPage = () => {
           name="General Settings"
           component={agent.agentType === 'Node.js' ? JsGeneralRegistrationForm : JavaGeneralRegistrationForm}
           validate={composeValidators(
-            required('id', 'Agent ID'),
-            sizeLimit({
+            !agentId && required('id', 'Agent ID'),
+            !agentId && sizeLimit({
               name: 'id', alias: 'Agent ID', min: 3, max: 32,
             }),
             required('name'),
