@@ -36,16 +36,6 @@
     max-height: 20px;
   }
 
-  &__agent-name {
-    color: map-get($primary-blue, default);
-    cursor: pointer;
-
-    &--disabled {
-      pointer-events: none;
-      color: map-get($monochrome, default);
-    }
-  }
-
   &--with-margin {
     margin-left: 36px;
   }
