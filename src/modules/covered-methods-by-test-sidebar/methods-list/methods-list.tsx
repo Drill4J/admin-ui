@@ -79,7 +79,7 @@ export const MethodsList = methodsList(({ className, methods: { coveredMethods, 
             <VirtualList
               itemSize={56}
               height={Math.ceil(methodsListHeight)}
-              itemCount={covered}
+              itemCount={methods.length || covered}
               renderItem={({ index, style }) => (
                 <Method key={`${methods[index]?.name}${index}`} style={style as Record<symbol, string>}>
                   {methods.length > 0 && (
@@ -92,14 +92,14 @@ export const MethodsList = methodsList(({ className, methods: { coveredMethods, 
                           <MethodName className="text-ellipsis" title={methods[index]?.name as string}>{methods[index]?.name}</MethodName>
                         </div>
                         <CoverageIcon>
-                          <CoverageRateIcon coverageRate={methods[index].coverageRate} />
+                          <CoverageRateIcon coverageRate={methods[index]?.coverageRate} />
                         </CoverageIcon>
                       </div>
                       <MethodsPackage
                         className="text-ellipsis"
-                        title={methods[index].ownerClass}
+                        title={methods[index]?.ownerClass}
                       >
-                        {methods[index].ownerClass}
+                        {methods[index]?.ownerClass}
                       </MethodsPackage>
                     </>
                   )}

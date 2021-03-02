@@ -64,7 +64,7 @@ export const TestsList = testsList(({ className, associatedTests }: Props) => {
           <VirtualList
             itemSize={56}
             height={Math.floor(testsListHeight)}
-            itemCount={associatedTests.assocTestsCount}
+            itemCount={tests.length || associatedTests.assocTestsCount}
             renderItem={({ index, style }) => (
               <TestItem key={tests[index]} style={style as Record<symbol, string>}>
                 {tests.length > 0 && (
