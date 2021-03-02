@@ -13,6 +13,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const plugin = require('tailwindcss/plugin');
 
 module.exports = {
   purge: ['./src/**/*.{js,jsx,ts,tsx}', './public/index.html'],
@@ -138,5 +140,28 @@ module.exports = {
   variants: {
     extend: {},
   },
-  plugins: [],
+  plugins: [
+    plugin(({ addUtilities }) => {
+      const newUtilities = {
+        '.link': {
+          backgroundColor: 'transparent',
+          color: '#007fff',
+          cursor: 'pointer',
+        },
+        '.link:hover': {
+          color: '#3399ff',
+        },
+        '.link:active': {
+          color: '#006cd8',
+        },
+        '.text-ellipsis': {
+          whiteSpace: 'nowrap',
+          overflow: 'hidden',
+          textOverflow: 'ellipsis',
+        },
+      };
+
+      addUtilities(newUtilities);
+    }),
+  ],
 };

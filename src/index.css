@@ -25661,12 +25661,6 @@ button:focus {
   animation: bounce 1s infinite;
 }
 
-.text-ellipsis {
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
 .link {
   background-color: transparent;
   color: #007fff;
@@ -25679,6 +25673,12 @@ button:focus {
 
 .link:active {
   color: #006cd8;
+}
+
+.text-ellipsis {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 @media (min-width: 640px) {
@@ -151010,3 +151010,4 @@ button:focus {
     animation: bounce 1s infinite;
   }
 }
+

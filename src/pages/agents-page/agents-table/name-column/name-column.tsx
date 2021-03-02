@@ -16,6 +16,7 @@
 import { BEM, div } from '@redneckz/react-bem-helper';
 import { useHistory } from 'react-router-dom';
 import { Icons, Badge, Tooltip } from '@drill4j/ui-kit';
+import tw, { styled } from 'twin.macro';
 
 import { AGENT_STATUS } from 'common/constants';
 import { Agent } from 'types/agent';
@@ -30,6 +31,11 @@ interface Props {
 }
 
 const nameColumn = BEM(styles);
+
+const AgentName = styled.div`
+  ${tw`text-ellipsis text-monochrome-default`}
+  ${({ disabled }: {disabled: boolean}) => !disabled && tw`link`}
+`;
 
 export const NameColumn = nameColumn(
   ({
@@ -67,8 +73,7 @@ export const NameColumn = nameColumn(
             <NewAgentBadge color="green">{`+${unregisteredAgentsCount}`}</NewAgentBadge>
           )}
           <AgentName
-            className="link text-ellipsis"
-            onClick={() => push(
+            onClick={() => !agentIsDisabled && push(
               isServiceGroup
                 ? `/service-group-full-page/${id}/service-group-dashboard`
                 : `/full-page/${id}/${buildVersion}/dashboard`,
@@ -87,11 +92,3 @@ export const NameColumn = nameColumn(
 
 const AgentTypeIcon = nameColumn.agentTypeIcon('div');
 const NewAgentBadge = nameColumn.newAgentBadge(Badge);
-const AgentName = nameColumn.agentName(
-  div({ onClick: () => {}, 'data-test': '', title: '' } as {
-    onClick: () => void;
-    disabled: boolean;
-    'data-test': string;
-    title?: string;
-  }),
-);
