@@ -13,17 +13,4 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { TestCoverageInfo } from 'types/test-coverage-info';
-import { useBuildVersion } from 'hooks';
-import { TestDetails } from '../test-details';
-
-export const Tests = () => {
-  const tests = useBuildVersion<TestCoverageInfo[]>('/build/tests') || [];
-
-  return (
-    <TestDetails
-      tests={tests}
-      topicCoveredMethodsByTest="/build/tests/covered-methods"
-    />
-  );
-};
+export { BuildTests } from './build-tests';
