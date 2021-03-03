@@ -18,11 +18,15 @@ import { BEM } from '@redneckz/react-bem-helper';
 import {
   Icons, Column, Table,
 } from '@drill4j/ui-kit';
+import 'twin.macro';
 
 import { capitalize } from 'utils';
 import { TestCoverageInfo } from 'types/test-coverage-info';
-import { Cells } from 'components';
-import { CoveredMethodsByTestSidebar } from 'modules';
+import { FilterList } from 'types/filter-list';
+import { Cells, SearchPanel } from 'components';
+import {
+  CoveredMethodsByTestSidebar, setSearch, useTableActionsDispatch, useTableActionsState,
+} from 'modules';
 import { useVisibleElementsCount } from 'hooks';
 import { NoTestsStub } from './no-tests-stub';
 
@@ -30,7 +34,7 @@ import styles from './test-details.module.scss';
 
 interface Props {
   className?: string;
-  tests: TestCoverageInfo[];
+  tests: FilterList<TestCoverageInfo>;
   topicCoveredMethodsByTest: string;
 }
 
@@ -38,81 +42,89 @@ const testDetails = BEM(styles);
 
 export const TestDetails = testDetails(
   ({
-    className, tests, topicCoveredMethodsByTest,
+    className, topicCoveredMethodsByTest, tests: { items: tests = [], totalCount = 0, filteredCount = 0 },
   }: Props) => {
     const [selectedTest, setSelectedTest] = useState<null | { id: string; covered: number }>(null);
     const ref = useRef<HTMLDivElement>(null);
     const visibleElementsCount = useVisibleElementsCount(ref, 10, 10);
+    const dispatch = useTableActionsDispatch();
+    const { search } = useTableActionsState();
+    const [searchQuery] = search;
+
     return (
       <div className={className}>
-        {tests.length > 0 ? (
-          <>
-            <Title className="flex items-center w-full">
-              Tests
-            </Title>
-            <Table
-              data={tests.slice(0, visibleElementsCount)}
-              idKey="name"
-              gridTemplateColumns="calc(100% - 664px) 130px 76px 152px 186px 120px"
+        <>
+          <div tw="mt-2">
+            <SearchPanel
+              onSearch={(searchValue) => dispatch(setSearch([{ value: searchValue, field: 'name', op: 'CONTAINS' }]))}
+              searchQuery={searchQuery?.value}
+              searchResult={filteredCount}
+              placeholder="Search tests by name"
             >
-              <Column
-                name="testName"
-                label="Name"
-                Cell={({ item: { name } }) => (
-                  <Cells.Compound cellName={name} cellAdditionalInfo="&ndash;" icon={<Icons.Test height={16} width={16} />} />
-                )}
-                align="start"
-              />
-              <Column
-                name="type"
-                label="Test type"
-                Cell={({ value }) => (
-                  <>
-                    {capitalize(value)}
-                  </>
-                )}
-                align="start"
-              />
-              <Column
-                name="stats.result"
-                label="Status"
-                Cell={({ value }) => (
-                  <Cells.TestStatus
-                    type={value}
-                  >
-                    {capitalize(value)}
-                  </Cells.TestStatus>
-                )}
-                align="start"
-              />
-              <Column
-                name="coverage.percentage"
-                label="Coverage, %"
-                Cell={Cells.Coverage}
-              />
-              <Column
-                name="coverage.methodCount.covered"
-                label="Methods covered"
-                Cell={({ value, item: { id = '', coverage: { methodCount: { covered = 0 } = {} } = {} } = {} }) => (
-                  <Cells.Clickable
-                    onClick={() => setSelectedTest({ id, covered })}
-                    data-test="test-actions:view-curl:id"
-                    disabled={!value}
-                  >
-                    {value}
-                  </Cells.Clickable>
-                )}
-              />
-              <Column
-                name="stats.duration"
-                label="Duration"
-                Cell={Cells.Duration}
-              />,
-            </Table>
-          </>
-        ) : (
-          <NoTestsStub />
-        )}
+              Displaying {tests.slice(0, visibleElementsCount).length} of {totalCount} tests
+            </SearchPanel>
+          </div>
+          <Table
+            data={tests.slice(0, visibleElementsCount)}
+            idKey="name"
+            gridTemplateColumns="calc(100% - 664px) 130px 76px 152px 186px 120px"
+          >
+            <Column
+              name="testName"
+              label="Name"
+              Cell={({ item: { name } }) => (
+                <Cells.Compound cellName={name} cellAdditionalInfo="&ndash;" icon={<Icons.Test height={16} width={16} />} />
+              )}
+              align="start"
+            />
+            <Column
+              name="type"
+              label="Test type"
+              Cell={({ value }) => (
+                <>
+                  {capitalize(value)}
+                </>
+              )}
+              align="start"
+            />
+            <Column
+              name="stats.result"
+              label="Status"
+              Cell={({ value }) => (
+                <Cells.TestStatus
+                  type={value}
+                >
+                  {capitalize(value)}
+                </Cells.TestStatus>
+              )}
+              align="start"
+            />
+            <Column
+              name="coverage.percentage"
+              label="Coverage, %"
+              Cell={Cells.Coverage}
+            />
+            <Column
+              name="coverage.methodCount.covered"
+              label="Methods covered"
+              Cell={({ value, item: { id = '', coverage: { methodCount: { covered = 0 } = {} } = {} } = {} }) => (
+                <Cells.Clickable
+                  onClick={() => setSelectedTest({ id, covered })}
+                  data-test="test-actions:view-curl:id"
+                  disabled={!value}
+                >
+                  {value}
+                </Cells.Clickable>
+              )}
+            />
+            <Column
+              name="stats.duration"
+              label="Duration"
+              Cell={Cells.Duration}
+            />,
+          </Table>
+        </>
+        {!tests.length && <NoTestsStub />}
         {selectedTest !== null && (
           <CoveredMethodsByTestSidebar
             isOpen={Boolean(selectedTest)}
@@ -126,5 +138,3 @@ export const TestDetails = testDetails(
     );
   },
 );
-
-const Title = testDetails.title('div');

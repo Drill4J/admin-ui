@@ -26,7 +26,7 @@ import { CoveragePluginHeader } from '../coverage-plugin-header';
 import { CoverageDetails } from '../coverage-details';
 import { BuildProjectMethods } from './build-project-methods';
 import { usePluginState } from '../../store';
-import { Tests } from '../tests';
+import { BuildTests } from '../build-tests';
 import { ActiveScopeInfo } from './active-scope-info';
 import { usePreviousBuildCoverage } from '../use-previous-build-coverage';
 import { BuildProjectTests } from './build-project-tests';
@@ -85,17 +85,15 @@ export const Overview = overview(({ className }: Props) => {
         {scope?.active && status === AGENT_STATUS.ONLINE && <ActiveScopeInfo scope={scope} />}
       </InfoPanel>
       <TabContent>
-        {selectedTab === 'methods' ? (
-          <>
-            <TableActionsProvider>
-              <CoverageDetails
-                topic="/build/coverage/packages"
-                associatedTestsTopic="/build/associated-tests"
-                classesTopicPrefix="build"
-              />
-            </TableActionsProvider>
-          </>
-        ) : <Tests />}
+        <TableActionsProvider key={selectedTab}>
+          {selectedTab === 'methods' ? (
+            <CoverageDetails
+              topic="/build/coverage/packages"
+              associatedTestsTopic="/build/associated-tests"
+              classesTopicPrefix="build"
+            />
+          ) : <BuildTests />}
+        </TableActionsProvider>
       </TabContent>
     </div>
   );

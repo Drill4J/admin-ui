@@ -25,18 +25,17 @@ import {
 } from 'components';
 import { NotificationManagerContext } from 'notification-manager';
 import { ActiveScope } from 'types/active-scope';
-import { TestCoverageInfo } from 'types/test-coverage-info';
 import { TableActionsProvider } from 'modules';
 import { useAgent, useBuildVersion } from 'hooks';
 import { AGENT_STATUS } from 'common/constants';
 import { ScopeProjectMethods } from './scope-project-methods';
 import { CoverageDetails } from '../../coverage-details';
-import { TestDetails } from '../../test-details';
 import { toggleScope } from '../../api';
 import { usePluginState } from '../../../store';
 import { useCoveragePluginDispatch, openModal } from '../../store';
 import { ScopeStatus } from './scope-status';
 import { ScopeProjectTests } from './scope-project-tests';
+import { ScopeTests } from '../../scope-tests';
 
 import styles from './scope-info.module.scss';
 
@@ -62,7 +61,6 @@ export const ScopeInfo = scopeInfo(
     const { pluginId = '', scopeId = '', buildVersion } = useParams<{ pluginId: string, scopeId: string, buildVersion: string }>();
     const dispatch = useCoveragePluginDispatch();
     const scope = useBuildVersion<ActiveScope>(`/build/scopes/${scopeId}`);
-    const tests = useBuildVersion<TestCoverageInfo[]>(`/build/scopes/${scopeId}/tests`) || [];
     const {
       name = '', active = false, enabled = false, started = 0, finished = 0,
     } = scope || {};
@@ -152,26 +150,23 @@ export const ScopeInfo = scopeInfo(
               </TabsPanel>
             </RoutingTabsPanel>
             <TabContent>
-              {selectedTab === 'coverage' ? (
-                <>
-                  <ScopeProjectMethods scope={scope} />
-                  <TableActionsProvider>
+              <TableActionsProvider key={selectedTab}>
+                {selectedTab === 'coverage' ? (
+                  <>
+                    <ScopeProjectMethods scope={scope} />
                     <CoverageDetails
                       topic={`/build/scopes/${scopeId}/coverage/packages`}
                       associatedTestsTopic={`/build/scopes/${scopeId}/associated-tests`}
                       classesTopicPrefix={`build/scopes/${scopeId}`}
                     />
-                  </TableActionsProvider>
-                </>
-              ) : (
-                <>
-                  <ScopeProjectTests scopeId={scopeId} />
-                  <TestDetails
-                    tests={tests}
-                    topicCoveredMethodsByTest={`/build/scopes/${scopeId}/tests/covered-methods`}
-                  />
-                </>
-              )}
+                  </>
+                ) : (
+                  <>
+                    <ScopeProjectTests scopeId={scopeId} />
+                    <ScopeTests />
+                  </>
+                )}
+              </TableActionsProvider>
             </TabContent>
           </div>
         )

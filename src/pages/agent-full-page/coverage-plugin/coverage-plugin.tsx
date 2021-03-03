@@ -19,7 +19,6 @@ import { Switch, Route } from 'react-router-dom';
 import { TestsToRunList } from 'modules';
 import { Overview } from './overview';
 import { ScopesList, ScopeInfo } from './scope';
-import { Tests } from './tests';
 import { CoveragePluginModals } from './covarage-plugin-modals';
 import { CoveragePluginProvider } from './store';
 import { InitialDataController } from './initial-data-controller';
@@ -52,11 +51,6 @@ export const CoveragePlugin = coveragePlugin(({ className }: Props) => (
               <Route
                 path="/full-page/:agentId/:buildVersion/:pluginId/scopes/:scopeId"
                 component={ScopeInfo}
-                exact
-              />
-              <Route
-                path="/full-page/:agentId/:buildVersion/:pluginId/tests"
-                component={Tests}
                 exact
               />
               <Route
