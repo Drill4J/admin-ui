@@ -17,6 +17,8 @@ import { Observable, Subscription, timer } from 'rxjs';
 import { webSocket, WebSocketSubject } from 'rxjs/webSocket';
 import { mergeMap, retryWhen } from 'rxjs/operators';
 
+import { TOKEN_KEY } from '../constants';
+
 export interface DrillResponse {
   message: string;
   destination: string;
@@ -95,6 +97,7 @@ export class DrillSocket {
 
   // eslint-disable-next-line class-methods-use-this
   private handleUnauthorized() {
+    localStorage.setItem(TOKEN_KEY, '');
     if (window.location.pathname !== '/login') {
       window.location.href = '/login';
     }
