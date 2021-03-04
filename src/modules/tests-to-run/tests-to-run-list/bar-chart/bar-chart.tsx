@@ -13,10 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { useEffect, useRef, useState } from 'react';
+import {
+  useEffect, useRef, useState,
+} from 'react';
 import { BEM, div } from '@redneckz/react-bem-helper';
 import { Tooltip } from '@drill4j/ui-kit';
 import { nanoid } from 'nanoid';
+import tw, { styled } from 'twin.macro';
 
 import { DATA_VISUALIZATION_COLORS } from 'common/constants';
 import { useBuildVersion, useElementSize } from 'hooks';
@@ -41,6 +44,10 @@ const BAR_WITH_GAP_WIDTH_PX = 112;
 const CHART_HEIGHT_PX = 160;
 const BORDER_PX = 1;
 
+const CartesianLayout = styled.div`
+  ${tw`grid items-end gap-12 px-12 border-b border-monochrome-black`}
+`;
+
 export const BarChart = barChart(({
   className, activeBuildVersion, totalDuration, summaryTestsToRun,
 }: Props) => {
@@ -63,6 +70,25 @@ export const BarChart = barChart(({
     : testsToRunHistorySlice(testsToRunHistory, slice, visibleBarsCount);
   const yScale = getYScale(totalDuration);
 
+  const barRef = useRef<HTMLDivElement>(null);
+  const [isVisibleTooltip, setIsVisibleTooltip] = useState(true);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => setIsVisibleTooltip(entry.isIntersecting),
+      {
+        root: null,
+        threshold: 0.9,
+      },
+    );
+    barRef.current && observer.observe(barRef.current);
+
+    return () => {
+      observer.disconnect();
+    };
+  }, []);
+
+  console.log(isVisibleTooltip);
   return (
     <div className={className} ref={ref}>
       <YAxis style={
@@ -83,12 +109,14 @@ export const BarChart = barChart(({
         }
       </YAxis>
       <Chart>
-        <CartesianLayout style={
-          {
-            height: `${CHART_HEIGHT_PX}px`,
-            gridTemplateColumns: `repeat(${visibleBarsCount}, 64px)`,
+        <CartesianLayout
+          style={
+            {
+              height: `${CHART_HEIGHT_PX}px`,
+              gridTemplateColumns: `repeat(${visibleBarsCount}, 64px)`,
+            }
           }
-        }
+          ref={barRef}
         >
           {bars.map(({ buildVersion, statsByType: { AUTO: { total = 0, completed = 0, duration = 0 } = {} } = {} }) => {
             const isAllAutoTestsDone = Boolean(total) && completed === total;
@@ -107,16 +135,19 @@ export const BarChart = barChart(({
             const savedTimeDuration = getDuration(totalDuration - duration);
             const durationType = isAllAutoTestsDone ? 'all-tests-done-duration' : 'duration';
             const hasUncompletedTests = completed > 0 && completed < total;
+
             return (
-              <Tooltip message={(hasUncompletedTests && buildVersion !== activeBuildVersion) && (
-                <div className="flex flex-col items-center w-full">
-                  <span>Not all the suggested Auto Tests</span>
-                  <span>were run in this build</span>
-                </div>
-              )}
+              <Tooltip
+                message={isVisibleTooltip && (hasUncompletedTests && buildVersion !== activeBuildVersion) && (
+                  <div className="flex flex-col items-center w-full">
+                    <span>Not all the suggested Auto Tests</span>
+                    <span>were run in this build</span>
+                  </div>
+                )}
+                key={buildVersion}
               >
                 <GroupedBars bordered={!isAllAutoTestsDone} hasUncompletedTests={hasUncompletedTests} key={nanoid()}>
-                  <Tooltip message={(hasUncompletedTests && buildVersion !== activeBuildVersion) ? null : (
+                  <Tooltip message={!isVisibleTooltip || (hasUncompletedTests && buildVersion !== activeBuildVersion) ? null : (
                     <>
                       {!total && 'No Auto Tests suggested to run in this build'}
                       {isAllAutoTestsDone && (
@@ -148,7 +179,7 @@ export const BarChart = barChart(({
                       }}
                     />
                   </Tooltip>
-                  <Tooltip message={(isAllAutoTestsDone || buildVersion === activeBuildVersion) && (
+                  <Tooltip message={isVisibleTooltip && (isAllAutoTestsDone || buildVersion === activeBuildVersion) && (
                     <div className="text-center">
                       {duration >= totalDuration && <div>No time was saved in this build.</div>}
                       <div>Auto Tests {!isAllAutoTestsDone && 'current'} duration with Drill4J: {hours}:{minutes}:{seconds}</div>
@@ -196,7 +227,6 @@ export const BarChart = barChart(({
 });
 
 const Chart = barChart.chart('div');
-const CartesianLayout = barChart.cartesianLayout('div');
 const GroupedBars = barChart.groupedBars(div({} as { bordered?: boolean, hasUncompletedTests?: boolean }));
 const Bar = barChart.bar('div');
 const YAxis = barChart.yAxis('div');
