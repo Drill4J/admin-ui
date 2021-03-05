@@ -19,6 +19,7 @@ import { Redirect, useParams } from 'react-router-dom';
 import {
   Icons, Menu, Button, SessionIndicator,
 } from '@drill4j/ui-kit';
+import 'twin.macro';
 
 import {
   TabsPanel, Tab,
@@ -163,7 +164,9 @@ export const ScopeInfo = scopeInfo(
                 ) : (
                   <>
                     <ScopeProjectTests scopeId={scopeId} />
-                    <ScopeTests />
+                    <div tw="mt-2">
+                      <ScopeTests />
+                    </div>
                   </>
                 )}
               </TableActionsProvider>
