@@ -25,7 +25,7 @@ export const abortAllSession = async (
     await axios.post(`/${agentType === 'ServiceGroup' ? 'groups' : 'agents'}/${agentId}/plugins/${pluginId}/dispatch-action`, {
       type: 'CANCEL_ALL',
     });
-    showGeneralAlertMessage && showGeneralAlertMessage({ type: 'SUCCESS', text: 'Sessions has been aborted successfully.' });
+    showGeneralAlertMessage && showGeneralAlertMessage({ type: 'SUCCESS', text: 'Sessions have been aborted successfully.' });
   } catch ({ response: { data: { message } = {} } = {} }) {
     showGeneralAlertMessage && showGeneralAlertMessage({
       type: 'ERROR',
