@@ -13,34 +13,31 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { BEM } from '@redneckz/react-bem-helper';
 import { SortArrow, useHover } from '@drill4j/ui-kit';
+import 'twin.macro';
 
 import { ColumnProps, Sort, Order } from './table-types';
 
-import styles from './default-header-cell.module.scss';
-
 interface Props<T> {
-  className?: string;
   column: ColumnProps<unknown, T>;
   sort: Sort;
   onSort: (sort: Sort) => void;
 }
 
-const defaultHeaderCell = BEM(styles);
-
-export const DefaultHeaderCell = defaultHeaderCell(<T, >({
-  className, column: { name, label }, sort, onSort,
-}: Props<T>) => {
+export const DefaultHeaderCell = <T, >({ column: { name, label }, sort, onSort }: Props<T>) => {
   const { ref, isVisible } = useHover();
   const activeCell = name === sort?.field;
   return (
-    <div className={className} ref={ref} onClick={() => onSort({ order: setOrder(sort?.order), field: name })}>
+    <div
+      tw="relative inline-flex items-center cursor-pointer"
+      ref={ref}
+      onClick={() => onSort({ order: setOrder(sort?.order), field: name })}
+    >
       {name !== 'selector' && (isVisible || activeCell) && <SortArrow active={activeCell} order={activeCell ? sort.order : null} /> }
       {label}
     </div>
   );
-});
+};
 
 function setOrder(order: Order) {
   switch (order) {

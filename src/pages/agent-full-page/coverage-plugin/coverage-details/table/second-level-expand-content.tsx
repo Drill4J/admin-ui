@@ -13,28 +13,29 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { BEM } from '@redneckz/react-bem-helper';
+import tw, { styled } from 'twin.macro';
 
 import { get } from 'utils';
 import { MethodCoverage } from 'types/method-coverage';
+import { TableRowCell } from './table-row-cell';
 import { DefaultCell } from './default-cell';
 import { ColumnProps } from './table-types';
 
-import styles from './table-row.module.scss';
-
 interface Props<T> {
-  className?: string;
   data?: MethodCoverage[];
   columns?: ColumnProps<unknown, T>[];
   color?: string;
 }
 
-export const SecondLevelExpandContent = BEM(styles)(<T, >({ className, data = [], columns = [] }: Props<T>) => (
+const Content = styled.div`
+  ${tw`grid items-center min-h-40px`}
+`;
+
+export const SecondLevelExpandContent = <T, >({ data = [], columns = [] }: Props<T>) => (
   <>
     {data.map((field) => (
-      <div
-        className={className}
-        style={{ display: 'grid', gridTemplateColumns: `104px calc(40% - 72px) repeat(${columns.length - 1}, 1fr)` }}
+      <Content
+        style={{ gridTemplateColumns: `104px calc(40% - 72px) repeat(${columns.length - 1}, 1fr)` }}
         key={field.name}
       >
         {columns.map((column, index) => {
@@ -45,9 +46,7 @@ export const SecondLevelExpandContent = BEM(styles)(<T, >({ className, data = []
             </TableRowCell>
           );
         })}
-      </div>
+      </Content>
     ))}
   </>
-));
-
-const TableRowCell = BEM(styles).tableRowCell('div');
+);

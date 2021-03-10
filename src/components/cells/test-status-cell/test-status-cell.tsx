@@ -13,8 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { BEM } from '@redneckz/react-bem-helper';
+import tw, { styled } from 'twin.macro';
 
-import styles from './test-status-cell.module.scss';
+type Statuses = 'PASSED' | 'FAILED';
 
-export const TestStatusCell = BEM(styles)('div');
+interface Props {
+  children: React.ReactNode;
+  type: Statuses;
+}
+
+const Cell = styled.div(({ type }: {type: Statuses}) => [
+  tw`font-bold`,
+  type === 'PASSED' && tw`text-green-default`,
+  type === 'FAILED' && tw`text-red-default`,
+]);
+
+export const TestStatusCell = ({ children, ...rest }: Props) => <Cell {...rest}>{children}</Cell>;

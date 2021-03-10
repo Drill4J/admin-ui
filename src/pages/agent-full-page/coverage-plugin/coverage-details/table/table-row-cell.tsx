@@ -13,30 +13,25 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-@import '~common/style-guide/index';
+import tw, { styled } from 'twin.macro';
 
-.packages-tree-coverage-cell {
-  display: inline-flex;
-  align-items: center;
-  gap: 16px;
-  font-family: $semibold-font;
+import { Align } from './table-types';
 
-  &__icon {
-    display: flex;
-    align-items: center;
+const Cell = styled.div(({ type }: { type: Align }) => [
+  tw`px-4`,
+  `&:first-child {
+      padding: 0 0;
+   }`,
+  type === 'start' && tw`w-full justify-self-start`,
+  type === 'end' && tw`justify-self-end`,
+  type === 'center' && tw`justify-self-center`,
+  type === 'stretch' && tw`justify-self-stretch`,
+]);
 
-    &--type {
-      &--success {
-        color: map-get($monochrome, default);
-      }
-
-      &--warning {
-        color: map-get($orange, default);
-      }
-
-      &--error {
-        color: map-get($red, default);
-      }
-    }
-  }
+interface Props {
+  children: React.ReactNode;
+  type: Align;
+  style?: Record<symbol, string>;
 }
+
+export const TableRowCell = ({ children, ...rest }: Props) => <Cell {...rest}>{children}</Cell>;

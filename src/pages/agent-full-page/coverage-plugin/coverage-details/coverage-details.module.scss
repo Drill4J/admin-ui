@@ -16,13 +16,6 @@
 @import '~common/style-guide/index';
 
 .coverage-details {
-  display: flex;
-  flex-direction: column;
-
-  &__coverage-details-search-panel {
-    margin-top: 16px;
-  }
-
   &__not-found {
     display: grid;
     place-items: center;
@@ -42,11 +35,5 @@
     line-height: 20px;
     color: map-get($monochrome, default);
     text-align: center;
-  }
-
-  &__coverage-icon {
-    min-width: 16px;
-    margin-left: 16px;
-    color: map-get($monochrome, default);
   }
 }

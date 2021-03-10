@@ -13,21 +13,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { BEM } from '@redneckz/react-bem-helper';
+import tw, { styled } from 'twin.macro';
 
 import { get } from 'utils';
 import { DefaultCell } from './default-cell';
 import { ExpandedRowContent } from './expanded-row-content';
+import { TableRowCell } from './table-row-cell';
 import { ColumnProps } from './table-types';
 
-import styles from './table-row.module.scss';
+type Colors = 'blue' | 'gray' | 'yellow';
 
 interface Props<T> {
-  className?: string;
   item: T;
   columns: ColumnProps<unknown, T>[];
   index: number;
-  color?: 'blue' | 'gray' | 'yellow';
+  color?: Colors;
   expandedColumns?: ColumnProps<unknown, T>[];
   secondLevelExpand?: ColumnProps<unknown, T>[];
   expandedContentKey?: string;
@@ -35,53 +35,51 @@ interface Props<T> {
   classesTopicPrefix: string;
 }
 
-const tableRow = BEM(styles);
+const Content = styled.div(({ color }: {color?: Colors}) => [
+  tw`grid items-center min-h-40px`,
+  color && tw`bg-monochrome-light-tint`,
+]);
 
-export const TableRow = tableRow(
-  <T, >({
-    className,
-    item,
-    columns,
-    index,
-    expandedContentKey = '',
-    color,
-    expandedColumns = [],
-    secondLevelExpand = [],
-    expandedRows = [],
-    classesTopicPrefix,
-  }: Props<T>) => {
-    const gridTemplateColumns = expandedColumns?.length
-      ? `32px 40% repeat(${columns.length - 2}, 1fr)`
-      : `2fr repeat(${columns.length - 1}, 1fr)`;
-    return (
-      <>
-        <div
-          className={className}
-          style={{ display: 'grid', gridTemplateColumns, backgroundColor: color ? '#F8F9FB' : undefined }}
-          data-test="table-row"
-        >
-          {columns.map((column) => {
-            const Cell = column.Cell || DefaultCell;
-            return (
-              <TableRowCell key={column.name} type={column.align || 'end'}>
-                <Cell value={get(item, column.name)} item={item} rowIndex={index} testContext={column?.testContext} />
-              </TableRowCell>
-            );
-          })}
-        </div>
-        {color && (
-          <ExpandedRowContent
-            key={String(get(item, expandedContentKey))}
-            item={get(item, expandedContentKey)}
-            expandedColumns={expandedColumns}
-            secondLevelExpand={secondLevelExpand}
-            expandedRows={expandedRows}
-            classesTopicPrefix={classesTopicPrefix}
-          />
-        )}
-      </>
-    );
-  },
-);
-
-const TableRowCell = tableRow.tableRowCell('div');
+export const TableRow = <T, >({
+  item,
+  columns,
+  index,
+  expandedContentKey = '',
+  color,
+  expandedColumns = [],
+  secondLevelExpand = [],
+  expandedRows = [],
+  classesTopicPrefix,
+}: Props<T>) => {
+  const gridTemplateColumns = expandedColumns?.length
+    ? `32px 40% repeat(${columns.length - 2}, 1fr)`
+    : `2fr repeat(${columns.length - 1}, 1fr)`;
+  return (
+    <>
+      <Content
+        color={color}
+        style={{ gridTemplateColumns }}
+        data-test="table-row"
+      >
+        {columns.map((column) => {
+          const Cell = column.Cell || DefaultCell;
+          return (
+            <TableRowCell key={column.name} type={column.align || 'end'}>
+              <Cell value={get(item, column.name)} item={item} rowIndex={index} testContext={column?.testContext} />
+            </TableRowCell>
+          );
+        })}
+      </Content>
+      {color && (
+        <ExpandedRowContent
+          key={String(get(item, expandedContentKey))}
+          item={get(item, expandedContentKey)}
+          expandedColumns={expandedColumns}
+          secondLevelExpand={secondLevelExpand}
+          expandedRows={expandedRows}
+          classesTopicPrefix={classesTopicPrefix}
+        />
+      )}
+    </>
+  );
+};

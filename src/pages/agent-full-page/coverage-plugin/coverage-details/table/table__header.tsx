@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { BEM } from '@redneckz/react-bem-helper';
+import 'twin.macro';
 
 import {
   useTableActionsDispatch, setSort, useTableActionsState,
@@ -21,36 +21,33 @@ import {
 import { DefaultHeaderCell } from './default-header-cell';
 import { ColumnProps } from './table-types';
 
-import styles from './table-header.module.scss';
-
 interface Props<T> {
   className?: string;
   columns: ColumnProps<unknown, T>[];
   expandedColumnsLength?: number;
 }
 
-const tableHeader = BEM(styles);
-
-export const TableHeader = tableHeader(<T, >({ columns, className, expandedColumnsLength }: Props<T>) => {
+export const TableHeader = <T, >({ columns, expandedColumnsLength }: Props<T>) => {
   const dispatch = useTableActionsDispatch();
   const { sort: [sort] } = useTableActionsState();
   const gridTemplateColumns = expandedColumnsLength
     ? `32px 40% repeat(${columns.length - 2}, 1fr)`
     : `2fr repeat(${columns.length - 1}, 1fr)`;
   return (
-    <div className={className} style={{ display: 'grid', gridTemplateColumns }}>
+    <div
+      tw="grid items-center h-13 text-14 leading-20 font-bold border-b border-t border-monochrome-black"
+      style={{ gridTemplateColumns }}
+    >
       {columns.map((column) => {
         const { name, HeaderCell, align = 'end' } = column;
         return (
-          <TableHeaderCell key={name} style={{ justifySelf: align }}>
+          <div tw="px-4" key={name} style={{ justifySelf: align }}>
             {HeaderCell
               ? HeaderCell({ column })
               : <DefaultHeaderCell column={column} sort={sort} onSort={(cellSort) => dispatch(setSort(cellSort))} />}
-          </TableHeaderCell>
+          </div>
         );
       })}
     </div>
   );
-});
-
-const TableHeaderCell = tableHeader.tableHeaderCell('div');
+};

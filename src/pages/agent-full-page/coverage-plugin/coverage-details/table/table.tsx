@@ -14,17 +14,14 @@
  * limitations under the License.
  */
 import { Children, ReactElement, ReactNode } from 'react';
-import { BEM } from '@redneckz/react-bem-helper';
+import 'twin.macro';
 
 import { get } from 'utils';
 import { TableRow } from './table__row';
 import { TableHeader } from './table__header';
 import { ColumnProps } from './table-types';
 
-import styles from './table.module.scss';
-
 interface Props<T> {
-  className?: string;
   data?: T[];
   children: ReactElement<ColumnProps<unknown, T>> | ReactElement<ColumnProps<unknown, T>>[];
   idKey?: string;
@@ -39,62 +36,57 @@ interface Props<T> {
   tableContentStub?: ReactNode | null;
 }
 
-const table = BEM(styles);
+export const Table = <T, >({
+  data = [],
+  children,
+  idKey = '',
+  footer,
+  expandedRows = [],
+  expandedColumns,
+  expandedContentKey,
+  secondLevelExpand,
+  withoutHeader,
+  selectedRows = [],
+  classesTopicPrefix,
+  tableContentStub = null,
+}: Props<T>) => {
+  const columns = Children.map(children, (column) => column && column.props);
 
-export const Table = table(
-  <T, >({
-    className,
-    data = [],
-    children,
-    idKey = '',
-    footer,
-    expandedRows = [],
+  const expandedColumnsComponents = Children.map(
     expandedColumns,
-    expandedContentKey,
+    (column) => column && column.props,
+  );
+  const expandedColumnsSecondLevel = Children.map(
     secondLevelExpand,
-    withoutHeader,
-    selectedRows = [],
-    classesTopicPrefix,
-    tableContentStub = null,
-  }: Props<T>) => {
-    const columns = Children.map(children, (column) => column && column.props);
+    (column) => column && column.props,
+  );
 
-    const expandedColumnsComponents = Children.map(
-      expandedColumns,
-      (column) => column && column.props,
-    );
-    const expandedColumnsSecondLevel = Children.map(
-      secondLevelExpand,
-      (column) => column && column.props,
-    );
-
-    return (
-      <>
-        <div className={className}>
-          {!withoutHeader && <TableHeader columns={columns} expandedColumnsLength={expandedColumns?.length} />}
-          {data.length > 0 && (
-            data.map((item, index) => (
-              <TableRow
-                key={idKey ? String(get(item, idKey)) : index}
-                item={item}
-                columns={columns}
-                index={index}
-                expandedColumns={expandedColumnsComponents}
-                color={getRowColor({ expandedRows, selectedRows, itemId: String(get(item, idKey)) })}
-                expandedContentKey={expandedContentKey}
-                expandedRows={expandedRows}
-                secondLevelExpand={expandedColumnsSecondLevel}
-                classesTopicPrefix={classesTopicPrefix}
-              />
-            ))
-          ) }
-          {footer}
-        </div>
-        {tableContentStub}
-      </>
-    );
-  },
-);
+  return (
+    <>
+      <div tw="w-full text-14 leading-16 text-monochrome-black">
+        {!withoutHeader && <TableHeader columns={columns} expandedColumnsLength={expandedColumns?.length} />}
+        {data.length > 0 && (
+          data.map((item, index) => (
+            <TableRow
+              key={idKey ? String(get(item, idKey)) : index}
+              item={item}
+              columns={columns}
+              index={index}
+              expandedColumns={expandedColumnsComponents}
+              color={getRowColor({ expandedRows, selectedRows, itemId: String(get(item, idKey)) })}
+              expandedContentKey={expandedContentKey}
+              expandedRows={expandedRows}
+              secondLevelExpand={expandedColumnsSecondLevel}
+              classesTopicPrefix={classesTopicPrefix}
+            />
+          ))
+        ) }
+        {footer}
+      </div>
+      {tableContentStub}
+    </>
+  );
+};
 
 // eslint-disable-next-line consistent-return
 function getRowColor({

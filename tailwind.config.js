@@ -22,6 +22,7 @@ module.exports = {
   theme: {
     extend: {
       spacing: {
+        13: '3.25rem',
         21: '5.25rem',
         27: '6.75rem',
         29: '7.25rem',
@@ -41,7 +42,11 @@ module.exports = {
       },
     },
     minWidth: {
+      '16px': '16px',
       '32px': '32px',
+    },
+    minHeight: {
+      '40px': '40px',
     },
     colors: {
       transparent: 'transparent',
@@ -135,6 +140,7 @@ module.exports = {
       38: '38px',
       40: '40px',
       48: '48px',
+      64: '64px',
     },
   },
   variants: {
