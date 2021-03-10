@@ -67,7 +67,7 @@ export const CoverageDetails = coverageDetails(
     return (
       <div tw="flex flex-col">
         <>
-          <div tw="mt-4">
+          <div tw="mt-2">
             <SearchPanel
               onSearch={(searchValue) => dispatch(setSearch([{ value: searchValue, field: 'name', op: 'CONTAINS' }]))}
               searchQuery={searchQuery?.value}
@@ -163,7 +163,7 @@ export const CoverageDetails = coverageDetails(
               name="coverage"
               label={(
                 <div className="flex justify-end items-center w-full">
-                  Coverage, %<Icons.Checkbox tw="ml-4 min-w-16px" width={16} height={16} />
+                  Coverage, %<Icons.Checkbox tw="ml-4 min-w-16px text-monochrome-default" width={16} height={16} />
                 </div>
               )}
               Cell={CoverageCell}

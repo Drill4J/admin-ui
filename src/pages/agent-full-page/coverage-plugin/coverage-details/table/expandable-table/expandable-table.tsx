@@ -30,7 +30,6 @@ interface Props<T> {
   expandedColumns?: ReactElement<ColumnProps<unknown, T>>[];
   expandedContentKey: string;
   secondLevelExpand?: ReactElement<ColumnProps<unknown, T>>[];
-  className?: string;
   hasSecondLevelExpand?: boolean;
   classesTopicPrefix: string;
   tableContentStub?: ReactNode | null;
@@ -41,7 +40,6 @@ export const ExpandableTable = <T, >({
   data,
   idKey,
   expandedColumns,
-  className,
   hasSecondLevelExpand,
   tableContentStub = null,
   ...restProps
@@ -49,7 +47,6 @@ export const ExpandableTable = <T, >({
   const [expandedRows, setExpandedRows] = useState<string[]>([]);
   return (
     <Table
-      className={className}
       data={data}
       expandedRows={expandedRows}
       idKey={idKey}

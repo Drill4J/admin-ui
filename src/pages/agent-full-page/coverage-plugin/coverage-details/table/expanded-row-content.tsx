@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { BEM } from '@redneckz/react-bem-helper';
+import tw, { styled } from 'twin.macro';
 
 import { get } from 'utils';
 import { useBuildVersion } from 'hooks';
@@ -21,11 +21,9 @@ import { Package } from 'types/package';
 import { ColumnProps } from './table-types';
 import { DefaultCell } from './default-cell';
 import { SecondLevelExpandContent } from './second-level-expand-content';
-
-import styles from './table-row.module.scss';
+import { TableRowCell } from './table-row-cell';
 
 interface Props<T> {
-  className?: string;
   item: string;
   expandedColumns?: ColumnProps<unknown, T>[];
   expandedRows?: string[];
@@ -34,10 +32,11 @@ interface Props<T> {
   classesTopicPrefix: string;
 }
 
-const expandedRowContent = BEM(styles);
+const Content = styled.div`
+  ${tw`grid items-center min-h-40px`}
+`;
 
-export const ExpandedRowContent = expandedRowContent(<T, >({
-  className,
+export const ExpandedRowContent = <T, >({
   item,
   expandedColumns = [],
   expandedRows = [],
@@ -50,10 +49,8 @@ export const ExpandedRowContent = expandedRowContent(<T, >({
     <>
       {classes.map((field, index) => (
         <div key={field.id}>
-          <div
-            className={className}
+          <Content
             style={{
-              display: 'grid',
               gridTemplateColumns: `64px calc(40% - 32px) repeat(${expandedColumns.length - 2}, 1fr)`,
               backgroundColor: expandedRows.includes(String(field.name)) ? '#F8F9FB' : undefined,
             }}
@@ -66,7 +63,7 @@ export const ExpandedRowContent = expandedRowContent(<T, >({
                 </TableRowCell>
               );
             })}
-          </div>
+          </Content>
           {expandedRows.includes(String(field.name)) && (
             <SecondLevelExpandContent
               data={field.methods}
@@ -77,6 +74,4 @@ export const ExpandedRowContent = expandedRowContent(<T, >({
       ))}
     </>
   );
-});
-
-const TableRowCell = expandedRowContent.tableRowCell('div');
+};
