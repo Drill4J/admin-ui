@@ -34,7 +34,6 @@ import { CellProps } from './table/table-types';
 import styles from './coverage-details.module.scss';
 
 interface Props {
-  className?: string;
   topic: string;
   associatedTestsTopic: string;
   classesTopicPrefix: string;
@@ -43,9 +42,7 @@ interface Props {
 const coverageDetails = BEM(styles);
 
 export const CoverageDetails = coverageDetails(
-  ({
-    className, associatedTestsTopic, classesTopicPrefix, topic,
-  }: Props) => {
+  ({ associatedTestsTopic, classesTopicPrefix, topic }: Props) => {
     const [selectedAssocTests, setSelectedAssocTests] = useState<null | {
       id: string,
       assocTestsCount: number,
@@ -68,16 +65,18 @@ export const CoverageDetails = coverageDetails(
     ];
 
     return (
-      <div className={className}>
+      <div tw="flex flex-col">
         <>
-          <CoverageDetailsSearchPanel
-            onSearch={(searchValue) => dispatch(setSearch([{ value: searchValue, field: 'name', op: 'CONTAINS' }]))}
-            searchQuery={searchQuery?.value}
-            searchResult={filteredCount}
-            placeholder="Search package by name"
-          >
-            Displaying {coverageByPackages.slice(0, visibleElementsCount).length} of {totalCount} packages
-          </CoverageDetailsSearchPanel>
+          <div tw="mt-4">
+            <SearchPanel
+              onSearch={(searchValue) => dispatch(setSearch([{ value: searchValue, field: 'name', op: 'CONTAINS' }]))}
+              searchQuery={searchQuery?.value}
+              searchResult={filteredCount}
+              placeholder="Search package by name"
+            >
+              Displaying {coverageByPackages.slice(0, visibleElementsCount).length} of {totalCount} packages
+            </SearchPanel>
+          </div>
           <ExpandableTable
             data={coverageByPackages.slice(0, visibleElementsCount)}
             idKey="name"
@@ -164,7 +163,7 @@ export const CoverageDetails = coverageDetails(
               name="coverage"
               label={(
                 <div className="flex justify-end items-center w-full">
-                  Coverage, %<CoverageIcon width={16} height={16} />
+                  Coverage, %<Icons.Checkbox tw="ml-4 min-w-16px" width={16} height={16} />
                 </div>
               )}
               Cell={CoverageCell}
@@ -205,8 +204,6 @@ export const CoverageDetails = coverageDetails(
   },
 );
 
-const CoverageDetailsSearchPanel = coverageDetails.coverageDetailsSearchPanel(SearchPanel);
 const NotFound = coverageDetails.notFound('div');
 const Title = coverageDetails.title('div');
 const Message = coverageDetails.message('div');
-const CoverageIcon = coverageDetails.coverageIcon(Icons.Checkbox);

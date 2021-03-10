@@ -41,6 +41,7 @@ module.exports = {
       },
     },
     minWidth: {
+      '16px': '16px',
       '32px': '32px',
     },
     colors: {
@@ -135,6 +136,7 @@ module.exports = {
       38: '38px',
       40: '40px',
       48: '48px',
+      64: '64px',
     },
   },
   variants: {

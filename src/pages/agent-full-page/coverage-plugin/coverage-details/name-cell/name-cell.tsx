@@ -13,27 +13,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { BEM } from '@redneckz/react-bem-helper';
+import 'twin.macro';
 
 import { CellProps } from '../table/table-types';
 
-import styles from './name-cell.module.scss';
-
 interface Props extends CellProps<string, unknown>{
-  className?: string;
   icon?: React.ReactNode;
   type?: 'primary' | 'secondary';
 }
 
-const nameCell = BEM(styles);
-
-export const NameCell = nameCell(({
-  className, icon, value, testContext,
-}: Props) => (
-  <span className={className}>
-    {icon && <Prefix>{icon}</Prefix>}
+export const NameCell = ({ icon, value, testContext }: Props) => (
+  <span tw="flex items-center">
+    {icon && <div tw="flex items-center mr-2">{icon}</div>}
     <div className="text-ellipsis text-14 text-monochrome-black" data-test={`name-cell:content:${testContext}`} title={value}>{value}</div>
   </span>
-));
-
-const Prefix = nameCell.prefix('div');
+);

@@ -13,29 +13,24 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { BEM, div } from '@redneckz/react-bem-helper';
 import { Icons } from '@drill4j/ui-kit';
+import tw, { styled } from 'twin.macro';
 
 import { percentFormatter } from 'utils';
 import { CellProps } from '../table/table-types';
 
-import styles from './coverage-cell.module.scss';
+const IconWrapper = styled.div(({ type }: { type?: 'success' | 'error' | 'warning' }) => [
+  tw`flex items-center`,
+  type === 'warning' && tw`text-orange-default`,
+  type === 'error' && tw`text-red-default`,
+  type === 'success' && tw`text-monochrome-default`,
+]);
 
-const coverageCell = BEM(styles);
-
-interface Props extends CellProps<number, unknown>{
-  className?: string;
-}
-
-export const CoverageCell = coverageCell(({ className, value = 0 }: Props) => (
-  <div className={className}>
+export const CoverageCell = ({ value = 0 }: CellProps<number, unknown>) => (
+  <div tw="inline-flex items-center gap-4 font-bold">
     <span data-test="coverage-cell:coverage">{`${percentFormatter(value)}%`}</span>
     {getCoverageIcon(value)}
   </div>
-));
-
-const IconWrapper = coverageCell.icon(
-  div({ type: undefined } as { type?: 'success' | 'error' | 'warning' }),
 );
 
 function getCoverageIcon(coverage: number) {

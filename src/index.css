@@ -7564,6 +7564,10 @@ button:focus {
   line-height: 48px;
 }
 
+.leading-64 {
+  line-height: 64px;
+}
+
 .list-inside {
   list-style-position: inside;
 }
@@ -10796,6 +10800,10 @@ button:focus {
 
 .min-h-screen {
   min-height: 100vh;
+}
+
+.min-w-16px {
+  min-width: 16px;
 }
 
 .min-w-32px {
@@ -32693,6 +32701,10 @@ button:focus {
     line-height: 48px;
   }
 
+  .sm\:leading-64 {
+    line-height: 64px;
+  }
+
   .sm\:list-inside {
     list-style-position: inside;
   }
@@ -35925,6 +35937,10 @@ button:focus {
 
   .sm\:min-h-screen {
     min-height: 100vh;
+  }
+
+  .sm\:min-w-16px {
+    min-width: 16px;
   }
 
   .sm\:min-w-32px {
@@ -57759,6 +57775,10 @@ button:focus {
     line-height: 48px;
   }
 
+  .md\:leading-64 {
+    line-height: 64px;
+  }
+
   .md\:list-inside {
     list-style-position: inside;
   }
@@ -60991,6 +61011,10 @@ button:focus {
 
   .md\:min-h-screen {
     min-height: 100vh;
+  }
+
+  .md\:min-w-16px {
+    min-width: 16px;
   }
 
   .md\:min-w-32px {
@@ -82825,6 +82849,10 @@ button:focus {
     line-height: 48px;
   }
 
+  .lg\:leading-64 {
+    line-height: 64px;
+  }
+
   .lg\:list-inside {
     list-style-position: inside;
   }
@@ -86057,6 +86085,10 @@ button:focus {
 
   .lg\:min-h-screen {
     min-height: 100vh;
+  }
+
+  .lg\:min-w-16px {
+    min-width: 16px;
   }
 
   .lg\:min-w-32px {
@@ -107891,6 +107923,10 @@ button:focus {
     line-height: 48px;
   }
 
+  .xl\:leading-64 {
+    line-height: 64px;
+  }
+
   .xl\:list-inside {
     list-style-position: inside;
   }
@@ -111123,6 +111159,10 @@ button:focus {
 
   .xl\:min-h-screen {
     min-height: 100vh;
+  }
+
+  .xl\:min-w-16px {
+    min-width: 16px;
   }
 
   .xl\:min-w-32px {
@@ -132957,6 +132997,10 @@ button:focus {
     line-height: 48px;
   }
 
+  .\32xl\:leading-64 {
+    line-height: 64px;
+  }
+
   .\32xl\:list-inside {
     list-style-position: inside;
   }
@@ -136189,6 +136233,10 @@ button:focus {
 
   .\32xl\:min-h-screen {
     min-height: 100vh;
+  }
+
+  .\32xl\:min-w-16px {
+    min-width: 16px;
   }
 
   .\32xl\:min-w-32px {

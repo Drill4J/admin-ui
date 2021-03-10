@@ -13,8 +13,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { BEM, div } from '@redneckz/react-bem-helper';
+import tw, { styled } from 'twin.macro';
 
-import styles from './clickable-cell.module.scss';
+const Cell = styled.div(({ disabled }: { disabled?: boolean }) => [
+  tw`inline-flex`,
+  tw`leading-16 font-bold text-monochrome-black underline cursor-pointer`,
+  disabled && tw`no-underline cursor-default pointer-events-none`,
+]);
 
-export const ClickableCell = BEM(styles)(div({ onClick: () => {}, 'data-test': '' } as { disabled?: boolean; 'data-test'?: string }));
+interface Props {
+  children: React.ReactNode;
+  disabled?: boolean;
+  onClick?: () => void;
+}
+
+export const ClickableCell = ({ children, ...rest }: Props) => <Cell {...rest}>{children}</Cell>;
