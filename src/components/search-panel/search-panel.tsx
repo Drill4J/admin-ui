@@ -13,9 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { Form, Field } from 'react-final-form';
+import { Inputs } from '@drill4j/ui-kit';
+import { useCallback, useEffect, useState } from 'react';
 
-import { Fields } from 'forms';
+import { debounce } from 'utils';
 
 interface Props {
   onSearch: (search: string) => void;
@@ -27,34 +28,42 @@ interface Props {
 
 export const SearchPanel = ({
   onSearch, searchQuery, searchResult, children, placeholder,
-}: Props) => (
-  <div>
-    <div className="flex items-center w-full">
-      <Form
-        onSubmit={({ search = '' }) => onSearch(search)}
-        render={({ handleSubmit, form }) => (
-          <div className="py-2 h-10">
-            <form onSubmit={handleSubmit}>
-              <Field
-                name="search"
-                component={Fields.Search}
-                placeholder={placeholder}
-                reset={() => { form.reset(); handleSubmit(); }}
-              />
-            </form>
-          </div>
-        )}
-      />
-      <div
-        className={`flex items-center w-full ml-4 ${searchQuery
-          ? 'justify-between'
-          : 'justify-end'} text-12 leading-20 monochrome-default`}
-      >
-        {searchQuery && <span data-test="search-panel:search-result">{searchResult} result{searchResult > 1 ? 's' : ''}</span>}
-        <span data-test="search-panel:displaying-results-count">
-          {children}
-        </span>
+}: Props) => {
+  const [searchValue, setValue] = useState('');
+  const search = useCallback(debounce((v) => {
+    onSearch(v);
+  }, 500), [onSearch]);
+
+  useEffect(() => {
+    search(searchValue);
+  }, [searchValue]);
+
+  return (
+    <div>
+      <div className="flex items-center w-full">
+        <div className="py-2 h-10">
+          <Inputs.Search
+            value={searchValue}
+            onChange={({ target: { value = '' } }) => {
+              setValue(value);
+              search(value);
+            }}
+            placeholder={placeholder}
+            reset={() => setValue('')}
+          />
+        </div>
+        <div
+          className={`flex items-center w-full ml-4 ${searchQuery
+            ? 'justify-between'
+            : 'justify-end'} text-12 leading-20 monochrome-default`}
+        >
+          {searchQuery &&
+          <span data-test="search-panel:search-result">{searchResult} result{searchResult > 1 ? 's' : ''}</span>}
+          <span data-test="search-panel:displaying-results-count">
+            {children}
+          </span>
+        </div>
       </div>
     </div>
-  </div>
-);
+  );
+};
