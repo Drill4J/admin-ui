@@ -13,27 +13,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-@import '~common/style-guide/index';
+import 'twin.macro';
 
-.coverage-details {
-  &__not-found {
-    display: grid;
-    place-items: center;
-    margin-top: 48px;
-    color: map-get($monochrome, medium-tint);
-  }
-
-  &__title {
-    margin: 16px 0 8px 0;
-    font-size: 20px;
-    line-height: 32px;
-    color: map-get($monochrome, default);
-  }
-
-  &__message {
-    font-size: 14px;
-    line-height: 20px;
-    color: map-get($monochrome, default);
-    text-align: center;
-  }
+interface Props {
+  children: React.ReactNode;
 }
+
+export const NoResultsFoundSub = ({ children }: Props) => (
+  <div tw="grid place-items-center mt-21 text-monochrome-medium-tint">
+    {children}
+    <div tw="mt-4 mb-2 text-20 leading-32 text-monochrome-default">No results found</div>
+    <div tw="text-14 leading-20 text-monochrome-default text-center">
+      Try adjusting your search or filter to find what you are looking for.
+    </div>
+  </div>
+);

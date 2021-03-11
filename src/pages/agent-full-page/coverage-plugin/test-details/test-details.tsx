@@ -25,7 +25,7 @@ import { TestCoverageInfo } from 'types/test-coverage-info';
 import { FilterList } from 'types/filter-list';
 import { Cells, SearchPanel } from 'components';
 import {
-  CoveredMethodsByTestSidebar, setSearch, useTableActionsDispatch, useTableActionsState,
+  CoveredMethodsByTestSidebar, NoResultsFoundSub, setSearch, useTableActionsDispatch, useTableActionsState,
 } from 'modules';
 import { useVisibleElementsCount } from 'hooks';
 import { NoTestsStub } from './no-tests-stub';
@@ -124,7 +124,8 @@ export const TestDetails = testDetails(
             />,
           </Table>
         </>
-        {!tests.length && <NoTestsStub />}
+        {!tests.length && !searchQuery?.value && <NoTestsStub />}
+        {!filteredCount && searchQuery?.value && <NoResultsFoundSub><Icons.Package height={104} width={107} /></NoResultsFoundSub>}
         {selectedTest !== null && (
           <CoveredMethodsByTestSidebar
             isOpen={Boolean(selectedTest)}
