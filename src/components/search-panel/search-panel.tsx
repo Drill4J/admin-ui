@@ -44,10 +44,7 @@ export const SearchPanel = ({
         <div className="py-2 h-10">
           <Inputs.Search
             value={searchValue}
-            onChange={({ target: { value = '' } }) => {
-              setValue(value);
-              search(value);
-            }}
+            onChange={({ target: { value = '' } }) => setValue(value)}
             placeholder={placeholder}
             reset={() => setValue('')}
           />
