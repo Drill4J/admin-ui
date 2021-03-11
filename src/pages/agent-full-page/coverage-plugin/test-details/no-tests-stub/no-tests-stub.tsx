@@ -15,6 +15,7 @@
  */
 import { BEM } from '@redneckz/react-bem-helper';
 import { Icons } from '@drill4j/ui-kit';
+import 'twin.macro';
 
 import { AGENT_STATUS } from 'common/constants';
 import { usePluginState } from '../../../store';
@@ -31,10 +32,10 @@ export const NoTestsStub = noTestsStub(({ className }: Props) => {
   const { agent: { status = '' } = {} } = usePluginState();
   return (
     <div className={className}>
-      <Icon height={104} width={107} />
-      <Title>
-        {status === AGENT_STATUS.BUSY ? 'Build tests are loading' : 'No tests available yet.'}
-      </Title>
+      <Icons.Test tw="mt-21" height={104} width={107} />
+      <div tw="mt-4 text-20 leading-32 text-monochrome-default">
+        {status === AGENT_STATUS.BUSY ? 'Build tests are loading' : 'No tests available yet'}
+      </div>
       <Message>
         {status === AGENT_STATUS.BUSY
           ? 'It may take a few seconds.'
@@ -44,6 +45,4 @@ export const NoTestsStub = noTestsStub(({ className }: Props) => {
   );
 });
 
-const Icon = noTestsStub.icon(Icons.Test);
-const Title = noTestsStub.title('div');
 const Message = noTestsStub.message('div');

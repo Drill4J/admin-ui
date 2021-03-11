@@ -33,7 +33,7 @@ interface Props<T> {
 }
 
 const Content = styled.div`
-  ${tw`grid items-center min-h-40px`}
+  ${tw`grid items-center min-h-40px border-b border-monochrome-medium-tint`}
 `;
 
 export const ExpandedRowContent = <T, >({

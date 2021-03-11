@@ -13,20 +13,5 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-@import '~common/style-guide/index';
 
-.no-tests-stub {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  color: map-get($monochrome, medium-tint);
-
-  &__message {
-    margin-top: 8px;
-    width: 400px;
-    font-size: 14px;
-    line-height: 24px;
-    text-align: center;
-    color: map-get($monochrome, default);
-  }
-}
+export { NoResultsFoundSub } from './no-results-found-stub';
