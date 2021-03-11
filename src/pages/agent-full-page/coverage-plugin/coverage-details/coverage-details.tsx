@@ -77,7 +77,7 @@ export const CoverageDetails = ({ associatedTestsTopic, classesTopicPrefix, topi
           classesTopicPrefix={classesTopicPrefix}
           tableContentStub={coverageByPackages.length === 0 && (
             <NoResultsFoundSub>
-              <Icons.Test height={104} width={107} />
+              <Icons.Package height={104} width={107} />
             </NoResultsFoundSub>
           )}
           expandedColumns={[

@@ -125,7 +125,7 @@ export const TestDetails = testDetails(
           </Table>
         </>
         {!tests.length && !searchQuery?.value && <NoTestsStub />}
-        {!filteredCount && searchQuery?.value && <NoResultsFoundSub><Icons.Package height={104} width={107} /></NoResultsFoundSub>}
+        {!filteredCount && searchQuery?.value && <NoResultsFoundSub><Icons.Test height={104} width={107} /></NoResultsFoundSub>}
         {selectedTest !== null && (
           <CoveredMethodsByTestSidebar
             isOpen={Boolean(selectedTest)}
