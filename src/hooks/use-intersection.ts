@@ -14,11 +14,10 @@
  * limitations under the License.
  */
 import { useState, useEffect, useRef } from 'react';
-import { useHover } from '@drill4j/ui-kit';
 
-export function useIntersection(threshold = 1.0) {
+export function useIntersection<N extends HTMLElement>(threshold = 1.0) {
   const [visible, setVisible] = useState(true);
-  const { ref, isVisible } = useHover();
+  const ref = useRef<N>(null);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -33,7 +32,7 @@ export function useIntersection(threshold = 1.0) {
     return () => {
       observer.disconnect();
     };
-  }, [isVisible, ref.current]);
+  });
 
   return { visible, ref };
 }

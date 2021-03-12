@@ -20,7 +20,7 @@ import { BEM, div } from '@redneckz/react-bem-helper';
 import { nanoid } from 'nanoid';
 import tw, { styled } from 'twin.macro';
 
-import { useBuildVersion, useElementSize, useIntersection } from 'hooks';
+import { useBuildVersion, useElementSize } from 'hooks';
 import { TestsToRunSummary } from 'types/tests-to-run-summary';
 import {
   convertToPercentage,

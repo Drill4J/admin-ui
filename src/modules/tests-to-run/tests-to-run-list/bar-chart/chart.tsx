@@ -13,8 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { useRef } from 'react';
-import { Tooltip, useHover } from '@drill4j/ui-kit';
+import { Tooltip } from '@drill4j/ui-kit';
 import { BEM, div } from '@redneckz/react-bem-helper';
 import { nanoid } from 'nanoid';
 
@@ -61,8 +60,8 @@ export const Chart = ({
   const savedTimeDuration = getDuration(totalDuration - duration);
   const durationType = isAllAutoTestsDone ? 'all-tests-done-duration' : 'duration';
   const hasUncompletedTests = completed > 0 && completed < total;
-  const { ref: firstChartRef, visible: isVisibleFirstChart } = useIntersection(1);
-  const { ref: secondChartRef, visible: isVisibleSecondChart } = useIntersection(1);
+  const { ref: firstChartRef, visible: isVisibleFirstChart } = useIntersection<HTMLDivElement>(1);
+  const { ref: secondChartRef, visible: isVisibleSecondChart } = useIntersection<HTMLDivElement>(1);
 
   return (
     <Tooltip
