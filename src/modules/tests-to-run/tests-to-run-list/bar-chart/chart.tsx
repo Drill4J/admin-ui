@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 import { useRef } from 'react';
-import { Tooltip } from '@drill4j/ui-kit';
+import { Tooltip, useHover } from '@drill4j/ui-kit';
 import { BEM, div } from '@redneckz/react-bem-helper';
 import { nanoid } from 'nanoid';
 
@@ -34,12 +34,14 @@ interface Props {
   chartData?: TestsToRunSummary;
   activeBuildVersion?: string;
   totalDuration?: number;
-  yScale: { stepSizeMs: number, unit: string, stepsCount: number };
-  isVisibleTooltip: boolean;
+  yScale: { stepSizeMs: number; unit: string; stepsCount: number };
 }
 
 export const Chart = ({
-  activeBuildVersion, totalDuration = 0, yScale, isVisibleTooltip, chartData: { buildVersion, statsByType } = {},
+  activeBuildVersion,
+  totalDuration = 0,
+  yScale,
+  chartData: { buildVersion, statsByType } = {},
 }: Props) => {
   const { AUTO: { total = 0, completed = 0, duration = 0 } = {} } = statsByType || {};
   const isAllAutoTestsDone = Boolean(total) && completed === total;
@@ -47,9 +49,10 @@ export const Chart = ({
   const MIN_DURATION_HEIGHT_PX = completed ? 4 : 0; // min height in px required by UX design
 
   const msPerPx = CHART_HEIGHT_PX / (yScale.stepSizeMs * yScale.stepsCount);
-  const durationHeight = duration < totalDuration
-    ? Math.max(msPerPx * duration - BORDER_PX, MIN_DURATION_HEIGHT_PX)
-    : msPerPx * totalDuration - BORDER_PX;
+  const durationHeight =
+    duration < totalDuration
+      ? Math.max(msPerPx * duration - BORDER_PX, MIN_DURATION_HEIGHT_PX)
+      : msPerPx * totalDuration - BORDER_PX;
 
   const savedTimeMs = totalDuration - duration;
   const savedTimeHeight = msPerPx * savedTimeMs - (durationHeight > 4 ? 0 : MIN_DURATION_HEIGHT_PX);
@@ -58,71 +61,87 @@ export const Chart = ({
   const savedTimeDuration = getDuration(totalDuration - duration);
   const durationType = isAllAutoTestsDone ? 'all-tests-done-duration' : 'duration';
   const hasUncompletedTests = completed > 0 && completed < total;
-  const ref = useRef(null);
-  const isVisibleSecondChart = useIntersection(ref);
+  const { ref: firstChartRef, visible: isVisibleFirstChart } = useIntersection(1);
+  const { ref: secondChartRef, visible: isVisibleSecondChart } = useIntersection(1);
 
   return (
-    <Tooltip message={isVisibleTooltip && (hasUncompletedTests && buildVersion !== activeBuildVersion) && (
-      <div className="flex flex-col items-center w-full">
-        <span>Not all the suggested Auto Tests</span>
-        <span>were run in this build</span>
-      </div>
-    )}
+    <Tooltip
+      message={
+        isVisibleFirstChart &&
+        hasUncompletedTests &&
+        buildVersion !== activeBuildVersion && (
+          <div className="flex flex-col items-center w-full">
+            <span>Not all the suggested Auto Tests</span>
+            <span>were run in this build</span>
+          </div>
+        )
+      }
     >
-      <GroupedBars bordered={!isAllAutoTestsDone} hasUncompletedTests={hasUncompletedTests} key={nanoid()}>
-        <Tooltip message={!isVisibleTooltip || (hasUncompletedTests && buildVersion !== activeBuildVersion) ? null : (
-          <>
-            {!total && 'No Auto Tests suggested to run in this build'}
-            {isAllAutoTestsDone && (
-              <SavedTimePercent>
-                Total time saved: {savedTimeDuration.hours}:{savedTimeDuration.minutes}:{savedTimeDuration.seconds}
-                <span>{percentFormatter((1 - duration / totalDuration) * 100)}%</span>
-              </SavedTimePercent>
-            )}
-            {Boolean(total) && !isAllAutoTestsDone && (
-              <div className="flex flex-col items-center w-full">
-                <span>
-                  {`${completed
-                    ? 'Not all'
-                    : 'None'} of the suggested Auto Tests`}
-                </span>
-                <span>were run in this build</span>
-              </div>
-            )}
-          </>
-        )}
+      <div ref={firstChartRef}>
+        <GroupedBars
+          bordered={!isAllAutoTestsDone}
+          hasUncompletedTests={hasUncompletedTests}
+          key={nanoid()}
         >
-          <ChartBlock
-            type={buildVersion !== activeBuildVersion
-              ? 'saved-time'
-              : undefined}
-            style={{
-              height: `${savedTimeHeight}px`,
-              backgroundColor: isAllAutoTestsDone ? DATA_VISUALIZATION_COLORS.SAVED_TIME : 'transparent',
-            }}
-          />
-        </Tooltip>
-        <Tooltip message={isVisibleSecondChart && (isAllAutoTestsDone || buildVersion === activeBuildVersion) && (
-          <div className="text-center">
-            {duration >= totalDuration && <div>No time was saved in this build.</div>}
-            <div>Auto Tests {!isAllAutoTestsDone && 'current'} duration with Drill4J: {hours}:{minutes}:{seconds}</div>
-          </div>
-        )}
-        >
-          <div ref={ref}>
+          <Tooltip
+            message={
+              !isVisibleFirstChart || (hasUncompletedTests && buildVersion !== activeBuildVersion) ? null : (
+                <>
+                  {!total && 'No Auto Tests suggested to run in this build'}
+                  {isAllAutoTestsDone && (
+                    <SavedTimePercent>
+                      Total time saved: {savedTimeDuration.hours}:{savedTimeDuration.minutes}:
+                      {savedTimeDuration.seconds}
+                      <span>{percentFormatter((1 - duration / totalDuration) * 100)}%</span>
+                    </SavedTimePercent>
+                  )}
+                  {Boolean(total) && !isAllAutoTestsDone && (
+                    <div className="flex flex-col items-center w-full">
+                      <span>{`${completed ? 'Not all' : 'None'} of the suggested Auto Tests`}</span>
+                      <span>were run in this build</span>
+                    </div>
+                  )}
+                </>
+              )
+            }
+          >
             <ChartBlock
-              type={buildVersion !== activeBuildVersion
-                ? durationType
-                : 'active'}
-              style={{ height: `${durationHeight}px` }}
+              type={buildVersion !== activeBuildVersion ? 'saved-time' : undefined}
+              style={{
+                height: `${savedTimeHeight}px`,
+                backgroundColor: isAllAutoTestsDone
+                  ? DATA_VISUALIZATION_COLORS.SAVED_TIME
+                  : 'transparent',
+              }}
             />
-          </div>
-        </Tooltip>
-      </GroupedBars>
+          </Tooltip>
+          <Tooltip
+            message={
+              isVisibleSecondChart &&
+              (isAllAutoTestsDone || buildVersion === activeBuildVersion) && (
+                <div className="text-center">
+                  {duration >= totalDuration && <div>No time was saved in this build.</div>}
+                  <div>
+                    Auto Tests {!isAllAutoTestsDone && 'current'} duration with Drill4J: {hours}:
+                    {minutes}:{seconds}
+                  </div>
+                </div>
+              )
+            }
+          >
+            <div ref={secondChartRef}>
+              <ChartBlock
+                type={buildVersion !== activeBuildVersion ? durationType : 'active'}
+                style={{ height: `${durationHeight}px` }}
+              />
+            </div>
+          </Tooltip>
+        </GroupedBars>
+      </div>
     </Tooltip>
   );
 };
 
-const GroupedBars = barChart.groupedBars(div({} as { bordered?: boolean, hasUncompletedTests?: boolean }));
+const GroupedBars = barChart.groupedBars(div({ } as { bordered?: boolean; hasUncompletedTests?: boolean; }));
 const ChartBlock = barChart.bar('div');
 const SavedTimePercent = barChart.savedTimePercent('div');

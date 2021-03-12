@@ -13,10 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
+import { useHover } from '@drill4j/ui-kit';
 
-export function useIntersection<E extends HTMLElement>(ref: React.RefObject<E>, threshold = 1.0) {
+export function useIntersection(threshold = 1.0) {
   const [visible, setVisible] = useState(true);
+  const { ref, isVisible } = useHover();
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -26,12 +28,12 @@ export function useIntersection<E extends HTMLElement>(ref: React.RefObject<E>, 
         threshold,
       },
     );
-    ref.current && observer.observe(ref.current);
+    ref && ref.current && observer.observe(ref.current);
 
     return () => {
       observer.disconnect();
     };
-  });
+  }, [isVisible, ref.current]);
 
-  return visible;
+  return { visible, ref };
 }

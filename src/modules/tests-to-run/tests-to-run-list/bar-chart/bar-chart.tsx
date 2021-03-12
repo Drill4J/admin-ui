@@ -68,9 +68,6 @@ export const BarChart = barChart(({
     : testsToRunHistorySlice(testsToRunHistory, slice, visibleBarsCount);
   const yScale = getYScale(totalDuration);
 
-  const barRef = useRef<HTMLDivElement>(null);
-  const isVisibleTooltip = useIntersection(barRef, 0.94);
-
   return (
     <div className={className} ref={ref}>
       <YAxis style={
@@ -98,7 +95,6 @@ export const BarChart = barChart(({
               gridTemplateColumns: `repeat(${visibleBarsCount}, 64px)`,
             }
           }
-          ref={barRef}
         >
           {bars.map((bar) => (
             <Chart
@@ -106,7 +102,6 @@ export const BarChart = barChart(({
               activeBuildVersion={activeBuildVersion}
               yScale={yScale}
               totalDuration={totalDuration}
-              isVisibleTooltip={isVisibleTooltip}
               key={bar.buildVersion}
             />
           ))}
