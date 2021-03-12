@@ -27,7 +27,7 @@ import {
   composeValidators, Fields, requiredArray, sizeLimit,
 } from 'forms';
 import { UnlockingSystemSettingsFormModal } from 'modules';
-import { parsePackages, formatPackages } from 'utils';
+import { parsePackages, formatPackages, dotsAndSlashesToSlash } from 'utils';
 import { Agent } from 'types/agent';
 import { useFormHandleSubmit } from 'hooks';
 import { NotificationManagerContext } from 'notification-manager';
@@ -122,7 +122,7 @@ export const SystemSettingsForm = ({
                   tw="w-97 h-20"
                   name="systemSettings.packages"
                   component={Fields.Textarea}
-                  parse={parsePackages}
+                  parse={(value) => parsePackages(dotsAndSlashesToSlash(value))}
                   format={formatPackages}
                   placeholder="e.g. com/example/mypackage&#10;foo/bar/baz&#10;and so on."
                   disabled={!unlockedPackages}
