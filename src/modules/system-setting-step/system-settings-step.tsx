@@ -18,7 +18,7 @@ import { FormGroup, GeneralAlerts } from '@drill4j/ui-kit';
 import 'twin.macro';
 
 import { Fields } from 'forms';
-import { parsePackages, formatPackages } from 'utils';
+import { parsePackages, formatPackages, dotsAndSlashesToSlash } from 'utils';
 
 export const SystemSettingsStep = () => (
   <div tw="space-y-10">
@@ -32,7 +32,7 @@ export const SystemSettingsStep = () => (
             tw="h-20"
             name="systemSettings.packages"
             component={Fields.Textarea}
-            parse={parsePackages}
+            parse={(value) => parsePackages(dotsAndSlashesToSlash(value))}
             format={formatPackages}
             placeholder="e.g. com/example/mypackage&#10;foo/bar/baz&#10;and so on."
           />
