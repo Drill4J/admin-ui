@@ -109,9 +109,15 @@ export const CoveragePluginHeader = coveragePluginHeader(({ className, previousB
           <div>Parent build:</div>
           {previousBuildVersion
             ? (
-              <ParentBuildVersion className="pr-6 link" to={`/full-page/${agentId}/${previousBuildVersion}/dashboard`}>
-                <div className="text-ellipsis" title={previousBuildVersion}>{previousBuildVersion}</div>
-              </ParentBuildVersion>
+              <div className="text-ellipsis mr-6">
+                <ParentBuildVersion
+                  className="inline link"
+                  to={`/full-page/${agentId}/${previousBuildVersion}/dashboard`}
+                  title={previousBuildVersion}
+                >
+                  {previousBuildVersion}
+                </ParentBuildVersion>
+              </div>
             ) : <span>&ndash;</span>}
         </BaselinePanel>
       )}
