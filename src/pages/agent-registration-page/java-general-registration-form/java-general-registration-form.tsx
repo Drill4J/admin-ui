@@ -37,7 +37,7 @@ export const JavaGeneralRegistrationForm = () => {
           <Field name="agentVersion" component={Fields.Input} placeholder="n/a" disabled />
         </FormGroup>
         <FormGroup tw="w-97" label="Service Group">
-          <Field name="serviceGroup" component={Fields.Input} placeholder="n/a" disabled />
+          <Field name="group" component={Fields.Input} placeholder="n/a" disabled />
         </FormGroup>
         <FormGroup tw="w-97" label="Agent name">
           <Field name="name" component={Fields.Input} placeholder="Enter agent's name" />
