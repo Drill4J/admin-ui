@@ -53,7 +53,7 @@ export const JsSystemSettingsForm = ({ agent, setPristineSettings }: Props) => {
       }}
       initialValues={agent}
       validate={composeValidators(
-        required('systemSettings.targetHost', 'Target Host'),
+        !agent.group && required('systemSettings.targetHost', 'Target Host'),
       ) as any}
       render={(props) => {
         const ref = useFormHandleSubmit(props);
