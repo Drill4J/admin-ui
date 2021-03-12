@@ -98,7 +98,8 @@ export const AgentRegistrationPage = () => {
           name="System settings"
           component={agent.agentType === 'Node.js' ? JsSystemRegistrationForm : SystemSettingsStep}
           validate={agent.agentType === 'Node.js'
-            ? composeValidators(required('systemSettings.targetHost', 'Target Host')) : composeValidators(
+            ? composeValidators(!agent.group && required('systemSettings.targetHost', 'Target Host'))
+            : composeValidators(
               requiredArray('systemSettings.packages', 'Path prefix is required.'),
               sizeLimit({
                 name: 'systemSettings.sessionIdHeaderName',
