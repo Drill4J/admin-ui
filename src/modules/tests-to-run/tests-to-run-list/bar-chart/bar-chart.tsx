@@ -13,17 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { useEffect, useRef, useState } from 'react';
+import {
+  useEffect, useRef, useState,
+} from 'react';
 import { BEM, div } from '@redneckz/react-bem-helper';
-import { Tooltip } from '@drill4j/ui-kit';
 import { nanoid } from 'nanoid';
+import tw, { styled } from 'twin.macro';
 
-import { DATA_VISUALIZATION_COLORS } from 'common/constants';
 import { useBuildVersion, useElementSize } from 'hooks';
 import { TestsToRunSummary } from 'types/tests-to-run-summary';
 import {
-  convertToPercentage, getDuration, percentFormatter,
+  convertToPercentage,
 } from 'utils';
+import { Chart } from './chart';
 
 import styles from './bar-chart.module.scss';
 
@@ -39,7 +41,10 @@ const barChart = BEM(styles);
 const BAR_HORIZONTAL_PADDING_PX = 96;
 const BAR_WITH_GAP_WIDTH_PX = 112;
 const CHART_HEIGHT_PX = 160;
-const BORDER_PX = 1;
+
+const CartesianLayout = styled.div`
+  ${tw`grid items-end gap-12 px-12 border-b border-monochrome-black`}
+`;
 
 export const BarChart = barChart(({
   className, activeBuildVersion, totalDuration, summaryTestsToRun,
@@ -82,90 +87,24 @@ export const BarChart = barChart(({
             )).reverse()
         }
       </YAxis>
-      <Chart>
-        <CartesianLayout style={
-          {
-            height: `${CHART_HEIGHT_PX}px`,
-            gridTemplateColumns: `repeat(${visibleBarsCount}, 64px)`,
+      <ChartBlock>
+        <CartesianLayout
+          style={
+            {
+              height: `${CHART_HEIGHT_PX}px`,
+              gridTemplateColumns: `repeat(${visibleBarsCount}, 64px)`,
+            }
           }
-        }
         >
-          {bars.map(({ buildVersion, statsByType: { AUTO: { total = 0, completed = 0, duration = 0 } = {} } = {} }) => {
-            const isAllAutoTestsDone = Boolean(total) && completed === total;
-
-            const MIN_DURATION_HEIGHT_PX = completed ? 4 : 0; // min height in px required by UX design
-
-            const msPerPx = CHART_HEIGHT_PX / (yScale.stepSizeMs * yScale.stepsCount);
-            const durationHeight = duration < totalDuration
-              ? Math.max(msPerPx * duration - BORDER_PX, MIN_DURATION_HEIGHT_PX)
-              : msPerPx * totalDuration - BORDER_PX;
-
-            const savedTimeMs = totalDuration - duration;
-            const savedTimeHeight = msPerPx * savedTimeMs - (durationHeight > 4 ? 0 : MIN_DURATION_HEIGHT_PX);
-
-            const { hours, minutes, seconds } = getDuration(duration);
-            const savedTimeDuration = getDuration(totalDuration - duration);
-            const durationType = isAllAutoTestsDone ? 'all-tests-done-duration' : 'duration';
-            const hasUncompletedTests = completed > 0 && completed < total;
-            return (
-              <Tooltip message={(hasUncompletedTests && buildVersion !== activeBuildVersion) && (
-                <div className="flex flex-col items-center w-full">
-                  <span>Not all the suggested Auto Tests</span>
-                  <span>were run in this build</span>
-                </div>
-              )}
-              >
-                <GroupedBars bordered={!isAllAutoTestsDone} hasUncompletedTests={hasUncompletedTests} key={nanoid()}>
-                  <Tooltip message={(hasUncompletedTests && buildVersion !== activeBuildVersion) ? null : (
-                    <>
-                      {!total && 'No Auto Tests suggested to run in this build'}
-                      {isAllAutoTestsDone && (
-                        <SavedTimePercent>
-                          Total time saved: {savedTimeDuration.hours}:{savedTimeDuration.minutes}:{savedTimeDuration.seconds}
-                          <span>{percentFormatter((1 - duration / totalDuration) * 100)}%</span>
-                        </SavedTimePercent>
-                      )}
-                      {Boolean(total) && !isAllAutoTestsDone && (
-                        <div className="flex flex-col items-center w-full">
-                          <span>
-                            {`${completed
-                              ? 'Not all'
-                              : 'None'} of the suggested Auto Tests`}
-                          </span>
-                          <span>were run in this build</span>
-                        </div>
-                      )}
-                    </>
-                  )}
-                  >
-                    <Bar
-                      type={buildVersion !== activeBuildVersion
-                        ? 'saved-time'
-                        : undefined}
-                      style={{
-                        height: `${savedTimeHeight}px`,
-                        backgroundColor: isAllAutoTestsDone ? DATA_VISUALIZATION_COLORS.SAVED_TIME : 'transparent',
-                      }}
-                    />
-                  </Tooltip>
-                  <Tooltip message={(isAllAutoTestsDone || buildVersion === activeBuildVersion) && (
-                    <div className="text-center">
-                      {duration >= totalDuration && <div>No time was saved in this build.</div>}
-                      <div>Auto Tests {!isAllAutoTestsDone && 'current'} duration with Drill4J: {hours}:{minutes}:{seconds}</div>
-                    </div>
-                  )}
-                  >
-                    <Bar
-                      type={buildVersion !== activeBuildVersion
-                        ? durationType
-                        : 'active'}
-                      style={{ height: `${durationHeight}px` }}
-                    />
-                  </Tooltip>
-                </GroupedBars>
-              </Tooltip>
-            );
-          })}
+          {bars.map((bar) => (
+            <Chart
+              chartData={bar}
+              activeBuildVersion={activeBuildVersion}
+              yScale={yScale}
+              totalDuration={totalDuration}
+              key={bar.buildVersion}
+            />
+          ))}
         </CartesianLayout>
         {/* This hack is needed to dynamically change the slider of a custom scrollbar */}
         <style type="text/css">
@@ -190,19 +129,15 @@ export const BarChart = barChart(({
             {bars.map(({ buildVersion }) => <div key={nanoid()} title={buildVersion}>{buildVersion}</div>)}
           </XAxisLegend>
         </XAxis>
-      </Chart>
+      </ChartBlock>
     </div>
   );
 });
 
-const Chart = barChart.chart('div');
-const CartesianLayout = barChart.cartesianLayout('div');
-const GroupedBars = barChart.groupedBars(div({} as { bordered?: boolean, hasUncompletedTests?: boolean }));
-const Bar = barChart.bar('div');
+const ChartBlock = barChart.chart('div');
 const YAxis = barChart.yAxis('div');
 const XAxis = barChart.xAxis('div');
 const XAxisLegend = barChart.xAxisLegend('div');
-const SavedTimePercent = barChart.savedTimePercent('div');
 
 const MS_IN_SECONDS = 1000;
 const MS_IN_MINUTES = MS_IN_SECONDS * 60;

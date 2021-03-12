@@ -24,3 +24,4 @@ export { useBuildVersion } from './use-build-version';
 export { useActiveScope } from './use-active-scope';
 export { useBaselineVersion } from './use-baseline-version';
 export { useFormHandleSubmit } from './use-form-handle-submit';
+export { useIntersection } from './use-intersection';
