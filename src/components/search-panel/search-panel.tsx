@@ -15,8 +15,7 @@
  */
 import { Inputs } from '@drill4j/ui-kit';
 import { useCallback, useEffect, useState } from 'react';
-
-import { debounce } from 'utils';
+import debounce from 'lodash.debounce';
 
 interface Props {
   onSearch: (search: string) => void;
