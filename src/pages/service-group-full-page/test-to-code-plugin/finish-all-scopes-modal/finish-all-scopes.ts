@@ -28,7 +28,7 @@ export function finishAllScopes(
       });
       onSuccess && onSuccess();
     } catch ({ response: { data: { message } = {} } = {} }) {
-      onError && onError(message || 'There is some issue with scopes finishing. Please try again later');
+      onError && onError(message || 'There is some issue with your action. Please try again later');
     }
   };
 }
