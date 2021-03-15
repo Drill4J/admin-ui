@@ -14,36 +14,35 @@
  * limitations under the License.
  */
 import { LinkButton } from '@drill4j/ui-kit';
-import { BEM } from '@redneckz/react-bem-helper';
 import { Field } from 'react-final-form';
+import 'twin.macro';
 
 import { Fields } from 'forms';
 import { ActiveSession } from 'types/active-session';
 import { useSessionsPaneDispatch, useSessionsPaneState, setBulkOperation } from '../store';
-
-import styles from './management-active-sessions.module.scss';
 
 interface Props {
   className?: string;
   activeSessions: ActiveSession[];
 }
 
-const managementActiveSessions = BEM(styles);
-
-export const ManagementActiveSessions = managementActiveSessions(({ className, activeSessions }: Props) => {
+export const ManagementActiveSessions = ({ activeSessions }: Props) => {
   const dispatch = useSessionsPaneDispatch();
   const { bulkOperation, singleOperation } = useSessionsPaneState();
   const disabled = bulkOperation.isProcessing || Boolean(singleOperation.id);
 
   return (
-    <div className={className} data-test="management-active-sessions:search-panel">
-      <Content>
-        <div className="flex justify-between items-center w-full">
+    <div
+      tw="h-22 border-b border-monochrome-medium-tint text-16 leading-20 text-monochrome-black"
+      data-test="management-active-sessions:search-panel"
+    >
+      <div tw="flex flex-col justify-between pt-4 px-6 pb-3 h-full">
+        <div tw="flex justify-between items-center w-full">
           <span>
             Active Sessions
-            <Count>{activeSessions.length}</Count>
+            <span tw="ml-2 text-monochrome-default">{activeSessions.length}</span>
           </span>
-          <ActionsPanel>
+          <div tw="flex gap-4">
             <LinkButton
               size="small"
               onClick={() => dispatch(setBulkOperation('abort', true))}
@@ -60,7 +59,7 @@ export const ManagementActiveSessions = managementActiveSessions(({ className, a
             >
               Finish all
             </LinkButton>
-          </ActionsPanel>
+          </div>
         </div>
         <Field
           name="id"
@@ -68,11 +67,7 @@ export const ManagementActiveSessions = managementActiveSessions(({ className, a
           placeholder="Search session by ID"
           disabled
         />
-      </Content>
+      </div>
     </div>
   );
-});
-
-const Count = managementActiveSessions.count('span');
-const ActionsPanel = managementActiveSessions.actionsPanel('div');
-const Content = managementActiveSessions.content('div');
+};

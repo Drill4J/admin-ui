@@ -16,7 +16,6 @@
 import { useEffect } from 'react';
 import { Form } from 'react-final-form';
 import { useParams } from 'react-router-dom';
-import { BEM } from '@redneckz/react-bem-helper';
 import {
   Modal, GeneralAlerts,
 } from '@drill4j/ui-kit';
@@ -41,15 +40,11 @@ import { BulkOperationWarning } from './bulk-operation-warning';
 import { ActionsPanel } from './actions-panel';
 import { setIsNewSession, useSessionsPaneDispatch, useSessionsPaneState } from './store';
 
-import styles from './sessions-management-pane.module.scss';
-
 interface Props {
   className?: string;
   isOpen: boolean;
   onToggle: (value: boolean) => void;
 }
-
-const manageSessionsPane = BEM(styles);
 
 const validateManageSessionsPane = composeValidators(
   required('sessionId', 'Session ID'),
@@ -58,101 +53,99 @@ const validateManageSessionsPane = composeValidators(
   }),
 );
 
-export const SessionsManagementPane = manageSessionsPane(
-  ({
-    isOpen, onToggle,
-  }: Props) => {
-    const dispatch = useSessionsPaneDispatch();
-    const { bulkOperation, isNewSession } = useSessionsPaneState();
-    const { generalAlertMessage, showGeneralAlertMessage } = useGeneralAlertMessage();
-    const {
-      agentId = '', serviceGroupId = '', pluginId = '', buildVersion = '',
-    } = useParams<{ agentId: string; serviceGroupId: string; pluginId: string; buildVersion: string}>();
-    const agentType = serviceGroupId ? 'ServiceGroup' : 'Agent';
-    const id = agentId || serviceGroupId;
-    const activeSessions = useActiveSessions(agentType, id, buildVersion) || [];
-    const hasGlobalSession = activeSessions.some(({ isGlobal }) => isGlobal);
-    useEffect(() => showGeneralAlertMessage(null), [isNewSession]);
+export const SessionsManagementPane = ({
+  isOpen, onToggle,
+}: Props) => {
+  const dispatch = useSessionsPaneDispatch();
+  const { bulkOperation, isNewSession } = useSessionsPaneState();
+  const { generalAlertMessage, showGeneralAlertMessage } = useGeneralAlertMessage();
+  const {
+    agentId = '', serviceGroupId = '', pluginId = '', buildVersion = '',
+  } = useParams<{ agentId: string; serviceGroupId: string; pluginId: string; buildVersion: string}>();
+  const agentType = serviceGroupId ? 'ServiceGroup' : 'Agent';
+  const id = agentId || serviceGroupId;
+  const activeSessions = useActiveSessions(agentType, id, buildVersion) || [];
+  const hasGlobalSession = activeSessions.some(({ isGlobal }) => isGlobal);
+  useEffect(() => showGeneralAlertMessage(null), [isNewSession]);
 
-    return (
-      <Modal isOpen={isOpen} onToggle={onToggle}>
-        <Form
-          onSubmit={async (values: { sessionId: string; isRealtime: boolean; isGlobal: boolean }, form): Promise<unknown> => {
-            try {
-              const response = await (agentId
-                ? startAgentSession(agentId, pluginId)(values)
-                : startServiceGroupSessions(serviceGroupId, pluginId)(values));
-              showGeneralAlertMessage({ type: 'SUCCESS', text: 'New session has been started successfully.' });
-              form.change('sessionId', '');
-              form.change('isGlobal', false);
-              form.change('isRealtime', false);
-              dispatch(setIsNewSession(false));
-              return response;
-            } catch (error) {
-              if (error?.response?.data?.code === 409) {
-                const { data: { fieldErrors = [] } = {}, message: errorMessage = '' } = error?.response?.data || {};
-                errorMessage && showGeneralAlertMessage({
-                  type: 'ERROR',
-                  text: errorMessage || 'There is some issue with your action. Please try again later.',
-                });
+  return (
+    <Modal isOpen={isOpen} onToggle={onToggle}>
+      <Form
+        onSubmit={async (values: { sessionId: string; isRealtime: boolean; isGlobal: boolean }, form): Promise<unknown> => {
+          try {
+            const response = await (agentId
+              ? startAgentSession(agentId, pluginId)(values)
+              : startServiceGroupSessions(serviceGroupId, pluginId)(values));
+            showGeneralAlertMessage({ type: 'SUCCESS', text: 'New session has been started successfully.' });
+            form.change('sessionId', '');
+            form.change('isGlobal', false);
+            form.change('isRealtime', false);
+            dispatch(setIsNewSession(false));
+            return response;
+          } catch (error) {
+            if (error?.response?.data?.code === 409) {
+              const { data: { fieldErrors = [] } = {}, message: errorMessage = '' } = error?.response?.data || {};
+              errorMessage && showGeneralAlertMessage({
+                type: 'ERROR',
+                text: errorMessage || 'There is some issue with your action. Please try again later.',
+              });
 
-                return handleFieldErrors(fieldErrors);
-              }
-              showGeneralAlertMessage({ type: 'ERROR', text: 'There is some issue with your action. Please try again  later.' });
-              return error;
+              return handleFieldErrors(fieldErrors);
             }
-          }}
-          validate={validateManageSessionsPane}
-          render={({
-            invalid, handleSubmit, dirtySinceLastSubmit, submitting, hasValidationErrors,
-          }) => (
-            <form onSubmit={handleSubmit} tw="flex flex-col h-full">
-              <Header data-test="sessions-management-pane:header">
-                {isNewSession ? 'Start New Session' : 'Sessions Management'}
-              </Header>
-              {generalAlertMessage?.type && (
-                <GeneralAlerts type={generalAlertMessage.type}>
-                  {generalAlertMessage.text}
-                </GeneralAlerts>
+            showGeneralAlertMessage({ type: 'ERROR', text: 'There is some issue with your action. Please try again  later.' });
+            return error;
+          }
+        }}
+        validate={validateManageSessionsPane}
+        render={({
+          invalid, handleSubmit, dirtySinceLastSubmit, submitting, hasValidationErrors,
+        }) => (
+          <form onSubmit={handleSubmit} tw="flex flex-col h-full">
+            <div
+              tw="h-16 px-6 py-4 text-20 leading-32 text-monochrome-black border-b border-monochrome-medium-tint"
+              data-test="sessions-management-pane:header"
+            >
+              {isNewSession ? 'Start New Session' : 'Sessions Management'}
+            </div>
+            {generalAlertMessage?.type && (
+              <GeneralAlerts type={generalAlertMessage.type}>
+                {generalAlertMessage.text}
+              </GeneralAlerts>
+            )}
+            {isNewSession &&
+            <ManagementNewSession agentId={agentId} serviceGroupId={serviceGroupId} hasGlobalSession={hasGlobalSession} />}
+            {!isNewSession && activeSessions.length > 0 && (
+              <>
+                <ManagementActiveSessions activeSessions={activeSessions} />
+                <ActiveSessionsList
+                  agentType={agentType}
+                  activeSessions={activeSessions}
+                  showGeneralAlertMessage={showGeneralAlertMessage}
+                />
+              </>
+            )}
+            {!isNewSession && activeSessions.length === 0 && <EmptyActiveSessionsStub />}
+            <div tw="min-h-80px mt-auto px-6 py-4 bg-monochrome-light-tint">
+              {bulkOperation.isProcessing ? (
+                <BulkOperationWarning
+                  agentId={id}
+                  agentType={agentType}
+                  pluginId={pluginId}
+                  showGeneralAlertMessage={showGeneralAlertMessage}
+                />
+              ) : (
+                <ActionsPanel
+                  activeSessions={activeSessions}
+                  startSessionDisabled={(invalid && !dirtySinceLastSubmit) || hasValidationErrors || submitting}
+                  onToggle={onToggle}
+                  handleSubmit={handleSubmit}
+                  submitting={submitting}
+                />
               )}
-              {isNewSession &&
-                <ManagementNewSession agentId={agentId} serviceGroupId={serviceGroupId} hasGlobalSession={hasGlobalSession} />}
-              {!isNewSession && activeSessions.length > 0 && (
-                <>
-                  <ManagementActiveSessions activeSessions={activeSessions} />
-                  <ActiveSessionsList
-                    agentType={agentType}
-                    activeSessions={activeSessions}
-                    showGeneralAlertMessage={showGeneralAlertMessage}
-                  />
-                </>
-              )}
-              {!isNewSession && activeSessions.length === 0 && <EmptyActiveSessionsStub />}
-              <Footer>
-                {bulkOperation.isProcessing ? (
-                  <BulkOperationWarning
-                    agentId={id}
-                    agentType={agentType}
-                    pluginId={pluginId}
-                    showGeneralAlertMessage={showGeneralAlertMessage}
-                  />
-                ) : (
-                  <ActionsPanel
-                    activeSessions={activeSessions}
-                    startSessionDisabled={(invalid && !dirtySinceLastSubmit) || hasValidationErrors || submitting}
-                    onToggle={onToggle}
-                    handleSubmit={handleSubmit}
-                    submitting={submitting}
-                  />
-                )}
-              </Footer>
-            </form>
-          )}
-        />
-      </Modal>
-    );
-  },
-);
-
-const Header = manageSessionsPane.header('div');
-const Footer = manageSessionsPane.footer('div');
+            </div>
+          </form>
+        )}
+      />
+    </Modal>
+  );
+};

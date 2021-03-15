@@ -24,6 +24,8 @@ module.exports = {
       spacing: {
         13: '3.25rem',
         21: '5.25rem',
+        22: '5.5rem',
+        26: '6.5rem',
         27: '6.75rem',
         29: '7.25rem',
         30: '7.5rem',
@@ -44,9 +46,11 @@ module.exports = {
     minWidth: {
       '16px': '16px',
       '32px': '32px',
+      '104px': '104px',
     },
     minHeight: {
       '40px': '40px',
+      '80px': '80px',
     },
     colors: {
       transparent: 'transparent',

@@ -15,17 +15,15 @@
  */
 import { Field } from 'react-final-form';
 import { NavLink } from 'react-router-dom';
-import { BEM } from '@redneckz/react-bem-helper';
 import {
   FormGroup,
   GeneralAlerts,
   Icons,
   Tooltip,
 } from '@drill4j/ui-kit';
+import tw, { styled } from 'twin.macro';
 
 import { Fields } from 'forms';
-
-import styles from './management-new-session.module.scss';
 
 interface Props {
   className?: string;
@@ -34,9 +32,11 @@ interface Props {
   hasGlobalSession: boolean;
 }
 
-const managementNewSession = BEM(styles);
+const SettingsLink = styled(NavLink)`
+  ${tw`font-bold`}
+`;
 
-export const ManagementNewSession = managementNewSession(({
+export const ManagementNewSession = ({
   className, agentId, serviceGroupId, hasGlobalSession,
 }: Props) => (
   <div className={className}>
@@ -46,6 +46,7 @@ export const ManagementNewSession = managementNewSession(({
         {agentId
           ? (
             <SettingsLink
+              className="link"
               to={`/agents/agent/${agentId}/settings/general`}
               data-test="management-new-session:settings-link:agent"
             >
@@ -54,6 +55,7 @@ export const ManagementNewSession = managementNewSession(({
           )
           : (
             <SettingsLink
+              className="link"
               to={`/agents/service-group/${serviceGroupId}/settings/general`}
               data-test="management-new-session:settings-link:service-group"
             >
@@ -62,7 +64,7 @@ export const ManagementNewSession = managementNewSession(({
           )}
       </span>
     </GeneralAlerts>
-    <NewSessionForm>
+    <div tw="grid gap-4 py-4 px-6">
       <FormGroup label="Session ID">
         <Field name="sessionId" component={Fields.Input} placeholder="Enter session ID" />
       </FormGroup>
@@ -98,7 +100,7 @@ export const ManagementNewSession = managementNewSession(({
                 </div>
               )}
             >
-              <IconInfo />
+              <Icons.Info tw="text-monochrome-default" />
             </Tooltip>
           </div>
         )}
@@ -109,10 +111,6 @@ export const ManagementNewSession = managementNewSession(({
         component={Fields.Checkbox}
         label="Real-time coverage collection"
       />
-    </NewSessionForm>
+    </div>
   </div>
-));
-
-const SettingsLink = managementNewSession.settingsLink(NavLink);
-const NewSessionForm = managementNewSession.newSessionForm('div');
-const IconInfo = managementNewSession.iconInfo(Icons.Info);
+);

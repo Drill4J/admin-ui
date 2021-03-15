@@ -13,39 +13,44 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { BEM } from '@redneckz/react-bem-helper';
 import { Icons } from '@drill4j/ui-kit';
-
+import tw, { styled } from 'twin.macro';
 import { ActiveSession } from 'types/active-session';
 import { Message } from 'types/message';
 import { SessionInfo } from '../session-info';
 import { useSessionsPaneState } from '../../store';
 
-import styles from './service-group-sessions.module.scss';
-
 interface Props {
-  className?: string;
   activeSessions: ActiveSession[];
   showGeneralAlertMessage: (message: Message) => void;
 }
 
-const serviceGroupSessions = BEM(styles);
+const ServiceGroupAgentPanel = styled.div`
+  ${tw`h-9`}
+  ${tw`text-12 leading-24 text-monochrome-black border-b border-monochrome-medium-tint`}
+  ${({ disabled }: { disabled: boolean }) => disabled && tw`opacity-20`}
+`;
 
-export const ServiceGroupSessions = serviceGroupSessions(({ className, activeSessions, showGeneralAlertMessage }: Props) => {
+export const ServiceGroupSessions = ({ activeSessions, showGeneralAlertMessage }: Props) => {
   const serviceGroupAgentsIds = Array.from(new Set(activeSessions.map(session => session.agentId)));
   const { bulkOperation, singleOperation } = useSessionsPaneState();
 
   return (
-    <div className={className}>
+    <div>
       {serviceGroupAgentsIds.map((agentId) => (
         <div key={agentId}>
           <ServiceGroupAgentPanel
+            tw=""
             className="flex items-center w-full px-6 py-1"
             data-test="service-group-sessions:service-group-agent-panel"
             disabled={Boolean(singleOperation.id) || bulkOperation.isProcessing}
           >
             <Icons.Agent data-test="service-group-sessions:agent-icon" />
-            <AgentTitle data-test="service-group-sessions:agent-title">Agent:</AgentTitle>
+            <span
+              tw="mx-2 text-monochrome-default"
+              data-test="service-group-sessions:agent-title"
+            >Agent:
+            </span>
             {agentId}
           </ServiceGroupAgentPanel>
           {activeSessions.filter(({ agentId: sessionAgentId }) => sessionAgentId === agentId)
@@ -66,7 +71,4 @@ export const ServiceGroupSessions = serviceGroupSessions(({ className, activeSes
       ))}
     </div>
   );
-});
-
-const ServiceGroupAgentPanel = serviceGroupSessions.serviceGroupAgentPanel('div');
-const AgentTitle = serviceGroupSessions.agentTitle('span');
+};

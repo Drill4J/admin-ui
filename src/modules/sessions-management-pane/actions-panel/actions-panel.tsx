@@ -13,18 +13,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { BEM } from '@redneckz/react-bem-helper';
 import { Button, Icons, Spinner } from '@drill4j/ui-kit';
+import tw, { styled } from 'twin.macro';
 
 import { ActiveSession } from 'types/active-session';
 import { useSessionsPaneDispatch, useSessionsPaneState, setIsNewSession } from '../store';
 
-import styles from './actions-panel.module.scss';
-
-const actionsPanel = BEM(styles);
+const Content = styled.div`
+  ${tw`grid gap-4 items-center h-full`}
+  grid-template-columns: max-content max-content max-content;
+`;
 
 interface Props {
-  className?: string;
   activeSessions: ActiveSession[];
   startSessionDisabled: boolean;
   onToggle: (value: boolean) => void;
@@ -32,61 +32,59 @@ interface Props {
   submitting: boolean;
 }
 
-export const ActionsPanel = actionsPanel(
-  ({
-    className, activeSessions, onToggle, startSessionDisabled, handleSubmit, submitting,
-  }: Props) => {
-    const dispatch = useSessionsPaneDispatch();
-    const { singleOperation, isNewSession } = useSessionsPaneState();
+export const ActionsPanel = ({
+  activeSessions, onToggle, startSessionDisabled, handleSubmit, submitting,
+}: Props) => {
+  const dispatch = useSessionsPaneDispatch();
+  const { singleOperation, isNewSession } = useSessionsPaneState();
 
-    return (
-      <div className={className}>
-        { isNewSession ? (
-          <Button
-            className="flex justify-center items-center gap-x-1 w-31"
-            type="primary"
-            size="large"
-            disabled={startSessionDisabled || submitting}
-            onClick={handleSubmit}
-            data-test="sessions-management-pane:start-session-button"
-          >
-            {submitting ? <Spinner disabled /> : 'Start Session'}
-          </Button>
-        ) : (
-          <Button
-            type="primary"
-            size="large"
-            onClick={(e) => {
-              e.preventDefault();
-              dispatch(setIsNewSession(true));
-            }}
-            data-test="sessions-management-pane:start-new-session-button"
-            disabled={Boolean(singleOperation.id)}
-          >
-            Start New Session
-          </Button>
-        )}
-        { activeSessions.length > 0 && isNewSession && (
-          <Button
-            className="flex gap-x-2"
-            type="secondary"
-            size="large"
-            onClick={() => dispatch(setIsNewSession(false))}
-            data-test="sessions-management-pane:back-button"
-          >
-            <Icons.Expander width={8} height={14} rotate={180} />
-            <span>Back</span>
-          </Button>
-        )}
+  return (
+    <Content>
+      { isNewSession ? (
         <Button
+          tw="flex justify-center items-center gap-x-1 w-31"
+          type="primary"
+          size="large"
+          disabled={startSessionDisabled || submitting}
+          onClick={handleSubmit}
+          data-test="sessions-management-pane:start-session-button"
+        >
+          {submitting ? <Spinner disabled /> : 'Start Session'}
+        </Button>
+      ) : (
+        <Button
+          type="primary"
+          size="large"
+          onClick={(e) => {
+            e.preventDefault();
+            dispatch(setIsNewSession(true));
+          }}
+          data-test="sessions-management-pane:start-new-session-button"
+          disabled={Boolean(singleOperation.id)}
+        >
+          Start New Session
+        </Button>
+      )}
+      { activeSessions.length > 0 && isNewSession && (
+        <Button
+          tw="flex gap-x-2"
           type="secondary"
           size="large"
-          onClick={() => onToggle(false)}
-          data-test="sessions-management-pane:cancel-button"
+          onClick={() => dispatch(setIsNewSession(false))}
+          data-test="sessions-management-pane:back-button"
         >
-          Cancel
+          <Icons.Expander width={8} height={14} rotate={180} />
+          <span>Back</span>
         </Button>
-      </div>
-    );
-  },
-);
+      )}
+      <Button
+        type="secondary"
+        size="large"
+        onClick={() => onToggle(false)}
+        data-test="sessions-management-pane:cancel-button"
+      >
+        Cancel
+      </Button>
+    </Content>
+  );
+};

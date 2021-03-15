@@ -13,28 +13,23 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { BEM } from '@redneckz/react-bem-helper';
 
 import { ActiveSession } from 'types/active-session';
 import { Message } from 'types/message';
 import { SessionInfo } from './session-info';
 import { ServiceGroupSessions } from './service-group-sessions';
-
-import styles from './active-sessions-list.module.scss';
+import 'twin.macro';
 
 interface Props {
-  className?: string;
   agentType: string;
   activeSessions: ActiveSession[];
   showGeneralAlertMessage: (message: Message) => void;
 }
 
-const activeSessionsList = BEM(styles);
-
-export const ActiveSessionsList = activeSessionsList(({
-  className, agentType, activeSessions, showGeneralAlertMessage,
+export const ActiveSessionsList = ({
+  agentType, activeSessions, showGeneralAlertMessage,
 }: Props) => (
-  <div className={className}>
+  <div tw="overflow-y-auto">
     {agentType === 'Agent' ? (
       activeSessions.map(({
         id: sessionId, testType, agentId, isRealtime, isGlobal,
@@ -53,4 +48,4 @@ export const ActiveSessionsList = activeSessionsList(({
       <ServiceGroupSessions activeSessions={activeSessions} showGeneralAlertMessage={showGeneralAlertMessage} />
     )}
   </div>
-));
+);
