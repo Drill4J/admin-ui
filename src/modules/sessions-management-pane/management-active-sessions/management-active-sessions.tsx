@@ -22,7 +22,6 @@ import { ActiveSession } from 'types/active-session';
 import { useSessionsPaneDispatch, useSessionsPaneState, setBulkOperation } from '../store';
 
 interface Props {
-  className?: string;
   activeSessions: ActiveSession[];
 }
 

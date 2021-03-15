@@ -41,7 +41,6 @@ import { ActionsPanel } from './actions-panel';
 import { setIsNewSession, useSessionsPaneDispatch, useSessionsPaneState } from './store';
 
 interface Props {
-  className?: string;
   isOpen: boolean;
   onToggle: (value: boolean) => void;
 }
@@ -53,9 +52,7 @@ const validateManageSessionsPane = composeValidators(
   }),
 );
 
-export const SessionsManagementPane = ({
-  isOpen, onToggle,
-}: Props) => {
+export const SessionsManagementPane = ({ isOpen, onToggle }: Props) => {
   const dispatch = useSessionsPaneDispatch();
   const { bulkOperation, isNewSession } = useSessionsPaneState();
   const { generalAlertMessage, showGeneralAlertMessage } = useGeneralAlertMessage();

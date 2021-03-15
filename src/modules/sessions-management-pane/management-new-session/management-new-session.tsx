@@ -26,7 +26,6 @@ import tw, { styled } from 'twin.macro';
 import { Fields } from 'forms';
 
 interface Props {
-  className?: string;
   agentId: string;
   serviceGroupId: string;
   hasGlobalSession: boolean;
@@ -37,9 +36,9 @@ const SettingsLink = styled(NavLink)`
 `;
 
 export const ManagementNewSession = ({
-  className, agentId, serviceGroupId, hasGlobalSession,
+  agentId, serviceGroupId, hasGlobalSession,
 }: Props) => (
-  <div className={className}>
+  <div>
     <GeneralAlerts type="INFO">
       <span data-test="management-new-session:info-general-alert">
         Pay attention that you have to specify Header Mapping in&nbsp;

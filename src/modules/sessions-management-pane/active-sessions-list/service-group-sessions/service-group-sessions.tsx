@@ -40,7 +40,6 @@ export const ServiceGroupSessions = ({ activeSessions, showGeneralAlertMessage }
       {serviceGroupAgentsIds.map((agentId) => (
         <div key={agentId}>
           <ServiceGroupAgentPanel
-            tw=""
             className="flex items-center w-full px-6 py-1"
             data-test="service-group-sessions:service-group-agent-panel"
             disabled={Boolean(singleOperation.id) || bulkOperation.isProcessing}
@@ -49,7 +48,8 @@ export const ServiceGroupSessions = ({ activeSessions, showGeneralAlertMessage }
             <span
               tw="mx-2 text-monochrome-default"
               data-test="service-group-sessions:agent-title"
-            >Agent:
+            >
+              Agent:
             </span>
             {agentId}
           </ServiceGroupAgentPanel>
