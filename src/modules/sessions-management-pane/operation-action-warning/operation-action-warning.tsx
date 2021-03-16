@@ -13,15 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { BEM } from '@redneckz/react-bem-helper';
 import { Button, NegativeActionButton, Spinner } from '@drill4j/ui-kit';
+import 'twin.macro';
 
 import { OperationType } from '../store/reducer';
 
-import styles from './operation-action-warning.module.scss';
-
 interface Props {
-  className?: string;
   handleDecline: () => void;
   handleConfirm: () => void;
   children: React.ReactNode;
@@ -29,16 +26,14 @@ interface Props {
   loading: boolean;
 }
 
-const operationActionWarning = BEM(styles);
-
-export const OperationActionWarning = operationActionWarning(({
-  className, handleConfirm, handleDecline, children, operationType, loading,
+export const OperationActionWarning = ({
+  handleConfirm, handleDecline, children, operationType, loading,
 } : Props) => {
   const ConfirmButton = operationType === 'abort' ? NegativeActionButton : Button;
   return (
-    <div className={`${className} flex items-center w-full`} data-test="operation-action-warning">
+    <div className="flex items-center w-full h-full font-regular text-12 leading-20" data-test="operation-action-warning">
       <span>{children}</span>
-      <Actions>
+      <div tw="flex justify-between ml-4 min-w-104px">
         <Button
           type="secondary"
           size="small"
@@ -56,9 +51,7 @@ export const OperationActionWarning = operationActionWarning(({
         >
           {loading ? <Spinner disabled /> : 'Yes'}
         </ConfirmButton>
-      </Actions>
+      </div>
     </div>
   );
-});
-
-const Actions = operationActionWarning.actions('div');
+};

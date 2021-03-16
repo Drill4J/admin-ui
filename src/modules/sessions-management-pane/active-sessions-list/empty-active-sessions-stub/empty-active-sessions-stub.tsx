@@ -13,28 +13,25 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { BEM } from '@redneckz/react-bem-helper';
 import { Icons } from '@drill4j/ui-kit';
+import 'twin.macro';
 
-import styles from './empty-active-sessions-stub.module.scss';
-
-interface Props {
-  className?: string;
-}
-
-const emptyActiveSessionsStub = BEM(styles);
-
-export const EmptyActiveSessionsStub = emptyActiveSessionsStub(
-  ({ className }: Props) => (
-    <div className={className}>
-      <div className="flex flex-col items-center w-full">
-        <Icons.Test width={120} height={134} viewBox="0 0 18 20" data-test="empty-active-sessions-stub:test-icon" />
-        <Title data-test="empty-active-sessions-stub:title">There are no active sessions</Title>
-        <Message data-test="empty-active-sessions-stub:message">You can use this menu to start new.</Message>
+export const EmptyActiveSessionsStub = () => (
+  <div tw="grid place-items-center h-full text-monochrome-medium-tint">
+    <div className="flex flex-col items-center w-full">
+      <Icons.Test width={120} height={134} viewBox="0 0 18 20" data-test="empty-active-sessions-stub:test-icon" />
+      <div
+        tw="mt-7 mb-2 text-20 leading-32 text-monochrome-default"
+        data-test="empty-active-sessions-stub:title"
+      >
+        There are no active sessions
+      </div>
+      <div
+        tw="text-14 leading-20 text-monochrome-default text-center"
+        data-test="empty-active-sessions-stub:message"
+      >
+        You can use this menu to start new.
       </div>
     </div>
-  ),
+  </div>
 );
-
-const Title = emptyActiveSessionsStub.title('div');
-const Message = emptyActiveSessionsStub.message('div');
