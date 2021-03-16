@@ -13,20 +13,24 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { BEM, div } from '@redneckz/react-bem-helper';
 import { Icons } from '@drill4j/ui-kit';
+import tw, { styled } from 'twin.macro';
 
-import styles from './coverage-rate-icon.module.scss';
+type CoverageRate = 'MISSED' | 'PARTLY' | 'FULL'
 
 interface Props {
-  className?: string;
-  coverageRate?: 'MISSED' | 'PARTLY' | 'FULL';
+  coverageRate?: CoverageRate;
 }
 
-const coverageRateIcon = BEM(styles);
+const IconWrapper = styled.div(({ rate }: { rate?: CoverageRate }) => [
+  tw`h-4`,
+  rate === 'FULL' && tw`text-monochrome-dark-tint`,
+  rate === 'MISSED' && tw`text-red-default`,
+  rate === 'PARTLY' && tw`text-orange-default`,
+]);
 
-export const CoverageRateIcon = coverageRateIcon(({ className, coverageRate }: Props) => (
-  <div className={className}>
+export const CoverageRateIcon = ({ coverageRate }: Props) => (
+  <div>
     <IconWrapper rate={coverageRate}>
       {coverageRate === 'FULL' ? (
         <Icons.Checkbox height={16} width={16} />
@@ -35,6 +39,4 @@ export const CoverageRateIcon = coverageRateIcon(({ className, coverageRate }: P
       )}
     </IconWrapper>
   </div>
-));
-
-const IconWrapper = coverageRateIcon.iconWrapper(div({} as { rate?: string }));
+);

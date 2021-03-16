@@ -13,14 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { BEM } from '@redneckz/react-bem-helper';
-
 import { convertToPercentage } from 'utils';
+import 'twin.macro';
 
-import styles from './cards.module.scss';
+import { Card, Label, TotalCount } from './card-styles';
 
 interface Props {
-  className?: string;
   children?: React.ReactNode;
   covered?: number;
   totalCount?: number;
@@ -28,29 +26,25 @@ interface Props {
   testContext?: string;
 }
 
-export const BuildMethodsCard = BEM(styles)(({
-  className, children, covered = 0, totalCount = 0, label, testContext,
+export const BuildMethodsCard = ({
+  children, covered = 0, totalCount = 0, label, testContext,
 }: Props) => (
-  <div className={`${className} flex flex-col justify-between items-center w-full`}>
+  <Card>
     <div className="flex justify-between items-center w-full">
       <Label data-test={`build-methods-card:label:${label}`}>{label}</Label>
       <TotalCount data-test={`build-methods-card:total-count:${label}`}>{totalCount}</TotalCount>
     </div>
-    <Info>
+    <div tw="w-full text-12 leading-16 text-monochrome-default">
       <div className="flex justify-between items-center w-full">
-        <Covered data-test={`build-methods-card:covered-count:${label}`}>{covered}</Covered>
+        <div tw="font-bold text-16 leading-18" data-test={`build-methods-card:covered-count:${label}`}>{covered}</div>
         <span data-test={`build-methods-card:${testContext}`}>{children}</span>
       </div>
-      <CoverageBar>
-        <Progress style={{ width: `${convertToPercentage(covered, totalCount)}%` }} />
-      </CoverageBar>
-    </Info>
-  </div>
-));
-
-const Covered = BEM(styles).covered('div');
-const Info = BEM(styles).info('div');
-const CoverageBar = BEM(styles).coverageBar('div');
-const Progress = BEM(styles).progress('div');
-const Label = BEM(styles).label('span');
-const TotalCount = BEM(styles).totalCount('span');
+      <div tw="h-2 mt-1 rounded-sm bg-monochrome-light-tint">
+        <div
+          tw="h-2 rounded-sm bg-data-visualization-scrollbar-thumb"
+          style={{ width: `${convertToPercentage(covered, totalCount)}%` }}
+        />
+      </div>
+    </div>
+  </Card>
+);

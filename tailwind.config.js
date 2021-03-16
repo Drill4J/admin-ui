@@ -22,9 +22,13 @@ module.exports = {
   theme: {
     extend: {
       spacing: {
+        '1px': '1px',
         13: '3.25rem',
+        19.5: '4.875rem',
         21: '5.25rem',
         22: '5.5rem',
+        23: '5.75rem',
+        25: '6.25rem',
         26: '6.5rem',
         27: '6.75rem',
         29: '7.25rem',
@@ -45,6 +49,7 @@ module.exports = {
     },
     minWidth: {
       '16px': '16px',
+      '20px': '20px',
       '32px': '32px',
       '104px': '104px',
     },
