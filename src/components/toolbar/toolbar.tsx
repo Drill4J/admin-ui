@@ -14,10 +14,9 @@
  * limitations under the License.
  */
 import { ReactNode, useState } from 'react';
-import { BEM, div } from '@redneckz/react-bem-helper';
 import { useHistory } from 'react-router-dom';
 import { Icons } from '@drill4j/ui-kit';
-import 'twin.macro';
+import tw, { styled } from 'twin.macro';
 
 import { TOKEN_KEY } from 'common/constants';
 import { useWsConnection } from 'hooks';
@@ -25,26 +24,27 @@ import { defaultAdminSocket } from 'common/connection';
 import { Notification } from 'types/notificaiton';
 import { NotificationsSidebar } from './notifications-sidebar';
 
-import styles from './toolbar.module.scss';
-
 interface Props {
-  className?: string;
   breadcrumbs?: ReactNode;
 }
 
-const toolbar = BEM(styles);
+const NotificationCount = styled.div`
+  ${tw`flex justify-center min-w-20px h-5 mr-4 ml-1 px-1 rounded-lg`}
+  ${tw`font-bold text-monochrome-default bg-monochrome-medium-tint`}
+  ${({ unread }:{ unread:boolean }) => unread && tw`text-12 text-monochrome-white bg-red-default`}
+`;
 
-export const Toolbar = toolbar(({ className, breadcrumbs }: Props) => {
+export const Toolbar = ({ breadcrumbs }: Props) => {
   const [isNotificationPaneOpen, setIsNotificationPaneOpen] = useState(false);
   const notifications = useWsConnection<Notification[]>(defaultAdminSocket, '/notifications') || [];
   const unreadNotifications = notifications.filter(notification => !notification.read);
   const { push } = useHistory();
 
   return (
-    <div className={className}>
-      <Content>
-        <BreadcrumbsWrapper>{breadcrumbs}</BreadcrumbsWrapper>
-        <UserInfo>
+    <div tw="flex items-center w-full h-full">
+      <div tw="flex items-center justify-between mx-6 w-full h-full">
+        <div tw="text-monochrome-default">{breadcrumbs}</div>
+        <div tw="flex items-center text-12 leading-20 text-monochrome-default">
           <span className="link">
             <Icons.Notification
               onClick={() => setIsNotificationPaneOpen(!isNotificationPaneOpen)}
@@ -54,9 +54,10 @@ export const Toolbar = toolbar(({ className, breadcrumbs }: Props) => {
           <NotificationCount unread={unreadNotifications.length > 0} data-test="tolbar:notification-count">
             {unreadNotifications.length}
           </NotificationCount>
-          <Divider />
+          <span tw="w-1px h-5 mr-4 bg-monochrome-medium-tint" />
           Signed in as Guest
-          <SingOut
+          <div
+            tw="ml-2 font-bold text-12 leading-20 text-blue-default cursor-pointer"
             className="link"
             onClick={() => {
               localStorage.removeItem(TOKEN_KEY);
@@ -65,9 +66,9 @@ export const Toolbar = toolbar(({ className, breadcrumbs }: Props) => {
             data-test="toolbar:sign-out"
           >
             Sign out
-          </SingOut>
-        </UserInfo>
-      </Content>
+          </div>
+        </div>
+      </div>
       {isNotificationPaneOpen && (
         <NotificationsSidebar
           notifications={notifications}
@@ -77,13 +78,4 @@ export const Toolbar = toolbar(({ className, breadcrumbs }: Props) => {
       )}
     </div>
   );
-});
-
-const Content = toolbar.content('div');
-const BreadcrumbsWrapper = toolbar.breadcrumbs('div');
-const Divider = toolbar.divider('span');
-const UserInfo = toolbar.userInfo('div');
-const NotificationCount = toolbar.notificationCount(div({} as {unread?: boolean}));
-const SingOut = toolbar.signOut(
-  div({ onClick: () => {}, 'data-test': '' } as { 'data-test': string }),
-);
+};

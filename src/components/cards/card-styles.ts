@@ -13,35 +13,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-@import '~common/style-guide/index';
+import tw, { styled } from 'twin.macro';
 
-.footer {
-  opacity: 0.75;
-  font-size: 12px;
-  line-height: 32px;
-  color: map-get($monochrome, default);
+export const Card = styled.div`
+  ${tw`flex flex-col justify-between items-center w-full h-23 pt-3 px-4 pb-4`}
+  ${tw`border border-monochrome-medium-tint font-bold`}
+`;
 
-  &__content-wrapper {
-    padding: 0 24px;
-  }
+export const Label = styled.span`
+  ${tw`text-12 leading-16 text-monochrome-default`}
+`;
 
-  &__content {
-    border-top: 1px solid map-get($monochrome, medium-tint);
-  }
-
-  &__admin-info {
-    & > *:not(:last-child)::after {
-      content: '\2022';
-      margin: 0 8px;
-    }
-  }
-
-  &__link {
-    text-decoration: none;
-    color: map-get($monochrome, default);
-    &:not(:last-child)::after {
-      content: '\2022';
-      margin: 0 8px;
-    }
-  }
-}
+export const TotalCount = styled.span`
+  ${tw`text-16 leading-16 text-monochrome-black`}
+`;

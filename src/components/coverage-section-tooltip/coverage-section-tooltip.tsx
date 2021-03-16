@@ -13,44 +13,31 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { BEM } from '@redneckz/react-bem-helper';
-
 import { camelToTitle, percentFormatter } from 'utils';
-
-import styles from './coverage-section-tooltip.module.scss';
+import 'twin.macro';
 
 interface Props {
-  className?: string;
   data: Record<string, { total: number, covered: number }>;
 }
 
-const coverageSectionTooltip = BEM(styles);
-
-export const CoverageSectionTooltip = coverageSectionTooltip((
-  { className, data: { totalCovered: { covered, total }, ...testTypes } }: Props,
-) => (
-  <div className={className}>
+export const CoverageSectionTooltip = ({ data: { totalCovered: { covered, total }, ...testTypes } }: Props) => (
+  <div tw="flex flex-col font-bold text-12">
     <div className="flex justify-between items-center w-full">
       <div className="flex items-center w-full">
-        <TooltipItemTotal>total covered: {`${covered}/${total}`}</TooltipItemTotal>
-        <TooltipItemTotalValue>{`${percentFormatter((covered / total) * 100)}%`}</TooltipItemTotalValue>
+        <span tw="uppercase">total covered: {`${covered}/${total}`}</span>
+        <span tw="ml-6 leading-20 text-right opacity-50">{`${percentFormatter((covered / total) * 100)}%`}</span>
       </div>
     </div>
     {Object.keys(testTypes).map((testType) => (
-      <div className="flex justify-between items-center w-full" key={testType}>
-        <TooltipItemDetails>
+      <div className="flex justify-between items-center w-full font-regular" key={testType}>
+        <span tw="leading-20">
           {`${camelToTitle(testType)} (${testTypes[testType]
             .covered || 0}/${testTypes[testType].total || 0}`})
-        </TooltipItemDetails>
-        <TooltipItemValue>
+        </span>
+        <span tw="ml-6 leading-20 text-right opacity-50">
           {`${percentFormatter((testTypes[testType].covered / testTypes[testType].total) * 100)}%`}
-        </TooltipItemValue>
+        </span>
       </div>
     ))}
   </div>
-));
-
-const TooltipItemValue = coverageSectionTooltip.tooltipItemValue('span');
-const TooltipItemTotal = coverageSectionTooltip.tooltipItemTotal('span');
-const TooltipItemTotalValue = coverageSectionTooltip.tooltipItemTotalValue('span');
-const TooltipItemDetails = coverageSectionTooltip.tooltipItemDetails('span');
+);

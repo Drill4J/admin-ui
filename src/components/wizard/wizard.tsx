@@ -16,7 +16,6 @@
 import {
   Children, ComponentType, ReactElement, useReducer, useState, Component, useContext,
 } from 'react';
-import { BEM } from '@redneckz/react-bem-helper';
 import { Form } from 'react-final-form';
 import {
   Icons, Button, Spinner,
@@ -33,8 +32,6 @@ import {
 import { FormValidator } from '../../forms/form-validators';
 import 'twin.macro';
 
-import styles from './wizard.module.scss';
-
 export interface StepProps {
   name: string;
   component: ComponentType<any>;
@@ -42,20 +39,17 @@ export interface StepProps {
 }
 
 interface Props {
-  className?: string;
   initialValues: Agent;
   onSubmit: (val: Record<string, unknown>) => Promise<void>;
   children: ReactElement<StepProps>[];
   onSuccessMessage: string;
 }
 
-const wizard = BEM(styles);
-
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export const Step = (props: StepProps) => null;
 
-export const Wizard = wizard(({
-  className, children, initialValues, onSubmit, onSuccessMessage,
+export const Wizard = ({
+  children, initialValues, onSubmit, onSuccessMessage,
 }: Props) => {
   const [{ currentStepIndex }, dispatch] = useReducer(wizardReducer, state);
   const [error, setError] = useState(false);
@@ -65,7 +59,7 @@ export const Wizard = wizard(({
   const { showMessage } = useContext(NotificationManagerContext);
 
   return (
-    <div className={className}>
+    <div>
       <Form
         initialValues={{ ...initialValues, availablePlugins }}
         keepDirtyOnReinitialize
@@ -95,13 +89,13 @@ export const Wizard = wizard(({
         }) => (
           <>
             <div className="flex items-center w-full px-6 py-4">
-              <StepName>
+              <span tw="w-full text-20 leading-32 text-monochrome-black">
                 {`${currentStepIndex + 1} of ${Children.count(children)}. ${name} `}
-              </StepName>
+              </span>
               <div className="flex justify-end items-center w-full">
                 {currentStepIndex > 0 && (
-                  <PreviousButton
-                    className="flex gap-x-2"
+                  <Button
+                    tw="flex gap-x-2 mr-4"
                     type="secondary"
                     size="large"
                     onClick={() => dispatch(previousStep())}
@@ -109,7 +103,7 @@ export const Wizard = wizard(({
                   >
                     <Icons.Expander width={8} height={14} rotate={180} />
                     <span>Back</span>
-                  </PreviousButton>
+                  </Button>
                 )}
                 {currentStepIndex < steps.length - 1 ? (
                   <Button
@@ -146,7 +140,4 @@ export const Wizard = wizard(({
       />
     </div>
   );
-});
-
-const StepName = wizard.stepName('span');
-const PreviousButton = wizard.previousButton(Button);
+};

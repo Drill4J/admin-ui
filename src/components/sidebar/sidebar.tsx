@@ -13,12 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { BEM, div } from '@redneckz/react-bem-helper';
 import { useHistory, useLocation, matchPath } from 'react-router-dom';
+import tw, { styled } from 'twin.macro';
 
 import { ReactComponent as LogoSvg } from './logo.svg';
-
-import styles from './sidebar.module.scss';
 
 interface IconProps {
   width?: number;
@@ -30,26 +28,24 @@ interface IconProps {
 }
 
 interface Props {
-  className?: string;
   active?: 'active';
   links: Array<{ icon: React.ComponentType<IconProps>; link: string; computedLink?: string }>;
   matchParams: { path: string };
 }
 
-const sidebar = BEM(styles);
-
-export const Sidebar = sidebar(({
-  className, links, matchParams,
-}: Props) => {
+export const Sidebar = ({ links, matchParams }: Props) => {
   const { push } = useHistory();
   const { pathname } = useLocation();
   const { params: { activeLink = '' } = {} } = matchPath<{ activeLink: string }>(pathname, matchParams) || {};
 
   return (
-    <div className={className}>
-      <Logo onClick={() => push('/')}>
+    <div tw="w-20 h-full bg-monochrome-light-tint">
+      <div
+        tw="flex justify-center items-center w-full h-20 cursor-pointer"
+        onClick={() => push('/')}
+      >
         <LogoSvg />
-      </Logo>
+      </div>
       {links.length > 0
           && links.map(({ icon: Icon, link, computedLink }) => (
             <SidebarLink
@@ -62,13 +58,10 @@ export const Sidebar = sidebar(({
           ))}
     </div>
   );
-});
+};
 
-const Logo = sidebar.logo('div');
-export const SidebarLink = sidebar.link(
-  div({ active: undefined, onClick: () => {}, long: undefined } as {
-    active?: boolean;
-    onClick: () => void;
-    long?: boolean;
-  }),
-);
+export const SidebarLink = styled.div`
+  ${tw`flex justify-center items-center w-full h-20`}
+  ${tw`border-b border-t border-monochrome-medium-tint text-monochrome-default cursor-pointer`}
+  ${({ type }: {type: string}) => type === 'active' && tw`text-monochrome-white bg-blue-default`}
+`;
