@@ -45,7 +45,7 @@ export class DrillSocket {
 
   public connection$: Observable<DrillResponse>;
 
-  public autoSubscribe$: Subject<'CLOSE' | 'OPEN'>;
+  public reconnection$: Subject<'CLOSE' | 'OPEN'>;
 
   constructor(url: string) {
     this.ws$ = webSocket<DrillResponse>({
@@ -53,11 +53,11 @@ export class DrillSocket {
       closeObserver: {
         next: () => {
           this.onCloseEvent();
-          this.autoSubscribe$.next('CLOSE');
+          this.reconnection$.next('CLOSE');
         },
       },
       openObserver: {
-        next: () => this.autoSubscribe$.next('OPEN'),
+        next: () => this.reconnection$.next('OPEN'),
       },
     });
     this.connection$ = this.ws$.pipe(retryWhen(genericRetryStrategy()));
@@ -67,13 +67,13 @@ export class DrillSocket {
         this.handleUnauthorized();
       }
     });
-    this.autoSubscribe$ = new Subject();
+    this.reconnection$ = new Subject();
   }
 
   public subscribe(topic: string, callback: (arg: any) => void, message?: SubscriptionMessage | Record<string, unknown>) {
     let subscription = this.connection$.subscribe({ next: subscribe(topic, callback, message) });
 
-    const autoSubscription = this.autoSubscribe$.subscribe((type) => {
+    const autoSubscription = this.reconnection$.subscribe((type) => {
       if (type === 'CLOSE') {
         subscription.unsubscribe();
         this.send(topic, 'UNSUBSCRIBE', message);
