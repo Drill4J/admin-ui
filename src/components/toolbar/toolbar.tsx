@@ -29,7 +29,7 @@ interface Props {
 }
 
 const NotificationCount = styled.div`
-  ${tw`flex justify-center min-w-20px h-5 mr-4 ml-1 px-1 rounded-lg`}
+  ${tw`flex justify-center min-w-20px h-5 mr-4 ml-1 px-1 rounded-full`}
   ${tw`font-bold text-monochrome-default bg-monochrome-medium-tint`}
   ${({ unread }:{ unread:boolean }) => unread && tw`text-12 text-monochrome-white bg-red-default`}
 `;
