@@ -14,12 +14,11 @@
  * limitations under the License.
  */
 import { useContext, useState } from 'react';
-import { BEM } from '@redneckz/react-bem-helper';
 import { Redirect, useParams } from 'react-router-dom';
 import {
   Icons, Menu, Button, SessionIndicator,
 } from '@drill4j/ui-kit';
-import 'twin.macro';
+import tw, { styled } from 'twin.macro';
 
 import {
   TabsPanel, Tab,
@@ -38,149 +37,141 @@ import { ScopeStatus } from './scope-status';
 import { ScopeProjectTests } from './scope-project-tests';
 import { ScopeTests } from '../../scope-tests';
 
-import styles from './scope-info.module.scss';
-
-interface Props {
-  className?: string;
-}
-
 interface MenuItemType {
   label: string;
   icon: keyof typeof Icons;
   onClick: () => void;
 }
 
-const scopeInfo = BEM(styles);
+const Header = styled.div`
+  ${tw`grid items-center gap-4 w-full h-20 border-b border-monochrome-medium-tint`}
+  ${tw`text-24 text-monochrome-black`}
+  grid-template-columns: minmax(auto, max-content) auto auto;
+`;
 
-export const ScopeInfo = scopeInfo(
-  ({
-    className,
-  }: Props) => {
-    const { showMessage } = useContext(NotificationManagerContext);
-    const { agentId, loading } = usePluginState();
-    const { buildVersion: activeBuildVersion = '', status } = useAgent(agentId) || {};
-    const { pluginId = '', scopeId = '', buildVersion } = useParams<{ pluginId: string, scopeId: string, buildVersion: string }>();
-    const dispatch = useCoveragePluginDispatch();
-    const scope = useBuildVersion<ActiveScope>(`/build/scopes/${scopeId}`);
-    const {
-      name = '', active = false, enabled = false, started = 0, finished = 0,
-    } = scope || {};
+export const ScopeInfo = () => {
+  const { showMessage } = useContext(NotificationManagerContext);
+  const { agentId, loading } = usePluginState();
+  const { buildVersion: activeBuildVersion = '', status } = useAgent(agentId) || {};
+  const { pluginId = '', scopeId = '', buildVersion } = useParams<{ pluginId: string, scopeId: string, buildVersion: string }>();
+  const dispatch = useCoveragePluginDispatch();
+  const scope = useBuildVersion<ActiveScope>(`/build/scopes/${scopeId}`);
+  const {
+    name = '', active = false, enabled = false, started = 0, finished = 0,
+  } = scope || {};
 
-    const [selectedTab, setSelectedTab] = useState('coverage');
-    const menuActions = [
-      !active && {
-        label: `${enabled ? 'Ignore' : 'Include'} in stats`,
-        icon: enabled ? 'EyeCrossed' : 'Eye',
-        onClick: () => toggleScope(agentId, pluginId, {
-          onSuccess: () => {
-            showMessage({
-              type: 'SUCCESS',
-              text: `Scope has been ${enabled ? 'ignored' : 'included'} in build stats.`,
-            });
-          },
-          onError: () => {
-            showMessage({
-              type: 'ERROR',
-              text: 'There is some issue with your action. Please try again later',
-            });
-          },
-        })(scopeId),
-      },
-      active && {
-        label: 'Sessions Management',
-        icon: 'ManageSessions',
-        onClick: () => dispatch(openModal('SessionsManagementModal', null)),
-      },
-      {
-        label: 'Rename',
-        icon: 'Edit',
-        onClick: () => dispatch(openModal('RenameScopeModal', scope)),
-      },
-      {
-        label: 'Delete',
-        icon: 'Delete',
-        onClick: () => dispatch(openModal('DeleteScopeModal', scope)),
-      },
-    ].filter(Boolean);
-    const newBuildHasAppeared = activeBuildVersion && buildVersion && activeBuildVersion !== buildVersion;
+  const [selectedTab, setSelectedTab] = useState('coverage');
+  const menuActions = [
+    !active && {
+      label: `${enabled ? 'Ignore' : 'Include'} in stats`,
+      icon: enabled ? 'EyeCrossed' : 'Eye',
+      onClick: () => toggleScope(agentId, pluginId, {
+        onSuccess: () => {
+          showMessage({
+            type: 'SUCCESS',
+            text: `Scope has been ${enabled ? 'ignored' : 'included'} in build stats.`,
+          });
+        },
+        onError: () => {
+          showMessage({
+            type: 'ERROR',
+            text: 'There is some issue with your action. Please try again later',
+          });
+        },
+      })(scopeId),
+    },
+    active && {
+      label: 'Sessions Management',
+      icon: 'ManageSessions',
+      onClick: () => dispatch(openModal('SessionsManagementModal', null)),
+    },
+    {
+      label: 'Rename',
+      icon: 'Edit',
+      onClick: () => dispatch(openModal('RenameScopeModal', scope)),
+    },
+    {
+      label: 'Delete',
+      icon: 'Delete',
+      onClick: () => dispatch(openModal('DeleteScopeModal', scope)),
+    },
+  ].filter(Boolean);
+  const newBuildHasAppeared = activeBuildVersion && buildVersion && activeBuildVersion !== buildVersion;
 
-    return (
-      scope && !scope?.coverage.percentage && newBuildHasAppeared
-        ? <Redirect to={{ pathname: `/full-page/${agentId}/${activeBuildVersion}/${pluginId}/dashboard` }} />
-        : (
-          <div className={className}>
-            <Header>
-              <ScopeName data-test="scope-info:scope-name" title={name}>{name}</ScopeName>
-              {status === AGENT_STATUS.ONLINE && (
-                <div className="flex items-center w-full">
-                  {active && <ScopeSessionIndicator active={loading} />}
-                  <ScopeStatus active={active} loading={loading} enabled={enabled} started={started} finished={finished} />
-                </div>
-              )}
-              <div className="flex justify-end items-center w-full">
-                {active && status === AGENT_STATUS.ONLINE && (
-                  <FinishScopeButton
-                    className="flex gap-x-2"
-                    type="primary"
-                    size="large"
-                    onClick={() => dispatch(openModal('FinishScopeModal', scope))}
-                    data-test="scope-info:finish-scope-button"
-                  >
-                    <Icons.Complete />
-                    <span>Finish Scope</span>
-                  </FinishScopeButton>
-                )}
-                {activeBuildVersion === buildVersion && status === AGENT_STATUS.ONLINE
-                  && <Menu items={menuActions as MenuItemType[]} />}
+  return (
+    scope && !scope?.coverage.percentage && newBuildHasAppeared
+      ? <Redirect to={{ pathname: `/full-page/${agentId}/${activeBuildVersion}/${pluginId}/dashboard` }} />
+      : (
+        <div>
+          <Header>
+            <div
+              className="text-ellipsis font-light text-24 leading-32 text-monochrome-black"
+              data-test="scope-info:scope-name"
+              title={name}
+            >
+              {name}
+            </div>
+            {status === AGENT_STATUS.ONLINE && (
+              <div className="flex items-center w-full">
+                {active && <SessionIndicator tw="mr-2" active={loading} />}
+                <ScopeStatus active={active} loading={loading} enabled={enabled} started={started} finished={finished} />
               </div>
-            </Header>
-            <RoutingTabsPanel className="flex items-center w-full">
-              <TabsPanel activeTab={selectedTab} onSelect={setSelectedTab}>
-                <Tab name="coverage">
-                  <TabIconWrapper>
-                    <Icons.Function />
-                  </TabIconWrapper>
-                  Scope methods
-                </Tab>
-                <Tab name="tests">
-                  <TabIconWrapper>
-                    <Icons.Test width={16} />
-                  </TabIconWrapper>
-                  Scope tests
-                </Tab>
-              </TabsPanel>
-            </RoutingTabsPanel>
-            <TabContent>
-              <TableActionsProvider key={selectedTab}>
-                {selectedTab === 'coverage' ? (
-                  <>
-                    <ScopeProjectMethods scope={scope} />
-                    <CoverageDetails
-                      topic={`/build/scopes/${scopeId}/coverage/packages`}
-                      associatedTestsTopic={`/build/scopes/${scopeId}/associated-tests`}
-                      classesTopicPrefix={`build/scopes/${scopeId}`}
-                    />
-                  </>
-                ) : (
-                  <>
-                    <ScopeProjectTests scopeId={scopeId} />
-                    <div tw="mt-2">
-                      <ScopeTests />
-                    </div>
-                  </>
-                )}
-              </TableActionsProvider>
-            </TabContent>
+            )}
+            <div className="flex justify-end items-center w-full">
+              {active && status === AGENT_STATUS.ONLINE && (
+                <Button
+                  className="flex gap-x-2 mr-4"
+                  type="primary"
+                  size="large"
+                  onClick={() => dispatch(openModal('FinishScopeModal', scope))}
+                  data-test="scope-info:finish-scope-button"
+                >
+                  <Icons.Complete />
+                  <span>Finish Scope</span>
+                </Button>
+              )}
+              {activeBuildVersion === buildVersion && status === AGENT_STATUS.ONLINE
+                  && <Menu items={menuActions as MenuItemType[]} />}
+            </div>
+          </Header>
+          <div tw="flex items-center w-full border-b border-monochrome-medium-tint">
+            <TabsPanel activeTab={selectedTab} onSelect={setSelectedTab}>
+              <Tab name="coverage">
+                <div tw="flex items-center mr-2 text-monochrome-black">
+                  <Icons.Function />
+                </div>
+                Scope methods
+              </Tab>
+              <Tab name="tests">
+                <div tw="flex items-center mr-2 text-monochrome-black">
+                  <Icons.Test width={16} />
+                </div>
+                Scope tests
+              </Tab>
+            </TabsPanel>
           </div>
-        )
-    );
-  },
-);
-
-const Header = scopeInfo.header('div');
-const ScopeName = scopeInfo.scopeName('div');
-const ScopeSessionIndicator = scopeInfo.scopeSessionIndicator(SessionIndicator);
-const FinishScopeButton = scopeInfo.finishScopeButton(Button);
-const RoutingTabsPanel = scopeInfo.routingTabsPanel('div');
-const TabIconWrapper = scopeInfo.tabIconWrapper('div');
-const TabContent = scopeInfo.tabContent('div');
+          <div tw="mt-4">
+            <TableActionsProvider key={selectedTab}>
+              {selectedTab === 'coverage' ? (
+                <>
+                  <ScopeProjectMethods scope={scope} />
+                  <CoverageDetails
+                    topic={`/build/scopes/${scopeId}/coverage/packages`}
+                    associatedTestsTopic={`/build/scopes/${scopeId}/associated-tests`}
+                    classesTopicPrefix={`build/scopes/${scopeId}`}
+                  />
+                </>
+              ) : (
+                <>
+                  <ScopeProjectTests scopeId={scopeId} />
+                  <div tw="mt-2">
+                    <ScopeTests />
+                  </div>
+                </>
+              )}
+            </TableActionsProvider>
+          </div>
+        </div>
+      )
+  );
+};

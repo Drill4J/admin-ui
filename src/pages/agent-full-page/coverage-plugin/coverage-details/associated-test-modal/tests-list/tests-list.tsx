@@ -13,24 +13,26 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { BEM } from '@redneckz/react-bem-helper';
 import { useRef, useState } from 'react';
 import VirtualList from 'react-tiny-virtual-list';
 import { Icons, Inputs } from '@drill4j/ui-kit';
+import tw, { styled } from 'twin.macro';
 
 import { useElementSize } from 'hooks';
-import 'twin.macro';
-
-import styles from './tests-list.module.scss';
 
 interface Props {
-  className?: string;
   associatedTests: { testsMap: Record<string, string[]>; assocTestsCount: number; };
 }
 
-const testsList = BEM(styles);
+const TestItem = styled.div`
+  ${tw`flex flex-col justify-center min-h-40px px-6`}
+  ${tw`text-14 break-normal`}
+  &:first-child {
+    ${tw`mt-2`}
+  }
+`;
 
-export const TestsList = testsList(({ className, associatedTests }: Props) => {
+export const TestsList = ({ associatedTests }: Props) => {
   const { AUTO: autoTests = [], MANUAL: manualTests = [] } = associatedTests.testsMap;
   const node = useRef<HTMLDivElement>(null);
   const [selectedSection, setSelectedSection] = useState('all');
@@ -49,8 +51,9 @@ export const TestsList = testsList(({ className, associatedTests }: Props) => {
   const tests = getTests();
 
   return (
-    <div className={className}>
-      <Filter
+    <div tw="flex flex-col h-full overflow-y-auto">
+      <Inputs.Dropdown
+        tw="my-4 mx-6"
         items={[
           { value: 'all', label: 'All tests' },
           { value: 'auto', label: `Auto (${autoTests.length})` },
@@ -59,7 +62,7 @@ export const TestsList = testsList(({ className, associatedTests }: Props) => {
         onChange={({ value }) => setSelectedSection(value)}
         value={selectedSection}
       />
-      <Content>
+      <div tw="flex flex-col flex-grow overflow-y-auto border-t border-monochrome-medium-tint">
         <div ref={node} style={{ height: '100%' }}>
           <VirtualList
             itemSize={56}
@@ -69,11 +72,11 @@ export const TestsList = testsList(({ className, associatedTests }: Props) => {
               <TestItem key={tests[index]} style={style as Record<symbol, string>}>
                 {tests.length > 0 && (
                   <>
-                    <TestInfo>
-                      <TestItemIcon />
-                      <TestName className="text-ellipsis" title={tests[index]}>{tests[index]}</TestName>
-                    </TestInfo>
-                    <TestId className="text-ellipsis" title="&ndash;">&ndash;</TestId>
+                    <div tw="flex flex-row items-center h-5">
+                      <Icons.Test tw="flex self-center min-w-12px min-h-16px" />
+                      <div className="text-ellipsis ml-4 text-14 leading-20 text-monochrome-black" title={tests[index]}>{tests[index]}</div>
+                    </div>
+                    <div className="text-ellipsis pl-7 text-12 text-monochrome-default" title="&ndash;">&ndash;</div>
                   </>
                 )}
                 {Object.keys(associatedTests.testsMap).length === 0 && (
@@ -91,15 +94,7 @@ export const TestsList = testsList(({ className, associatedTests }: Props) => {
             )}
           />
         </div>
-      </Content>
+      </div>
     </div>
   );
-});
-
-const Content = testsList.content('div');
-const Filter = testsList.filter(Inputs.Dropdown);
-const TestItem = testsList.testItem('div');
-const TestInfo = testsList.testInfo('div');
-const TestName = testsList.testName('div');
-const TestId = testsList.testId('div');
-const TestItemIcon = testsList.testItemIcon(Icons.Test);
+};

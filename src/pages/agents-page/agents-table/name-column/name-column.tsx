@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { BEM, div } from '@redneckz/react-bem-helper';
 import { useHistory } from 'react-router-dom';
 import { Icons, Badge, Tooltip } from '@drill4j/ui-kit';
 import tw, { styled } from 'twin.macro';
@@ -22,73 +21,69 @@ import { AGENT_STATUS } from 'common/constants';
 import { Agent } from 'types/agent';
 import { ServiceGroupAgents } from 'types/service-group-agents';
 
-import styles from './name-column.module.scss';
-
 interface Props {
-  className?: string;
   agent?: Agent;
   withMargin?: boolean;
 }
 
-const nameColumn = BEM(styles);
-
 const AgentName = styled.div`
   ${tw`text-ellipsis text-monochrome-default`}
-  ${({ disabled }: {disabled: boolean}) => !disabled && tw`link`}
+  ${({ disabled }: { disabled: boolean }) => !disabled && tw`link`}
 `;
 
-export const NameColumn = nameColumn(
-  ({
-    className,
-    agent: {
-      id, name, buildVersion, agentType, status, agentVersion, ...agent
-    } = {},
-  }: Props) => {
-    const { push } = useHistory();
-    const { agents = [] } = agent as ServiceGroupAgents;
-    const unregisteredAgentsCount = agents.reduce(
-      (acc, item) => (item.status === AGENT_STATUS.NOT_REGISTERED ? acc + 1 : acc),
-      0,
-    );
-    const isServiceGroup = agentType === 'ServiceGroup';
-    const isOfflineAgent = agentType === 'Java' && !agentVersion;
-    const AgentIcon = Icons[isOfflineAgent ? 'OfflineAgent' : 'Agent'];
-    const agentIsDisabled = status === AGENT_STATUS.NOT_REGISTERED || isOfflineAgent
+const AgentTypeIcon = styled.div`
+  ${tw`grid place-items-center w-6 h-6 text-monochrome-black`}
+  ${({ disabled }: { disabled: boolean }) => disabled && tw`text-monochrome-default`}
+`;
+const Content = styled.div(({ withMargin }: { withMargin?: boolean }) => withMargin && tw`ml-9`);
+
+export const NameColumn = ({
+  withMargin,
+  agent: {
+    id, name, buildVersion, agentType, status, agentVersion, ...agent
+  } = {},
+}: Props) => {
+  const { push } = useHistory();
+  const { agents = [] } = agent as ServiceGroupAgents;
+  const unregisteredAgentsCount = agents.reduce(
+    (acc, item) => (item.status === AGENT_STATUS.NOT_REGISTERED ? acc + 1 : acc),
+    0,
+  );
+  const isServiceGroup = agentType === 'ServiceGroup';
+  const isOfflineAgent = agentType === 'Java' && !agentVersion;
+  const AgentIcon = Icons[isOfflineAgent ? 'OfflineAgent' : 'Agent'];
+  const agentIsDisabled = status === AGENT_STATUS.NOT_REGISTERED || isOfflineAgent
     || (unregisteredAgentsCount !== 0 && unregisteredAgentsCount === agents.length);
 
-    return (
-      <div className={className}>
-        <div className="flex items-center gap-x-2 text-ellipsis">
-          <AgentTypeIcon disabled={agentIsDisabled}>
-            {isServiceGroup
-              ? <Icons.ServiceGroup />
-              : (
-                <Tooltip message={isOfflineAgent && 'Offline Agent'}>
-                  <AgentIcon />
-                </Tooltip>
-              )}
-          </AgentTypeIcon>
-          {(status === AGENT_STATUS.NOT_REGISTERED) && <NewAgentBadge color="green">New</NewAgentBadge>}
-          {unregisteredAgentsCount > 0 && (
-            <NewAgentBadge color="green">{`+${unregisteredAgentsCount}`}</NewAgentBadge>
-          )}
-          <AgentName
-            onClick={() => !agentIsDisabled && push(
-              isServiceGroup
-                ? `/service-group-full-page/${id}/service-group-dashboard`
-                : `/full-page/${id}/${buildVersion}/dashboard`,
+  return (
+    <Content tw="font-bold text-14 leading-48" withMargin={withMargin}>
+      <div className="flex items-center gap-x-2 text-ellipsis">
+        <AgentTypeIcon disabled={agentIsDisabled}>
+          {isServiceGroup
+            ? <Icons.ServiceGroup />
+            : (
+              <Tooltip message={isOfflineAgent && 'Offline Agent'}>
+                <AgentIcon />
+              </Tooltip>
             )}
-            disabled={agentIsDisabled}
-            data-test="name-column"
-            title={isServiceGroup ? `${name || id} (${agents.length})` : name || id}
-          >
-            {isServiceGroup ? `${name || id} (${agents.length})` : name || id}
-          </AgentName>
-        </div>
+        </AgentTypeIcon>
+        {(status === AGENT_STATUS.NOT_REGISTERED) && <Badge tw="max-h-20px" color="green">New</Badge>}
+        {unregisteredAgentsCount > 0 && (
+          <Badge tw="max-h-20px" color="green">{`+${unregisteredAgentsCount}`}</Badge>
+        )}
+        <AgentName
+          onClick={() => !agentIsDisabled && push(
+            isServiceGroup
+              ? `/service-group-full-page/${id}/service-group-dashboard`
+              : `/full-page/${id}/${buildVersion}/dashboard`,
+          )}
+          disabled={agentIsDisabled}
+          data-test="name-column"
+          title={isServiceGroup ? `${name || id} (${agents.length})` : name || id}
+        >
+          {isServiceGroup ? `${name || id} (${agents.length})` : name || id}
+        </AgentName>
       </div>
-    );
-  },
-);
-
-const AgentTypeIcon = nameColumn.agentTypeIcon('div');
-const NewAgentBadge = nameColumn.newAgentBadge(Badge);
+    </Content>
+  );
+};

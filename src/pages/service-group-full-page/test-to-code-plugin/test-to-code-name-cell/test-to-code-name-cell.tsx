@@ -13,44 +13,40 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { BEM, div } from '@redneckz/react-bem-helper';
-
-import styles from './test-to-code-name-cell.module.scss';
+import tw, { styled } from 'twin.macro';
 
 interface Props {
-  className?: string;
   name: string;
   additionalInformation?: string;
   onClick?: () => void;
 }
 
-const testToCodeNameCell = BEM(styles);
+const Content = styled.div`
+  ${tw`grid`}
+  grid-template-rows: repeat(2, max-content);
+`;
 
-export const TestToCodeNameCell = testToCodeNameCell(
-  ({
-    className, name, additionalInformation, onClick,
-  }: Props) => (
-    <div className={className}>
-      <NameCell
-        className="text-ellipsis link"
-        onClick={onClick}
-        data-test="test-to-code-name-cell:name-cell"
-        title={name}
-      >
-        {name}
-      </NameCell>
-      <AdditionalInformation
-        className="text-ellipsis"
-        data-test="test-to-code-name-cell:additional-information"
-        title={additionalInformation}
-      >
-        {additionalInformation}
-      </AdditionalInformation>
+const Name = styled.div(({ onClick }: { onClick?: () => void }) => [
+  tw`font-light text-24`,
+  onClick && tw`font-bold text-14 cursor-pointer`,
+]);
+
+export const TestToCodeNameCell = ({ name, additionalInformation, onClick }: Props) => (
+  <Content>
+    <Name
+      className="text-ellipsis link"
+      onClick={onClick}
+      data-test="test-to-code-name-cell:name-cell"
+      title={name}
+    >
+      {name}
+    </Name>
+    <div
+      className="text-ellipsis max-w-2/3 mt-1 text-12"
+      data-test="test-to-code-name-cell:additional-information"
+      title={additionalInformation}
+    >
+      {additionalInformation}
     </div>
-  ),
+  </Content>
 );
-
-const NameCell = testToCodeNameCell.nameCell(div(
-  { onClick: () => {}, 'data-test': '', title: '' } as { onClick?: () => void; 'data-test'?: string; title?: string; },
-));
-const AdditionalInformation = testToCodeNameCell.additionalInformation('div');

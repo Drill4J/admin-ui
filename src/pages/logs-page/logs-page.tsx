@@ -13,22 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { BEM } from '@redneckz/react-bem-helper';
+import 'twin.macro';
 
 import { PageHeader } from 'components';
 import { NotImplementedStub } from 'modules';
 
-import styles from './logs-page.module.scss';
-
-const logsPage = BEM(styles);
-
-export const LogsPage = logsPage(({ className }) => (
-  <div className={className}>
+export const LogsPage = () => (
+  <div tw="flex flex-col flex-grow">
     <PageHeader title="Global logs" itemsCount={0} />
-    <Content>
+    <div tw="flex flex-col flex-grow justify-center items-center">
       <NotImplementedStub />
-    </Content>
+    </div>
   </div>
-));
-
-const Content = logsPage.content('div');
+);

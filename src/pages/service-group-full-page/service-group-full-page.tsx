@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { BEM } from '@redneckz/react-bem-helper';
+import 'twin.macro';
 import {
   Switch, useParams, useLocation, Route, matchPath,
 } from 'react-router-dom';
@@ -32,20 +32,12 @@ import { ServiceGroupHeader } from './service-group-header';
 import { usePluginData } from './use-plugin-data';
 import { Dashboard } from './dashboard';
 
-import styles from './service-group-full-page.module.scss';
-
-interface Props {
-  className?: string;
-}
-
 interface Link {
   id: string;
   link: string;
   name: keyof typeof Icons;
   computed?: boolean;
 }
-
-const serviceGroupFullPage = BEM(styles);
 
 const getPluginsList = (serviceGroupId: string, plugins: Plugin[]): Link[] => [
   {
@@ -60,60 +52,54 @@ const getPluginsList = (serviceGroupId: string, plugins: Plugin[]): Link[] => [
   })),
 ];
 
-export const ServiceGroupFullPage = serviceGroupFullPage(
-  ({
-    className,
-  }: Props) => {
-    const { id = '', pluginId = '' } = useParams<{ id: string, pluginId: string }>();
-    const { pathname } = useLocation();
-    const plugins = useWsConnection<Plugin[]>(
-      defaultAdminSocket,
-      `/groups/${id}/plugins`,
-    ) || [];
-    const serviceGroup = usePluginData<ServiceGroupSummary>('/group/summary', id, pluginId) || {};
-    const path = '/:page/:serviceGroupId/:activeLink';
-    const { params: { activeLink = '' } = {} } = matchPath<{ activeLink: string }>(pathname, {
-      path,
-    }) || {};
+export const ServiceGroupFullPage = () => {
+  const { id = '', pluginId = '' } = useParams<{ id: string, pluginId: string }>();
+  const { pathname } = useLocation();
+  const plugins = useWsConnection<Plugin[]>(
+    defaultAdminSocket,
+    `/groups/${id}/plugins`,
+  ) || [];
+  const serviceGroup = usePluginData<ServiceGroupSummary>('/group/summary', id, pluginId) || {};
+  const path = '/:page/:serviceGroupId/:activeLink';
+  const { params: { activeLink = '' } = {} } = matchPath<{ activeLink: string }>(pathname, {
+    path,
+  }) || {};
 
-    return (
-      <PluginsLayout
-        sidebar={activeLink && <Sidebar links={getPluginsList(id, plugins)} matchParams={{ path }} />}
-        toolbar={(
-          <Toolbar
-            breadcrumbs={<Breadcrumbs />}
-          />
-        )}
-        header={<ServiceGroupHeader serviceGroup={serviceGroup} />}
-        footer={<Footer />}
-      >
-        <div className={className}>
-          <Content>
-            <Switch>
-              <Route
-                path="/service-group-full-page/:serviceGroupId/service-group-dashboard"
-                render={() => (
-                  <Dashboard
-                    serviceGroupId={id}
-                    plugins={plugins.filter(plugin => !plugin.available)}
-                  />
-                )}
-              />
-              <Route
-                path="/service-group-full-page/:serviceGroupId/:pluginId"
-                render={() => (
-                  <TestToCodePlugin
-                    summaries={serviceGroup.summaries}
-                    aggregated={serviceGroup.aggregated}
-                  />
-                )}
-              />
-            </Switch>
-          </Content>
+  return (
+    <PluginsLayout
+      sidebar={activeLink && <Sidebar links={getPluginsList(id, plugins)} matchParams={{ path }} />}
+      toolbar={(
+        <Toolbar
+          breadcrumbs={<Breadcrumbs />}
+        />
+      )}
+      header={<ServiceGroupHeader serviceGroup={serviceGroup} />}
+      footer={<Footer />}
+    >
+      <div tw="w-full h-full">
+        <div tw="h-full mx-6">
+          <Switch>
+            <Route
+              path="/service-group-full-page/:serviceGroupId/service-group-dashboard"
+              render={() => (
+                <Dashboard
+                  serviceGroupId={id}
+                  plugins={plugins.filter(plugin => !plugin.available)}
+                />
+              )}
+            />
+            <Route
+              path="/service-group-full-page/:serviceGroupId/:pluginId"
+              render={() => (
+                <TestToCodePlugin
+                  summaries={serviceGroup.summaries}
+                  aggregated={serviceGroup.aggregated}
+                />
+              )}
+            />
+          </Switch>
         </div>
-      </PluginsLayout>
-    );
-  },
-);
-
-const Content = serviceGroupFullPage.content('div');
+      </div>
+    </PluginsLayout>
+  );
+};

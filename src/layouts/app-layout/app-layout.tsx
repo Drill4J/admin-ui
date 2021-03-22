@@ -13,35 +13,24 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { BEM } from '@redneckz/react-bem-helper';
-
-import styles from './app-layout.module.scss';
+import 'twin.macro';
 
 interface Props {
-  className?: string;
   children?: React.ReactNode;
   toolbar?: React.ReactNode;
   sidebar?: React.ReactNode;
   footer?: React.ReactNode;
 }
 
-const appLayout = BEM(styles);
-
-export const AppLayout = appLayout(({
-  className, toolbar, sidebar, children, footer,
+export const AppLayout = ({
+  toolbar, sidebar, children, footer,
 }: Props) => (
-  <div className={className}>
-    <SidebarWrapper>{sidebar}</SidebarWrapper>
-    <ContentWrapper>
-      <HeaderWrapper>{toolbar}</HeaderWrapper>
-      <Content>{children}</Content>
-      <Footer>{footer}</Footer>
-    </ContentWrapper>
+  <div tw="flex flex-row w-full h-full overflow-hidden">
+    <div tw="w-20 h-full">{sidebar}</div>
+    <div tw="flex flex-col flex-grow">
+      <div tw="flex-shrink-0 w-full h-12 border-b border-monochrome-medium-tint">{toolbar}</div>
+      <div tw="flex flex-grow overflow-y-auto">{children}</div>
+      <div tw="w-full">{footer}</div>
+    </div>
   </div>
-));
-
-const SidebarWrapper = appLayout.sidebar('div');
-const ContentWrapper = appLayout.contentWrapper('div');
-const HeaderWrapper = appLayout.header('div');
-const Content = appLayout.content('div');
-const Footer = appLayout.footer('div');
+);

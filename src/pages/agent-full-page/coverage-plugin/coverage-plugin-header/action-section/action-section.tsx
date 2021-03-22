@@ -13,13 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { BEM } from '@redneckz/react-bem-helper';
 import { Tooltip } from '@drill4j/ui-kit';
+import tw, { styled } from 'twin.macro';
 
 import { TestTypeSummary } from 'types/test-type-summary';
 import { spacesToDashes } from 'utils';
-
-import styles from './action-section.module.scss';
 
 interface PreviousBuild {
   previousBuildVersion?: string;
@@ -27,35 +25,31 @@ interface PreviousBuild {
 }
 
 interface Props {
-  className?: string;
   label?: string;
   previousBuild?: PreviousBuild;
   children?: React.ReactNode;
 }
 
-const actionSection = BEM(styles);
+const TooltipMessage = styled.div`
+  ${tw`text-center`}
+`;
 
-export const ActionSection = actionSection(
+export const ActionSection =
   ({
-    className, label = '', previousBuild: { previousBuildVersion = '', previousBuildTests = [] } = {}, children,
+    label = '', previousBuild: { previousBuildVersion = '', previousBuildTests = [] } = {}, children,
   }: Props) => (
-    <div className={className}>
-      <Action data-test={`action-section:action:${label}`}>
+    <div tw="border-l border-monochrome-medium-tint text-monochrome-default">
+      <div tw="ml-4 mr-10 text-20 leading-32 text-monochrome-black" data-test={`action-section:action:${label}`}>
         <Tooltip
           position={label === 'risks' ? 'top-center' : 'top-left'}
           message={getTooltipMessage(label, previousBuildVersion, previousBuildTests.length)}
         >
-          <ActionName>{label}</ActionName>
+          <div tw="font-bold text-12 leading-16 uppercase">{label}</div>
           {previousBuildVersion ? children : <span data-test={`action-section:no-value:${spacesToDashes(label)}`}>&ndash;</span> }
         </Tooltip>
-      </Action>
+      </div>
     </div>
-  ),
-);
-
-const Action = actionSection.action('div');
-const ActionName = actionSection.actionName('div');
-const TooltipMessage = actionSection.tooltipMessage('div');
+  );
 
 function getTooltipMessage(label: string, buildVersion: string, testsCount: number) {
   if (!buildVersion) {

@@ -13,9 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { BEM } from '@redneckz/react-bem-helper';
 import { Button, Icons } from '@drill4j/ui-kit';
 import { useHistory } from 'react-router-dom';
+import 'twin.macro';
 
 import { PageHeader } from 'components';
 import { useWsConnection } from 'hooks';
@@ -25,15 +25,7 @@ import { ServiceGroup } from 'types/service-group';
 import { AgentsTable } from './agents-table';
 import { NoAgentsStub } from './no-agents-stub';
 
-import styles from './agents-page.module.scss';
-
-interface Props {
-  className?: string;
-}
-
-const agentsPage = BEM(styles);
-
-export const AgentsPage = agentsPage(({ className }: Props) => {
+export const AgentsPage = () => {
   const { push } = useHistory();
   const agentsList = useWsConnection<Agent[]>(
     defaultAdminSocket,
@@ -50,7 +42,7 @@ export const AgentsPage = agentsPage(({ className }: Props) => {
   ];
 
   return (
-    <div className={className}>
+    <div tw="flex flex-col flex-grow">
       <PageHeader
         title="Agents"
         itemsCount={agentsList.length}
@@ -66,9 +58,7 @@ export const AgentsPage = agentsPage(({ className }: Props) => {
           </Button>
         )}
       />
-      <Content>{agentsList.length > 0 ? <AgentsTable agents={agents} /> : <NoAgentsStub />}</Content>
+      <div tw="flex flex-row flex-grow flex-wrap m-6">{agentsList.length > 0 ? <AgentsTable agents={agents} /> : <NoAgentsStub />}</div>
     </div>
   );
-});
-
-const Content = agentsPage.content('div');
+};

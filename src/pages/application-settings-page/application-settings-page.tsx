@@ -13,18 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { BEM } from '@redneckz/react-bem-helper';
+import 'twin.macro';
 
 import { NotImplementedStub } from 'modules';
-import { PageHeader } from '../../components';
+import { PageHeader } from 'components';
 
-import styles from './application-settings-page.module.scss';
-
-const applicationSettingsPage = BEM(styles);
-
-export const ApplicationSettingsPage = applicationSettingsPage(({ className }) => (
-  <div className={className}>
+export const ApplicationSettingsPage = () => (
+  <div tw="flex flex-col flex-grow">
     <PageHeader title="Application settings" />
     <NotImplementedStub />
   </div>
-));
+);

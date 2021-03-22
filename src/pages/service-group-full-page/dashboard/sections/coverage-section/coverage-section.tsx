@@ -22,13 +22,12 @@ import { SingleBar, DashboardSection } from 'components';
 import { MethodsTooltip } from './methods-tooltip';
 
 interface Props {
-  className?: string;
   totalCoverage?: number;
   methodCount?: Count;
 }
 
-export const CoverageSection = ({ className, totalCoverage = 0, methodCount: { total = 0, covered = 0 } = {} }: Props) => (
-  <div className={className}>
+export const CoverageSection = ({ totalCoverage = 0, methodCount: { total = 0, covered = 0 } = {} }: Props) => (
+  <div>
     <DashboardSection
       label="Build Coverage"
       info={`${percentFormatter(totalCoverage)}%`}

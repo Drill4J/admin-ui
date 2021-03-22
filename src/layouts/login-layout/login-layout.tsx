@@ -13,27 +13,24 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { BEM } from '@redneckz/react-bem-helper';
+import tw, { styled } from 'twin.macro';
 
 import { ReactComponent as LoginLogo } from './logo.svg';
 
-import styles from './login-layout.module.scss';
-
 interface Props {
-  className?: string;
   children?: React.ReactNode;
 }
 
-const loginLayout = BEM(styles);
+const Sidebar = styled.div`
+  ${tw`w-108 h-full bg-monochrome-white`}
+  box-shadow: 11px 0 40px 0 rgba(0, 0, 0, 0.1);
+`;
 
-export const LoginLayout = loginLayout(({ className, children }: Props) => (
-  <div className={className}>
-    <SideBar>{children}</SideBar>
-    <LogoWrapper>
+export const LoginLayout = ({ children }: Props) => (
+  <div tw="flex w-full h-full">
+    <Sidebar>{children}</Sidebar>
+    <div tw="flex flex-grow justify-center items-center">
       <LoginLogo />
-    </LogoWrapper>
+    </div>
   </div>
-));
-
-const SideBar = loginLayout.sidebar('div');
-const LogoWrapper = loginLayout.logoWrapper('div');
+);

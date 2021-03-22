@@ -13,39 +13,25 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { BEM } from '@redneckz/react-bem-helper';
+import 'twin.macro';
 
 import { ReactComponent as LogoSvg } from './logo.svg';
 
-import styles from './header.module.scss';
-
 interface Props {
-  className?: string;
   baselineBuild?: string;
 }
 
-const header = BEM(styles);
-
-export const Header = header(
-  ({ className, baselineBuild }: Props) => (
-    <div className={className}>
-      <LogoWrapper>
-        <Logo />
-      </LogoWrapper>
-      <Content>
-        <Title>New Build has Arrived!</Title>
-        <BaselineBuildInfo className="flex items-center w-full mt-4">
-          Baseline build:&nbsp;
-          <BaselineBuild className="text-ellipsis" title={baselineBuild}>{baselineBuild}</BaselineBuild>
-        </BaselineBuildInfo>
-      </Content>
+export const Header = ({ baselineBuild }: Props) => (
+  <div tw="flex items-center">
+    <div tw="relative my-5 w-20 h-20 border-2 rounded-full border-monochrome-black">
+      <LogoSvg tw="absolute bottom-0" />
     </div>
-  ),
+    <div tw="flex flex-col justify-center ml-6">
+      <div tw="w-full font-bold text-24 leading-24">New Build has Arrived!</div>
+      <div tw="flex items-center w-full mt-4 text-12 leading-16 text-monochrome-default">
+        Baseline build:&nbsp;
+        <div className="text-ellipsis w-80 inline-block font-bold" title={baselineBuild}>{baselineBuild}</div>
+      </div>
+    </div>
+  </div>
 );
-
-const LogoWrapper = header.logoWrapper('div');
-const Logo = header.logo(LogoSvg);
-const Content = header.content('div');
-const Title = header.title('div');
-const BaselineBuildInfo = header.baselineBuildInfo('div');
-const BaselineBuild = header.baselineBuild('div');

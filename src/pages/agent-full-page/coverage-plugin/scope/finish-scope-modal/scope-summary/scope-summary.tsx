@@ -13,26 +13,29 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { BEM } from '@redneckz/react-bem-helper';
+import tw, { styled } from 'twin.macro';
 
 import { ActiveScope } from 'types/active-scope';
 import { formatMsToDate, percentFormatter } from 'utils';
 
-import styles from './scope-summary.module.scss';
-
 interface Props {
-  className?: string;
   scope: ActiveScope;
   testsCount: number;
 }
 
-const scopeSummary = BEM(styles);
+const Element = styled.div(() => [
+  tw`flex justify-between pt-3 pb-2`,
+  tw`border-b border-monochrome-medium-tint text-14 leading-20`,
+]);
+const ElementValue = styled.div`
+  ${tw`font-bold text-14`}
+`;
 
-export const ScopeSummary = scopeSummary(({ className, scope, testsCount }: Props) => {
+export const ScopeSummary = ({ scope, testsCount }: Props) => {
   const { coverage: { percentage = 0 } = {}, started } = scope || {};
   return (
-    <div className={className}>
-      <Title>Scope Summary</Title>
+    <div tw="w-full h-full">
+      <div tw="w-full pb-1 font-bold text-14 leading-20">Scope Summary</div>
       <Element>
         Code coverage
         <ElementValue data-test="finish-scope-modal:scope-summary:code-coverage">
@@ -49,11 +52,7 @@ export const ScopeSummary = scopeSummary(({ className, scope, testsCount }: Prop
       </Element>
     </div>
   );
-});
-
-const Title = scopeSummary.title('div');
-const Element = scopeSummary.element('div');
-const ElementValue = scopeSummary.elementValue('div');
+};
 
 function getTimeString(started?: number) {
   const duration = started ? Date.now() - started : 0;

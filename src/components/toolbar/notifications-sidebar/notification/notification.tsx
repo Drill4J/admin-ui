@@ -15,7 +15,8 @@
  */
 import { BEM, tag, div } from '@redneckz/react-bem-helper';
 import { format } from 'timeago.js';
-import { Icons } from '@drill4j/ui-kit';
+import { Icons, useHover } from '@drill4j/ui-kit';
+import tw, { styled } from 'twin.macro';
 
 import { Notification as NotificationType } from 'types/notificaiton';
 import { readNotification, deleteNotification } from '../api';
@@ -23,73 +24,109 @@ import { readNotification, deleteNotification } from '../api';
 import styles from './notification.module.scss';
 
 interface Props {
-  className?: string;
   notification: NotificationType;
   onError?: (message: string) => void;
 }
 
 const notification = BEM(styles);
 
+const Content = styled.div`
+  ${tw`flex flex-col justify-center gap-y-2 px-6 h-20`}
+  ${tw`text-12 text-monochrome-default border-b border-monochrome-medium-tint`}
+  ${tw`hover:bg-monochrome-default hover:bg-opacity-5`}
+`;
+
+const BuildVersion = styled.div(({ unread }: { unread?: boolean}) => [
+  tw`grid gap-4 h-5 text-14 text-monochrome-black`,
+  'grid-template-columns: 288px 48px;',
+  unread && tw`font-bold`,
+]);
+
+const NotificationStatusIndicator = styled.div(({ unread }: { unread?: boolean}) => [
+  tw`min-w-8px h-2 rounded bg-monochrome-medium-tint`,
+  unread && tw`bg-monochrome-default`,
+]);
+
+const SinceNotificationArrived = styled.div`
+  ${tw`h-6`}
+  ${({ isHover }: { isHover: boolean }) => isHover && `
+      overflow: hidden;
+      white-space: nowrap;
+      position: relative;
+      background: linear-gradient(90deg,currentColor 40%,transparent 80%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+  `}
+`;
+
+const MarkAsReadButton = styled.div(({ read }: { read?: boolean }) => [
+  tw`h-4 cursor-pointer`,
+  read && tw`hidden`,
+]);
+
+const DeleteNotificationButton = styled.div`
+  ${tw`h-4 cursor-pointer text-red-default hover:text-red-medium-tint active:text-red-shade`}
+`;
+
 export const Notification = notification(({
-  className, notification: {
+  notification: {
     agentId, createdAt, read, id = '', message: { currentId: buildVersion } = {},
   },
   onError,
-}: Props) => (
-  <div className={className}>
-    <Content className="flex flex-col justify-center gap-y-2 px-6">
-      <div className="flex justify-between items-center w-full">
-        <span>{agentId}</span>
-        <SinceNotificationArrived>{format(createdAt || Date.now())}</SinceNotificationArrived>
-      </div>
-      <BuildVersion unread={!read}>
-        <div className="flex items-center">
-          <NotificationStatusIndicator className="mr-2" unread={!read} />
-          <div className="text-ellipsis mr-1" title={`Build ${buildVersion}`}>Build {buildVersion}</div>arrived
+}: Props) => {
+  const { ref, isVisible } = useHover();
+  return (
+    <div ref={ref}>
+      <Content>
+        <div className="flex justify-between items-center w-full">
+          <span>{agentId}</span>
+          <SinceNotificationArrived isHover={isVisible}>{format(createdAt || Date.now())}</SinceNotificationArrived>
         </div>
-        <ButtonGroup className="justify-end gap-x-4 items-center">
-          <MarkAsReadButton
-            onClick={() => readNotification(id, { onError })}
-            read={read}
-            data-test="notification:mark-as-read-button"
+        <BuildVersion unread={!read}>
+          <div className="flex items-center">
+            <NotificationStatusIndicator className="mr-2" unread={!read} />
+            <div className="text-ellipsis mr-1" title={`Build ${buildVersion}`}>Build {buildVersion}</div>arrived
+          </div>
+          <div css={[
+            tw`hidden justify-end gap-x-4 items-center`,
+            isVisible && tw`flex`,
+          ]}
           >
-            <Icons.Success />
-          </MarkAsReadButton>
-          <DeleteNotificationButton
-            onClick={() => deleteNotification(id, { onError })}
-            data-test="notification:delete-notification-button"
+            <MarkAsReadButton
+              className="link"
+              onClick={() => readNotification(id, { onError })}
+              read={read}
+              data-test="notification:mark-as-read-button"
+            >
+              <Icons.Success />
+            </MarkAsReadButton>
+            <DeleteNotificationButton
+              onClick={() => deleteNotification(id, { onError })}
+              data-test="notification:delete-notification-button"
+            >
+              <Icons.Cancel />
+            </DeleteNotificationButton>
+          </div>
+        </BuildVersion>
+        <div className="flex gap-x-4 font-bold">
+          <a
+            className="link"
+            href={`/full-page/${agentId}/${buildVersion}/dashboard`}
+            target="_blank"
+            rel="noopener noreferrer"
+            data-test="notification:notification-button-dashboard"
           >
-            <Icons.Cancel />
-          </DeleteNotificationButton>
-        </ButtonGroup>
-      </BuildVersion>
-      <div className="flex gap-x-4 font-bold">
-        <LinkToDashboard
-          href={`/full-page/${agentId}/${buildVersion}/dashboard`}
-          target="_blank"
-          rel="noopener noreferrer"
-          data-test="notification:notification-button-dashboard"
-        >
-          Dashboard
-        </LinkToDashboard>
-        <NotificationButton onClick={() => {}} data-test="notification:notification-button-whats-new">
-          What’s new
-        </NotificationButton>
-      </div>
-    </Content>
-  </div>
-));
-
-const Content = notification.content('div');
-const SinceNotificationArrived = notification.sinceNotificationArrived('span');
-const BuildVersion = notification.buildVersion(div({} as { unread?: boolean}));
-const NotificationStatusIndicator = notification.notificationStatusIndicator(div({} as { unread?: boolean}));
-const ButtonGroup = notification.buttonGroup('div');
-const MarkAsReadButton = notification.markAsReadButton(div({ onClick: () => {} } as { onClick?: () => void; read?: boolean }));
-const DeleteNotificationButton = notification.deleteNotificationButton(
-  div({ onClick: () => {} } as { onClick?: () => void; read?: boolean }),
-);
-const LinkToDashboard = notification.linkToDashboard(
-  tag('a')({ href: '', rel: '', target: '' } as { href: string; rel: string; target: string }),
-);
-const NotificationButton = notification.notificationButton('span');
+            Dashboard
+          </a>
+          <div
+            tw="text-blue-default opacity-50 cursor-not-allowed"
+            data-test="notification:notification-button-whats-new"
+          >
+            What’s new
+          </div>
+        </div>
+      </Content>
+    </div>
+  );
+});

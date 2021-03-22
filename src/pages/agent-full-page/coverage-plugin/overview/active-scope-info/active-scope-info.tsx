@@ -13,28 +13,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { BEM } from '@redneckz/react-bem-helper';
 import { Link, useParams } from 'react-router-dom';
 import { Button, Icons, SessionIndicator } from '@drill4j/ui-kit';
+import 'twin.macro';
 
 import { percentFormatter } from 'utils';
 import { ActiveScope } from 'types/active-scope';
 import { useCoveragePluginDispatch, openModal } from '../../store';
 import { usePluginState } from '../../../store';
 
-import styles from './active-scope-info.module.scss';
-
 interface Props {
-  className?: string;
   scope: ActiveScope | null;
 }
 
-const activeScopeInfo = BEM(styles);
-
-export const ActiveScopeInfo = activeScopeInfo(({
-  className,
-  scope,
-}: Props) => {
+export const ActiveScopeInfo = ({ scope }: Props) => {
   const {
     id: scopeId,
     coverage: { percentage = 0 } = {},
@@ -44,16 +36,16 @@ export const ActiveScopeInfo = activeScopeInfo(({
   const { loading } = usePluginState();
 
   return (
-    <div className={className}>
-      <Title>ACTIVE SCOPE COVERAGE</Title>
+    <div tw="pt-4 px-6 pb-6 text-14 leading-16 bg-monochrome-light-tint text-monochrome-default">
+      <div tw="font-bold text-12">ACTIVE SCOPE COVERAGE</div>
       <div className="flex items-center gap-x-2 w-full h-10 mt-6 mb-3 ">
-        <ScopeCoverage data-test="active-scope-info:scope-coverage">
+        <div tw="text-32 leading-40 text-monochrome-black" data-test="active-scope-info:scope-coverage">
           {`${percentFormatter(percentage)}%`}
-        </ScopeCoverage>
+        </div>
         <SessionIndicator active={loading} />
       </div>
-      <FinishScopeButton
-        className="flex gap-x-2"
+      <Button
+        tw="flex justify-center gap-x-2 w-68"
         type="primary"
         size="large"
         onClick={() => dispatch(openModal('FinishScopeModal', scope))}
@@ -61,7 +53,7 @@ export const ActiveScopeInfo = activeScopeInfo(({
       >
         <Icons.Complete />
         <span>Finish Scope</span>
-      </FinishScopeButton>
+      </Button>
       <div className="flex flex-col items-start gap-y-3 w-full mt-6 font-bold leading-20">
         <Link
           className="link"
@@ -87,8 +79,4 @@ export const ActiveScopeInfo = activeScopeInfo(({
       </div>
     </div>
   );
-});
-
-const Title = activeScopeInfo.title('div');
-const ScopeCoverage = activeScopeInfo.scopeCoverage('div');
-const FinishScopeButton = activeScopeInfo.finishScopeButton(Button);
+};

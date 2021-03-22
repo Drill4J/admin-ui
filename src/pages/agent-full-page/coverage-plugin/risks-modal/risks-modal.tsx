@@ -13,17 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { BEM } from '@redneckz/react-bem-helper';
 import { useRef, useState } from 'react';
 import VirtualList from 'react-tiny-virtual-list';
 import {
   Icons, Modal, OverflowText, Inputs,
 } from '@drill4j/ui-kit';
+import tw, { styled } from 'twin.macro';
 
 import { useElementSize, useBuildVersion } from 'hooks';
 import { Risks } from 'types/risks';
-
-import styles from './risks-modal.module.scss';
 
 interface Props {
   isOpen: boolean;
@@ -31,7 +29,13 @@ interface Props {
   filter?: string;
 }
 
-const risksModal = BEM(styles);
+const Header = styled.div`
+  ${tw`flex items-center h-16 pl-6`}
+  ${tw`border-b border-monochrome-medium-tint text-18 leading-24 text-monochrome-black`}
+  & > * {
+    ${tw`mr-2`}
+  }
+`;
 
 export const RisksModal = ({ isOpen, onToggle, filter = 'all' }: Props) => {
   const risks = useBuildVersion<Risks[]>('/build/risks') || [];
@@ -59,15 +63,16 @@ export const RisksModal = ({ isOpen, onToggle, filter = 'all' }: Props) => {
           <span>Risks</span>
           <h2>{risks.length}</h2>
         </Header>
-        <NotificationPanel className="flex items-center">
+        <div tw="flex items-center h-10 px-6 text-14 leading-20 bg-monochrome-medium-tint opacity-50">
           Risks are not covered
-          <Bold>New</Bold>
+          <span tw="mx-1 font-bold leading-20">New</span>
           and
-          <Bold>Modified</Bold>
+          <span tw="mx-1 font-bold leading-20">Modified</span>
           methods.
-        </NotificationPanel>
-        <Content>
-          <Filter
+        </div>
+        <div tw="flex flex-col flex-grow overflow-y-hidden">
+          <Inputs.Dropdown
+            tw="mt-4 ml-6 text-blue-default"
             items={[
               { value: 'all', label: 'All risks' },
               { value: 'new', label: `Not covered new methods (${newRisks.length})` },
@@ -79,39 +84,37 @@ export const RisksModal = ({ isOpen, onToggle, filter = 'all' }: Props) => {
             onChange={({ value }) => setSelectedSection(value)}
             value={selectedSection}
           />
-          <MethodsList>
+          <div tw="flex flex-col h-full mt-4 text-14">
             <div ref={node} style={{ height: '100%' }}>
               <VirtualList
                 itemSize={60}
                 height={methodsListHeight}
                 itemCount={getRisks().length}
                 renderItem={({ index, style }) => (
-                  <MethodsListItem key={index} style={style as Record<symbol, string>}>
-                    <MethodsListItemIcon>
+                  <div
+                    tw="flex flex-row items-center w-97 min-h-40px mb-4 pl-6 text-12"
+                    key={index}
+                    style={style as Record<symbol, string>}
+                  >
+                    <div tw="flex items-center mr-4">
                       <Icons.Function />
-                    </MethodsListItemIcon>
-                    <MethodInfo>
+                    </div>
+                    <div tw="flex flex-col w-70">
                       <OverflowText title={getRisks()[index]?.name}>{getRisks()[index]?.name}</OverflowText>
-                      <MethodsPackage title={getRisks()[index]?.ownerClass}>{getRisks()[index]?.ownerClass}</MethodsPackage>
-                    </MethodInfo>
-                  </MethodsListItem>
+                      <OverflowText
+                        tw="w-80 text-monochrome-default"
+                        title={getRisks()[index]?.ownerClass}
+                      >
+                        {getRisks()[index]?.ownerClass}
+                      </OverflowText>
+                    </div>
+                  </div>
                 )}
               />
             </div>
-          </MethodsList>
-        </Content>
+          </div>
+        </div>
       </div>
     </Modal>
   );
 };
-
-const Header = risksModal.header('div');
-const Content = risksModal.content('div');
-const Filter = risksModal.filter(Inputs.Dropdown);
-const NotificationPanel = risksModal.notificationPanel('div');
-const Bold = risksModal.bold('span');
-const MethodsList = risksModal.methodsList('div');
-const MethodsListItem = risksModal.methodsListItem('div');
-const MethodInfo = risksModal.methodsInfo('div');
-const MethodsPackage = risksModal.methodsPackage(OverflowText);
-const MethodsListItemIcon = risksModal.methodsListItemIcon('div');
