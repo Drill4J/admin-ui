@@ -14,43 +14,38 @@
  * limitations under the License.
  */
 import { NavLink, useParams } from 'react-router-dom';
-import { BEM } from '@redneckz/react-bem-helper';
 import { MainProgressBar, ProgressBarLegends } from '@drill4j/ui-kit';
+import 'twin.macro';
 
 import { percentFormatter } from 'utils';
 import { PreviousBuildInfo } from '../previous-build-info-types';
 
-import styles from './build-coverage-info.module.scss';
-
 interface Props {
-  className?: string;
   buildCodeCoverage: number;
   previousBuildInfo?: PreviousBuildInfo;
 }
 
-const buildCoverageInfo = BEM(styles);
-
-export const BuildCoverageInfo = buildCoverageInfo(({
-  className, buildCodeCoverage, previousBuildInfo: { previousBuildVersion = '', previousBuildCodeCoverage = 0 } = {},
+export const BuildCoverageInfo = ({
+  buildCodeCoverage, previousBuildInfo: { previousBuildVersion = '', previousBuildCodeCoverage = 0 } = {},
 }: Props) => {
   const { agentId, buildVersion, pluginId } = useParams<{agentId: string, buildVersion: string, pluginId: string }>();
   const buildDiff = percentFormatter(buildCodeCoverage) - percentFormatter(previousBuildCodeCoverage);
   return (
-    <div className={className}>
+    <div tw="w-full h-full text-12 leading-16 text-monochrome-default">
       <div className="flex justify-between items-center w-full">
-        <Title data-test="build-coverage-info:title">BUILD COVERAGE</Title>
-        <Link
-          className="link"
+        <div tw="font-bold" data-test="build-coverage-info:title">BUILD COVERAGE</div>
+        <NavLink
+          className="link font-bold leading-16 no-underline"
           to={`/full-page/${agentId}/${buildVersion}/${pluginId}/scopes/`}
           data-test="build-coverage-info:all-scopes-link"
         >
           All scopes
-        </Link>
+        </NavLink>
       </div>
-      <DetailedCodeCoverageInfo data-test="build-coverage-info:detailed-code-coverage-info">
-        <BuildCoveragePercentage data-test="build-coverage-info:build-coverage-percentage">
+      <div tw="flex items-baseline mt-6 mb-3 text-12" data-test="build-coverage-info:detailed-code-coverage-info">
+        <div tw="mr-2 text-32 leading-40 text-monochrome-black" data-test="build-coverage-info:build-coverage-percentage">
           {percentFormatter(buildCodeCoverage)}%
-        </BuildCoveragePercentage>
+        </div>
         {previousBuildVersion && buildCodeCoverage > 0 && (
           <span data-test="build-coverage-info:comparing">
             <span tw="font-bold">
@@ -61,14 +56,9 @@ export const BuildCoverageInfo = buildCoverageInfo(({
             сompared to the parent build
           </span>
         )}
-      </DetailedCodeCoverageInfo>
+      </div>
       <MainProgressBar type="primary" value={`${buildCodeCoverage}%`} />
       <ProgressBarLegends />
     </div>
   );
-});
-
-const Title = buildCoverageInfo.title('div');
-const DetailedCodeCoverageInfo = buildCoverageInfo.detailedCodeCoverageInfo('div');
-const BuildCoveragePercentage = buildCoverageInfo.buildCoveragePercentage('div');
-const Link = buildCoverageInfo.link(NavLink);
+};

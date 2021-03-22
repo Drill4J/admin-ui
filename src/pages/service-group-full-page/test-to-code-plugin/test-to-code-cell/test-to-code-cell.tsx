@@ -13,25 +13,25 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { BEM, span } from '@redneckz/react-bem-helper';
 import { Icons, Tooltip } from '@drill4j/ui-kit';
-
-import styles from './test-to-code-cell.module.scss';
+import tw, { styled } from 'twin.macro';
 
 interface Props {
-  className?: string;
   value: number;
   onClick?: () => void;
   testContext?: string;
 }
 
-const testToCodeCell = BEM(styles);
+const Value = styled.span(({ clickable }: {clickable: boolean}) => [
+  tw`flex items-center text-20 text-monochrome-black`,
+  clickable && tw`cursor-pointer hover:text-blue-default active:text-blue-shade`,
+]);
 
-export const TestToCodeCell = testToCodeCell(({
-  className, value, onClick, testContext,
+export const TestToCodeCell = ({
+  value, onClick, testContext,
 }: Props) => (
-  <div className={className}>
-    <Content>
+  <div>
+    <div tw="pl-4">
       <Value onClick={onClick} clickable={Boolean(onClick)} data-test={`dashboard-cell:value:${testContext}`}>
         {value === undefined ? (
           <Tooltip message={(
@@ -44,14 +44,8 @@ export const TestToCodeCell = testToCodeCell(({
             n/a
           </Tooltip>
         ) : value}
-        {Boolean(onClick) && <LinkIcon height={8} />}
+        {Boolean(onClick) && <Icons.Expander tw="ml-1 text-blue-default" height={8} />}
       </Value>
-    </Content>
+    </div>
   </div>
-));
-
-const Content = testToCodeCell.content('div');
-const Value = testToCodeCell.value(
-  span({ onClick: () => {}, 'data-test': '' } as { onClick?: () => void; clickable?: boolean; 'data-test'?: string }),
 );
-const LinkIcon = testToCodeCell.linkIcon(Icons.Expander);

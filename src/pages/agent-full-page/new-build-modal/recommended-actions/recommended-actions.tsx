@@ -13,36 +13,24 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { BEM } from '@redneckz/react-bem-helper';
 import { nanoid } from 'nanoid';
 import { Icons } from '@drill4j/ui-kit';
-
-import styles from './recommended-actions.module.scss';
+import 'twin.macro';
 
 interface Props {
-  className?: string;
   recommendations?: string[];
 }
 
-const recommendedActions = BEM(styles);
-
-export const RecommendedActions = recommendedActions(
-  ({ className, recommendations = [] }: Props) => (
-    <div className={className}>
-      <Title>Recommended actions</Title>
-      <Content>
-        {recommendations.map((action: string) => (
-          <ActionName key={nanoid()}>
-            <ActionIcon height={16} width={16} />
-            {action}
-          </ActionName>
-        ))}
-      </Content>
+export const RecommendedActions = ({ recommendations = [] }: Props) => (
+  <div tw="w-full h-full">
+    <div tw="w-full text-14 leading-32 font-bold pb-2">Recommended actions</div>
+    <div tw="py-3 px-4 border border-green-default bg-green-default bg-opacity-5">
+      {recommendations.map((action: string) => (
+        <span tw="flex items-center text-14 leading-32 text-monochrome-black" key={nanoid()}>
+          <Icons.Checkbox tw="flex items-center mr-2 text-green-default" height={16} width={16} />
+          {action}
+        </span>
+      ))}
     </div>
-  ),
+  </div>
 );
-
-const Title = recommendedActions.title('div');
-const Content = recommendedActions.content('div');
-const ActionIcon = recommendedActions.actionIcon(Icons.Checkbox);
-const ActionName = recommendedActions.actionName('span');

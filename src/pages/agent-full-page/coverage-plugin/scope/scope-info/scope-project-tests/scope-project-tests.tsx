@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { BEM } from '@redneckz/react-bem-helper';
+import 'twin.macro';
 
 import { BuildTestsCard } from 'components';
 import { TestsInfo } from 'types/tests-info';
@@ -21,28 +21,21 @@ import { BuildCoverage } from 'types/build-coverage';
 import { useBuildVersion } from 'hooks';
 import { ActiveBuildTestsInfo } from '../../../active-build-tests-info';
 
-import styles from './scope-project-tests.module.scss';
-
 interface Props {
-  className?: string;
   scopeId: string;
 }
 
-const scopeProjectTests = BEM(styles);
-
-export const ScopeProjectTests = scopeProjectTests(({ className, scopeId }: Props) => {
+export const ScopeProjectTests = ({ scopeId }: Props) => {
   const { byTestType = [] } = useBuildVersion<BuildCoverage>(`/build/scopes/${scopeId}/coverage`) || {};
   const testsInfo: TestsInfo = byTestType.reduce((test, testType) => ({ ...test, [testType.type]: testType }), {});
 
   return (
-    <div className={className}>
+    <div tw="flex flex-col gap-10">
       <ActiveBuildTestsInfo testsInfo={testsInfo} />
-      <Cards>
+      <div tw="flex gap-2">
         <BuildTestsCard label="AUTO" testTypeSummary={testsInfo.AUTO} />
         <BuildTestsCard label="MANUAL" testTypeSummary={testsInfo.MANUAL} />
-      </Cards>
+      </div>
     </div>
   );
-});
-
-const Cards = scopeProjectTests.cards('div');
+};

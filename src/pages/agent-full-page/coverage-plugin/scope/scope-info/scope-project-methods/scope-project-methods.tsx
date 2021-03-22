@@ -14,8 +14,8 @@
  * limitations under the License.
  */
 import { useState } from 'react';
-import { BEM } from '@redneckz/react-bem-helper';
 import { LinkButton } from '@drill4j/ui-kit';
+import 'twin.macro';
 
 import { BuildMethodsCard } from 'components';
 import { Methods } from 'types/methods';
@@ -26,28 +26,23 @@ import { RisksModal } from '../../../risks-modal';
 import { PreviousBuildInfo } from './previous-build-info-types';
 import { ScopeCoverageInfo } from '../scope-coverage-info';
 
-import styles from './scope-project-methods.module.scss';
-
 interface Props {
-  className?: string;
   scope: ActiveScope | null;
   previousBuildInfo?: PreviousBuildInfo;
   loading?: boolean;
   status?: AgentStatus;
 }
 
-const scopeProjectMethods = BEM(styles);
-
-export const ScopeProjectMethods = scopeProjectMethods(({ className, scope }: Props) => {
+export const ScopeProjectMethods = ({ scope }: Props) => {
   const {
     all, new: newMethods, modified, risks,
   } = useBuildVersion<Methods>(`/build/scopes/${scope?.id}/methods`) || {};
   const [risksFilter, setRisksFilter] = useState('');
 
   return (
-    <div className={className}>
+    <div tw="flex flex-col gap-10">
       <ScopeCoverageInfo scope={scope} />
-      <Cards>
+      <div tw="flex gap-2">
         <BuildMethodsCard
           totalCount={all?.total}
           covered={all?.covered}
@@ -83,7 +78,7 @@ export const ScopeProjectMethods = scopeProjectMethods(({ className, scope }: Pr
             </LinkButton>
           )}
         </BuildMethodsCard>
-      </Cards>
+      </div>
       {risksFilter && (
         <RisksModal
           isOpen={Boolean(risksFilter)}
@@ -93,6 +88,4 @@ export const ScopeProjectMethods = scopeProjectMethods(({ className, scope }: Pr
       )}
     </div>
   );
-});
-
-const Cards = scopeProjectMethods.cards('div');
+};

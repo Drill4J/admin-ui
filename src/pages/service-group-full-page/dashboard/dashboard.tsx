@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { BEM } from '@redneckz/react-bem-helper';
+import 'twin.macro';
 
 import { NoPluginsStub } from 'modules';
 import { Plugin } from 'types/plugin';
@@ -24,22 +24,15 @@ import {
   CoverageSection, RisksSection, TestsToRunSection, TestsSection,
 } from './sections';
 
-import styles from './dashboard.module.scss';
-
 interface Props {
-  className?: string;
   serviceGroupId: string;
   plugins: Plugin[];
 }
 
-const dashboard = BEM(styles);
-
-export const Dashboard = dashboard(({
-  className, serviceGroupId, plugins,
-}: Props) => (
-  <div className={className}>
-    <Header>Dashboard</Header>
-    <Content>
+export const Dashboard = ({ serviceGroupId, plugins }: Props) => (
+  <div tw="flex flex-col w-full h-full">
+    <div tw="my-6 font-light text-24 leading-32">Dashboard</div>
+    <div tw="flex flex-grow">
       {plugins.length > 0 ? plugins.map(({ id: pluginId = '', name }) => {
         const {
           aggregated: {
@@ -65,9 +58,6 @@ export const Dashboard = dashboard(({
           </PluginCard>
         );
       }) : <NoPluginsStub agentId={serviceGroupId} agentType="ServiceGroup" />}
-    </Content>
+    </div>
   </div>
-));
-
-const Header = dashboard.header('div');
-const Content = dashboard.content('div');
+);

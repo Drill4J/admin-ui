@@ -14,25 +14,26 @@
  * limitations under the License.
  */
 import { useRef } from 'react';
-import { BEM } from '@redneckz/react-bem-helper';
 import { Legend, Tooltip } from '@drill4j/ui-kit';
 import { useParams } from 'react-router-dom';
+import tw, { styled } from 'twin.macro';
 
 import { DATA_VISUALIZATION_COLORS } from 'common/constants';
 import { TestsInfo } from 'types/tests-info';
 import { percentFormatter } from 'utils';
 import { useElementSize } from 'hooks';
 
-import styles from './active-build-tests-info.module.scss';
-
 interface Props {
-  className?: string;
   testsInfo: TestsInfo;
 }
 
-const activeBuildTestsInfo = BEM(styles);
+const TestsBar = styled.div(({ type }: { type: 'auto' | 'manual' }) => [
+  tw`h-8 opacity-50 hover:opacity-100`,
+  type === 'auto' && tw`bg-data-visualization-auto`,
+  type === 'manual' && tw`bg-data-visualization-manual`,
+]);
 
-export const ActiveBuildTestsInfo = activeBuildTestsInfo(({ className, testsInfo }: Props) => {
+export const ActiveBuildTestsInfo = ({ testsInfo }: Props) => {
   const {
     AUTO: {
       summary: {
@@ -56,20 +57,23 @@ export const ActiveBuildTestsInfo = activeBuildTestsInfo(({ className, testsInfo
   const { scopeId = '' } = useParams<{ scopeId?: string }>();
 
   return (
-    <div className={className} ref={ref}>
+    <div tw="text-12 leading-16 text-monochrome-default" ref={ref}>
       <div className="flex justify-between items-center w-full">
-        <Title data-test="active-build-tests-info:title">TESTS EXECUTION</Title>
+        <div tw="font-bold" data-test="active-build-tests-info:title">TESTS EXECUTION</div>
         <Legend legendItems={[
           { label: 'Auto', color: DATA_VISUALIZATION_COLORS.AUTO },
           { label: 'Manual', color: DATA_VISUALIZATION_COLORS.MANUAL },
         ]}
         />
       </div>
-      <Info>
-        <ExecutedTests data-test="active-build-tests-info:executed-tests">{testsExecuted}</ExecutedTests>
+      <div tw="flex gap-1 items-baseline mt-6 mb-3">
+        <div tw="text-32 leading-40 text-monochrome-black" data-test="active-build-tests-info:executed-tests">{testsExecuted}</div>
         &nbsp;tests executed in {scopeId ? 'scope' : 'build'}
-      </Info>
-      <ExecutedTestsBar data-test="active-build-tests-info:executed-tests-bar">
+      </div>
+      <div
+        tw="relative h-8 bg-monochrome-light-tint rounded overflow-hidden"
+        data-test="active-build-tests-info:executed-tests-bar"
+      >
         <div style={{ position: 'absolute' }}>
           {Boolean(autoTestsCount) && (
             <Tooltip
@@ -106,13 +110,7 @@ export const ActiveBuildTestsInfo = activeBuildTestsInfo(({ className, testsInfo
             </Tooltip>
           )}
         </div>
-      </ExecutedTestsBar>
+      </div>
     </div>
   );
-});
-
-const Title = activeBuildTestsInfo.title('div');
-const TestsBar = activeBuildTestsInfo.testsBar('div');
-const Info = activeBuildTestsInfo.info('div');
-const ExecutedTests = activeBuildTestsInfo.executedTests('div');
-const ExecutedTestsBar = activeBuildTestsInfo.executedTestsBar('div');
+};

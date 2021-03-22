@@ -13,36 +13,25 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { BEM } from '@redneckz/react-bem-helper';
 import { Icons } from '@drill4j/ui-kit';
 import 'twin.macro';
 
 import { AGENT_STATUS } from 'common/constants';
 import { usePluginState } from '../../../store';
 
-import styles from './no-tests-stub.module.scss';
-
-interface Props {
-  className?: string;
-}
-
-const noTestsStub = BEM(styles);
-
-export const NoTestsStub = noTestsStub(({ className }: Props) => {
+export const NoTestsStub = () => {
   const { agent: { status = '' } = {} } = usePluginState();
   return (
-    <div className={className}>
+    <div tw="flex flex-col items-center text-monochrome-medium-tint">
       <Icons.Test tw="mt-21" height={104} width={107} />
       <div tw="mt-4 text-20 leading-32 text-monochrome-default">
         {status === AGENT_STATUS.BUSY ? 'Build tests are loading' : 'No tests available yet'}
       </div>
-      <Message>
+      <div tw="mt-2 w-97 text-14 leading-24 text-center text-monochrome-default">
         {status === AGENT_STATUS.BUSY
           ? 'It may take a few seconds.'
           : 'Information about project tests will appear after the first launch of tests.'}
-      </Message>
+      </div>
     </div>
   );
-});
-
-const Message = noTestsStub.message('div');
+};

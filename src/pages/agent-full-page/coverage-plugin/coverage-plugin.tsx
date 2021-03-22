@@ -13,8 +13,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { BEM } from '@redneckz/react-bem-helper';
 import { Switch, Route } from 'react-router-dom';
+import 'twin.macro';
 
 import { TestsToRunList } from 'modules';
 import { Overview } from './overview';
@@ -23,20 +23,12 @@ import { CoveragePluginModals } from './covarage-plugin-modals';
 import { CoveragePluginProvider } from './store';
 import { InitialDataController } from './initial-data-controller';
 
-import styles from './coverage-plugin.module.scss';
-
-interface Props {
-  className?: string;
-}
-
-const coveragePlugin = BEM(styles);
-
-export const CoveragePlugin = coveragePlugin(({ className }: Props) => (
-  <div className={className}>
+export const CoveragePlugin = () => (
+  <div tw="flex flex-col w-full h-full">
     <CoveragePluginProvider>
       <InitialDataController>
         <>
-          <Content>
+          <div tw="flex-grow mx-6">
             <Switch>
               <Route
                 path="/full-page/:agentId/:buildVersion/:pluginId/dashboard"
@@ -59,12 +51,10 @@ export const CoveragePlugin = coveragePlugin(({ className }: Props) => (
                 exact
               />
             </Switch>
-          </Content>
+          </div>
           <CoveragePluginModals />
         </>
       </InitialDataController>
     </CoveragePluginProvider>
   </div>
-));
-
-const Content = coveragePlugin.content('div');
+);

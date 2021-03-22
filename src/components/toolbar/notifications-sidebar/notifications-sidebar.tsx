@@ -14,84 +14,81 @@
  * limitations under the License.
  */
 import { useState } from 'react';
-import { BEM } from '@redneckz/react-bem-helper';
 import { nanoid } from 'nanoid';
 import { Icons, Modal, GeneralAlerts } from '@drill4j/ui-kit';
+import tw, { styled } from 'twin.macro';
 
 import { Notification as NotificationType } from 'types/notificaiton';
 import { Notification } from './notification';
 import { deleteAllNotifications, readAllNotifications } from './api';
 
-import styles from './notifications-sidebar.module.scss';
-
 interface Props {
-  className?: string;
   isOpen: boolean;
   onToggle: (value: boolean) => void;
   notifications: NotificationType[];
 }
 
-const notificationsSidebar = BEM(styles);
+const Header = styled.div`
+  ${tw`flex items-center space-x-2 min-h-60px pl-6`}
+  ${tw`text-18 leading-24 text-monochrome-black border-b border-monochrome-medium-tint`}
+`;
 
-export const NotificationsSidebar = notificationsSidebar(
-  ({
-    className,
-    isOpen,
-    onToggle,
-    notifications,
-  }: Props) => {
-    const [errorMessage, setErrorMessage] = useState('');
+const ActionsPanel = styled.div`
+  ${tw`flex justify-end items-center w-full`}
+  ${tw`border-b border-monochrome-light-tint font-bold text-12 leading-38 text-blue-default`}
+  & > * {
+    ${tw`mr-4 cursor-pointer hover:text-blue-medium-tint active:text-blue-shade`}
+  }
+`;
 
-    return (
-      <Modal isOpen={isOpen} onToggle={onToggle}>
-        <div className={className}>
-          <Header>
-            <Icons.Notification />
-            <span>Notifications</span>
-          </Header>
-          {notifications.length > 0 ? (
-            <Content>
-              <ActionsPanel className="flex justify-end items-center w-full">
-                <span
-                  onClick={() => readAllNotifications({ onError: setErrorMessage })}
-                  data-test="notification-sidebar:mark-all-as-read"
-                >
-                  Mark all as read
-                </span>
-                <span
-                  onClick={() => deleteAllNotifications({ onError: setErrorMessage })}
-                  data-test="notification-sidebar:clear-all"
-                >
-                  Clear all
-                </span>
-              </ActionsPanel>
-              {errorMessage && (
-                <GeneralAlerts type="ERROR">
-                  {errorMessage}
-                </GeneralAlerts>
-              )}
-              <NotificationsList>
-                {notifications.map((notification) =>
-                  <Notification notification={notification} key={nanoid()} onError={setErrorMessage} />)}
-              </NotificationsList>
-            </Content>
-          ) : (
-            <EmptyNotificationPanel>
-              <Icons.Notification width={120} height={130} />
-              <Title>There are no notifications</Title>
-              <SubTitle>No worries, we’ll keep you posted!</SubTitle>
-            </EmptyNotificationPanel>
-          )}
-        </div>
-      </Modal>
-    );
-  },
-);
+export const NotificationsSidebar = ({
+  isOpen,
+  onToggle,
+  notifications,
+}: Props) => {
+  const [errorMessage, setErrorMessage] = useState('');
 
-const Header = notificationsSidebar.header('div');
-const Content = notificationsSidebar.content('div');
-const ActionsPanel = notificationsSidebar.actionsPanel('div');
-const NotificationsList = notificationsSidebar.notificationsList('div');
-const EmptyNotificationPanel = notificationsSidebar.emptyNotificationPanel('div');
-const Title = notificationsSidebar.title('div');
-const SubTitle = notificationsSidebar.subTitle('div');
+  return (
+    <Modal isOpen={isOpen} onToggle={onToggle}>
+      <div tw="flex flex-col h-full bg-monochrome-white">
+        <Header>
+          <Icons.Notification />
+          <span>Notifications</span>
+        </Header>
+        {notifications.length > 0 ? (
+          <div tw="flex flex-col flex-grow overflow-y-hidden">
+            <ActionsPanel>
+              <span
+                onClick={() => readAllNotifications({ onError: setErrorMessage })}
+                data-test="notification-sidebar:mark-all-as-read"
+              >
+                Mark all as read
+              </span>
+              <span
+                onClick={() => deleteAllNotifications({ onError: setErrorMessage })}
+                data-test="notification-sidebar:clear-all"
+              >
+                Clear all
+              </span>
+            </ActionsPanel>
+            {errorMessage && (
+              <GeneralAlerts type="ERROR">
+                {errorMessage}
+              </GeneralAlerts>
+            )}
+            <div tw="overflow-hidden overflow-y-auto">
+              {notifications.map((notification) =>
+                <Notification notification={notification} key={nanoid()} onError={setErrorMessage} />)}
+            </div>
+          </div>
+        ) : (
+          <div tw="flex flex-grow flex-col justify-center items-center text-monochrome-medium-tint">
+            <Icons.Notification width={120} height={130} />
+            <div tw="mt-10 mb-2 text-24 leading-32 text-monochrome-medium-tint text-center">There are no notifications</div>
+            <div tw="text-14 leading-24 text-monochrome-default text-center">No worries, we’ll keep you posted!</div>
+          </div>
+        )}
+      </div>
+    </Modal>
+  );
+};

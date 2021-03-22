@@ -13,24 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { BEM } from '@redneckz/react-bem-helper';
 import { Tooltip } from '@drill4j/ui-kit';
+import 'twin.macro';
 
 import { percentFormatter } from 'utils';
 
-import styles from './test-to-code-coverage-cell.module.scss';
-
 interface Props {
-  className?: string;
   value?: number;
 }
 
-const testToCodeCoverageCell = BEM(styles);
-
-export const TestToCodeCoverageCell = testToCodeCoverageCell(({ className, value = 0 }: Props) => (
-  <div className={className}>
-    <Content>
-      <Value className="flex items-center w-full" data-test="dashboard-coverage-cell:value">
+export const TestToCodeCoverageCell = ({ value = 0 }: Props) => (
+  <div>
+    <div tw="pl-4">
+      <div tw="flex items-center w-full text-20 text-monochrome-black" data-test="dashboard-coverage-cell:value">
         {value === undefined ? (
           <Tooltip message={(
             <div className="flex flex-col items-center w-full">
@@ -42,10 +37,7 @@ export const TestToCodeCoverageCell = testToCodeCoverageCell(({ className, value
             n/a
           </Tooltip>
         ) : `${percentFormatter(value)}%`}
-      </Value>
-    </Content>
+      </div>
+    </div>
   </div>
-));
-
-const Content = testToCodeCoverageCell.content('div');
-const Value = testToCodeCoverageCell.value('div');
+);

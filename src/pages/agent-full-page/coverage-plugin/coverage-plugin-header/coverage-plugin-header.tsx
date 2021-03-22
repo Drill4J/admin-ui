@@ -14,10 +14,9 @@
  * limitations under the License.
  */
 import { useContext, useState } from 'react';
-import { BEM, div } from '@redneckz/react-bem-helper';
 import { NavLink, useHistory, useParams } from 'react-router-dom';
 import { Button, Icons, Tooltip } from '@drill4j/ui-kit';
-import 'twin.macro';
+import tw, { styled } from 'twin.macro';
 
 import { QualityGatePane } from 'modules';
 import { NotificationManagerContext } from 'notification-manager';
@@ -25,7 +24,7 @@ import {
   ConditionSetting,
   ConditionSettingByType,
   QualityGate,
-  QualityGateSettings,
+  QualityGateSettings, QualityGateStatus,
 } from 'types/quality-gate-type';
 import { AGENT_STATUS } from 'common/constants';
 import { Metrics } from 'types/metrics';
@@ -38,16 +37,41 @@ import { BaselineBuildModal } from './baseline-build-modal';
 import { RisksModal } from '../risks-modal';
 import { toggleBaseline } from '../api';
 
-import styles from './coverage-plugin-header.module.scss';
-
 interface Props {
-  className?: string;
   previousBuildTests: TestTypeSummary[];
 }
 
-const coveragePluginHeader = BEM(styles);
+const Content = styled.div`
+  ${tw`grid items-center w-full h-20 border-b border-monochrome-medium-tint`}
+  grid-template-columns: max-content auto max-content;
+`;
+const BaselinePanel = styled.div`
+  ${tw`grid gap-x-2 pl-6`}
+  ${tw`border-l border-monochrome-medium-tint font-bold text-12 leading-24 text-monochrome-default`}
+  grid-template-columns: max-content minmax(64px, 60%);
+  grid-template-rows: repeat(2, 1fr);
+`;
+const FlagWrapper = styled.div(({ active }: { active?: boolean }) => [
+  tw`flex ml-2 text-monochrome-default`,
+  active && tw`text-blue-default cursor-pointer`,
+]);
+const StatusWrapper = styled.div(({ status }: { status?: QualityGateStatus }) => [
+  tw`flex items-center h-8 text-14`,
+  status === 'PASSED' && tw`text-green-default cursor-pointer`,
+  status === 'FAILED' && tw`text-red-default cursor-pointer`,
+]);
+const StatusTitle = styled.div`
+  ${tw`ml-2 font-bold lowercase`}
+  &::first-letter {
+    ${tw`uppercase`}
+  }
+`;
+const Count = styled.div`
+  ${tw`flex items-center w-full text-20 leading-32 cursor-pointer`}
+  ${tw`text-monochrome-black hover:text-blue-medium-tint active:text-blue-shade`}
+`;
 
-export const CoveragePluginHeader = coveragePluginHeader(({ className, previousBuildTests = [] }: Props) => {
+export const CoveragePluginHeader = ({ previousBuildTests = [] }: Props) => {
   const [isRisksModalOpen, setIsRisksModalOpen] = useState(false);
   const [isOpenQualityGatesPane, setIsOpenQualityGatesPane] = useState(false);
   const [isBaselineBuildModalOpened, setIsBaselineBuildModalOpened] = useState(false);
@@ -90,14 +114,19 @@ export const CoveragePluginHeader = coveragePluginHeader(({ className, previousB
   const { Flag, disabled, info } = showBaseline(isBaseline, isActiveBuild, previousBuildVersion);
 
   return (
-    <div className={className}>
-      <PluginName data-test="coverage-plugin-header:plugin-name">Test2Code</PluginName>
+    <Content>
+      <div
+        tw="mr-6 font-light text-24 leading-32"
+        data-test="coverage-plugin-header:plugin-name"
+      >
+        Test2Code
+      </div>
       {agentStatus === AGENT_STATUS.ONLINE && (
         <BaselinePanel>
           <div>Current build: </div>
           <div className="flex items-center w-full">
-            <CurrentBuildVersion className="text-ellipsis" title={buildVersion}>{buildVersion}</CurrentBuildVersion>
-            <Tooltip message={<TooltipMessage>{info}</TooltipMessage>} position="top-center">
+            <div className="text-ellipsis text-monochrome-black" title={buildVersion}>{buildVersion}</div>
+            <Tooltip message={<div tw="text-center">{info}</div>} position="top-center">
               <FlagWrapper
                 active={Boolean(isActiveBuild && previousBuildVersion)}
                 onClick={() => !disabled && setIsBaselineBuildModalOpened(true)}
@@ -110,24 +139,24 @@ export const CoveragePluginHeader = coveragePluginHeader(({ className, previousB
           {previousBuildVersion
             ? (
               <div className="text-ellipsis mr-6">
-                <ParentBuildVersion
+                <NavLink
                   className="inline link"
                   to={`/full-page/${agentId}/${previousBuildVersion}/dashboard`}
                   title={previousBuildVersion}
                 >
                   {previousBuildVersion}
-                </ParentBuildVersion>
+                </NavLink>
               </div>
             ) : <span>&ndash;</span>}
         </BaselinePanel>
       )}
       <div className="flex justify-end items-center">
         {activeBuildVersion === buildVersion && agentStatus === AGENT_STATUS.ONLINE && (
-          <QualityGateSection>
+          <div tw="pl-4 pr-10 border-l border-monochrome-medium-tint text-monochrome-default">
             <div className="flex items-center w-full">
-              <QualityGateLabel data-test="coverage-plugin-header:quality-gate-label">
+              <div tw="mr-2 text-12 leading-16 font-bold" data-test="coverage-plugin-header:quality-gate-label">
                 QUALITY GATE
-              </QualityGateLabel>
+              </div>
               {!configured && (
                 <Tooltip
                   message={(
@@ -137,7 +166,7 @@ export const CoveragePluginHeader = coveragePluginHeader(({ className, previousB
                     </>
                   )}
                 >
-                  <InfoIcon />
+                  <Icons.Info tw="flex text-monochrome-default" />
                 </Tooltip>
               )}
             </div>
@@ -153,14 +182,14 @@ export const CoveragePluginHeader = coveragePluginHeader(({ className, previousB
                 </Button>
               </StatusWrapper>
             ) : (
-              <StatusWrapper type={status} onClick={() => setIsOpenQualityGatesPane(true)}>
+              <StatusWrapper status={status} onClick={() => setIsOpenQualityGatesPane(true)}>
                 <StatusIcon />
                 <StatusTitle data-test="coverage-plugin-header:quality-gate-status">
                   {status}
                 </StatusTitle>
               </StatusWrapper>
             )}
-          </QualityGateSection>
+          </div>
         )}
         <ActionSection
           label="risks"
@@ -173,15 +202,15 @@ export const CoveragePluginHeader = coveragePluginHeader(({ className, previousB
               data-test="action-section:count:risks"
             >
               {risksCount}
-              <LinkIcon width={8} height={8} />
+              <Icons.Expander tw="ml-1 text-blue-default" width={8} height={8} />
             </Count>
           ) : (
-            <NoRisksCount
-              className="flex items-center w-full"
+            <div
+              tw="flex items-center w-full text-20 leading-32 text-monochrome-black"
               data-test="action-section:no-risks-count"
             >
               {risksCount}
-            </NoRisksCount>
+            </div>
           )}
         </ActionSection>
         <ActionSection
@@ -195,9 +224,9 @@ export const CoveragePluginHeader = coveragePluginHeader(({ className, previousB
               data-test="action-section:count:tests-to-run"
             >
               {testToRunCount}
-              <LinkIcon width={8} height={8} />
+              <Icons.Expander tw="ml-1 text-blue-default" width={8} height={8} />
             </Count>
-          ) : <NoValue data-test="action-section:no-value:tests-to-run">&ndash;</NoValue>}
+          ) : <div tw="text-20 leading-32 text-monochrome-black" data-test="action-section:no-value:tests-to-run">&ndash;</div>}
         </ActionSection>
       </div>
       {isRisksModalOpen && <RisksModal isOpen={isRisksModalOpen} onToggle={setIsRisksModalOpen} />}
@@ -231,25 +260,9 @@ export const CoveragePluginHeader = coveragePluginHeader(({ className, previousB
           }}
         />
       )}
-    </div>
+    </Content>
   );
-});
-
-const PluginName = coveragePluginHeader.pluginName('div');
-const BaselinePanel = coveragePluginHeader.baselinePanel('div');
-const CurrentBuildVersion = coveragePluginHeader.currentBuildVersion('div');
-const ParentBuildVersion = coveragePluginHeader.parentBuildVersion(NavLink);
-const FlagWrapper = coveragePluginHeader.flagWrapper(div({ onClick: () => {} } as { onClick: () => void; active: boolean }));
-const QualityGateLabel = coveragePluginHeader.qualityGateLabel('div');
-const InfoIcon = coveragePluginHeader.infoIcon(Icons.Info);
-const QualityGateSection = coveragePluginHeader.qualityGateSection('div');
-const StatusWrapper = coveragePluginHeader.statusWrapper('div');
-const StatusTitle = coveragePluginHeader.statusTitle('div');
-const Count = coveragePluginHeader.count('div');
-const NoRisksCount = coveragePluginHeader.noRisksCount('div');
-const LinkIcon = coveragePluginHeader.linkIcon(Icons.Expander);
-const NoValue = coveragePluginHeader.noValue('div');
-const TooltipMessage = coveragePluginHeader.tooltipMessage('div');
+};
 
 function showBaseline(isBaseline: boolean, isActiveBuild: boolean, previousBuildVersion: string) {
   if (!previousBuildVersion && isBaseline) {

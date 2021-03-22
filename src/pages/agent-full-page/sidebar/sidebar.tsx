@@ -13,16 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { BEM, div } from '@redneckz/react-bem-helper';
 import {
   useParams, useHistory, useLocation, matchPath,
 } from 'react-router-dom';
 import { Icons, Tooltip } from '@drill4j/ui-kit';
-
-import styles from './sidebar.module.scss';
+import tw, { styled } from 'twin.macro';
 
 interface Props {
-  className?: string;
   active?: 'active';
   links: Array<{
     id: string;
@@ -33,46 +30,36 @@ interface Props {
   matchParams: { path: string };
 }
 
-const sidebar = BEM(styles);
+export const SidebarLink = styled.div(({ active }: {active?: boolean}) => [
+  tw`flex justify-center items-center w-full h-20`,
+  tw`border-b border-monochrome-light-tint text-blue-default cursor-pointer`,
+  active && tw`text-monochrome-default bg-monochrome-white`,
+]);
 
-export const Sidebar = sidebar(
-  ({
-    className,
-    links,
-    matchParams,
-  }: Props) => {
-    const { agentId } = useParams<{ agentId: string }>();
-    const { pathname } = useLocation();
-    const { push } = useHistory();
-    const { params: { buildVersion = '', activeLink = '' } = {} } =
+export const Sidebar = ({ links, matchParams }: Props) => {
+  const { agentId } = useParams<{ agentId: string }>();
+  const { pathname } = useLocation();
+  const { push } = useHistory();
+  const { params: { buildVersion = '', activeLink = '' } = {} } =
       matchPath<{ buildVersion: string; activeLink: string }>(pathname, matchParams) || {};
 
-    return (
-      <div className={className}>
-        {links.map(({
-          id, name, link, computed,
-        }) => {
-          const Icon = Icons[name] || Icons.Plugins;
-          return (
-            <Tooltip message={<div>{name}</div>} position="right" key={link}>
-              <SidebarLink
-                type={id === activeLink ? 'active' : ''}
-                onClick={() => push(`/${computed ? `full-page/${agentId}/${buildVersion}/${link}` : link}`)}
-              >
-                <Icon />
-              </SidebarLink>
-            </Tooltip>
-          );
-        })}
-      </div>
-    );
-  },
-);
-
-export const SidebarLink = sidebar.link(
-  div({ active: undefined, onClick: () => {}, long: undefined } as {
-    active?: boolean;
-    onClick: () => void;
-    long?: boolean;
-  }),
-);
+  return (
+    <div tw="flex flex-col w-20 h-full bg-monochrome-light-tint">
+      {links.map(({
+        id, name, link, computed,
+      }) => {
+        const Icon = Icons[name] || Icons.Plugins;
+        return (
+          <Tooltip message={<div>{name}</div>} position="right" key={link}>
+            <SidebarLink
+              active={id === activeLink}
+              onClick={() => push(`/${computed ? `full-page/${agentId}/${buildVersion}/${link}` : link}`)}
+            >
+              <Icon />
+            </SidebarLink>
+          </Tooltip>
+        );
+      })}
+    </div>
+  );
+};

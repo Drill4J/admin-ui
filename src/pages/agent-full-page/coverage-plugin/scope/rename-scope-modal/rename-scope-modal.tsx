@@ -14,12 +14,12 @@
  * limitations under the License.
  */
 import { useContext, useState } from 'react';
-import { BEM } from '@redneckz/react-bem-helper';
 import { Form, Field } from 'react-final-form';
 import { useParams } from 'react-router-dom';
 import {
   Button, FormGroup, Popup, GeneralAlerts, Spinner,
 } from '@drill4j/ui-kit';
+import 'twin.macro';
 
 import {
   Fields,
@@ -33,16 +33,11 @@ import { ActiveScope } from 'types/active-scope';
 import { renameScope } from '../../api';
 import { usePluginState } from '../../../store';
 
-import styles from './rename-scope-modal.module.scss';
-
 interface Props {
-  className?: string;
   isOpen: boolean;
   onToggle: (value: boolean) => void;
   scope: ActiveScope | null;
 }
-
-const renameScopeModal = BEM(styles);
 
 const validateScope = composeValidators(
   required('name', 'Scope Name'),
@@ -51,63 +46,59 @@ const validateScope = composeValidators(
   }),
 );
 
-export const RenameScopeModal = renameScopeModal(
-  ({
-    className, isOpen, onToggle, scope,
-  }: Props) => {
-    const { agentId } = usePluginState();
-    const { pluginId = '' } = useParams<{ pluginId: string }>();
-    const { showMessage } = useContext(NotificationManagerContext);
-    const [errorMessage, setErrorMessage] = useState('');
+export const RenameScopeModal = ({ isOpen, onToggle, scope }: Props) => {
+  const { agentId } = usePluginState();
+  const { pluginId = '' } = useParams<{ pluginId: string }>();
+  const { showMessage } = useContext(NotificationManagerContext);
+  const [errorMessage, setErrorMessage] = useState('');
 
-    return (
-      <Popup
-        isOpen={isOpen}
-        onToggle={onToggle}
-        header={<div className="text-20">Rename Scope</div>}
-        type="info"
-        closeOnFadeClick
-      >
-        <div className={className}>
-          {errorMessage && (
-            <GeneralAlerts type="ERROR">
-              {errorMessage}
-            </GeneralAlerts>
+  return (
+    <Popup
+      isOpen={isOpen}
+      onToggle={onToggle}
+      header={<div className="text-20">Rename Scope</div>}
+      type="info"
+      closeOnFadeClick
+    >
+      <div tw="w-108">
+        {errorMessage && (
+          <GeneralAlerts type="ERROR">
+            {errorMessage}
+          </GeneralAlerts>
+        )}
+        <Form
+          onSubmit={(values) => renameScope(agentId, pluginId, {
+            onSuccess: () => {
+              showMessage({ type: 'SUCCESS', text: 'Scope name has been changed' });
+              onToggle(false);
+            },
+            onError: setErrorMessage,
+          })(values as ScopeSummary)}
+          validate={validateScope}
+          initialValues={scope || {}}
+          render={({ handleSubmit, submitting, pristine }) => (
+            <form onSubmit={handleSubmit} className="m-6">
+              <FormGroup label="Scope Name">
+                <Field name="name" component={Fields.Input} placeholder="Enter scope name" />
+              </FormGroup>
+              <div className="flex items-center gap-4 w-full mt-6">
+                <Button
+                  className="flex justify-center items-center gap-x-1 w-16"
+                  type="primary"
+                  size="large"
+                  onClick={handleSubmit}
+                  disabled={submitting || pristine}
+                >
+                  {submitting ? <Spinner disabled /> : 'Save'}
+                </Button>
+                <Button type="secondary" size="large" onClick={() => onToggle(false)}>
+                  Cancel
+                </Button>
+              </div>
+            </form>
           )}
-          <Form
-            onSubmit={(values) => renameScope(agentId, pluginId, {
-              onSuccess: () => {
-                showMessage({ type: 'SUCCESS', text: 'Scope name has been changed' });
-                onToggle(false);
-              },
-              onError: setErrorMessage,
-            })(values as ScopeSummary)}
-            validate={validateScope}
-            initialValues={scope || {}}
-            render={({ handleSubmit, submitting, pristine }) => (
-              <form onSubmit={handleSubmit} className="m-6">
-                <FormGroup label="Scope Name">
-                  <Field name="name" component={Fields.Input} placeholder="Enter scope name" />
-                </FormGroup>
-                <div className="flex items-center gap-4 w-full mt-6">
-                  <Button
-                    className="flex justify-center items-center gap-x-1 w-16"
-                    type="primary"
-                    size="large"
-                    onClick={handleSubmit}
-                    disabled={submitting || pristine}
-                  >
-                    {submitting ? <Spinner disabled /> : 'Save'}
-                  </Button>
-                  <Button type="secondary" size="large" onClick={() => onToggle(false)}>
-                    Cancel
-                  </Button>
-                </div>
-              </form>
-            )}
-          />
-        </div>
-      </Popup>
-    );
-  },
-);
+        />
+      </div>
+    </Popup>
+  );
+};

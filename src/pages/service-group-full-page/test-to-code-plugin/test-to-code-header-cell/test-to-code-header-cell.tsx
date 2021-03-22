@@ -14,42 +14,33 @@
  * limitations under the License.
  */
 import { Icons } from '@drill4j/ui-kit';
-import { BEM, div } from '@redneckz/react-bem-helper';
+import tw, { styled } from 'twin.macro';
 
 import { spacesToDashes } from 'utils';
 
-import styles from './test-to-code-header-cell.module.scss';
-
 interface Props {
-  className?: string;
   label: string;
   value?: string | number;
   onClick?: () => void;
 }
 
-const testToCodeHeaderCell = BEM(styles);
+const Value = styled.span(({ clickable }: {clickable: boolean}) => [
+  tw`flex items-center ml-4 text-20 text-monochrome-black`,
+  clickable && tw`cursor-pointer hover:text-blue-default active:text-blue-shade`,
+]);
 
-export const TestToCodeHeaderCell = testToCodeHeaderCell(({
-  className, label, value, onClick,
-}: Props) => (
-  <div className={className}>
-    <Content>
-      <Label>{label}</Label>
+export const TestToCodeHeaderCell = ({ label, value, onClick }: Props) => (
+  <div>
+    <div tw="border-l border-monochrome-medium-tint">
+      <div tw="ml-4 font-bold text-12 text-monochrome-default uppercase">{label}</div>
       <Value
         onClick={onClick}
         clickable={Boolean(onClick)}
         data-test={`dashboard-header-cell:${spacesToDashes(label)}:value`}
       >
         {value}
-        {Boolean(onClick) && <LinkIcon height={8} />}
+        {Boolean(onClick) && <Icons.Expander tw="ml-1 text-blue-default" height={8} />}
       </Value>
-    </Content>
+    </div>
   </div>
-));
-
-const Content = testToCodeHeaderCell.content('div');
-const Label = testToCodeHeaderCell.label('div');
-const Value = testToCodeHeaderCell.value(
-  div({ onClick: () => {}, 'data-test': '' } as { onClick?: () => void; clickable?: boolean;'data-test'?: string }),
 );
-const LinkIcon = testToCodeHeaderCell.linkIcon(Icons.Expander);

@@ -13,27 +13,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { BEM } from '@redneckz/react-bem-helper';
+import 'twin.macro';
 
 import { percentFormatter } from 'utils';
 import { Count } from 'types/count';
 
-import styles from './methods-tooltip.module.scss';
-
-const methodsTooltip = BEM(styles);
-
 interface Props {
-  className?: string;
   coveredMethods: Count;
 }
 
-export const MethodsTooltip = methodsTooltip(({ className, coveredMethods: { covered = 0, total = 0 } }: Props) => (
-  <div className={className}>
+export const MethodsTooltip = ({ coveredMethods: { covered = 0, total = 0 } }: Props) => (
+  <div tw="font-bold text-12 uppercase">
     <div className="flex items-center w-full">
       <div>covered methods: {covered}/{total}</div>
-      <Percent>{percentFormatter((covered / total) * 100)}%</Percent>
+      <div tw="ml-8 text-monochrome-default">{percentFormatter((covered / total) * 100)}%</div>
     </div>
   </div>
-));
-
-const Percent = methodsTooltip.percent('div');
+);

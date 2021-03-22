@@ -13,43 +13,45 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { BEM } from '@redneckz/react-bem-helper';
 import { nanoid } from 'nanoid';
 import { Icons } from '@drill4j/ui-kit';
+import tw, { styled } from 'twin.macro';
 
 import { BuildInfo } from 'types/build-info';
 
-import styles from './build-updates.module.scss';
-
 interface Props {
-  className?: string;
   buildInfo?: BuildInfo;
 }
 
-const buildUpdates = BEM(styles);
+const Content = styled.div`
+  ${tw`flex p-4 border border-monochrome-medium-tint`}
+  & > :not(:last-child) {
+    ${tw`mr-21`}
+  }
+`;
 
-export const BuildUpdates = buildUpdates(({ className, buildInfo = {} }: Props) => (
-  <div className={className}>
-    <Title>Build updates</Title>
+const IconsWrapper = styled.div(({ type }: {type: string }) => [
+  type === 'deleted' && tw`text-red-default`,
+  type === 'modified' && tw`text-orange-default`,
+  type === 'new' && tw`text-green-default`,
+]);
+
+export const BuildUpdates = ({ buildInfo = {} }: Props) => (
+  <div tw="w-full h-full">
+    <div tw="font-bold mb-6 text-14 leading-20">Build updates</div>
     <Content>
       {Object.keys(buildInfo).map((methodType) => (
         <div key={nanoid()}>
           <div className="flex items-center w-full">
             <IconsWrapper type={methodType}>{getMethodsIcon(methodType)}</IconsWrapper>
-            <MethodsType>{methodType}</MethodsType>
+            <span tw="ml-2 text-12 leading-24 text-monochrome-default uppercase">{methodType}</span>
           </div>
-          <MethodsCount>{buildInfo[methodType]}</MethodsCount>
+          <div tw="mt-4 font-light text-36 leading-32 text-monochrome-black">{buildInfo[methodType]}</div>
         </div>
       ))}
     </Content>
   </div>
-));
-
-const Title = buildUpdates.title('div');
-const Content = buildUpdates.content('div');
-const IconsWrapper = buildUpdates.iconsWrapper('div');
-const MethodsType = buildUpdates.methodsType('span');
-const MethodsCount = buildUpdates.methodsCount('div');
+);
 
 function getMethodsIcon(methodType?: string) {
   switch (methodType) {

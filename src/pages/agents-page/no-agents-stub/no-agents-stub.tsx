@@ -13,37 +13,24 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { BEM, tag } from '@redneckz/react-bem-helper';
+import 'twin.macro';
 
 import { ReactComponent as NoAgentsSvg } from './no-agents.svg';
 
-import styles from './no-agents-stub.module.scss';
-
-interface Props {
-  className?: string;
-}
-
-const noAgentsStub = BEM(styles);
-
-export const NoAgentsStub = noAgentsStub(({ className }: Props) => (
-  <div className={className}>
+export const NoAgentsStub = () => (
+  <div tw="flex flex-col flex-grow justify-center items-center">
     <NoAgentsSvg />
-    <Title>No agents online at the moment</Title>
-    <SubTitle>
+    <div tw="mt-10 mb-2 text-monochrome-default text-24 leading-32 text-center">No agents online at the moment</div>
+    <div tw="text-monochrome-default text-14 leading-24 text-center">
       Run your application with Drill4J Agent using&nbsp;
-      <Link
+      <a
+        tw="text-blue-default"
         href="https://drill4j.github.io/how-to-start/"
         rel="noopener noreferrer"
         target="_blank"
       >
         this guide.
-      </Link>
-    </SubTitle>
+      </a>
+    </div>
   </div>
-));
-
-const Title = noAgentsStub.title('div');
-const SubTitle = noAgentsStub.subTitle('div');
-const Link = noAgentsStub.link(
-  tag('a')({ href: '', rel: '', target: '' } as { href: string; rel: string; target: string }),
 );

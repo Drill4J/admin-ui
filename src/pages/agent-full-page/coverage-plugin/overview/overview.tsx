@@ -14,8 +14,8 @@
  * limitations under the License.
  */
 import { useState } from 'react';
-import { BEM } from '@redneckz/react-bem-helper';
 import { Icons } from '@drill4j/ui-kit';
+import tw, { styled } from 'twin.macro';
 
 import { TabsPanel, Tab } from 'components';
 import { useActiveScope, useAgent, useBuildVersion } from 'hooks';
@@ -31,15 +31,11 @@ import { ActiveScopeInfo } from './active-scope-info';
 import { usePreviousBuildCoverage } from '../use-previous-build-coverage';
 import { BuildProjectTests } from './build-project-tests';
 
-import styles from './overview.module.scss';
+const TabIconWrapper = styled.div`
+  ${tw`flex items-center mr-2 text-monochrome-black`}
+`;
 
-interface Props {
-  className?: string;
-}
-
-const overview = BEM(styles);
-
-export const Overview = overview(({ className }: Props) => {
+export const Overview = () => {
   const [selectedTab, setSelectedTab] = useState('methods');
   const { agentId, loading } = usePluginState();
   const { status } = useAgent(agentId) || {};
@@ -51,9 +47,9 @@ export const Overview = overview(({ className }: Props) => {
   const scope = useActiveScope();
 
   return (
-    <div className={className}>
+    <div>
       <CoveragePluginHeader previousBuildTests={previousBuildTests} />
-      <RoutingTabsPanel>
+      <div tw="w-full">
         <TabsPanel activeTab={selectedTab} onSelect={setSelectedTab}>
           <Tab name="methods">
             <TabIconWrapper>
@@ -68,9 +64,9 @@ export const Overview = overview(({ className }: Props) => {
             Build tests
           </Tab>
         </TabsPanel>
-      </RoutingTabsPanel>
-      <InfoPanel>
-        <SummaryPanel className="flex flex-col items-stretch w-full">
+      </div>
+      <div tw="flex gap-6">
+        <div tw="flex flex-col items-stretch gap-7 pt-4 w-full border-t border-monochrome-medium-tint">
           {selectedTab === 'methods'
             ? (
               <BuildProjectMethods
@@ -81,10 +77,10 @@ export const Overview = overview(({ className }: Props) => {
               />
             )
             : <BuildProjectTests />}
-        </SummaryPanel>
+        </div>
         {scope?.active && status === AGENT_STATUS.ONLINE && <ActiveScopeInfo scope={scope} />}
-      </InfoPanel>
-      <TabContent>
+      </div>
+      <div tw="mt-2">
         <TableActionsProvider key={selectedTab}>
           {selectedTab === 'methods' ? (
             <CoverageDetails
@@ -94,13 +90,7 @@ export const Overview = overview(({ className }: Props) => {
             />
           ) : <BuildTests />}
         </TableActionsProvider>
-      </TabContent>
+      </div>
     </div>
   );
-});
-
-const InfoPanel = overview.infoPanel('div');
-const SummaryPanel = overview.summaryPanel('div');
-const RoutingTabsPanel = overview.routingTabsPanel('div');
-const TabContent = overview.tabContent('div');
-const TabIconWrapper = overview.tabIconWrapper('div');
+};

@@ -14,34 +14,32 @@
  * limitations under the License.
  */
 import { useRef } from 'react';
-import { BEM } from '@redneckz/react-bem-helper';
 import {
   MainProgressBar, AdditionalProgressBar, StripedProgressBar, Tooltip, useElementSize,
 } from '@drill4j/ui-kit';
-import 'twin.macro';
+import tw, { styled } from 'twin.macro';
 
 import { percentFormatter } from 'utils';
 
-import styles from './multi-progress-bar.module.scss';
-
 interface Props {
-  className?: string;
   buildCodeCoverage: number;
   uniqueCodeCoverage: number;
   overlappingCode: number;
   active: boolean;
 }
 
-const multiProgressBar = BEM(styles);
+const Message = styled.div`
+  ${tw`text-center`}
+`;
 
-export const MultiProgressBar = multiProgressBar(({
-  className, buildCodeCoverage = 0, uniqueCodeCoverage = 0, overlappingCode = 0, active,
+export const MultiProgressBar = ({
+  buildCodeCoverage = 0, uniqueCodeCoverage = 0, overlappingCode = 0, active,
 }: Props) => {
   const node = useRef<HTMLDivElement>(null);
   const { width } = useElementSize(node);
 
   return (
-    <div className={className} ref={node}>
+    <div tw="relative w-full h-8 rounded bg-monochrome-light-tint" ref={node}>
       <Tooltip
         message={(
           <Message>
@@ -52,7 +50,7 @@ export const MultiProgressBar = multiProgressBar(({
       >
         <MainProgressBar value={`${buildCodeCoverage * (width / 100)}px`} testContext="build-coverage" />
       </Tooltip>
-      <ScopeCoverage style={{ left: `${buildCodeCoverage - overlappingCode}%` }}>
+      <div tw="flex absolute bottom-1/2 transform translate-y-1/2" style={{ left: `${buildCodeCoverage - overlappingCode}%` }}>
         <Tooltip
           message={(
             <Message>
@@ -62,14 +60,15 @@ export const MultiProgressBar = multiProgressBar(({
             </Message>
           )}
         >
-          <OverlappingCodeProgressBar
+          <div
+            tw="flex"
             data-test="multi-progress-bar:overlapping-code-progress-bar"
-            style={{ width: `${overlappingCode * (width / 100)}px` }}
+            style={{ width: `${overlappingCode * (width / 100)}px`, transform: 'scale(-1)' }}
           >
             {active
               ? <StripedProgressBar type="secondary" value={`${overlappingCode * (width / 100)}px`} />
               : <AdditionalProgressBar type="secondary" value={`${overlappingCode * (width / 100)}px`} />}
-          </OverlappingCodeProgressBar>
+          </div>
         </Tooltip>
         <Tooltip
           message={(
@@ -89,11 +88,7 @@ export const MultiProgressBar = multiProgressBar(({
               />
             )}
         </Tooltip>
-      </ScopeCoverage>
+      </div>
     </div>
   );
-});
-
-const Message = multiProgressBar.message('div');
-const ScopeCoverage = multiProgressBar.scopeCoverage('div');
-const OverlappingCodeProgressBar = multiProgressBar.overlappingCodeProgressBar('div');
+};

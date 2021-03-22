@@ -24,6 +24,7 @@ module.exports = {
       spacing: {
         '1px': '1px',
         13: '3.25rem',
+        19: '4.75rem',
         19.5: '4.875rem',
         21: '5.25rem',
         22: '5.5rem',
@@ -37,24 +38,41 @@ module.exports = {
         34: '8.5rem',
         42: '9.5rem',
         43: '9.75rem',
+        68: '17rem',
+        70: '17.5rem',
         88: '22rem',
         97: '25rem',
         98: '26rem',
         100: '28rem',
         108: '30rem',
+        147: '36.75rem',
       },
       height: {
         fit: 'fit-content',
       },
     },
     minWidth: {
+      '8px': '8px',
+      '12px': '12px',
       '16px': '16px',
       '20px': '20px',
       '32px': '32px',
+      '56px': '56px',
       '104px': '104px',
+      '2/3': '66%',
     },
     minHeight: {
+      '16px': '16px',
       '40px': '40px',
+      '60px': '60px',
+      '64px': '64px',
+      '80px': '80px',
+    },
+    maxHeight: {
+      '20px': '20px',
+    },
+    maxWidth: {
+      '1/2': '50%',
       '80px': '80px',
     },
     colors: {
@@ -128,8 +146,10 @@ module.exports = {
       28: '28px',
       30: '30px',
       32: '32px',
+      36: '36px',
       40: '40px',
       48: '48px',
+      64: '64px',
     },
     lineHeight: {
       10: '10px',
@@ -150,7 +170,12 @@ module.exports = {
       40: '40px',
       48: '48px',
       64: '64px',
+      86: '86px',
     },
+    borderColor: theme => ({
+      ...theme('colors'),
+      'current-color': 'currentColor',
+    }),
   },
   variants: {
     extend: {},

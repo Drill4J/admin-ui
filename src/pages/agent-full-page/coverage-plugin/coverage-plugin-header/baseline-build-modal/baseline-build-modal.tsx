@@ -14,25 +14,24 @@
  * limitations under the License.
  */
 import { useState } from 'react';
-import { BEM } from '@redneckz/react-bem-helper';
 import {
   Button, Popup, Checkbox,
 } from '@drill4j/ui-kit';
-
-import styles from './baseline-build-modal.module.scss';
+import tw, { styled } from 'twin.macro';
 
 interface Props {
-  className?: string;
   isOpen: boolean;
   onToggle: (value: boolean) => void;
   isBaseline: boolean;
   toggleBaseline: () => void;
 }
 
-const baselineBuildModal = BEM(styles);
+const Message = styled.div`
+  ${tw`text-14 leading-20`}
+`;
 
-export const BaselineBuildModal = baselineBuildModal(({
-  className, isOpen, onToggle, isBaseline, toggleBaseline,
+export const BaselineBuildModal = ({
+  isOpen, onToggle, isBaseline, toggleBaseline,
 }: Props) => {
   const [isConfirmed, setIsConfirmed] = useState(isBaseline);
 
@@ -43,7 +42,7 @@ export const BaselineBuildModal = baselineBuildModal(({
       header={`${isBaseline ? 'Unset' : 'Set'} as Baseline Build`}
       closeOnFadeClick
     >
-      <div className={className}>
+      <div tw="w-108">
         <div className="flex flex-col gap-6 pt-4 px-6 pb-6">
           <Message className="flex items-center w-full">
             {isBaseline
@@ -89,6 +88,4 @@ export const BaselineBuildModal = baselineBuildModal(({
       </div>
     </Popup>
   );
-});
-
-const Message = baselineBuildModal.message('div');
+};

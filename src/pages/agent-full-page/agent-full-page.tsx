@@ -14,11 +14,11 @@
  * limitations under the License.
  */
 import { useEffect, useState } from 'react';
-import { BEM } from '@redneckz/react-bem-helper';
 import {
   Switch, useLocation, useParams, Route, matchPath,
 } from 'react-router-dom';
 import { Icons } from '@drill4j/ui-kit';
+import 'twin.macro';
 
 import { Toolbar, Footer } from 'components';
 import { PluginsLayout } from 'layouts';
@@ -36,20 +36,12 @@ import { Sidebar } from './sidebar';
 import { InitialConfigController } from './initial-config-controller';
 import { NewBuildModal } from './new-build-modal';
 
-import styles from './agent-full-page.module.scss';
-
-interface Props {
-  className?: string;
-}
-
 interface Link {
   id: string;
   link: string;
   name: keyof typeof Icons;
   computed: boolean;
 }
-
-const agentFullPage = BEM(styles);
 
 const getPluginsLinks = (plugins: Plugin[] = []): Link[] => ([
   {
@@ -63,63 +55,59 @@ const getPluginsLinks = (plugins: Plugin[] = []): Link[] => ([
   })),
 ]);
 
-export const AgentFullPage = agentFullPage(
-  ({
-    className,
-  }: Props) => {
-    const { agentId = '' } = useParams<{ agentId: string }>();
-    const { pathname } = useLocation();
-    const agent = useAgent(agentId) || {};
-    const path = '/:page/:agentId/:buildVersion/:activeLink';
-    const { params: { activeLink = '' } = {} } = matchPath<{ activeLink: string }>(pathname, {
-      path,
-    }) || {};
-    const notifications = useWsConnection<Notification[]>(defaultAdminSocket, '/notifications') || [];
-    const newBuildNotification = notifications.find((notification) => notification.agentId === agentId) || {};
-    const [isNewBuildModalOpened, setIsNewBuildModalOpened] = useState(false);
-    useEffect(() => {
-      if (!newBuildNotification?.read && newBuildNotification?.agentId === agentId) {
-        setIsNewBuildModalOpened(true);
-      }
-    }, [newBuildNotification, agentId]);
+export const AgentFullPage = () => {
+  const { agentId = '' } = useParams<{ agentId: string }>();
+  const { pathname } = useLocation();
+  const agent = useAgent(agentId) || {};
+  const path = '/:page/:agentId/:buildVersion/:activeLink';
+  const { params: { activeLink = '' } = {} } = matchPath<{ activeLink: string }>(pathname, {
+    path,
+  }) || {};
+  const notifications = useWsConnection<Notification[]>(defaultAdminSocket, '/notifications') || [];
+  const newBuildNotification = notifications.find((notification) => notification.agentId === agentId) || {};
+  const [isNewBuildModalOpened, setIsNewBuildModalOpened] = useState(false);
+  useEffect(() => {
+    if (!newBuildNotification?.read && newBuildNotification?.agentId === agentId) {
+      setIsNewBuildModalOpened(true);
+    }
+  }, [newBuildNotification, agentId]);
 
-    return (
-      <PluginProvider>
-        <InitialConfigController>
-          <PluginsLayout
-            sidebar={activeLink && <Sidebar links={getPluginsLinks(agent.plugins)} matchParams={{ path }} />}
-            toolbar={(
-              <Toolbar
-                breadcrumbs={<Breadcrumbs />}
+  return (
+    <PluginProvider>
+      <InitialConfigController>
+        <PluginsLayout
+          sidebar={activeLink && <Sidebar links={getPluginsLinks(agent.plugins)} matchParams={{ path }} />}
+          toolbar={(
+            <Toolbar
+              breadcrumbs={<Breadcrumbs />}
+            />
+          )}
+          header={<PluginHeader agentName={agent.name} agentStatus={agent.status} />}
+          footer={<Footer />}
+        >
+          <div tw="w-full h-full">
+            <Switch>
+              <Route
+                path="/full-page/:agentId/:buildVersion/dashboard"
+                render={() => <Dashboard agent={agent} />}
+                exact
+              />
+              <Route path="/full-page/:agentId/build-list" component={BuildList} />
+              <Route
+                path="/full-page/:agentId/:buildVersion/:pluginId/:tab"
+                component={CoveragePlugin}
+              />
+            </Switch>
+            {isNewBuildModalOpened && (
+              <NewBuildModal
+                isOpen={isNewBuildModalOpened}
+                onToggle={setIsNewBuildModalOpened}
+                notification={newBuildNotification}
               />
             )}
-            header={<PluginHeader agentName={agent.name} agentStatus={agent.status} />}
-            footer={<Footer />}
-          >
-            <div className={className}>
-              <Switch>
-                <Route
-                  path="/full-page/:agentId/:buildVersion/dashboard"
-                  render={() => <Dashboard agent={agent} />}
-                  exact
-                />
-                <Route path="/full-page/:agentId/build-list" component={BuildList} />
-                <Route
-                  path="/full-page/:agentId/:buildVersion/:pluginId/:tab"
-                  component={CoveragePlugin}
-                />
-              </Switch>
-              {isNewBuildModalOpened && (
-                <NewBuildModal
-                  isOpen={isNewBuildModalOpened}
-                  onToggle={setIsNewBuildModalOpened}
-                  notification={newBuildNotification}
-                />
-              )}
-            </div>
-          </PluginsLayout>
-        </InitialConfigController>
-      </PluginProvider>
-    );
-  },
-);
+          </div>
+        </PluginsLayout>
+      </InitialConfigController>
+    </PluginProvider>
+  );
+};

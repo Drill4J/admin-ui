@@ -13,8 +13,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { BEM } from '@redneckz/react-bem-helper';
 import { ExpandableTable, Column } from '@drill4j/ui-kit';
+import 'twin.macro';
 
 import { AGENT_STATUS } from 'common/constants';
 import { Agent } from 'types/agent';
@@ -22,17 +22,12 @@ import { NameColumn } from './name-column';
 import { ActionsColumn } from './actions-column';
 import { AgentStatusToggle } from '../agent-status-toggle';
 
-import styles from './table-view.module.scss';
-
 interface Props {
-  className?: string;
   agents: Agent[];
 }
 
-const agentsTable = BEM(styles);
-
-export const AgentsTable = agentsTable(({ className, agents }: Props) => (
-  <div className={className}>
+export const AgentsTable = ({ agents }: Props) => (
+  <div tw="w-full h-full">
     <ExpandableTable
       data={agents}
       idKey="id"
@@ -107,4 +102,4 @@ export const AgentsTable = agentsTable(({ className, agents }: Props) => (
       />
     </ExpandableTable>
   </div>
-));
+);

@@ -13,14 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { BEM } from '@redneckz/react-bem-helper';
+import 'twin.macro';
 
 import { ScopeTimer } from '../..';
 
-import styles from './scope-status.module.scss';
-
 interface Props {
-  className?: string;
   active: boolean;
   loading: boolean;
   enabled: boolean;
@@ -28,14 +25,12 @@ interface Props {
   finished: number;
 }
 
-const scopeStatus = BEM(styles);
-
-export const ScopeStatus = scopeStatus(({
-  className, active, enabled, started, finished,
+export const ScopeStatus = ({
+  active, enabled, started, finished,
 }: Props) => (
-  <div className={className}>
+  <div tw="flex flex-col font-bold text-12 leading-16 text-monochrome-default">
     {active
-      ? <Active data-test="scope-status:active">Active</Active>
+      ? <div tw="text-green-default" data-test="scope-status:active">Active</div>
       : (
         <>
           {enabled
@@ -45,6 +40,4 @@ export const ScopeStatus = scopeStatus(({
       )}
     <ScopeTimer started={started} finished={finished} active={active} size="small" />
   </div>
-));
-
-const Active = scopeStatus.active('div');
+);

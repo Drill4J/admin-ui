@@ -13,13 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { BEM } from '@redneckz/react-bem-helper';
-import 'twin.macro';
-
-import styles from './item-info.module.scss';
+import tw, { styled } from 'twin.macro';
 
 interface Props {
-  className?: string;
   children?: React.ReactNode;
   packageName?: string;
   testClassName?: string;
@@ -27,18 +23,26 @@ interface Props {
   treeLevel: number;
 }
 
-const itemInfo = BEM(styles);
+const ItemWrapper = styled.div`
+  ${tw`flex flex-row items-center h-8`}
+`;
+const Label = styled.span`
+  ${tw`min-w-56px font-bold text-14 leading-32 text-monochrome-black text-left`}
+`;
+const Value = styled.div`
+  ${tw`ml-4 text-14 leading-32 text-monochrome-default`}
+`;
 
-export const ItemInfo = itemInfo(({
-  className, packageName, testClassName, methodName, treeLevel,
+export const ItemInfo = ({
+  packageName, testClassName, methodName, treeLevel,
 }: Props) => (
-  <div className={className}>
-    <Content>
+  <div tw="bg-monochrome-light-tint border-t border-b border-monochrome-medium-tint">
+    <div tw="flex flex-col justify-center min-h-64px py-2 px-6">
       {packageName ? (
-        <ItemWrapper>
+        <div tw="flex flex-row items-center h-8">
           <Label>Package</Label>
           <Value className="text-ellipsis" title={packageName}>{packageName}</Value>
-        </ItemWrapper>
+        </div>
       ) : (
         <div tw="space-y-4 pt-2 pb-2 animate-pulse">
           {Array.from(Array(treeLevel).keys()).map((level) => (<div key={level} tw="h-4 bg-monochrome-medium-tint rounded" />))}
@@ -56,11 +60,6 @@ export const ItemInfo = itemInfo(({
           <Value className="text-ellipsis" title={methodName}>{methodName}</Value>
         </ItemWrapper>
       )}
-    </Content>
+    </div>
   </div>
-));
-
-const Content = itemInfo.content('div');
-const ItemWrapper = itemInfo.itemWrapper('div');
-const Label = itemInfo.label('span');
-const Value = itemInfo.value('div');
+);

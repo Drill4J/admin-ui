@@ -13,29 +13,70 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { BEM, div } from '@redneckz/react-bem-helper';
 import { useHistory, matchPath } from 'react-router-dom';
 import { Spinner, Icons } from '@drill4j/ui-kit';
+import tw, { styled } from 'twin.macro';
 
 import { AGENT_STATUS } from 'common/constants';
 import { capitalize } from 'utils';
 import { AgentStatus } from 'types/agent-status';
-import { ComponentPropsType } from 'types/component-props-type';
 import { useAgent } from 'hooks';
 import { usePluginState } from '../store';
 import { ReactComponent as LogoSvg } from './logo.svg';
 
-import styles from './plugin-header.module.scss';
-
 interface Props {
-  className?: string;
   agentName?: string;
   agentStatus?: AgentStatus;
 }
 
-const pluginHeader = BEM(styles);
+const LogoWrapper = styled.div`
+  ${tw`relative w-20 h-20 border-2 border-monochrome-black rounded-full`}
+  &:before {
+    ${({ recording }: { recording?: boolean }) => recording && 'content: \'\';'}
+    ${tw`absolute w-19 h-19 rounded-full`}
+    background: conic-gradient(
+            red,
+            #ff8000,
+            yellow,
+            #80ff00,
+            lime,
+            #00ff80,
+            cyan,
+            #0080ff,
+            blue,
+            #8000ff,
+            magenta,
+            #ff0080,
+            red
+    );
+    animation: rotation 10s linear infinite;
+    @keyframes rotation {
+      to {
+        transform: rotate(1turn);
+      }
+    }
+  }
+`;
+const AgentInfo = styled.div`
+  ${tw`flex flex-col ml-6 max-w-1/2`}
+  & > * {
+    ${tw`mb-2`}
+  }
+`;
+const SettingsButton = styled(Icons.Settings)(({ disabled }: { disabled?: boolean }) => [
+  tw`flex w-8 h-8 cursor-pointer`,
+  disabled && tw`opacity-25 pointer-events-none`,
+]);
+const AgentStatusWrapper = styled.div(({ status }: { status?: AgentStatus }) => [
+  tw`flex justify-center items-center px-2`,
+  tw`border border-current-color rounded-full font-bold text-12 leading-20`,
+  status === 'BUSY' && tw`text-orange-default`,
+  status === 'NOT_REGISTERED' && tw`text-red-default`,
+  status === 'OFFLINE' && tw`text-monochrome-default`,
+  status === 'ONLINE' && tw`text-green-default`,
+]);
 
-export const PluginHeader = pluginHeader(({ className, agentName, agentStatus }: Props) => {
+export const PluginHeader = ({ agentName, agentStatus }: Props) => {
   const { loading } = usePluginState();
   const { push, location: { pathname } } = useHistory();
   const { params: { buildVersion = '', agentId = '' } = {} } = matchPath<{ buildVersion: string; agentId: string }>(pathname, {
@@ -44,14 +85,14 @@ export const PluginHeader = pluginHeader(({ className, agentName, agentStatus }:
   const { buildVersion: activeBuildVersion = '' } = useAgent(agentId) || {};
 
   return (
-    <div className={className}>
-      <Content>
+    <div tw="flex w-full h-28">
+      <div tw="flex justify-between items-center w-full h-full px-6">
         <div className="flex items-center w-full">
           <LogoWrapper recording={buildVersion === activeBuildVersion && loading}>
-            <Logo />
+            <LogoSvg tw="absolute bottom-0 left-0" />
           </LogoWrapper>
           <AgentInfo>
-            <AgentName className="text-ellipsis" title={agentName}>{agentName}</AgentName>
+            <div className="text-ellipsis text-32 leading-40" title={agentName}>{agentName}</div>
             <div className="flex items-center w-full">
               <AgentStatusWrapper status={agentStatus}>{capitalize(agentStatus)}</AgentStatusWrapper>
               <div
@@ -69,16 +110,7 @@ export const PluginHeader = pluginHeader(({ className, agentName, agentStatus }:
             data-test="plugin-header:settings-button"
           />
         </span>
-      </Content>
+      </div>
     </div>
   );
-});
-
-const Content = pluginHeader.content('div');
-const LogoWrapper = pluginHeader.logoWrapper(div({} as { recording?: boolean }));
-const Logo = pluginHeader.logo(LogoSvg);
-const AgentInfo = pluginHeader.agentInfo('div');
-const AgentName = pluginHeader.agentName('div');
-const AgentStatusWrapper = pluginHeader.agentStatusWrapper(div({} as { status?: AgentStatus }));
-const SettingsButton: React.FC<ComponentPropsType<typeof Icons.Settings> & { disabled?: boolean }>
-  = pluginHeader.settingsButton(Icons.Settings);
+};
