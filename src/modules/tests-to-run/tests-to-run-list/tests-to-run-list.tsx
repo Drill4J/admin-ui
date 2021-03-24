@@ -14,11 +14,11 @@
  * limitations under the License.
  */
 import { useState } from 'react';
-import { BEM } from '@redneckz/react-bem-helper';
 import {
   Table, Column, Icons, Legend,
 } from '@drill4j/ui-kit';
 import { useParams } from 'react-router-dom';
+import 'twin.macro';
 
 import { ParentBuild } from 'types/parent-build';
 import { Cells, SearchPanel } from 'components';
@@ -37,16 +37,11 @@ import { BarChart } from './bar-chart';
 import { NoTestsToRunStub } from './no-tests-to-run-stub';
 import { NoDataStub } from './no-data-stub';
 
-import styles from './tests-to-run-list.module.scss';
-
 interface Props {
-  className?: string;
   agentType?: string;
 }
 
-const testsToRunList = BEM(styles);
-
-export const TestsToRunList = testsToRunList(({ className, agentType = 'Agent' }: Props) => {
+export const TestsToRunList = ({ agentType = 'Agent' }: Props) => {
   const [selectedTest, setSelectedTest] = useState<null | { id: string; covered: number }>(null);
   const [search, setSearch] = useState<Search[]>([{ field: 'name', value: '', op: 'CONTAINS' }]);
   const {
@@ -66,7 +61,7 @@ export const TestsToRunList = testsToRunList(({ className, agentType = 'Agent' }
     .reduce((test, testType) => ({ ...test, [testType.type]: testType }), {}) as TestsInfo;
   const previousBuildAutoTestsCount = AUTO?.summary?.testCount || 0;
   return (
-    <div className={className}>
+    <div tw="flex flex-col gap-4">
       <TestsToRunHeader
         agentInfo={{
           agentType, buildVersion, previousBuildVersion, activeBuildVersion,
@@ -75,8 +70,10 @@ export const TestsToRunList = testsToRunList(({ className, agentType = 'Agent' }
         previousBuildTestsDuration={totalDuration}
         previousBuildAutoTestsCount={previousBuildAutoTestsCount}
       />
-      <div className="flex justify-between items-start w-full">
-        <BarTitle data-test="tests-to-run-list:bar-title">SAVED TIME HISTORY</BarTitle>
+      <div tw="flex justify-between items-start w-full">
+        <span tw="h-6 align-top text-12 leading-16 font-bold text-monochrome-default" data-test="tests-to-run-list:bar-title">
+          SAVED TIME HISTORY
+        </span>
         <Legend
           legendItems={[
             { label: 'No data', borderColor: DATA_VISUALIZATION_COLORS.SAVED_TIME, color: 'transparent' },
@@ -93,7 +90,9 @@ export const TestsToRunList = testsToRunList(({ className, agentType = 'Agent' }
         />
       ) : <NoDataStub />}
       <div>
-        <TableTitle data-test="tests-to-run-list:table-title">ALL SUGGESTED TESTS ({totalCount})</TableTitle>
+        <span tw="text-12 leading-32 font-bold text-monochrome-default" data-test="tests-to-run-list:table-title">
+          ALL SUGGESTED TESTS ({totalCount})
+        </span>
         <div>
           <SearchPanel
             onSearch={(value) => setSearch([{ ...searchQuery, value }])}
@@ -126,7 +125,11 @@ export const TestsToRunList = testsToRunList(({ className, agentType = 'Agent' }
               name="stats.result"
               label="State"
               Cell={({ item: { toRun } }) => (
-                <StateCell>{toRun ? 'To run' : <Done>Done</Done>}</StateCell>
+                <span tw="leading-64">
+                  {toRun
+                    ? 'To run'
+                    : <span tw="font-bold text-green-default">Done</span>}
+                </span>
               )}
               align="start"
             />
@@ -168,9 +171,4 @@ export const TestsToRunList = testsToRunList(({ className, agentType = 'Agent' }
       )}
     </div>
   );
-});
-
-const BarTitle = testsToRunList.barTitle('span');
-const TableTitle = testsToRunList.tableTitle('span');
-const Done = testsToRunList.done('span');
-const StateCell = testsToRunList.stateCell('span');
+};

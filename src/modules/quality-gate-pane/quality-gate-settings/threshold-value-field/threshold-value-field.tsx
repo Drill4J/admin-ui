@@ -13,34 +13,25 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { BEM } from '@redneckz/react-bem-helper';
 import { Inputs } from '@drill4j/ui-kit';
 import { FieldRenderProps } from 'react-final-form';
-
-import styles from './threshold-value-field.module.scss';
+import 'twin.macro';
 
 interface Props extends FieldRenderProps<string> {
-  className?: string;
   children: React.ReactNode;
 }
 
-const thresholdValueField = BEM(styles);
-
-export const ThresholdValueField = thresholdValueField(
-  (props: Props) => {
-    const {
-      className, children, input, meta, ...rest
-    } = props;
-    return (
-      <div className={className} data-test="threshold-value-field">
-        <div>
-          {children}
-          {meta.error && meta.touched && <ErrorMessage>{meta.error}</ErrorMessage>}
-        </div>
-        <Inputs.Number {...input} {...rest} error={(meta.error || meta.submitError) && meta.touched} />
+export const ThresholdValueField = (props: Props) => {
+  const {
+    children, input, meta, ...rest
+  } = props;
+  return (
+    <div tw="contents" data-test="threshold-value-field">
+      <div>
+        {children}
+        {meta.error && meta.touched && <div tw="text-10 leading-12 text-red-default">{meta.error}</div>}
       </div>
-    );
-  },
-);
-
-const ErrorMessage = thresholdValueField.errorMessage('div');
+      <Inputs.Number {...input} {...rest} error={(meta.error || meta.submitError) && meta.touched} />
+    </div>
+  );
+};

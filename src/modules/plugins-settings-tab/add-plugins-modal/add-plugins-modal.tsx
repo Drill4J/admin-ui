@@ -14,19 +14,16 @@
  * limitations under the License.
  */
 import { useContext, useState } from 'react';
-import { BEM } from '@redneckz/react-bem-helper';
 import { Modal, Button, Spinner } from '@drill4j/ui-kit';
 import { matchPath, useLocation } from 'react-router-dom';
+import tw, { styled } from 'twin.macro';
 
 import { NotificationManagerContext } from 'notification-manager';
 import { Plugin } from 'types/plugin';
 import { SelectableList } from './selectable-list';
 import { loadPlugins } from './load-plugins';
 
-import styles from './add-plugins-modal.module.scss';
-
 interface Props {
-  className?: string;
   isOpen: boolean;
   onToggle: (arg: boolean) => void;
   plugins: Plugin[];
@@ -35,10 +32,17 @@ interface Props {
   setSelectedPlugins: (plugins: string[]) => void;
 }
 
-const addPluginModal = BEM(styles);
+const PluginsList = styled.div`
+  height: calc(100% - 200px);
+  width: 100%;
+  overflow: auto;
+  border-radius: 4px;
+  ${tw`border border-monochrome-medium-tint`};
+  ${tw`bg-monochrome-white`};
+`;
 
-export const AddPluginsModal = addPluginModal(({
-  className, isOpen, onToggle, plugins, agentId, setSelectedPlugins, selectedPlugins,
+export const AddPluginsModal = ({
+  isOpen, onToggle, plugins, agentId, setSelectedPlugins, selectedPlugins,
 }: Props) => {
   const { showMessage } = useContext(NotificationManagerContext);
   const { pathname } = useLocation();
@@ -61,10 +65,12 @@ export const AddPluginsModal = addPluginModal(({
 
   return (
     <Modal isOpen={isOpen} onToggle={onToggle}>
-      <div className={className}>
-        <Header>Add new plugin</Header>
-        <Content>
-          <Title>Choose one or more plugins:</Title>
+      <div tw="flex flex-col h-full">
+        <div tw="pt-4 pb-4 pr-6 pl-6 text-20 leading-32 text-monochrome-black border-b border-monochrome-medium-tint">
+          Add new plugin
+        </div>
+        <div tw="h-full flex-grow pr-6 pl-6">
+          <div tw="mt-4 font-bold text-14 leading-40 text-monochrome-black">Choose one or more plugins:</div>
           <PluginsList>
             <SelectableList
               plugins={plugins}
@@ -72,8 +78,8 @@ export const AddPluginsModal = addPluginModal(({
               onSelect={setSelectedPlugins}
             />
           </PluginsList>
-        </Content>
-        <Actions>
+        </div>
+        <div tw="flex items-center h-20 w-full gap-x-4 pl-6 bg-monochrome-light-tint">
           <Button
             className="flex justify-center items-center gap-x-1 w-27"
             type="primary"
@@ -90,14 +96,8 @@ export const AddPluginsModal = addPluginModal(({
           <Button type="secondary" size="large" onClick={() => onToggle(!isOpen)}>
             Cancel
           </Button>
-        </Actions>
+        </div>
       </div>
     </Modal>
   );
-});
-
-const Header = addPluginModal.header('div');
-const Content = addPluginModal.content('div');
-const Title = addPluginModal.title('div');
-const PluginsList = addPluginModal.pluginsList('div');
-const Actions = addPluginModal.actions('div');
+};

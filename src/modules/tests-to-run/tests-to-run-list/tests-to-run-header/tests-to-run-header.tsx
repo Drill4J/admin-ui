@@ -14,15 +14,13 @@
  * limitations under the License.
  */
 import { useState } from 'react';
-import { BEM } from '@redneckz/react-bem-helper';
 import { Button } from '@drill4j/ui-kit';
+import tw, { styled } from 'twin.macro';
 
 import { TestsToRunSummary } from 'types/tests-to-run-summary';
 import { convertToPercentage, getDuration, percentFormatter } from 'utils';
 import { GetSuggestedTestsModal } from './get-suggested-tests-modal';
 import { SavedTimeSection } from './saved-time-section';
-
-import styles from './tests-to-run-header.module.scss';
 
 interface AgentInfo {
   agentType: string;
@@ -31,23 +29,33 @@ interface AgentInfo {
   activeBuildVersion: string;
 }
 interface Props {
-  className?: string;
   agentInfo: AgentInfo;
   previousBuildAutoTestsCount: number;
   previousBuildTestsDuration: number;
   summaryTestsToRun: TestsToRunSummary;
 }
 
-const testsToRunHeader = BEM(styles);
+const SubTitle = styled.div`
+  ${tw`grid mr-4 text-14 leading-24 font-bold text-monochrome-default`};
+  grid-template-columns: max-content minmax(auto, max-content) max-content minmax(auto, max-content);
+`;
 
-export const TestsToRunHeader = testsToRunHeader(({
-  className, agentInfo, previousBuildAutoTestsCount, previousBuildTestsDuration, summaryTestsToRun,
+export const TestsToRunHeader = ({
+  agentInfo,
+  previousBuildAutoTestsCount,
+  previousBuildTestsDuration,
+  summaryTestsToRun,
 }: Props) => {
   const {
     stats: {
-      duration: currentDuration = 0, parentDuration = 0, total: totalTestsToRun = 0, completed: completedTestsToRun = 0,
+      duration: currentDuration = 0,
+      parentDuration = 0,
+      total: totalTestsToRun = 0,
+      completed: completedTestsToRun = 0,
     } = {},
-    statsByType: { AUTO: { total: totalAutoTestsToRun = 0, completed: completedAutoTestsToRun = 0 } = {} } = {},
+    statsByType: {
+      AUTO: { total: totalAutoTestsToRun = 0, completed: completedAutoTestsToRun = 0 } = {},
+    } = {},
   } = summaryTestsToRun;
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const {
@@ -55,37 +63,46 @@ export const TestsToRunHeader = testsToRunHeader(({
   } = agentInfo;
   const totalDuration = getDuration(previousBuildTestsDuration);
   const estimatedTimeSaved = getDuration(previousBuildTestsDuration - parentDuration);
-  const totalTimeSaved = getDuration((previousBuildTestsDuration - currentDuration) > 0 ? previousBuildTestsDuration - currentDuration : 0);
+  const totalTimeSaved = getDuration(
+    previousBuildTestsDuration - currentDuration > 0
+      ? previousBuildTestsDuration - currentDuration
+      : 0,
+  );
 
   return (
     <>
-      <div className={className}>
-        <div className="flex justify-between items-center w-full">
+      <div tw="flex items-center h-20 border-b border-monochrome-medium-tint">
+        <div tw="flex justify-between items-center w-full">
           <div>
-            <Title data-test="tests-to-run-header:title">
+            <div
+              tw="flex gap-x-2 text-24 leading-36 font-light text-monochrome-black"
+              data-test="tests-to-run-header:title"
+            >
               Tests to Run
-              <Count>{totalTestsToRun - completedTestsToRun}</Count>
-            </Title>
+              <div tw="text-monochrome-default">{totalTestsToRun - completedTestsToRun}</div>
+            </div>
             <SubTitle data-test="tests-to-run-header:subtitle">
               Build:
-              <CurrentBuildVersion
+              <div
+                tw="max-w-280px mr-2 ml-1 text-monochrome-black"
                 className="text-ellipsis"
                 data-test="tests-to-run-header:current-build-version"
                 title={buildVersion}
               >
                 {buildVersion}
-              </CurrentBuildVersion>
+              </div>
               Compared to:
-              <ComparedBuildVersion
+              <div
+                tw="max-w-280px ml-1 text-monochrome-black"
                 className="text-ellipsis"
                 data-test="tests-to-run-header:compared-build-version"
                 title={previousBuildVersion}
               >
                 {previousBuildVersion}
-              </ComparedBuildVersion>
+              </div>
             </SubTitle>
           </div>
-          <Actions>
+          <div tw="flex items-center gap-6 mr-10">
             {activeBuildVersion === buildVersion && (
               <Button
                 type="secondary"
@@ -107,10 +124,21 @@ export const TestsToRunHeader = testsToRunHeader(({
             <SavedTimeSection
               previousBuildAutoTestsCount={previousBuildAutoTestsCount}
               label="estimated time saved"
-              percentage={totalAutoTestsToRun
-                ? percentFormatter(convertToPercentage(previousBuildTestsDuration - parentDuration, previousBuildTestsDuration))
-                : undefined}
-              message={previousBuildAutoTestsCount ? getEstimatedTimeSavedTooltipMessage(totalAutoTestsToRun) : null}
+              percentage={
+                totalAutoTestsToRun
+                  ? percentFormatter(
+                    convertToPercentage(
+                      previousBuildTestsDuration - parentDuration,
+                      previousBuildTestsDuration,
+                    ),
+                  )
+                  : undefined
+              }
+              message={
+                previousBuildAutoTestsCount
+                  ? getEstimatedTimeSavedTooltipMessage(totalAutoTestsToRun)
+                  : null
+              }
             >
               {totalAutoTestsToRun
                 ? `${estimatedTimeSaved.hours}:${estimatedTimeSaved.minutes}:${estimatedTimeSaved.seconds}`
@@ -119,43 +147,64 @@ export const TestsToRunHeader = testsToRunHeader(({
             <SavedTimeSection
               previousBuildAutoTestsCount={previousBuildAutoTestsCount}
               label="total time saved"
-              percentage={totalAutoTestsToRun && totalAutoTestsToRun === completedAutoTestsToRun
-                ? percentFormatter(convertToPercentage(previousBuildTestsDuration - currentDuration, previousBuildTestsDuration))
-                : undefined}
-              message={getTotalSavedTimeTooltipMessage(totalAutoTestsToRun - completedAutoTestsToRun)}
+              percentage={
+                totalAutoTestsToRun && totalAutoTestsToRun === completedAutoTestsToRun
+                  ? percentFormatter(
+                    convertToPercentage(
+                      previousBuildTestsDuration - currentDuration,
+                      previousBuildTestsDuration,
+                    ),
+                  )
+                  : undefined
+              }
+              message={getTotalSavedTimeTooltipMessage(
+                totalAutoTestsToRun - completedAutoTestsToRun,
+              )}
             >
-              { totalAutoTestsToRun && totalAutoTestsToRun === completedAutoTestsToRun
+              {totalAutoTestsToRun && totalAutoTestsToRun === completedAutoTestsToRun
                 ? `${totalTimeSaved.hours}:${totalTimeSaved.minutes}:${totalTimeSaved.seconds}`
-                : '––:––:––' }
+                : '––:––:––'}
             </SavedTimeSection>
-          </Actions>
+          </div>
         </div>
       </div>
-      {modalIsOpen && <GetSuggestedTestsModal isOpen={modalIsOpen} onToggle={setModalIsOpen} agentType={agentType} />}
+      {modalIsOpen && (
+        <GetSuggestedTestsModal
+          isOpen={modalIsOpen}
+          onToggle={setModalIsOpen}
+          agentType={agentType}
+        />
+      )}
     </>
   );
-});
-
-const Title = testsToRunHeader.title('div');
-const Count = testsToRunHeader.count('div');
-const SubTitle = testsToRunHeader.subTitle('div');
-const Actions = testsToRunHeader.actions('div');
-const CurrentBuildVersion = testsToRunHeader.currentBuildVersion('div');
-const ComparedBuildVersion = testsToRunHeader.comparedBuildVersion('div');
+};
 
 function getTotalDurationTooltipMessage(previousBuildAutoTestsCount: number) {
-  return previousBuildAutoTestsCount
-    ? <span>Auto Tests total duration in the parent build</span>
-    : <span>No data about Auto Tests duration in the parent build</span>;
+  return previousBuildAutoTestsCount ? (
+    <span>Auto Tests total duration in the parent build</span>
+  ) : (
+    <span>No data about Auto Tests duration in the parent build</span>
+  );
 }
 
 function getEstimatedTimeSavedTooltipMessage(autoTestsCount: number) {
-  return autoTestsCount
-    ? <span>Potentially saved time after running only<br />the suggested Auto Tests</span>
-    : <span>No suggested Auto Tests to run in current build</span>;
+  return autoTestsCount ? (
+    <span>
+      Potentially saved time after running only
+      <br />
+      the suggested Auto Tests
+    </span>
+  ) : (
+    <span>No suggested Auto Tests to run in current build</span>
+  );
 }
 
 function getTotalSavedTimeTooltipMessage(autoTestsToRunCount: number) {
   return autoTestsToRunCount ? (
-    <span>Data about saved time will be displayed<br />when all Auto Tests will have the state done </span>) : null;
+    <span>
+      Data about saved time will be displayed
+      <br />
+      when all Auto Tests will have the state done{' '}
+    </span>
+  ) : null;
 }

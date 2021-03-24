@@ -13,26 +13,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { BEM } from '@redneckz/react-bem-helper';
 import { Icons } from '@drill4j/ui-kit';
-
-import styles from './no-plugins-stub.module.scss';
+import 'twin.macro';
 
 interface Props {
-  className?: string;
   children: string;
 }
 
-const noPluginsStub = BEM(styles);
-
-export const NoPluginsStub = noPluginsStub(({ className, children }: Props) => (
-  <div className={className}>
-    <Icon height={160} width={160} />
-    <Title>No plugins installed</Title>
-    <SubTitle>{children}</SubTitle>
+export const NoPluginsStub = ({ children }: Props) => (
+  <div tw="flex flex-col items-center justify-center h-full">
+    <Icons.Plugins tw="text-monochrome-medium-tint" height={160} width={160} />
+    <div tw="mt-10 mb-2 text-monochrome-default text-24 leading-32">No plugins installed</div>
+    <div tw="text-monochrome-default text-14 leading-24">{children}</div>
   </div>
-));
-
-const Icon = noPluginsStub.icon(Icons.Plugins);
-const Title = noPluginsStub.title('div');
-const SubTitle = noPluginsStub.subTitle('div');
+);

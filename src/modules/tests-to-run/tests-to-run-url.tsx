@@ -13,46 +13,50 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { BEM, span } from '@redneckz/react-bem-helper';
-
+import tw, { styled } from 'twin.macro';
 import { adminUrl } from './admin-url';
 
-import styles from './tests-to-run-url.module.scss';
-
 interface Props {
-  className?: string;
   agentId: string;
   pluginId: string;
   agentType?: string;
 }
 
-const testsToRunUrl = BEM(styles);
+const UrlContainer = styled.div`
+  width: 390px;
+  ${tw`text-blue-default break-all`}
 
-export const TestsToRunUrl = testsToRunUrl(
-  ({
-    className, agentId, pluginId, agentType,
-  }: Props) => (
-    <span
-      className={`${className} ${agentType === 'ServiceGroup' ? 'text-12' : 'text-14'}`}
-      style={{ width: agentType === 'ServiceGroup' ? '300px' : undefined }}
-    >
-      <div>
-        <CurlFlag>curl <CurlFlag color="red">-</CurlFlag>i <CurlFlag color="red">-</CurlFlag>H </CurlFlag>
-        &quot;accept: application/json&quot;<CurlFlag> \</CurlFlag>
-      </div>
-      <div>
-        <CurlFlag> <CurlFlag color="red">-</CurlFlag>H </CurlFlag>
-        &quot;content-type: application/json&quot;<CurlFlag> \</CurlFlag>
-      </div>
-      <div className="flex items-start">
-        <CurlFlag> <CurlFlag color="red">-</CurlFlag>X <CurlFlag invisible>\</CurlFlag></CurlFlag>
-        <span>
-          <CurlFlag> GET </CurlFlag>{`${adminUrl}api/${agentType === 'ServiceGroup'
-            ? 'groups' : 'agents'}/${agentId}/plugins/${pluginId}/data/tests-to-run`}
-        </span>
-      </div>
-    </span>
-  ),
+  & > *:not(:first-child) {
+    margin-left: 16px;
+  }
+`;
+
+const CurlFlag = styled.span(({ isRed, invisible }: { isRed?: boolean; invisible?: boolean}) => [
+  'min-width: 18px;',
+  tw`font-bold text-monochrome-black`,
+  isRed && tw`text-red-default`,
+  invisible && tw`opacity-0`,
+]);
+
+export const TestsToRunUrl = ({ agentId, pluginId, agentType }: Props) => (
+  <UrlContainer
+    className={`${agentType === 'ServiceGroup' ? 'text-12' : 'text-14'}`}
+    style={{ width: agentType === 'ServiceGroup' ? '300px' : undefined }}
+  >
+    <div>
+      <CurlFlag>curl <CurlFlag isRed>-</CurlFlag>i <CurlFlag isRed>-</CurlFlag>H </CurlFlag>
+      &quot;accept: application/json&quot;<CurlFlag> \</CurlFlag>
+    </div>
+    <div>
+      <CurlFlag> <CurlFlag isRed>-</CurlFlag>H </CurlFlag>
+      &quot;content-type: application/json&quot;<CurlFlag> \</CurlFlag>
+    </div>
+    <div className="flex items-start">
+      <CurlFlag> <CurlFlag isRed>-</CurlFlag>X <CurlFlag invisible>\</CurlFlag></CurlFlag>
+      <span>
+        <CurlFlag> GET </CurlFlag>{`${adminUrl}api/${agentType === 'ServiceGroup'
+          ? 'groups' : 'agents'}/${agentId}/plugins/${pluginId}/data/tests-to-run`}
+      </span>
+    </div>
+  </UrlContainer>
 );
-
-const CurlFlag = testsToRunUrl.curlFlag(span({} as {invisible?: boolean; color?: 'red'}));

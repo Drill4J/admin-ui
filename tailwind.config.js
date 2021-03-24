@@ -60,6 +60,10 @@ module.exports = {
       '56px': '56px',
       '104px': '104px',
       '2/3': '66%',
+      '48px': '48px',
+      '154px': '154px',
+      '200px': '200px',
+      '850px': '850px',
     },
     minHeight: {
       '16px': '16px',
@@ -74,6 +78,8 @@ module.exports = {
     maxWidth: {
       '1/2': '50%',
       '80px': '80px',
+      '200px': '200px',
+      '280px': '280px',
     },
     colors: {
       transparent: 'transparent',

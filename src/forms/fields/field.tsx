@@ -14,8 +14,15 @@
  * limitations under the License.
  */
 import { FieldRenderProps } from 'react-final-form';
+import tw, { styled } from 'twin.macro';
 
-import { ErrorMessage } from './error-message';
+const ErrorMessage = styled.div`
+  ${tw`text-12 leading-24 whitespace-nowrap text-red-default`};
+
+  &::first-letter {
+    text-transform: uppercase;
+  }
+`;
 
 export const field = <T, >(Input: React.ElementType) => (props: FieldRenderProps<T>) => {
   const { input, meta, ...rest } = props;

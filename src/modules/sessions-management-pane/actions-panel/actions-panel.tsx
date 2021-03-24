@@ -55,7 +55,7 @@ export const ActionsPanel = ({
         <Button
           type="primary"
           size="large"
-          onClick={(e) => {
+          onClick={(e: any) => {
             e.preventDefault();
             dispatch(setIsNewSession(true));
           }}

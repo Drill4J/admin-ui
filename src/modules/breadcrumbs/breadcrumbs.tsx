@@ -13,16 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { BEM } from '@redneckz/react-bem-helper';
 import {
   Link, useHistory, useLocation, matchPath,
 } from 'react-router-dom';
-
-import styles from './breadcrumbs.module.scss';
-
-interface Props {
-  className?: string;
-}
+import tw, { styled } from 'twin.macro';
 
 interface CrumbType {
   label: string;
@@ -42,9 +36,31 @@ type MatchType = {
   scopeId: string;
 };
 
-const breadcrumbs = BEM(styles);
+const BreadcrumbsContainer = styled.div`
+  & > * {
+    :last-child {
+    ${tw`text-monochrome-default`};
+  }
 
-export const Breadcrumbs = breadcrumbs(({ className }: Props) => {
+  :not(:first-child):before {
+    padding: 0 8px;
+    ${tw`text-monochrome-default`};
+    content: '/';
+  }
+
+  :not(:last-child) {
+    &:hover {
+      ${tw`text-blue-medium-tint`};
+    }
+
+    &:active {
+        ${tw`text-blue-shade`};
+      }
+    }
+  }
+`;
+
+export const Breadcrumbs = () => {
   const { location } = useHistory<{ label: string; buildVersion: string; pluginId: string }>();
   const { pathname } = useLocation();
   const {
@@ -152,18 +168,17 @@ export const Breadcrumbs = breadcrumbs(({ className }: Props) => {
     });
 
   return (
-    <div className={className}>
+    <BreadcrumbsContainer>
       {currentPageCrumbs.map(({ label, link, state }) => link && (
-        <Crumb
+        <Link
+          tw="inline-block max-w-200px text-ellipsis align-middle text-blue-default text-12 font-bold cursor-pointer no-underline"
           key={label}
           to={{ pathname: link, state }}
           title={label}
         >
           {label}
-        </Crumb>
+        </Link>
       ))}
-    </div>
+    </BreadcrumbsContainer>
   );
-});
-
-const Crumb = breadcrumbs.crumb(Link);
+};
