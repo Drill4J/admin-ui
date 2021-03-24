@@ -14,7 +14,6 @@
  * limitations under the License.
  */
 import { useRef, useState } from 'react';
-import { BEM } from '@redneckz/react-bem-helper';
 import VirtualList from 'react-tiny-virtual-list';
 import {
   Inputs, Icons,
@@ -25,16 +24,11 @@ import { MethodCoveredByTest } from 'types/method-covered-by-test';
 import { CoverageRateIcon } from 'components';
 import 'twin.macro';
 
-import styles from './methods-list.module.scss';
-
 interface Props {
-  className?: string;
   methods: { coveredMethods: MethodCoveredByTest, covered: number };
 }
 
-const methodsList = BEM(styles);
-
-export const MethodsList = methodsList(({ className, methods: { coveredMethods, covered } }: Props) => {
+export const MethodsList = ({ methods: { coveredMethods, covered } }: Props) => {
   const {
     newMethods = [], modifiedMethods = [], unaffectedMethods = [], allMethods = [],
   } = coveredMethods;
@@ -56,8 +50,9 @@ export const MethodsList = methodsList(({ className, methods: { coveredMethods, 
   const methods = getMethods();
 
   return (
-    <div className={className}>
-      <Filter
+    <div tw="flex-col h-full overflow-hidden">
+      <Inputs.Dropdown
+        tw="pt-2 pb-2 pr-6 pl-6 leading-32 text-monochrome-default border-b border-monochrome-medium-tint"
         items={[
           { value: 'all', label: 'All methods' },
           { value: 'new', label: `New methods (${newMethods.length})` },
@@ -73,34 +68,39 @@ export const MethodsList = methodsList(({ className, methods: { coveredMethods, 
         onChange={({ value }) => setSelectedSection(value)}
         value={selectedSection}
       />
-      <Content>
-        <Methods>
+      <div tw="h-full w-full mb-4 overflow-y-hidden">
+        <div tw="flex flex-col h-full text-14">
           <div ref={node} style={{ height: '100%' }}>
             <VirtualList
               itemSize={56}
               height={Math.ceil(methodsListHeight)}
               itemCount={methods.length || covered}
               renderItem={({ index, style }) => (
-                <Method key={`${methods[index]?.name}${index}`} style={style as Record<symbol, string>}>
+                <div
+                  tw="flex flex-col justify-center pl-6 pr-6 text-12 first:mt-2"
+                  key={`${methods[index]?.name}${index}`}
+                  style={style as Record<symbol, string>}
+                >
                   {methods.length > 0 && (
                     <>
                       <div className="flex items-center w-full h-20px">
-                        <div className="flex items-center w-full">
-                          <MethodsListItemIcon>
-                            <Icons.Function />
-                          </MethodsListItemIcon>
-                          <MethodName className="text-ellipsis" title={methods[index]?.name as string}>{methods[index]?.name}</MethodName>
+                        <div className="flex items-center w-full gap-4">
+                          <Icons.Function tw="h-4" />
+                          <div
+                            tw="max-w-280px text-monochrome-black text-14 text-ellipsis"
+                            title={methods[index]?.name as string}
+                          >
+                            {methods[index]?.name}
+                          </div>
                         </div>
-                        <CoverageIcon>
-                          <CoverageRateIcon coverageRate={methods[index]?.coverageRate} />
-                        </CoverageIcon>
+                        <CoverageRateIcon tw="h-4" coverageRate={methods[index]?.coverageRate} />
                       </div>
-                      <MethodsPackage
-                        className="text-ellipsis"
+                      <div
+                        tw="max-w-280px ml-8 text-monochrome-default text-12 text-ellipsis"
                         title={methods[index]?.ownerClass}
                       >
                         {methods[index]?.ownerClass}
-                      </MethodsPackage>
+                      </div>
                     </>
                   )}
                   {Object.keys(coveredMethods).length === 0 && (
@@ -114,21 +114,12 @@ export const MethodsList = methodsList(({ className, methods: { coveredMethods, 
                       </div>
                     </div>
                   )}
-                </Method>
+                </div>
               )}
             />
           </div>
-        </Methods>
-      </Content>
+        </div>
+      </div>
     </div>
   );
-});
-
-const Content = methodsList.content('div');
-const Filter = methodsList.filter(Inputs.Dropdown);
-const Methods = methodsList.methods('div');
-const Method = methodsList.method('div');
-const MethodName = methodsList.methodName('div');
-const MethodsPackage = methodsList.methodPackage('div');
-const MethodsListItemIcon = methodsList.methodIcon('div');
-const CoverageIcon = methodsList.coverageIcon('div');
+};

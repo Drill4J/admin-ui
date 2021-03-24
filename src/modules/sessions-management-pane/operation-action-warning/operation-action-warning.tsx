@@ -29,7 +29,7 @@ interface Props {
 export const OperationActionWarning = ({
   handleConfirm, handleDecline, children, operationType, loading,
 } : Props) => {
-  const ConfirmButton = operationType === 'abort' ? NegativeActionButton : Button;
+  const ConfirmButton: any = operationType === 'abort' ? NegativeActionButton : Button;
   return (
     <div className="flex items-center w-full h-full font-regular text-12 leading-20" data-test="operation-action-warning">
       <span>{children}</span>

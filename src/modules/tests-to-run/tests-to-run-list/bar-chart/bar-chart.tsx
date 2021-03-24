@@ -13,42 +13,118 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import {
-  useEffect, useRef, useState,
-} from 'react';
-import { BEM, div } from '@redneckz/react-bem-helper';
+import { useEffect, useRef, useState } from 'react';
 import { nanoid } from 'nanoid';
 import tw, { styled } from 'twin.macro';
 
 import { useBuildVersion, useElementSize } from 'hooks';
 import { TestsToRunSummary } from 'types/tests-to-run-summary';
-import {
-  convertToPercentage,
-} from 'utils';
+import { convertToPercentage } from 'utils';
 import { Chart } from './chart';
 
-import styles from './bar-chart.module.scss';
-
 interface Props {
-  className?: string;
   activeBuildVersion: string;
   totalDuration: number;
   summaryTestsToRun: TestsToRunSummary;
 }
 
-const barChart = BEM(styles);
-
 const BAR_HORIZONTAL_PADDING_PX = 96;
 const BAR_WITH_GAP_WIDTH_PX = 112;
 const CHART_HEIGHT_PX = 160;
+
+const Content = styled.div`
+  ${tw`grid`};
+  grid-template-columns: 30px 1fr;
+`;
+
+const YAxis = styled.div`
+  ${tw`relative grid text-12 leading-16 text-monochrome-default`};
+  grid-area: 1 / 1 / 2 / 3;
+  z-index: -1;
+
+  &::before {
+    ${tw`absolute text-monochrome-default`};
+    top: calc(100% - 12px);
+    content: '0';
+  }
+
+  & > div {
+    ${tw`relative border-t border-monochrome-medium-tint`};
+    margin-left: 30px;
+
+    &::before {
+      position: absolute;
+      top: -9px;
+      left: -30px;
+      content: attr(data-content);
+    }
+  }
+`;
 
 const CartesianLayout = styled.div`
   ${tw`grid items-end gap-12 px-12 border-b border-monochrome-black`}
 `;
 
-export const BarChart = barChart(({
-  className, activeBuildVersion, totalDuration, summaryTestsToRun,
-}: Props) => {
+const ChartBlock = styled.div`
+  display: grid;
+  grid-area: 1 / 2 / 2 / 3;
+  overflow: hidden;
+`;
+
+const XAxis = styled.div`
+  ${tw`grid gap-5 text-12 leading-24 text-monochrome-black`};
+  grid-template-columns: max-content auto;
+`;
+
+const XAxisLegend = styled.div`
+  ${tw`grid gap-12 pr-2 text-monochrome-default`};
+
+  & > div {
+    ${tw`w-16 text-center text-ellipsis`};
+
+    &:last-child {
+      ${tw`text-monochrome-black`};
+    }
+  }
+`;
+
+const Range = styled.input`
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    width: 100%;
+    margin: 0px;
+    transform: rotateY(180deg);
+
+    @-moz-document url-prefix() {
+      height: 8px;
+    }
+
+    &:focus {
+      outline: none;
+    }
+
+    &::-webkit-slider-runnable-track {
+      ${tw`w-full h-2 bg-monochrome-medium-tint`};
+    }
+
+    &::-moz-range-track {
+      ${tw`w-full h-full bg-monochrome-medium-tint`};
+    }
+
+    &::-webkit-slider-thumb {
+      ${tw`h-2 bg-data-visualization-scrollbar-thumb`};
+      -webkit-appearance: none;
+    }
+
+    &::-moz-range-thumb {
+      border: none;
+      border-radius: 0;
+      ${tw`h-full bg-data-visualization-scrollbar-thumb`};
+      -moz-appearance: none;
+    }
+`;
+
+export const BarChart = ({ activeBuildVersion, totalDuration, summaryTestsToRun }: Props) => {
   const ref = useRef(null);
   const { width } = useElementSize(ref);
   const [slice, setSlice] = useState(0);
@@ -58,43 +134,43 @@ export const BarChart = barChart(({
     setSlice(visibleBarsCount);
   }, [width, visibleBarsCount]);
 
-  const testsToRunParentStats = useBuildVersion<TestsToRunSummary[]>('/build/tests-to-run/parent-stats') || [];
+  const testsToRunParentStats =
+    useBuildVersion<TestsToRunSummary[]>('/build/tests-to-run/parent-stats') || [];
   const testsToRunHistory = [...testsToRunParentStats, summaryTestsToRun];
 
   const sliderThumb = convertToPercentage(visibleBarsCount, testsToRunHistory.length);
 
-  const bars = visibleBarsCount > testsToRunHistory.length
-    ? testsToRunHistory
-    : testsToRunHistorySlice(testsToRunHistory, slice, visibleBarsCount);
+  const bars =
+    visibleBarsCount > testsToRunHistory.length
+      ? testsToRunHistory
+      : testsToRunHistorySlice(testsToRunHistory, slice, visibleBarsCount);
   const yScale = getYScale(totalDuration);
 
   return (
-    <div className={className} ref={ref}>
-      <YAxis style={
-        {
+    <Content ref={ref}>
+      <YAxis
+        style={{
           height: `${CHART_HEIGHT_PX}px`,
-          gridTemplateRows: `repeat(${yScale.stepsCount}, ${CHART_HEIGHT_PX / yScale.stepsCount}px)`,
-        }
-      }
+          gridTemplateRows: `repeat(${yScale.stepsCount}, ${
+            CHART_HEIGHT_PX / yScale.stepsCount
+          }px)`,
+        }}
       >
-        {
-          Array.from({ length: yScale.stepsCount },
-            (_, i) => (
-              <div
-                key={nanoid()}
-                data-content={`${getTimeFormat((i + 1) * yScale.stepSizeMs, yScale.unit)}${yScale.unit}`}
-              />
-            )).reverse()
-        }
+        {Array.from({ length: yScale.stepsCount }, (_, i) => (
+          <div
+            key={nanoid()}
+            data-content={`${getTimeFormat((i + 1) * yScale.stepSizeMs, yScale.unit)}${
+              yScale.unit
+            }`}
+          />
+        )).reverse()}
       </YAxis>
       <ChartBlock>
         <CartesianLayout
-          style={
-            {
-              height: `${CHART_HEIGHT_PX}px`,
-              gridTemplateColumns: `repeat(${visibleBarsCount}, 64px)`,
-            }
-          }
+          style={{
+            height: `${CHART_HEIGHT_PX}px`,
+            gridTemplateColumns: `repeat(${visibleBarsCount}, 64px)`,
+          }}
         >
           {bars.map((bar) => (
             <Chart
@@ -108,16 +184,19 @@ export const BarChart = barChart(({
         </CartesianLayout>
         {/* This hack is needed to dynamically change the slider of a custom scrollbar */}
         <style type="text/css">
-          #custom-scroll-bar::-webkit-slider-thumb &#123;
-          width: {sliderThumb}% !important;
+          #custom-scroll-bar::-webkit-slider-thumb &#123; width: {sliderThumb}% !important;
         </style>
-        <input
+        <Range
           id="custom-scroll-bar"
           type="range"
           min={visibleBarsCount > testsToRunHistory.length ? 0 : visibleBarsCount}
           style={{
-            width: `${visibleBarsCount <= 0 || visibleBarsCount >= testsToRunHistory.length ? 0 : width - 30}px`,
-            marginBottom: `${visibleBarsCount <= 0 || visibleBarsCount >= testsToRunHistory.length ? 0 : 8}px`,
+            width: `${
+              visibleBarsCount <= 0 || visibleBarsCount >= testsToRunHistory.length ? 0 : width - 30
+            }px`,
+            marginBottom: `${
+              visibleBarsCount <= 0 || visibleBarsCount >= testsToRunHistory.length ? 0 : 8
+            }px`,
           }}
           value={slice || bars.length}
           max={testsToRunHistory.length}
@@ -126,18 +205,17 @@ export const BarChart = barChart(({
         <XAxis>
           <span>Build</span>
           <XAxisLegend style={{ gridTemplateColumns: `repeat(${visibleBarsCount}, 64px)` }}>
-            {bars.map(({ buildVersion }) => <div key={nanoid()} title={buildVersion}>{buildVersion}</div>)}
+            {bars.map(({ buildVersion }) => (
+              <div key={nanoid()} title={buildVersion}>
+                {buildVersion}
+              </div>
+            ))}
           </XAxisLegend>
         </XAxis>
       </ChartBlock>
-    </div>
+    </Content>
   );
-});
-
-const ChartBlock = barChart.chart('div');
-const YAxis = barChart.yAxis('div');
-const XAxis = barChart.xAxis('div');
-const XAxisLegend = barChart.xAxisLegend('div');
+};
 
 const MS_IN_SECONDS = 1000;
 const MS_IN_MINUTES = MS_IN_SECONDS * 60;
@@ -268,10 +346,15 @@ const graphParams = [
   },
 ];
 
-function testsToRunHistorySlice(testsToRunHistory: TestsToRunSummary[], slice: number, visibleBarsCount: number) {
-  return testsToRunHistory.slice(testsToRunHistory.length - slice, slice
-    ? testsToRunHistory.length + visibleBarsCount - slice
-    : testsToRunHistory.length);
+function testsToRunHistorySlice(
+  testsToRunHistory: TestsToRunSummary[],
+  slice: number,
+  visibleBarsCount: number,
+) {
+  return testsToRunHistory.slice(
+    testsToRunHistory.length - slice,
+    slice ? testsToRunHistory.length + visibleBarsCount - slice : testsToRunHistory.length,
+  );
 }
 
 // TODO move that
@@ -299,9 +382,9 @@ function getYScale(duration: number) {
 }
 
 function getParams(duration: number) {
-  const durationsMs = graphParams.map(x => x.duration);
+  const durationsMs = graphParams.map((x) => x.duration);
 
-  const lesserNeighborIndex = durationsMs.findIndex(x => x <= duration);
+  const lesserNeighborIndex = durationsMs.findIndex((x) => x <= duration);
 
   const isOutOfRange = lesserNeighborIndex === -1;
   if (isOutOfRange) {
@@ -325,9 +408,8 @@ function getParams(duration: number) {
   const lesserError = Math.abs(durationsMs[lesserNeighborIndex] - duration);
   const greaterError = Math.abs(durationsMs[lesserNeighborIndex - 1] - duration);
 
-  const bestNeighborIndex = lesserError < greaterError
-    ? lesserNeighborIndex
-    : lesserNeighborIndex - 1;
+  const bestNeighborIndex =
+    lesserError < greaterError ? lesserNeighborIndex : lesserNeighborIndex - 1;
 
   const step = graphParams[bestNeighborIndex];
 

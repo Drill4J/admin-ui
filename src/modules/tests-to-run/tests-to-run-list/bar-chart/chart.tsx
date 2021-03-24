@@ -14,17 +14,13 @@
  * limitations under the License.
  */
 import { Tooltip } from '@drill4j/ui-kit';
-import { BEM, div } from '@redneckz/react-bem-helper';
 import { nanoid } from 'nanoid';
+import tw, { styled } from 'twin.macro';
 
 import { useIntersection } from 'hooks';
 import { getDuration, percentFormatter } from 'utils';
 import { DATA_VISUALIZATION_COLORS } from 'common/constants';
 import { TestsToRunSummary } from 'types/tests-to-run-summary';
-
-import styles from './bar-chart.module.scss';
-
-const barChart = BEM(styles);
 
 const CHART_HEIGHT_PX = 160;
 const BORDER_PX = 1;
@@ -35,6 +31,37 @@ interface Props {
   totalDuration?: number;
   yScale: { stepSizeMs: number; unit: string; stepsCount: number };
 }
+
+const GroupedBars = styled.div(({ bordered, hasUncompletedTests }: { bordered?: boolean; hasUncompletedTests?: boolean; }) => [
+  'display: grid;',
+  'gap: 1px;',
+  'align-items: end;',
+  'grid-template-rows: auto max-content;',
+  'width: max-content;',
+  bordered && tw`gap-0 border border-b-0 border-data-visualization-saved-time border-opacity-50`,
+  hasUncompletedTests && tw`hover:border border-b-0 border-data-visualization-saved-time`,
+]);
+
+const Bar = styled.div(({ type }: { type?: string }) => [
+  tw`grid w-16`,
+  type === 'active' && tw`bg-data-visualization-coverage`,
+  type === 'saved' && tw`opacity-50 hover:opacity-100`,
+  type === 'isDoneDuration' && tw`bg-data-visualization-coverage opacity-50 hover:opacity-100`,
+  type === 'isDuration' && tw`bg-data-visualization-coverage opacity-50`,
+]);
+
+const SavedTimePercent = styled.div`
+  &::after {
+    position: absolute;
+    top: 7px;
+    left: 168px;
+    content: '|';
+  }
+
+  & > span {
+    ${tw`ml-4 text-data-visualization-saved-time`};
+  }
+`;
 
 export const Chart = ({
   activeBuildVersion,
@@ -58,7 +85,7 @@ export const Chart = ({
 
   const { hours, minutes, seconds } = getDuration(duration);
   const savedTimeDuration = getDuration(totalDuration - duration);
-  const durationType = isAllAutoTestsDone ? 'all-tests-done-duration' : 'duration';
+  const durationType = isAllAutoTestsDone ? 'isDoneDuration' : 'isDuration';
   const hasUncompletedTests = completed > 0 && completed < total;
   const { ref: firstChartRef, visible: isVisibleFirstChart } = useIntersection<HTMLDivElement>(1);
   const { ref: secondChartRef, visible: isVisibleSecondChart } = useIntersection<HTMLDivElement>(1);
@@ -104,8 +131,8 @@ export const Chart = ({
               )
             }
           >
-            <ChartBlock
-              type={buildVersion !== activeBuildVersion ? 'saved-time' : undefined}
+            <Bar
+              type={buildVersion !== activeBuildVersion ? 'saved' : undefined}
               style={{
                 height: `${savedTimeHeight}px`,
                 backgroundColor: isAllAutoTestsDone
@@ -129,7 +156,7 @@ export const Chart = ({
             }
           >
             <div ref={secondChartRef}>
-              <ChartBlock
+              <Bar
                 type={buildVersion !== activeBuildVersion ? durationType : 'active'}
                 style={{ height: `${durationHeight}px` }}
               />
@@ -140,7 +167,3 @@ export const Chart = ({
     </Tooltip>
   );
 };
-
-const GroupedBars = barChart.groupedBars(div({ } as { bordered?: boolean; hasUncompletedTests?: boolean; }));
-const ChartBlock = barChart.bar('div');
-const SavedTimePercent = barChart.savedTimePercent('div');

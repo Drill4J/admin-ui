@@ -13,70 +13,57 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { BEM } from '@redneckz/react-bem-helper';
 import { Field } from 'react-final-form';
 import { Icons } from '@drill4j/ui-kit';
+import 'twin.macro';
 
 import { PluginListEntry } from 'components';
 import { Plugin } from 'types/plugin';
 
-import styles from './install-plugins-step.module.scss';
-
 interface Props {
-  className?: string;
   formValues?: { plugins?: string[], availablePlugins?: Plugin[] };
   infoPanel?: React.ReactNode;
 }
 
-const installPluginsStep = BEM(styles);
-
-export const InstallPluginsStep = installPluginsStep(
-  ({ className, infoPanel, formValues: { plugins = [], availablePlugins = [] } = {} }: Props) => (
-    <div className={className}>
-      {infoPanel}
-      <SelectedPluginsInfo>
-        {plugins.length}
-        &nbsp;of&nbsp;
-        {availablePlugins.length}
-        &nbsp;selected
-      </SelectedPluginsInfo>
-      <PluginsList>
-        {availablePlugins.map(({
-          id = '', name, description, version,
-        }) => (
-          <Field
-            name="plugins"
-            type="checkbox"
-            value={id}
-            key={id}
-            render={({ input, meta }) => (
-              <PluginListEntry
-                description={description}
-                input={input}
-                meta={meta}
-                icon={name as keyof typeof Icons}
-                onClick={() => input.onChange({
-                  target: {
-                    type: 'checkbox',
-                    checked: !input.checked,
-                  },
-                })}
-              >
-                <PluginInfo className="flex items-center w-full mb-3">
-                  <PluginName>{name}&nbsp;</PluginName>
-                  {version && <PluginVersion>({version})</PluginVersion>}
-                </PluginInfo>
-              </PluginListEntry>
-            )}
-          />
-        ))}
-      </PluginsList>
+export const InstallPluginsStep = ({ infoPanel, formValues: { plugins = [], availablePlugins = [] } = {} }: Props) => (
+  <div tw="min-w-850px">
+    {infoPanel}
+    <div tw="pt-4 pb-4 mr-10 ml-10 text-20 leading-32 text-monochrome-default">
+      {plugins.length}
+      &nbsp;of&nbsp;
+      {availablePlugins.length}
+      &nbsp;selected
     </div>
-  ),
+    <div tw="mr-6 ml-6">
+      {availablePlugins.map(({
+        id = '', name, description, version,
+      }) => (
+        <Field
+          name="plugins"
+          type="checkbox"
+          value={id}
+          key={id}
+          render={({ input, meta }) => (
+            <PluginListEntry
+              description={description}
+              input={input}
+              meta={meta}
+              icon={name as keyof typeof Icons}
+              onClick={() => input.onChange({
+                target: {
+                  type: 'checkbox',
+                  checked: !input.checked,
+                },
+              })}
+            >
+              <div tw="flex items-center w-full mb-3 text-14 leading-20">
+                <div tw="font-bold text-monochrome-black">{name}&nbsp;</div>
+                {version && <div tw="text-monochrome-default">({version})</div>}
+              </div>
+            </PluginListEntry>
+          )}
+        />
+      ))}
+    </div>
+  </div>
 );
-
-const SelectedPluginsInfo = installPluginsStep.selectedPluginsInfo('div');
-const PluginsList = installPluginsStep.pluginsList('div');
-const PluginInfo = installPluginsStep.pluginInfo('div');
-const PluginName = installPluginsStep.pluginName('div');
-const PluginVersion = installPluginsStep.pluginVersion('div');

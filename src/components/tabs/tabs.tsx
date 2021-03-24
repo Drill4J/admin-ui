@@ -14,32 +14,54 @@
  * limitations under the License.
  */
 import { Children, cloneElement, ReactElement } from 'react';
-import { BEM, button } from '@redneckz/react-bem-helper';
-
-import styles from './tabs.module.scss';
+import tw, { styled, css } from 'twin.macro';
 
 interface Props {
-  className?: string;
   children: ReactElement | ReactElement[];
   activeTab: number | string;
   onSelect: (tabName: string) => void;
 }
 
-const tabsPanel = BEM(styles);
-
-export const TabsPanel = tabsPanel((props: Props) => {
-  const {
-    children, className, activeTab, onSelect,
-  } = props;
+export const TabsPanel = (props: Props) => {
+  const { children, activeTab, onSelect } = props;
 
   return (
-    <div className={className}>
-      {Children.map(children, (child: ReactElement, index: number) => cloneElement(child, {
-        onClick: () => activeTab !== child.props.name && onSelect && onSelect(child.props.name || index),
-        active: (child.props.name || index) === activeTab,
-      }))}
+    <div tw="flex">
+      {Children.map(children, (child: ReactElement, index: number) =>
+        cloneElement(child, {
+          onClick: () =>
+            activeTab !== child.props.name && onSelect && onSelect(child.props.name || index),
+          active: (child.props.name || index) === activeTab,
+        }))}
     </div>
   );
-});
+};
 
-export const Tab = tabsPanel.tabLabel(button({ name: '' }));
+export const Tab = styled.button`
+  ${tw`relative flex items-center pb-2 mr-4 text-14 font-bold text-monochrome-default cursor-pointer`};
+  min-height: 46px;
+  box-sizing: border-box;
+  border: none;
+  background: none;
+  white-space: nowrap;
+  outline: none;
+
+  ${({ active }: { active?: boolean }) =>
+    active &&
+    css`
+      ${tw`text-monochrome-black`};
+
+      &:after {
+        ${tw`bg-blue-default`};
+        content: '';
+        display: block;
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        height: 4px;
+        border-radius: 2px;
+        transform: translateY(50%);
+      }
+    `}
+`;

@@ -13,13 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { BEM } from '@redneckz/react-bem-helper';
 import { Tooltip } from '@drill4j/ui-kit';
-
-import styles from './saved-time-section.module.scss';
+import tw, { styled } from 'twin.macro';
 
 interface Props {
-  className?: string;
   percentage?: number;
   previousBuildAutoTestsCount: number;
   message: React.ReactNode;
@@ -27,30 +24,37 @@ interface Props {
   label: React.ReactNode;
 }
 
-const savedTimeSection = BEM(styles);
+const Percentage = styled.span`
+  ${tw`font-bold`};
 
-export const SavedTimeSection = savedTimeSection(
-  ({
-    className, label, percentage, message, children, previousBuildAutoTestsCount,
-  }: Props) => (
-    <div className={className}>
-      <Content data-test={`information-section:${label}`}>
-        <Tooltip
-          message={message && <div className="flex items-center w-full text-center">{message}</div>}
-        >
-          <Title>{label}</Title>
-          <Value className="flex items-center gap-2 mt-2 w-full">
-            <Duration>{previousBuildAutoTestsCount ? children : 'n/a'}</Duration>
-            {typeof percentage === 'number' && <Percentage>{percentage}%</Percentage>}
-          </Value>
-        </Tooltip>
-      </Content>
+  &::before {
+    content: '';
+    display: inline-block;
+    width: 1px;
+    height: 16px;
+    margin: auto 8px auto 0;
+    ${tw`bg-monochrome-black`};
+  }
+`;
+
+export const SavedTimeSection = ({
+  label,
+  percentage,
+  message,
+  children,
+  previousBuildAutoTestsCount,
+}: Props) => (
+  <div tw="border-l border-monochrome-medium-tint text-monochrome-default">
+    <div tw="ml-4" data-test={`information-section:${label}`}>
+      <Tooltip
+        message={message && <div className="flex items-center w-full text-center">{message}</div>}
+      >
+        <div tw="text-12 leading-16 font-bold uppercase">{label}</div>
+        <div tw="flex items-center gap-2 mt-2 w-full text-20 leading-20 text-monochrome-black">
+          <span tw="font-regular">{previousBuildAutoTestsCount ? children : 'n/a'}</span>
+          {typeof percentage === 'number' && <Percentage>{percentage}%</Percentage>}
+        </div>
+      </Tooltip>
     </div>
-  ),
+  </div>
 );
-
-const Content = savedTimeSection.content('div');
-const Title = savedTimeSection.title('div');
-const Duration = savedTimeSection.duration('span');
-const Percentage = savedTimeSection.percentage('span');
-const Value = savedTimeSection.value('div');

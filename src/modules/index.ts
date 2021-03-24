@@ -15,7 +15,6 @@
  */
 export { SessionsManagementPane, SessionsManagementPaneProvider, useActiveSessions } from './sessions-management-pane';
 export { CancelAgentRegistrationModal } from './cancel-agent-registration-modal';
-export { NotImplementedStub } from './not-implemented-stub';
 export { Breadcrumbs } from './breadcrumbs';
 export { UnlockingSystemSettingsFormModal } from './unlocking-system-settings-form-modal';
 export { InstallPluginsStep } from './install-plugins-step';

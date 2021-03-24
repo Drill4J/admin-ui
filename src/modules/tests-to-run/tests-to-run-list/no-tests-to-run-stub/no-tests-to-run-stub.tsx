@@ -13,25 +13,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { BEM } from '@redneckz/react-bem-helper';
 import { Icons } from '@drill4j/ui-kit';
+import 'twin.macro';
 
-import styles from './no-tests-to-run-stub.module.scss';
-
-interface Props {
-  className?: string;
-}
-
-const noTestsToRunStub = BEM(styles);
-
-export const NoTestsToRunStub = noTestsToRunStub(({ className }: Props) => (
-  <div className={className}>
-    <Icon width={80} height={80} />
-    <Title>No suggested tests</Title>
-    <SubTitle>There is no information about the suggested to run tests<br /> in this build.</SubTitle>
+export const NoTestsToRunStub = () => (
+  <div tw="flex flex-col items-center justify-center h-full">
+    <Icons.Test tw="text-monochrome-medium-tint" width={80} height={80} />
+    <div tw="mt-4 text-20 leading-32 text-monochrome-default">
+      No suggested tests
+    </div>
+    <div tw="mt-2 text-center text-14 leading-20 text-monochrome-default">
+      There is no information about the suggested to run tests<br /> in this build.
+    </div>
   </div>
-));
-
-const Icon = noTestsToRunStub.icon(Icons.Test);
-const Title = noTestsToRunStub.title('div');
-const SubTitle = noTestsToRunStub.subTitle('div');
+);

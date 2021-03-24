@@ -20,9 +20,6 @@ import { AppLayout } from 'layouts';
 import {
   LoginPage,
   AgentsPage,
-  PluginsPage,
-  LogsPage,
-  ApplicationSettingsPage,
   NotFoundPage,
   AgentFullPage,
   SettingsPage,
@@ -53,9 +50,6 @@ export const PageSwitcher = () => (
       <Switch>
         <PrivateRoute exact path="/agents" component={AgentsPage} />
         <PrivateRoute exact path="/agents/:type/:id/settings/:tab" component={SettingsPage} />
-        <PrivateRoute exact path="/plugins" component={PluginsPage} />
-        <PrivateRoute exact path="/logs" component={LogsPage} />
-        <PrivateRoute exact path="/settings" component={ApplicationSettingsPage} />
         <PrivateRoute exact path="/registration/:agentId" component={AgentRegistrationPage} />
         <PrivateRoute path="/bulk-registration/:serviceGroupId" component={ServiceGroupRegistrationPage} />
         <PrivateRoute path="/preregister/offline-agent" component={AgentRegistrationPage} />

@@ -13,15 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { BEM } from '@redneckz/react-bem-helper';
+import 'twin.macro';
 
 import { get } from 'utils';
 import { ColumnProps } from './list-types';
 
-import styles from './list.module.scss';
-
 interface Props {
-  className?: string;
   item: { [key: string]: unknown };
   columns: ColumnProps[];
   index: number;
@@ -29,10 +26,10 @@ interface Props {
   testContext?: string;
 }
 
-export const ListRow = BEM(styles).row(({
-  className, item, columns, style, testContext,
+export const ListRow = ({
+  item, columns, style, testContext,
 }: Props) => (
-  <div className={className} style={style} data-test={`${testContext}:list-row`}>
+  <div tw="grid items-center h-20 border-b border-monochrome-medium-tint" style={style} data-test={`${testContext}:list-row`}>
     {columns.map((column) => {
       const DefaultCell = ({ value }: { value: unknown; item: { [key: string]: unknown } }) => (
         <div>{String(value)}</div>
@@ -45,4 +42,4 @@ export const ListRow = BEM(styles).row(({
       );
     })}
   </div>
-));
+);

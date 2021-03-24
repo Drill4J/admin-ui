@@ -1,4 +1,4 @@
-/*! tailwindcss v2.0.3 | MIT License | https://tailwindcss.com */
+/*! tailwindcss v2.0.4 | MIT License | https://tailwindcss.com */
 
 /*! modern-normalize v1.0.0 | MIT License | https://github.com/sindresorhus/modern-normalize */
 
@@ -11567,6 +11567,14 @@ button:focus {
   max-width: 80px;
 }
 
+.max-w-200px {
+  max-width: 200px;
+}
+
+.max-w-280px {
+  max-width: 280px;
+}
+
 .min-h-16px {
   min-height: 16px;
 }
@@ -11617,6 +11625,22 @@ button:focus {
 
 .min-w-2\/3 {
   min-width: 66%;
+}
+
+.min-w-48px {
+  min-width: 48px;
+}
+
+.min-w-154px {
+  min-width: 154px;
+}
+
+.min-w-200px {
+  min-width: 200px;
+}
+
+.min-w-850px {
+  min-width: 850px;
 }
 
 .object-contain {
@@ -39346,6 +39370,14 @@ button:focus {
     max-width: 80px;
   }
 
+  .sm\:max-w-200px {
+    max-width: 200px;
+  }
+
+  .sm\:max-w-280px {
+    max-width: 280px;
+  }
+
   .sm\:min-h-16px {
     min-height: 16px;
   }
@@ -39396,6 +39428,22 @@ button:focus {
 
   .sm\:min-w-2\/3 {
     min-width: 66%;
+  }
+
+  .sm\:min-w-48px {
+    min-width: 48px;
+  }
+
+  .sm\:min-w-154px {
+    min-width: 154px;
+  }
+
+  .sm\:min-w-200px {
+    min-width: 200px;
+  }
+
+  .sm\:min-w-850px {
+    min-width: 850px;
   }
 
   .sm\:object-contain {
@@ -67019,6 +67067,14 @@ button:focus {
     max-width: 80px;
   }
 
+  .md\:max-w-200px {
+    max-width: 200px;
+  }
+
+  .md\:max-w-280px {
+    max-width: 280px;
+  }
+
   .md\:min-h-16px {
     min-height: 16px;
   }
@@ -67069,6 +67125,22 @@ button:focus {
 
   .md\:min-w-2\/3 {
     min-width: 66%;
+  }
+
+  .md\:min-w-48px {
+    min-width: 48px;
+  }
+
+  .md\:min-w-154px {
+    min-width: 154px;
+  }
+
+  .md\:min-w-200px {
+    min-width: 200px;
+  }
+
+  .md\:min-w-850px {
+    min-width: 850px;
   }
 
   .md\:object-contain {
@@ -94692,6 +94764,14 @@ button:focus {
     max-width: 80px;
   }
 
+  .lg\:max-w-200px {
+    max-width: 200px;
+  }
+
+  .lg\:max-w-280px {
+    max-width: 280px;
+  }
+
   .lg\:min-h-16px {
     min-height: 16px;
   }
@@ -94742,6 +94822,22 @@ button:focus {
 
   .lg\:min-w-2\/3 {
     min-width: 66%;
+  }
+
+  .lg\:min-w-48px {
+    min-width: 48px;
+  }
+
+  .lg\:min-w-154px {
+    min-width: 154px;
+  }
+
+  .lg\:min-w-200px {
+    min-width: 200px;
+  }
+
+  .lg\:min-w-850px {
+    min-width: 850px;
   }
 
   .lg\:object-contain {
@@ -122365,6 +122461,14 @@ button:focus {
     max-width: 80px;
   }
 
+  .xl\:max-w-200px {
+    max-width: 200px;
+  }
+
+  .xl\:max-w-280px {
+    max-width: 280px;
+  }
+
   .xl\:min-h-16px {
     min-height: 16px;
   }
@@ -122415,6 +122519,22 @@ button:focus {
 
   .xl\:min-w-2\/3 {
     min-width: 66%;
+  }
+
+  .xl\:min-w-48px {
+    min-width: 48px;
+  }
+
+  .xl\:min-w-154px {
+    min-width: 154px;
+  }
+
+  .xl\:min-w-200px {
+    min-width: 200px;
+  }
+
+  .xl\:min-w-850px {
+    min-width: 850px;
   }
 
   .xl\:object-contain {
@@ -150038,6 +150158,14 @@ button:focus {
     max-width: 80px;
   }
 
+  .\32xl\:max-w-200px {
+    max-width: 200px;
+  }
+
+  .\32xl\:max-w-280px {
+    max-width: 280px;
+  }
+
   .\32xl\:min-h-16px {
     min-height: 16px;
   }
@@ -150088,6 +150216,22 @@ button:focus {
 
   .\32xl\:min-w-2\/3 {
     min-width: 66%;
+  }
+
+  .\32xl\:min-w-48px {
+    min-width: 48px;
+  }
+
+  .\32xl\:min-w-154px {
+    min-width: 154px;
+  }
+
+  .\32xl\:min-w-200px {
+    min-width: 200px;
+  }
+
+  .\32xl\:min-w-850px {
+    min-width: 850px;
   }
 
   .\32xl\:object-contain {

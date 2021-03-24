@@ -13,48 +13,38 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { BEM } from '@redneckz/react-bem-helper';
 import { Icons } from '@drill4j/ui-kit';
+import 'twin.macro';
 
 import { percentFormatter } from 'utils';
 
-import styles from './condition.module.scss';
-
 interface Props {
-  className?: string;
   passed: boolean;
   type: 'coverage' | 'risks' | 'testsToRun';
   children: React.ReactNode;
   thresholdValue: string;
 }
 
-const condition = BEM(styles);
-
-export const Condition = condition(
-  ({
-    className, passed, type, children, thresholdValue,
-  }: Props) => {
-    const title = {
-      coverage: 'Build coverage',
-      risks: 'Risks',
-      testsToRun: 'Suggested “Tests to run” executed',
-    };
-    return (
-      <div className={className}>
-        {passed ? <Passed width={16} height={16} /> : <Failed width={16} height={16} />}
-        <Content>
-          {title[type]}
-          {children}
-        </Content>
-        <ThresholdValue data-test={`quality-gate-status:condition:${type}`}>
-          {type === 'coverage' ? `${percentFormatter(Number(thresholdValue))}%` : thresholdValue }
-        </ThresholdValue>
+export const Condition = ({
+  passed, type, children, thresholdValue,
+}: Props) => {
+  const title = {
+    coverage: 'Build coverage',
+    risks: 'Risks',
+    testsToRun: 'Suggested “Tests to run” executed',
+  };
+  return (
+    <div tw="flex items-center">
+      {passed
+        ? <Icons.Checkbox width={16} height={16} tw="text-green-default" />
+        : <Icons.Warning width={16} height={16} tw="text-red-default" />}
+      <div tw="flex flex-col flex-1 mr-4 ml-4 text-14 leading-16">
+        {title[type]}
+        {children}
       </div>
-    );
-  },
-);
-
-const Passed = condition.passed(Icons.Checkbox);
-const Failed = condition.failed(Icons.Warning);
-const Content = condition.content('div');
-const ThresholdValue = condition.thresholdValue('span');
+      <span tw="font-bold" data-test={`quality-gate-status:condition:${type}`}>
+        {type === 'coverage' ? `${percentFormatter(Number(thresholdValue))}%` : thresholdValue }
+      </span>
+    </div>
+  );
+};

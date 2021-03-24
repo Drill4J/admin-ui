@@ -13,110 +13,102 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { BEM } from '@redneckz/react-bem-helper';
 import { Icons, Tooltip } from '@drill4j/ui-kit';
 import { Field } from 'react-final-form';
+import { styled } from 'twin.macro';
 
 import { Fields } from 'forms/fields';
 import { ConditionSettingByType } from 'types/quality-gate-type';
 import { parseCoverage, inputLengthRestriction } from 'utils';
 import { ThresholdValueField } from './threshold-value-field';
 
-import styles from './quality-gate-settings.module.scss';
-
 interface Props {
-  className?: string;
   conditionSettingByType: ConditionSettingByType;
 }
 
-const qualityGateSettings = BEM(styles);
+const GridWrapper = styled.div`
+  display: grid;
+  grid-template-columns: 32px 244px 60px 16px;
+  grid-template-rows: max-content;
+`;
 
-export const QualityGateSettings = qualityGateSettings(
-  ({ className, conditionSettingByType }: Props) => (
-    <div className={className}>
-      <Conditions>
-        <GridWrapper>
-          <Field
-            name="coverage.enabled"
-            type="checkbox"
-            component={Checkbox}
-          />
-          <Field
-            name="coverage.condition.value"
-            component={ThresholdValueField}
-            disabled={!conditionSettingByType?.coverage?.enabled}
-            parse={parseCoverage}
-          >
-            <Condtion data-test="quality-gate-settings:condtion:coverage">
-              Build coverage
-              <CondtionStatus data-test="quality-gate-settings:condtion-status:coverage">
-                Minimum percentage of build covered by tests
-              </CondtionStatus>
-            </Condtion>
-          </Field>
-          <Percentage>%</Percentage>
-        </GridWrapper>
-        <GridWrapper>
-          <Field
-            name="risks.enabled"
-            type="checkbox"
-            component={Checkbox}
-          />
-          <Field
-            name="risks.condition.value"
-            component={ThresholdValueField}
-            disabled={!conditionSettingByType?.risks?.enabled}
-            parse={(value: string) => inputLengthRestriction(value, 7)}
-          >
-            <Condtion>
-              <div className="flex items-center w-full" data-test="quality-gate-settings:condtion:risks">
-                Risks
-                <RisksInfoIcon
-                  message={(
-                    <div className="flex flex-col items-center w-full">
-                      <span>Try to cover all of your risks in current build.</span>
-                      <span>Uncovered risks won’t be counted in your next build.</span>
-                    </div>
-                  )}
-                >
-                  <Icons.Info width={12} height={12} data-test="quality-gate-settings:info-icon" />
-                </RisksInfoIcon>
-              </div>
-              <CondtionStatus data-test="quality-gate-settings:condtion-status:risks">
-                Maximum number of risks in the build
-              </CondtionStatus>
-            </Condtion>
-          </Field>
-        </GridWrapper>
-        <GridWrapper>
-          <Field
-            name="tests.enabled"
-            type="checkbox"
-            component={Checkbox}
-          />
-          <Field
-            name="tests.condition.value"
-            component={ThresholdValueField}
-            disabled={!conditionSettingByType?.tests?.enabled}
-            parse={(value: string) => inputLengthRestriction(value, 7)}
-          >
-            <Condtion data-test="quality-gate-settings:condtion:tests">
-              Suggested “Tests to run” executed
-              <CondtionStatus data-test="quality-gate-settings:condtion-status:tests">
-                Maximum number of tests to run in the build
-              </CondtionStatus>
-            </Condtion>
-          </Field>
-        </GridWrapper>
-      </Conditions>
-    </div>
-  ),
+export const QualityGateSettings = ({ conditionSettingByType }: Props) => (
+  <div tw="h-48 pr-6 pl-6 space-y-6 mt-6">
+    <GridWrapper>
+      <Field
+        tw="self-start mt-2"
+        name="coverage.enabled"
+        type="checkbox"
+        component={Fields.Checkbox}
+      />
+      <Field
+        name="coverage.condition.value"
+        component={ThresholdValueField}
+        disabled={!conditionSettingByType?.coverage?.enabled}
+        parse={parseCoverage}
+      >
+        <div tw="text-14 leading-16 text-monochrome-black" data-test="quality-gate-settings:condtion:coverage">
+          Build coverage
+          <div tw="text-10 leading-16 text-monochrome-default" data-test="quality-gate-settings:condtion-status:coverage">
+            Minimum percentage of build covered by tests
+          </div>
+        </div>
+      </Field>
+      <div tw="justify-self-end mt-2 text-14 leading-16 text-monochrome-default">%</div>
+    </GridWrapper>
+    <GridWrapper>
+      <Field
+        tw="self-start mt-2"
+        name="risks.enabled"
+        type="checkbox"
+        component={Fields.Checkbox}
+      />
+      <Field
+        name="risks.condition.value"
+        component={ThresholdValueField}
+        disabled={!conditionSettingByType?.risks?.enabled}
+        parse={(value: string) => inputLengthRestriction(value, 7)}
+      >
+        <div tw="text-14 leading-16 text-monochrome-black">
+          <div className="flex items-center gap-x-2 w-full" data-test="quality-gate-settings:condtion:risks">
+            Risks
+            <Tooltip
+              message={(
+                <div className="flex flex-col items-center w-full">
+                  <span>Try to cover all of your risks in current build.</span>
+                  <span>Uncovered risks won’t be counted in your next build.</span>
+                </div>
+              )}
+            >
+              <Icons.Info tw="text-monochrome-default" width={12} height={12} data-test="quality-gate-settings:info-icon" />
+            </Tooltip>
+          </div>
+          <div tw="text-10 leading-16 text-monochrome-default" data-test="quality-gate-settings:condtion-status:risks">
+            Maximum number of risks in the build
+          </div>
+        </div>
+      </Field>
+    </GridWrapper>
+    <GridWrapper>
+      <Field
+        tw="self-start mt-2"
+        name="tests.enabled"
+        type="checkbox"
+        component={Fields.Checkbox}
+      />
+      <Field
+        name="tests.condition.value"
+        component={ThresholdValueField}
+        disabled={!conditionSettingByType?.tests?.enabled}
+        parse={(value: string) => inputLengthRestriction(value, 7)}
+      >
+        <div tw="text-14 leading-16 text-monochrome-black" data-test="quality-gate-settings:condtion:tests">
+          Suggested “Tests to run” executed
+          <div tw="text-10 leading-16 text-monochrome-default" data-test="quality-gate-settings:condtion-status:tests">
+            Maximum number of tests to run in the build
+          </div>
+        </div>
+      </Field>
+    </GridWrapper>
+  </div>
 );
-
-const Conditions = qualityGateSettings.conditions('div');
-const GridWrapper = qualityGateSettings.gridWrapper('div');
-const Checkbox = qualityGateSettings.checkbox(Fields.Checkbox);
-const Condtion = qualityGateSettings.condtion('div');
-const CondtionStatus = qualityGateSettings.condtionStatus('div');
-const Percentage = qualityGateSettings.percentage('div');
-const RisksInfoIcon = qualityGateSettings.risksInfoIcon(Tooltip);

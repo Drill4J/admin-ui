@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { BEM, tag, div } from '@redneckz/react-bem-helper';
 import { format } from 'timeago.js';
 import { Icons, useHover } from '@drill4j/ui-kit';
 import tw, { styled } from 'twin.macro';
@@ -21,14 +20,10 @@ import tw, { styled } from 'twin.macro';
 import { Notification as NotificationType } from 'types/notificaiton';
 import { readNotification, deleteNotification } from '../api';
 
-import styles from './notification.module.scss';
-
 interface Props {
   notification: NotificationType;
   onError?: (message: string) => void;
 }
-
-const notification = BEM(styles);
 
 const Content = styled.div`
   ${tw`flex flex-col justify-center gap-y-2 px-6 h-20`}
@@ -69,7 +64,7 @@ const DeleteNotificationButton = styled.div`
   ${tw`h-4 cursor-pointer text-red-default hover:text-red-medium-tint active:text-red-shade`}
 `;
 
-export const Notification = notification(({
+export const Notification = ({
   notification: {
     agentId, createdAt, read, id = '', message: { currentId: buildVersion } = {},
   },
@@ -129,4 +124,4 @@ export const Notification = notification(({
       </Content>
     </div>
   );
-});
+};
