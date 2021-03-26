@@ -32,7 +32,7 @@ export const ServiceGroupHeader = ({ serviceGroup: { name, summaries = [] } = {}
     <div tw="flex items-center w-full h-28">
       <LogoSvg tw="ml-6" />
       <div tw="flex items-center justify-between w-full h-full mx-6">
-        <div tw="flex flex-col">
+        <div tw="flex flex-col gap-y-1">
           <div tw="text-32 leading-40">{name}</div>
           <div tw="text-14 leading-20">
             Agents&nbsp;<span tw="text-monochrome-default">{summaries.length}</span>
