@@ -61,7 +61,7 @@ export const Wizard = ({
   return (
     <div>
       <Form
-        initialValues={{ ...initialValues, availablePlugins }}
+        initialValues={{ ...initialValues, availablePlugins, plugins: ['test2code'] }}
         keepDirtyOnReinitialize
         onSubmit={async (values) => {
           try {
@@ -115,8 +115,8 @@ export const Wizard = ({
                     disabled={submitting || invalid}
                     data-test="wizard:continue-button"
                   >
-                    <span>Continue</span>
-                    <Icons.Expander width={8} height={14} />
+                    Continue
+                    <Icons.Expander tw="text-monochrome-white" width={8} height={14} />
                   </Button>
                 ) : (
                   <Button
