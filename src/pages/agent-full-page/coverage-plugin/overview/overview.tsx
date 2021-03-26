@@ -18,10 +18,13 @@ import { Icons } from '@drill4j/ui-kit';
 import tw, { styled } from 'twin.macro';
 
 import { TabsPanel, Tab } from 'components';
-import { useActiveScope, useAgent, useBuildVersion } from 'hooks';
+import {
+  useActiveScope, useAgent, useBuildVersion,
+} from 'hooks';
 import { TableActionsProvider } from 'modules';
 import { ParentBuild } from 'types/parent-build';
 import { AGENT_STATUS } from 'common/constants';
+import { BuildCoverage } from 'types/build-coverage';
 import { CoveragePluginHeader } from '../coverage-plugin-header';
 import { CoverageDetails } from '../coverage-details';
 import { BuildProjectMethods } from './build-project-methods';
@@ -45,6 +48,7 @@ export const Overview = () => {
     byTestType: previousBuildTests = [],
   } = usePreviousBuildCoverage(previousBuildVersion) || {};
   const scope = useActiveScope();
+  const buildCoverage = useBuildVersion<BuildCoverage>('/build/coverage') || {};
 
   return (
     <div>
@@ -74,6 +78,7 @@ export const Overview = () => {
                 previousBuildInfo={{ previousBuildVersion, previousBuildCodeCoverage }}
                 loading={loading}
                 status={status}
+                buildCoverage={buildCoverage}
               />
             )
             : <BuildProjectTests />}
@@ -87,6 +92,7 @@ export const Overview = () => {
               topic="/build/coverage/packages"
               associatedTestsTopic="/build/associated-tests"
               classesTopicPrefix="build"
+              finishedScopesCount={buildCoverage?.finishedScopesCount}
             />
           ) : <BuildTests />}
         </TableActionsProvider>

@@ -17,7 +17,6 @@ import { Icons } from '@drill4j/ui-kit';
 import tw, { styled } from 'twin.macro';
 
 import { percentFormatter } from 'utils';
-import { CellProps } from '../table/table-types';
 
 const IconWrapper = styled.div(({ type }: { type?: 'success' | 'error' | 'warning' }) => [
   tw`flex items-center`,
@@ -26,11 +25,16 @@ const IconWrapper = styled.div(({ type }: { type?: 'success' | 'error' | 'warnin
   type === 'success' && tw`text-monochrome-default`,
 ]);
 
-export const CoverageCell = ({ value = 0 }: CellProps<number, unknown>) => (
-  <div tw="inline-flex items-center gap-4 font-bold">
+const Content = styled.div(({ finishedScopesCount } : { finishedScopesCount?: number }) => [
+  tw`inline-flex items-center gap-4 font-bold`,
+  finishedScopesCount === 0 && tw`pr-8`,
+]);
+
+export const CoverageCell = ({ value = 0, finishedScopesCount = 0 }: { value: number, finishedScopesCount?: number}) => (
+  <Content finishedScopesCount={finishedScopesCount}>
     <span data-test="coverage-cell:coverage">{`${percentFormatter(value)}%`}</span>
-    {getCoverageIcon(value)}
-  </div>
+    {Boolean(finishedScopesCount) && getCoverageIcon(value)}
+  </Content>
 );
 
 function getCoverageIcon(coverage: number) {

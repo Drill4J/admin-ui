@@ -13,7 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { useRef, useState } from 'react';
+import {
+  useRef, useState,
+} from 'react';
 import { Icons } from '@drill4j/ui-kit';
 import 'twin.macro';
 
@@ -34,9 +36,12 @@ interface Props {
   topic: string;
   associatedTestsTopic: string;
   classesTopicPrefix: string;
+  finishedScopesCount?: number;
 }
 
-export const CoverageDetails = ({ associatedTestsTopic, classesTopicPrefix, topic }: Props) => {
+export const CoverageDetails = ({
+  associatedTestsTopic, classesTopicPrefix, topic, finishedScopesCount,
+}: Props) => {
   const [selectedAssocTests, setSelectedAssocTests] = useState<null | {
     id: string,
     assocTestsCount: number,
@@ -53,7 +58,10 @@ export const CoverageDetails = ({ associatedTestsTopic, classesTopicPrefix, topi
   const visibleElementsCount = useVisibleElementsCount(ref, 10, 10);
   const [searchQuery] = search;
   const expandedColumns = [
-    <Column name="coverage" Cell={CoverageCell} />,
+    <Column
+      name="coverage"
+      Cell={({ value = 0 }) => <CoverageCell value={value as number} finishedScopesCount={finishedScopesCount} />}
+    />,
     <Column name="totalMethodsCount" testContext="total-methods-count" />,
     <Column name="coveredMethodsCount" testContext="covered-methods-count" />,
   ];
@@ -158,7 +166,7 @@ export const CoverageDetails = ({ associatedTestsTopic, classesTopicPrefix, topi
                 Coverage, %<Icons.Checkbox tw="ml-4 min-w-16px text-monochrome-default" width={16} height={16} />
               </div>
             )}
-            Cell={CoverageCell}
+            Cell={({ value = 0 }) => <CoverageCell value={value as number} finishedScopesCount={finishedScopesCount} />}
           />
           <Column name="totalMethodsCount" label="Methods total" testContext="total-methods-count" />
           <Column name="coveredMethodsCount" label="Methods covered" testContext="covered-methods-count" />
