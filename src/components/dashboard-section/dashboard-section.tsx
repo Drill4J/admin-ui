@@ -43,6 +43,6 @@ export const DashboardSection = ({
         {additionalInfo}
       </div>
     </div>
-    <div tw="w-1/2 flex justify-end cursor-pointer">{graph}</div>
+    <div tw="w-1/2 flex justify-end">{graph}</div>
   </div>
 );
