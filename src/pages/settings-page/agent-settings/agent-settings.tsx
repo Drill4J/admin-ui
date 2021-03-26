@@ -18,6 +18,7 @@ import { Icons } from '@drill4j/ui-kit';
 import {
   useParams, Prompt, Switch, Route, useHistory,
 } from 'react-router-dom';
+import 'twin.macro';
 
 import { TabsPanel, Tab, PageHeader } from 'components';
 import { useAgent } from 'hooks';
@@ -25,7 +26,6 @@ import { PluginsSettingsTab, SystemSettingsForm } from 'modules';
 import { GeneralSettingsForm } from './general-settings-form';
 import { JsSystemSettingsForm } from './js-system-settings-form';
 import { AgentStatusToggle } from '../../agents-page/agent-status-toggle';
-import 'twin.macro';
 import { UnSaveChangeModal } from '../un-save-changes-modal';
 
 export const AgentSettings = () => {
@@ -47,17 +47,18 @@ export const AgentSettings = () => {
           </div>
         )}
       />
-      <TabsPanel
-        tw="mx-6"
-        activeTab={selectedTab}
-        onSelect={(tab) => (pristineSettings
-          ? push(`/agents/agent/${id}/settings/${tab}`, { pristineSettings })
-          : setNextLocation(`/agents/agent/${id}/settings/${tab}`))}
-      >
-        <Tab name="general">General</Tab>
-        <Tab name="system">System</Tab>
-        <Tab name="plugins">Plugins</Tab>
-      </TabsPanel>
+      <div tw="px-6">
+        <TabsPanel
+          activeTab={selectedTab}
+          onSelect={(tab) => (pristineSettings
+            ? push(`/agents/agent/${id}/settings/${tab}`, { pristineSettings })
+            : setNextLocation(`/agents/agent/${id}/settings/${tab}`))}
+        >
+          <Tab name="general">General</Tab>
+          <Tab name="system">System</Tab>
+          <Tab name="plugins">Plugins</Tab>
+        </TabsPanel>
+      </div>
       <Switch>
         <Route
           path="/agents/agent/:id/settings/general"

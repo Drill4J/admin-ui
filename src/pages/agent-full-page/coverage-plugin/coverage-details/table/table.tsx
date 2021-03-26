@@ -63,8 +63,8 @@ export const Table = <T, >({
 
   return (
     <>
+      {!withoutHeader && <TableHeader columns={columns} expandedColumnsLength={expandedColumns?.length} />}
       <div tw="w-full text-14 leading-16 text-monochrome-black">
-        {!withoutHeader && <TableHeader columns={columns} expandedColumnsLength={expandedColumns?.length} />}
         {data.length > 0 && (
           data.map((item, index) => (
             <TableRow

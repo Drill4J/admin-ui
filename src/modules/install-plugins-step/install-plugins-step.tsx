@@ -12,7 +12,8 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- */
+*/
+import { useEffect } from 'react';
 import { Field } from 'react-final-form';
 import { Icons } from '@drill4j/ui-kit';
 import 'twin.macro';
@@ -43,25 +44,37 @@ export const InstallPluginsStep = ({ infoPanel, formValues: { plugins = [], avai
           type="checkbox"
           value={id}
           key={id}
-          render={({ input, meta }) => (
-            <PluginListEntry
-              description={description}
-              input={input}
-              meta={meta}
-              icon={name as keyof typeof Icons}
-              onClick={() => input.onChange({
+          render={({ input, meta }) => {
+            useEffect(() => {
+              const atLeastOnePluginSelected = plugins.length === 1;
+              if (atLeastOnePluginSelected) return;
+              input.onChange({
                 target: {
                   type: 'checkbox',
-                  checked: !input.checked,
+                  checked: true,
                 },
-              })}
-            >
-              <div tw="flex items-center w-full mb-3 text-14 leading-20">
-                <div tw="font-bold text-monochrome-black">{name}&nbsp;</div>
-                {version && <div tw="text-monochrome-default">({version})</div>}
-              </div>
-            </PluginListEntry>
-          )}
+              });
+            }, []);
+            return (
+              <PluginListEntry
+                description={description}
+                input={input}
+                meta={meta}
+                icon={name as keyof typeof Icons}
+                onClick={() => input.onChange({
+                  target: {
+                    type: 'checkbox',
+                    checked: !input.checked,
+                  },
+                })}
+              >
+                <div tw="flex items-center w-full mb-3 text-14 leading-20">
+                  <div tw="font-bold text-monochrome-black">{name}&nbsp;</div>
+                  {version && <div tw="text-monochrome-default">({version})</div>}
+                </div>
+              </PluginListEntry>
+            );
+          }}
         />
       ))}
     </div>

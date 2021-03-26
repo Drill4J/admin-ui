@@ -34,6 +34,7 @@ interface Props {
   previousBuildInfo?: PreviousBuildInfo;
   loading?: boolean;
   status?: AgentStatus;
+  buildCoverage: BuildCoverage;
 }
 
 export const BuildProjectMethods = ({
@@ -41,10 +42,9 @@ export const BuildProjectMethods = ({
   previousBuildInfo,
   status,
   loading,
+  buildCoverage,
 }: Props) => {
   const [risksFilter, setRisksFilter] = useState<string>('');
-
-  const buildCoverage = useBuildVersion<BuildCoverage>('/build/coverage') || {};
   const {
     all, new: newMethods, modified, deleted, risks,
   } = useBuildVersion<Methods>('/build/methods') || {};

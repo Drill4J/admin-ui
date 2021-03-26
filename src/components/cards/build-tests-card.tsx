@@ -37,6 +37,7 @@ export const BuildTestsCard = ({ label, testTypeSummary }: Props) => {
         data-test={`build-tests-card:percentage:${label}`}
       >
         {percentFormatter(percentage)}%
+        <span tw="text-12 leading-16 ml-1 text-monochrome-default">methods covered</span>
       </span>
     </Card>
   );
