@@ -23,7 +23,7 @@ interface Props {
 }
 
 const Value = styled.span(({ clickable }: {clickable: boolean}) => [
-  tw`flex items-center text-20 text-monochrome-black`,
+  tw`inline-flex items-center text-20 text-monochrome-black`,
   clickable && tw`cursor-pointer hover:text-blue-default active:text-blue-shade`,
 ]);
 
