@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import 'twin.macro';
+import tw from 'twin.macro';
 
 import {
   useTableActionsDispatch, setSort, useTableActionsState,
@@ -35,7 +35,11 @@ export const TableHeader = <T, >({ columns, expandedColumnsLength }: Props<T>) =
     : `2fr repeat(${columns.length - 1}, 1fr)`;
   return (
     <div
-      tw="grid items-center h-13 text-14 leading-20 font-bold border-b border-t border-monochrome-black"
+      css={[
+        tw`sticky -top-1 z-40 bg-monochrome-white`,
+        tw`grid items-center h-13`,
+        tw`text-14 leading-20 font-bold border-b border-t border-monochrome-black`,
+      ]}
       style={{ gridTemplateColumns }}
     >
       {columns.map((column) => {
