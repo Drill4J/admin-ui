@@ -70,12 +70,7 @@ export const ManagementNewSession = ({
           name="sessionId"
           component={Fields.Input}
           placeholder="Enter session ID"
-          parse={(value = '') => {
-            if (value[value.length - 1] === ' ' && !(value.length > 0 && value[0] === ' ')) {
-              return value;
-            }
-            return removeUnnecessarySpaces(value);
-          }}
+          parse={removeUnnecessarySpaces}
         />
       </FormGroup>
       <Field
