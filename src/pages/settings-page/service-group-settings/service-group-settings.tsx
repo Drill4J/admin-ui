@@ -43,17 +43,18 @@ export const ServiceGroupSettings = () => {
           </div>
         )}
       />
-      <TabsPanel
-        tw="mx-6"
-        activeTab={selectedTab}
-        onSelect={(tab) => (pristineSettings
-          ? push(`/agents/service-group/${id}/settings/${tab}`, { pristineSettings })
-          : setNextLocation(`/agents/service-group/${id}/settings/${tab}`))}
-      >
-        <Tab name="general">General</Tab>
-        <Tab name="system">System</Tab>
-        <Tab name="plugins">Plugins</Tab>
-      </TabsPanel>
+      <div tw="px-6">
+        <TabsPanel
+          activeTab={selectedTab}
+          onSelect={(tab) => (pristineSettings
+            ? push(`/agents/service-group/${id}/settings/${tab}`, { pristineSettings })
+            : setNextLocation(`/agents/service-group/${id}/settings/${tab}`))}
+        >
+          <Tab name="general">General</Tab>
+          <Tab name="system">System</Tab>
+          <Tab name="plugins">Plugins</Tab>
+        </TabsPanel>
+      </div>
       <Switch>
         <Route
           path="/agents/service-group/:id/settings/general"
