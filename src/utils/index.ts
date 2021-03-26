@@ -31,3 +31,4 @@ export { inputLengthRestriction } from './input-length-restriction';
 export { convertToPercentage } from './convert-to-percentage';
 export { getDuration } from './get-duration';
 export { dotsAndSlashesToSlash } from './dots-and-slashes-to-slash';
+export { removeUnnecessarySpaces } from './remove-unnecessary-spaces';
