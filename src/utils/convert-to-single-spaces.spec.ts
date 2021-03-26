@@ -13,15 +13,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { removeUnnecessarySpaces } from './remove-unnecessary-spaces';
+import { convertToSingleSpaces } from './convert-to-single-spaces';
 
-describe('removeUnnecessarySpaces', () => {
-  it('should trim the string', () => {
-    expect(removeUnnecessarySpaces('   foobarbuzz   ')).toBe('foobarbuzz');
+describe('convertToSingleSpaces', () => {
+  it('should trim left the string', () => {
+    expect(convertToSingleSpaces('   foobarbuzz')).toBe('foobarbuzz');
   })
 
-  it('should trim the string and leave only one space between the words', () => {
-    expect(removeUnnecessarySpaces('   foo    bar foo   ')).toBe('foo bar foo');
-    expect(removeUnnecessarySpaces(' foo bar buzz ')).toBe('foo bar buzz');
+  it('should leave only one space between words', () => {
+    expect(convertToSingleSpaces('foo    bar')).toBe('foo bar');
+  })
+
+  it('should leave only one space after words', () => {
+    expect(convertToSingleSpaces('foo    ')).toBe('foo ');
   })
 });

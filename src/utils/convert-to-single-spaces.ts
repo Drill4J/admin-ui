@@ -13,9 +13,4 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-export const removeUnnecessarySpaces = (value: string): string => {
-  if (value[value.length - 1] === ' ' && !(value.length > 0 && value[0] === ' ')) {
-    return value;
-  }
-  return value.split(' ').filter(Boolean).join(' ');
-};
+export const convertToSingleSpaces = (value = ''): string => value.trimLeft().split(/ +/).join(' ');
