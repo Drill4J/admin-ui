@@ -70,7 +70,7 @@ export const MethodsList = ({ methods: { coveredMethods, covered } }: Props) => 
       />
       <div tw="h-full w-full mb-4 overflow-y-hidden">
         <div tw="flex flex-col h-full text-14">
-          <div ref={node} style={{ height: '100%' }}>
+          <div ref={node} style={{ height: '95%' }}>
             <VirtualList
               itemSize={56}
               height={Math.ceil(methodsListHeight)}
