@@ -25,15 +25,15 @@ const IconWrapper = styled.div(({ type }: { type?: 'success' | 'error' | 'warnin
   type === 'success' && tw`text-monochrome-default`,
 ]);
 
-const Content = styled.div(({ finishedScopesCount } : { finishedScopesCount?: number }) => [
+const Content = styled.div(({ showCoverageIcon } : { showCoverageIcon: boolean }) => [
   tw`inline-flex items-center gap-4 font-bold`,
-  finishedScopesCount === 0 && tw`pr-8`,
+  !showCoverageIcon && tw`pr-8`,
 ]);
 
-export const CoverageCell = ({ value = 0, finishedScopesCount = 0 }: { value: number, finishedScopesCount?: number}) => (
-  <Content finishedScopesCount={finishedScopesCount}>
+export const CoverageCell = ({ value = 0, showCoverageIcon }: { value: number, showCoverageIcon: boolean }) => (
+  <Content showCoverageIcon={showCoverageIcon}>
     <span data-test="coverage-cell:coverage">{`${percentFormatter(value)}%`}</span>
-    {Boolean(finishedScopesCount) && getCoverageIcon(value)}
+    {showCoverageIcon && getCoverageIcon(value)}
   </Content>
 );
 

@@ -26,23 +26,25 @@ const Content = styled.div`
   grid-template-rows: repeat(2, max-content);
 `;
 
-const Name = styled.div(({ onClick }: { onClick?: () => void }) => [
+const Name = styled.span(({ onClick }: { onClick?: () => void }) => [
   tw`font-light text-24`,
   onClick && tw`font-bold text-14 cursor-pointer`,
 ]);
 
 export const TestToCodeNameCell = ({ name, additionalInformation, onClick }: Props) => (
   <Content>
-    <Name
-      className="text-ellipsis link"
-      onClick={onClick}
-      data-test="test-to-code-name-cell:name-cell"
-      title={name}
-    >
-      {name}
-    </Name>
+    <div tw="text-ellipsis text-blue-default">
+      <Name
+        tw="w-max link"
+        onClick={onClick}
+        data-test="test-to-code-name-cell:name-cell"
+        title={name}
+      >
+        {name}
+      </Name>
+    </div>
     <div
-      className="text-ellipsis max-w-2/3 mt-1 text-12"
+      tw="text-ellipsis max-w-1/2 mt-1 text-12"
       data-test="test-to-code-name-cell:additional-information"
       title={additionalInformation}
     >

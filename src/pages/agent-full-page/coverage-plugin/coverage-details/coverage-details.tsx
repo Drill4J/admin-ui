@@ -36,11 +36,11 @@ interface Props {
   topic: string;
   associatedTestsTopic: string;
   classesTopicPrefix: string;
-  finishedScopesCount?: number;
+  showCoverageIcon: boolean;
 }
 
 export const CoverageDetails = ({
-  associatedTestsTopic, classesTopicPrefix, topic, finishedScopesCount,
+  associatedTestsTopic, classesTopicPrefix, topic, showCoverageIcon,
 }: Props) => {
   const [selectedAssocTests, setSelectedAssocTests] = useState<null | {
     id: string,
@@ -60,7 +60,7 @@ export const CoverageDetails = ({
   const expandedColumns = [
     <Column
       name="coverage"
-      Cell={({ value = 0 }) => <CoverageCell value={value as number} finishedScopesCount={finishedScopesCount} />}
+      Cell={({ value = 0 }) => <CoverageCell value={value as number} showCoverageIcon={showCoverageIcon} />}
     />,
     <Column name="totalMethodsCount" testContext="total-methods-count" />,
     <Column name="coveredMethodsCount" testContext="covered-methods-count" />,
@@ -166,7 +166,7 @@ export const CoverageDetails = ({
                 Coverage, %<Icons.Checkbox tw="ml-4 min-w-16px text-monochrome-default" width={16} height={16} />
               </div>
             )}
-            Cell={({ value = 0 }) => <CoverageCell value={value as number} finishedScopesCount={finishedScopesCount} />}
+            Cell={({ value = 0 }) => <CoverageCell value={value as number} showCoverageIcon={showCoverageIcon} />}
           />
           <Column name="totalMethodsCount" label="Methods total" testContext="total-methods-count" />
           <Column name="coveredMethodsCount" label="Methods covered" testContext="covered-methods-count" />

@@ -92,7 +92,7 @@ export const Overview = () => {
               topic="/build/coverage/packages"
               associatedTestsTopic="/build/associated-tests"
               classesTopicPrefix="build"
-              finishedScopesCount={buildCoverage?.finishedScopesCount}
+              showCoverageIcon={Boolean(buildCoverage?.finishedScopesCount)}
             />
           ) : <BuildTests />}
         </TableActionsProvider>

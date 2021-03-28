@@ -57,9 +57,8 @@ export const ScopeInfo = () => {
   const dispatch = useCoveragePluginDispatch();
   const scope = useBuildVersion<ActiveScope>(`/build/scopes/${scopeId}`);
   const {
-    name = '', active = false, enabled = false, started = 0, finished = 0,
+    name = '', active = false, enabled = false, started = 0, finished = 0, sessionsFinished,
   } = scope || {};
-
   const [selectedTab, setSelectedTab] = useState('coverage');
   const menuActions = [
     !active && {
@@ -159,6 +158,7 @@ export const ScopeInfo = () => {
                     topic={`/build/scopes/${scopeId}/coverage/packages`}
                     associatedTestsTopic={`/build/scopes/${scopeId}/associated-tests`}
                     classesTopicPrefix={`build/scopes/${scopeId}`}
+                    showCoverageIcon={loading || Boolean(sessionsFinished)}
                   />
                 </>
               ) : (
