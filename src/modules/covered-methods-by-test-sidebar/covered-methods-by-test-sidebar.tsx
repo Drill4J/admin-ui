@@ -15,7 +15,7 @@
  */
 import { Modal } from '@drill4j/ui-kit';
 
-import { MethodCoveredByTest } from 'types/method-covered-by-test';
+import { MethodsCoveredByTestSummary } from 'types/methods-covered-by-test-summary';
 import { useBuildVersion } from 'hooks';
 import tw, { styled } from 'twin.macro';
 import { capitalize } from 'utils';
@@ -36,13 +36,9 @@ const MethodInfoLabel = styled.div(tw`min-w-32px text-left text-14 leading-32 fo
 export const CoveredMethodsByTestSidebar = ({
   isOpen, onToggle, testInfo, topicCoveredMethodsByTest,
 }: Props) => {
-  const coveredMethodsByTest = useBuildVersion<MethodCoveredByTest[]>(topicCoveredMethodsByTest) || [];
-  const filteredMethods = coveredMethodsByTest.find(({ id }) => id === testInfo.id) || {};
-  const {
-    testName = '',
-    testType = '',
-  } = filteredMethods;
-  const showSceleton = !coveredMethodsByTest.length;
+  const summary = useBuildVersion<MethodsCoveredByTestSummary>(`${topicCoveredMethodsByTest}/${testInfo.id}/methods/summary`) || {};
+  const showSceleton = !Object.keys(summary).length;
+
   return (
     <Modal isOpen={isOpen} onToggle={onToggle}>
       <div tw="flex flex-col h-full">
@@ -53,14 +49,22 @@ export const CoveredMethodsByTestSidebar = ({
         <section tw="h-20 pt-2 pb-2 pr-6 pl-6 bg-monochrome-light-tint border-b border-monochrome-medium-tint">
           <div tw="flex items-center w-full gap-4">
             <MethodInfoLabel>Test</MethodInfoLabel>
-            <MethodInfoValue sceleton={showSceleton} className="text-ellipsis" title={testName}>{testName}</MethodInfoValue>
+            <MethodInfoValue sceleton={showSceleton} className="text-ellipsis" title={summary?.id}>{summary?.testName}</MethodInfoValue>
           </div>
           <div tw="flex items-center w-full gap-4">
             <MethodInfoLabel>Type</MethodInfoLabel>
-            <MethodInfoValue sceleton={showSceleton} className="text-ellipsis">{capitalize(testType.toLowerCase())}</MethodInfoValue>
+            <MethodInfoValue
+              sceleton={showSceleton}
+              className="text-ellipsis"
+            >
+              {capitalize(summary?.testType?.toLowerCase())}
+            </MethodInfoValue>
           </div>
         </section>
-        <MethodsList methods={{ coveredMethods: filteredMethods, covered: testInfo.covered }} />
+        <MethodsList
+          topicCoveredMethodsByTest={`${topicCoveredMethodsByTest}/${summary.id}/methods`}
+          summary={summary}
+        />
       </div>
     </Modal>
   );

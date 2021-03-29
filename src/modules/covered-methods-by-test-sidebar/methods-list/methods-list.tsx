@@ -19,35 +19,27 @@ import {
   Inputs, Icons,
 } from '@drill4j/ui-kit';
 
-import { useElementSize } from 'hooks';
-import { MethodCoveredByTest } from 'types/method-covered-by-test';
+import { MethodsDetails } from 'types/methods-details';
+import { MethodCounts, MethodsCoveredByTestSummary } from 'types/methods-covered-by-test-summary';
+import { useBuildVersion, useElementSize } from 'hooks';
 import { CoverageRateIcon } from 'components';
 import 'twin.macro';
 
 interface Props {
-  methods: { coveredMethods: MethodCoveredByTest, covered: number };
+  summary: MethodsCoveredByTestSummary;
+  topicCoveredMethodsByTest: string;
 }
 
-export const MethodsList = ({ methods: { coveredMethods, covered } }: Props) => {
-  const {
-    newMethods = [], modifiedMethods = [], unaffectedMethods = [], allMethods = [],
-  } = coveredMethods;
-  const [selectedSection, setSelectedSection] = useState('all');
+export const MethodsList = ({ topicCoveredMethodsByTest, summary }: Props) => {
+  const [selectedSection, setSelectedSection] = useState<keyof MethodCounts>('all');
+  const methods = useBuildVersion<MethodsDetails[]>(
+    `${topicCoveredMethodsByTest}/${selectedSection}`,
+  ) || [];
   const node = useRef<HTMLDivElement>(null);
   const { height: methodsListHeight } = useElementSize(node);
-  const getMethods = () => {
-    switch (selectedSection) {
-      case 'new':
-        return newMethods;
-      case 'modified':
-        return modifiedMethods;
-      case 'unaffected':
-        return unaffectedMethods;
-      default:
-        return allMethods;
-    }
-  };
-  const methods = getMethods();
+  const selectedMethodsCount = getMethodsCount(summary?.methodCounts, selectedSection) || 0;
+  const methodsCount = methods.length || selectedMethodsCount;
+  const isShowSceleton = !Object.keys(summary).length || (Number(selectedMethodsCount) > 0 && methods.length === 0);
 
   return (
     <div tw="flex-col h-full overflow-hidden">
@@ -55,66 +47,68 @@ export const MethodsList = ({ methods: { coveredMethods, covered } }: Props) => 
         tw="pt-2 pb-2 pr-6 pl-6 leading-32 text-monochrome-default border-b border-monochrome-medium-tint"
         items={[
           { value: 'all', label: 'All methods' },
-          { value: 'new', label: `New methods (${newMethods.length})` },
+          { value: 'new', label: `New methods (${summary?.methodCounts?.new})` },
           {
             value: 'modified',
-            label: `Modified methods (${modifiedMethods.length})`,
+            label: `Modified methods (${summary?.methodCounts?.modified})`,
           },
           {
             value: 'unaffected',
-            label: `Unaffected methods (${unaffectedMethods.length})`,
+            label: `Unaffected methods (${summary?.methodCounts?.unaffected})`,
           },
         ]}
-        onChange={({ value }) => setSelectedSection(value)}
+        onChange={({ value }) => setSelectedSection(value as keyof MethodCounts)}
         value={selectedSection}
       />
       <div tw="h-full w-full mb-4 overflow-y-hidden">
         <div tw="flex flex-col h-full text-14">
-          <div ref={node} style={{ height: '95%' }}>
+          <div ref={node} style={{ height: 'calc(100% - 40px)' }}>
             <VirtualList
               itemSize={56}
               height={Math.ceil(methodsListHeight)}
-              itemCount={methods.length || covered}
-              renderItem={({ index, style }) => (
+              itemCount={methodsCount}
+              renderItem={({ index, style }) => (!isShowSceleton ? (
                 <div
                   tw="flex flex-col justify-center pl-6 pr-6 text-12 first:mt-2"
                   key={`${methods[index]?.name}${index}`}
                   style={style as Record<symbol, string>}
                 >
-                  {methods.length > 0 && (
-                    <>
-                      <div className="flex items-center w-full h-20px">
-                        <div className="flex items-center w-full gap-4">
-                          <Icons.Function tw="h-4" />
-                          <div
-                            tw="max-w-280px text-monochrome-black text-14 text-ellipsis"
-                            title={methods[index]?.name as string}
-                          >
-                            {methods[index]?.name}
-                          </div>
-                        </div>
-                        <CoverageRateIcon tw="h-4" coverageRate={methods[index]?.coverageRate} />
-                      </div>
+                  <div className="flex items-center w-full h-20px">
+                    <div className="flex items-center w-full gap-4">
+                      <Icons.Function tw="h-4" />
                       <div
-                        tw="max-w-280px ml-8 text-monochrome-default text-12 text-ellipsis"
-                        title={methods[index]?.ownerClass}
+                        tw="max-w-280px text-monochrome-black text-14 text-ellipsis"
+                        title={methods[index]?.name as string}
                       >
-                        {methods[index]?.ownerClass}
-                      </div>
-                    </>
-                  )}
-                  {Object.keys(coveredMethods).length === 0 && (
-                    <div tw="flex space-x-2 animate-pulse">
-                      <div tw="rounded-full bg-monochrome-medium-tint h-6 w-6" />
-                      <div tw="flex-1 space-y-4 py-1">
-                        <div tw="space-y-2">
-                          <div tw="h-4 bg-monochrome-medium-tint rounded" />
-                          <div tw="h-3 bg-monochrome-medium-tint rounded" />
-                        </div>
+                        {methods[index]?.name}
                       </div>
                     </div>
-                  )}
+                    <CoverageRateIcon tw="h-4" coverageRate={methods[index]?.coverageRate} />
+                  </div>
+                  <div
+                    tw="max-w-280px ml-8 text-monochrome-default text-12 text-ellipsis"
+                    title={methods[index]?.ownerClass}
+                  >
+                    {methods[index]?.ownerClass}
+                  </div>
                 </div>
+              ) : (
+                <div
+                  tw="flex flex-col justify-center pl-6 pr-6 text-12 first:mt-2"
+                  key={index}
+                  style={style as Record<symbol, string>}
+                >
+                  <div tw="flex space-x-2 animate-pulse">
+                    <div tw="rounded-full bg-monochrome-medium-tint h-6 w-6" />
+                    <div tw="flex-1 space-y-4 py-1">
+                      <div tw="space-y-2">
+                        <div tw="h-4 bg-monochrome-medium-tint rounded" />
+                        <div tw="h-3 bg-monochrome-medium-tint rounded" />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              )
               )}
             />
           </div>
@@ -123,3 +117,7 @@ export const MethodsList = ({ methods: { coveredMethods, covered } }: Props) => 
     </div>
   );
 };
+
+export function getMethodsCount(methodsCount: MethodCounts = {}, key: keyof MethodCounts) {
+  return methodsCount[key];
+}

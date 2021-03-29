@@ -13,15 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { MethodsDetails } from './methods-details';
+export interface MethodCounts {
+  all?: number;
+  new?: number;
+  modified?: number;
+  unaffected?: number;
+}
 
-export interface MethodCoveredByTest {
+export interface MethodsCoveredByTestSummary {
   id?: string;
   testName?: string;
   testType?: string;
-  testsCount?: number;
-  allMethods?: MethodsDetails[];
-  newMethods?: MethodsDetails[];
-  modifiedMethods?: MethodsDetails[];
-  unaffectedMethods?: MethodsDetails[];
+  methodCounts?: MethodCounts
 }
