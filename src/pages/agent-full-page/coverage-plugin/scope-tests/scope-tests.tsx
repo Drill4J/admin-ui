@@ -29,7 +29,7 @@ export const ScopeTests = () => {
   return (
     <TestDetails
       tests={tests as FilterList<TestCoverageInfo>}
-      topicCoveredMethodsByTest={`/build/scopes/${scopeId}/tests/covered-methods`}
+      topicCoveredMethodsByTest={`/build/scopes/${scopeId}/tests`}
     />
   );
 };

@@ -26,7 +26,7 @@ export const BuildTests = () => {
   return (
     <TestDetails
       tests={tests as FilterList<TestCoverageInfo>}
-      topicCoveredMethodsByTest="/build/tests/covered-methods"
+      topicCoveredMethodsByTest="/build/tests"
     />
   );
 };
