@@ -13,18 +13,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import axios from 'axios';
+import { convertToSingleSpaces } from './convert-to-single-spaces';
 
-import { StartSessionPayloadTypes } from './start-session-payload-types';
+describe('convertToSingleSpaces', () => {
+  it('should trim left the string', () => {
+    expect(convertToSingleSpaces('   foobarbuzz')).toBe('foobarbuzz');
+  })
 
-export function startAgentSession(
-  agentId: string,
-  pluginId: string,
-) {
-  return async ({ sessionId, isGlobal, isRealtime }: StartSessionPayloadTypes): Promise<void> => {
-    await axios.post(`/agents/${agentId}/plugins/${pluginId}/dispatch-action`, {
-      type: 'START',
-      payload: { sessionId: sessionId.trim(), isGlobal, isRealtime },
-    });
-  };
-}
+  it('should leave only one space between words', () => {
+    expect(convertToSingleSpaces('foo    bar')).toBe('foo bar');
+  })
+
+  it('should leave only one space after words', () => {
+    expect(convertToSingleSpaces('foo    ')).toBe('foo ');
+  })
+});
