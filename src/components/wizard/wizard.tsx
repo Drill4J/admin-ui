@@ -61,8 +61,11 @@ export const Wizard = ({
   return (
     <div>
       <Form
-        initialValues={{ ...initialValues, availablePlugins, plugins: ['test2code'] }}
+        initialValues={{
+          ...initialValues, availablePlugins, plugins: ['test2code'],
+        }}
         keepDirtyOnReinitialize
+        initialValuesEqual={(prevValues, nextValues) => JSON.stringify(prevValues) === JSON.stringify(nextValues)}
         onSubmit={async (values) => {
           try {
             await onSubmit(values);
