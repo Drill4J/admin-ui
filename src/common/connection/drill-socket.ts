@@ -43,6 +43,8 @@ export class DrillSocket {
 
   public onCloseEvent: (value?: CloseEvent) => void = () => {};
 
+  public onOpenEvent: () => void = () => {};
+
   public connection$: Observable<DrillResponse>;
 
   public reconnection$: Subject<'CLOSE' | 'OPEN'>;
@@ -57,7 +59,10 @@ export class DrillSocket {
         },
       },
       openObserver: {
-        next: () => this.reconnection$.next('OPEN'),
+        next: () => {
+          this.onOpenEvent();
+          this.reconnection$.next('OPEN');
+        },
       },
     });
     this.connection$ = this.ws$.pipe(retryWhen(genericRetryStrategy()));
@@ -71,15 +76,14 @@ export class DrillSocket {
   }
 
   public subscribe(topic: string, callback: (arg: any) => void, message?: SubscriptionMessage | Record<string, unknown>) {
-    let subscription = this.connection$.subscribe({ next: subscribe(topic, callback, message) });
+    let subscription = this.connection$.subscribe({ next: nextMessageHandler(topic, callback, message) });
 
     const autoSubscription = this.reconnection$.subscribe((type) => {
       if (type === 'CLOSE') {
         subscription.unsubscribe();
-        this.send(topic, 'UNSUBSCRIBE', message);
       }
       if (type === 'OPEN') {
-        subscription = this.connection$.subscribe({ next: subscribe(topic, callback, message) });
+        subscription = this.connection$.subscribe({ next: nextMessageHandler(topic, callback, message) });
         this.send(topic, 'SUBSCRIBE', message);
       }
     });
@@ -110,7 +114,7 @@ export class DrillSocket {
   }
 }
 
-const subscribe = (topic: string, callback: (arg: any) => void, message?: SubscriptionMessage | Record<string, unknown>) => ({
+const nextMessageHandler = (topic: string, callback: (arg: any) => void, message?: SubscriptionMessage | Record<string, unknown>) => ({
   destination,
   message: responseMessage, to,
 }: DrillResponse) => {

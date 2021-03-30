@@ -54,6 +54,7 @@ export const NotificationManager = ({ children }: Props) => {
       { type: 'ERROR', text: 'Backend connection has been lost. Please, try to refresh the page.' },
     );
   };
+  defaultAdminSocket.onOpenEvent = () => setMessage(null);
 
   const contextValue = useMemo(() => ({ showMessage: handleShowMessage, closeMessage: () => setMessage(null) }), []);
   return (
