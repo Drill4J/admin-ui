@@ -13,7 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { Observable, Subscription, timer } from 'rxjs';
+import {
+  Observable, Subject, Subscription, timer,
+} from 'rxjs';
 import { webSocket, WebSocketSubject } from 'rxjs/webSocket';
 import { mergeMap, retryWhen } from 'rxjs/operators';
 
@@ -41,13 +43,26 @@ export class DrillSocket {
 
   public onCloseEvent: (value?: CloseEvent) => void = () => {};
 
+  public onOpenEvent: () => void = () => {};
+
   public connection$: Observable<DrillResponse>;
+
+  public reconnection$: Subject<'CLOSE' | 'OPEN'>;
 
   constructor(url: string) {
     this.ws$ = webSocket<DrillResponse>({
       url,
       closeObserver: {
-        next: () => this.onCloseEvent(),
+        next: () => {
+          this.onCloseEvent();
+          this.reconnection$.next('CLOSE');
+        },
+      },
+      openObserver: {
+        next: () => {
+          this.onOpenEvent();
+          this.reconnection$.next('OPEN');
+        },
       },
     });
     this.connection$ = this.ws$.pipe(retryWhen(genericRetryStrategy()));
@@ -57,40 +72,27 @@ export class DrillSocket {
         this.handleUnauthorized();
       }
     });
+    this.reconnection$ = new Subject();
   }
 
   public subscribe(topic: string, callback: (arg: any) => void, message?: SubscriptionMessage | Record<string, unknown>) {
-    const subscription = this.connection$.subscribe(
-      ({ destination, message: responseMessage, to }: DrillResponse) => {
-        if (destination !== topic) {
-          return;
-        }
+    let subscription = this.connection$.subscribe({ next: nextMessageHandler(topic, callback, message) });
 
-        if (!to && !message) {
-          callback(responseMessage || null);
-          return;
-        }
+    const autoSubscription = this.reconnection$.subscribe((type) => {
+      if (type === 'CLOSE') {
+        subscription.unsubscribe();
+      }
+      if (type === 'OPEN') {
+        subscription = this.connection$.subscribe({ next: nextMessageHandler(topic, callback, message) });
+        this.send(topic, 'SUBSCRIBE', message);
+      }
+    });
 
-        const {
-          agentId: subscriptionAgentId,
-          buildVersion: subscriptionBuildVersion,
-        } = message as SubscriptionMessage;
-        const {
-          agentId: messageAgentId,
-          buildVersion: messageBuildVersion,
-        } = to as SubscriptionMessage;
-        if (
-          subscriptionAgentId === messageAgentId &&
-          subscriptionBuildVersion === messageBuildVersion
-        ) {
-          callback(responseMessage || null);
-        }
-      },
-    );
     this.send(topic, 'SUBSCRIBE', message);
 
     return () => {
       subscription.unsubscribe();
+      autoSubscription.unsubscribe();
       this.send(topic, 'UNSUBSCRIBE', message);
     };
   }
@@ -111,3 +113,32 @@ export class DrillSocket {
     });
   }
 }
+
+const nextMessageHandler = (topic: string, callback: (arg: any) => void, message?: SubscriptionMessage | Record<string, unknown>) => ({
+  destination,
+  message: responseMessage, to,
+}: DrillResponse) => {
+  if (destination !== topic) {
+    return;
+  }
+
+  if (!to && !message) {
+    callback(responseMessage || null);
+    return;
+  }
+
+  const {
+    agentId: subscriptionAgentId,
+    buildVersion: subscriptionBuildVersion,
+  } = message as SubscriptionMessage;
+  const {
+    agentId: messageAgentId,
+    buildVersion: messageBuildVersion,
+  } = to as SubscriptionMessage;
+  if (
+    subscriptionAgentId === messageAgentId &&
+    subscriptionBuildVersion === messageBuildVersion
+  ) {
+    callback(responseMessage || null);
+  }
+};
