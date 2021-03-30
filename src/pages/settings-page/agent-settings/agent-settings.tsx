@@ -40,7 +40,7 @@ export const AgentSettings = () => {
     <div tw="flex flex-col w-full">
       <PageHeader
         title={(
-          <div tw="flex gap-x-4 items-center">
+          <div tw="flex gap-x-4 items-center pt-5 pb-7">
             <Icons.Settings tw="text-monochrome-default" height={20} width={20} />
             {agent.agentType} Agent Settings
             <AgentStatusToggle tw="mt-2 leading-20" agent={agent} />
