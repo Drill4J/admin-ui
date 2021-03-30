@@ -18,7 +18,7 @@ import { Spinner, Icons } from '@drill4j/ui-kit';
 import tw, { styled } from 'twin.macro';
 
 import { AGENT_STATUS } from 'common/constants';
-import { capitalize } from 'utils';
+import { capitalize, snakeToSpaces } from 'utils';
 import { AgentStatus } from 'types/agent-status';
 import { useAgent } from 'hooks';
 import { usePluginState } from '../store';
@@ -71,7 +71,7 @@ const AgentStatusWrapper = styled.div(({ status }: { status?: AgentStatus }) => 
   tw`flex justify-center items-center px-2`,
   tw`border border-current-color rounded-full font-bold text-12 leading-20`,
   status === 'BUSY' && tw`text-orange-default`,
-  status === 'NOT_REGISTERED' && tw`text-red-default`,
+  status === 'NOT_REGISTERED' && tw`text-monochrome-default`,
   status === 'OFFLINE' && tw`text-monochrome-default`,
   status === 'ONLINE' && tw`text-green-default`,
 ]);
@@ -94,9 +94,9 @@ export const PluginHeader = ({ agentName, agentStatus }: Props) => {
           <AgentInfo>
             <div className="text-ellipsis text-32 leading-40" title={agentName}>{agentName}</div>
             <div className="flex items-center w-full">
-              <AgentStatusWrapper status={agentStatus}>{capitalize(agentStatus)}</AgentStatusWrapper>
+              <AgentStatusWrapper status={agentStatus}>{capitalize(snakeToSpaces(agentStatus))}</AgentStatusWrapper>
               <div
-                className="flex items-center w-full ml-2"
+                className="flex items-center ml-2"
               >
                 {agentStatus === AGENT_STATUS.BUSY && <Spinner />}
               </div>

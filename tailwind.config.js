@@ -210,4 +210,7 @@ module.exports = {
       addUtilities(newUtilities);
     }),
   ],
+  corePlugins: {
+    fontWeight: false,
+  },
 };

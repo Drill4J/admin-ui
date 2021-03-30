@@ -37,7 +37,7 @@ export const ServiceGroupSettings = () => {
     <div tw="flex flex-col w-full">
       <PageHeader
         title={(
-          <div tw="flex items-center gap-x-4 w-full ">
+          <div tw="flex items-center gap-x-4 w-full pt-5 pb-7">
             <Icons.Settings tw="text-monochrome-default" height={20} width={20} />
             Service Group Settings
           </div>
