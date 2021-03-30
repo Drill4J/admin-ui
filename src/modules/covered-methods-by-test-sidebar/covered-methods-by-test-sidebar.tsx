@@ -49,7 +49,13 @@ export const CoveredMethodsByTestSidebar = ({
         <section tw="h-20 pt-2 pb-2 pr-6 pl-6 bg-monochrome-light-tint border-b border-monochrome-medium-tint">
           <div tw="flex items-center w-full gap-4">
             <MethodInfoLabel>Test</MethodInfoLabel>
-            <MethodInfoValue sceleton={showSceleton} className="text-ellipsis" title={summary?.id}>{summary?.testName}</MethodInfoValue>
+            <MethodInfoValue
+              sceleton={showSceleton}
+              className="text-ellipsis"
+              title={summary?.testName}
+            >
+              {summary?.testName}
+            </MethodInfoValue>
           </div>
           <div tw="flex items-center w-full gap-4">
             <MethodInfoLabel>Type</MethodInfoLabel>
