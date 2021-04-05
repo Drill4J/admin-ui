@@ -73,11 +73,11 @@ export const SessionsManagementPane = ({ isOpen, onToggle }: Props) => {
             const response = await (agentId
               ? startAgentSession(agentId, pluginId)(values)
               : startServiceGroupSessions(serviceGroupId, pluginId)(values));
-            showGeneralAlertMessage({ type: 'SUCCESS', text: 'New session has been started successfully.' });
+            dispatch(setIsNewSession(false));
             form.change('sessionId', '');
             form.change('isGlobal', false);
             form.change('isRealtime', false);
-            dispatch(setIsNewSession(false));
+            showGeneralAlertMessage({ type: 'SUCCESS', text: 'New session has been started successfully.' });
             return response;
           } catch (error) {
             if (error?.response?.data?.code === 409) {
