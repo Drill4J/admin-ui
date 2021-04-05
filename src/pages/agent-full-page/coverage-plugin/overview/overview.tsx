@@ -90,7 +90,7 @@ export const Overview = () => {
           {selectedTab === 'methods' ? (
             <CoverageDetails
               topic="/build/coverage/packages"
-              associatedTestsTopic="/build/associated-tests"
+              associatedTestsTopic="/build"
               classesTopicPrefix="build"
               showCoverageIcon={Boolean(buildCoverage?.finishedScopesCount)}
             />

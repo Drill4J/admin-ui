@@ -156,7 +156,7 @@ export const ScopeInfo = () => {
                   <ScopeProjectMethods scope={scope} />
                   <CoverageDetails
                     topic={`/build/scopes/${scopeId}/coverage/packages`}
-                    associatedTestsTopic={`/build/scopes/${scopeId}/associated-tests`}
+                    associatedTestsTopic={`/build/scopes/${scopeId}`}
                     classesTopicPrefix={`build/scopes/${scopeId}`}
                     showCoverageIcon={loading || Boolean(sessionsFinished)}
                   />

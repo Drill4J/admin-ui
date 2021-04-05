@@ -31,10 +31,10 @@ interface Props {
 export const AssociatedTestModal = ({
   isOpen, onToggle, selectedAssocTests, associatedTestsTopic,
 }: Props) => {
-  const associatedTests = useBuildVersion<AssociatedTests[]>(associatedTestsTopic) || [];
+  const associatedTests = useBuildVersion<AssociatedTests>(`${associatedTestsTopic}/tests/associatedWith/${selectedAssocTests.id}`) || {};
   const {
     tests = [], packageName = '', className: testClassName = '', methodName = '',
-  } = associatedTests.find((test) => test.id === selectedAssocTests.id) || {};
+  } = associatedTests;
   const testsMap = tests.reduce((acc, { type = '', name = '' }) =>
     ({ ...acc, [type]: acc[type] ? [...acc[type], name] : [name] }), {} as { [testType: string]: string[] });
 
