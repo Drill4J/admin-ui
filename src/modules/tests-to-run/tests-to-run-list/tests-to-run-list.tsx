@@ -166,7 +166,7 @@ export const TestsToRunList = ({ agentType = 'Agent' }: Props) => {
           isOpen={Boolean(selectedTest)}
           onToggle={() => setSelectedTest(null)}
           testInfo={selectedTest}
-          topicCoveredMethodsByTest="/build/tests/covered-methods"
+          topicCoveredMethodsByTest="/build/tests"
         />
       )}
     </div>
