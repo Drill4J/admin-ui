@@ -108,11 +108,11 @@ export const TestsToRunModal = ({ isOpen, onToggle }: Props) => {
             onChange={({ value }) => setSelectedFilter(value)}
             value={selectedFilter}
           />
-          <div tw="flex flex-col text-14 mt-4">
+          <div tw="text-14 mt-4 px-6 space-y-4">
             {(getSelectedTests() || []).map((test) => (
-              <div tw="flex flex-row items-center pr-5 pl-6" key={nanoid()}>
-                <Icons.Test tw="flex items-center mr-4 min-w-16px" />
-                <div tw="flex flex-col break-all">{test}</div>
+              <div tw="flex items-center gap-x-4" key={nanoid()}>
+                <Icons.Test tw="flex items-center min-w-16px" />
+                <div tw="break-all">{test}</div>
               </div>
             ))}
           </div>
