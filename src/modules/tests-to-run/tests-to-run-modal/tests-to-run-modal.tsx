@@ -69,7 +69,7 @@ export const TestsToRunModal = ({ isOpen, onToggle }: Props) => {
         </div>
         <div
           css={[
-            tw`relative flex flex-col gap-x-2 pt-2 pb-2 pr-6 pl-6`,
+            tw`relative flex flex-col gap-y-4 gap-x-2 pt-2 pb-2 pr-6 pl-6`,
             tw`text-14 leading-20 bg-monochrome-light-tint break-words text-monochrome-default`,
           ]}
         >
@@ -78,7 +78,7 @@ export const TestsToRunModal = ({ isOpen, onToggle }: Props) => {
             Use this Curl in your command line to get JSON:
           </span>
           <TestsToRunUrl agentId={serviceGroupId} pluginId={pluginId} agentType="ServiceGroup" />
-          <div tw="absolute top-13 right-6 text-blue-default cursor-pointer active:text-blue-shade">
+          <div tw="absolute top-16 right-6 text-blue-default cursor-pointer active:text-blue-shade">
             {copied
               ? (
                 <div className="flex items-center gap-x-1 text-10 leading-16 primary-blue-default">
