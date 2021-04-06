@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import {
   Table, Column, Icons, Legend,
 } from '@drill4j/ui-kit';
@@ -27,7 +27,7 @@ import { FilterList } from 'types/filter-list';
 import { Search } from 'types/search';
 import { BuildSummary } from 'types/build-summary';
 import { TestsInfo } from 'types/tests-info';
-import { useBuildVersion, useAgent } from 'hooks';
+import { useBuildVersion, useAgent, useVisibleElementsCount } from 'hooks';
 import { CoveredMethodsByTestSidebar } from 'modules';
 import { capitalize } from 'utils';
 import { DATA_VISUALIZATION_COLORS } from 'common/constants';
@@ -60,6 +60,9 @@ export const TestsToRunList = ({ agentType = 'Agent' }: Props) => {
   const { AUTO } = previousBuildTests
     .reduce((test, testType) => ({ ...test, [testType.type]: testType }), {}) as TestsInfo;
   const previousBuildAutoTestsCount = AUTO?.summary?.testCount || 0;
+
+  const ref = useRef<HTMLDivElement>(null);
+  const visibleElementsCount = useVisibleElementsCount(ref, 10, 10);
   return (
     <div tw="flex flex-col gap-4">
       <TestsToRunHeader
@@ -102,7 +105,11 @@ export const TestsToRunList = ({ agentType = 'Agent' }: Props) => {
           >
             Displaying {filteredCount} of {totalCount} tests
           </SearchPanel>
-          <Table data={testsToRun} idKey="name" gridTemplateColumns="calc(100% - 664px) 130px 76px 152px 186px 120px">
+          <Table
+            data={testsToRun.slice(0, visibleElementsCount)}
+            idKey="name"
+            gridTemplateColumns="calc(100% - 664px) 130px 76px 152px 186px 120px"
+          >
             <Column
               name="name"
               label="Name"
@@ -158,6 +165,7 @@ export const TestsToRunList = ({ agentType = 'Agent' }: Props) => {
               Cell={({ value, item: { toRun } }) => (toRun ? null : <Cells.Duration value={value} />)}
             />,
           </Table>
+          <div ref={ref} />
         </div>
       </div>
       {!testsToRun.length && <NoTestsToRunStub />}
