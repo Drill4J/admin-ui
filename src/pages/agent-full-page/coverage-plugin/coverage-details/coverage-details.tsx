@@ -22,9 +22,9 @@ import 'twin.macro';
 import { ClassCoverage } from 'types/class-coverage';
 import { FilterList } from 'types/filter-list';
 import { useVisibleElementsCount, useBuildVersion } from 'hooks';
-import { Cells, SearchPanel } from 'components';
+import { Cells, SearchPanel, Stub } from 'components';
 import {
-  useTableActionsState, useTableActionsDispatch, setSearch, NoResultsFoundSub,
+  useTableActionsState, useTableActionsDispatch, setSearch,
 } from 'modules';
 import { NameCell } from './name-cell';
 import { AssociatedTestModal } from './associated-test-modal';
@@ -84,9 +84,9 @@ export const CoverageDetails = ({
           idKey="name"
           classesTopicPrefix={classesTopicPrefix}
           tableContentStub={coverageByPackages.length === 0 && (
-            <NoResultsFoundSub>
+            <Stub title="No results found" message="Try adjusting your search or filter to find what you are looking for.">
               <Icons.Package height={104} width={107} />
-            </NoResultsFoundSub>
+            </Stub>
           )}
           expandedColumns={[
             <Column

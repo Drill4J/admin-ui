@@ -30,3 +30,4 @@ export { CoverageRateIcon } from './coverage-rate-icon';
 export { DashboardSection } from './dashboard-section';
 export { SectionTooltip } from './section-tooltip';
 export { BuildTestsCard, BuildMethodsCard } from './cards';
+export { Stub } from './stub';

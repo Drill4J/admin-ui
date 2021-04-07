@@ -17,13 +17,13 @@ import { Button, Icons } from '@drill4j/ui-kit';
 import { useHistory } from 'react-router-dom';
 import 'twin.macro';
 
-import { PageHeader } from 'components';
+import { PageHeader, Stub } from 'components';
 import { useWsConnection } from 'hooks';
 import { defaultAdminSocket } from 'common/connection';
 import { Agent } from 'types/agent';
 import { ServiceGroup } from 'types/service-group';
 import { AgentsTable } from './agents-table';
-import { NoAgentsStub } from './no-agents-stub';
+import { ReactComponent as NoAgentsSvg } from './no-agents.svg';
 
 export const AgentsPage = () => {
   const { push } = useHistory();
@@ -58,7 +58,27 @@ export const AgentsPage = () => {
           </Button>
         )}
       />
-      <div tw="flex flex-row flex-grow flex-wrap m-6">{agentsList.length > 0 ? <AgentsTable agents={agents} /> : <NoAgentsStub />}</div>
+      <div tw="flex flex-row flex-grow flex-wrap m-6">{agentsList.length > 0 ? <AgentsTable agents={agents} /> : (
+        <Stub
+          title="No agents online at the moment"
+          message={(
+            <>
+              Run your application with Drill4J Agent using&nbsp;
+              <a
+                tw="text-blue-default"
+                href="https://drill4j.github.io/how-to-start/"
+                rel="noopener noreferrer"
+                target="_blank"
+              >
+                this guide.
+              </a>
+            </>
+          )}
+        >
+          <NoAgentsSvg />
+        </Stub>
+      )}
+      </div>
     </div>
   );
 };

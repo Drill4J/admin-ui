@@ -28,11 +28,11 @@ import { ScopeSummary } from 'types/scope-summary';
 import { TestTypeSummary } from 'types/test-type-summary';
 import { useActiveScope, useAgent, useBuildVersion } from 'hooks';
 import { AGENT_STATUS } from 'common/constants';
+import { Stub } from 'components';
 import { toggleScope } from '../../api';
 import { usePluginState } from '../../../store';
 import { useCoveragePluginDispatch, openModal } from '../../store';
 import { ScopeTimer } from '../scope-timer';
-import { NoScopeStub } from '../no-scope-stub';
 
 interface MenuItemType {
   label: string;
@@ -211,7 +211,11 @@ export const ScopesList = () => {
               />
             )}
           </Table>
-        ) : <NoScopeStub />}
+        ) : (
+          <Stub title={<span tw="text-24">No scopes found</span>} message="There are no scopes with finished test sessions in this build.">
+            <Icons.Scope tw="text-monochrome-medium-tint" width={157} height={157} data-test="no-scope-stub:test-icon" />
+          </Stub>
+        )}
     </div>
   );
 };

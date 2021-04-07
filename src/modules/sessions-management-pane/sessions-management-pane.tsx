@@ -17,7 +17,7 @@ import { useEffect } from 'react';
 import { Form } from 'react-final-form';
 import { useParams } from 'react-router-dom';
 import {
-  Modal, GeneralAlerts,
+  Modal, GeneralAlerts, Icons,
 } from '@drill4j/ui-kit';
 import 'twin.macro';
 
@@ -28,13 +28,13 @@ import {
   handleFieldErrors,
 } from 'forms';
 import { useGeneralAlertMessage } from 'hooks';
+import { Stub } from 'components';
 import { ManagementNewSession } from './management-new-session';
 import { useActiveSessions } from './use-active-sessions';
 import {
   startServiceGroupSessions, startAgentSession,
 } from './sessions-management-pane-api';
 import { ManagementActiveSessions } from './management-active-sessions';
-import { EmptyActiveSessionsStub } from './active-sessions-list/empty-active-sessions-stub';
 import { ActiveSessionsList } from './active-sessions-list';
 import { BulkOperationWarning } from './bulk-operation-warning';
 import { ActionsPanel } from './actions-panel';
@@ -121,7 +121,11 @@ export const SessionsManagementPane = ({ isOpen, onToggle }: Props) => {
                 />
               </>
             )}
-            {!isNewSession && activeSessions.length === 0 && <EmptyActiveSessionsStub />}
+            {!isNewSession && activeSessions.length === 0 && (
+              <Stub title="There are no active sessions" message="You can use this menu to start new.">
+                <Icons.Test width={120} height={134} viewBox="0 0 18 20" data-test="empty-active-sessions-stub:test-icon" />
+              </Stub>
+            )}
             <div tw="min-h-80px mt-auto px-6 py-4 bg-monochrome-light-tint">
               {bulkOperation.isProcessing ? (
                 <BulkOperationWarning

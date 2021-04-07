@@ -22,12 +22,13 @@ import 'twin.macro';
 import { capitalize } from 'utils';
 import { TestCoverageInfo } from 'types/test-coverage-info';
 import { FilterList } from 'types/filter-list';
-import { Cells, SearchPanel } from 'components';
+import { Cells, SearchPanel, Stub } from 'components';
 import {
-  CoveredMethodsByTestSidebar, NoResultsFoundSub, setSearch, useTableActionsDispatch, useTableActionsState,
+  CoveredMethodsByTestSidebar, setSearch, useTableActionsDispatch, useTableActionsState,
 } from 'modules';
 import { useVisibleElementsCount } from 'hooks';
-import { NoTestsStub } from './no-tests-stub';
+import { AGENT_STATUS } from 'common/constants';
+import { usePluginState } from '../../store';
 
 interface Props {
   tests: FilterList<TestCoverageInfo>;
@@ -37,6 +38,7 @@ interface Props {
 export const TestDetails = ({
   topicCoveredMethodsByTest, tests: { items: tests = [], totalCount = 0, filteredCount = 0 },
 }: Props) => {
+  const { agent: { status = '' } = {} } = usePluginState();
   const [selectedTest, setSelectedTest] = useState<null | { id: string; covered: number }>(null);
   const ref = useRef<HTMLDivElement>(null);
   const visibleElementsCount = useVisibleElementsCount(ref, 10, 10);
@@ -117,8 +119,24 @@ export const TestDetails = ({
           />,
         </Table>
       </>
-      {!tests.length && !searchQuery?.value && <NoTestsStub />}
-      {!filteredCount && searchQuery?.value && <NoResultsFoundSub><Icons.Test height={104} width={107} /></NoResultsFoundSub>}
+      {!tests.length && !searchQuery?.value && (
+        <Stub
+          title={status === AGENT_STATUS.BUSY ? 'Build tests are loading' : 'No tests available yet'}
+          message={status === AGENT_STATUS.BUSY
+            ? 'It may take a few seconds.'
+            : 'Information about project tests will appear after the first launch of tests.'}
+        >
+          <Icons.Test height={104} width={107} />
+        </Stub>
+      )}
+      {!filteredCount && searchQuery?.value && (
+        <Stub
+          title="No results found"
+          message="Try adjusting your search or filter to find what you are looking for."
+        >
+          <Icons.Test height={104} width={107} />
+        </Stub>
+      )}
       {selectedTest !== null && (
         <CoveredMethodsByTestSidebar
           isOpen={Boolean(selectedTest)}
