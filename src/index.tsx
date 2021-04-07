@@ -14,7 +14,6 @@
  * limitations under the License.
  */
 import ReactDOM from 'react-dom';
-import './common/style-guide/common.scss';
 import './common/style-guide/fonts/fonts.scss';
 import { App } from './app';
 import * as serviceWorker from './serviceWorker';
