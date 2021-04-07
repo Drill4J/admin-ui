@@ -14,7 +14,9 @@
  * limitations under the License.
  */
 
-import { useContext, useEffect, useState } from 'react';
+import {
+  useContext, useEffect, useState,
+} from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import {
@@ -29,7 +31,7 @@ import {
 import { UnlockingSystemSettingsFormModal } from 'modules';
 import { parsePackages, formatPackages, dotsAndSlashesToSlash } from 'utils';
 import { Agent } from 'types/agent';
-import { useFormHandleSubmit } from 'hooks';
+import { useFormHandleSubmit, usePreserveCaretPosition } from 'hooks';
 import { NotificationManagerContext } from 'notification-manager';
 
 interface Props {
@@ -45,6 +47,8 @@ export const SystemSettingsForm = ({
   const [isUnlockingModalOpened, setIsUnlockingModalOpened] = useState(false);
   const { showMessage } = useContext(NotificationManagerContext);
   const { id = '' } = useParams<{ id: string }>();
+
+  const handleOnChange = usePreserveCaretPosition(dotsAndSlashesToSlash);
 
   return (
     <Form
@@ -119,14 +123,21 @@ export const SystemSettingsForm = ({
                   </div>
                 </div>
                 <Field
-                  tw="w-97 h-20"
                   name="systemSettings.packages"
-                  component={Fields.Textarea}
-                  parse={(value) => parsePackages(dotsAndSlashesToSlash(value))}
+                  parse={parsePackages}
                   format={formatPackages}
-                  placeholder="e.g. com/example/mypackage&#10;foo/bar/baz&#10;and so on."
-                  disabled={!unlockedPackages}
-                />
+                >
+                  {({ input, meta }) => (
+                    <Fields.Textarea
+                      tw="w-97 h-20"
+                      input={input}
+                      meta={meta}
+                      onChange={(event: any) => handleOnChange(input, event)}
+                      placeholder="e.g. com/example/mypackage&#10;foo/bar/baz&#10;and so on."
+                      disabled={!unlockedPackages}
+                    />
+                  )}
+                </Field>
                 {unlockedPackages && (
                   <div tw="w-97 text-12 leading-16 text-monochrome-default">
                     Make sure you add application packages only, otherwise agent&apos;s performance will be affected.

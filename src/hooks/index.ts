@@ -25,3 +25,5 @@ export { useActiveScope } from './use-active-scope';
 export { useBaselineVersion } from './use-baseline-version';
 export { useFormHandleSubmit } from './use-form-handle-submit';
 export { useIntersection } from './use-intersection';
+export { useRunAfterUpdate } from './use-run-after-update';
+export { usePreserveCaretPosition } from './use-preserve-caret-position';
