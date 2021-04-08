@@ -27,9 +27,6 @@ interface Props {
 const TestItem = styled.div`
   ${tw`flex flex-col justify-center min-h-40px px-6`}
   ${tw`text-14 break-normal`}
-  &:first-child {
-    ${tw`mt-2`}
-  }
 `;
 
 export const TestsList = ({ associatedTests }: Props) => {
@@ -62,7 +59,7 @@ export const TestsList = ({ associatedTests }: Props) => {
         onChange={({ value }) => setSelectedSection(value)}
         value={selectedSection}
       />
-      <div tw="flex flex-col flex-grow overflow-y-auto border-t border-monochrome-medium-tint">
+      <div tw="flex flex-col flex-grow pt-2 overflow-y-auto border-t border-monochrome-medium-tint">
         <div ref={node} style={{ height: '100%' }}>
           <VirtualList
             itemSize={56}
@@ -74,9 +71,9 @@ export const TestsList = ({ associatedTests }: Props) => {
                   <>
                     <div tw="flex flex-row items-center h-5">
                       <Icons.Test tw="flex self-center min-w-12px min-h-16px" />
-                      <div className="text-ellipsis ml-4 text-14 leading-20 text-monochrome-black" title={tests[index]}>{tests[index]}</div>
+                      <div tw="text-ellipsis ml-4 text-14 leading-20 text-monochrome-black" title={tests[index]}>{tests[index]}</div>
                     </div>
-                    <div className="text-ellipsis pl-7 text-12 text-monochrome-default" title="&ndash;">&ndash;</div>
+                    <div tw="text-ellipsis pl-7 text-12 text-monochrome-default" title="&ndash;">&ndash;</div>
                   </>
                 )}
                 {Object.keys(associatedTests.testsMap).length === 0 && (
