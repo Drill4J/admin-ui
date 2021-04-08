@@ -13,17 +13,28 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { Icons } from '@drill4j/ui-kit';
 import 'twin.macro';
 
-export const NoDataStub = () => (
-  <div tw="flex flex-col items-center justify-center mt-6 mb-8">
-    <Icons.Graph tw="text-monochrome-medium-tint" width={70} height={75} />
-    <div tw="mt-4 text-monochrome-default text-20 leading-32">
-      No data about saved time
+interface Props {
+  icon: React.ReactNode;
+  title: React.ReactNode;
+  message: React.ReactNode;
+}
+
+export const Stub = ({ icon, title, message }: Props) => (
+  <div tw="flex flex-col justify-center items-center w-full h-full flex-grow text-monochrome-medium-tint py-10">
+    { icon }
+    <div
+      tw="mt-4 mb-2 text-20 leading-32 text-monochrome-default"
+      data-test="stub:title"
+    >
+      { title }
     </div>
-    <div tw="mt-2 text-center text-14 leading-20 text-monochrome-default">
-      There is no information about Auto Tests duration in the parent build.
+    <div
+      tw="mt-2 text-14 leading-20 text-monochrome-default text-center"
+      data-test="stub:message"
+    >
+      { message }
     </div>
   </div>
 );

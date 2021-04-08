@@ -20,13 +20,12 @@ import {
 import { Icons, Button, GeneralAlerts } from '@drill4j/ui-kit';
 import 'twin.macro';
 
-import { PluginListEntry } from 'components';
+import { PluginListEntry, Stub } from 'components';
 import { Agent } from 'types/agent';
 import { useWsConnection } from 'hooks';
 import { Plugin } from 'types/plugin';
 import { defaultAdminSocket } from 'common/connection';
 import { AddPluginsModal } from './add-plugins-modal';
-import { NoPluginsStub } from './no-plugins-stub';
 
 interface Props {
   agent: Agent;
@@ -84,9 +83,11 @@ export const PluginsSettingsTab = ({ agent: { buildVersion = '' } }: Props) => {
             </PluginListEntry>
           ))
         ) : (
-          <NoPluginsStub>
-            {`There are no plugins installed on this ${agentType === 'agent' ? 'agent' : 'service group'} at the moment.`}
-          </NoPluginsStub>
+          <Stub
+            icon={<Icons.Plugins tw="text-monochrome-medium-tint" height={160} width={160} />}
+            title={<span tw="text-24">No plugins installed</span>}
+            message={`There are no plugins installed on this ${agentType === 'agent' ? 'agent' : 'service group'} at the moment.`}
+          />
         )}
       </div>
       {isAddPluginOpen && (

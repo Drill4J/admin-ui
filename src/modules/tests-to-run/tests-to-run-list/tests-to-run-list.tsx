@@ -21,7 +21,7 @@ import { useParams } from 'react-router-dom';
 import 'twin.macro';
 
 import { ParentBuild } from 'types/parent-build';
-import { Cells, SearchPanel } from 'components';
+import { Cells, SearchPanel, Stub } from 'components';
 import { TestCoverageInfo } from 'types/test-coverage-info';
 import { FilterList } from 'types/filter-list';
 import { Search } from 'types/search';
@@ -34,8 +34,6 @@ import { DATA_VISUALIZATION_COLORS } from 'common/constants';
 import { TestsToRunSummary } from 'types/tests-to-run-summary';
 import { TestsToRunHeader } from './tests-to-run-header';
 import { BarChart } from './bar-chart';
-import { NoTestsToRunStub } from './no-tests-to-run-stub';
-import { NoDataStub } from './no-data-stub';
 
 interface Props {
   agentType?: string;
@@ -74,8 +72,8 @@ export const TestsToRunList = ({ agentType = 'Agent' }: Props) => {
         previousBuildAutoTestsCount={previousBuildAutoTestsCount}
       />
       <div tw="flex justify-between items-start w-full">
-        <span tw="h-6 align-top text-12 leading-16 font-bold text-monochrome-default" data-test="tests-to-run-list:bar-title">
-          SAVED TIME HISTORY
+        <span tw="h-6 align-top text-12 leading-16 font-bold text-monochrome-default uppercase" data-test="tests-to-run-list:bar-title">
+          saved time history
         </span>
         <Legend
           legendItems={[
@@ -91,10 +89,16 @@ export const TestsToRunList = ({ agentType = 'Agent' }: Props) => {
           totalDuration={totalDuration}
           summaryTestsToRun={summaryTestsToRun}
         />
-      ) : <NoDataStub />}
+      ) : (
+        <Stub
+          icon={<Icons.Graph tw="text-monochrome-medium-tint" width={70} height={75} />}
+          title="No data about saved time"
+          message="There is no information about Auto Tests duration in the parent build."
+        />
+      )}
       <div>
-        <span tw="text-12 leading-32 font-bold text-monochrome-default" data-test="tests-to-run-list:table-title">
-          ALL SUGGESTED TESTS ({totalCount})
+        <span tw="text-12 leading-32 font-bold text-monochrome-default uppercase" data-test="tests-to-run-list:table-title">
+          all suggested tests ({totalCount})
         </span>
         <div>
           <SearchPanel
@@ -168,7 +172,13 @@ export const TestsToRunList = ({ agentType = 'Agent' }: Props) => {
           <div ref={ref} />
         </div>
       </div>
-      {!testsToRun.length && <NoTestsToRunStub />}
+      {!testsToRun.length && (
+        <Stub
+          icon={<Icons.Test tw="text-monochrome-medium-tint" width={80} height={80} />}
+          title="No suggested tests"
+          message="There is no information about the suggested to run tests in this build."
+        />
+      )}
       {selectedTest !== null && (
         <CoveredMethodsByTestSidebar
           isOpen={Boolean(selectedTest)}
