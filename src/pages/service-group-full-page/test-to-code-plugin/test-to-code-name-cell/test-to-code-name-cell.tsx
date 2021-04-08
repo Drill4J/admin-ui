@@ -13,12 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+import { Link } from 'react-router-dom';
 import tw, { styled } from 'twin.macro';
 
 interface Props {
   name: string;
   additionalInformation?: string;
-  onClick?: () => void;
+  link: string;
 }
 
 const Content = styled.div`
@@ -26,17 +27,15 @@ const Content = styled.div`
   grid-template-rows: repeat(2, max-content);
 `;
 
-const Name = styled.span(({ onClick }: { onClick?: () => void }) => [
-  tw`font-light text-24`,
-  onClick && tw`font-bold text-14 cursor-pointer`,
-]);
+const Name = styled(Link)`
+  ${tw`w-max link font-bold text-14`}
+`;
 
-export const TestToCodeNameCell = ({ name, additionalInformation, onClick }: Props) => (
+export const TestToCodeNameCell = ({ name, additionalInformation, link }: Props) => (
   <Content>
     <div tw="text-ellipsis text-blue-default">
       <Name
-        tw="w-max link"
-        onClick={onClick}
+        to={link}
         data-test="test-to-code-name-cell:name-cell"
         title={name}
       >

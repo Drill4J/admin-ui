@@ -66,7 +66,7 @@ export const TestToCodePlugin = ({ summaries = [], aggregated }: Props) => {
             <TestToCodeNameCell
               name={value}
               additionalInformation={`Build: ${buildVersion}`}
-              onClick={() => push(`/full-page/${agentId}/${buildVersion}/dashboard`)}
+              link={`/full-page/${agentId}/${buildVersion}/dashboard`}
             />
           )}
           HeaderCell={() => <div tw="font-light text-24 leading-32">Test2Code</div>}
