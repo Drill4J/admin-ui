@@ -16,17 +16,14 @@
 import 'twin.macro';
 
 interface Props {
-  className?: string;
-  children: React.ReactNode;
+  icon: React.ReactNode;
   title: React.ReactNode;
   message: React.ReactNode;
 }
 
-export const Stub = ({
-  children, title, message, className,
-}: Props) => (
-  <div tw="flex flex-col justify-center items-center w-full h-full flex-grow text-monochrome-medium-tint py-10" className={className}>
-    { children }
+export const Stub = ({ icon, title, message }: Props) => (
+  <div tw="flex flex-col justify-center items-center w-full h-full flex-grow text-monochrome-medium-tint py-10">
+    { icon }
     <div
       tw="mt-4 mb-2 text-20 leading-32 text-monochrome-default"
       data-test="stub:title"

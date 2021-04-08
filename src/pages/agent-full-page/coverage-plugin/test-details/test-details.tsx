@@ -121,21 +121,19 @@ export const TestDetails = ({
       </>
       {!tests.length && !searchQuery?.value && (
         <Stub
+          icon={<Icons.Test height={104} width={107} />}
           title={status === AGENT_STATUS.BUSY ? 'Build tests are loading' : 'No tests available yet'}
           message={status === AGENT_STATUS.BUSY
             ? 'It may take a few seconds.'
             : 'Information about project tests will appear after the first launch of tests.'}
-        >
-          <Icons.Test height={104} width={107} />
-        </Stub>
+        />
       )}
       {!filteredCount && searchQuery?.value && (
         <Stub
+          icon={<Icons.Test height={104} width={107} />}
           title="No results found"
           message="Try adjusting your search or filter to find what you are looking for."
-        >
-          <Icons.Test height={104} width={107} />
-        </Stub>
+        />
       )}
       {selectedTest !== null && (
         <CoveredMethodsByTestSidebar

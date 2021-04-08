@@ -33,21 +33,21 @@ const AgentInfoLink = styled(Link)`
 `;
 
 export const NoPluginsStub = ({ agentId = '', agentType }: Props) => (
-  <Stub
-    className="border-t border-monochrome-medium-tint"
-    title={<span tw="text-24">No data available</span>}
-    message={(
-      <>
-        <div>
-          <div>There are no enabled plugins on this {camelToSpaces(agentType)} to collect the data from.</div>
-          <div>To install a plugin go to</div>
-        </div>
-        <AgentInfoLink to={`/agents/${agentType === 'Agent' ? 'agent' : 'service-group'}/${agentId}/settings/general`}>
-          {camelToSpaces(agentType)} settings page
-        </AgentInfoLink>
-      </>
-    )}
-  >
-    <Icons.Plugins tw="text-monochrome-default" height={160} width={160} />
-  </Stub>
+  <div tw="w-full h-full border-t border-monochrome-medium-tint">
+    <Stub
+      icon={<Icons.Plugins tw="text-monochrome-default" height={160} width={160} />}
+      title={<span tw="text-24">No data available</span>}
+      message={(
+        <>
+          <div>
+            <div>There are no enabled plugins on this {camelToSpaces(agentType)} to collect the data from.</div>
+            <div>To install a plugin go to</div>
+          </div>
+          <AgentInfoLink to={`/agents/${agentType === 'Agent' ? 'agent' : 'service-group'}/${agentId}/settings/general`}>
+            {camelToSpaces(agentType)} settings page
+          </AgentInfoLink>
+        </>
+      )}
+    />
+  </div>
 );

@@ -72,8 +72,8 @@ export const TestsToRunList = ({ agentType = 'Agent' }: Props) => {
         previousBuildAutoTestsCount={previousBuildAutoTestsCount}
       />
       <div tw="flex justify-between items-start w-full">
-        <span tw="h-6 align-top text-12 leading-16 font-bold text-monochrome-default" data-test="tests-to-run-list:bar-title">
-          SAVED TIME HISTORY
+        <span tw="h-6 align-top text-12 leading-16 font-bold text-monochrome-default uppercase" data-test="tests-to-run-list:bar-title">
+          saved time history
         </span>
         <Legend
           legendItems={[
@@ -91,15 +91,14 @@ export const TestsToRunList = ({ agentType = 'Agent' }: Props) => {
         />
       ) : (
         <Stub
+          icon={<Icons.Graph tw="text-monochrome-medium-tint" width={70} height={75} />}
           title="No data about saved time"
           message="There is no information about Auto Tests duration in the parent build."
-        >
-          <Icons.Graph tw="text-monochrome-medium-tint" width={70} height={75} />
-        </Stub>
+        />
       )}
       <div>
-        <span tw="text-12 leading-32 font-bold text-monochrome-default" data-test="tests-to-run-list:table-title">
-          ALL SUGGESTED TESTS ({totalCount})
+        <span tw="text-12 leading-32 font-bold text-monochrome-default uppercase" data-test="tests-to-run-list:table-title">
+          all suggested tests ({totalCount})
         </span>
         <div>
           <SearchPanel
@@ -174,9 +173,11 @@ export const TestsToRunList = ({ agentType = 'Agent' }: Props) => {
         </div>
       </div>
       {!testsToRun.length && (
-        <Stub title="No suggested tests" message="There is no information about the suggested to run tests in this build.">
-          <Icons.Test tw="text-monochrome-medium-tint" width={80} height={80} />
-        </Stub>
+        <Stub
+          icon={<Icons.Test tw="text-monochrome-medium-tint" width={80} height={80} />}
+          title="No suggested tests"
+          message="There is no information about the suggested to run tests in this build."
+        />
       )}
       {selectedTest !== null && (
         <CoveredMethodsByTestSidebar

@@ -84,9 +84,11 @@ export const CoverageDetails = ({
           idKey="name"
           classesTopicPrefix={classesTopicPrefix}
           tableContentStub={coverageByPackages.length === 0 && (
-            <Stub title="No results found" message="Try adjusting your search or filter to find what you are looking for.">
-              <Icons.Package height={104} width={107} />
-            </Stub>
+            <Stub
+              icon={<Icons.Package height={104} width={107} />}
+              title="No results found"
+              message="Try adjusting your search or filter to find what you are looking for."
+            />
           )}
           expandedColumns={[
             <Column

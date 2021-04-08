@@ -60,6 +60,7 @@ export const AgentsPage = () => {
       />
       <div tw="flex flex-row flex-grow flex-wrap m-6">{agentsList.length > 0 ? <AgentsTable agents={agents} /> : (
         <Stub
+          icon={<NoAgentsSvg />}
           title="No agents online at the moment"
           message={(
             <>
@@ -74,9 +75,7 @@ export const AgentsPage = () => {
               </a>
             </>
           )}
-        >
-          <NoAgentsSvg />
-        </Stub>
+        />
       )}
       </div>
     </div>

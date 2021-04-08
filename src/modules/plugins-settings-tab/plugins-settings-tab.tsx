@@ -84,11 +84,10 @@ export const PluginsSettingsTab = ({ agent: { buildVersion = '' } }: Props) => {
           ))
         ) : (
           <Stub
+            icon={<Icons.Plugins tw="text-monochrome-medium-tint" height={160} width={160} />}
             title={<span tw="text-24">No plugins installed</span>}
             message={`There are no plugins installed on this ${agentType === 'agent' ? 'agent' : 'service group'} at the moment.`}
-          >
-            <Icons.Plugins tw="text-monochrome-medium-tint" height={160} width={160} />
-          </Stub>
+          />
         )}
       </div>
       {isAddPluginOpen && (

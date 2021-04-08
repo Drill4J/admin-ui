@@ -122,9 +122,11 @@ export const SessionsManagementPane = ({ isOpen, onToggle }: Props) => {
               </>
             )}
             {!isNewSession && activeSessions.length === 0 && (
-              <Stub title="There are no active sessions" message="You can use this menu to start new.">
-                <Icons.Test width={120} height={134} viewBox="0 0 18 20" data-test="empty-active-sessions-stub:test-icon" />
-              </Stub>
+              <Stub
+                icon={<Icons.Test width={120} height={134} viewBox="0 0 18 20" data-test="empty-active-sessions-stub:test-icon" />}
+                title="There are no active sessions"
+                message="You can use this menu to start a new one."
+              />
             )}
             <div tw="min-h-80px mt-auto px-6 py-4 bg-monochrome-light-tint">
               {bulkOperation.isProcessing ? (

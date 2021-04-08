@@ -212,9 +212,11 @@ export const ScopesList = () => {
             )}
           </Table>
         ) : (
-          <Stub title={<span tw="text-24">No scopes found</span>} message="There are no scopes with finished test sessions in this build.">
-            <Icons.Scope tw="text-monochrome-medium-tint" width={157} height={157} data-test="no-scope-stub:test-icon" />
-          </Stub>
+          <Stub
+            icon={<Icons.Scope tw="text-monochrome-medium-tint" width={157} height={157} data-test="no-scope-stub:test-icon" />}
+            title={<span tw="text-24">No scopes found</span>}
+            message="There are no scopes with finished test sessions in this build."
+          />
         )}
     </div>
   );
