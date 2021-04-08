@@ -16,6 +16,7 @@
 import { Inputs } from '@drill4j/ui-kit';
 import { useCallback, useEffect, useState } from 'react';
 import debounce from 'lodash.debounce';
+import { styled } from 'twin.macro';
 
 interface Props {
   onSearch: (search: string) => void;
@@ -26,12 +27,19 @@ interface Props {
 }
 
 export const SearchPanel = ({
-  onSearch, searchQuery, searchResult, children, placeholder,
+  onSearch,
+  searchQuery,
+  searchResult,
+  children,
+  placeholder,
 }: Props) => {
   const [searchValue, setValue] = useState('');
-  const search = useCallback(debounce((v) => {
-    onSearch(v);
-  }, 500), [onSearch]);
+  const search = useCallback(
+    debounce((v) => {
+      onSearch(v);
+    }, 500),
+    [onSearch],
+  );
 
   useEffect(() => {
     search(searchValue);
@@ -41,7 +49,7 @@ export const SearchPanel = ({
     <div>
       <div className="flex items-center w-full">
         <div className="py-2 h-10">
-          <Inputs.Search
+          <Search
             value={searchValue}
             onChange={({ target: { value = '' } }) => setValue(value)}
             placeholder={placeholder}
@@ -49,17 +57,28 @@ export const SearchPanel = ({
           />
         </div>
         <div
-          className={`flex items-center w-full ml-4 ${searchQuery
-            ? 'justify-between'
-            : 'justify-end'} text-12 leading-20 monochrome-default`}
+          className={`flex items-center w-full ml-4 ${
+            searchQuery ? 'justify-between' : 'justify-end'
+          } text-12 leading-20 monochrome-default`}
         >
-          {searchQuery &&
-          <span data-test="search-panel:search-result">{searchResult} result{searchResult > 1 ? 's' : ''}</span>}
-          <span data-test="search-panel:displaying-results-count">
-            {children}
-          </span>
+          {searchQuery && (
+            <span data-test="search-panel:search-result">
+              {searchResult} result{searchResult > 1 ? 's' : ''}
+            </span>
+          )}
+          <span data-test="search-panel:displaying-results-count">{children}</span>
         </div>
       </div>
     </div>
   );
 };
+
+const Search = styled(Inputs.Search)`
+  * > input {
+    width: 400px;
+  }
+
+  svg[class*='clear-icon'] {
+    left: calc(100% - 10px);
+  }
+`;
