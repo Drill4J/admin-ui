@@ -38,7 +38,7 @@ export const NoPluginsStub = ({ agentId = '', agentType }: Props) => (
     title={<span tw="text-24">No data available</span>}
     message={(
       <>
-        <div tw="text-14 leading-20 text-center">
+        <div>
           <div>There are no enabled plugins on this {camelToSpaces(agentType)} to collect the data from.</div>
           <div>To install a plugin go to</div>
         </div>
