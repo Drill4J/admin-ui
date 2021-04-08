@@ -13,11 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
 */
-import { Field } from 'react-final-form';
 import { Icons } from '@drill4j/ui-kit';
 import 'twin.macro';
 
-import { PluginListEntry } from 'components';
+import { PluginListEntry, Field } from 'components';
 import { Plugin } from 'types/plugin';
 
 interface Props {

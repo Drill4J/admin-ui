@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { Field } from 'react-final-form';
+import { Field } from 'components';
 import { NavLink } from 'react-router-dom';
 import {
   FormGroup,
@@ -24,7 +24,6 @@ import {
 import tw, { styled } from 'twin.macro';
 
 import { Fields } from 'forms';
-import { convertToSingleSpaces } from 'utils';
 
 interface Props {
   agentId: string;
@@ -70,7 +69,6 @@ export const ManagementNewSession = ({
           name="sessionId"
           placeholder="Enter session ID"
           component={Fields.Input}
-          parse={convertToSingleSpaces}
         />
       </FormGroup>
       <Field

@@ -22,7 +22,7 @@ import { useParams } from 'react-router-dom';
 import {
   Icons, Tooltip, GeneralAlerts, FormGroup, Spinner, Button,
 } from '@drill4j/ui-kit';
-import { Field, Form } from 'react-final-form';
+import { Form } from 'react-final-form';
 import 'twin.macro';
 
 import {
@@ -33,6 +33,7 @@ import { parsePackages, formatPackages, dotsAndSlashesToSlash } from 'utils';
 import { Agent } from 'types/agent';
 import { useFormHandleSubmit, usePreserveCaretPosition } from 'hooks';
 import { NotificationManagerContext } from 'notification-manager';
+import { Field } from 'components';
 
 interface Props {
   agent: Agent;

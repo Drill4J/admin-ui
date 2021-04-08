@@ -16,7 +16,8 @@
 import { useContext, useEffect } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
-import { Field, Form } from 'react-final-form';
+import { Form } from 'react-final-form';
+import { Field } from 'components';
 import {
   Button, FormGroup, GeneralAlerts, Spinner,
 } from '@drill4j/ui-kit';
