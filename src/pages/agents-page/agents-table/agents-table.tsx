@@ -50,7 +50,7 @@ export const AgentsTable = ({ agents }: Props) => (
           name="environment"
           label="Environment"
           Cell={({ value, item }) => (
-            <div className="text-ellipsis" title={value}>{item.status === AGENT_STATUS.NOT_REGISTERED ? 'n/a' : value}</div>
+            <div className="text-ellipsis" title={value}>{item.status === AGENT_STATUS.NOT_REGISTERED || !value ? 'n/a' : value}</div>
           )}
           align="start"
         />,
@@ -80,9 +80,20 @@ export const AgentsTable = ({ agents }: Props) => (
       <Column
         name="environment"
         label="Environment"
-        Cell={({ value, item }) => (
-          <div className="text-ellipsis" title={value}>{item.status === AGENT_STATUS.NOT_REGISTERED ? 'n/a' : value}</div>
-        )}
+        Cell={({ value, item }) => {
+          if (item.agentType === 'ServiceGroup') {
+            return (
+              <div className="text-ellipsis" title={value}>
+                {item.agents.some((agent: Agent) => agent.status === AGENT_STATUS.NOT_REGISTERED) || !value ? 'n/a' : value}
+              </div>
+            );
+          }
+          return (
+            <div className="text-ellipsis" title={value}>
+              {item.status === AGENT_STATUS.NOT_REGISTERED || !value ? 'n/a' : value}
+            </div>
+          );
+        }}
         align="start"
       />
       <Column
