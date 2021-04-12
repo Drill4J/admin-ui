@@ -14,4 +14,4 @@
  * limitations under the License.
  */
 
-export const dotsAndSlashesToSlash = (str: string) => str.replace(/[./]+/g, '/');
+export const dotsAndSlashesToSlash = (str: string) => str.replace(/[./" "]+/g, '/');
