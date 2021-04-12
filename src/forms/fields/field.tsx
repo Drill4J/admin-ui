@@ -39,7 +39,8 @@ export const field = <T, >(Input: React.ElementType) => (props: FieldRenderProps
         {...input}
         {...rest}
         error={isError}
-        onChange={input.type === 'checkbox' ? input.onChange : (event: any) => handleOnChange(input, event)}
+        onBlur={(event: React.ChangeEvent<HTMLInputElement>) => input.onChange({ target: { value: event.target.value.trimEnd() } })}
+        onChange={input.type === 'checkbox' ? input.onChange : (event: React.ChangeEvent<HTMLInputElement>) => handleOnChange(input, event)}
       />
       {isError && <ErrorMessage>{meta.error || meta.submitError}</ErrorMessage>}
     </>
