@@ -23,17 +23,12 @@ import {
 import { sessionPaneReducer } from './reducer';
 import { SessionsManagementPane } from '../sessions-management-pane';
 
-interface Props {
-  isOpen: boolean;
-  onToggle: (value: boolean) => void;
-}
-
-export const SessionsManagementPaneProvider = ({ isOpen, onToggle }: Props) => {
+export const SessionsManagementPaneProvider = () => {
   const [state, dispatch] = useReducer(sessionPaneReducer, defaultState);
   return (
     <SessionsManagementPaneContext.Provider value={state}>
       <SessionsManagementPaneDispatchContext.Provider value={dispatch}>
-        <SessionsManagementPane isOpen={isOpen} onToggle={onToggle} />
+        <SessionsManagementPane />
       </SessionsManagementPaneDispatchContext.Provider>
     </SessionsManagementPaneContext.Provider>
   );

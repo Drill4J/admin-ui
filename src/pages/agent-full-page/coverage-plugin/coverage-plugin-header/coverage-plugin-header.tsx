@@ -13,9 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { useContext, useState } from 'react';
+import { useContext } from 'react';
 import {
-  NavLink, useParams, Link,
+  NavLink, useParams, Link, Route,
 } from 'react-router-dom';
 import { Button, Icons, Tooltip } from '@drill4j/ui-kit';
 import tw, { styled } from 'twin.macro';
@@ -36,7 +36,6 @@ import { ParentBuild } from 'types/parent-build';
 import { TestTypeSummary } from 'types/test-type-summary';
 import { ActionSection } from './action-section';
 import { BaselineBuildModal } from './baseline-build-modal';
-import { RisksModal } from '../risks-modal';
 import { toggleBaseline } from '../api';
 
 interface Props {
@@ -53,11 +52,11 @@ const BaselinePanel = styled.div`
   grid-template-columns: max-content minmax(64px, 60%);
   grid-template-rows: repeat(2, 1fr);
 `;
-const FlagWrapper = styled.div(({ active }: { active?: boolean }) => [
+const FlagWrapper = styled(Link)(({ active }: { active?: boolean }) => [
   tw`flex ml-2 text-monochrome-default`,
   active && tw`text-blue-default cursor-pointer`,
 ]);
-const StatusWrapper = styled.div(({ status }: { status?: QualityGateStatus }) => [
+const StatusWrapper = styled(Link)(({ status }: { status?: QualityGateStatus }) => [
   tw`flex items-center h-8 text-14`,
   status === 'PASSED' && tw`text-green-default cursor-pointer`,
   status === 'FAILED' && tw`text-red-default cursor-pointer`,
@@ -68,16 +67,14 @@ const StatusTitle = styled.div`
     ${tw`uppercase`}
   }
 `;
-const Count = styled.div`
+const Count = styled(Link)`
   ${tw`flex items-center w-full text-20 leading-32 cursor-pointer`}
   ${tw`text-monochrome-black hover:text-blue-medium-tint active:text-blue-shade`}
 `;
 
 export const CoveragePluginHeader = ({ previousBuildTests = [] }: Props) => {
-  const [isRisksModalOpen, setIsRisksModalOpen] = useState(false);
-  const [isOpenQualityGatesPane, setIsOpenQualityGatesPane] = useState(false);
-  const [isBaselineBuildModalOpened, setIsBaselineBuildModalOpened] = useState(false);
   const { showMessage } = useContext(NotificationManagerContext);
+
   const { pluginId = '', agentId = '', buildVersion = '' } = useParams<{
     pluginId: string;
     agentId: string;
@@ -128,8 +125,8 @@ export const CoveragePluginHeader = ({ previousBuildTests = [] }: Props) => {
             <div className="text-ellipsis text-monochrome-black" title={buildVersion}>{buildVersion}</div>
             <Tooltip message={<div tw="text-center">{info}</div>} position="top-center">
               <FlagWrapper
+                to={`/full-page/${agentId}/${buildVersion}/${pluginId}/dashboard${!disabled ? '/baseline-build-modal' : ''}`}
                 active={Boolean(isActiveBuild && previousBuildVersion)}
-                onClick={() => !disabled && setIsBaselineBuildModalOpened(true)}
               >
                 <Flag />
               </FlagWrapper>
@@ -171,18 +168,22 @@ export const CoveragePluginHeader = ({ previousBuildTests = [] }: Props) => {
               )}
             </div>
             {!configured ? (
-              <StatusWrapper>
+              <StatusWrapper
+                to={`/full-page/${agentId}/${buildVersion}/${pluginId}/dashboard/quality-gate-pane`}
+                data-test="coverage-plugin-header:configure-button"
+              >
                 <Button
-                  data-test="coverage-plugin-header:configure-button"
                   type="primary"
                   size="small"
-                  onClick={() => setIsOpenQualityGatesPane(true)}
                 >
                   Configure
                 </Button>
               </StatusWrapper>
             ) : (
-              <StatusWrapper status={status} onClick={() => setIsOpenQualityGatesPane(true)}>
+              <StatusWrapper
+                to={`/full-page/${agentId}/${buildVersion}/${pluginId}/dashboard/quality-gate-pane`}
+                status={status}
+              >
                 <StatusIcon />
                 <StatusTitle data-test="coverage-plugin-header:quality-gate-status">
                   {status}
@@ -197,8 +198,8 @@ export const CoveragePluginHeader = ({ previousBuildTests = [] }: Props) => {
         >
           {risksCount > 0 ? (
             <Count
+              to={`/full-page/${agentId}/${buildVersion}/${pluginId}/dashboard/risks-modal`}
               className="flex items-center w-full"
-              onClick={() => setIsRisksModalOpen(true)}
               data-test="action-section:count:risks"
             >
               {risksCount}
@@ -218,49 +219,49 @@ export const CoveragePluginHeader = ({ previousBuildTests = [] }: Props) => {
           previousBuild={{ previousBuildVersion, previousBuildTests }}
         >
           {previousBuildTests.length > 0 ? (
-            <Link to={`/full-page/${agentId}/${buildVersion}/${pluginId}/tests-to-run`}>
-              <Count
-                className="flex items-center w-full"
-                data-test="action-section:count:tests-to-run"
-              >
-                {testToRunCount}
-                <Icons.Expander tw="ml-1 text-blue-default" width={8} height={8} />
-              </Count>
-            </Link>
+            <Count
+              to={`/full-page/${agentId}/${buildVersion}/${pluginId}/tests-to-run`}
+              className="flex items-center w-full"
+              data-test="action-section:count:tests-to-run"
+            >
+              {testToRunCount}
+              <Icons.Expander tw="ml-1 text-blue-default" width={8} height={8} />
+            </Count>
           ) : <div tw="text-20 leading-32 text-monochrome-black" data-test="action-section:no-value:tests-to-run">&ndash;</div>}
         </ActionSection>
       </div>
-      {isRisksModalOpen && <RisksModal isOpen={isRisksModalOpen} onToggle={setIsRisksModalOpen} />}
-      <QualityGatePane
-        isOpen={isOpenQualityGatesPane}
-        onToggle={() => setIsOpenQualityGatesPane(false)}
-        qualityGateSettings={qualityGateSettings}
-        agentId={agentId}
-        pluginId={pluginId}
+      <Route
+        path="/full-page/:agentId/:buildVersion/:pluginId/dashboard/baseline-build-modal"
+        render={() => (
+          <BaselineBuildModal
+            isBaseline={isBaseline}
+            toggleBaseline={async () => {
+              try {
+                await toggleBaseline(agentId, pluginId);
+                showMessage({
+                  type: 'SUCCESS',
+                  text: `Current build has been ${isBaseline
+                    ? 'unset as baseline successfully. All subsequent builds won\'t be compared to it.'
+                    : 'set as baseline successfully. All subsequent builds will be compared to it.'}`,
+                });
+              } catch ({ response: { data: { message } = {} } = {} }) {
+                showMessage({
+                  type: 'ERROR',
+                  text: message || 'There is some issue with your action. Please try again later.',
+                });
+              }
+            }}
+          />
+        )}
       />
-      {isBaselineBuildModalOpened && (
-        <BaselineBuildModal
-          isOpen={isBaselineBuildModalOpened}
-          onToggle={setIsBaselineBuildModalOpened}
-          isBaseline={isBaseline}
-          toggleBaseline={async () => {
-            try {
-              await toggleBaseline(agentId, pluginId);
-              showMessage({
-                type: 'SUCCESS',
-                text: `Current build has been ${isBaseline
-                  ? 'unset as baseline successfully. All subsequent builds won\'t be compared to it.'
-                  : 'set as baseline successfully. All subsequent builds will be compared to it.'}`,
-              });
-            } catch ({ response: { data: { message } = {} } = {} }) {
-              showMessage({
-                type: 'ERROR',
-                text: message || 'There is some issue with your action. Please try again later.',
-              });
-            }
-          }}
-        />
-      )}
+      <Route
+        path="/full-page/:agentId/:buildVersion/:pluginId/dashboard/quality-gate-pane"
+        render={() => (
+          <QualityGatePane
+            qualityGateSettings={qualityGateSettings}
+          />
+        )}
+      />
     </Content>
   );
 };

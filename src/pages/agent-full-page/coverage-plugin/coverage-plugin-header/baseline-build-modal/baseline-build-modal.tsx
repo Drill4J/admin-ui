@@ -19,9 +19,9 @@ import {
 } from '@drill4j/ui-kit';
 import tw, { styled } from 'twin.macro';
 
+import { useCloseModal } from 'hooks';
+
 interface Props {
-  isOpen: boolean;
-  onToggle: (value: boolean) => void;
   isBaseline: boolean;
   toggleBaseline: () => void;
 }
@@ -31,14 +31,15 @@ const Message = styled.div`
 `;
 
 export const BaselineBuildModal = ({
-  isOpen, onToggle, isBaseline, toggleBaseline,
+  isBaseline, toggleBaseline,
 }: Props) => {
   const [isConfirmed, setIsConfirmed] = useState(isBaseline);
+  const closeModal = useCloseModal('/baseline-build-modal');
 
   return (
     <Popup
-      isOpen={isOpen}
-      onToggle={onToggle}
+      isOpen
+      onToggle={closeModal}
       header={`${isBaseline ? 'Unset' : 'Set'} as Baseline Build`}
       closeOnFadeClick
     >
@@ -74,13 +75,13 @@ export const BaselineBuildModal = ({
               size="large"
               onClick={() => {
                 toggleBaseline();
-                onToggle(false);
+                closeModal();
               }}
               disabled={!isConfirmed}
             >
               {isBaseline ? 'Unset' : 'Set'} as Baseline
             </Button>
-            <Button type="secondary" size="large" onClick={() => onToggle(false)}>
+            <Button type="secondary" size="large" onClick={closeModal}>
               Cancel
             </Button>
           </div>

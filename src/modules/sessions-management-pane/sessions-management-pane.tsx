@@ -27,7 +27,7 @@ import {
   required,
   handleFieldErrors,
 } from 'forms';
-import { useGeneralAlertMessage } from 'hooks';
+import { useCloseModal, useGeneralAlertMessage } from 'hooks';
 import { Stub } from 'components';
 import { ManagementNewSession } from './management-new-session';
 import { useActiveSessions } from './use-active-sessions';
@@ -40,11 +40,6 @@ import { BulkOperationWarning } from './bulk-operation-warning';
 import { ActionsPanel } from './actions-panel';
 import { setIsNewSession, useSessionsPaneDispatch, useSessionsPaneState } from './store';
 
-interface Props {
-  isOpen: boolean;
-  onToggle: (value: boolean) => void;
-}
-
 const validateManageSessionsPane = composeValidators(
   required('sessionId', 'Session ID'),
   sizeLimit({
@@ -52,7 +47,7 @@ const validateManageSessionsPane = composeValidators(
   }),
 );
 
-export const SessionsManagementPane = ({ isOpen, onToggle }: Props) => {
+export const SessionsManagementPane = () => {
   const dispatch = useSessionsPaneDispatch();
   const { bulkOperation, isNewSession } = useSessionsPaneState();
   const { generalAlertMessage, showGeneralAlertMessage } = useGeneralAlertMessage();
@@ -64,9 +59,10 @@ export const SessionsManagementPane = ({ isOpen, onToggle }: Props) => {
   const activeSessions = useActiveSessions(agentType, id, buildVersion) || [];
   const hasGlobalSession = activeSessions.some(({ isGlobal }) => isGlobal);
   useEffect(() => showGeneralAlertMessage(null), [isNewSession]);
+  const closeModal = useCloseModal('/session-management-pane');
 
   return (
-    <Modal isOpen={isOpen} onToggle={onToggle}>
+    <Modal isOpen onToggle={closeModal}>
       <Form
         onSubmit={async (values: { sessionId: string; isRealtime: boolean; isGlobal: boolean }, form): Promise<unknown> => {
           try {
@@ -140,7 +136,7 @@ export const SessionsManagementPane = ({ isOpen, onToggle }: Props) => {
                 <ActionsPanel
                   activeSessions={activeSessions}
                   startSessionDisabled={(invalid && !dirtySinceLastSubmit) || hasValidationErrors || submitting}
-                  onToggle={onToggle}
+                  onToggle={closeModal}
                   handleSubmit={handleSubmit}
                   submitting={submitting}
                 />

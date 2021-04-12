@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 import { useContext, useState } from 'react';
-import { Redirect, useParams } from 'react-router-dom';
+import { Redirect, useHistory, useParams } from 'react-router-dom';
 import {
   Icons, Menu, Button, SessionIndicator,
 } from '@drill4j/ui-kit';
@@ -60,6 +60,7 @@ export const ScopeInfo = () => {
     name = '', active = false, enabled = false, started = 0, finished = 0, sessionsFinished,
   } = scope || {};
   const [selectedTab, setSelectedTab] = useState('coverage');
+  const { push, location: { pathname = '' } } = useHistory();
   const menuActions = [
     !active && {
       label: `${enabled ? 'Ignore' : 'Include'} in stats`,
@@ -82,7 +83,10 @@ export const ScopeInfo = () => {
     active && {
       label: 'Sessions Management',
       icon: 'ManageSessions',
-      onClick: () => dispatch(openModal('SessionsManagementModal', null)),
+      onClick: () => {
+        push(`${pathname}/session-management-pane`);
+        dispatch(openModal(undefined, null));
+      },
     },
     {
       label: 'Rename',

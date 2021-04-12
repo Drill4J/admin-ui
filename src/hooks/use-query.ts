@@ -13,16 +13,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { ActiveScope } from 'types/active-scope';
-import { ActiveSessions } from 'types/active-sessions';
+import { useLocation } from 'react-router-dom';
 
-export type ModalName =
-  | 'RenameScopeModal'
-  | 'DeleteScopeModal'
-  | 'FinishScopeModal';
-
-export interface PluginState {
-  openedModalName?: ModalName;
-  scope: ActiveScope | null;
-  activeSessions: ActiveSessions;
+export function useQuery() {
+  return new URLSearchParams(useLocation().search);
 }

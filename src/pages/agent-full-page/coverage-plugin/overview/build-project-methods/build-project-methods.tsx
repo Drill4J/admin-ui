@@ -13,8 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { useState } from 'react';
-import { LinkButton } from '@drill4j/ui-kit';
+import { Link, useParams } from 'react-router-dom';
 import 'twin.macro';
 
 import { BuildMethodsCard } from 'components';
@@ -27,7 +26,6 @@ import { AGENT_STATUS } from 'common/constants';
 import { PreviousBuildInfo } from './previous-build-info-types';
 import { BuildCoverageInfo } from './build-coverage-info';
 import { ActiveBuildCoverageInfo } from './active-build-coverage-info';
-import { RisksModal } from '../../risks-modal';
 
 interface Props {
   scope?: ActiveScope | null;
@@ -44,11 +42,15 @@ export const BuildProjectMethods = ({
   loading,
   buildCoverage,
 }: Props) => {
-  const [risksFilter, setRisksFilter] = useState<string>('');
   const {
     all, new: newMethods, modified, deleted, risks,
   } = useBuildVersion<Methods>('/build/methods') || {};
   const { percentage: buildCodeCoverage = 0 } = buildCoverage;
+  const { pluginId = '', agentId = '', buildVersion = '' } = useParams<{
+    pluginId: string;
+    agentId: string;
+    buildVersion: string;
+  }>();
 
   return (
     <div tw="flex flex-col gap-8">
@@ -81,13 +83,13 @@ export const BuildProjectMethods = ({
           label="NEW"
         >
           {Boolean(risks?.new) && (
-            <LinkButton
-              size="small"
-              onClick={() => setRisksFilter('new')}
+            <Link
+              tw="link"
+              to={`/full-page/${agentId}/${buildVersion}/${pluginId}/dashboard/risks-modal/?filter=new`}
               data-test="build-project-methods:link-button:new:risks"
             >
               {risks?.new} risks
-            </LinkButton>
+            </Link>
           )}
         </BuildMethodsCard>
         <BuildMethodsCard
@@ -96,23 +98,16 @@ export const BuildProjectMethods = ({
           label="MODIFIED"
         >
           {Boolean(risks?.modified) && (
-            <LinkButton
-              size="small"
-              onClick={() => setRisksFilter('modified')}
+            <Link
+              tw="link"
+              to={`/full-page/${agentId}/${buildVersion}/${pluginId}/dashboard/risks-modal/?filter=modified`}
               data-test="build-project-methods:link-button:modified:risks"
             >
               {risks?.modified} risks
-            </LinkButton>
+            </Link>
           )}
         </BuildMethodsCard>
       </div>
-      {risksFilter && (
-        <RisksModal
-          isOpen={Boolean(risksFilter)}
-          onToggle={() => setRisksFilter('')}
-          filter={risksFilter}
-        />
-      )}
     </div>
   );
 };

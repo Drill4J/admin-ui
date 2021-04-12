@@ -13,10 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import {
-  useRef, useState,
-} from 'react';
+import { useRef } from 'react';
 import { Icons } from '@drill4j/ui-kit';
+import { Route, useHistory, useParams } from 'react-router-dom';
 import 'twin.macro';
 
 import { ClassCoverage } from 'types/class-coverage';
@@ -42,11 +41,6 @@ interface Props {
 export const CoverageDetails = ({
   associatedTestsTopic, classesTopicPrefix, topic, showCoverageIcon,
 }: Props) => {
-  const [selectedAssocTests, setSelectedAssocTests] = useState<null | {
-    id: string,
-    assocTestsCount: number,
-    treeLevel: number,
-  }>(null);
   const dispatch = useTableActionsDispatch();
   const { search, sort } = useTableActionsState();
   const {
@@ -65,6 +59,14 @@ export const CoverageDetails = ({
     <Column name="totalMethodsCount" testContext="total-methods-count" />,
     <Column name="coveredMethodsCount" testContext="covered-methods-count" />,
   ];
+  const { push } = useHistory();
+  const {
+    buildVersion, agentId, pluginId, scopeId,
+  } = useParams<{ agentId?: string; pluginId?: string; buildVersion?: string; scopeId?: string}>();
+
+  const openModal = (id: string, treeLevel: number) => (scopeId
+    ? push(`/full-page/${agentId}/${buildVersion}/${pluginId}/scope/${scopeId}/associated-test-modal/?testId=${id}&treeLevel=${treeLevel}`)
+    : push(`/full-page/${agentId}/${buildVersion}/${pluginId}/dashboard/associated-test-modal/?testId=${id}&treeLevel=${treeLevel}`));
 
   return (
     <div tw="flex flex-col">
@@ -104,12 +106,10 @@ export const CoverageDetails = ({
               label="Associated tests"
               Cell={({
                 value = '',
-                item: { id = '', assocTestsCount = 0 } = {},
+                item: { id = '' } = {},
               }: CellProps<string, { id?: string; assocTestsCount?: number }>) => (
                 <Cells.Clickable
-                  onClick={() => {
-                    setSelectedAssocTests({ id, assocTestsCount, treeLevel: 2 });
-                  }}
+                  onClick={() => openModal(id, 2)}
                   data-test="coverage-details:associated-tests-count"
                   disabled={!value}
                 >
@@ -132,12 +132,10 @@ export const CoverageDetails = ({
               label="Associated tests"
               Cell={({
                 value = '',
-                item: { id = '', assocTestsCount = 0 } = {},
+                item: { id = '' } = {},
               }: CellProps<string, { id?: string; assocTestsCount?: number }>) => (
                 <Cells.Clickable
-                  onClick={() => {
-                    setSelectedAssocTests({ id, assocTestsCount, treeLevel: 3 });
-                  }}
+                  onClick={() => openModal(id, 3)}
                   data-test="coverage-details:associated-tests-count"
                   disabled={!value}
                 >
@@ -175,14 +173,9 @@ export const CoverageDetails = ({
           <Column
             name="assocTestsCount"
             label="Associated tests"
-            Cell={({
-              value = '',
-              item: { id = '', assocTestsCount = 0 } = {},
-            }: CellProps<string, { id?: string; assocTestsCount?: number }>) => (
+            Cell={({ value = '', item: { id = '' } = {} }: CellProps<string, { id?: string; assocTestsCount?: number }>) => (
               <Cells.Clickable
-                onClick={() => {
-                  setSelectedAssocTests({ id, assocTestsCount, treeLevel: 1 });
-                }}
+                onClick={() => openModal(id, 1)}
                 data-test="coverage-details:associated-tests-count"
                 disabled={!value}
               >
@@ -193,14 +186,17 @@ export const CoverageDetails = ({
         </ExpandableTable>
         <div ref={ref} />
       </>
-      {selectedAssocTests !== null && (
-        <AssociatedTestModal
-          selectedAssocTests={selectedAssocTests}
-          isOpen={Boolean(selectedAssocTests.id)}
-          onToggle={() => setSelectedAssocTests(null)}
-          associatedTestsTopic={associatedTestsTopic}
-        />
-      )}
+      <Route
+        path={[
+          '/full-page/:agentId/:buildVersion/:pluginId/dashboard/associated-test-modal',
+          '/full-page/:agentId/:buildVersion/:pluginId/scopes/:scopeId/associated-test-modal',
+        ]}
+        render={() => (
+          <AssociatedTestModal
+            associatedTestsTopic={associatedTestsTopic}
+          />
+        )}
+      />
     </div>
   );
 };

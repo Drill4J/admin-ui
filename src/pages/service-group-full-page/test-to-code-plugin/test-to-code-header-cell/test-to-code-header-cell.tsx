@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 import { Icons } from '@drill4j/ui-kit';
+import { Link } from 'react-router-dom';
 import tw, { styled } from 'twin.macro';
 
 import { spacesToDashes } from 'utils';
@@ -21,25 +22,29 @@ import { spacesToDashes } from 'utils';
 interface Props {
   label: string;
   value?: string | number;
-  onClick?: () => void;
+  path?: string;
 }
 
 const Value = styled.span(({ clickable }: {clickable: boolean}) => [
-  tw`inline-flex items-center ml-4 text-20 text-monochrome-black`,
+  tw`ml-4 text-20 text-monochrome-black`,
   clickable && tw`cursor-pointer hover:text-blue-default active:text-blue-shade`,
 ]);
 
-export const TestToCodeHeaderCell = ({ label, value, onClick }: Props) => (
+export const TestToCodeHeaderCell = ({
+  label, value, path,
+}: Props) => (
   <div>
     <div tw="border-l border-monochrome-medium-tint">
       <div tw="ml-4 font-bold text-12 text-monochrome-default uppercase">{label}</div>
       <Value
-        onClick={onClick}
-        clickable={Boolean(onClick)}
+        clickable={Boolean(path)}
         data-test={`dashboard-header-cell:${spacesToDashes(label)}:value`}
       >
-        {value}
-        {Boolean(onClick) && <Icons.Expander tw="ml-1 text-blue-default" height={8} />}
+        {path ? (
+          <Link tw="inline-flex items-center" to={path}>
+            {value}<Icons.Expander tw="ml-1 text-blue-default" height={8} />
+          </Link>
+        ) : value}
       </Value>
     </div>
   </div>

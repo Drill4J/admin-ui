@@ -13,16 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { ActiveScope } from 'types/active-scope';
-import { ActiveSessions } from 'types/active-sessions';
+import { useHistory, useLocation } from 'react-router-dom';
 
-export type ModalName =
-  | 'RenameScopeModal'
-  | 'DeleteScopeModal'
-  | 'FinishScopeModal';
+export const useCloseModal = (name: string) => {
+  const { pathname } = useLocation();
+  const { push } = useHistory();
 
-export interface PluginState {
-  openedModalName?: ModalName;
-  scope: ActiveScope | null;
-  activeSessions: ActiveSessions;
-}
+  return () => push(pathname.split(name)[0]);
+};

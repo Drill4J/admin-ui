@@ -20,14 +20,10 @@ import {
 } from '@drill4j/ui-kit';
 import tw, { styled } from 'twin.macro';
 
-import { useElementSize, useBuildVersion } from 'hooks';
+import {
+  useElementSize, useBuildVersion, useQuery, useCloseModal,
+} from 'hooks';
 import { Risks } from 'types/risks';
-
-interface Props {
-  isOpen: boolean;
-  onToggle: (value: boolean) => void;
-  filter?: string;
-}
 
 const Header = styled.div`
   ${tw`flex items-center h-16 pl-6`}
@@ -37,8 +33,9 @@ const Header = styled.div`
   }
 `;
 
-export const RisksModal = ({ isOpen, onToggle, filter = 'all' }: Props) => {
+export const RisksModal = () => {
   const risks = useBuildVersion<Risks[]>('/build/risks') || [];
+  const filter = useQuery().get('filter') || 'all';
   const [selectedSection, setSelectedSection] = useState<string>(filter);
   const node = useRef<HTMLDivElement>(null);
   const { height: methodsListHeight } = useElementSize(node);
@@ -56,7 +53,7 @@ export const RisksModal = ({ isOpen, onToggle, filter = 'all' }: Props) => {
   };
 
   return (
-    <Modal isOpen={isOpen} onToggle={onToggle}>
+    <Modal isOpen onToggle={useCloseModal('/risks-modal')}>
       <div className="flex flex-col h-full">
         <Header>
           <Icons.Test height={20} width={18} viewBox="0 0 18 20" />

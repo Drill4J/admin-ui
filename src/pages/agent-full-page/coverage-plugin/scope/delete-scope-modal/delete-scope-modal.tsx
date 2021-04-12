@@ -14,9 +14,9 @@
  * limitations under the License.
  */
 import { useContext, useState } from 'react';
-import { useHistory, useParams } from 'react-router-dom';
+import { useHistory, useParams, Link } from 'react-router-dom';
 import {
-  Button, Popup, OverflowText, GeneralAlerts, Spinner, LinkButton,
+  Button, Popup, OverflowText, GeneralAlerts, Spinner,
 } from '@drill4j/ui-kit';
 import 'twin.macro';
 
@@ -68,12 +68,13 @@ export const DeleteScopeModal = ({ isOpen, onToggle, scope }: Props) => {
               <span>
                 You are about to delete an active scope, but at least one active<br />
                 session has been detected. First, you need to finish it in <br />
-                <LinkButton
-                  tw="text-14"
-                  onClick={() => dispatch(openModal('SessionsManagementModal', null))}
+                <Link
+                  to={`${pathname}/session-management-pane`}
+                  tw="link font-bold text-14"
+                  onClick={() => dispatch(openModal(undefined, null))}
                 >
                   Sessions Management
-                </LinkButton>
+                </Link>
               </span>
             )}
             { scope && !scope.active && (
