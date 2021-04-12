@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { Field } from 'components';
+import { Field } from 'react-final-form';
 import { FormGroup, GeneralAlerts } from '@drill4j/ui-kit';
 import 'twin.macro';
 
@@ -30,7 +30,7 @@ export const SystemSettingsStep = () => (
         <FormGroup tw="w-97" label="Project Package(s)">
           <Field
             tw="h-20"
-            type="textarea"
+            component={Fields.Textarea}
             name="systemSettings.packages"
             placeholder="e.g. com/example/mypackage&#10;foo/bar/baz&#10;and so on."
             parse={parsePackages}

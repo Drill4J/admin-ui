@@ -16,8 +16,8 @@
 import { useContext, useEffect } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
-import { Form } from 'react-final-form';
-import { Field } from 'components';
+import { Form, Field } from 'react-final-form';
+
 import {
   Button, FormGroup, GeneralAlerts, Spinner,
 } from '@drill4j/ui-kit';
@@ -90,7 +90,6 @@ export const GeneralSettingsForm = ({ agent, setPristineSettings }: Props) => {
               <FormGroup tw="w-97" label="Description" optional>
                 <Field
                   tw="h-20"
-                  type="textarea"
                   name="description"
                   component={Fields.Textarea}
                   placeholder="Add agent's description"

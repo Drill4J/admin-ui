@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { Field } from 'components';
+import { Field } from 'react-final-form';
 import { useParams } from 'react-router-dom';
 import { FormGroup, GeneralAlerts } from '@drill4j/ui-kit';
 import { styled } from 'twin.macro';
@@ -45,7 +45,6 @@ export const JavaGeneralRegistrationForm = () => {
         <FormGroup tw="w-97" label="Description" optional>
           <Field
             tw="h-20"
-            type="textarea"
             name="description"
             component={Fields.Textarea}
             placeholder="Add agent's description"

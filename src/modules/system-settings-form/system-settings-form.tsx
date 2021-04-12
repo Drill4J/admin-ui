@@ -22,18 +22,17 @@ import { useParams } from 'react-router-dom';
 import {
   Icons, Tooltip, GeneralAlerts, FormGroup, Spinner, Button,
 } from '@drill4j/ui-kit';
-import { Form } from 'react-final-form';
+import { Form, Field } from 'react-final-form';
 import 'twin.macro';
 
 import {
-  composeValidators, requiredArray, sizeLimit,
+  composeValidators, Fields, requiredArray, sizeLimit,
 } from 'forms';
 import { UnlockingSystemSettingsFormModal } from 'modules';
 import { parsePackages, formatPackages, dotsAndSlashesToSlash } from 'utils';
 import { Agent } from 'types/agent';
 import { useFormHandleSubmit } from 'hooks';
 import { NotificationManagerContext } from 'notification-manager';
-import { Field } from 'components';
 
 interface Props {
   agent: Agent;
@@ -123,7 +122,7 @@ export const SystemSettingsForm = ({
                 </div>
                 <Field
                   tw="w-97 h-20"
-                  type="textarea"
+                  component={Fields.Textarea}
                   name="systemSettings.packages"
                   parse={parsePackages}
                   format={formatPackages}
@@ -142,6 +141,7 @@ export const SystemSettingsForm = ({
               <FormGroup tw="w-97" label="Header Mapping" optional>
                 <Field
                   name="systemSettings.sessionIdHeaderName"
+                  component={Fields.Input}
                   placeholder="Enter session header name"
                 />
               </FormGroup>

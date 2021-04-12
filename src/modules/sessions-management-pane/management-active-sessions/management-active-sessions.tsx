@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 import { LinkButton } from '@drill4j/ui-kit';
-import { Field } from 'components';
+import { Field } from 'react-final-form';
 import 'twin.macro';
 
 import { Fields } from 'forms';

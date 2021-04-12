@@ -13,7 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+import { usePreserveCaretPosition } from 'hooks';
 import { FieldRenderProps } from 'react-final-form';
+import { convertToSingleSpaces } from 'utils';
 import tw, { styled } from 'twin.macro';
 
 const ErrorMessage = styled.div`
@@ -25,11 +27,20 @@ const ErrorMessage = styled.div`
 `;
 
 export const field = <T, >(Input: React.ElementType) => (props: FieldRenderProps<T>) => {
-  const { input, meta, ...rest } = props;
+  const {
+    input, meta, replacer, ...rest
+  } = props;
   const isError = (meta.error || (meta.submitError && !meta.dirtySinceLastSubmit)) && meta.touched;
+  const handleOnChange = usePreserveCaretPosition(replacer || convertToSingleSpaces);
+
   return (
     <>
-      <Input {...input} {...rest} error={isError} />
+      <Input
+        {...input}
+        {...rest}
+        error={isError}
+        onChange={input.type === 'checkbox' ? input.onChange : (event: any) => handleOnChange(input, event)}
+      />
       {isError && <ErrorMessage>{meta.error || meta.submitError}</ErrorMessage>}
     </>
   );

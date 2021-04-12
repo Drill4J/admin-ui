@@ -14,8 +14,8 @@
  * limitations under the License.
  */
 import { useContext, useState } from 'react';
-import { Form } from 'react-final-form';
-import { Field } from 'components';
+import { Form, Field } from 'react-final-form';
+
 import { useParams } from 'react-router-dom';
 import {
   Button, FormGroup, Popup, GeneralAlerts, Spinner,
