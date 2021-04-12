@@ -22,7 +22,7 @@ import { useParams } from 'react-router-dom';
 import {
   Icons, Tooltip, GeneralAlerts, FormGroup, Spinner, Button,
 } from '@drill4j/ui-kit';
-import { Field, Form } from 'react-final-form';
+import { Form, Field } from 'react-final-form';
 import 'twin.macro';
 
 import {
@@ -31,7 +31,7 @@ import {
 import { UnlockingSystemSettingsFormModal } from 'modules';
 import { parsePackages, formatPackages, dotsAndSlashesToSlash } from 'utils';
 import { Agent } from 'types/agent';
-import { useFormHandleSubmit, usePreserveCaretPosition } from 'hooks';
+import { useFormHandleSubmit } from 'hooks';
 import { NotificationManagerContext } from 'notification-manager';
 
 interface Props {
@@ -47,8 +47,6 @@ export const SystemSettingsForm = ({
   const [isUnlockingModalOpened, setIsUnlockingModalOpened] = useState(false);
   const { showMessage } = useContext(NotificationManagerContext);
   const { id = '' } = useParams<{ id: string }>();
-
-  const handleOnChange = usePreserveCaretPosition(dotsAndSlashesToSlash);
 
   return (
     <Form
@@ -123,21 +121,15 @@ export const SystemSettingsForm = ({
                   </div>
                 </div>
                 <Field
+                  tw="w-97 h-20"
+                  component={Fields.Textarea}
                   name="systemSettings.packages"
                   parse={parsePackages}
                   format={formatPackages}
-                >
-                  {({ input, meta }) => (
-                    <Fields.Textarea
-                      tw="w-97 h-20"
-                      input={input}
-                      meta={meta}
-                      onChange={(event: any) => handleOnChange(input, event)}
-                      placeholder="e.g. com/example/mypackage&#10;foo/bar/baz&#10;and so on."
-                      disabled={!unlockedPackages}
-                    />
-                  )}
-                </Field>
+                  placeholder="e.g. com/example/mypackage&#10;foo/bar/baz&#10;and so on."
+                  disabled={!unlockedPackages}
+                  replacer={dotsAndSlashesToSlash}
+                />
                 {unlockedPackages && (
                   <div tw="w-97 text-12 leading-16 text-monochrome-default">
                     Make sure you add application packages only, otherwise agent&apos;s performance will be affected.

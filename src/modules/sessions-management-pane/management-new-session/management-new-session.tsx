@@ -24,7 +24,6 @@ import {
 import tw, { styled } from 'twin.macro';
 
 import { Fields } from 'forms';
-import { convertToSingleSpaces } from 'utils';
 
 interface Props {
   agentId: string;
@@ -70,7 +69,6 @@ export const ManagementNewSession = ({
           name="sessionId"
           placeholder="Enter session ID"
           component={Fields.Input}
-          parse={convertToSingleSpaces}
         />
       </FormGroup>
       <Field

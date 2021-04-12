@@ -17,7 +17,7 @@ import { Icons, Tooltip } from '@drill4j/ui-kit';
 import { Field } from 'react-final-form';
 import { styled } from 'twin.macro';
 
-import { Fields } from 'forms/fields';
+import { Fields } from 'forms';
 import { ConditionSettingByType } from 'types/quality-gate-type';
 import { parseCoverage, inputLengthRestriction } from 'utils';
 import { ThresholdValueField } from './threshold-value-field';
