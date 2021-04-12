@@ -26,12 +26,12 @@ import { Form } from 'react-final-form';
 import 'twin.macro';
 
 import {
-  composeValidators, Fields, requiredArray, sizeLimit,
+  composeValidators, requiredArray, sizeLimit,
 } from 'forms';
 import { UnlockingSystemSettingsFormModal } from 'modules';
 import { parsePackages, formatPackages, dotsAndSlashesToSlash } from 'utils';
 import { Agent } from 'types/agent';
-import { useFormHandleSubmit, usePreserveCaretPosition } from 'hooks';
+import { useFormHandleSubmit } from 'hooks';
 import { NotificationManagerContext } from 'notification-manager';
 import { Field } from 'components';
 
@@ -48,8 +48,6 @@ export const SystemSettingsForm = ({
   const [isUnlockingModalOpened, setIsUnlockingModalOpened] = useState(false);
   const { showMessage } = useContext(NotificationManagerContext);
   const { id = '' } = useParams<{ id: string }>();
-
-  const handleOnChange = usePreserveCaretPosition(dotsAndSlashesToSlash);
 
   return (
     <Form
@@ -124,21 +122,15 @@ export const SystemSettingsForm = ({
                   </div>
                 </div>
                 <Field
+                  tw="w-97 h-20"
+                  type="textarea"
                   name="systemSettings.packages"
                   parse={parsePackages}
                   format={formatPackages}
-                >
-                  {({ input, meta }) => (
-                    <Fields.Textarea
-                      tw="w-97 h-20"
-                      input={input}
-                      meta={meta}
-                      onChange={(event: any) => handleOnChange(input, event)}
-                      placeholder="e.g. com/example/mypackage&#10;foo/bar/baz&#10;and so on."
-                      disabled={!unlockedPackages}
-                    />
-                  )}
-                </Field>
+                  placeholder="e.g. com/example/mypackage&#10;foo/bar/baz&#10;and so on."
+                  disabled={!unlockedPackages}
+                  replacer={dotsAndSlashesToSlash}
+                />
                 {unlockedPackages && (
                   <div tw="w-97 text-12 leading-16 text-monochrome-default">
                     Make sure you add application packages only, otherwise agent&apos;s performance will be affected.
@@ -150,7 +142,6 @@ export const SystemSettingsForm = ({
               <FormGroup tw="w-97" label="Header Mapping" optional>
                 <Field
                   name="systemSettings.sessionIdHeaderName"
-                  component={Fields.Input}
                   placeholder="Enter session header name"
                 />
               </FormGroup>

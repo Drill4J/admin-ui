@@ -13,16 +13,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+import { Fields } from 'forms';
+import { usePreserveCaretPosition } from 'hooks';
 import { Field as ReactFinalFormField, FieldProps } from 'react-final-form';
 import { convertToSingleSpaces } from 'utils';
 
 export const Field = (props: FieldProps<any, any, any>) => {
-  const { parse, type } = props;
+  const { replacer, type } = props;
+  const handleOnChange = usePreserveCaretPosition(replacer || convertToSingleSpaces);
+  const Input = type === 'textarea' ? Fields.Textarea : Fields.Input;
 
   return (
-    <ReactFinalFormField
-      parse={type === 'checkbox' ? undefined : (parse || convertToSingleSpaces)}
-      {...props}
-    />
+    <ReactFinalFormField {...props}>
+      {({ input, ...rest }) => (
+        <Input {...input} {...rest} onChange={(event: any) => handleOnChange(input, event)} />
+      )}
+    </ReactFinalFormField>
   );
 };

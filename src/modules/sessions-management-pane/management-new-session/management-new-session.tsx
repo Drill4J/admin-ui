@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 import { Field } from 'components';
+import { Field as Checkbox } from 'react-final-form';
 import { NavLink } from 'react-router-dom';
 import {
   FormGroup,
@@ -71,7 +72,7 @@ export const ManagementNewSession = ({
           component={Fields.Input}
         />
       </FormGroup>
-      <Field
+      <Checkbox
         name="isGlobal"
         type="checkbox"
         render={({ input, meta }) => (
@@ -108,7 +109,7 @@ export const ManagementNewSession = ({
           </div>
         )}
       />
-      <Field
+      <Checkbox
         name="isRealtime"
         type="checkbox"
         component={Fields.Checkbox}

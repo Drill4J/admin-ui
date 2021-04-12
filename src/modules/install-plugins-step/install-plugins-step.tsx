@@ -16,8 +16,9 @@
 import { Icons } from '@drill4j/ui-kit';
 import 'twin.macro';
 
-import { PluginListEntry, Field } from 'components';
+import { PluginListEntry } from 'components';
 import { Plugin } from 'types/plugin';
+import { Field as Checkbox } from 'react-final-form';
 
 interface Props {
   formValues?: { plugins?: string[], availablePlugins?: Plugin[] };
@@ -37,7 +38,7 @@ export const InstallPluginsStep = ({ infoPanel, formValues: { plugins = [], avai
       {availablePlugins.map(({
         id = '', name, description, version,
       }) => (
-        <Field
+        <Checkbox
           name="plugins"
           type="checkbox"
           value={id}

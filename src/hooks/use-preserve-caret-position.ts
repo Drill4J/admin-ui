@@ -15,15 +15,15 @@
 */
 import { useRunAfterUpdate } from './use-run-after-update';
 
-export const usePreserveCaretPosition = (converter: (str: string) => string) => {
+export const usePreserveCaretPosition = (replacer: (str: string) => string) => {
   const runAfterUpdate = useRunAfterUpdate();
 
   const parse = (value: string, caretPosition: number) => {
     const beforeCaret = value.slice(0, caretPosition);
     const afterCaret = value.slice(caretPosition, value.length);
 
-    const parseBeforeCaret = converter(beforeCaret);
-    const parseAfterCaret = converter(afterCaret);
+    const parseBeforeCaret = replacer(beforeCaret);
+    const parseAfterCaret = replacer(afterCaret);
 
     const newValue = parseBeforeCaret + parseAfterCaret;
     const preserveCaret = parseBeforeCaret.length;
