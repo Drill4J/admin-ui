@@ -38,7 +38,7 @@ export const SearchPanel = ({
   const [searchValue, setValue] = useState('');
   const search = useCallback(
     debounce((v) => {
-      onSearch(v);
+      onSearch(v.trimEnd());
     }, 500),
     [onSearch],
   );

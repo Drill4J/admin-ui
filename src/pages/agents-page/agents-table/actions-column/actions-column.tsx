@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { useHistory } from 'react-router-dom';
+import { useHistory, Link } from 'react-router-dom';
 import { Icons, Button, Tooltip } from '@drill4j/ui-kit';
 import 'twin.macro';
 
@@ -73,18 +73,18 @@ export const ActionsColumn = ({ agent }: Props) => {
       )}
       {((status === AGENT_STATUS.ONLINE && agentType !== 'ServiceGroup') ||
         (!hasOfflineAgent && !unregisteredAgentsCount && agentType === 'ServiceGroup')) && (
-        <div className="link text-blue-default cursor-pointer">
+        <Link
+          to={`/agents/${
+            agentType === 'ServiceGroup' ? 'service-group' : 'agent'
+          }/${agentId}/settings/general`}
+          tw="link"
+        >
           <Icons.Settings
-            onClick={() => push(
-              `/agents/${
-                agentType === 'ServiceGroup' ? 'service-group' : 'agent'
-              }/${agentId}/settings/general`,
-            )}
             height={16}
             width={16}
             data-test="action-column:icons-settings"
           />
-        </div>
+        </Link>
       )}
     </div>
   );

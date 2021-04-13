@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 import {
-  useParams, useHistory, useLocation, matchPath,
+  useParams, useLocation, matchPath, Link,
 } from 'react-router-dom';
 import { Icons, Tooltip } from '@drill4j/ui-kit';
 import tw, { styled } from 'twin.macro';
@@ -30,7 +30,7 @@ interface Props {
   matchParams: { path: string };
 }
 
-export const SidebarLink = styled.div(({ active }: {active?: boolean}) => [
+export const SidebarLink = styled(Link)(({ active }: {active?: boolean}) => [
   tw`flex justify-center items-center w-full h-20`,
   tw`border-b border-monochrome-light-tint text-blue-default cursor-pointer`,
   active && tw`text-monochrome-default bg-monochrome-white`,
@@ -39,7 +39,6 @@ export const SidebarLink = styled.div(({ active }: {active?: boolean}) => [
 export const Sidebar = ({ links, matchParams }: Props) => {
   const { agentId } = useParams<{ agentId: string }>();
   const { pathname } = useLocation();
-  const { push } = useHistory();
   const { params: { buildVersion = '', activeLink = '' } = {} } =
       matchPath<{ buildVersion: string; activeLink: string }>(pathname, matchParams) || {};
 
@@ -53,7 +52,7 @@ export const Sidebar = ({ links, matchParams }: Props) => {
           <Tooltip message={<div>{name}</div>} position="right" key={link}>
             <SidebarLink
               active={id === activeLink}
-              onClick={() => push(`/${computed ? `full-page/${agentId}/${buildVersion}/${link}` : link}`)}
+              to={`/${computed ? `full-page/${agentId}/${buildVersion}/${link}` : link}`}
             >
               <Icon />
             </SidebarLink>

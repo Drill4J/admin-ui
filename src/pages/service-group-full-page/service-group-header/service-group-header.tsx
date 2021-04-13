@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { useParams, useHistory } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import { Icons } from '@drill4j/ui-kit';
 import 'twin.macro';
 
@@ -26,7 +26,6 @@ interface Props {
 
 export const ServiceGroupHeader = ({ serviceGroup: { name, summaries = [] } = {} }: Props) => {
   const { id = '' } = useParams<{ id: string }>();
-  const { push } = useHistory();
 
   return (
     <div tw="flex items-center w-full h-28">
@@ -38,14 +37,13 @@ export const ServiceGroupHeader = ({ serviceGroup: { name, summaries = [] } = {}
             Agents&nbsp;<span tw="text-monochrome-default">{summaries.length}</span>
           </div>
         </div>
-        <div className="link">
+        <Link tw="link" to={`/agents/service-group/${id}/settings/general`}>
           <Icons.Settings
             width={32}
             height={32}
-            onClick={() => push(`/agents/service-group/${id}/settings/general`)}
             data-test="service-group-header:settings-button"
           />
-        </div>
+        </Link>
       </div>
     </div>
   );

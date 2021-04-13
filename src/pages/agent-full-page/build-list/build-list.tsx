@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 import { useRef } from 'react';
-import { useHistory, useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import {
   Table, Column, Icons, Tooltip,
 } from '@drill4j/ui-kit';
@@ -36,7 +36,6 @@ const NameCell = styled.div`
 
 export const BuildList = () => {
   const { agentId = '' } = useParams<{ agentId: string }>();
-  const { push } = useHistory();
   const buildVersions = useWsConnection<BuildVersion[]>(defaultAdminSocket, `/agents/${agentId}/builds`) || [];
   const { buildVersion: activeBuildVersion } = useAgent(agentId) || {};
   const { version: baseline } = useBaselineVersion(agentId, activeBuildVersion) || {};
@@ -56,13 +55,10 @@ export const BuildList = () => {
             label="Name"
             Cell={({ value: buildVersion }) => (
               <NameCell
-                onClick={() => {
-                  dispatch(setBuildVersion(buildVersion));
-                  push(`/full-page/${agentId}/${buildVersion}/dashboard`);
-                }}
+                onClick={() => dispatch(setBuildVersion(buildVersion))}
                 title={buildVersion}
               >
-                <div className="link text-ellipsis">{buildVersion}</div>
+                <Link tw="link text-ellipsis" to={`/full-page/${agentId}/${buildVersion}/dashboard`}>{buildVersion}</Link>
                 {baseline === buildVersion && (
                   <Tooltip
                     message={(

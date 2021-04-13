@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { useHistory } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { Icons, Badge, Tooltip } from '@drill4j/ui-kit';
 import tw, { styled } from 'twin.macro';
 
@@ -26,9 +26,9 @@ interface Props {
   withMargin?: boolean;
 }
 
-const AgentName = styled.div`
-  ${tw`text-ellipsis text-monochrome-default`}
-  ${({ disabled }: { disabled: boolean }) => !disabled && tw`link`}
+const AgentName = styled(Link)`
+  ${tw`text-ellipsis text-monochrome-default pointer-events-none`}
+  ${({ disabled }: { disabled: boolean }) => !disabled && tw`link pointer-events-auto`}
 `;
 
 const AgentTypeIcon = styled.div`
@@ -43,7 +43,6 @@ export const NameColumn = ({
     id, name, buildVersion, agentType, status, agentVersion, ...agent
   } = {},
 }: Props) => {
-  const { push } = useHistory();
   const { agents = [] } = agent as ServiceGroupAgents;
   const unregisteredAgentsCount = agents.reduce(
     (acc, item) => (item.status === AGENT_STATUS.NOT_REGISTERED ? acc + 1 : acc),
@@ -72,11 +71,9 @@ export const NameColumn = ({
           <Badge tw="max-h-20px" color="green">{`+${unregisteredAgentsCount}`}</Badge>
         )}
         <AgentName
-          onClick={() => !agentIsDisabled && push(
-            isServiceGroup
-              ? `/service-group-full-page/${id}/service-group-dashboard`
-              : `/full-page/${id}/${buildVersion}/dashboard`,
-          )}
+          to={isServiceGroup
+            ? `/service-group-full-page/${id}/service-group-dashboard`
+            : `/full-page/${id}/${buildVersion}/dashboard`}
           disabled={agentIsDisabled}
           data-test="name-column"
           title={isServiceGroup ? `${name || id} (${agents.length})` : name || id}

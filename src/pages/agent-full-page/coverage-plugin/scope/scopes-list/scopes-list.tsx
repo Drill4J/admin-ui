@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 import { useContext } from 'react';
-import { useParams, useHistory } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import {
   Menu, Icons, Table, Column, Status,
 } from '@drill4j/ui-kit';
@@ -50,7 +50,6 @@ export const ScopesList = () => {
   const { agentId } = usePluginState();
   const { buildVersion: activeBuildVersion = '', status } = useAgent(agentId) || {};
   const { pluginId = '', buildVersion = '' } = useParams<{ pluginId: string; buildVersion: string }>();
-  const { push } = useHistory();
   const dispatch = useCoveragePluginDispatch();
   const activeScope = useActiveScope();
   const scopes = useBuildVersion<ScopeSummary[]>('/build/scopes/finished') || [];
@@ -76,9 +75,9 @@ export const ScopesList = () => {
                   id, started, active, enabled, finished,
                 },
               }) => (
-                <span
+                <Link
                   tw="font-bold text-14 leading-20 cursor-pointer"
-                  onClick={() => push(`/full-page/${agentId}/${buildVersion}/${pluginId}/scopes/${id}`)}
+                  to={`/full-page/${agentId}/${buildVersion}/${pluginId}/scopes/${id}`}
                   data-test="scopes-list:scope-name"
                 >
                   <div className="link text-ellipsis" title={value}>{value}</div>
@@ -89,7 +88,7 @@ export const ScopesList = () => {
                       {!enabled && <Status tw="text-monochrome-default">Ignored</Status>}
                     </div>
                   )}
-                </span>
+                </Link>
               )}
               align="start"
             />

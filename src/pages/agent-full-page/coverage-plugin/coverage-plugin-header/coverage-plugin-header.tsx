@@ -14,7 +14,9 @@
  * limitations under the License.
  */
 import { useContext, useState } from 'react';
-import { NavLink, useHistory, useParams } from 'react-router-dom';
+import {
+  NavLink, useParams, Link,
+} from 'react-router-dom';
 import { Button, Icons, Tooltip } from '@drill4j/ui-kit';
 import tw, { styled } from 'twin.macro';
 
@@ -76,8 +78,6 @@ export const CoveragePluginHeader = ({ previousBuildTests = [] }: Props) => {
   const [isOpenQualityGatesPane, setIsOpenQualityGatesPane] = useState(false);
   const [isBaselineBuildModalOpened, setIsBaselineBuildModalOpened] = useState(false);
   const { showMessage } = useContext(NotificationManagerContext);
-
-  const { push } = useHistory();
   const { pluginId = '', agentId = '', buildVersion = '' } = useParams<{
     pluginId: string;
     agentId: string;
@@ -218,14 +218,15 @@ export const CoveragePluginHeader = ({ previousBuildTests = [] }: Props) => {
           previousBuild={{ previousBuildVersion, previousBuildTests }}
         >
           {previousBuildTests.length > 0 ? (
-            <Count
-              className="flex items-center w-full"
-              onClick={() => push(`/full-page/${agentId}/${buildVersion}/${pluginId}/tests-to-run`)}
-              data-test="action-section:count:tests-to-run"
-            >
-              {testToRunCount}
-              <Icons.Expander tw="ml-1 text-blue-default" width={8} height={8} />
-            </Count>
+            <Link to={`/full-page/${agentId}/${buildVersion}/${pluginId}/tests-to-run`}>
+              <Count
+                className="flex items-center w-full"
+                data-test="action-section:count:tests-to-run"
+              >
+                {testToRunCount}
+                <Icons.Expander tw="ml-1 text-blue-default" width={8} height={8} />
+              </Count>
+            </Link>
           ) : <div tw="text-20 leading-32 text-monochrome-black" data-test="action-section:no-value:tests-to-run">&ndash;</div>}
         </ActionSection>
       </div>

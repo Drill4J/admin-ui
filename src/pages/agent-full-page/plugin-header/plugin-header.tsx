@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { useHistory, matchPath } from 'react-router-dom';
+import { useHistory, matchPath, Link } from 'react-router-dom';
 import { Spinner, Icons } from '@drill4j/ui-kit';
 import tw, { styled } from 'twin.macro';
 
@@ -78,7 +78,7 @@ const AgentStatusWrapper = styled.div(({ status }: { status?: AgentStatus }) => 
 
 export const PluginHeader = ({ agentName, agentStatus }: Props) => {
   const { loading } = usePluginState();
-  const { push, location: { pathname } } = useHistory();
+  const { location: { pathname } } = useHistory();
   const { params: { buildVersion = '', agentId = '' } = {} } = matchPath<{ buildVersion: string; agentId: string }>(pathname, {
     path: '/:page/:agentId/:buildVersion',
   }) || {};
@@ -103,13 +103,12 @@ export const PluginHeader = ({ agentName, agentStatus }: Props) => {
             </div>
           </AgentInfo>
         </div>
-        <span className="link">
+        <Link tw="link" to={`/agents/agent/${agentId}/settings/general`}>
           <SettingsButton
-            onClick={() => push(`/agents/agent/${agentId}/settings/general`)}
             disabled={agentStatus === AGENT_STATUS.OFFLINE}
             data-test="plugin-header:settings-button"
           />
-        </span>
+        </Link>
       </div>
     </div>
   );
