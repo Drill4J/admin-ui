@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 import { useState } from 'react';
-import { useHistory, useParams } from 'react-router-dom';
+import { useHistory, useParams, Link } from 'react-router-dom';
 import { Menu } from '@drill4j/ui-kit';
 import 'twin.macro';
 
@@ -127,7 +127,8 @@ export const TestToCodePlugin = ({ summaries = [], aggregated }: Props) => {
                 {
                   label: 'Builds list',
                   icon: 'BuildList',
-                  onClick: () => push(`/full-page/${agentId}/build-list`),
+                  onClick: () => null,
+                  content: <Link to={`/full-page/${agentId}/build-list`}>Builds list</Link>,
                 },
                 {
                   label: 'Settings',
