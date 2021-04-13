@@ -13,7 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { useHistory, useLocation, matchPath } from 'react-router-dom';
+import {
+  useLocation, matchPath, Link,
+} from 'react-router-dom';
 import tw, { styled } from 'twin.macro';
 
 import { ReactComponent as LogoSvg } from './logo.svg';
@@ -34,24 +36,23 @@ interface Props {
 }
 
 export const Sidebar = ({ links, matchParams }: Props) => {
-  const { push } = useHistory();
   const { pathname } = useLocation();
   const { params: { activeLink = '' } = {} } = matchPath<{ activeLink: string }>(pathname, matchParams) || {};
 
   return (
     <div tw="w-20 h-full bg-monochrome-light-tint">
-      <div
+      <Link
         tw="flex justify-center items-center w-full h-20 cursor-pointer"
-        onClick={() => push('/')}
+        to="/"
       >
         <LogoSvg />
-      </div>
+      </Link>
       {links.length > 0
           && links.map(({ icon: Icon, link, computedLink }) => (
             <SidebarLink
               key={link}
               type={link === activeLink ? 'active' : ''}
-              onClick={() => push(`/${computedLink || link}`)}
+              to={`/${computedLink || link}`}
             >
               <Icon />
             </SidebarLink>
@@ -60,7 +61,7 @@ export const Sidebar = ({ links, matchParams }: Props) => {
   );
 };
 
-export const SidebarLink = styled.div`
+export const SidebarLink = styled(Link)`
   ${tw`flex justify-center items-center w-full h-20`}
   ${tw`border-b border-t border-monochrome-medium-tint text-monochrome-default cursor-pointer`}
   ${({ type }: {type: string}) => type === 'active' && tw`text-monochrome-white bg-blue-default`}

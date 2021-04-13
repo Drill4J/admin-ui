@@ -15,7 +15,7 @@
  */
 import { useState } from 'react';
 import {
-  matchPath, useHistory, useLocation,
+  matchPath, useLocation, Link,
 } from 'react-router-dom';
 import { Icons, Button, GeneralAlerts } from '@drill4j/ui-kit';
 import 'twin.macro';
@@ -37,7 +37,6 @@ export const PluginsSettingsTab = ({ agent: { buildVersion = '' } }: Props) => {
   const { params: { type: agentType = '', id = '' } = {} } = matchPath<{ type: 'service-group' | 'agent', id: string }>(pathname, {
     path: '/agents/:type/:id/settings/:tab',
   }) || {};
-  const { push } = useHistory();
   const pluginsTopic = `/${agentType === 'agent' ? 'agents' : 'groups'}/${id}/plugins`;
   const plugins = useWsConnection<Plugin[]>(defaultAdminSocket, pluginsTopic) || [];
   const installedPlugins = plugins.filter((plugin) => !plugin.available);
@@ -68,19 +67,21 @@ export const PluginsSettingsTab = ({ agent: { buildVersion = '' } }: Props) => {
           installedPlugins.map(({
             id: pluginId, name, description, version,
           }) => (
-            <PluginListEntry
-              key={id}
-              description={description}
-              onClick={() => (agentType === 'agent'
-                ? push(`/full-page/${id}/${buildVersion}/${pluginId}/dashboard`)
-                : push(`/service-group-full-page/${id}/${pluginId}`))}
-              icon={name as keyof typeof Icons}
+            <Link to={agentType === 'agent'
+              ? `/full-page/${id}/${buildVersion}/${pluginId}/dashboard`
+              : `/service-group-full-page/${id}/${pluginId}`}
             >
-              <div className="flex items-center w-full">
-                <div tw="font-semibold text-14 leading-22 link">{name}&nbsp;</div>
-                {version && <div tw="text-14 leading-22 text-monochrome-default">({version})</div>}
-              </div>
-            </PluginListEntry>
+              <PluginListEntry
+                key={id}
+                description={description}
+                icon={name as keyof typeof Icons}
+              >
+                <div className="flex items-center w-full">
+                  <div tw="font-semibold text-14 leading-22 link">{name}&nbsp;</div>
+                  {version && <div tw="text-14 leading-22 text-monochrome-default">({version})</div>}
+                </div>
+              </PluginListEntry>
+            </Link>
           ))
         ) : (
           <Stub
