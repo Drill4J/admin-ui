@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 import { Button, Icons } from '@drill4j/ui-kit';
-import { useHistory } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import 'twin.macro';
 
 import { PageHeader, Stub } from 'components';
@@ -26,7 +26,6 @@ import { AgentsTable } from './agents-table';
 import { ReactComponent as NoAgentsSvg } from './no-agents.svg';
 
 export const AgentsPage = () => {
-  const { push } = useHistory();
   const agentsList = useWsConnection<Agent[]>(
     defaultAdminSocket,
     '/api/agents',
@@ -47,15 +46,16 @@ export const AgentsPage = () => {
         title="Agents"
         itemsCount={agentsList.length}
         actions={(
-          <Button
-            className="flex gap-x-2"
-            type="secondary"
-            size="large"
-            onClick={() => push('/preregister/offline-agent')}
-          >
-            <Icons.Register />
-            <span>Preregister Offline Agent</span>
-          </Button>
+          <Link to="/preregister/offline-agent">
+            <Button
+              className="flex gap-x-2"
+              type="secondary"
+              size="large"
+            >
+              <Icons.Register />
+              <span>Preregister Offline Agent</span>
+            </Button>
+          </Link>
         )}
       />
       <div tw="flex flex-row flex-grow flex-wrap m-6">{agentsList.length > 0 ? <AgentsTable agents={agents} /> : (

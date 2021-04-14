@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { useHistory, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { Icons, Button, Tooltip } from '@drill4j/ui-kit';
 import 'twin.macro';
 
@@ -34,7 +34,6 @@ export const ActionsColumn = ({ agent }: Props) => {
   const {
     id: agentId = '', status, agentType = '', group = '',
   } = agent;
-  const { push } = useHistory();
   const { agents = [] } = agent as ServiceGroup;
   const unregisteredAgentsCount = agents.reduce(
     (acc, { status: agentStatus }) => (agentStatus === AGENT_STATUS.NOT_REGISTERED ? acc + 1 : acc), 0,
@@ -56,19 +55,21 @@ export const ActionsColumn = ({ agent }: Props) => {
             </div>
           )}
         >
-          <Button
-            onClick={() => push(`/${
-              agentType === 'ServiceGroup' ? 'bulk-registration' : 'registration'
-            }/${agentId}?unregisteredAgentsCount=${unregisteredAgentsCount}`)}
-            data-test="action-column:icons-register"
-            size="small"
-            type={agentType === 'ServiceGroup' || !group ? 'primary' : 'secondary'}
-            disabled={agentType === 'ServiceGroup' && !isJavaAgentsServiceGroup}
-            tw="flex items-center w-full gap-x-2"
+          <Link to={`/${
+            agentType === 'ServiceGroup' ? 'bulk-registration' : 'registration'
+          }/${agentId}?unregisteredAgentsCount=${unregisteredAgentsCount}`}
           >
-            <Icons.Register />
-            Register {unregisteredAgentsCount ? `(${unregisteredAgentsCount})` : ''}
-          </Button>
+            <Button
+              data-test="action-column:icons-register"
+              size="small"
+              type={agentType === 'ServiceGroup' || !group ? 'primary' : 'secondary'}
+              disabled={agentType === 'ServiceGroup' && !isJavaAgentsServiceGroup}
+              tw="flex items-center w-full gap-x-2"
+            >
+              <Icons.Register />
+              Register {unregisteredAgentsCount ? `(${unregisteredAgentsCount})` : ''}
+            </Button>
+          </Link>
         </Tooltip>
       )}
       {((status === AGENT_STATUS.ONLINE && agentType !== 'ServiceGroup') ||

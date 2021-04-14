@@ -13,26 +13,27 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+import { Link } from 'react-router-dom';
 import { Icons, Tooltip } from '@drill4j/ui-kit';
 import tw, { styled } from 'twin.macro';
 
 interface Props {
   value: number;
-  onClick?: () => void;
+  link: string;
   testContext?: string;
 }
 
-const Value = styled.span(({ clickable }: {clickable: boolean}) => [
+const Value = styled(Link)(({ clickable }: {clickable: boolean}) => [
   tw`inline-flex items-center text-20 text-monochrome-black`,
   clickable && tw`cursor-pointer hover:text-blue-default active:text-blue-shade`,
 ]);
 
 export const TestToCodeCell = ({
-  value, onClick, testContext,
+  value, link, testContext,
 }: Props) => (
   <div>
     <div tw="pl-4">
-      <Value onClick={onClick} clickable={Boolean(onClick)} data-test={`dashboard-cell:value:${testContext}`}>
+      <Value to={link} clickable={Boolean(link)} data-test={`dashboard-cell:value:${testContext}`}>
         {value === undefined ? (
           <Tooltip message={(
             <div className="flex flex-col items-center w-full">
@@ -44,7 +45,7 @@ export const TestToCodeCell = ({
             n/a
           </Tooltip>
         ) : value}
-        {Boolean(onClick) && <Icons.Expander tw="ml-1 text-blue-default" height={8} />}
+        {Boolean(link) && <Icons.Expander tw="ml-1 text-blue-default" height={8} />}
       </Value>
     </div>
   </div>

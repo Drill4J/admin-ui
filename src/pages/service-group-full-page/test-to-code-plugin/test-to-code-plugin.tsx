@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 import { useState } from 'react';
-import { useHistory, useParams, Link } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import { Menu } from '@drill4j/ui-kit';
 import 'twin.macro';
 
@@ -42,7 +42,6 @@ interface Props {
 export const TestToCodePlugin = ({ summaries = [], aggregated }: Props) => {
   const [testsToRunModalIsOpen, setTestsToRunModalIsOpen] = useState(false);
   const { serviceGroupId = '', pluginId = '' } = useParams<{ serviceGroupId: string, pluginId: string}>();
-  const { push } = useHistory();
   const [isSessionsManagementModalOpen, setIsSessionsManagementModalOpen] = useState(false);
   const [isFinishScopesModalOpen, setIsFinishScopesModalOpen] = useState(false);
   const serviceGroupSummaries = summaries
@@ -90,6 +89,7 @@ export const TestToCodePlugin = ({ summaries = [], aggregated }: Props) => {
             <TestToCodeCell
               value={value}
               testContext="risks"
+              link="#"
             />
           )}
           HeaderCell={() => (
@@ -101,8 +101,8 @@ export const TestToCodePlugin = ({ summaries = [], aggregated }: Props) => {
           Cell={({ value, item: { id: agentId = '', buildVersion = '' } = {} }) => (
             <TestToCodeCell
               value={value?.count}
-              onClick={() => push(`/full-page/${agentId}/${buildVersion}/${pluginId}/tests-to-run`)}
               testContext="tests-to-run"
+              link={`/full-page/${agentId}/${buildVersion}/${pluginId}/tests-to-run`}
             />
           )}
           HeaderCell={() => (
@@ -133,7 +133,8 @@ export const TestToCodePlugin = ({ summaries = [], aggregated }: Props) => {
                 {
                   label: 'Settings',
                   icon: 'Settings',
-                  onClick: () => push(`/agents/agent/${agentId}/settings/general`),
+                  onClick: () => null,
+                  content: <Link to={`/agents/agent/${agentId}/settings/general`}>Settings</Link>,
                 },
               ]}
             />
