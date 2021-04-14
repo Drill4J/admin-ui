@@ -27,6 +27,14 @@ const NumberInput = styled.input`
   ${tw`py-0 px-2 text-right text-14 leading-22 text-monochrome-black`};
   ${tw`rounded border border-monochrome-medium-tint bg-monochrome-white outline-none`};
 
+
+  -moz-appearance: textfield;
+
+  ::-webkit-outer-spin-button,
+  ::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+  }
+  
   :focus {
     ${tw`border border-monochrome-black`};
   }
@@ -58,6 +66,7 @@ export const ThresholdValueField = (props: Props) => {
       inputRef.current && inputRef.current.focus();
     }
   }, [disabled]);
+
   return (
     <div tw="contents" data-test="threshold-value-field">
       <div>

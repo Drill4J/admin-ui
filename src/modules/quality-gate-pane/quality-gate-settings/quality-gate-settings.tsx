@@ -42,6 +42,7 @@ export const QualityGateSettings = ({ conditionSettingByType }: Props) => (
         component={Fields.Checkbox}
       />
       <Field
+        type="number"
         name="coverage.condition.value"
         component={ThresholdValueField}
         disabled={!conditionSettingByType?.coverage?.enabled}
@@ -64,6 +65,7 @@ export const QualityGateSettings = ({ conditionSettingByType }: Props) => (
         component={Fields.Checkbox}
       />
       <Field
+        type="number"
         name="risks.condition.value"
         component={ThresholdValueField}
         disabled={!conditionSettingByType?.risks?.enabled}
@@ -97,6 +99,7 @@ export const QualityGateSettings = ({ conditionSettingByType }: Props) => (
         component={Fields.Checkbox}
       />
       <Field
+        type="number"
         name="tests.condition.value"
         component={ThresholdValueField}
         disabled={!conditionSettingByType?.tests?.enabled}
