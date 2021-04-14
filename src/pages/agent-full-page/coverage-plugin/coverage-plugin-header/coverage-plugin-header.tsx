@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { useContext } from 'react';
 import {
   NavLink, useParams, Link, Route,
 } from 'react-router-dom';
@@ -21,7 +20,6 @@ import { Button, Icons, Tooltip } from '@drill4j/ui-kit';
 import tw, { styled } from 'twin.macro';
 
 import { QualityGatePane } from 'modules';
-import { NotificationManagerContext } from 'notification-manager';
 import {
   ConditionSetting,
   ConditionSettingByType,
@@ -36,7 +34,6 @@ import { ParentBuild } from 'types/parent-build';
 import { TestTypeSummary } from 'types/test-type-summary';
 import { ActionSection } from './action-section';
 import { BaselineBuildModal } from './baseline-build-modal';
-import { toggleBaseline } from '../api';
 
 interface Props {
   previousBuildTests: TestTypeSummary[];
@@ -73,8 +70,6 @@ const Count = styled(Link)`
 `;
 
 export const CoveragePluginHeader = ({ previousBuildTests = [] }: Props) => {
-  const { showMessage } = useContext(NotificationManagerContext);
-
   const { pluginId = '', agentId = '', buildVersion = '' } = useParams<{
     pluginId: string;
     agentId: string;
@@ -232,35 +227,11 @@ export const CoveragePluginHeader = ({ previousBuildTests = [] }: Props) => {
       </div>
       <Route
         path="/full-page/:agentId/:buildVersion/:pluginId/dashboard/baseline-build-modal"
-        render={() => (
-          <BaselineBuildModal
-            isBaseline={isBaseline}
-            toggleBaseline={async () => {
-              try {
-                await toggleBaseline(agentId, pluginId);
-                showMessage({
-                  type: 'SUCCESS',
-                  text: `Current build has been ${isBaseline
-                    ? 'unset as baseline successfully. All subsequent builds won\'t be compared to it.'
-                    : 'set as baseline successfully. All subsequent builds will be compared to it.'}`,
-                });
-              } catch ({ response: { data: { message } = {} } = {} }) {
-                showMessage({
-                  type: 'ERROR',
-                  text: message || 'There is some issue with your action. Please try again later.',
-                });
-              }
-            }}
-          />
-        )}
+        render={() => <BaselineBuildModal isBaseline={isBaseline} />}
       />
       <Route
         path="/full-page/:agentId/:buildVersion/:pluginId/dashboard/quality-gate-pane"
-        render={() => (
-          <QualityGatePane
-            qualityGateSettings={qualityGateSettings}
-          />
-        )}
+        render={() => <QualityGatePane qualityGateSettings={qualityGateSettings} />}
       />
     </Content>
   );
