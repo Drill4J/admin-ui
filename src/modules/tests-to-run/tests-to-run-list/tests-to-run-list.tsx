@@ -17,7 +17,9 @@ import { useRef, useState } from 'react';
 import {
   Table, Column, Icons, Legend,
 } from '@drill4j/ui-kit';
-import { Route, useHistory, useParams } from 'react-router-dom';
+import {
+  Route, useParams, Link,
+} from 'react-router-dom';
 import 'twin.macro';
 
 import { ParentBuild } from 'types/parent-build';
@@ -48,7 +50,6 @@ export const TestsToRunList = ({ agentType = 'Agent' }: Props) => {
   } = useBuildVersion<FilterList<TestCoverageInfo>>('/build/tests-to-run', search, undefined, 'LIST') || {};
   const [searchQuery] = search;
   const { buildVersion = '', agentId = '', pluginId } = useParams<{ buildVersion: string; agentId: string; pluginId?: string; }>();
-  const { push } = useHistory();
   const { buildVersion: activeBuildVersion = '' } = useAgent(agentId) || {};
   const { version: previousBuildVersion = '' } = useBuildVersion<ParentBuild>('/data/parent') || {};
   const summaryTestsToRun = useBuildVersion<TestsToRunSummary>('/build/summary/tests-to-run') || {};
@@ -156,11 +157,13 @@ export const TestsToRunList = ({ agentType = 'Agent' }: Props) => {
               Cell={({ value, item: { id = '', toRun = false, coverage: { methodCount: { covered = 0 } = {} } = {} } = {} }) => (
                 toRun ? null : (
                   <Cells.Clickable
-                    onClick={() => push(`/full-page/${
-                      agentId}/${buildVersion}/${pluginId}/tests-to-run/covered-methods-modal/?coveredMethods=${covered}&testId=${id}`)}
                     disabled={!value}
                   >
-                    {value}
+                    <Link to={`/full-page/${
+                      agentId}/${buildVersion}/${pluginId}/tests-to-run/covered-methods-modal/?coveredMethods=${covered}&testId=${id}`}
+                    >
+                      {value}
+                    </Link>
                   </Cells.Clickable>
                 )
               )}

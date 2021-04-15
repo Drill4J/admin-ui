@@ -15,7 +15,7 @@
  */
 import { useRef } from 'react';
 import { Icons } from '@drill4j/ui-kit';
-import { Route, useHistory, useParams } from 'react-router-dom';
+import { Route, useParams, Link } from 'react-router-dom';
 import 'twin.macro';
 
 import { ClassCoverage } from 'types/class-coverage';
@@ -59,14 +59,13 @@ export const CoverageDetails = ({
     <Column name="totalMethodsCount" testContext="total-methods-count" />,
     <Column name="coveredMethodsCount" testContext="covered-methods-count" />,
   ];
-  const { push } = useHistory();
   const {
     buildVersion, agentId, pluginId, scopeId,
   } = useParams<{ agentId?: string; pluginId?: string; buildVersion?: string; scopeId?: string}>();
 
-  const openModal = (id: string, treeLevel: number) => (scopeId
-    ? push(`/full-page/${agentId}/${buildVersion}/${pluginId}/scope/${scopeId}/associated-test-modal/?testId=${id}&treeLevel=${treeLevel}`)
-    : push(`/full-page/${agentId}/${buildVersion}/${pluginId}/dashboard/associated-test-modal/?testId=${id}&treeLevel=${treeLevel}`));
+  const getModalLink = (id: string, treeLevel: number) => (scopeId
+    ? `/full-page/${agentId}/${buildVersion}/${pluginId}/scope/${scopeId}/associated-test-modal/?testId=${id}&treeLevel=${treeLevel}`
+    : `/full-page/${agentId}/${buildVersion}/${pluginId}/dashboard/associated-test-modal/?testId=${id}&treeLevel=${treeLevel}`);
 
   return (
     <div tw="flex flex-col">
@@ -109,11 +108,10 @@ export const CoverageDetails = ({
                 item: { id = '' } = {},
               }: CellProps<string, { id?: string; assocTestsCount?: number }>) => (
                 <Cells.Clickable
-                  onClick={() => openModal(id, 2)}
                   data-test="coverage-details:associated-tests-count"
                   disabled={!value}
                 >
-                  {value || 'n/a'}
+                  {value ? <Link to={getModalLink(id, 2)}>{value}</Link> : 'n/a'}
                 </Cells.Clickable>
               )}
             />,
@@ -135,11 +133,10 @@ export const CoverageDetails = ({
                 item: { id = '' } = {},
               }: CellProps<string, { id?: string; assocTestsCount?: number }>) => (
                 <Cells.Clickable
-                  onClick={() => openModal(id, 3)}
                   data-test="coverage-details:associated-tests-count"
                   disabled={!value}
                 >
-                  {value || 'n/a'}
+                  {value ? <Link to={getModalLink(id, 3)}>{value}</Link> : 'n/a'}
                 </Cells.Clickable>
               )}
             />,
@@ -175,11 +172,10 @@ export const CoverageDetails = ({
             label="Associated tests"
             Cell={({ value = '', item: { id = '' } = {} }: CellProps<string, { id?: string; assocTestsCount?: number }>) => (
               <Cells.Clickable
-                onClick={() => openModal(id, 1)}
                 data-test="coverage-details:associated-tests-count"
                 disabled={!value}
               >
-                {value || 'n/a'}
+                {value ? <Link to={getModalLink(id, 1)}>{value}</Link> : 'n/a'}
               </Cells.Clickable>
             )}
           />

@@ -17,6 +17,9 @@ import { useRef } from 'react';
 import {
   Icons, Column, Table,
 } from '@drill4j/ui-kit';
+import {
+  Route, useParams, Link,
+} from 'react-router-dom';
 import 'twin.macro';
 
 import { capitalize } from 'utils';
@@ -28,9 +31,6 @@ import {
 } from 'modules';
 import { useVisibleElementsCount } from 'hooks';
 import { AGENT_STATUS } from 'common/constants';
-import {
-  Route, useHistory, useParams,
-} from 'react-router-dom';
 import { usePluginState } from '../../store';
 
 interface Props {
@@ -51,7 +51,6 @@ export const TestDetails = ({
   const {
     pluginId, buildVersion, agentId, scopeId,
   } = useParams<{buildVersion?: string; pluginId?: string; agentId?: string; scopeId?: string; }>();
-  const { push } = useHistory();
 
   return (
     <div tw="flex flex-col">
@@ -111,15 +110,17 @@ export const TestDetails = ({
             label="Methods covered"
             Cell={({ value, item: { id = '', coverage: { methodCount: { covered = 0 } = {} } = {} } = {} }) => (
               <Cells.Clickable
-                onClick={() => (scopeId
-                  ? push(`/full-page/${agentId}/${buildVersion}/${
-                    pluginId}/scope/${scopeId}/covered-methods-modal?coveredMethods=${covered}&testId=${id}`)
-                  : push(`/full-page/${agentId}/${buildVersion}/${
-                    pluginId}/dashboard/covered-methods-modal?coveredMethods=${covered}&testId=${id}`))}
                 data-test="test-actions:view-curl:id"
                 disabled={!value}
               >
-                {value}
+                <Link to={scopeId
+                  ? `/full-page/${agentId}/${buildVersion}/${
+                    pluginId}/scope/${scopeId}/covered-methods-modal?coveredMethods=${covered}&testId=${id}`
+                  : `/full-page/${agentId}/${buildVersion}/${
+                    pluginId}/dashboard/covered-methods-modal?coveredMethods=${covered}&testId=${id}`}
+                >
+                  {value}
+                </Link>
               </Cells.Clickable>
             )}
           />

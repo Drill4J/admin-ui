@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 import { useContext } from 'react';
-import { useParams, Link, useHistory } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import {
   Menu, Icons, Table, Column, Status,
 } from '@drill4j/ui-kit';
@@ -38,6 +38,7 @@ interface MenuItemType {
   label: string;
   icon: keyof typeof Icons;
   onClick: () => void;
+  content?: React.ReactNode;
 }
 
 const Title = styled.div`
@@ -50,7 +51,6 @@ export const ScopesList = () => {
   const { agentId } = usePluginState();
   const { buildVersion: activeBuildVersion = '', status } = useAgent(agentId) || {};
   const { pluginId = '', buildVersion = '' } = useParams<{ pluginId: string; buildVersion: string }>();
-  const { push } = useHistory();
   const dispatch = useCoveragePluginDispatch();
   const activeScope = useActiveScope();
   const scopes = useBuildVersion<ScopeSummary[]>('/build/scopes/finished') || [];
@@ -164,7 +164,7 @@ export const ScopesList = () => {
                 name="actions"
                 Cell={({ item }) => {
                   const { active, enabled, id } = item;
-                  const menuActions = [
+                  const menuActions: MenuItemType[] = [
                     active && {
                       label: 'Finish Scope',
                       icon: 'Check',
@@ -173,10 +173,11 @@ export const ScopesList = () => {
                     active && {
                       label: 'Sessions Management',
                       icon: 'ManageSessions',
-                      onClick: () => {
-                        push(`/full-page/${agentId}/${buildVersion}/${pluginId}/scopes/session-management-pane`);
-                        dispatch(openModal(undefined, null));
-                      },
+                      content: (
+                        <Link to={`/full-page/${agentId}/${buildVersion}/${pluginId}/scopes/session-management-pane`}>
+                          Sessions Management
+                        </Link>
+                      ),
                     },
                     !active && {
                       label: `${enabled ? 'Ignore' : 'Include'} in stats`,
