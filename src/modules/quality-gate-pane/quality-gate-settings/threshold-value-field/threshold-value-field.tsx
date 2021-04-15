@@ -78,6 +78,7 @@ export const ThresholdValueField = (props: Props) => {
         ref={inputRef}
         disabled={disabled}
         error={(meta.error || meta.submitError) && meta.touched}
+        type="number"
       />
     </div>
   );
