@@ -60,12 +60,12 @@ export const CoverageDetails = ({
     <Column name="coveredMethodsCount" testContext="covered-methods-count" />,
   ];
   const {
-    buildVersion, agentId, pluginId, scopeId,
-  } = useParams<{ agentId?: string; pluginId?: string; buildVersion?: string; scopeId?: string}>();
+    buildVersion, agentId, pluginId, scopeId, tab,
+  } = useParams<{ agentId?: string; pluginId?: string; buildVersion?: string; scopeId?: string; tab: string; }>();
 
   const getModalLink = (id: string, treeLevel: number) => (scopeId
-    ? `/full-page/${agentId}/${buildVersion}/${pluginId}/scope/${scopeId}/associated-test-modal/?testId=${id}&treeLevel=${treeLevel}`
-    : `/full-page/${agentId}/${buildVersion}/${pluginId}/dashboard/associated-test-modal/?testId=${id}&treeLevel=${treeLevel}`);
+    ? `/full-page/${agentId}/${buildVersion}/${pluginId}/scope/${scopeId}/${tab}/associated-test-modal/?testId=${id}&treeLevel=${treeLevel}`
+    : `/full-page/${agentId}/${buildVersion}/${pluginId}/dashboard/${tab}/associated-test-modal/?testId=${id}&treeLevel=${treeLevel}`);
 
   return (
     <div tw="flex flex-col">
@@ -184,8 +184,8 @@ export const CoverageDetails = ({
       </>
       <Route
         path={[
-          '/full-page/:agentId/:buildVersion/:pluginId/dashboard/associated-test-modal',
-          '/full-page/:agentId/:buildVersion/:pluginId/scopes/:scopeId/associated-test-modal',
+          '/full-page/:agentId/:buildVersion/:pluginId/dashboard/:tab/associated-test-modal',
+          '/full-page/:agentId/:buildVersion/:pluginId/scopes/:scopeId/:tab/associated-test-modal',
         ]}
         render={() => (
           <AssociatedTestModal

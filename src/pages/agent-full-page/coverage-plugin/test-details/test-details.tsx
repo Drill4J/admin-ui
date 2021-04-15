@@ -49,8 +49,8 @@ export const TestDetails = ({
   const [searchQuery] = search;
 
   const {
-    pluginId, buildVersion, agentId, scopeId,
-  } = useParams<{buildVersion?: string; pluginId?: string; agentId?: string; scopeId?: string; }>();
+    pluginId, buildVersion, agentId, scopeId, tab,
+  } = useParams<{buildVersion?: string; pluginId?: string; agentId?: string; scopeId?: string; tab?: string; }>();
 
   return (
     <div tw="flex flex-col">
@@ -115,9 +115,9 @@ export const TestDetails = ({
               >
                 <Link to={scopeId
                   ? `/full-page/${agentId}/${buildVersion}/${
-                    pluginId}/scope/${scopeId}/covered-methods-modal?coveredMethods=${covered}&testId=${id}`
+                    pluginId}/scope/${scopeId}/${tab}/covered-methods-modal?coveredMethods=${covered}&testId=${id}`
                   : `/full-page/${agentId}/${buildVersion}/${
-                    pluginId}/dashboard/covered-methods-modal?coveredMethods=${covered}&testId=${id}`}
+                    pluginId}/dashboard/${tab}/covered-methods-modal?coveredMethods=${covered}&testId=${id}`}
                 >
                   {value}
                 </Link>
@@ -149,8 +149,8 @@ export const TestDetails = ({
       )}
       <Route
         path={[
-          '/full-page/:agentId/:buildVersion/:pluginId/dashboard/covered-methods-modal',
-          '/full-page/:agentId/:buildVersion/:pluginId/scopes/:scopeId/covered-methods-modal',
+          '/full-page/:agentId/:buildVersion/:pluginId/dashboard/:tab/covered-methods-modal',
+          '/full-page/:agentId/:buildVersion/:pluginId/scopes/:scopeId/:tab/covered-methods-modal',
         ]}
         render={() => <CoveredMethodsByTestSidebar topicCoveredMethodsByTest={topicCoveredMethodsByTest} />}
       />

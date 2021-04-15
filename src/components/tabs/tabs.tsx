@@ -14,30 +14,33 @@
  * limitations under the License.
  */
 import { Children, cloneElement, ReactElement } from 'react';
+import { Link, useParams } from 'react-router-dom';
 import tw, { styled, css } from 'twin.macro';
 
 interface Props {
   children: ReactElement | ReactElement[];
-  activeTab: number | string;
-  onSelect: (tabName: string) => void;
 }
 
 export const TabsPanel = (props: Props) => {
-  const { children, activeTab, onSelect } = props;
+  const { children } = props;
+  const { tab } = useParams<{ tab: string }>();
 
   return (
     <div tw="flex">
       {Children.map(children, (child: ReactElement, index: number) =>
         cloneElement(child, {
-          onClick: () =>
-            activeTab !== child.props.name && onSelect && onSelect(child.props.name || index),
-          active: (child.props.name || index) === activeTab,
+          active: (child.props.name || index) === tab,
         }))}
     </div>
   );
 };
 
-export const Tab = styled.button`
+interface TabProps {
+  name: string;
+  active?: boolean
+}
+
+export const Tab = styled(Link)<TabProps>`
   ${tw`relative flex items-center pb-2 mr-4 text-14 font-bold text-monochrome-default cursor-pointer`};
   min-height: 46px;
   box-sizing: border-box;
@@ -46,7 +49,7 @@ export const Tab = styled.button`
   white-space: nowrap;
   outline: none;
 
-  ${({ active }: { active?: boolean }) =>
+  ${({ active }) =>
     active &&
     css`
       ${tw`text-monochrome-black`};

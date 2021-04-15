@@ -42,7 +42,7 @@ export const Dashboard = ({ agent }: Props) => {
               <PluginCard
                 key={id}
                 label={name}
-                pluginLink={`/full-page/${agentId}/${buildVersion}/${id}/dashboard`}
+                pluginLink={`/full-page/${agentId}/${buildVersion}/${id}/dashboard/methods`}
               >
                 <CoverageSection />
                 <TestsSection />

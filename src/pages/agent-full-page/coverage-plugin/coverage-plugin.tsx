@@ -32,7 +32,7 @@ export const CoveragePlugin = () => (
           <div tw="flex-grow mx-6">
             <Switch>
               <Route
-                path="/full-page/:agentId/:buildVersion/:pluginId/dashboard"
+                path="/full-page/:agentId/:buildVersion/:pluginId/dashboard/:tab"
                 component={Overview}
               />
               <Route
@@ -40,7 +40,7 @@ export const CoveragePlugin = () => (
                 component={ScopesList}
               />
               <Route
-                path="/full-page/:agentId/:buildVersion/:pluginId/scope/:scopeId"
+                path="/full-page/:agentId/:buildVersion/:pluginId/scope/:scopeId/:tab"
                 component={ScopeInfo}
               />
               <Route
@@ -52,8 +52,8 @@ export const CoveragePlugin = () => (
           <CoveragePluginModals />
           <Route
             path={[
-              '/full-page/:agentId/:buildVersion/:pluginId/dashboard/risks-modal',
-              '/full-page/:agentId/:buildVersion/:pluginId/scopes/:scopeId/risks-modal',
+              '/full-page/:agentId/:buildVersion/:pluginId/dashboard/:tab/risks-modal',
+              '/full-page/:agentId/:buildVersion/:pluginId/scopes/:scopeId/:tab/risks-modal',
             ]}
             component={RisksModal}
           />

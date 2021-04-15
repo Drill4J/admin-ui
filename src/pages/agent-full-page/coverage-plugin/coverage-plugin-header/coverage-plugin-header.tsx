@@ -70,10 +70,13 @@ const Count = styled(Link)`
 `;
 
 export const CoveragePluginHeader = ({ previousBuildTests = [] }: Props) => {
-  const { pluginId = '', agentId = '', buildVersion = '' } = useParams<{
+  const {
+    pluginId = '', agentId = '', buildVersion = '', tab = '',
+  } = useParams<{
     pluginId: string;
     agentId: string;
     buildVersion: string;
+    tab: string;
   }>();
   const { buildVersion: activeBuildVersion = '', status: agentStatus } = useAgent(agentId) || {};
 
@@ -164,7 +167,7 @@ export const CoveragePluginHeader = ({ previousBuildTests = [] }: Props) => {
             </div>
             {!configured ? (
               <StatusWrapper
-                to={`/full-page/${agentId}/${buildVersion}/${pluginId}/dashboard/quality-gate-pane`}
+                to={`/full-page/${agentId}/${buildVersion}/${pluginId}/dashboard/${tab}/quality-gate-pane`}
                 data-test="coverage-plugin-header:configure-button"
               >
                 <Button
@@ -176,7 +179,7 @@ export const CoveragePluginHeader = ({ previousBuildTests = [] }: Props) => {
               </StatusWrapper>
             ) : (
               <StatusWrapper
-                to={`/full-page/${agentId}/${buildVersion}/${pluginId}/dashboard/quality-gate-pane`}
+                to={`/full-page/${agentId}/${buildVersion}/${pluginId}/dashboard/${tab}/quality-gate-pane`}
                 status={status}
               >
                 <StatusIcon />
@@ -193,7 +196,7 @@ export const CoveragePluginHeader = ({ previousBuildTests = [] }: Props) => {
         >
           {risksCount > 0 ? (
             <Count
-              to={`/full-page/${agentId}/${buildVersion}/${pluginId}/dashboard/risks-modal`}
+              to={`/full-page/${agentId}/${buildVersion}/${pluginId}/dashboard/${tab}/risks-modal`}
               className="flex items-center w-full"
               data-test="action-section:count:risks"
             >
@@ -226,11 +229,11 @@ export const CoveragePluginHeader = ({ previousBuildTests = [] }: Props) => {
         </ActionSection>
       </div>
       <Route
-        path="/full-page/:agentId/:buildVersion/:pluginId/dashboard/baseline-build-modal"
+        path="/full-page/:agentId/:buildVersion/:pluginId/dashboard/:tab/baseline-build-modal"
         render={() => <BaselineBuildModal isBaseline={isBaseline} />}
       />
       <Route
-        path="/full-page/:agentId/:buildVersion/:pluginId/dashboard/quality-gate-pane"
+        path="/full-page/:agentId/:buildVersion/:pluginId/dashboard/:tab/quality-gate-pane"
         render={() => <QualityGatePane qualityGateSettings={qualityGateSettings} />}
       />
     </Content>

@@ -46,10 +46,13 @@ export const BuildProjectMethods = ({
     all, new: newMethods, modified, deleted, risks,
   } = useBuildVersion<Methods>('/build/methods') || {};
   const { percentage: buildCodeCoverage = 0 } = buildCoverage;
-  const { pluginId = '', agentId = '', buildVersion = '' } = useParams<{
+  const {
+    pluginId = '', agentId = '', buildVersion = '', tab = '',
+  } = useParams<{
     pluginId: string;
     agentId: string;
     buildVersion: string;
+    tab: string;
   }>();
 
   return (
@@ -85,7 +88,7 @@ export const BuildProjectMethods = ({
           {Boolean(risks?.new) && (
             <Link
               tw="link"
-              to={`/full-page/${agentId}/${buildVersion}/${pluginId}/dashboard/risks-modal/?filter=new`}
+              to={`/full-page/${agentId}/${buildVersion}/${pluginId}/dashboard/${tab}/risks-modal/?filter=new`}
               data-test="build-project-methods:link-button:new:risks"
             >
               {risks?.new} risks
@@ -100,7 +103,7 @@ export const BuildProjectMethods = ({
           {Boolean(risks?.modified) && (
             <Link
               tw="link"
-              to={`/full-page/${agentId}/${buildVersion}/${pluginId}/dashboard/risks-modal/?filter=modified`}
+              to={`/full-page/${agentId}/${buildVersion}/${pluginId}/dashboard/${tab}/risks-modal/?filter=modified`}
               data-test="build-project-methods:link-button:modified:risks"
             >
               {risks?.modified} risks

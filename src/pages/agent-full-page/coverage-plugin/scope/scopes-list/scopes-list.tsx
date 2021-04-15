@@ -78,7 +78,7 @@ export const ScopesList = () => {
               }) => (
                 <Link
                   tw="font-bold text-14 leading-20 cursor-pointer"
-                  to={`/full-page/${agentId}/${buildVersion}/${pluginId}/scope/${id}`}
+                  to={`/full-page/${agentId}/${buildVersion}/${pluginId}/scope/${id}/methods`}
                   data-test="scopes-list:scope-name"
                 >
                   <div className="link text-ellipsis" title={value}>{value}</div>

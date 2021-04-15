@@ -31,7 +31,9 @@ export const ActiveScopeInfo = ({ scope }: Props) => {
     id: scopeId,
     coverage: { percentage = 0 } = {},
   } = scope || {};
-  const { agentId, buildVersion, pluginId } = useParams<{agentId: string, buildVersion: string, pluginId: string }>();
+  const {
+    agentId, buildVersion, pluginId, tab,
+  } = useParams<{agentId: string, buildVersion: string, pluginId: string; tab: string }>();
   const dispatch = useCoveragePluginDispatch();
   const { loading } = usePluginState();
 
@@ -57,7 +59,7 @@ export const ActiveScopeInfo = ({ scope }: Props) => {
       <div className="flex flex-col items-start gap-y-3 w-full mt-6 font-bold leading-20">
         <Link
           className="link"
-          to={`/full-page/${agentId}/${buildVersion}/${pluginId}/scope/${scopeId}`}
+          to={`/full-page/${agentId}/${buildVersion}/${pluginId}/scope/${scopeId}/methods`}
           data-test="active-scope-info:scope-details-link"
         >
           Scope Details
@@ -71,7 +73,7 @@ export const ActiveScopeInfo = ({ scope }: Props) => {
         </Link>
         <Link
           tw="link"
-          to={`/full-page/${agentId}/${buildVersion}/${pluginId}/dashboard/session-management-pane`}
+          to={`/full-page/${agentId}/${buildVersion}/${pluginId}/dashboard/${tab}/session-management-pane`}
           data-test="active-scope-info:sessions-management-link"
         >
           Sessions Management

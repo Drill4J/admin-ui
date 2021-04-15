@@ -16,6 +16,7 @@
 import { useState } from 'react';
 import { Icons } from '@drill4j/ui-kit';
 import tw, { styled } from 'twin.macro';
+import { Route, Link, useParams } from 'react-router-dom';
 
 import { TabsPanel, Tab } from 'components';
 import {
@@ -39,7 +40,6 @@ const TabIconWrapper = styled.div`
 `;
 
 export const Overview = () => {
-  const [selectedTab, setSelectedTab] = useState('methods');
   const { agentId, loading } = usePluginState();
   const { status } = useAgent(agentId) || {};
   const { version: previousBuildVersion = '' } = useBuildVersion<ParentBuild>('/data/parent') || {};
@@ -49,19 +49,20 @@ export const Overview = () => {
   } = usePreviousBuildCoverage(previousBuildVersion) || {};
   const scope = useActiveScope();
   const buildCoverage = useBuildVersion<BuildCoverage>('/build/coverage') || {};
+  const { pluginId = '', buildVersion = '', tab } = useParams<{ pluginId: string; buildVersion: string; tab: string}>();
 
   return (
     <div>
       <CoveragePluginHeader previousBuildTests={previousBuildTests} />
       <div tw="w-full">
-        <TabsPanel activeTab={selectedTab} onSelect={setSelectedTab}>
-          <Tab name="methods">
+        <TabsPanel>
+          <Tab name="methods" to={`/full-page/${agentId}/${buildVersion}/${pluginId}/dashboard/methods`}>
             <TabIconWrapper>
               <Icons.Function />
             </TabIconWrapper>
             Build methods
           </Tab>
-          <Tab name="tests">
+          <Tab name="tests" to={`/full-page/${agentId}/${buildVersion}/${pluginId}/dashboard/tests`}>
             <TabIconWrapper>
               <Icons.Test width={16} />
             </TabIconWrapper>
@@ -71,7 +72,7 @@ export const Overview = () => {
       </div>
       <div tw="flex gap-6">
         <div tw="flex flex-col items-stretch gap-7 pt-4 w-full border-t border-monochrome-medium-tint">
-          {selectedTab === 'methods'
+          {tab === 'methods'
             ? (
               <BuildProjectMethods
                 scope={scope}
@@ -86,8 +87,8 @@ export const Overview = () => {
         {scope?.active && status === AGENT_STATUS.ONLINE && <ActiveScopeInfo scope={scope} />}
       </div>
       <div tw="mt-2">
-        <TableActionsProvider key={selectedTab}>
-          {selectedTab === 'methods' ? (
+        <TableActionsProvider key={tab}>
+          {tab === 'methods' ? (
             <CoverageDetails
               topic="/build/coverage/packages"
               associatedTestsTopic="/build"

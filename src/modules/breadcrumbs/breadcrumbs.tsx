@@ -24,8 +24,8 @@ interface CrumbType {
   state?: { label: string; buildVersion: string; pluginId: string };
 }
 
-const modals = ['session-management-pane', 'quality-gate-pane', 'risks-modal', 'associated-test-modal',
-  'tests-to-run-modal', 'finish-all-scopes-modal', 'covered-methods-modal'];
+const modalsAndTabs = ['session-management-pane', 'quality-gate-pane', 'risks-modal', 'associated-test-modal',
+  'tests-to-run-modal', 'finish-all-scopes-modal', 'covered-methods-modal', 'methods', 'tests'];
 
 type MatchType = {
   agentId: string;
@@ -89,6 +89,8 @@ export const Breadcrumbs = () => {
       '/full-page/:agentId/:buildVersion/:pluginId/',
       '/full-page/:agentId/:buildVersion/:pluginId/:page/',
       '/full-page/:agentId/:buildVersion/:pluginId/:page/:scopeId',
+      '/full-page/:agentId/:buildVersion/:pluginId/:page/:scopeId/:tab',
+      '/full-page/:agentId/:buildVersion/:pluginId/:page/:scopeId/:tab/:modal',
     ],
     exact: true,
   }) || {};
@@ -142,7 +144,7 @@ export const Breadcrumbs = () => {
     },
     {
       label: `${buildVersion}`,
-      link: buildVersion && buildVersion !== 'build-list' ? `/full-page/${agentId}/${buildVersion}/${pluginId}/dashboard` : '',
+      link: buildVersion && buildVersion !== 'build-list' ? `/full-page/${agentId}/${buildVersion}/${pluginId}/dashboard/methods` : '',
     },
     {
       label: 'All scopes',
@@ -150,7 +152,7 @@ export const Breadcrumbs = () => {
     },
     {
       label: `${scopeId}`,
-      link: scopeId && !modals.includes(scopeId) ? `/full-page/${agentId}/${buildVersion}/${pluginId}/scope/${scopeId}` : '',
+      link: scopeId && !modalsAndTabs.includes(scopeId) ? `/full-page/${agentId}/${buildVersion}/${pluginId}/scope/${scopeId}` : '',
     },
     {
       label: 'Tests to Run',
