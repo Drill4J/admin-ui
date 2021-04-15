@@ -22,6 +22,5 @@ export {
   handleFieldErrors,
   numericLimits,
   positiveInteger,
-  isNumericString,
   correctPattern,
 } from './form-validators';

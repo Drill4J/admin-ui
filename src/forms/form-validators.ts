@@ -89,7 +89,7 @@ export function numericLimits({
 }): FormValidator {
   return (valitationItem) => {
     const value = get(valitationItem, fieldName);
-    return !isNumericString(typeof value === 'string' ? value : '') || Number(value) < min || Number(value) > max
+    return Number(value) < min || Number(value) > max
       ? toError(fieldName, `${fieldAlias || camelToSpaces(fieldName)} should be between ${min} and ${max} ${unit}.`)
       : undefined;
   };
@@ -98,14 +98,10 @@ export function numericLimits({
 export function positiveInteger(fieldName: string, fieldAlias?: string): FormValidator {
   return (valitationItem) => {
     const value = get(valitationItem, fieldName);
-    return !isNumericString(typeof value === 'string' ? value : '') || !Number.isInteger(Number(value)) || Number(value) < 0
+    return !Number.isInteger(Number(value)) || Number(value) < 0
       ? toError(fieldName, `${fieldAlias || camelToSpaces(fieldName)} number should be positive integer or 0.`)
       : undefined;
   };
-}
-
-export function isNumericString(value: string): boolean {
-  return /^[0-9.]+$/.test(value) && !Number.isNaN(Number(value));
 }
 
 export function correctPattern(fieldName: string, pattern: RegExp, errorMessage: string): FormValidator {
