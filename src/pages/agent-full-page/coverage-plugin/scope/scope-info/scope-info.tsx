@@ -156,7 +156,7 @@ export const ScopeInfo = () => {
           </div>
           <div tw="mt-4">
             <TableActionsProvider key={tab}>
-              {tab === 'coverage' ? (
+              {tab === 'methods' ? (
                 <>
                   <ScopeProjectMethods scope={scope} />
                   <CoverageDetails
