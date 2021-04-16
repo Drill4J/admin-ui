@@ -35,6 +35,7 @@ export const TabsPanel = (props: Props) => {
   );
 };
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 interface TabProps {
   name: string;
   active?: boolean

@@ -13,10 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { useState } from 'react';
 import { Icons } from '@drill4j/ui-kit';
 import tw, { styled } from 'twin.macro';
-import { Route, Link, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 
 import { TabsPanel, Tab } from 'components';
 import {
