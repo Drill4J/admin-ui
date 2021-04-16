@@ -92,7 +92,7 @@ export const TestToCodePlugin = ({ summaries = [], aggregated }: Props) => {
         />
         <ListColumn
           name="risks"
-          Cell={({ value }) => <TestToCodeCell link="#" value={value} testContext="risks" />}
+          Cell={({ value }) => <TestToCodeCell link="#" value={value} name="risks" />}
           HeaderCell={() => <TestToCodeHeaderCell value={aggregated?.risks || 0} label="risks" />}
         />
         <ListColumn
@@ -100,7 +100,7 @@ export const TestToCodePlugin = ({ summaries = [], aggregated }: Props) => {
           Cell={({ value, item: { id: agentId = '', buildVersion = '' } = {} }) => (
             <TestToCodeCell
               value={value?.count}
-              testContext="tests-to-run"
+              name="tests-to-run"
               link={`/full-page/${agentId}/${buildVersion}/${pluginId}/tests-to-run`}
             />
           )}

@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { useContext, useState } from 'react';
+import { useContext } from 'react';
 import { Redirect, useHistory, useParams } from 'react-router-dom';
 import {
   Icons, Menu, Button, SessionIndicator,
