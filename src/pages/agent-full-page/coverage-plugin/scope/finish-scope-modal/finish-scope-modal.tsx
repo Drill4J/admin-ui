@@ -14,9 +14,9 @@
  * limitations under the License.
  */
 import { useContext, useState } from 'react';
-import { useParams, useHistory } from 'react-router-dom';
+import { useParams, useHistory, Link } from 'react-router-dom';
 import {
-  Button, Inputs, Popup, OverflowText, GeneralAlerts, LinkButton, Spinner,
+  Button, Inputs, Popup, OverflowText, GeneralAlerts, Spinner,
 } from '@drill4j/ui-kit';
 import 'twin.macro';
 
@@ -73,9 +73,13 @@ export const FinishScopeModal = ({ isOpen, onToggle, scope }: Props) => {
             <div>
               At least one active session has been detected.<br />
               First, you need to finish it in&nbsp;
-              <LinkButton tw="text-14" onClick={() => dispatch(openModal('SessionsManagementModal', null))}>
+              <Link
+                tw="link font-bold text-14"
+                to={`${pathname}/session-management-pane`}
+                onClick={() => dispatch(openModal(undefined, null))}
+              >
                 Sessions Management
-              </LinkButton>
+              </Link>
             </div>
           </GeneralAlerts>
         )}

@@ -51,7 +51,7 @@ const getPluginsLinks = (plugins: Plugin[] = []): Link[] => ([
     computed: true,
   },
   ...plugins.map(({ id = '', name }) => ({
-    id, link: `${id}/dashboard`, name: name as keyof typeof Icons, computed: true,
+    id, link: id === 'test2code' ? `${id}/dashboard/methods` : `${id}/dashboard`, name: name as keyof typeof Icons, computed: true,
   })),
 ]);
 

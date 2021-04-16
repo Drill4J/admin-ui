@@ -18,6 +18,7 @@ import {
   Button, Modal, Icons, GeneralAlerts, Spinner,
 } from '@drill4j/ui-kit';
 import { Form } from 'react-final-form';
+import { useParams } from 'react-router-dom';
 import tw, { styled } from 'twin.macro';
 
 import {
@@ -28,7 +29,7 @@ import {
 import {
   QualityGateSettings as QualityGate, ConditionSettingByType, QualityGateStatus as Status,
 } from 'types/quality-gate-type';
-import { useGeneralAlertMessage } from 'hooks';
+import { useCloseModal, useGeneralAlertMessage } from 'hooks';
 import { QualityGateStatus } from './quality-gate-status';
 import { QualityGateSettings } from './quality-gate-settings';
 import { updateQualityGateSettings } from './api';
@@ -46,11 +47,7 @@ const validateQualityGate = (formValues: ConditionSettingByType) => composeValid
 )(formValues);
 
 interface Props {
-  isOpen: boolean;
-  onToggle: (value: boolean) => void;
   qualityGateSettings: QualityGate;
-  agentId: string;
-  pluginId: string;
 }
 
 const StatusIconWrapper = styled.div(({ status }: { status: Status }) => [
@@ -65,25 +62,23 @@ const ActionsPanel = styled.div`
 `;
 
 export const QualityGatePane = ({
-  isOpen,
-  onToggle,
   qualityGateSettings: {
     configured, conditionSettingByType, qualityGate, metrics,
   },
-  agentId,
-  pluginId,
 }: Props) => {
   const [isEditing, setIsEditing] = useState(false);
   const { generalAlertMessage, showGeneralAlertMessage } = useGeneralAlertMessage();
   const StatusIcon = Icons[qualityGate.status];
+  const closeModal = useCloseModal('/quality-gate-pane');
+  const { agentId = '', pluginId = '' } = useParams<{ agentId?: string; pluginId?: string; }>();
 
   const handleOnToggle = () => {
-    onToggle(false);
+    closeModal();
     setIsEditing(false);
   };
 
   return (
-    <Modal isOpen={isOpen} onToggle={handleOnToggle}>
+    <Modal isOpen onToggle={handleOnToggle}>
       <Form
         onSubmit={async (values) => {
           await updateQualityGateSettings(agentId, pluginId, showGeneralAlertMessage)(values);

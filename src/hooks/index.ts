@@ -27,3 +27,5 @@ export { useFormHandleSubmit } from './use-form-handle-submit';
 export { useIntersection } from './use-intersection';
 export { useRunAfterUpdate } from './use-run-after-update';
 export { usePreserveCaretPosition } from './use-preserve-caret-position';
+export { useQuery } from './use-query';
+export { useCloseModal } from './use-close-modal';

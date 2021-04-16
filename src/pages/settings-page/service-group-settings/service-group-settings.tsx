@@ -15,7 +15,7 @@
  */
 import { useState } from 'react';
 import {
-  useParams, Switch, useHistory, Route, Prompt,
+  useParams, Switch, Route, Prompt,
 } from 'react-router-dom';
 import { Icons } from '@drill4j/ui-kit';
 import 'twin.macro';
@@ -29,9 +29,8 @@ import { UnSaveChangeModal } from '../un-save-changes-modal';
 export const ServiceGroupSettings = () => {
   const [pristineSettings, setPristineSettings] = useState(true);
   const [nextLocation, setNextLocation] = useState('');
-  const { id = '', tab: selectedTab = '' } = useParams<{ id: string; tab: string }>();
+  const { id = '' } = useParams<{ id: string; }>();
   const serviceGroup = useServiceGroup(id) || {};
-  const { push } = useHistory();
 
   return (
     <div tw="flex flex-col w-full">
@@ -44,15 +43,10 @@ export const ServiceGroupSettings = () => {
         )}
       />
       <div tw="px-6">
-        <TabsPanel
-          activeTab={selectedTab}
-          onSelect={(tab) => (pristineSettings
-            ? push(`/agents/service-group/${id}/settings/${tab}`, { pristineSettings })
-            : setNextLocation(`/agents/service-group/${id}/settings/${tab}`))}
-        >
-          <Tab name="general">General</Tab>
-          <Tab name="system">System</Tab>
-          <Tab name="plugins">Plugins</Tab>
+        <TabsPanel>
+          <Tab name="general" to={`/agents/service-group/${id}/settings/general`}>General</Tab>
+          <Tab name="system" to={`/agents/service-group/${id}/settings/system`}>System</Tab>
+          <Tab name="plugins" to={`/agents/service-group/${id}/settings/plugins`}>Plugins</Tab>
         </TabsPanel>
       </div>
       <Switch>
@@ -70,19 +64,15 @@ export const ServiceGroupSettings = () => {
         />
       </Switch>
       <UnSaveChangeModal
-        isOpen={Boolean(nextLocation)}
-        onToggle={() => setNextLocation('')}
-        onConfirmAction={() => {
-          push(nextLocation, { pristineSettings: true });
-          setNextLocation('');
-        }}
+        setNextLocation={setNextLocation}
+        path={nextLocation}
       />
       <Prompt
         when={!pristineSettings}
         message={({ pathname, state }) => {
-          const { pristineSettings: pristine = false } = state as { pristineSettings: boolean } || {};
-          if (pristine) {
-            setPristineSettings(true);
+          const { pristine } = state as { pristine: boolean } || {};
+
+          if (pristineSettings || pristine) {
             return true;
           }
           setNextLocation(pathname);

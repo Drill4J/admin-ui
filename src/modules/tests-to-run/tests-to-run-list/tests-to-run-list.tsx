@@ -17,7 +17,9 @@ import { useRef, useState } from 'react';
 import {
   Table, Column, Icons, Legend,
 } from '@drill4j/ui-kit';
-import { useParams } from 'react-router-dom';
+import {
+  Route, useParams, Link,
+} from 'react-router-dom';
 import 'twin.macro';
 
 import { ParentBuild } from 'types/parent-build';
@@ -40,7 +42,6 @@ interface Props {
 }
 
 export const TestsToRunList = ({ agentType = 'Agent' }: Props) => {
-  const [selectedTest, setSelectedTest] = useState<null | { id: string; covered: number }>(null);
   const [search, setSearch] = useState<Search[]>([{ field: 'name', value: '', op: 'CONTAINS' }]);
   const {
     items: testsToRun = [],
@@ -48,7 +49,7 @@ export const TestsToRunList = ({ agentType = 'Agent' }: Props) => {
     totalCount = 0,
   } = useBuildVersion<FilterList<TestCoverageInfo>>('/build/tests-to-run', search, undefined, 'LIST') || {};
   const [searchQuery] = search;
-  const { buildVersion = '', agentId = '' } = useParams<{ buildVersion: string; agentId: string; }>();
+  const { buildVersion = '', agentId = '', pluginId } = useParams<{ buildVersion: string; agentId: string; pluginId?: string; }>();
   const { buildVersion: activeBuildVersion = '' } = useAgent(agentId) || {};
   const { version: previousBuildVersion = '' } = useBuildVersion<ParentBuild>('/data/parent') || {};
   const summaryTestsToRun = useBuildVersion<TestsToRunSummary>('/build/summary/tests-to-run') || {};
@@ -61,6 +62,7 @@ export const TestsToRunList = ({ agentType = 'Agent' }: Props) => {
 
   const ref = useRef<HTMLDivElement>(null);
   const visibleElementsCount = useVisibleElementsCount(ref, 10, 10);
+
   return (
     <div tw="flex flex-col gap-4">
       <TestsToRunHeader
@@ -155,10 +157,13 @@ export const TestsToRunList = ({ agentType = 'Agent' }: Props) => {
               Cell={({ value, item: { id = '', toRun = false, coverage: { methodCount: { covered = 0 } = {} } = {} } = {} }) => (
                 toRun ? null : (
                   <Cells.Clickable
-                    onClick={() => setSelectedTest({ id, covered })}
                     disabled={!value}
                   >
-                    {value}
+                    <Link to={`/full-page/${
+                      agentId}/${buildVersion}/${pluginId}/tests-to-run/covered-methods-modal/?coveredMethods=${covered}&testId=${id}`}
+                    >
+                      {value}
+                    </Link>
                   </Cells.Clickable>
                 )
               )}
@@ -179,14 +184,10 @@ export const TestsToRunList = ({ agentType = 'Agent' }: Props) => {
           message="There is no information about the suggested to run tests in this build."
         />
       )}
-      {selectedTest !== null && (
-        <CoveredMethodsByTestSidebar
-          isOpen={Boolean(selectedTest)}
-          onToggle={() => setSelectedTest(null)}
-          testInfo={selectedTest}
-          topicCoveredMethodsByTest="/build/tests"
-        />
-      )}
+      <Route
+        path="/full-page/:agentId/:buildVersion/:pluginId/tests-to-run/covered-methods-modal"
+        render={() => <CoveredMethodsByTestSidebar topicCoveredMethodsByTest="/build/tests" />}
+      />
     </div>
   );
 };

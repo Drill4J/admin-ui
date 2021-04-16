@@ -13,8 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { useState } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import {
+  Route, useParams, Link,
+} from 'react-router-dom';
 import { Menu } from '@drill4j/ui-kit';
 import 'twin.macro';
 
@@ -28,7 +29,12 @@ import { TestToCodeCell } from './test-to-code-cell';
 import { TestToCodeHeaderCell } from './test-to-code-header-cell';
 import { FinishAllScopesModal } from './finish-all-scopes-modal';
 
-type TestToRun = { groupedTests?: { [testType: string]: string[] }; count?: number; agentType?: string; id?: string };
+type TestToRun = {
+  groupedTests?: { [testType: string]: string[] };
+  count?: number;
+  agentType?: string;
+  id?: string;
+};
 
 interface Props {
   summaries?: Summary[];
@@ -40,27 +46,30 @@ interface Props {
 }
 
 export const TestToCodePlugin = ({ summaries = [], aggregated }: Props) => {
-  const [testsToRunModalIsOpen, setTestsToRunModalIsOpen] = useState(false);
-  const { serviceGroupId = '', pluginId = '' } = useParams<{ serviceGroupId: string, pluginId: string}>();
-  const [isSessionsManagementModalOpen, setIsSessionsManagementModalOpen] = useState(false);
-  const [isFinishScopesModalOpen, setIsFinishScopesModalOpen] = useState(false);
-  const serviceGroupSummaries = summaries
-    .map((agentSummary) => ({ ...agentSummary, ...agentSummary.summary }));
+  const { pluginId = '', serviceGroupId = '' } = useParams<{
+    pluginId: string;
+    serviceGroupId: string;
+  }>();
+  const serviceGroupSummaries = summaries.map((agentSummary) => ({
+    ...agentSummary,
+    ...agentSummary.summary,
+  }));
 
   return (
     <div>
-      <List data={serviceGroupSummaries} gridTemplateColumns="3fr repeat(3, 1fr) 50px" testContext="test-to-code-plugin">
+      <List
+        data={serviceGroupSummaries}
+        gridTemplateColumns="3fr repeat(3, 1fr) 50px"
+        testContext="test-to-code-plugin"
+      >
         <ListColumn
           name="name"
           Cell={({
             value,
-            item: {
-              buildVersion,
-              id: agentId,
-            },
+            item: { buildVersion, id: agentId },
           }: {
             value: string;
-            item: { buildVersion?: string; id?: string; };
+            item: { buildVersion?: string; id?: string };
           }) => (
             <TestToCodeNameCell
               name={value}
@@ -73,9 +82,7 @@ export const TestToCodePlugin = ({ summaries = [], aggregated }: Props) => {
         <ListColumn
           name="coverage"
           label="Coverage"
-          Cell={({ value }) => (
-            <TestToCodeCoverageCell value={value} />
-          )}
+          Cell={({ value }) => <TestToCodeCoverageCell value={value} />}
           HeaderCell={() => (
             <TestToCodeHeaderCell
               value={`${percentFormatter(aggregated?.coverage || 0)}%`}
@@ -85,16 +92,8 @@ export const TestToCodePlugin = ({ summaries = [], aggregated }: Props) => {
         />
         <ListColumn
           name="risks"
-          Cell={({ value }) => (
-            <TestToCodeCell
-              value={value}
-              testContext="risks"
-              link="#"
-            />
-          )}
-          HeaderCell={() => (
-            <TestToCodeHeaderCell value={aggregated?.risks || 0} label="risks" />
-          )}
+          Cell={({ value }) => <TestToCodeCell link="#" value={value} testContext="risks" />}
+          HeaderCell={() => <TestToCodeHeaderCell value={aggregated?.risks || 0} label="risks" />}
         />
         <ListColumn
           name="testsToRun"
@@ -109,17 +108,13 @@ export const TestToCodePlugin = ({ summaries = [], aggregated }: Props) => {
             <TestToCodeHeaderCell
               value={aggregated?.testsToRun?.count || 0}
               label="tests to run"
-              onClick={() => setTestsToRunModalIsOpen(true)}
+              path={`/service-group-full-page/${serviceGroupId}/${pluginId}/tests-to-run-modal`}
             />
           )}
         />
         <ListColumn
           name="actions"
-          Cell={({
-            item: {
-              id: agentId = '',
-            },
-          }) => (
+          Cell={({ item: { id: agentId = '' } }) => (
             <Menu
               tw="flex justify-center w-full"
               testContext="test-to-code-plugin:actions:cell"
@@ -147,40 +142,44 @@ export const TestToCodePlugin = ({ summaries = [], aggregated }: Props) => {
                 {
                   label: 'Finish all scopes',
                   icon: 'Check',
-                  onClick: () => setIsFinishScopesModalOpen(true),
+                  onClick: () => null,
+                  content: (
+                    <Link
+                      to={`/service-group-full-page/${serviceGroupId}/${pluginId}/finish-all-scopes-modal`}
+                    >
+                      Finish all scopes
+                    </Link>
+                  ),
                 },
                 {
                   label: 'Sessions Management',
                   icon: 'ManageSessions',
-                  onClick: () => setIsSessionsManagementModalOpen(true),
+                  onClick: () => null,
+                  content: (
+                    <Link
+                      to={`/service-group-full-page/${serviceGroupId}/${pluginId}/session-management-pane`}
+                    >
+                      Sessions Management
+                    </Link>
+                  ),
                 },
               ]}
             />
           )}
         />
       </List>
-      {isSessionsManagementModalOpen && (
-        <SessionsManagementPane
-          isOpen={isSessionsManagementModalOpen}
-          onToggle={setIsSessionsManagementModalOpen}
-        />
-      )}
-      {isFinishScopesModalOpen && (
-        <FinishAllScopesModal
-          isOpen={isFinishScopesModalOpen}
-          onToggle={setIsFinishScopesModalOpen}
-          setIsSessionsManagementModalOpen={setIsSessionsManagementModalOpen}
-          serviceGroupId={serviceGroupId}
-          agentsCount={serviceGroupSummaries.length}
-          pluginId={pluginId}
-        />
-      )}
-      {testsToRunModalIsOpen && (
-        <TestsToRunModal
-          isOpen={testsToRunModalIsOpen}
-          onToggle={setTestsToRunModalIsOpen}
-        />
-      )}
+      <Route
+        path="/service-group-full-page/:serviceGroupId/:pluginId/session-management-pane"
+        component={SessionsManagementPane}
+      />
+      <Route
+        path="/service-group-full-page/:serviceGroupId/:pluginId/finish-all-scopes-modal"
+        render={() => <FinishAllScopesModal agentsCount={serviceGroupSummaries.length} />}
+      />
+      <Route
+        path="/service-group-full-page/:serviceGroupId/:pluginId/tests-to-run-modal"
+        component={TestsToRunModal}
+      />
     </div>
   );
 };

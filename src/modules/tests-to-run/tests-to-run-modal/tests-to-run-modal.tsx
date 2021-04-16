@@ -23,6 +23,7 @@ import tw from 'twin.macro';
 
 import { copyToClipboard } from 'utils';
 import { usePluginData } from 'pages/service-group-full-page/use-plugin-data';
+import { useCloseModal } from 'hooks';
 import { TestsToRunUrl } from '../tests-to-run-url';
 import { getTestsToRunURL } from '../get-tests-to-run-url';
 
@@ -31,12 +32,7 @@ interface GroupedTestToRun {
   totalCount?: number;
 }
 
-interface Props {
-  isOpen: boolean;
-  onToggle: (value: boolean) => void;
-}
-
-export const TestsToRunModal = ({ isOpen, onToggle }: Props) => {
+export const TestsToRunModal = () => {
   const [copied, setCopied] = useState(false);
   useEffect(() => {
     const timeout = setTimeout(() => setCopied(false), 5000);
@@ -58,9 +54,10 @@ export const TestsToRunModal = ({ isOpen, onToggle }: Props) => {
         return allTests;
     }
   };
+  const closeModal = useCloseModal('/tests-to-run-modal');
 
   return (
-    <Modal isOpen={isOpen} onToggle={onToggle}>
+    <Modal isOpen onToggle={closeModal}>
       <div tw="flex flex-col h-full">
         <div tw="flex items-center gap-x-2 h-16 border-b border-monochrome-medium-tint pl-6 text-18 leading-24 text-monochrome-black">
           <Icons.Test height={20} width={18} viewBox="0 0 18 20" />

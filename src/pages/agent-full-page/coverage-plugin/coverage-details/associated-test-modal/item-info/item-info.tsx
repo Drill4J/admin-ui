@@ -20,7 +20,7 @@ interface Props {
   packageName?: string;
   testClassName?: string;
   methodName?: string;
-  treeLevel: number;
+  treeLevel: number | null;
 }
 
 const ItemWrapper = styled.div`
@@ -45,7 +45,8 @@ export const ItemInfo = ({
         </div>
       ) : (
         <div tw="space-y-4 pt-2 pb-2 animate-pulse">
-          {Array.from(Array(treeLevel).keys()).map((level) => (<div key={level} tw="h-4 bg-monochrome-medium-tint rounded" />))}
+          {Array.from(Array(treeLevel).keys()).map((level) => (
+            <div key={level} tw="h-4 bg-monochrome-medium-tint rounded" />))}
         </div>
       )}
       {testClassName && (

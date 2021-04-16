@@ -13,32 +13,35 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import {
   Button, Popup, Checkbox,
 } from '@drill4j/ui-kit';
+import { useParams } from 'react-router-dom';
 import tw, { styled } from 'twin.macro';
 
+import { useCloseModal } from 'hooks';
+import { NotificationManagerContext } from 'notification-manager';
+import { toggleBaseline } from '../../api';
+
 interface Props {
-  isOpen: boolean;
-  onToggle: (value: boolean) => void;
   isBaseline: boolean;
-  toggleBaseline: () => void;
 }
 
 const Message = styled.div`
   ${tw`text-14 leading-20`}
 `;
 
-export const BaselineBuildModal = ({
-  isOpen, onToggle, isBaseline, toggleBaseline,
-}: Props) => {
+export const BaselineBuildModal = ({ isBaseline }: Props) => {
   const [isConfirmed, setIsConfirmed] = useState(isBaseline);
+  const closeModal = useCloseModal('/baseline-build-modal');
+  const { showMessage } = useContext(NotificationManagerContext);
+  const { pluginId = '', agentId = '' } = useParams<{ pluginId: string; agentId: string; }>();
 
   return (
     <Popup
-      isOpen={isOpen}
-      onToggle={onToggle}
+      isOpen
+      onToggle={closeModal}
       header={`${isBaseline ? 'Unset' : 'Set'} as Baseline Build`}
       closeOnFadeClick
     >
@@ -72,15 +75,28 @@ export const BaselineBuildModal = ({
             <Button
               type="primary"
               size="large"
-              onClick={() => {
-                toggleBaseline();
-                onToggle(false);
+              onClick={async () => {
+                try {
+                  await toggleBaseline(agentId, pluginId);
+                  showMessage({
+                    type: 'SUCCESS',
+                    text: `Current build has been ${isBaseline
+                      ? 'unset as baseline successfully. All subsequent builds won\'t be compared to it.'
+                      : 'set as baseline successfully. All subsequent builds will be compared to it.'}`,
+                  });
+                } catch ({ response: { data: { message } = {} } = {} }) {
+                  showMessage({
+                    type: 'ERROR',
+                    text: message || 'There is some issue with your action. Please try again later.',
+                  });
+                }
+                closeModal();
               }}
               disabled={!isConfirmed}
             >
               {isBaseline ? 'Unset' : 'Set'} as Baseline
             </Button>
-            <Button type="secondary" size="large" onClick={() => onToggle(false)}>
+            <Button type="secondary" size="large" onClick={closeModal}>
               Cancel
             </Button>
           </div>

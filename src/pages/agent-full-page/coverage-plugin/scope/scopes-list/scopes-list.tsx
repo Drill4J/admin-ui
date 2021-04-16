@@ -38,6 +38,7 @@ interface MenuItemType {
   label: string;
   icon: keyof typeof Icons;
   onClick: () => void;
+  content?: React.ReactNode;
 }
 
 const Title = styled.div`
@@ -77,7 +78,7 @@ export const ScopesList = () => {
               }) => (
                 <Link
                   tw="font-bold text-14 leading-20 cursor-pointer"
-                  to={`/full-page/${agentId}/${buildVersion}/${pluginId}/scopes/${id}`}
+                  to={`/full-page/${agentId}/${buildVersion}/${pluginId}/scope/${id}/methods`}
                   data-test="scopes-list:scope-name"
                 >
                   <div className="link text-ellipsis" title={value}>{value}</div>
@@ -163,7 +164,7 @@ export const ScopesList = () => {
                 name="actions"
                 Cell={({ item }) => {
                   const { active, enabled, id } = item;
-                  const menuActions = [
+                  const menuActions: MenuItemType[] = [
                     active && {
                       label: 'Finish Scope',
                       icon: 'Check',
@@ -172,7 +173,11 @@ export const ScopesList = () => {
                     active && {
                       label: 'Sessions Management',
                       icon: 'ManageSessions',
-                      onClick: () => dispatch(openModal('SessionsManagementModal', null)),
+                      content: (
+                        <Link to={`/full-page/${agentId}/${buildVersion}/${pluginId}/scopes/session-management-pane`}>
+                          Sessions Management
+                        </Link>
+                      ),
                     },
                     !active && {
                       label: `${enabled ? 'Ignore' : 'Include'} in stats`,

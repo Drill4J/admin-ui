@@ -31,7 +31,9 @@ export const ActiveScopeInfo = ({ scope }: Props) => {
     id: scopeId,
     coverage: { percentage = 0 } = {},
   } = scope || {};
-  const { agentId, buildVersion, pluginId } = useParams<{agentId: string, buildVersion: string, pluginId: string }>();
+  const {
+    agentId, buildVersion, pluginId, tab,
+  } = useParams<{agentId: string, buildVersion: string, pluginId: string; tab: string }>();
   const dispatch = useCoveragePluginDispatch();
   const { loading } = usePluginState();
 
@@ -57,25 +59,25 @@ export const ActiveScopeInfo = ({ scope }: Props) => {
       <div className="flex flex-col items-start gap-y-3 w-full mt-6 font-bold leading-20">
         <Link
           className="link"
-          to={`/full-page/${agentId}/${buildVersion}/${pluginId}/scopes/${scopeId}`}
+          to={`/full-page/${agentId}/${buildVersion}/${pluginId}/scope/${scopeId}/methods`}
           data-test="active-scope-info:scope-details-link"
         >
           Scope Details
         </Link>
         <Link
           className="link"
-          to={`/full-page/${agentId}/${buildVersion}/${pluginId}/scopes/`}
+          to={`/full-page/${agentId}/${buildVersion}/${pluginId}/scopes`}
           data-test="active-scope-info:all-scopes-link"
         >
           All Scopes
         </Link>
-        <Button
-          className="link"
-          onClick={() => dispatch(openModal('SessionsManagementModal', null))}
+        <Link
+          tw="link"
+          to={`/full-page/${agentId}/${buildVersion}/${pluginId}/dashboard/${tab}/session-management-pane`}
           data-test="active-scope-info:sessions-management-link"
         >
           Sessions Management
-        </Button>
+        </Link>
       </div>
     </div>
   );

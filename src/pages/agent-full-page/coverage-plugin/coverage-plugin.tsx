@@ -16,12 +16,13 @@
 import { Switch, Route } from 'react-router-dom';
 import 'twin.macro';
 
-import { TestsToRunList } from 'modules';
+import { SessionsManagementPaneProvider, TestsToRunList } from 'modules';
 import { Overview } from './overview';
 import { ScopesList, ScopeInfo } from './scope';
 import { CoveragePluginModals } from './covarage-plugin-modals';
 import { CoveragePluginProvider } from './store';
 import { InitialDataController } from './initial-data-controller';
+import { RisksModal } from './risks-modal';
 
 export const CoveragePlugin = () => (
   <div tw="flex flex-col w-full h-full">
@@ -31,28 +32,35 @@ export const CoveragePlugin = () => (
           <div tw="flex-grow mx-6">
             <Switch>
               <Route
-                path="/full-page/:agentId/:buildVersion/:pluginId/dashboard"
+                path="/full-page/:agentId/:buildVersion/:pluginId/dashboard/:tab"
                 component={Overview}
-                exact
               />
               <Route
                 path="/full-page/:agentId/:buildVersion/:pluginId/scopes"
                 component={ScopesList}
-                exact
               />
               <Route
-                path="/full-page/:agentId/:buildVersion/:pluginId/scopes/:scopeId"
+                path="/full-page/:agentId/:buildVersion/:pluginId/scope/:scopeId/:tab"
                 component={ScopeInfo}
-                exact
               />
               <Route
                 path="/full-page/:agentId/:buildVersion/:pluginId/tests-to-run"
                 component={TestsToRunList}
-                exact
               />
             </Switch>
           </div>
           <CoveragePluginModals />
+          <Route
+            path={[
+              '/full-page/:agentId/:buildVersion/:pluginId/dashboard/:tab/risks-modal',
+              '/full-page/:agentId/:buildVersion/:pluginId/scopes/:scopeId/:tab/risks-modal',
+            ]}
+            component={RisksModal}
+          />
+          <Route
+            path="/full-page/:agentId/:buildVersion/:pluginId/*/session-management-pane"
+            component={SessionsManagementPaneProvider}
+          />
         </>
       </InitialDataController>
     </CoveragePluginProvider>

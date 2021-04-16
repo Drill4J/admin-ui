@@ -15,7 +15,7 @@
  */
 import { useState } from 'react';
 import {
-  matchPath, useLocation, Link,
+  matchPath, Route, useLocation, Link,
 } from 'react-router-dom';
 import { Icons, Button, GeneralAlerts } from '@drill4j/ui-kit';
 import 'twin.macro';
@@ -32,7 +32,6 @@ interface Props {
 }
 
 export const PluginsSettingsTab = ({ agent: { buildVersion = '' } }: Props) => {
-  const [isAddPluginOpen, setIsAddPluginOpen] = useState(false);
   const { pathname } = useLocation();
   const { params: { type: agentType = '', id = '' } = {} } = matchPath<{ type: 'service-group' | 'agent', id: string }>(pathname, {
     path: '/agents/:type/:id/settings/:tab',
@@ -52,15 +51,18 @@ export const PluginsSettingsTab = ({ agent: { buildVersion = '' } }: Props) => {
           Plugins
           <span tw="ml-2 font-regular text-monochrome-default">{installedPlugins.length}</span>
         </span>
-        <Button
-          tw="flex items-center justify-center gap-x-2 pl-2 pr-2 text-14"
-          type="secondary"
-          onClick={() => setIsAddPluginOpen(!isAddPluginOpen)}
+        <Link
+          to={`/agents/${agentType}/${id}/settings/plugins/add-plugin-modal`}
           data-test={`${agentType}-info-page:add-plugin-button`}
         >
-          <Icons.Add />
-          Add plugin
-        </Button>
+          <Button
+            tw="flex items-center justify-center gap-x-2 h-full pl-2 pr-2 text-14"
+            type="secondary"
+          >
+            <Icons.Add />
+            Add plugin
+          </Button>
+        </Link>
       </div>
       <div tw="flex-grow mr-6 ml-6">
         {installedPlugins.length > 0 ? (
@@ -91,16 +93,16 @@ export const PluginsSettingsTab = ({ agent: { buildVersion = '' } }: Props) => {
           />
         )}
       </div>
-      {isAddPluginOpen && (
-        <AddPluginsModal
-          isOpen={isAddPluginOpen}
-          onToggle={setIsAddPluginOpen}
-          plugins={plugins}
-          agentId={id}
-          selectedPlugins={selectedPlugins}
-          setSelectedPlugins={setSelectedPlugins}
-        />
-      )}
+      <Route
+        path="/agents/:type/:id/settings/plugins/add-plugin-modal"
+        render={() => (
+          <AddPluginsModal
+            plugins={plugins}
+            selectedPlugins={selectedPlugins}
+            setSelectedPlugins={setSelectedPlugins}
+          />
+        )}
+      />
     </div>
   );
 };

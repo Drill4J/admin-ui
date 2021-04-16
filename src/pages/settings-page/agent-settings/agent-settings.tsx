@@ -16,7 +16,7 @@
 import { useState } from 'react';
 import { Icons } from '@drill4j/ui-kit';
 import {
-  useParams, Prompt, Switch, Route, useHistory,
+  useParams, Prompt, Switch, Route,
 } from 'react-router-dom';
 import 'twin.macro';
 
@@ -31,9 +31,8 @@ import { UnSaveChangeModal } from '../un-save-changes-modal';
 export const AgentSettings = () => {
   const [pristineSettings, setPristineSettings] = useState(true);
   const [nextLocation, setNextLocation] = useState('');
-  const { id = '', tab: selectedTab = '' } = useParams<{ id: string; tab: string }>();
+  const { id = '' } = useParams<{ id: string; }>();
   const agent = useAgent(id) || {};
-  const { push } = useHistory();
   const SystemSettings = agent.agentType === 'Node.js' ? JsSystemSettingsForm : SystemSettingsForm;
 
   return (
@@ -48,15 +47,10 @@ export const AgentSettings = () => {
         )}
       />
       <div tw="px-6">
-        <TabsPanel
-          activeTab={selectedTab}
-          onSelect={(tab) => (pristineSettings
-            ? push(`/agents/agent/${id}/settings/${tab}`, { pristineSettings })
-            : setNextLocation(`/agents/agent/${id}/settings/${tab}`))}
-        >
-          <Tab name="general">General</Tab>
-          <Tab name="system">System</Tab>
-          <Tab name="plugins">Plugins</Tab>
+        <TabsPanel>
+          <Tab name="general" to={`/agents/agent/${id}/settings/general`}>General</Tab>
+          <Tab name="system" to={`/agents/agent/${id}/settings/system`}>System</Tab>
+          <Tab name="plugins" to={`/agents/agent/${id}/settings/plugins`}>Plugins</Tab>
         </TabsPanel>
       </div>
       <Switch>
@@ -73,20 +67,13 @@ export const AgentSettings = () => {
           render={() => <PluginsSettingsTab agent={agent} />}
         />
       </Switch>
-      <UnSaveChangeModal
-        isOpen={Boolean(nextLocation)}
-        onToggle={() => setNextLocation('')}
-        onConfirmAction={() => {
-          push(nextLocation, { pristineSettings: true });
-          setNextLocation('');
-        }}
-      />
+      <UnSaveChangeModal path={nextLocation} setNextLocation={setNextLocation} />
       <Prompt
-        when={!pristineSettings}
+        when
         message={({ pathname, state }) => {
-          const { pristineSettings: pristine = false } = state as { pristineSettings: boolean } || {};
-          if (pristine) {
-            setPristineSettings(true);
+          const { pristine } = state as { pristine: boolean } || {};
+
+          if (pristineSettings || pristine) {
             return true;
           }
           setNextLocation(pathname);

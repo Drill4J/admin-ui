@@ -15,20 +15,17 @@
  */
 import { useContext, useState } from 'react';
 import {
-  Button, Popup, OverflowText, GeneralAlerts, LinkButton, Spinner,
+  Button, Popup, OverflowText, GeneralAlerts, Spinner,
 } from '@drill4j/ui-kit';
+import { useParams, Link } from 'react-router-dom';
 import tw, { styled } from 'twin.macro';
 
 import { useActiveSessions } from 'modules';
 import { NotificationManagerContext } from 'notification-manager';
+import { useCloseModal } from 'hooks';
 import { finishAllScopes } from './finish-all-scopes';
 
 interface Props {
-  isOpen: boolean;
-  onToggle: (value: boolean) => void;
-  setIsSessionsManagementModalOpen: (value: boolean) => void;
-  serviceGroupId: string;
-  pluginId: string;
   agentsCount: number;
 }
 
@@ -40,18 +37,18 @@ const Instructions = styled.div`
   }
 `;
 
-export const FinishAllScopesModal = ({
-  isOpen, onToggle, setIsSessionsManagementModalOpen, serviceGroupId, agentsCount, pluginId,
-}: Props) => {
+export const FinishAllScopesModal = ({ agentsCount }: Props) => {
   const { showMessage } = useContext(NotificationManagerContext);
   const [errorMessage, setErrorMessage] = useState('');
+  const { serviceGroupId = '', pluginId = '' } = useParams<{ serviceGroupId?: string; pluginId?:string; }>();
   const activeSessions = useActiveSessions('ServiceGroup', serviceGroupId) || [];
   const [loading, setLoading] = useState(false);
+  const closeModal = useCloseModal('/finish-all-scopes-modal');
 
   return (
     <Popup
-      isOpen={isOpen}
-      onToggle={onToggle}
+      isOpen
+      onToggle={closeModal}
       header={<OverflowText>Finish All Scopes</OverflowText>}
       type="info"
       closeOnFadeClick
@@ -67,9 +64,12 @@ export const FinishAllScopesModal = ({
             <div>
               At least one active session has been detected.<br />
               First, you need to finish it in&nbsp;
-              <LinkButton tw="text-14" onClick={() => { setIsSessionsManagementModalOpen(true); onToggle(false); }}>
+              <Link
+                to={`/service-group-full-page/${serviceGroupId}/${pluginId}/session-management-pane`}
+                tw="link text-14"
+              >
                 Sessions Management
-              </LinkButton>
+              </Link>
             </div>
           </GeneralAlerts>
         )}
@@ -97,7 +97,7 @@ export const FinishAllScopesModal = ({
                       type: 'SUCCESS',
                       text: 'All scopes have been successfully finished',
                     });
-                    onToggle(false);
+                    closeModal();
                   },
                   onError: setErrorMessage,
                 })({ prevScopeEnabled: true, savePrevScope: true });
@@ -106,7 +106,7 @@ export const FinishAllScopesModal = ({
             >
               {loading ? <Spinner disabled /> : 'Finish all scopes'}
             </Button>
-            <Button type="secondary" size="large" onClick={() => onToggle(false)}>
+            <Button type="secondary" size="large" onClick={() => closeModal()}>
               Cancel
             </Button>
           </div>

@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { SessionsManagementPaneProvider as SessionsManagementModal } from 'modules';
 import { useCoveragePluginState, useCoveragePluginDispatch, openModal } from './store';
 import { RenameScopeModal } from './scope/rename-scope-modal';
 import { FinishScopeModal } from './scope/finish-scope-modal';
@@ -23,7 +22,6 @@ const modals = {
   RenameScopeModal,
   FinishScopeModal,
   DeleteScopeModal,
-  SessionsManagementModal,
 };
 
 export const CoveragePluginModals = () => {

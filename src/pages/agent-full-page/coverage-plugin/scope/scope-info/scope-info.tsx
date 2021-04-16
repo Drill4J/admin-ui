@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 import { useContext, useState } from 'react';
-import { Redirect, useParams } from 'react-router-dom';
+import { Redirect, useHistory, useParams } from 'react-router-dom';
 import {
   Icons, Menu, Button, SessionIndicator,
 } from '@drill4j/ui-kit';
@@ -53,13 +53,15 @@ export const ScopeInfo = () => {
   const { showMessage } = useContext(NotificationManagerContext);
   const { agentId, loading } = usePluginState();
   const { buildVersion: activeBuildVersion = '', status } = useAgent(agentId) || {};
-  const { pluginId = '', scopeId = '', buildVersion } = useParams<{ pluginId: string, scopeId: string, buildVersion: string }>();
+  const {
+    pluginId = '', scopeId = '', buildVersion = '', tab = '',
+  } = useParams<{ pluginId: string, scopeId: string, buildVersion: string; tab: string }>();
   const dispatch = useCoveragePluginDispatch();
   const scope = useBuildVersion<ActiveScope>(`/build/scopes/${scopeId}`);
   const {
     name = '', active = false, enabled = false, started = 0, finished = 0, sessionsFinished,
   } = scope || {};
-  const [selectedTab, setSelectedTab] = useState('coverage');
+  const { push, location: { pathname = '' } } = useHistory();
   const menuActions = [
     !active && {
       label: `${enabled ? 'Ignore' : 'Include'} in stats`,
@@ -82,7 +84,10 @@ export const ScopeInfo = () => {
     active && {
       label: 'Sessions Management',
       icon: 'ManageSessions',
-      onClick: () => dispatch(openModal('SessionsManagementModal', null)),
+      onClick: () => {
+        push(`${pathname}/session-management-pane`);
+        dispatch(openModal(undefined, null));
+      },
     },
     {
       label: 'Rename',
@@ -134,14 +139,14 @@ export const ScopeInfo = () => {
             </div>
           </Header>
           <div tw="flex items-center w-full border-b border-monochrome-medium-tint">
-            <TabsPanel activeTab={selectedTab} onSelect={setSelectedTab}>
-              <Tab name="coverage">
+            <TabsPanel>
+              <Tab name="methods" to={`/full-page/${agentId}/${buildVersion}/${pluginId}/scope/${scopeId}/methods`}>
                 <div tw="flex items-center mr-2 text-monochrome-black">
                   <Icons.Function />
                 </div>
                 Scope methods
               </Tab>
-              <Tab name="tests">
+              <Tab name="tests" to={`/full-page/${agentId}/${buildVersion}/${pluginId}/scope/${scopeId}/tests`}>
                 <div tw="flex items-center mr-2 text-monochrome-black">
                   <Icons.Test width={16} />
                 </div>
@@ -150,8 +155,8 @@ export const ScopeInfo = () => {
             </TabsPanel>
           </div>
           <div tw="mt-4">
-            <TableActionsProvider key={selectedTab}>
-              {selectedTab === 'coverage' ? (
+            <TableActionsProvider key={tab}>
+              {tab === 'coverage' ? (
                 <>
                   <ScopeProjectMethods scope={scope} />
                   <CoverageDetails

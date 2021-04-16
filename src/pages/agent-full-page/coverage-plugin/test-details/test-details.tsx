@@ -13,10 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { useState, useRef } from 'react';
+import { useRef } from 'react';
 import {
   Icons, Column, Table,
 } from '@drill4j/ui-kit';
+import {
+  Route, useParams, Link,
+} from 'react-router-dom';
 import 'twin.macro';
 
 import { capitalize } from 'utils';
@@ -39,12 +42,15 @@ export const TestDetails = ({
   topicCoveredMethodsByTest, tests: { items: tests = [], totalCount = 0, filteredCount = 0 },
 }: Props) => {
   const { agent: { status = '' } = {} } = usePluginState();
-  const [selectedTest, setSelectedTest] = useState<null | { id: string; covered: number }>(null);
   const ref = useRef<HTMLDivElement>(null);
   const visibleElementsCount = useVisibleElementsCount(ref, 10, 10);
   const dispatch = useTableActionsDispatch();
   const { search } = useTableActionsState();
   const [searchQuery] = search;
+
+  const {
+    pluginId, buildVersion, agentId, scopeId, tab,
+  } = useParams<{buildVersion?: string; pluginId?: string; agentId?: string; scopeId?: string; tab?: string; }>();
 
   return (
     <div tw="flex flex-col">
@@ -104,11 +110,17 @@ export const TestDetails = ({
             label="Methods covered"
             Cell={({ value, item: { id = '', coverage: { methodCount: { covered = 0 } = {} } = {} } = {} }) => (
               <Cells.Clickable
-                onClick={() => setSelectedTest({ id, covered })}
                 data-test="test-actions:view-curl:id"
                 disabled={!value}
               >
-                {value}
+                <Link to={scopeId
+                  ? `/full-page/${agentId}/${buildVersion}/${
+                    pluginId}/scope/${scopeId}/${tab}/covered-methods-modal?coveredMethods=${covered}&testId=${id}`
+                  : `/full-page/${agentId}/${buildVersion}/${
+                    pluginId}/dashboard/${tab}/covered-methods-modal?coveredMethods=${covered}&testId=${id}`}
+                >
+                  {value}
+                </Link>
               </Cells.Clickable>
             )}
           />
@@ -135,14 +147,13 @@ export const TestDetails = ({
           message="Try adjusting your search or filter to find what you are looking for."
         />
       )}
-      {selectedTest !== null && (
-        <CoveredMethodsByTestSidebar
-          isOpen={Boolean(selectedTest)}
-          onToggle={() => setSelectedTest(null)}
-          testInfo={selectedTest}
-          topicCoveredMethodsByTest={topicCoveredMethodsByTest}
-        />
-      )}
+      <Route
+        path={[
+          '/full-page/:agentId/:buildVersion/:pluginId/dashboard/:tab/covered-methods-modal',
+          '/full-page/:agentId/:buildVersion/:pluginId/scopes/:scopeId/:tab/covered-methods-modal',
+        ]}
+        render={() => <CoveredMethodsByTestSidebar topicCoveredMethodsByTest={topicCoveredMethodsByTest} />}
+      />
       <div ref={ref} />
     </div>
   );

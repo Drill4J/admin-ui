@@ -20,14 +20,12 @@ import tw, { styled } from 'twin.macro';
 
 import { NotificationManagerContext } from 'notification-manager';
 import { Plugin } from 'types/plugin';
+import { useCloseModal } from 'hooks';
 import { SelectableList } from './selectable-list';
 import { loadPlugins } from './load-plugins';
 
 interface Props {
-  isOpen: boolean;
-  onToggle: (arg: boolean) => void;
   plugins: Plugin[];
-  agentId: string;
   selectedPlugins: string[];
   setSelectedPlugins: (plugins: string[]) => void;
 }
@@ -42,18 +40,19 @@ const PluginsList = styled.div`
 `;
 
 export const AddPluginsModal = ({
-  isOpen, onToggle, plugins, agentId, setSelectedPlugins, selectedPlugins,
+  plugins, setSelectedPlugins, selectedPlugins,
 }: Props) => {
   const { showMessage } = useContext(NotificationManagerContext);
   const { pathname } = useLocation();
-  const { params: { type = '' } = {} } = matchPath<{ type: 'service-group' | 'agent' }>(pathname, {
+  const { params: { type = '', id: agentId = '' } = {} } = matchPath<{ type: 'service-group' | 'agent'; id: string }>(pathname, {
     path: '/agents/:type/:id/settings/:tab',
   }) || {};
   const [loading, setLoading] = useState(false);
+  const closeModal = useCloseModal('/add-plugin-modal');
   const handleLoadPlugins = loadPlugins(
     `/${type === 'agent' ? 'agents' : 'groups'}/${agentId}/plugins`, {
       onSuccess: () => {
-        onToggle(false);
+        closeModal();
         showMessage({ type: 'SUCCESS', text: 'Plugin has been added' });
       },
       onError: () => showMessage({
@@ -64,7 +63,7 @@ export const AddPluginsModal = ({
   );
 
   return (
-    <Modal isOpen={isOpen} onToggle={onToggle}>
+    <Modal isOpen onToggle={closeModal}>
       <div tw="flex flex-col h-full">
         <div tw="pt-4 pb-4 pr-6 pl-6 text-20 leading-32 text-monochrome-black border-b border-monochrome-medium-tint">
           Add new plugin
@@ -93,7 +92,7 @@ export const AddPluginsModal = ({
           >
             {loading ? <Spinner disabled /> : 'Add plugin'}
           </Button>
-          <Button type="secondary" size="large" onClick={() => onToggle(!isOpen)}>
+          <Button type="secondary" size="large" onClick={closeModal}>
             Cancel
           </Button>
         </div>
