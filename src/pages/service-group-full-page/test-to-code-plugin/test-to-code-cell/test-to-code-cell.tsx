@@ -20,20 +20,22 @@ import tw, { styled } from 'twin.macro';
 interface Props {
   value: number;
   link: string;
-  testContext?: string;
+  name: string;
 }
 
-const Value = styled(Link)(({ clickable }: {clickable: boolean}) => [
+const Value = styled(Link)(({ name }: { name: string }) => [
   tw`inline-flex items-center text-20 text-monochrome-black`,
-  clickable && tw`cursor-pointer hover:text-blue-default active:text-blue-shade`,
+  name === 'tests-to-run'
+    ? tw`cursor-pointer hover:text-blue-default active:text-blue-shade`
+    : tw`pointer-events-none`,
 ]);
 
 export const TestToCodeCell = ({
-  value, link, testContext,
+  value, link, name,
 }: Props) => (
   <div>
     <div tw="pl-4">
-      <Value to={link} clickable={Boolean(link)} data-test={`dashboard-cell:value:${testContext}`}>
+      <Value to={link} name={name} data-test={`dashboard-cell:value:${name}`}>
         {value === undefined ? (
           <Tooltip message={(
             <div className="flex flex-col items-center w-full">
@@ -45,7 +47,7 @@ export const TestToCodeCell = ({
             n/a
           </Tooltip>
         ) : value}
-        {Boolean(link) && <Icons.Expander tw="ml-1 text-blue-default" height={8} />}
+        {name === 'tests-to-run' && <Icons.Expander tw="ml-1 text-blue-default" height={8} />}
       </Value>
     </div>
   </div>
