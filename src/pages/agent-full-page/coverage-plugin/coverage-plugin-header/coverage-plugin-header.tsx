@@ -123,7 +123,7 @@ export const CoveragePluginHeader = ({ previousBuildTests = [] }: Props) => {
             <div className="text-ellipsis text-monochrome-black" title={buildVersion}>{buildVersion}</div>
             <Tooltip message={<div tw="text-center">{info}</div>} position="top-center">
               <FlagWrapper
-                to={`/full-page/${agentId}/${buildVersion}/${pluginId}/dashboard${!disabled ? '/baseline-build-modal' : ''}`}
+                to={`/full-page/${agentId}/${buildVersion}/${pluginId}/dashboard/${tab}${!disabled ? '/baseline-build-modal' : ''}`}
                 active={Boolean(isActiveBuild && previousBuildVersion)}
               >
                 <Flag />

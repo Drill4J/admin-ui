@@ -13,8 +13,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { ReactNode, useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import { ReactNode } from 'react';
+import { Route, useHistory, Link } from 'react-router-dom';
 import { Icons } from '@drill4j/ui-kit';
 import tw, { styled } from 'twin.macro';
 
@@ -35,22 +35,20 @@ const NotificationCount = styled.div`
 `;
 
 export const Toolbar = ({ breadcrumbs }: Props) => {
-  const [isNotificationPaneOpen, setIsNotificationPaneOpen] = useState(false);
   const notifications = useWsConnection<Notification[]>(defaultAdminSocket, '/notifications') || [];
   const unreadNotifications = notifications.filter(notification => !notification.read);
-  const { push } = useHistory();
+  const { push, location: { pathname } } = useHistory();
 
   return (
     <div tw="flex items-center w-full h-full">
       <div tw="flex items-center justify-between mx-6 w-full h-full">
         <div tw="text-monochrome-default">{breadcrumbs}</div>
         <div tw="flex items-center text-12 leading-20 text-monochrome-default">
-          <span className="link">
+          <Link to={`${pathname}/notification-sidebar`} className="link">
             <Icons.Notification
-              onClick={() => setIsNotificationPaneOpen(!isNotificationPaneOpen)}
               data-test="tolbar:icon-notification"
             />
-          </span>
+          </Link>
           <NotificationCount unread={unreadNotifications.length > 0} data-test="tolbar:notification-count">
             {unreadNotifications.length}
           </NotificationCount>
@@ -69,13 +67,10 @@ export const Toolbar = ({ breadcrumbs }: Props) => {
           </div>
         </div>
       </div>
-      {isNotificationPaneOpen && (
-        <NotificationsSidebar
-          notifications={notifications}
-          isOpen={isNotificationPaneOpen}
-          onToggle={setIsNotificationPaneOpen}
-        />
-      )}
+      <Route
+        path="*/notification-sidebar"
+        render={() => <NotificationsSidebar notifications={notifications} />}
+      />
     </div>
   );
 };
