@@ -20,6 +20,7 @@ import { webSocket, WebSocketSubject } from 'rxjs/webSocket';
 import { mergeMap, retryWhen } from 'rxjs/operators';
 
 import { TOKEN_KEY } from '../constants';
+import { SubscribersCollection } from './subscribersCollection';
 
 export interface DrillResponse {
   message: string;
@@ -49,6 +50,8 @@ export class DrillSocket {
 
   public reconnection$: Subject<'CLOSE' | 'OPEN'>;
 
+  private subscribers: SubscribersCollection;
+
   constructor(url: string) {
     this.ws$ = webSocket<DrillResponse>({
       url,
@@ -73,27 +76,48 @@ export class DrillSocket {
       }
     });
     this.reconnection$ = new Subject();
+    this.subscribers = new SubscribersCollection();
   }
 
   public subscribe(topic: string, callback: (arg: any) => void, message?: SubscriptionMessage | Record<string, unknown>) {
-    let subscription = this.connection$.subscribe({ next: nextMessageHandler(topic, callback, message) });
+    const key = createSubscriberKey(topic, message);
+    let subscription = this.connection$.subscribe({
+      next: nextMessageHandler(topic, callback, message, this.subscribers.setSubscriberValue.bind(this.subscribers)),
+    });
 
     const autoSubscription = this.reconnection$.subscribe((type) => {
       if (type === 'CLOSE') {
         subscription.unsubscribe();
+        this.subscribers.removeSubscriber(key);
       }
-      if (type === 'OPEN') {
-        subscription = this.connection$.subscribe({ next: nextMessageHandler(topic, callback, message) });
-        this.send(topic, 'SUBSCRIBE', message);
+      if (type === 'OPEN' && subscription.closed) {
+        subscription = this.connection$.subscribe({
+          next: nextMessageHandler(topic, callback, message, this.subscribers.setSubscriberValue.bind(this.subscribers)),
+        });
+
+        if (!this.subscribers.has(key)) {
+          this.send(topic, 'SUBSCRIBE', message);
+        } else {
+          callback(this.subscribers.get(key).lastValue);
+        }
+        this.subscribers.addSubscriber(key);
       }
     });
 
-    this.send(topic, 'SUBSCRIBE', message);
+    if (!this.subscribers.has(key)) {
+      this.send(topic, 'SUBSCRIBE', message);
+    } else {
+      callback(this.subscribers.get(key).lastValue);
+    }
+    this.subscribers.addSubscriber(key);
 
     return () => {
       subscription.unsubscribe();
       autoSubscription.unsubscribe();
-      this.send(topic, 'UNSUBSCRIBE', message);
+      if (this.subscribers.get(key).quantity === 1) {
+        this.send(topic, 'UNSUBSCRIBE', message);
+      }
+      this.subscribers.removeSubscriber(key);
     };
   }
 
@@ -114,16 +138,20 @@ export class DrillSocket {
   }
 }
 
-const nextMessageHandler = (topic: string, callback: (arg: any) => void, message?: SubscriptionMessage | Record<string, unknown>) => ({
+const nextMessageHandler = (topic: string, callback: (arg: any) => void,
+  message?: SubscriptionMessage | Record<string, unknown>,
+  setSubscriberValue?: (name: string, value: any) => void) => ({
   destination,
   message: responseMessage, to,
 }: DrillResponse) => {
+  const key = createSubscriberKey(topic, message);
   if (destination !== topic) {
     return;
   }
 
   if (!to && !message) {
     callback(responseMessage || null);
+    setSubscriberValue && setSubscriberValue(key, responseMessage);
     return;
   }
 
@@ -140,5 +168,10 @@ const nextMessageHandler = (topic: string, callback: (arg: any) => void, message
     subscriptionBuildVersion === messageBuildVersion
   ) {
     callback(responseMessage || null);
+    setSubscriberValue && setSubscriberValue(key, responseMessage);
   }
 };
+
+function createSubscriberKey(topic: string, message?: SubscriptionMessage | Record<string, unknown>) {
+  return topic + JSON.stringify(message);
+}
