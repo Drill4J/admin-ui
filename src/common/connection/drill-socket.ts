@@ -81,9 +81,7 @@ export class DrillSocket {
 
   public subscribe(topic: string, callback: (arg: any) => void, message?: SubscriptionMessage | Record<string, unknown>) {
     const key = createSubscriberKey(topic, message);
-    let subscription = this.connection$.subscribe({
-      next: nextMessageHandler(topic, callback, message, this.subscribers.setSubscriberValue.bind(this.subscribers)),
-    });
+    let subscription = this.createSubscription(key, topic, callback, message);
 
     const autoSubscription = this.reconnection$.subscribe((type) => {
       if (type === 'CLOSE') {
@@ -91,25 +89,9 @@ export class DrillSocket {
         this.subscribers.removeSubscriber(key);
       }
       if (type === 'OPEN' && subscription.closed) {
-        subscription = this.connection$.subscribe({
-          next: nextMessageHandler(topic, callback, message, this.subscribers.setSubscriberValue.bind(this.subscribers)),
-        });
-
-        if (!this.subscribers.has(key)) {
-          this.send(topic, 'SUBSCRIBE', message);
-        } else {
-          callback(this.subscribers.get(key).lastValue);
-        }
-        this.subscribers.addSubscriber(key);
+        subscription = this.createSubscription(key, topic, callback, message);
       }
     });
-
-    if (!this.subscribers.has(key)) {
-      this.send(topic, 'SUBSCRIBE', message);
-    } else {
-      callback(this.subscribers.get(key).lastValue);
-    }
-    this.subscribers.addSubscriber(key);
 
     return () => {
       subscription.unsubscribe();
@@ -134,6 +116,23 @@ export class DrillSocket {
       destination,
       type,
       message: JSON.stringify(message),
+    });
+  }
+
+  private createSubscription(
+    key: string,
+    topic: string,
+    callback: (arg: any) => void,
+    message?: SubscriptionMessage | Record<string, unknown>,
+  ) {
+    if (!this.subscribers.has(key)) {
+      this.send(topic, 'SUBSCRIBE', message);
+    } else {
+      callback(this.subscribers.get(key).lastValue);
+    }
+    this.subscribers.addSubscriber(key);
+    return this.connection$.subscribe({
+      next: nextMessageHandler(topic, callback, message, this.subscribers.setSubscriberValue.bind(this.subscribers)),
     });
   }
 }
