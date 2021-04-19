@@ -132,13 +132,13 @@ export class DrillSocket {
     }
     this.subscribers.addSubscriber(key);
     return this.connection$.subscribe({
-      next: nextMessageHandler(topic, callback, this.subscribers.setSubscriberValue.bind(this.subscribers), message),
+      next: nextMessageHandler(topic, callback, this.subscribers, message),
     });
   }
 }
 
 const nextMessageHandler = (topic: string, callback: (arg: any) => void,
-  setSubscriberValue: (name: string, value: any) => void,
+  subscribers: SubscribersCollection,
   message?: SubscriptionMessage | Record<string, unknown>) => ({
   destination,
   message: responseMessage, to,
@@ -150,7 +150,7 @@ const nextMessageHandler = (topic: string, callback: (arg: any) => void,
 
   if (!to && !message) {
     callback(responseMessage || null);
-    setSubscriberValue && setSubscriberValue(key, responseMessage);
+    subscribers.setSubscriberValue(key, responseMessage);
     return;
   }
 
@@ -167,7 +167,7 @@ const nextMessageHandler = (topic: string, callback: (arg: any) => void,
     subscriptionBuildVersion === messageBuildVersion
   ) {
     callback(responseMessage || null);
-    setSubscriberValue && setSubscriberValue(key, responseMessage);
+    subscribers.setSubscriberValue(key, responseMessage);
   }
 };
 
