@@ -143,11 +143,11 @@ const nextMessageHandler = (topic: string, callback: (arg: any) => void,
   destination,
   message: responseMessage, to,
 }: DrillResponse) => {
-  const key = createSubscriberKey(topic, message);
   if (destination !== topic) {
     return;
   }
 
+  const key = createSubscriberKey(topic, message);
   if (!to && !message) {
     callback(responseMessage || null);
     subscribers.setSubscriberValue(key, responseMessage);
