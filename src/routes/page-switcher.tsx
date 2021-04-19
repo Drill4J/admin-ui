@@ -48,7 +48,7 @@ export const PageSwitcher = () => (
       footer={<Footer />}
     >
       <Switch>
-        <PrivateRoute exact path="/agents" component={AgentsPage} />
+        <PrivateRoute path="/agents" component={AgentsPage} />
         <PrivateRoute path="/agents/:type/:id/settings/:tab" component={SettingsPage} />
         <PrivateRoute exact path="/registration/:agentId" component={AgentRegistrationPage} />
         <PrivateRoute path="/bulk-registration/:serviceGroupId" component={ServiceGroupRegistrationPage} />

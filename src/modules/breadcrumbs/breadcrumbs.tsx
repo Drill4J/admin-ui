@@ -25,7 +25,7 @@ interface CrumbType {
 }
 
 const modalsAndTabs = ['session-management-pane', 'quality-gate-pane', 'risks-modal', 'associated-test-modal',
-  'tests-to-run-modal', 'finish-all-scopes-modal', 'covered-methods-modal', 'methods', 'tests'];
+  'tests-to-run-modal', 'finish-all-scopes-modal', 'covered-methods-modal', 'methods', 'tests', 'notification-sidebar'];
 
 type MatchType = {
   agentId: string;
@@ -124,7 +124,7 @@ export const Breadcrumbs = () => {
     {
       label: 'Agent: Test2Code',
       link: buildVersion && buildVersion !== 'build-list' && pluginId !== 'dashboard'
-        ? `/full-page/${agentId}/${buildVersion}/${pluginId}/dashboard`
+        ? `/full-page/${agentId}/${buildVersion}/${pluginId}/dashboard/methods`
         : '',
     },
     {

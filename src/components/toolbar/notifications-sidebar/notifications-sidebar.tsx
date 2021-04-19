@@ -19,12 +19,11 @@ import { Icons, Modal, GeneralAlerts } from '@drill4j/ui-kit';
 import tw, { styled } from 'twin.macro';
 
 import { Notification as NotificationType } from 'types/notificaiton';
+import { useCloseModal } from 'hooks';
 import { Notification } from './notification';
 import { deleteAllNotifications, readAllNotifications } from './api';
 
 interface Props {
-  isOpen: boolean;
-  onToggle: (value: boolean) => void;
   notifications: NotificationType[];
 }
 
@@ -42,14 +41,13 @@ const ActionsPanel = styled.div`
 `;
 
 export const NotificationsSidebar = ({
-  isOpen,
-  onToggle,
   notifications,
 }: Props) => {
   const [errorMessage, setErrorMessage] = useState('');
+  const onToggle = useCloseModal('/notification-sidebar');
 
   return (
-    <Modal isOpen={isOpen} onToggle={onToggle}>
+    <Modal isOpen onToggle={onToggle}>
       <div tw="flex flex-col h-full bg-monochrome-white">
         <Header>
           <Icons.Notification />

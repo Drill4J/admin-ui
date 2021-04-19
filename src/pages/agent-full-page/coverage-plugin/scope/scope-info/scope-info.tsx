@@ -14,7 +14,9 @@
  * limitations under the License.
  */
 import { useContext } from 'react';
-import { Redirect, useHistory, useParams } from 'react-router-dom';
+import {
+  Redirect, useParams, Link,
+} from 'react-router-dom';
 import {
   Icons, Menu, Button, SessionIndicator,
 } from '@drill4j/ui-kit';
@@ -61,7 +63,6 @@ export const ScopeInfo = () => {
   const {
     name = '', active = false, enabled = false, started = 0, finished = 0, sessionsFinished,
   } = scope || {};
-  const { push, location: { pathname = '' } } = useHistory();
   const menuActions = [
     !active && {
       label: `${enabled ? 'Ignore' : 'Include'} in stats`,
@@ -84,10 +85,10 @@ export const ScopeInfo = () => {
     active && {
       label: 'Sessions Management',
       icon: 'ManageSessions',
-      onClick: () => {
-        push(`${pathname}/session-management-pane`);
-        dispatch(openModal(undefined, null));
-      },
+      content: (
+        <Link to={`/full-page/${agentId}/${buildVersion}/${pluginId}/scope/${scopeId}/${tab}/session-management-pane`}>
+          Sessions Management
+        </Link>),
     },
     {
       label: 'Rename',
