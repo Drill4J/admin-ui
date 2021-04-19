@@ -20,7 +20,7 @@ import { webSocket, WebSocketSubject } from 'rxjs/webSocket';
 import { mergeMap, retryWhen } from 'rxjs/operators';
 
 import { TOKEN_KEY } from '../constants';
-import { SubscribersCollection } from './subscribersCollection';
+import { SubscribersCollection } from './subscribers-collection';
 
 export interface DrillResponse {
   message: string;
