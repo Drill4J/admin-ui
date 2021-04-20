@@ -185,7 +185,7 @@ export const CoverageDetails = ({
       <Route
         path={[
           '/full-page/:agentId/:buildVersion/:pluginId/dashboard/:tab/associated-test-modal',
-          '/full-page/:agentId/:buildVersion/:pluginId/scopes/:scopeId/:tab/associated-test-modal',
+          '/full-page/:agentId/:buildVersion/:pluginId/scope/:scopeId/:tab/associated-test-modal',
         ]}
         render={() => (
           <AssociatedTestModal

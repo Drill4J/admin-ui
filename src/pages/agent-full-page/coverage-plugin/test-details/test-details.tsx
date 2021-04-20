@@ -150,7 +150,7 @@ export const TestDetails = ({
       <Route
         path={[
           '/full-page/:agentId/:buildVersion/:pluginId/dashboard/:tab/covered-methods-modal',
-          '/full-page/:agentId/:buildVersion/:pluginId/scopes/:scopeId/:tab/covered-methods-modal',
+          '/full-page/:agentId/:buildVersion/:pluginId/scope/:scopeId/:tab/covered-methods-modal',
         ]}
         render={() => <CoveredMethodsByTestSidebar topicCoveredMethodsByTest={topicCoveredMethodsByTest} />}
       />

@@ -108,14 +108,14 @@ export const Breadcrumbs = () => {
   };
 
   const crumbs: CrumbType[] = [
-    { label: 'Agents', link: agentId || serviceGroupId ? '/' : '' },
+    { label: 'Agents', link: (agentId || serviceGroupId) && agentId !== 'notification-sidebar' ? '/' : '' },
     {
       label: `${agentType === 'service-group' ? 'Service Group' : 'Agent'} Settings`,
       link: settings ? `/agents/${agentType}/${agentId}/settings/general` : '',
     },
     {
       label: registrationLabel(),
-      link: registrationType ? '/' : '',
+      link: registrationType && agentId !== 'notification-sidebar' ? '/' : '',
     },
     {
       label: 'Agent: Dashboard',
