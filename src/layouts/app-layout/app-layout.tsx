@@ -15,20 +15,22 @@
  */
 import 'twin.macro';
 
+import { Toolbar } from 'components';
+import { Breadcrumbs } from 'modules';
+
 interface Props {
   children?: React.ReactNode;
-  toolbar?: React.ReactNode;
   sidebar?: React.ReactNode;
   footer?: React.ReactNode;
 }
 
 export const AppLayout = ({
-  toolbar, sidebar, children, footer,
+  sidebar, children, footer,
 }: Props) => (
   <div tw="flex flex-row w-full h-full overflow-hidden">
     <div tw="w-20 h-full">{sidebar}</div>
     <div tw="flex flex-col flex-grow">
-      <div tw="flex-shrink-0 w-full h-12 border-b border-monochrome-medium-tint">{toolbar}</div>
+      <div tw="flex-shrink-0 w-full h-12 border-b border-monochrome-medium-tint"><Toolbar breadcrumbs={<Breadcrumbs />} /></div>
       <div tw="flex flex-grow overflow-y-auto">{children}</div>
       <div tw="w-full">{footer}</div>
     </div>
