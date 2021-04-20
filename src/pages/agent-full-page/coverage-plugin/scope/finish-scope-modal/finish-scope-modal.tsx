@@ -115,7 +115,7 @@ export const FinishScopeModal = ({ isOpen, onToggle, scope }: Props) => {
                       onError: setErrorMessage,
                     })({ prevScopeEnabled: !ignoreScope, savePrevScope: true });
                     isScopeInfoPage && !scope?.sessionsFinished &&
-                        push(`/full-page/${agentId}/${buildVersion}/${pluginId}/dashboard`);
+                        push(`/full-page/${agentId}/${buildVersion}/${pluginId}/dashboard/methods`);
                     setLoading(false);
                   }}
                   data-test="finish-scope-modal:finish-scope-button"
