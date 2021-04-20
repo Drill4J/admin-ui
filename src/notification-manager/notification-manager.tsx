@@ -51,10 +51,10 @@ export const NotificationManager = ({ children }: Props) => {
 
   defaultAdminSocket.onCloseEvent = () => {
     setMessage(
-      { type: 'ERROR', text: 'Backend connection has been lost. Please, try to refresh the page.' },
+      { type: 'ERROR', text: 'Backend connection has been lost. Trying to reconnect...' },
     );
   };
-  defaultAdminSocket.onOpenEvent = () => setMessage(null);
+  defaultAdminSocket.onOpenEvent = () => handleShowMessage({ type: 'SUCCESS', text: 'Backend connection has been successfully restored.' });
 
   const contextValue = useMemo(() => ({ showMessage: handleShowMessage, closeMessage: () => setMessage(null) }), []);
   return (
