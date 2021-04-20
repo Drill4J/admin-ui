@@ -69,9 +69,11 @@ export const PluginsSettingsTab = ({ agent: { buildVersion = '' } }: Props) => {
           installedPlugins.map(({
             id: pluginId, name, description, version,
           }) => (
-            <Link to={agentType === 'agent'
-              ? `/full-page/${id}/${buildVersion}/${pluginId}/dashboard`
-              : `/service-group-full-page/${id}/${pluginId}`}
+            <Link
+              to={agentType === 'agent'
+                ? `/full-page/${id}/${buildVersion}/${pluginId}/dashboard`
+                : `/service-group-full-page/${id}/${pluginId}`}
+              key={pluginId}
             >
               <PluginListEntry
                 key={id}

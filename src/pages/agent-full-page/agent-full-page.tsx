@@ -88,7 +88,7 @@ export const AgentFullPage = () => {
           <div tw="w-full h-full">
             <Switch>
               <Route
-                path="/full-page/:agentId/:buildVersion/dashboard"
+                path={['/full-page/:agentId/:buildVersion/dashboard', '/full-page/:agentId/:buildVersion/dashboard/notification-sidebar']}
                 render={() => <Dashboard agent={agent} />}
                 exact
               />

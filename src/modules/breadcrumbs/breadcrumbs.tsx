@@ -108,14 +108,14 @@ export const Breadcrumbs = () => {
   };
 
   const crumbs: CrumbType[] = [
-    { label: 'Agents', link: agentId || serviceGroupId ? '/' : '' },
+    { label: 'Agents', link: (agentId || serviceGroupId) && agentId !== 'notification-sidebar' ? '/' : '' },
     {
       label: `${agentType === 'service-group' ? 'Service Group' : 'Agent'} Settings`,
       link: settings ? `/agents/${agentType}/${agentId}/settings/general` : '',
     },
     {
       label: registrationLabel(),
-      link: registrationType ? '/' : '',
+      link: registrationType && agentId !== 'notification-sidebar' ? '/' : '',
     },
     {
       label: 'Agent: Dashboard',
@@ -168,7 +168,8 @@ export const Breadcrumbs = () => {
           ...currentPageCrumb,
           link: location.state?.label === 'Agent: Dashboard'
             ? `/full-page/${agentId}/${location.state.buildVersion}/dashboard`
-            : `/full-page/${agentId}/${location.state.buildVersion}/${location.state.pluginId}/dashboard`,
+            : `/full-page/${agentId}/${location.state.buildVersion}/${location.state.pluginId}/dashboard${
+              location.state.pluginId === 'test2code' ? '/methods' : ''}`,
         };
       }
       return currentPageCrumb;
