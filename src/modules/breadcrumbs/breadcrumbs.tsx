@@ -168,7 +168,8 @@ export const Breadcrumbs = () => {
           ...currentPageCrumb,
           link: location.state?.label === 'Agent: Dashboard'
             ? `/full-page/${agentId}/${location.state.buildVersion}/dashboard`
-            : `/full-page/${agentId}/${location.state.buildVersion}/${location.state.pluginId}/dashboard`,
+            : `/full-page/${agentId}/${location.state.buildVersion}/${location.state.pluginId}/dashboard${
+              location.state.pluginId === 'test2code' ? '/methods' : ''}`,
         };
       }
       return currentPageCrumb;
