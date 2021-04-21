@@ -148,7 +148,7 @@ export const Breadcrumbs = () => {
     },
     {
       label: 'All scopes',
-      link: page === 'scopes' ? `/full-page/${agentId}/${buildVersion}/${pluginId}/scopes` : '',
+      link: page === 'scopes' || page === 'scope' ? `/full-page/${agentId}/${buildVersion}/${pluginId}/scopes` : '',
     },
     {
       label: `${scopeId}`,
