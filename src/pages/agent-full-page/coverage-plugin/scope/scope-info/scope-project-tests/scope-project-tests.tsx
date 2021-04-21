@@ -26,7 +26,7 @@ interface Props {
 }
 
 export const ScopeProjectTests = ({ scopeId }: Props) => {
-  const { byTestType = [] } = useBuildVersion<BuildCoverage>(`/build/scope/${scopeId}/coverage`) || {};
+  const { byTestType = [] } = useBuildVersion<BuildCoverage>(`/build/scopes/${scopeId}/coverage`) || {};
   const testsInfo: TestsInfo = byTestType.reduce((test, testType) => ({ ...test, [testType.type]: testType }), {});
 
   return (
