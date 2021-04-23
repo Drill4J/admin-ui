@@ -77,7 +77,7 @@ export class DrillSocket {
     this.subscribers = new SubscribersCollection();
     this.reconnection$.pipe(pairwise()).subscribe((value) => {
       const [prev, current] = value;
-      if (prev === 'OPEN' && current === 'CLOSE') {
+      if (current === 'CLOSE') {
         this.onCloseEvent();
       }
       if (prev === 'CLOSE' && current === 'OPEN') {
