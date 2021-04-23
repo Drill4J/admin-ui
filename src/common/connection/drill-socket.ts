@@ -96,6 +96,7 @@ export class DrillSocket {
         this.subscribers.removeSubscriber(key);
       }
       if (type === 'OPEN' && subscription.closed) {
+        this.send(topic, 'SUBSCRIBE', message);
         subscription = this.createSubscription(key, topic, callback, message);
       }
     });
