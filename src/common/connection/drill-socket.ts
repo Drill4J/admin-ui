@@ -17,7 +17,7 @@ import {
   Observable, Subject, Subscription, timer,
 } from 'rxjs';
 import { webSocket, WebSocketSubject } from 'rxjs/webSocket';
-import { mergeMap, retryWhen } from 'rxjs/operators';
+import { mergeMap, pairwise, retryWhen } from 'rxjs/operators';
 
 import { TOKEN_KEY } from '../constants';
 import { SubscribersCollection } from './subscribers-collection';
@@ -57,13 +57,11 @@ export class DrillSocket {
       url,
       closeObserver: {
         next: () => {
-          this.onCloseEvent();
           this.reconnection$.next('CLOSE');
         },
       },
       openObserver: {
         next: () => {
-          this.onOpenEvent();
           this.reconnection$.next('OPEN');
         },
       },
@@ -77,6 +75,15 @@ export class DrillSocket {
     });
     this.reconnection$ = new Subject();
     this.subscribers = new SubscribersCollection();
+    this.reconnection$.pipe(pairwise()).subscribe((value) => {
+      const [prev, current] = value;
+      if (prev === 'OPEN' && current === 'CLOSE') {
+        this.onCloseEvent();
+      }
+      if (prev === 'CLOSE' && current === 'OPEN') {
+        this.onOpenEvent();
+      }
+    });
   }
 
   public subscribe(topic: string, callback: (arg: any) => void, message?: SubscriptionMessage | Record<string, unknown>) {
