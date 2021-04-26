@@ -69,7 +69,7 @@ export const MethodsList = ({ topicCoveredMethodsByTest, summary }: Props) => {
               itemCount={methodsCount}
               renderItem={({ index, style }) => (!isShowSceleton ? (
                 <div
-                  tw="flex flex-col justify-center pl-6 pr-6 text-12 first:mt-2"
+                  tw="flex flex-col justify-center pl-6 pr-6 text-12"
                   key={`${methods[index]?.name}${index}`}
                   style={style as Record<symbol, string>}
                 >
@@ -94,7 +94,7 @@ export const MethodsList = ({ topicCoveredMethodsByTest, summary }: Props) => {
                 </div>
               ) : (
                 <div
-                  tw="flex flex-col justify-center pl-6 pr-6 text-12 first:mt-2"
+                  tw="flex flex-col justify-center pl-6 pr-6 text-12"
                   key={index}
                   style={style as Record<symbol, string>}
                 >
