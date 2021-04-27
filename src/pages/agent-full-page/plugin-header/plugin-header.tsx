@@ -15,7 +15,7 @@
  */
 import { useHistory, matchPath, Link } from 'react-router-dom';
 import { Spinner, Icons } from '@drill4j/ui-kit';
-import tw, { styled } from 'twin.macro';
+import tw, { styled, css } from 'twin.macro';
 
 import { AGENT_STATUS } from 'common/constants';
 import { capitalize, snakeToSpaces } from 'utils';
@@ -63,9 +63,13 @@ const AgentInfo = styled.div`
     ${tw`mb-2`}
   }
 `;
-const SettingsButton = styled(Icons.Settings)(({ disabled }: { disabled?: boolean }) => [
-  tw`flex w-8 h-8 cursor-pointer`,
+const SettingsButton = styled(Link)(({ disabled }: { disabled?: boolean }) => [
   disabled && tw`opacity-25 pointer-events-none`,
+  css`
+    & > svg {
+      ${tw`w-8 h-8`}
+    }
+  `,
 ]);
 const AgentStatusWrapper = styled.div(({ status }: { status?: AgentStatus }) => [
   tw`flex justify-center items-center px-2`,
@@ -103,12 +107,14 @@ export const PluginHeader = ({ agentName, agentStatus }: Props) => {
             </div>
           </AgentInfo>
         </div>
-        <Link tw="link" to={`/agents/agent/${agentId}/settings/general`}>
-          <SettingsButton
-            disabled={agentStatus === AGENT_STATUS.OFFLINE}
-            data-test="plugin-header:settings-button"
-          />
-        </Link>
+        <SettingsButton
+          tw="link"
+          to={`/agents/agent/${agentId}/settings/general`}
+          disabled={agentStatus === AGENT_STATUS.OFFLINE}
+          data-test="plugin-header:settings-button"
+        >
+          <Icons.Settings />
+        </SettingsButton>
       </div>
     </div>
   );
