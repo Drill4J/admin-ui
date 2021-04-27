@@ -60,7 +60,7 @@ export const MethodsList = ({ topicCoveredMethodsByTest, summary }: Props) => {
         onChange={({ value }) => setSelectedSection(value as keyof MethodCounts)}
         value={selectedSection}
       />
-      <div tw="h-full w-full mb-4 overflow-y-hidden">
+      <div tw="h-full pt-2 w-full mb-4 overflow-y-hidden">
         <div tw="flex flex-col h-full text-14">
           <div ref={node} style={{ height: 'calc(100% - 40px)' }}>
             <VirtualList
