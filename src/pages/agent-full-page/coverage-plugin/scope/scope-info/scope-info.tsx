@@ -85,10 +85,11 @@ export const ScopeInfo = () => {
     active && {
       label: 'Sessions Management',
       icon: 'ManageSessions',
-      content: (
+      Content: ({ children }: { children: JSX.Element }) => (
         <Link to={`/full-page/${agentId}/${buildVersion}/${pluginId}/scope/${scopeId}/${tab}/session-management-pane`}>
-          Sessions Management
-        </Link>),
+          {children}
+        </Link>
+      ),
     },
     {
       label: 'Rename',
