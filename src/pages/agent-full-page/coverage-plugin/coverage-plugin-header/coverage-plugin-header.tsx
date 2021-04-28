@@ -16,60 +16,23 @@
 import {
   NavLink, useParams, Link, Route,
 } from 'react-router-dom';
-import { Button, Icons, Tooltip } from '@drill4j/ui-kit';
+import {
+  Button, Icons, Tooltip,
+} from '@drill4j/ui-kit';
 import tw, { styled } from 'twin.macro';
 
 import { QualityGatePane } from 'modules';
-import {
-  ConditionSetting,
-  ConditionSettingByType,
-  QualityGate,
-  QualityGateSettings, QualityGateStatus,
-} from 'types/quality-gate-type';
+import { ConditionSetting, QualityGate, QualityGateStatus } from 'types/quality-gate-type';
 import { AGENT_STATUS } from 'common/constants';
-import { Metrics } from 'types/metrics';
 import { useAgent, useBuildVersion } from 'hooks';
-import { Baseline } from 'types/baseline';
 import { ParentBuild } from 'types/parent-build';
-import { TestTypeSummary } from 'types/test-type-summary';
+import { Metrics } from 'types/metrics';
 import { ActionSection } from './action-section';
 import { BaselineBuildModal } from './baseline-build-modal';
+import { BaselineTooltip } from './baseline-tooltip';
+import { usePreviousBuildCoverage } from '../use-previous-build-coverage';
 
-interface Props {
-  previousBuildTests: TestTypeSummary[];
-}
-
-const Content = styled.div`
-  ${tw`grid items-center w-full h-20 border-b border-monochrome-medium-tint`}
-  grid-template-columns: max-content auto max-content;
-`;
-const BaselinePanel = styled.div`
-  ${tw`grid gap-x-2 pl-6`}
-  ${tw`border-l border-monochrome-medium-tint font-bold text-12 leading-24 text-monochrome-default`}
-  grid-template-columns: max-content minmax(64px, 60%);
-  grid-template-rows: repeat(2, 1fr);
-`;
-const FlagWrapper = styled(Link)(({ active }: { active?: boolean }) => [
-  tw`flex ml-2 text-monochrome-default`,
-  active && tw`text-blue-default cursor-pointer`,
-]);
-const StatusWrapper = styled(Link)(({ status }: { status?: QualityGateStatus }) => [
-  tw`flex items-center h-8 text-14`,
-  status === 'PASSED' && tw`text-green-default cursor-pointer`,
-  status === 'FAILED' && tw`text-red-default cursor-pointer`,
-]);
-const StatusTitle = styled.div`
-  ${tw`ml-2 font-bold lowercase`}
-  &::first-letter {
-    ${tw`uppercase`}
-  }
-`;
-const Count = styled(Link)`
-  ${tw`flex items-center w-full text-20 leading-32 cursor-pointer`}
-  ${tw`text-monochrome-black hover:text-blue-medium-tint active:text-blue-shade`}
-`;
-
-export const CoveragePluginHeader = ({ previousBuildTests = [] }: Props) => {
+export const CoveragePluginHeader = () => {
   const {
     pluginId = '', agentId = '', buildVersion = '', tab = '',
   } = useParams<{
@@ -78,35 +41,19 @@ export const CoveragePluginHeader = ({ previousBuildTests = [] }: Props) => {
     buildVersion: string;
     tab: string;
   }>();
+
   const { buildVersion: activeBuildVersion = '', status: agentStatus } = useAgent(agentId) || {};
 
-  const conditionSettings = useBuildVersion<ConditionSetting[]>('/data/quality-gate-settings') || [];
-  const {
-    status = 'FAILED',
-    results = { coverage: false, risks: false, tests: false },
-  } = useBuildVersion<QualityGate>('/data/quality-gate') || {};
-  const { coverage = 0, risks: risksCount = 0, tests: testToRunCount = 0 } = useBuildVersion<Metrics>('/data/stats') || {};
-
-  const conditionSettingByType = conditionSettings.reduce(
-    (conditionSetting, measureType) => ({
-      ...conditionSetting,
-      [measureType.condition.measure]: measureType,
-    }),
-    {} as ConditionSettingByType,
-  );
-  const configured = conditionSettings.some(({ enabled }) => enabled);
-  const qualityGateSettings: QualityGateSettings = {
-    configured,
-    conditionSettingByType,
-    qualityGate: { status, results },
-    metrics: { coverage, risks: risksCount, tests: testToRunCount },
-  };
-  const StatusIcon = Icons[status];
-  const { version: baseline } = useBuildVersion<Baseline>('/data/baseline', undefined, undefined, undefined, activeBuildVersion) || {};
+  const { risks: risksCount = 0, tests: testToRunCount = 0 } = useBuildVersion<Metrics>('/data/stats') || {};
   const { version: previousBuildVersion = '' } = useBuildVersion<ParentBuild>('/data/parent') || {};
-  const isBaseline = baseline === buildVersion;
-  const isActiveBuild = activeBuildVersion === buildVersion;
-  const { Flag, disabled, info } = showBaseline(isBaseline, isActiveBuild, previousBuildVersion);
+  const conditionSettings = useBuildVersion<ConditionSetting[]>('/data/quality-gate-settings') || [];
+  const { status = 'FAILED' } = useBuildVersion<QualityGate>('/data/quality-gate') || {};
+
+  const { byTestType: previousBuildTests = [] } = usePreviousBuildCoverage(previousBuildVersion) || {};
+
+  const configured = conditionSettings.some(({ enabled }) => enabled);
+
+  const StatusIcon = Icons[status];
 
   return (
     <Content>
@@ -121,14 +68,7 @@ export const CoveragePluginHeader = ({ previousBuildTests = [] }: Props) => {
           <div>Current build: </div>
           <div className="flex items-center w-full">
             <div className="text-ellipsis text-monochrome-black" title={buildVersion}>{buildVersion}</div>
-            <Tooltip message={<div tw="text-center">{info}</div>} position="top-center">
-              <FlagWrapper
-                to={`/full-page/${agentId}/${buildVersion}/${pluginId}/dashboard/${tab}${!disabled ? '/baseline-build-modal' : ''}`}
-                active={Boolean(isActiveBuild && previousBuildVersion)}
-              >
-                <Flag />
-              </FlagWrapper>
-            </Tooltip>
+            <BaselineTooltip />
           </div>
           <div>Parent build:</div>
           {previousBuildVersion
@@ -190,10 +130,7 @@ export const CoveragePluginHeader = ({ previousBuildTests = [] }: Props) => {
             )}
           </div>
         )}
-        <ActionSection
-          label="risks"
-          previousBuild={{ previousBuildVersion, previousBuildTests }}
-        >
+        <ActionSection label="risks">
           {risksCount > 0 ? (
             <Count
               to={`/full-page/${agentId}/${buildVersion}/${pluginId}/dashboard/${tab}/risks-modal`}
@@ -212,10 +149,7 @@ export const CoveragePluginHeader = ({ previousBuildTests = [] }: Props) => {
             </div>
           )}
         </ActionSection>
-        <ActionSection
-          label="tests to run"
-          previousBuild={{ previousBuildVersion, previousBuildTests }}
-        >
+        <ActionSection label="tests to run">
           {previousBuildTests.length > 0 ? (
             <Count
               to={`/full-page/${agentId}/${buildVersion}/${pluginId}/tests-to-run`}
@@ -230,59 +164,42 @@ export const CoveragePluginHeader = ({ previousBuildTests = [] }: Props) => {
       </div>
       <Route
         path="/full-page/:agentId/:buildVersion/:pluginId/dashboard/:tab/baseline-build-modal"
-        render={() => <BaselineBuildModal isBaseline={isBaseline} />}
+        render={() => <BaselineBuildModal />}
       />
       <Route
         path="/full-page/:agentId/:buildVersion/:pluginId/dashboard/:tab/quality-gate-pane"
-        render={() => <QualityGatePane qualityGateSettings={qualityGateSettings} />}
+        render={() => <QualityGatePane />}
       />
     </Content>
   );
 };
 
-function showBaseline(isBaseline: boolean, isActiveBuild: boolean, previousBuildVersion: string) {
-  if (!previousBuildVersion && isBaseline) {
-    return ({
-      disabled: true,
-      info: (
-        <>
-          The initial build is set as baseline by default. All methods <br />
-          and key metrics of subsequent builds are compared with it.
-        </>
-      ),
-      Flag: Icons.Flag,
-    });
-  }
-  if (isActiveBuild && !isBaseline) {
-    return ({
-      disabled: false,
-      info: 'Set as Baseline',
-      Flag: Icons.Flag,
-    });
-  }
-  if (isActiveBuild && isBaseline) {
-    return ({
-      disabled: false,
-      info: 'Unset as Baseline',
-      Flag: Icons.FilledFlag,
-    });
-  }
-  if (!isActiveBuild && isBaseline) {
-    return ({
-      disabled: true,
-      info: (
-        <>
-          This build is set as baseline. <br />
-          All subsequent builds are compared with it.
-        </>
-      ),
-      Flag: Icons.Flag,
-    });
-  }
+const Content = styled.div`
+  ${tw`grid items-center w-full h-20 border-b border-monochrome-medium-tint`}
+  grid-template-columns: max-content auto max-content;
+`;
 
-  return {
-    disabled: true,
-    info: null,
-    Flag: () => null,
-  };
-}
+const BaselinePanel = styled.div`
+  ${tw`grid gap-x-2 pl-6`}
+  ${tw`border-l border-monochrome-medium-tint font-bold text-12 leading-24 text-monochrome-default`}
+  grid-template-columns: max-content minmax(64px, 60%);
+  grid-template-rows: repeat(2, 1fr);
+`;
+
+const StatusWrapper = styled(Link)(({ status }: { status?: QualityGateStatus }) => [
+  tw`flex items-center h-8 text-14`,
+  status === 'PASSED' && tw`text-green-default cursor-pointer`,
+  status === 'FAILED' && tw`text-red-default cursor-pointer`,
+]);
+
+const StatusTitle = styled.div`
+  ${tw`ml-2 font-bold lowercase`}
+  &::first-letter {
+    ${tw`uppercase`}
+  }
+`;
+
+const Count = styled(Link)`
+  ${tw`flex items-center w-full text-20 leading-32 cursor-pointer`}
+  ${tw`text-monochrome-black hover:text-blue-medium-tint active:text-blue-shade`}
+`;

@@ -14,28 +14,23 @@
  * limitations under the License.
  */
 import { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 import { Icons } from '@drill4j/ui-kit';
 import tw from 'twin.macro';
 
 import { copyToClipboard, percentFormatter } from 'utils';
-import { QualityGateSettings } from 'types/quality-gate-type';
+import { ConditionSettingByType, QualityGate } from 'types/quality-gate-type';
+import { useBuildVersion } from 'hooks';
+import { Metrics } from 'types/metrics';
 import { QualityGateConfigurationUrl } from './quality-gate-configuration-url';
 import { getQualityGateConfigurationUrl } from './get-quality-gate-configuration-url';
 import { Condition } from './condition';
 
 interface Props {
-  qualityGateSettings: Omit<QualityGateSettings, 'configured'>;
-  agentId: string;
-  pluginId: string;
+  conditionSettingByType: ConditionSettingByType;
 }
 
-export const QualityGateStatus = ({
-  qualityGateSettings: {
-    conditionSettingByType, qualityGate, metrics,
-  },
-  agentId,
-  pluginId,
-}: Props) => {
+export const QualityGateStatus = ({ conditionSettingByType }: Props) => {
   const [copied, setCopied] = useState(false);
   useEffect(() => {
     const timeout = setTimeout(() => setCopied(false), 5000);
@@ -43,19 +38,22 @@ export const QualityGateStatus = ({
     return () => clearTimeout(timeout);
   }, [copied]);
 
+  const { pluginId = '', agentId = '' } = useParams<{ pluginId: string; agentId: string; }>();
+  const { results = { coverage: false, risks: false, tests: false } } = useBuildVersion<QualityGate>('/data/quality-gate') || {};
+  const { coverage = 0, risks: risksCount = 0, tests: testToRunCount = 0 } = useBuildVersion<Metrics>('/data/stats') || {};
   return (
     <>
       <div tw="p-6 space-y-6">
         {conditionSettingByType.coverage?.enabled && (
           <Condition
-            passed={Boolean(qualityGate?.results?.coverage)}
+            passed={Boolean(results.coverage)}
             type="coverage"
             thresholdValue={conditionSettingByType.coverage.condition.value}
           >
             <div tw="block text-monochrome-default text-10 leading-16" data-test="quality-gate-status:condition-status:coverage">
-              {qualityGate?.results?.coverage ? 'Passed' : 'Failed'}. Your coverage is&nbsp;
+              {results.coverage ? 'Passed' : 'Failed'}. Your coverage is&nbsp;
               <span tw="font-bold" data-test="quality-gate-status:condition-status:coverage">
-                {percentFormatter(metrics?.coverage || 0)}
+                {percentFormatter(coverage || 0)}
               </span>
               %
             </div>
@@ -63,27 +61,27 @@ export const QualityGateStatus = ({
         )}
         {conditionSettingByType.risks?.enabled && (
           <Condition
-            passed={Boolean(qualityGate?.results?.risks)}
+            passed={Boolean(results.risks)}
             type="risks"
             thresholdValue={conditionSettingByType.risks.condition.value}
           >
             <div tw="block text-monochrome-default text-10 leading-16" data-test="quality-gate-status:condition-status:risks">
-              {qualityGate?.results?.risks ? 'Passed' : 'Failed'}. You have&nbsp;
-              <span tw="font-bold" data-test="quality-gate-status:condition-status:risks">{metrics?.risks}</span>
+              {results.risks ? 'Passed' : 'Failed'}. You have&nbsp;
+              <span tw="font-bold" data-test="quality-gate-status:condition-status:risks">{risksCount}</span>
               &nbsp;risks
             </div>
           </Condition>
         )}
         {conditionSettingByType.tests?.enabled && (
           <Condition
-            passed={Boolean(qualityGate?.results?.tests)}
+            passed={Boolean(results.tests)}
             type="testsToRun"
             thresholdValue={conditionSettingByType.tests.condition.value}
           >
             <div tw="block text-monochrome-default text-10 leading-16" data-test="quality-gate-status:condition-status:tests">
-              {qualityGate?.results?.tests ? 'Passed' : 'Failed'}. You have&nbsp;
-              <span tw="font-bold" data-test="quality-gate-status:condition-status:tests">{metrics?.tests}</span>
-              {qualityGate?.results?.tests ? ' Tests to run' : ' not executed tests to run'}
+              {results.tests ? 'Passed' : 'Failed'}. You have&nbsp;
+              <span tw="font-bold" data-test="quality-gate-status:condition-status:tests">{testToRunCount}</span>
+              {results.tests ? ' Tests to run' : ' not executed tests to run'}
             </div>
           </Condition>
         )}

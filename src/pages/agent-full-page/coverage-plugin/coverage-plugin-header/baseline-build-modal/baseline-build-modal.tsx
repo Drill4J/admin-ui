@@ -20,23 +20,23 @@ import {
 import { useParams } from 'react-router-dom';
 import tw, { styled } from 'twin.macro';
 
-import { useCloseModal } from 'hooks';
+import { useAgent, useBuildVersion, useCloseModal } from 'hooks';
 import { NotificationManagerContext } from 'notification-manager';
+import { Baseline } from 'types/baseline';
 import { toggleBaseline } from '../../api';
-
-interface Props {
-  isBaseline: boolean;
-}
 
 const Message = styled.div`
   ${tw`text-14 leading-20`}
 `;
 
-export const BaselineBuildModal = ({ isBaseline }: Props) => {
+export const BaselineBuildModal = () => {
+  const { pluginId = '', agentId = '', buildVersion = '' } = useParams<{ pluginId: string; agentId: string; buildVersion: string; }>();
+  const { buildVersion: activeBuildVersion = '' } = useAgent(agentId) || {};
+  const { version: baseline } = useBuildVersion<Baseline>('/data/baseline', undefined, undefined, undefined, activeBuildVersion) || {};
+  const isBaseline = baseline === buildVersion;
   const [isConfirmed, setIsConfirmed] = useState(isBaseline);
   const closeModal = useCloseModal('/baseline-build-modal');
   const { showMessage } = useContext(NotificationManagerContext);
-  const { pluginId = '', agentId = '' } = useParams<{ pluginId: string; agentId: string; }>();
 
   return (
     <Popup
