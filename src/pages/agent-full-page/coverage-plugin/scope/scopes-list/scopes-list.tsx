@@ -82,13 +82,11 @@ export const ScopesList = () => {
                   data-test="scopes-list:scope-name"
                 >
                   <div className="link text-ellipsis" title={value}>{value}</div>
-                  {status === AGENT_STATUS.ONLINE && (
-                    <div tw="flex gap-x-2 items-center w-full text-12">
-                      <ScopeTimer started={started} finished={finished} active={active} size="small" />
-                      {active && <Status tw="text-green-default">Active</Status>}
-                      {!enabled && <Status tw="text-monochrome-default">Ignored</Status>}
-                    </div>
-                  )}
+                  <div tw="flex gap-x-2 items-center w-full text-12">
+                    <ScopeTimer started={started} finished={finished} active={active} size="small" />
+                    {active && <Status tw="text-green-default">Active</Status>}
+                    {!enabled && <Status tw="text-monochrome-default">Ignored</Status>}
+                  </div>
                 </Link>
               )}
               align="start"
