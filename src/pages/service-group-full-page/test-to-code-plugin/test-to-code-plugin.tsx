@@ -123,13 +123,17 @@ export const TestToCodePlugin = ({ summaries = [], aggregated }: Props) => {
                   label: 'Builds list',
                   icon: 'BuildList',
                   onClick: () => null,
-                  content: <Link to={`/full-page/${agentId}/build-list`}>Builds list</Link>,
+                  Content: ({ children }: { children: JSX.Element }) => <Link to={`/full-page/${agentId}/build-list`}>{children}</Link>,
                 },
                 {
                   label: 'Settings',
                   icon: 'Settings',
                   onClick: () => null,
-                  content: <Link to={`/agents/agent/${agentId}/settings/general`}>Settings</Link>,
+                  Content: ({ children }: { children: JSX.Element }) => (
+                    <Link to={`/agents/agent/${agentId}/settings/general`}>
+                      {children}
+                    </Link>
+                  ),
                 },
               ]}
             />
@@ -143,11 +147,11 @@ export const TestToCodePlugin = ({ summaries = [], aggregated }: Props) => {
                   label: 'Finish all scopes',
                   icon: 'Check',
                   onClick: () => null,
-                  content: (
+                  Content: ({ children }: { children: JSX.Element }) => (
                     <Link
                       to={`/service-group-full-page/${serviceGroupId}/${pluginId}/finish-all-scopes-modal`}
                     >
-                      Finish all scopes
+                      {children}
                     </Link>
                   ),
                 },
@@ -155,11 +159,11 @@ export const TestToCodePlugin = ({ summaries = [], aggregated }: Props) => {
                   label: 'Sessions Management',
                   icon: 'ManageSessions',
                   onClick: () => null,
-                  content: (
+                  Content: ({ children }: { children: JSX.Element }) => (
                     <Link
                       to={`/service-group-full-page/${serviceGroupId}/${pluginId}/session-management-pane`}
                     >
-                      Sessions Management
+                      {children}
                     </Link>
                   ),
                 },
