@@ -72,9 +72,9 @@ export const ScopesList = () => {
               name="name"
               label="Name"
               Cell={({
-                value, item: {
-                  id, started, active, enabled, finished,
-                },
+                value = '', item: {
+                  id = '', started = 0, active = false, enabled = false, finished = 0,
+                } = {},
               }) => (
                 <Link
                   tw="font-bold text-14 leading-20 cursor-pointer"
@@ -94,7 +94,7 @@ export const ScopesList = () => {
             <Column
               name="started"
               label="Started"
-              Cell={({ value }) => (
+              Cell={({ value = 0 }) => (
                 <>
                   <div tw="font-bold text-12 leading-16 text-monochrome-black">
                     {dateFormatter(value)}
@@ -109,19 +109,17 @@ export const ScopesList = () => {
             <Column
               name="coverage"
               label="Coverage"
-              Cell={({ item: { coverage: { percentage } } }) => (
+              Cell={({ item = {} }) => (
                 <div tw="text-20 leading-32 my-6 text-monochrome-black" data-test="scopes-list:coverage">
-                  {`${percentFormatter(percentage)}%`}
+                  {`${percentFormatter(item?.coverage?.percentage)}%`}
                 </div>
               )}
             />
             <Column
               name="autoTests"
               label="Auto Tests"
-              Cell={({
-                item: { coverage: { byTestType } },
-              }: { item: { coverage: { byTestType: TestTypeSummary[] }; active: boolean }}) => {
-                const coverageByTestType = transformObjectsArrayToObject(byTestType, 'type');
+              Cell={({ item = {} }) => {
+                const coverageByTestType = transformObjectsArrayToObject(item?.coverage?.byTestType as TestTypeSummary[], 'type');
                 return (
                   <div tw="font-bold text-12 leading-20 text-monochrome-black">
                     {coverageByTestType?.AUTO && (
@@ -139,10 +137,8 @@ export const ScopesList = () => {
             <Column
               name="manualTests"
               label="Manual tests"
-              Cell={({
-                item: { coverage: { byTestType } },
-              }: { item: { coverage: { byTestType: TestTypeSummary[] }; active: boolean }}) => {
-                const coverageByTestType = transformObjectsArrayToObject(byTestType, 'type');
+              Cell={({ item = {} }) => {
+                const coverageByTestType = transformObjectsArrayToObject(item?.coverage?.byTestType as TestTypeSummary[], 'type');
                 return (
                   <div tw="font-bold text-12 leading-20 text-monochrome-black">
                     {coverageByTestType?.MANUAL && (
@@ -160,7 +156,7 @@ export const ScopesList = () => {
             {activeBuildVersion === buildVersion && status === AGENT_STATUS.ONLINE && (
               <Column
                 name="actions"
-                Cell={({ item }) => {
+                Cell={({ item = {} }) => {
                   const { active, enabled, id } = item;
                   const menuActions: MenuItemType[] = [
                     active && {
