@@ -34,13 +34,6 @@ import { usePluginState } from '../../../store';
 import { useCoveragePluginDispatch, openModal } from '../../store';
 import { ScopeTimer } from '../scope-timer';
 
-interface MenuItemType {
-  label: string;
-  icon: keyof typeof Icons;
-  onClick: () => void;
-  content?: React.ReactNode;
-}
-
 const Title = styled.div`
   ${tw`flex items-center gap-x-2 w-full h-20 border-b border-monochrome-medium-tint`}
   ${tw`font-light text-24 leading-32 text-monochrome-black`}
@@ -158,7 +151,7 @@ export const ScopesList = () => {
                 name="actions"
                 Cell={({ item = {} }) => {
                   const { active, enabled, id } = item;
-                  const menuActions: MenuItemType[] = [
+                  const menuActions = [
                     active && {
                       label: 'Finish Scope',
                       icon: 'Check',
@@ -167,9 +160,9 @@ export const ScopesList = () => {
                     active && {
                       label: 'Sessions Management',
                       icon: 'ManageSessions',
-                      content: (
+                      Content: ({ children }: { children: JSX.Element }) => (
                         <Link to={`/full-page/${agentId}/${buildVersion}/${pluginId}/scopes/session-management-pane`}>
-                          Sessions Management
+                          {children}
                         </Link>
                       ),
                     },
@@ -203,7 +196,7 @@ export const ScopesList = () => {
                     },
                   ].filter(Boolean);
                   return (
-                    <Menu items={menuActions as MenuItemType[]} />
+                    <Menu items={menuActions} />
                   );
                 }}
               />
