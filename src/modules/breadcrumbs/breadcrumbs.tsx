@@ -152,7 +152,7 @@ export const Breadcrumbs = () => {
     },
     {
       label: `${scopeId}`,
-      link: scopeId && !modalsAndTabs.includes(scopeId) ? `/full-page/${agentId}/${buildVersion}/${pluginId}/scope/${scopeId}` : '',
+      link: scopeId && !modalsAndTabs.includes(scopeId) ? `/full-page/${agentId}/${buildVersion}/${pluginId}/scope/${scopeId}/methods` : '',
     },
     {
       label: 'Tests to Run',

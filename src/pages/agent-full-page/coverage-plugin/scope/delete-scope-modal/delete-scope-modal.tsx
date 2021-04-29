@@ -108,7 +108,7 @@ export const DeleteScopeModal = ({ isOpen, onToggle, scope }: Props) => {
                           showMessage({ type: 'SUCCESS', text: 'Scope has been deleted' });
                           onToggle(false);
                           scope?.id && pathname.includes(scope.id)
-                          && push(`/full-page/${agentId}/${buildVersion}/${pluginId}/dashboard`);
+                          && push(`/full-page/${agentId}/${buildVersion}/${pluginId}/dashboard/methods`);
                         },
                         onError: setErrorMessage,
                       })(scope as ActiveScope);
