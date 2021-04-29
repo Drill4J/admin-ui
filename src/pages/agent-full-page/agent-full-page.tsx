@@ -64,7 +64,8 @@ export const AgentFullPage = () => {
     <PluginProvider>
       <InitialConfigController>
         <PluginsLayout
-          sidebar={activeLink && <Sidebar links={getPluginsLinks(agent.plugins)} matchParams={{ path }} />}
+          sidebar={activeLink && activeLink !== 'notification-sidebar'
+          && <Sidebar links={getPluginsLinks(agent.plugins)} matchParams={{ path }} />}
           toolbar={(
             <Toolbar
               breadcrumbs={<Breadcrumbs />}
