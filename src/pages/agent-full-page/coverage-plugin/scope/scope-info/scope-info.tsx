@@ -106,7 +106,7 @@ export const ScopeInfo = () => {
 
   return (
     scope && !scope?.coverage.percentage && newBuildHasAppeared
-      ? <Redirect to={{ pathname: `/full-page/${agentId}/${activeBuildVersion}/${pluginId}/dashboard` }} />
+      ? <Redirect to={{ pathname: `/full-page/${agentId}/${activeBuildVersion}/${pluginId}/dashboard/methods` }} />
       : (
         <div>
           <Header>

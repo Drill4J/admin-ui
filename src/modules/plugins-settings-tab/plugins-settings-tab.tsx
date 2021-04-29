@@ -71,7 +71,7 @@ export const PluginsSettingsTab = ({ agent: { buildVersion = '' } }: Props) => {
           }) => (
             <Link
               to={agentType === 'agent'
-                ? `/full-page/${id}/${buildVersion}/${pluginId}/dashboard`
+                ? `/full-page/${id}/${buildVersion}/${pluginId}/dashboard/methods`
                 : `/service-group-full-page/${id}/${pluginId}`}
               key={pluginId}
             >
