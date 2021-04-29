@@ -37,14 +37,14 @@ const NotificationCount = styled.div`
 export const Toolbar = ({ breadcrumbs }: Props) => {
   const notifications = useWsConnection<Notification[]>(defaultAdminSocket, '/notifications') || [];
   const unreadNotifications = notifications.filter(notification => !notification.read);
-  const { push, location: { pathname } } = useHistory();
+  const { push, location: { pathname, state } } = useHistory();
 
   return (
     <div tw="flex items-center w-full h-full">
       <div tw="flex items-center justify-between mx-6 w-full h-full">
         <div tw="text-monochrome-default">{breadcrumbs}</div>
         <div tw="flex items-center text-12 leading-20 text-monochrome-default">
-          <Link to={`${pathname}/notification-sidebar`} className="link">
+          <Link to={{ pathname: `${pathname}/notification-sidebar`, state }} className="link">
             <Icons.Notification
               data-test="tolbar:icon-notification"
             />

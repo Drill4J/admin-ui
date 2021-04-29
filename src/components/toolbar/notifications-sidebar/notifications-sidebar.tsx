@@ -16,6 +16,7 @@
 import { useState } from 'react';
 import { nanoid } from 'nanoid';
 import { Icons, Modal, GeneralAlerts } from '@drill4j/ui-kit';
+import { useHistory } from 'react-router-dom';
 import tw, { styled } from 'twin.macro';
 
 import { Notification as NotificationType } from 'types/notificaiton';
@@ -44,7 +45,8 @@ export const NotificationsSidebar = ({
   notifications,
 }: Props) => {
   const [errorMessage, setErrorMessage] = useState('');
-  const onToggle = useCloseModal('/notification-sidebar');
+  const { location: { state } } = useHistory();
+  const onToggle = useCloseModal('/notification-sidebar', state);
 
   return (
     <Modal isOpen onToggle={onToggle}>

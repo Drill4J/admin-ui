@@ -15,9 +15,9 @@
  */
 import { useHistory, useLocation } from 'react-router-dom';
 
-export const useCloseModal = (name: string) => {
+export const useCloseModal = (name: string, state?: unknown) => {
   const { pathname } = useLocation();
   const { push } = useHistory();
 
-  return () => push(pathname.split(name)[0]);
+  return () => push({ pathname: pathname.split(name)[0], state });
 };
