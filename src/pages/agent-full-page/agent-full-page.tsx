@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { useEffect, useState } from 'react';
 import {
   Switch, useLocation, useParams, Route, matchPath,
 } from 'react-router-dom';
@@ -23,10 +22,8 @@ import 'twin.macro';
 import { Toolbar, Footer } from 'components';
 import { PluginsLayout } from 'layouts';
 import { Breadcrumbs } from 'modules';
-import { useAgent, useWsConnection } from 'hooks';
+import { useAgent } from 'hooks';
 import { Plugin } from 'types/plugin';
-import { Notification } from 'types/notificaiton';
-import { defaultAdminSocket } from 'common/connection';
 import { CoveragePlugin } from './coverage-plugin';
 import { PluginProvider } from './store';
 import { PluginHeader } from './plugin-header';
@@ -34,7 +31,6 @@ import { Dashboard } from './dashboard';
 import { BuildList } from './build-list';
 import { Sidebar } from './sidebar';
 import { InitialConfigController } from './initial-config-controller';
-import { NewBuildModal } from './new-build-modal';
 
 interface Link {
   id: string;
@@ -63,14 +59,6 @@ export const AgentFullPage = () => {
   const { params: { activeLink = '' } = {} } = matchPath<{ activeLink: string }>(pathname, {
     path,
   }) || {};
-  const notifications = useWsConnection<Notification[]>(defaultAdminSocket, '/notifications') || [];
-  const newBuildNotification = notifications.find((notification) => notification.agentId === agentId) || {};
-  const [isNewBuildModalOpened, setIsNewBuildModalOpened] = useState(false);
-  useEffect(() => {
-    if (!newBuildNotification?.read && newBuildNotification?.agentId === agentId) {
-      setIsNewBuildModalOpened(true);
-    }
-  }, [newBuildNotification, agentId]);
 
   return (
     <PluginProvider>
@@ -98,13 +86,6 @@ export const AgentFullPage = () => {
                 component={CoveragePlugin}
               />
             </Switch>
-            {isNewBuildModalOpened && (
-              <NewBuildModal
-                isOpen={isNewBuildModalOpened}
-                onToggle={setIsNewBuildModalOpened}
-                notification={newBuildNotification}
-              />
-            )}
           </div>
         </PluginsLayout>
       </InitialConfigController>
