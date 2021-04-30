@@ -130,12 +130,12 @@ export const Breadcrumbs = () => {
     {
       label: 'Service Group: Dashboard',
       link: serviceGroupId &&
-      pluginId === 'service-group-dashboard' ? `/service-group-full-page/${serviceGroupId}/serice-group-dashboard` : '',
+      pluginId === 'service-group-dashboard' ? `/service-group-full-page/${serviceGroupId}/service-group-dashboard` : '',
     },
     {
       label: 'Service Group: Test2Code',
       link: serviceGroupId &&
-      pluginId !== 'service-group-dashboard' ? `/service-group-full-page/${serviceGroupId}/serice-group-dashboard` : '',
+      pluginId !== 'service-group-dashboard' ? `/service-group-full-page/${serviceGroupId}/test2code` : '',
     },
     {
       label: 'All builds',
