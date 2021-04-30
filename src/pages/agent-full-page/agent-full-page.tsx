@@ -22,8 +22,11 @@ import 'twin.macro';
 import { Toolbar, Footer } from 'components';
 import { PluginsLayout } from 'layouts';
 import { Breadcrumbs } from 'modules';
-import { useAgent } from 'hooks';
+import { useAgent, useWsConnection } from 'hooks';
 import { Plugin } from 'types/plugin';
+import { Notification } from 'types/notificaiton';
+import { defaultAdminSocket } from 'common/connection';
+import { useEffect } from 'react';
 import { CoveragePlugin } from './coverage-plugin';
 import { PluginProvider } from './store';
 import { PluginHeader } from './plugin-header';
@@ -31,6 +34,7 @@ import { Dashboard } from './dashboard';
 import { BuildList } from './build-list';
 import { Sidebar } from './sidebar';
 import { InitialConfigController } from './initial-config-controller';
+import { readNotification } from './api';
 
 interface Link {
   id: string;
@@ -39,7 +43,7 @@ interface Link {
   computed: boolean;
 }
 
-const getPluginsLinks = (plugins: Plugin[] = []): Link[] => ([
+const getPluginsLinks = (plugins: Plugin[] = []): Link[] => [
   {
     id: 'dashboard',
     link: 'dashboard',
@@ -47,37 +51,58 @@ const getPluginsLinks = (plugins: Plugin[] = []): Link[] => ([
     computed: true,
   },
   ...plugins.map(({ id = '', name }) => ({
-    id, link: id === 'test2code' ? `${id}/dashboard/methods` : `${id}/dashboard`, name: name as keyof typeof Icons, computed: true,
+    id,
+    link: id === 'test2code' ? `${id}/dashboard/methods` : `${id}/dashboard`,
+    name: name as keyof typeof Icons,
+    computed: true,
   })),
-]);
+];
 
 export const AgentFullPage = () => {
   const { agentId = '' } = useParams<{ agentId: string }>();
   const { pathname } = useLocation();
   const agent = useAgent(agentId) || {};
   const path = '/:page/:agentId/:buildVersion/:activeLink';
-  const { params: { activeLink = '' } = {} } = matchPath<{ activeLink: string }>(pathname, {
-    path,
-  }) || {};
+  const { params: { activeLink = '', buildVersion = '' } = {} } =
+    matchPath<{ activeLink: string; buildVersion: string }>(pathname, {
+      path,
+    }) || {};
+
+  const notifications = useWsConnection<Notification[]>(defaultAdminSocket, '/notifications') || [];
+  const newBuildNotification = notifications.find((notification) => notification.agentId === agentId) || {};
+
+  useEffect(() => {
+    if (
+      !newBuildNotification?.read &&
+      newBuildNotification?.agentId === agentId &&
+      newBuildNotification?.message?.currentId === buildVersion &&
+      newBuildNotification?.id
+    ) {
+      readNotification(newBuildNotification.id);
+    }
+  }, [buildVersion, newBuildNotification?.id]);
 
   return (
     <PluginProvider>
       <InitialConfigController>
         <PluginsLayout
-          sidebar={activeLink && activeLink !== 'notification-sidebar'
-          && <Sidebar links={getPluginsLinks(agent.plugins)} matchParams={{ path }} />}
-          toolbar={(
-            <Toolbar
-              breadcrumbs={<Breadcrumbs />}
-            />
-          )}
+          sidebar={
+            activeLink &&
+            activeLink !== 'notification-sidebar' && (
+              <Sidebar links={getPluginsLinks(agent.plugins)} matchParams={{ path }} />
+            )
+          }
+          toolbar={<Toolbar breadcrumbs={<Breadcrumbs />} />}
           header={<PluginHeader agentName={agent.name} agentStatus={agent.status} />}
           footer={<Footer />}
         >
           <div tw="w-full h-full">
             <Switch>
               <Route
-                path={['/full-page/:agentId/:buildVersion/dashboard', '/full-page/:agentId/:buildVersion/dashboard/notification-sidebar']}
+                path={[
+                  '/full-page/:agentId/:buildVersion/dashboard',
+                  '/full-page/:agentId/:buildVersion/dashboard/notification-sidebar',
+                ]}
                 render={() => <Dashboard agent={agent} />}
                 exact
               />
