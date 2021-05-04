@@ -95,9 +95,8 @@ export const ManagementNewSession = ({
                     )
                     : (
                       <>
-                        Session that tracks all of the executions on your JVM
-                        <br />
-                        (e.g. background tasks)
+                        Session that tracks all of the executions on your <br />
+                        target application (e.g. background tasks)
                       </>
                     )}
                 </div>
@@ -111,7 +110,25 @@ export const ManagementNewSession = ({
       <Field
         name="isRealtime"
         type="checkbox"
-        component={Fields.Checkbox}
+        render={({ input, meta }) => (
+          <div className="flex items-center gap-2">
+            <Fields.Checkbox
+              input={input}
+              meta={meta}
+              label="Real-time coverage collection"
+            />
+            <Tooltip
+              message={(
+                <div className="text-center">
+                  Active scope coverage is updated once <br />
+                  in 2 seconds. It will affect performance
+                </div>
+              )}
+            >
+              <Icons.Info tw="text-monochrome-default" />
+            </Tooltip>
+          </div>
+        )}
         label="Real-time coverage collection"
       />
     </div>
