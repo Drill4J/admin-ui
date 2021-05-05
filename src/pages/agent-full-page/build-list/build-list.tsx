@@ -13,13 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { useRef } from 'react';
+import { useMemo, useRef } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import {
   Table, Column, Icons, Tooltip,
 } from '@drill4j/ui-kit';
 import tw, { styled } from 'twin.macro';
 
+import { Table as ReTable } from 'components';
 import { defaultAdminSocket } from 'common/connection';
 import {
   useWsConnection, useAgent, useBaselineVersion,
@@ -41,6 +42,81 @@ export const BuildList = () => {
   const { version: baseline } = useBaselineVersion(agentId, activeBuildVersion) || {};
   const dispatch = usePluginDispatch();
   const node = useRef<HTMLDivElement>(null);
+
+  const columns = [
+    {
+      // Make an expander cell
+      Header: () => null, // No header
+      id: 'expander', // It needs an ID
+      Cell: ({ row }: any) => (
+        // Use Cell to render an expander for each row.
+        // We can use the getToggleRowExpandedProps prop-getter
+        // to build the expander.
+        <span {...row.getToggleRowExpandedProps()}>
+          {row.isExpanded ? '👇' : '👉'}
+        </span>
+      ),
+    },
+    {
+      Header: 'Name',
+      accessor: 'buildVersion',
+      Cell: ({ value: buildVersion }: any) => (
+        <NameCell
+          onClick={() => dispatch(setBuildVersion(buildVersion))}
+          title={buildVersion}
+        >
+          <Link tw="link text-ellipsis" to={`/full-page/${agentId}/${buildVersion}/dashboard`}>{buildVersion}</Link>
+          {baseline === buildVersion && (
+            <Tooltip
+              message={(
+                <span>
+                  This build is set as baseline.<br />
+                  All subsequent builds are compared with it.
+                </span>
+              )}
+              position="top-right"
+            >
+              <Icons.Flag tw="flex items-center text-monochrome-default" />
+            </Tooltip>
+          )}
+        </NameCell>
+      ),
+      text: 'left',
+      width: '30%',
+    },
+    {
+      Header: 'Added',
+      accessor: 'detectedAt',
+      Cell: ({ value }: any) => <span>{dateTimeFormatter(value)}</span>,
+      text: 'left',
+      width: '20%',
+    },
+    {
+      Header: 'Total methods',
+      accessor: 'summary.total',
+      width: '10%',
+    },
+    {
+      Header: 'New',
+      accessor: 'summary.new',
+      width: '10%',
+    },
+    {
+      Header: 'Modified',
+      accessor: 'summary.modified',
+      width: '10%',
+    },
+    {
+      Header: 'Unaffected',
+      accessor: 'summary.unaffected',
+      width: '10%',
+    },
+    {
+      Header: 'Deleted',
+      accessor: 'summary.deleted',
+      width: '10%',
+    },
+  ];
 
   return (
     <div tw="mx-6">
@@ -103,6 +179,10 @@ export const BuildList = () => {
             label="Deleted"
           />
         </Table>
+        <ReTable
+          columns={columns}
+          data={buildVersions}
+        />
       </div>
     </div>
   );
