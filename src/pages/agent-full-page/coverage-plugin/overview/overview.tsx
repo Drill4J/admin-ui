@@ -23,14 +23,12 @@ import {
 } from 'hooks';
 import { TableActionsProvider } from 'modules';
 import { ParentBuild } from 'types/parent-build';
-import { AGENT_STATUS } from 'common/constants';
 import { BuildCoverage } from 'types/build-coverage';
 import { CoveragePluginHeader } from '../coverage-plugin-header';
 import { CoverageDetails } from '../coverage-details';
 import { BuildProjectMethods } from './build-project-methods';
 import { usePluginState } from '../../store';
 import { BuildTests } from '../build-tests';
-import { ActiveScopeInfo } from './active-scope-info';
 import { usePreviousBuildCoverage } from '../use-previous-build-coverage';
 import { BuildProjectTests } from './build-project-tests';
 
@@ -68,21 +66,18 @@ export const Overview = () => {
           </Tab>
         </TabsPanel>
       </div>
-      <div tw="flex gap-6">
-        <div tw="flex flex-col items-stretch gap-7 pt-4 w-full border-t border-monochrome-medium-tint">
-          {tab === 'methods'
-            ? (
-              <BuildProjectMethods
-                scope={scope}
-                previousBuildInfo={{ previousBuildVersion, previousBuildCodeCoverage }}
-                loading={loading}
-                status={status}
-                buildCoverage={buildCoverage}
-              />
-            )
-            : <BuildProjectTests />}
-        </div>
-        {scope?.active && status === AGENT_STATUS.ONLINE && <ActiveScopeInfo scope={scope} />}
+      <div tw="flex flex-col items-stretch gap-7 pt-4 w-full border-t border-monochrome-medium-tint">
+        {tab === 'methods'
+          ? (
+            <BuildProjectMethods
+              scope={scope}
+              previousBuildInfo={{ previousBuildVersion, previousBuildCodeCoverage }}
+              loading={loading}
+              status={status}
+              buildCoverage={buildCoverage}
+            />
+          )
+          : <BuildProjectTests status={status} />}
       </div>
       <div tw="mt-2">
         <TableActionsProvider key={tab}>

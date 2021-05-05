@@ -206,19 +206,23 @@ export const CoverageDetails = ({
             Displaying {coverageByPackages.slice(0, visibleElementsCount).length} of {totalCount} packages
           </SearchPanel>
         </div>
-        <Table
-          columns={columns}
-          data={coverageByPackages.slice(0, visibleElementsCount)}
-          renderRowSubComponent={renderRowSubComponent}
-          stub={coverageByPackages.length === 0 && (
-            <Stub
-              icon={<Icons.Package height={104} width={107} />}
-              title="No results found"
-              message="Try adjusting your search or filter to find what you are looking for."
+        <div tw="overflow-x-auto">
+          <div style={{ minWidth: '1100px' }}>
+            <Table
+              columns={columns}
+              data={coverageByPackages.slice(0, visibleElementsCount)}
+              renderRowSubComponent={renderRowSubComponent}
+              stub={coverageByPackages.length === 0 && (
+                <Stub
+                  icon={<Icons.Package height={104} width={107} />}
+                  title="No results found"
+                  message="Try adjusting your search or filter to find what you are looking for."
+                />
+              )}
             />
-          )}
-        />
-        <div ref={ref} />
+            <div ref={ref} />
+          </div>
+        </div>
       </>
       <Route
         path={[

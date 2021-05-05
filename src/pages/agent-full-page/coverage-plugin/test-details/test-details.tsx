@@ -66,75 +66,79 @@ export const TestDetails = ({
             Displaying {tests.slice(0, visibleElementsCount).length} of {totalCount} tests
           </SearchPanel>
         </div>
-        <Table
-          isDefaulToggleSortBy
-          data={tests.slice(0, visibleElementsCount)}
-          columns={[{
-            Header: 'Name',
-            accessor: 'testName',
-            Cell: ({ row }: any) => (
-              <Cells.Compound cellName={row.original.name} cellAdditionalInfo="&ndash;" icon={<Icons.Test height={16} width={16} />} />
-            ),
-            textAlign: 'left',
-            width: '56%',
-          },
-          {
-            Header: 'Test type',
-            accessor: 'type',
-            Cell: ({ value }: any) => (
-              <>
-                {capitalize(value)}
-              </>
-            ),
-            textAlign: 'left',
-            width: '10%',
-          },
-          {
-            Header: 'Status',
-            accessor: 'stats.result',
-            Cell: ({ value }: any) => (
-              <Cells.TestStatus
-                type={value}
-              >
-                {capitalize(value)}
-              </Cells.TestStatus>
-            ),
-            textAlign: 'left',
-            width: '7%',
-          },
-          {
-            Header: 'Coverage, %',
-            accessor: 'coverage.percentage',
-            Cell: Cells.Coverage,
-            width: '7%',
-          },
-          {
-            Header: 'Methods covered',
-            accessor: 'coverage.methodCount.covered',
-            Cell: ({ value, row: { original: { id = '', coverage: { methodCount: { covered = 0 } = {} } = {} } = {} } = {} }: any) => (
-              <Cells.Clickable
-                data-test="test-actions:view-curl:id"
-                disabled={!value}
-              >
-                <Link to={scopeId
-                  ? `/full-page/${agentId}/${buildVersion}/${pluginId}/scope/${
-                    scopeId}/${tab}/covered-methods-modal?${queryString.stringify({ coveredMethods: covered, testId: id })}`
-                  : `/full-page/${agentId}/${buildVersion}/${
-                    pluginId}/dashboard/${tab}/covered-methods-modal?${queryString.stringify({ coveredMethods: covered, testId: id })}`}
-                >
-                  {value}
-                </Link>
-              </Cells.Clickable>
-            ),
-            width: '10%',
-          },
-          {
-            Header: 'Duration',
-            accessor: 'stats.duration',
-            Cell: Cells.Duration,
-            width: '10%',
-          }]}
-        />
+        <div tw="overflow-x-auto">
+          <div style={{ minWidth: '1000px' }}>
+            <Table
+              isDefaulToggleSortBy
+              data={tests.slice(0, visibleElementsCount)}
+              columns={[{
+                Header: 'Name',
+                accessor: 'testName',
+                Cell: ({ row }: any) => (
+                  <Cells.Compound cellName={row.original.name} cellAdditionalInfo="&ndash;" icon={<Icons.Test height={16} width={16} />} />
+                ),
+                textAlign: 'left',
+                width: '56%',
+              },
+              {
+                Header: 'Test type',
+                accessor: 'type',
+                Cell: ({ value }: any) => (
+                  <>
+                    {capitalize(value)}
+                  </>
+                ),
+                textAlign: 'left',
+                width: '10%',
+              },
+              {
+                Header: 'Status',
+                accessor: 'stats.result',
+                Cell: ({ value }: any) => (
+                  <Cells.TestStatus
+                    type={value}
+                  >
+                    {capitalize(value)}
+                  </Cells.TestStatus>
+                ),
+                textAlign: 'left',
+                width: '7%',
+              },
+              {
+                Header: 'Coverage, %',
+                accessor: 'coverage.percentage',
+                Cell: Cells.Coverage,
+                width: '7%',
+              },
+              {
+                Header: 'Methods covered',
+                accessor: 'coverage.methodCount.covered',
+                Cell: ({ value, row: { original: { id = '', coverage: { methodCount: { covered = 0 } = {} } = {} } = {} } = {} }: any) => (
+                  <Cells.Clickable
+                    data-test="test-actions:view-curl:id"
+                    disabled={!value}
+                  >
+                    <Link to={scopeId
+                      ? `/full-page/${agentId}/${buildVersion}/${pluginId}/scope/${
+                        scopeId}/${tab}/covered-methods-modal?${queryString.stringify({ coveredMethods: covered, testId: id })}`
+                      : `/full-page/${agentId}/${buildVersion}/${
+                        pluginId}/dashboard/${tab}/covered-methods-modal?${queryString.stringify({ coveredMethods: covered, testId: id })}`}
+                    >
+                      {value}
+                    </Link>
+                  </Cells.Clickable>
+                ),
+                width: '10%',
+              },
+              {
+                Header: 'Duration',
+                accessor: 'stats.duration',
+                Cell: Cells.Duration,
+                width: '10%',
+              }]}
+            />
+          </div>
+        </div>
       </>
       {!tests.length && !searchQuery?.value && (
         <Stub
