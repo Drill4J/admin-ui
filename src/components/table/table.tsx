@@ -15,14 +15,14 @@
  */
 import { useMemo } from 'react';
 import { useTable, useExpanded } from 'react-table';
-import { useHover, SortArrow } from '@drill4j/ui-kit';
+import { Icons } from '@drill4j/ui-kit';
 import tw, { styled } from 'twin.macro';
 import { setSort, useTableActionsDispatch, useTableActionsState } from 'modules';
 import { Order } from 'types/sort';
 import { nanoid } from 'nanoid';
 
 export const Table = ({
-  columns, data, renderRowSubComponent = null, withoutHeader,
+  columns, data, renderRowSubComponent = null,
 }: any) => {
   const {
     getTableProps, getTableBodyProps, headerGroups, rows, prepareRow,
@@ -33,41 +33,39 @@ export const Table = ({
     },
     useExpanded,
   );
-  const { ref, isVisible } = useHover();
 
   const dispatch = useTableActionsDispatch();
   const { sort: [sort] } = useTableActionsState();
 
   return (
     <table {...getTableProps()} tw="w-full text-14 leading-16 text-monochrome-black">
-      {!withoutHeader && (
-        <TableHead>
-          {headerGroups.map((headerGroup) => (
-            <tr {...headerGroup.getHeaderGroupProps()} tw="h-13 px-4" key={nanoid()}>
-              {headerGroup.headers.map((column: any) => {
-                const active = column.id === sort?.field;
-                return (
-                  <th
+      <TableHead>
+        {headerGroups.map((headerGroup) => (
+          <tr {...headerGroup.getHeaderGroupProps()} tw="h-13 px-4" key={nanoid()}>
+            {headerGroup.headers.map((column: any) => {
+              const active = column.id === sort?.field;
+              return (
+                <TH
                   // {...column.getHeaderProps(column.getSortByToggleProps())}
-                    tw="first:px-4 last:px-4"
-                    style={{ textAlign: (column as any).text || 'right', width: column.width }}
-                    onClick={() => dispatch(setSort({ order: setOrder(sort?.order), field: column.id }))}
-                    key={nanoid()}
-                  >
-                    <div tw="relative inline-flex items-center cursor-pointer" ref={ref}>
-                      {column.id !== 'expander' && (isVisible || active) && (
-                        <SortArrow active={active} order={active ? sort.order : null} />
-                      )}
-                      {column.render('Header')}
-                    </div>
-                  </th>
+                  style={{ textAlign: (column as any).text || 'right', width: column.width }}
+                  onClick={() => dispatch(setSort({ order: setOrder(sort?.order), field: column.id }))}
+                  key={nanoid()}
+                >
+                  <div tw="relative inline-flex items-center cursor-pointer">
+                    {column.id !== 'expander' && (
+                      <SortArrow active={active}>
+                        <Icons.SortingArrow rotate={sort?.order === 'DESC' ? 0 : 180} />
+                      </SortArrow>
+                    )}
+                    {column.render('Header')}
+                  </div>
+                </TH>
 
-                );
-              })}
-            </tr>
-          ))}
-        </TableHead>
-      )}
+              );
+            })}
+          </tr>
+        ))}
+      </TableHead>
       <tbody {...getTableBodyProps()}>
         {rows.map((row: any) => {
           prepareRow(row);
@@ -99,6 +97,20 @@ const TableHead = styled.thead`
   ${tw`sticky -top-1 z-40 bg-monochrome-white 
     text-14 leading-20 font-bold 
     border-b border-t-2 border-monochrome-black`};
+`;
+
+const SortArrow = styled.div`
+  ${tw`invisible absolute -left-4 grid place-items-center h-4 w-4 text-blue-medium-tint cursor-pointer`};
+
+  ${({ active }: { active: boolean }) => active && tw`visible text-blue-shade`}
+`;
+
+const TH = styled.th`
+  ${tw`first:px-4 last:px-4`};
+
+  &:hover ${SortArrow} {
+    ${tw`visible`};
+  }
 `;
 
 export const TR = styled.tr`
