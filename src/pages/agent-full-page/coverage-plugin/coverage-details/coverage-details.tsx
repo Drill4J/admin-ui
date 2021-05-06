@@ -117,12 +117,12 @@ export const CoverageDetails = ({
     {
       Header: 'Associated tests',
       accessor: 'assocTestsCount',
-      Cell: ({ value = '', item: { id = '' } = {} }: any) => (
+      Cell: ({ value = '', row }: any) => (
         <Cells.Clickable
           data-test="coverage-details:associated-tests-count"
           disabled={!value}
         >
-          {value ? <Link to={getModalLink(id, 1)}>{value}</Link> : 'n/a'}
+          {value ? <Link to={getModalLink(row.original.id, 1)}>{value}</Link> : 'n/a'}
         </Cells.Clickable>
       ),
       width: '10%',
