@@ -33,7 +33,6 @@ import { Package } from 'types/package';
 import { NameCell } from './name-cell';
 import { AssociatedTestModal } from './associated-test-modal';
 import { CoverageCell } from './coverage-cell';
-import { CellProps } from './table/table-types';
 
 interface Props {
   topic: string;
@@ -80,7 +79,7 @@ export const CoverageDetails = ({
     {
       Header: 'Name',
       accessor: 'name',
-      Cell: ({ value = '' }: CellProps<string, unknown>) => (
+      Cell: ({ value = '' }: any) => (
         <NameCell
           icon={<Icons.Package />}
           value={value}
@@ -117,7 +116,7 @@ export const CoverageDetails = ({
     {
       Header: 'Associated tests',
       accessor: 'assocTestsCount',
-      Cell: ({ value = '', item: { id = '' } = {} }: CellProps<string, { id?: string; assocTestsCount?: number }>) => (
+      Cell: ({ value = '', item: { id = '' } = {} }: any) => (
         <Cells.Clickable
           data-test="coverage-details:associated-tests-count"
           disabled={!value}
