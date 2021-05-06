@@ -224,7 +224,7 @@ export const CoverageDetails = ({
         </div>
         <Table
           columns={[...columns, ...infoColumns]}
-          data={coverageByPackages}
+          data={coverageByPackages.slice(0, visibleElementsCount)}
           renderRowSubComponent={renderRowSubComponent}
         />
         <div ref={ref} />
