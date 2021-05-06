@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { useMemo, useRef } from 'react';
+import { useRef } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import {
   Table, Column, Icons, Tooltip,
