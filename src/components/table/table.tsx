@@ -19,6 +19,7 @@ import { useHover, SortArrow } from '@drill4j/ui-kit';
 import tw, { styled } from 'twin.macro';
 import { setSort, useTableActionsDispatch, useTableActionsState } from 'modules';
 import { Order } from 'types/sort';
+import { nanoid } from 'nanoid';
 
 export const Table = ({
   columns, data, renderRowSubComponent = null, withoutHeader,
@@ -42,7 +43,7 @@ export const Table = ({
       {!withoutHeader && (
         <TableHead>
           {headerGroups.map((headerGroup) => (
-            <tr {...headerGroup.getHeaderGroupProps()} tw="h-13 px-4">
+            <tr {...headerGroup.getHeaderGroupProps()} tw="h-13 px-4" key={nanoid()}>
               {headerGroup.headers.map((column: any) => {
                 const active = column.id === sort?.field;
                 return (
@@ -51,6 +52,7 @@ export const Table = ({
                     tw="first:px-4 last:px-4"
                     style={{ textAlign: (column as any).text || 'right', width: column.width }}
                     onClick={() => dispatch(setSort({ order: setOrder(sort?.order), field: column.id }))}
+                    key={nanoid()}
                   >
                     <div tw="relative inline-flex items-center cursor-pointer" ref={ref}>
                       {column.id !== 'expander' && (isVisible || active) && (
@@ -71,12 +73,13 @@ export const Table = ({
           prepareRow(row);
           return (
             <>
-              <TR {...row.getRowProps()} isExpanded={row.isExpanded}>
+              <TR {...row.getRowProps()} isExpanded={row.isExpanded} key={nanoid()}>
                 {row.cells.map((cell: any) => (
                   <td
                     {...cell.getCellProps()}
                     tw="text-ellipsis first:px-4 last:px-4"
                     style={{ textAlign: (cell.column as any).text || 'right' }}
+                    key={nanoid()}
                   >
                     {cell.render('Cell')}
                   </td>
