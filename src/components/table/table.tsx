@@ -13,34 +13,33 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+import { useMemo } from 'react';
 import { useTable, useSortBy, useExpanded } from 'react-table';
 import { Icons, useHover } from '@drill4j/ui-kit';
 import tw, { styled } from 'twin.macro';
 
-export const Table = ({ columns, data }: any) => {
-  // Use the state and functions returned from useTable to build your UI
+export const Table = ({
+  columns, data, renderRowSubComponent = null, withoutHeader,
+}: any) => {
   const {
     getTableProps, getTableBodyProps, headerGroups, rows, prepareRow,
   } = useTable(
     {
-      columns,
-      data,
+      columns: useMemo(() => columns, [columns]),
+      data: useMemo(() => data, [data]),
     },
     useSortBy,
     useExpanded,
   );
-
-  // Render the UI for your table
-  const { ref, isVisible } = useHover();
+  const { ref } = useHover();
 
   return (
     <table {...getTableProps()} tw="w-full text-14 leading-16 text-monochrome-black">
-      <TableHead>
-        {headerGroups.map((headerGroup) => (
-          <tr {...headerGroup.getHeaderGroupProps()} tw="h-13 px-4">
-            {headerGroup.headers.map((column: any) => {
-              console.log(column);
-              return (
+      {!withoutHeader && (
+        <TableHead>
+          {headerGroups.map((headerGroup) => (
+            <tr {...headerGroup.getHeaderGroupProps()} tw="h-13 px-4">
+              {headerGroup.headers.map((column: any) => (
                 <th
                   {...column.getHeaderProps(column.getSortByToggleProps())}
                   tw="first:px-4 last:px-4"
@@ -57,26 +56,30 @@ export const Table = ({ columns, data }: any) => {
                   </div>
 
                 </th>
-              );
-            })}
-          </tr>
-        ))}
-      </TableHead>
-      <tbody {...getTableBodyProps()}>
-        {rows.map((row) => {
-          prepareRow(row);
-          return (
-            <tr {...row.getRowProps()} tw="min-h-40px border-b border-monochrome-medium-tint">
-              {row.cells.map((cell) => (
-                <td
-                  {...cell.getCellProps()}
-                  tw="first:px-4 last:px-4"
-                  style={{ textAlign: (cell.column as any).text || 'right' }}
-                >
-                  {cell.render('Cell')}
-                </td>
               ))}
             </tr>
+          ))}
+        </TableHead>
+      )}
+      <tbody {...getTableBodyProps()}>
+        {rows.map((row: any) => {
+          prepareRow(row);
+          return (
+            <>
+              <TR {...row.getRowProps()} isExpanded={row.isExpanded}>
+                {row.cells.map((cell: any) => (
+                  <td
+                    {...cell.getCellProps()}
+                    tw="text-ellipsis first:px-4 last:px-4"
+                    style={{ textAlign: (cell.column as any).text || 'right' }}
+                  >
+                    {cell.render('Cell')}
+                  </td>
+                ))}
+              </TR>
+              {(row as any).isExpanded && renderRowSubComponent &&
+                renderRowSubComponent({ row })}
+            </>
           );
         })}
       </tbody>
@@ -90,8 +93,13 @@ const TableHead = styled.thead`
     border-b border-t-2 border-monochrome-black`};
 `;
 
+export const TR = styled.tr`
+  ${tw`h-10 border-b border-monochrome-medium-tint`}
+  ${({ isExpanded }: { isExpanded: boolean }) => isExpanded && tw`bg-monochrome-light-tint`}
+`;
+
 const SortArrow = styled.div`
   ${tw`h-4 w-4 cursor-pointer text-blue-medium-tint`};
 
-  color: ${({ active }: { active: boolean }) => active && tw`text-blue-shade`};
+  ${({ active }: { active: boolean }) => active && tw`text-blue-shade`};
 `;

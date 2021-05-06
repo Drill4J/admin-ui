@@ -31,4 +31,4 @@ export { DashboardSection } from './dashboard-section';
 export { SectionTooltip } from './section-tooltip';
 export { BuildTestsCard, BuildMethodsCard } from './cards';
 export { Stub } from './stub';
-export { Table } from './table';
+export { Table, TR } from './table';
