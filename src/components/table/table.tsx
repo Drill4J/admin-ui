@@ -14,9 +14,11 @@
  * limitations under the License.
  */
 import { useMemo } from 'react';
-import { useTable, useSortBy, useExpanded } from 'react-table';
-import { Icons, useHover } from '@drill4j/ui-kit';
+import { useTable, useExpanded } from 'react-table';
+import { useHover, SortArrow } from '@drill4j/ui-kit';
 import tw, { styled } from 'twin.macro';
+import { setSort, useTableActionsDispatch, useTableActionsState } from 'modules';
+import { Order } from 'types/sort';
 
 export const Table = ({
   columns, data, renderRowSubComponent = null, withoutHeader,
@@ -28,10 +30,12 @@ export const Table = ({
       columns: useMemo(() => columns, [columns]),
       data: useMemo(() => data, [data]),
     },
-    useSortBy,
     useExpanded,
   );
-  const { ref } = useHover();
+  const { ref, isVisible } = useHover();
+
+  const dispatch = useTableActionsDispatch();
+  const { sort: [sort] } = useTableActionsState();
 
   return (
     <table {...getTableProps()} tw="w-full text-14 leading-16 text-monochrome-black">
@@ -39,24 +43,25 @@ export const Table = ({
         <TableHead>
           {headerGroups.map((headerGroup) => (
             <tr {...headerGroup.getHeaderGroupProps()} tw="h-13 px-4">
-              {headerGroup.headers.map((column: any) => (
-                <th
-                  {...column.getHeaderProps(column.getSortByToggleProps())}
-                  tw="first:px-4 last:px-4"
-                  style={{ textAlign: (column as any).text || 'right', width: column.width }}
-                  ref={ref}
-                >
-                  <div tw="inline-flex">
-                    {(column.isSorted) && (
-                      <SortArrow active>
-                        <Icons.SortingArrow rotate={column.isSortedDesc ? 0 : 180} />
-                      </SortArrow>
-                    )}
-                    {column.render('Header')}
-                  </div>
+              {headerGroup.headers.map((column: any) => {
+                const active = column.id === sort?.field;
+                return (
+                  <th
+                  // {...column.getHeaderProps(column.getSortByToggleProps())}
+                    tw="first:px-4 last:px-4"
+                    style={{ textAlign: (column as any).text || 'right', width: column.width }}
+                    onClick={() => dispatch(setSort({ order: setOrder(sort?.order), field: column.id }))}
+                  >
+                    <div tw="relative inline-flex items-center cursor-pointer" ref={ref}>
+                      {column.id !== 'expander' && (isVisible || active) && (
+                        <SortArrow active={active} order={active ? sort.order : null} />
+                      )}
+                      {column.render('Header')}
+                    </div>
+                  </th>
 
-                </th>
-              ))}
+                );
+              })}
             </tr>
           ))}
         </TableHead>
@@ -98,8 +103,13 @@ export const TR = styled.tr`
   ${({ isExpanded }: { isExpanded: boolean }) => isExpanded && tw`bg-monochrome-light-tint`}
 `;
 
-const SortArrow = styled.div`
-  ${tw`h-4 w-4 cursor-pointer text-blue-medium-tint`};
-
-  ${({ active }: { active: boolean }) => active && tw`text-blue-shade`};
-`;
+function setOrder(order: Order) {
+  switch (order) {
+    case 'ASC':
+      return 'DESC';
+    case 'DESC':
+      return null;
+    default:
+      return 'ASC';
+  }
+}
