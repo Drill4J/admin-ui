@@ -38,7 +38,7 @@ export const Table = ({
   const { sort: [sort] } = useTableActionsState();
 
   return (
-    <table {...getTableProps()} tw="w-full text-14 leading-16 text-monochrome-black">
+    <table {...getTableProps()} tw="table-fixed w-full text-14 leading-16 text-monochrome-black">
       <TableHead>
         {headerGroups.map((headerGroup) => (
           <tr {...headerGroup.getHeaderGroupProps()} tw="h-13 px-4" key={nanoid()}>

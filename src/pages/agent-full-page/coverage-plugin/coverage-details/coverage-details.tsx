@@ -75,7 +75,7 @@ export const CoverageDetails = ({
           {row.isExpanded ? <Icons.Expander rotate={90} /> : <Icons.Expander />}
         </span>
       ),
-      width: '1%',
+      width: '16px',
     },
     {
       Header: 'Name',
@@ -139,7 +139,7 @@ export const CoverageDetails = ({
             ? (
               <span
                 {...row.getToggleRowExpandedProps?.()}
-                tw="absolute top-2.5 left-13 z-50 grid place-items-center w-4 h-4 text-blue-default"
+                tw="absolute top-2.5 left-11 z-50 grid place-items-center w-4 h-4 text-blue-default"
               >
                 {row.isExpanded ? <Icons.Expander rotate={90} /> : <Icons.Expander />}
               </span>
