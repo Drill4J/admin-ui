@@ -24,7 +24,7 @@ import { ClassCoverage } from 'types/class-coverage';
 import { FilterList } from 'types/filter-list';
 import { useVisibleElementsCount, useBuildVersion } from 'hooks';
 import {
-  Cells, SearchPanel, Table, TR,
+  Cells, SearchPanel, Stub, Table, TR,
 } from 'components';
 import {
   useTableActionsState, useTableActionsDispatch, setSearch,
@@ -226,6 +226,13 @@ export const CoverageDetails = ({
           columns={[...columns, ...infoColumns]}
           data={coverageByPackages.slice(0, visibleElementsCount)}
           renderRowSubComponent={renderRowSubComponent}
+          stub={coverageByPackages.length === 0 && (
+            <Stub
+              icon={<Icons.Package height={104} width={107} />}
+              title="No results found"
+              message="Try adjusting your search or filter to find what you are looking for."
+            />
+          )}
         />
         <div ref={ref} />
       </>

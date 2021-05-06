@@ -22,7 +22,7 @@ import { Order } from 'types/sort';
 import { nanoid } from 'nanoid';
 
 export const Table = ({
-  columns, data, renderRowSubComponent = null,
+  columns, data, renderRowSubComponent = null, stub = null,
 }: any) => {
   const {
     getTableProps, getTableBodyProps, headerGroups, rows, prepareRow,
@@ -38,58 +38,61 @@ export const Table = ({
   const { sort: [sort] } = useTableActionsState();
 
   return (
-    <table {...getTableProps()} tw="table-fixed w-full text-14 leading-16 text-monochrome-black">
-      <TableHead>
-        {headerGroups.map((headerGroup) => (
-          <tr {...headerGroup.getHeaderGroupProps()} tw="h-13 px-4" key={nanoid()}>
-            {headerGroup.headers.map((column: any) => {
-              const active = column.id === sort?.field;
-              return (
-                <TH
+    <>
+      <table {...getTableProps()} tw="table-fixed w-full text-14 leading-16 text-monochrome-black">
+        <TableHead>
+          {headerGroups.map((headerGroup) => (
+            <tr {...headerGroup.getHeaderGroupProps()} tw="h-13 px-4" key={nanoid()}>
+              {headerGroup.headers.map((column: any) => {
+                const active = column.id === sort?.field;
+                return (
+                  <TH
                   // {...column.getHeaderProps(column.getSortByToggleProps())}
-                  style={{ textAlign: (column as any).text || 'right', width: column.width }}
-                  onClick={() => dispatch(setSort({ order: setOrder(sort?.order), field: column.id }))}
-                  key={nanoid()}
-                >
-                  <div tw="relative inline-flex items-center cursor-pointer">
-                    {column.id !== 'expander' && (
-                      <SortArrow active={active}>
-                        <Icons.SortingArrow rotate={sort?.order === 'DESC' ? 0 : 180} />
-                      </SortArrow>
-                    )}
-                    {column.render('Header')}
-                  </div>
-                </TH>
-
-              );
-            })}
-          </tr>
-        ))}
-      </TableHead>
-      <tbody {...getTableBodyProps()}>
-        {rows.map((row: any) => {
-          prepareRow(row);
-          return (
-            <>
-              <TR {...row.getRowProps()} isExpanded={row.isExpanded} key={nanoid()}>
-                {row.cells.map((cell: any) => (
-                  <td
-                    {...cell.getCellProps()}
-                    tw="text-ellipsis first:px-4 last:px-4"
-                    style={{ textAlign: (cell.column as any).text || 'right' }}
+                    style={{ textAlign: (column as any).text || 'right', width: column.width }}
+                    onClick={() => dispatch(setSort({ order: setOrder(sort?.order), field: column.id }))}
                     key={nanoid()}
                   >
-                    {cell.render('Cell')}
-                  </td>
-                ))}
-              </TR>
-              {(row as any).isExpanded && renderRowSubComponent &&
+                    <div tw="relative inline-flex items-center cursor-pointer">
+                      {column.id !== 'expander' && (
+                        <SortArrow active={active}>
+                          <Icons.SortingArrow rotate={sort?.order === 'DESC' ? 0 : 180} />
+                        </SortArrow>
+                      )}
+                      {column.render('Header')}
+                    </div>
+                  </TH>
+
+                );
+              })}
+            </tr>
+          ))}
+        </TableHead>
+        <tbody {...getTableBodyProps()}>
+          {rows.map((row: any) => {
+            prepareRow(row);
+            return (
+              <>
+                <TR {...row.getRowProps()} isExpanded={row.isExpanded} key={nanoid()}>
+                  {row.cells.map((cell: any) => (
+                    <td
+                      {...cell.getCellProps()}
+                      tw="text-ellipsis first:px-4 last:px-4"
+                      style={{ textAlign: (cell.column as any).text || 'right' }}
+                      key={nanoid()}
+                    >
+                      {cell.render('Cell')}
+                    </td>
+                  ))}
+                </TR>
+                {(row as any).isExpanded && renderRowSubComponent &&
                 renderRowSubComponent({ row })}
-            </>
-          );
-        })}
-      </tbody>
-    </table>
+              </>
+            );
+          })}
+        </tbody>
+      </table>
+      {stub}
+    </>
   );
 };
 
