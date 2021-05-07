@@ -1,29 +1,41 @@
 /*
- * Copyright 2020 EPAM Systems
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- * http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+* Copyright 2020 EPAM Systems
+*
+* Licensed under the Apache License, Version 2.0 (the "License");
+* you may not use this file except in compliance with the License.
+* You may obtain a copy of the License at
+*
+* http://www.apache.org/licenses/LICENSE-2.0
+*
+* Unless required by applicable law or agreed to in writing, software
+* distributed under the License is distributed on an "AS IS" BASIS,
+* WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
 import { useMemo } from 'react';
-import { useTable, useExpanded } from 'react-table';
+import {
+  useTable, useExpanded, Column,
+} from 'react-table';
 import { Icons } from '@drill4j/ui-kit';
-import tw, { styled } from 'twin.macro';
+
 import { setSort, useTableActionsDispatch, useTableActionsState } from 'modules';
 import { Order } from 'types/sort';
 import { nanoid } from 'nanoid';
+import tw, { styled } from 'twin.macro';
+
+type CustomColumn = Column & { textAlign?: string; width?: string; }
+
+interface Props {
+  columns: Array<CustomColumn>;
+  data: Array<any>;
+  renderRowSubComponent?: ({ row }: any) => JSX.Element;
+  stub?: React.ReactNode;
+}
 
 export const Table = ({
-  columns, data, renderRowSubComponent = null, stub = null,
-}: any) => {
+  columns, data, renderRowSubComponent, stub = null,
+}: Props) => {
   const {
     getTableProps, getTableBodyProps, headerGroups, rows, prepareRow,
   } = useTable(
@@ -47,8 +59,7 @@ export const Table = ({
                 const active = column.id === sort?.field;
                 return (
                   <TH
-                  // {...column.getHeaderProps(column.getSortByToggleProps())}
-                    style={{ textAlign: (column as any).text || 'right', width: column.width }}
+                    style={{ textAlign: column.textAlign || 'right', width: column.width }}
                     onClick={() => dispatch(setSort({ order: setOrder(sort?.order), field: column.id }))}
                     key={nanoid()}
                   >
@@ -77,15 +88,14 @@ export const Table = ({
                     <td
                       {...cell.getCellProps()}
                       tw="text-ellipsis first:px-4 last:px-4"
-                      style={{ textAlign: (cell.column as any).text || 'right' }}
+                      style={{ textAlign: cell.column.textAlign || 'right' }}
                       key={nanoid()}
                     >
                       {cell.render('Cell')}
                     </td>
                   ))}
                 </TR>
-                {(row as any).isExpanded && renderRowSubComponent &&
-                renderRowSubComponent({ row })}
+                {row.isExpanded && renderRowSubComponent?.({ row })}
               </>
             );
           })}

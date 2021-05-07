@@ -87,9 +87,8 @@ export const CoverageDetails = ({
           testContext="package"
         />
       ),
-      text: 'left',
+      textAlign: 'left',
       width: '30%',
-      maxWidth: '30%',
     },
   ];
 
@@ -171,7 +170,7 @@ export const CoverageDetails = ({
               </div>
             )
         ),
-        text: 'left',
+        textAlign: 'left',
         width: '30%',
       },
     ];
@@ -193,7 +192,7 @@ export const CoverageDetails = ({
                 <td
                   {...cell.getCellProps()}
                   tw="relative first:px-4 last:px-4"
-                  style={{ textAlign: (cell.column as any).text || 'right' }}
+                  style={{ textAlign: cell.column.textAlign || 'right' }}
                   key={nanoid()}
                 >
                   {cell.render('Cell')}
