@@ -160,7 +160,8 @@ export const TestsToRunList = ({ agentType = 'Agent' }: Props) => {
                     disabled={!value}
                   >
                     <Link to={`/full-page/${
-                      agentId}/${buildVersion}/${pluginId}/tests-to-run/covered-methods-modal/?coveredMethods=${covered}&testId=${id}`}
+                      agentId}/${buildVersion}/${pluginId}/tests-to-run/covered-methods-modal/
+                      ?coveredMethods=${covered}&testId=${window.btoa((id))}`}
                     >
                       {value}
                     </Link>

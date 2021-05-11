@@ -27,7 +27,8 @@ interface Props {
 
 export const AssociatedTestModal = ({ associatedTestsTopic }: Props) => {
   const params = useQuery();
-  const associatedTests = useBuildVersion<AssociatedTests>(`${associatedTestsTopic}/tests/associatedWith/${params.get('testId')}`) || {};
+  const associatedTests = useBuildVersion<AssociatedTests>(`${associatedTestsTopic}/tests/associatedWith/${
+    window.atob(params.get('testId') || '')}`) || {};
   const {
     tests = [], packageName = '', className: testClassName = '', methodName = '',
   } = associatedTests;
