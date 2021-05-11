@@ -187,7 +187,7 @@ export const CoverageDetails = ({
         {rows.map((row: any) => {
           prepareRow(row);
           return (
-            <TR {...row.getRowProps()} tw="h-10 border-b border-monochrome-medium-tint" isExpanded={row.isExpanded} key={nanoid()}>
+            <TR {...row.getRowProps()} isExpanded={row.isExpanded} key={nanoid()}>
               {row.cells.map((cell: any) => (
                 <td
                   {...cell.getCellProps()}
