@@ -42,7 +42,7 @@ export const ActionsColumn = ({ agent }: Props) => {
   const isJavaAgentsServiceGroup = agents.every((serviceGroupAgent) => serviceGroupAgent.agentType === 'Java');
 
   return (
-    <div className="flex items-center">
+    <div className="flex items-center justify-end">
       {(status === AGENT_STATUS.NOT_REGISTERED || unregisteredAgentsCount > 0) && (
         <Tooltip
           tw="mr-8"

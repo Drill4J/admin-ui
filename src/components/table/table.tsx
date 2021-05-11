@@ -29,7 +29,7 @@ type CustomColumn = Column & { textAlign?: string; width?: string; }
 interface Props {
   columns: Array<CustomColumn>;
   data: Array<any>;
-  renderRowSubComponent?: ({ row }: any) => JSX.Element;
+  renderRowSubComponent?: ({ row, rowProps }: any) => JSX.Element;
   stub?: React.ReactNode;
 }
 
@@ -81,9 +81,10 @@ export const Table = ({
         <tbody {...getTableBodyProps()}>
           {rows.map((row: any) => {
             prepareRow(row);
+            const rowProps = row.getRowProps();
             return (
               <React.Fragment key={nanoid()}>
-                <TR {...row.getRowProps()} isExpanded={row.isExpanded}>
+                <TR {...rowProps} isExpanded={row.isExpanded}>
                   {row.cells.map((cell: any) => (
                     <td
                       {...cell.getCellProps()}
@@ -95,7 +96,7 @@ export const Table = ({
                     </td>
                   ))}
                 </TR>
-                {row.isExpanded && renderRowSubComponent?.({ row })}
+                {row.isExpanded && renderRowSubComponent?.({ row, rowProps })}
               </React.Fragment>
             );
           })}
