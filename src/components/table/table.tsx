@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { useMemo } from 'react';
+import React, { useMemo } from 'react';
 import {
   useTable, useExpanded, Column,
 } from 'react-table';
@@ -82,8 +82,8 @@ export const Table = ({
           {rows.map((row: any) => {
             prepareRow(row);
             return (
-              <>
-                <TR {...row.getRowProps()} isExpanded={row.isExpanded} key={nanoid()}>
+              <React.Fragment key={nanoid()}>
+                <TR {...row.getRowProps()} isExpanded={row.isExpanded}>
                   {row.cells.map((cell: any) => (
                     <td
                       {...cell.getCellProps()}
@@ -96,7 +96,7 @@ export const Table = ({
                   ))}
                 </TR>
                 {row.isExpanded && renderRowSubComponent?.({ row })}
-              </>
+              </React.Fragment>
             );
           })}
         </tbody>
