@@ -33,7 +33,7 @@ const MethodInfoLabel = styled.div(tw`min-w-32px text-left text-14 leading-32 fo
 export const CoveredMethodsByTestSidebar = ({ topicCoveredMethodsByTest }: Props) => {
   const params = useQuery();
   const summary = useBuildVersion<MethodsCoveredByTestSummary>(
-    `${topicCoveredMethodsByTest}/${params.get('testId')}/methods/summary`,
+    `${topicCoveredMethodsByTest}/${window.atob(params.get('testId') || '')}/methods/summary`,
   ) || {};
   const showSceleton = !Object.keys(summary).length;
   const closeModal = useCloseModal('/covered-methods-modal');

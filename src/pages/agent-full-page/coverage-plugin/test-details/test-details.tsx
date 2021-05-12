@@ -115,9 +115,9 @@ export const TestDetails = ({
               >
                 <Link to={scopeId
                   ? `/full-page/${agentId}/${buildVersion}/${
-                    pluginId}/scope/${scopeId}/${tab}/covered-methods-modal?coveredMethods=${covered}&testId=${id.replace('#', '%23')}`
+                    pluginId}/scope/${scopeId}/${tab}/covered-methods-modal?coveredMethods=${covered}&testId=${window.btoa(id)}`
                   : `/full-page/${agentId}/${buildVersion}/${
-                    pluginId}/dashboard/${tab}/covered-methods-modal?coveredMethods=${covered}&testId=${id.replace('#', '%23')}`}
+                    pluginId}/dashboard/${tab}/covered-methods-modal?coveredMethods=${covered}&testId=${window.btoa(id)}`}
                 >
                   {value}
                 </Link>
