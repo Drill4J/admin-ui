@@ -13,22 +13,46 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { devirt } from '@redneckz/react-devirt';
 import { BrowserRouter as Router } from 'react-router-dom';
+import { createGlobalStyle } from 'styled-components';
+import tw from 'twin.macro';
 import { PageSwitcher } from './routes';
 import { NotificationManager } from './notification-manager';
 import { configureAxios } from './common/connection';
 
 import './index.css';
 
-if (process.env.REACT_APP_ENV === 'development') {
-  devirt();
-}
-
 configureAxios();
+
+const GlobalStyle = createGlobalStyle`
+  html,
+  body,
+  #root {
+    ${tw`w-full h-full m-0 p-0 box-border text-monochrome-black`}
+  }
+
+  body {
+    ${tw`font-regular`};
+  }
+
+  *,
+  *:before,
+  *:after {
+    box-sizing: inherit;
+  }
+
+  h2 {
+    ${tw`font-light text-monochrome-default text-18 leading-24`};
+  }
+
+  b {
+    ${tw`font-bold`};
+  }
+`;
 
 export const App = () => (
   <Router>
+    <GlobalStyle />
     <NotificationManager>
       <PageSwitcher />
     </NotificationManager>
