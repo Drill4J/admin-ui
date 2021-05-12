@@ -92,7 +92,7 @@ export const Table = ({
                       style={{ textAlign: cell.column.textAlign || 'right' }}
                       key={nanoid()}
                     >
-                      {cell.render('Cell')}
+                      {cell.render('Cell', { value: cell.value ? cell.value : null })}
                     </td>
                   ))}
                 </TR>
