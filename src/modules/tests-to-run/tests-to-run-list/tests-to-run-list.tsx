@@ -113,6 +113,7 @@ export const TestsToRunList = ({ agentType = 'Agent' }: Props) => {
             Displaying {filteredCount} of {totalCount} tests
           </SearchPanel>
           <Table
+            isDefaulToggleSortBy
             data={testsToRun.slice(0, visibleElementsCount)}
             columns={[{
               Header: 'Name',

@@ -30,7 +30,6 @@ import {
   useTableActionsState, useTableActionsDispatch, setSearch,
 } from 'modules';
 import { Package } from 'types/package';
-import { nanoid } from 'nanoid';
 import { NameCell } from './name-cell';
 import { AssociatedTestModal } from './associated-test-modal';
 import { CoverageCell } from './coverage-cell';
@@ -187,13 +186,13 @@ export const CoverageDetails = ({
         {rows.map((row: any) => {
           prepareRow(row);
           return (
-            <TR {...row.getRowProps()} isExpanded={row.isExpanded} key={nanoid()}>
+            <TR {...row.getRowProps()} isExpanded={row.isExpanded} key={`expanded-${row.original.id}-${parentRow.original.id}`}>
               {row.cells.map((cell: any) => (
                 <td
                   {...cell.getCellProps()}
                   tw="relative first:px-4 last:px-4"
                   style={{ textAlign: cell.column.textAlign || 'right' }}
-                  key={nanoid()}
+                  key={`expanded-${cell.column.Header}-${cell.value}`}
                 >
                   {cell.render('Cell')}
                 </td>

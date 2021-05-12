@@ -102,6 +102,7 @@ export const AgentsTable = ({ agents }: Props) => {
   return (
     <div tw="w-full h-full">
       <Table
+        isDefaulToggleSortBy
         columns={columns}
         data={agents}
         renderRowSubComponent={({ row, rowProps }: any) => (

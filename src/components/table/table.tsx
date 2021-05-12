@@ -10,18 +10,17 @@
 * Unless required by applicable law or agreed to in writing, software
 * distributed under the License is distributed on an "AS IS" BASIS,
 * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
+* See the License for the specific language governing permissions and
+* limitations under the License.
+*/
 import React, { useMemo } from 'react';
 import {
-  useTable, useExpanded, Column,
+  useTable, useExpanded, Column, useSortBy,
 } from 'react-table';
 import { Icons } from '@drill4j/ui-kit';
 
 import { setSort, useTableActionsDispatch, useTableActionsState } from 'modules';
 import { Order } from 'types/sort';
-import { nanoid } from 'nanoid';
 import tw, { styled } from 'twin.macro';
 
 type CustomColumn = Column & { textAlign?: string; width?: string; }
@@ -31,10 +30,11 @@ interface Props {
   data: Array<any>;
   renderRowSubComponent?: ({ row, rowProps }: any) => JSX.Element;
   stub?: React.ReactNode;
+  isDefaulToggleSortBy?: boolean;
 }
 
 export const Table = ({
-  columns, data, renderRowSubComponent, stub = null,
+  columns, data, renderRowSubComponent, stub = null, isDefaulToggleSortBy,
 }: Props) => {
   const {
     getTableProps, getTableBodyProps, headerGroups, rows, prepareRow,
@@ -43,6 +43,7 @@ export const Table = ({
       columns: useMemo(() => columns, [columns]),
       data: useMemo(() => data, [data]),
     },
+    useSortBy,
     useExpanded,
   );
 
@@ -54,19 +55,23 @@ export const Table = ({
       <table {...getTableProps()} tw="table-fixed w-full text-14 leading-16 text-monochrome-black">
         <TableHead>
           {headerGroups.map((headerGroup) => (
-            <tr {...headerGroup.getHeaderGroupProps()} tw="h-13 px-4" key={nanoid()}>
+            <tr {...headerGroup.getHeaderGroupProps()} tw="h-13 px-4">
               {headerGroup.headers.map((column: any) => {
                 const active = column.id === sort?.field;
+                const defaulToggleSortBy = column.getSortByToggleProps().onClick;
                 return (
                   <TH
+                    {...column.getHeaderProps(column.getSortByToggleProps())}
                     style={{ textAlign: column.textAlign || 'right', width: column.width }}
-                    onClick={() => dispatch(setSort({ order: setOrder(sort?.order), field: column.id }))}
-                    key={nanoid()}
+                    onClick={isDefaulToggleSortBy
+                      ? defaulToggleSortBy
+                      : () => dispatch(setSort({ order: setOrder(sort?.order), field: column.id }))}
+                    key={`header-${column.Header}-${column.id}`}
                   >
                     <div tw="relative inline-flex items-center cursor-pointer">
                       {column.id !== 'expander' && (
-                        <SortArrow active={active}>
-                          <Icons.SortingArrow rotate={sort?.order === 'DESC' ? 0 : 180} />
+                        <SortArrow active={column.isSorted || active}>
+                          <Icons.SortingArrow rotate={column.isSortedDesc || sort?.order === 'DESC' ? 0 : 180} />
                         </SortArrow>
                       )}
                       {column.render('Header')}
@@ -83,14 +88,14 @@ export const Table = ({
             prepareRow(row);
             const rowProps = row.getRowProps();
             return (
-              <React.Fragment key={nanoid()}>
-                <TR {...rowProps} isExpanded={row.isExpanded}>
+              <React.Fragment key={row.original.id}>
+                <TR {...rowProps} isExpanded={row.isExpanded} key={row.original.id}>
                   {row.cells.map((cell: any) => (
                     <td
                       {...cell.getCellProps()}
                       tw="text-ellipsis first:px-4 last:px-4"
                       style={{ textAlign: cell.column.textAlign || 'right' }}
-                      key={nanoid()}
+                      key={`${cell.column.Header}-${cell.value}`}
                     >
                       {cell.render('Cell')}
                     </td>

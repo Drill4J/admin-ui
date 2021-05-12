@@ -67,6 +67,7 @@ export const TestDetails = ({
           </SearchPanel>
         </div>
         <Table
+          isDefaulToggleSortBy
           data={tests.slice(0, visibleElementsCount)}
           columns={[{
             Header: 'Name',
