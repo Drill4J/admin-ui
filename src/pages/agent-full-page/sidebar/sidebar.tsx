@@ -30,11 +30,13 @@ interface Props {
   matchParams: { path: string };
 }
 
-export const SidebarLink = styled(Link)(({ active }: {active?: boolean}) => [
-  tw`flex justify-center items-center w-full h-20`,
-  tw`border-b border-monochrome-light-tint text-blue-default cursor-pointer`,
-  active && tw`text-monochrome-default bg-monochrome-white`,
-]);
+export const SidebarLink = styled(Link)`
+  ${tw`flex justify-center items-center w-full h-20`}
+  ${tw`border-b border-monochrome-medium-tint text-monochrome-default cursor-pointer`}
+  ${tw`hover:border-blue-default hover:text-blue-default active:bg-blue-default active:text-monochrome-white`}
+  
+  ${({ isActive }: { isActive: boolean }) => isActive && tw`text-blue-default bg-monochrome-white`}
+`;
 
 export const Sidebar = ({ links, matchParams }: Props) => {
   const { agentId } = useParams<{ agentId: string }>();
@@ -51,7 +53,7 @@ export const Sidebar = ({ links, matchParams }: Props) => {
         return (
           <Tooltip message={<div>{name}</div>} position="right" key={link}>
             <SidebarLink
-              active={id === activeLink}
+              isActive={id === activeLink}
               to={`/${computed ? `full-page/${agentId}/${buildVersion}/${link}` : link}`}
             >
               <Icon />
