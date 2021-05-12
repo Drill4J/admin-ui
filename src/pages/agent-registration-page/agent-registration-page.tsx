@@ -71,7 +71,12 @@ export const AgentRegistrationPage = () => {
           if (agentId) {
             await registerAgent(data);
             if (isMounted.current) {
-              push(`/full-page/${agentId}/${buildVersion}/dashboard`);
+              if (data.plugins?.length === 1) {
+                const [plugin] = data.plugins;
+                push(`/full-page/${agentId}/${buildVersion}/${plugin}/dashboard${plugin === 'test2code' ? '/methods' : ''}`);
+              } else {
+                push(`/full-page/${agentId}/${buildVersion}/dashboard`);
+              }
             }
           } else {
             await preregisterOfflineAgent(data);
