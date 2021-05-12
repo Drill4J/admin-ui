@@ -105,7 +105,13 @@ export class DrillSocket {
       subscription.unsubscribe();
       autoSubscription.unsubscribe();
       if (this.subscribers.get(key).quantity === 1) {
-        this.send(topic, 'UNSUBSCRIBE', message);
+        this.subscribers.setDelay(key, true);
+        setTimeout(() => {
+          if (this.subscribers.get(key).quantity === 0) {
+            this.send(topic, 'UNSUBSCRIBE', message);
+          }
+          this.subscribers.setDelay(key, false);
+        }, 1000);
       }
       this.subscribers.removeSubscriber(key);
     };
@@ -133,7 +139,7 @@ export class DrillSocket {
     callback: (arg: any) => void,
     message?: SubscriptionMessage | Record<string, unknown>,
   ) {
-    if (!this.subscribers.has(key)) {
+    if (!this.subscribers.has(key) && !this.subscribers.get(key)?.isDelayUnsubscribe) {
       this.send(topic, 'SUBSCRIBE', message);
     } else {
       callback(this.subscribers.get(key).lastValue);

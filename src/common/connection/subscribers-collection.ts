@@ -16,6 +16,7 @@
 interface Subscriber {
   quantity: number;
   lastValue: any;
+  isDelayUnsubscribe: boolean;
 }
 
 export class SubscribersCollection {
@@ -32,6 +33,7 @@ export class SubscribersCollection {
       this.subscribers[name] = {
         quantity: 1,
         lastValue: null,
+        isDelayUnsubscribe: false,
       };
     }
   }
@@ -57,5 +59,9 @@ export class SubscribersCollection {
 
   get(name: string) {
     return this.subscribers[name];
+  }
+
+  setDelay(name: string, isDelay: boolean) {
+    this.subscribers[name].isDelayUnsubscribe = isDelay;
   }
 }
