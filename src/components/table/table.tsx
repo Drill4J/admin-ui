@@ -13,7 +13,7 @@
 * See the License for the specific language governing permissions and
 * limitations under the License.
 */
-import React, { useMemo } from 'react';
+import React, { useMemo, useState } from 'react';
 import {
   useTable, useExpanded, Column, useSortBy,
 } from 'react-table';
@@ -40,16 +40,17 @@ export const Table = ({
     getTableProps, getTableBodyProps, headerGroups, rows, prepareRow,
   } = useTable(
     {
-      autoResetExpanded: false,
       columns: useMemo(() => columns, [columns]),
       data: useMemo(() => data, [data]),
-    } as any,
+    },
     useSortBy,
     useExpanded,
   );
 
   const dispatch = useTableActionsDispatch();
   const { sort: [sort] } = useTableActionsState();
+
+  const [expandedRows, setExpandedRows] = useState<string[]>([]);
 
   return (
     <>
@@ -84,7 +85,8 @@ export const Table = ({
           ))}
         </TableHead>
         <tbody {...getTableBodyProps()}>
-          {rows.map((row: any) => {
+          {rows.map((rawRow: any) => {
+            const row = { ...rawRow, isExpanded: expandedRows.includes(rawRow.original.id) };
             prepareRow(row);
             const rowProps = row.getRowProps();
             return (
@@ -96,7 +98,13 @@ export const Table = ({
                       tw="text-ellipsis first:px-4 last:px-4"
                       style={{ textAlign: cell.column.textAlign || 'right' }}
                     >
-                      {cell.render('Cell')}
+                      <div onClick={() => cell.column.id === 'expander' &&
+                        setExpandedRows(row.isExpanded
+                          ? expandedRows.filter((id) => id !== row.original.id)
+                          : [...expandedRows, row.original.id])}
+                      >
+                        {cell.render('Cell')}
+                      </div>
                     </td>
                   ))}
                 </TR>
