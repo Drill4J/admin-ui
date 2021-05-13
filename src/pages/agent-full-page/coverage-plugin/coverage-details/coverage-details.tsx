@@ -74,6 +74,17 @@ export const CoverageDetails = ({
           {row.isExpanded ? <Icons.Expander rotate={90} /> : <Icons.Expander />}
         </span>
       ),
+      SubCell: ({ row }: any) => (
+        row.canExpand
+          ? (
+            <span
+              {...row.getToggleRowExpandedProps?.()}
+              tw="absolute top-2.5 left-11 z-50 grid place-items-center w-4 h-4 text-blue-default"
+            >
+              {row.isExpanded ? <Icons.Expander rotate={90} /> : <Icons.Expander />}
+            </span>
+          ) : null
+      ),
       width: '16px',
     },
     {
@@ -86,12 +97,31 @@ export const CoverageDetails = ({
           testContext="package"
         />
       ),
+      SubCell: ({ value = '', row }: any) => (
+        row.canExpand
+          ? (
+            <div tw="pl-8">
+              <NameCell
+                icon={<Icons.Class />}
+                value={value}
+                testContext="package"
+              />
+            </div>
+          )
+          : (
+            <div tw="pl-13">
+              <Cells.Compound
+                key={value}
+                cellName={value}
+                cellAdditionalInfo={row.original.decl}
+                icon={<Icons.Function />}
+              />
+            </div>
+          )
+      ),
       textAlign: 'left',
       width: '30%',
     },
-  ];
-
-  const infoColumns = [
     {
       Header: () => (
         <div className="flex justify-end items-center w-full">
@@ -129,54 +159,11 @@ export const CoverageDetails = ({
 
   const ExpandedClasses = ({ parentRow }: any) => {
     const { classes = [] } = useBuildVersion<Package>(`/${classesTopicPrefix}/coverage/packages/${parentRow.values.name}`) || {};
-    const expandColumns = [
-      {
-        id: 'expander',
-        Cell: ({ row }: any) => (
-          row.canExpand
-            ? (
-              <span
-                {...row.getToggleRowExpandedProps?.()}
-                tw="absolute top-2.5 left-11 z-50 grid place-items-center w-4 h-4 text-blue-default"
-              >
-                {row.isExpanded ? <Icons.Expander rotate={90} /> : <Icons.Expander />}
-              </span>
-            ) : null
-        ),
-        width: '1%',
-      },
-      {
-        accessor: 'name',
-        Cell: ({ value = '', row }: any) => (
-          row.canExpand
-            ? (
-              <div tw="pl-8">
-                <NameCell
-                  icon={<Icons.Class />}
-                  value={value}
-                  testContext="package"
-                />
-              </div>
-            )
-            : (
-              <div tw="pl-13">
-                <Cells.Compound
-                  key={value}
-                  cellName={value}
-                  cellAdditionalInfo={row.original.decl}
-                  icon={<Icons.Function />}
-                />
-              </div>
-            )
-        ),
-        textAlign: 'left',
-        width: '30%',
-      },
-    ];
     const { rows, prepareRow } = useTable(
       {
-        columns: useMemo(() => [...expandColumns, ...infoColumns] as any, [columns]),
-        data: useMemo(() => classes.map((el) => ({ ...el, subRows: el.methods })), [classes]),
+        columns: useMemo(() => columns as any, [columns]),
+        data: useMemo(() => classes, [classes]),
+        getSubRows: (row) => row.methods || [],
       },
       useExpanded,
     );
@@ -186,15 +173,14 @@ export const CoverageDetails = ({
         {rows.map((row: any) => {
           prepareRow(row);
           return (
-            <TR {...row.getRowProps()} isExpanded={row.isExpanded} key={`expanded-${row.original.id}-${parentRow.original.id}`}>
+            <TR {...row.getRowProps()} isExpanded={row.isExpanded}>
               {row.cells.map((cell: any) => (
                 <td
                   {...cell.getCellProps()}
                   tw="relative first:px-4 last:px-4"
                   style={{ textAlign: cell.column.textAlign || 'right' }}
-                  key={`expanded-${cell.column.Header}-${cell.value}`}
                 >
-                  {cell.render('Cell')}
+                  {cell.render(cell.column.SubCell ? 'SubCell' : 'Cell')}
                 </td>
               ))}
             </TR>
@@ -221,7 +207,7 @@ export const CoverageDetails = ({
           </SearchPanel>
         </div>
         <Table
-          columns={[...columns, ...infoColumns]}
+          columns={columns}
           data={coverageByPackages.slice(0, visibleElementsCount)}
           renderRowSubComponent={renderRowSubComponent}
           stub={coverageByPackages.length === 0 && (
