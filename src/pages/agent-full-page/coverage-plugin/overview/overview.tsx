@@ -44,7 +44,6 @@ export const Overview = () => {
   const { version: previousBuildVersion = '' } = useBuildVersion<ParentBuild>('/data/parent') || {};
   const {
     percentage: previousBuildCodeCoverage = 0,
-    byTestType: previousBuildTests = [],
   } = usePreviousBuildCoverage(previousBuildVersion) || {};
   const scope = useActiveScope();
   const buildCoverage = useBuildVersion<BuildCoverage>('/build/coverage') || {};
@@ -52,7 +51,7 @@ export const Overview = () => {
 
   return (
     <div>
-      <CoveragePluginHeader previousBuildTests={previousBuildTests} />
+      <CoveragePluginHeader />
       <div tw="w-full">
         <TabsPanel>
           <Tab name="methods" to={`/full-page/${agentId}/${buildVersion}/${pluginId}/dashboard/methods`}>

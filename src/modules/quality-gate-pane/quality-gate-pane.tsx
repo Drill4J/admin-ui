@@ -14,11 +14,11 @@
  * limitations under the License.
  */
 import { useState } from 'react';
+import { useParams } from 'react-router-dom';
 import {
   Button, Modal, Icons, GeneralAlerts, Spinner,
 } from '@drill4j/ui-kit';
 import { Form } from 'react-final-form';
-import { useParams } from 'react-router-dom';
 import tw, { styled } from 'twin.macro';
 
 import {
@@ -27,9 +27,10 @@ import {
   positiveInteger,
 } from 'forms';
 import {
-  QualityGateSettings as QualityGate, ConditionSettingByType, QualityGateStatus as Status,
+  ConditionSetting,
+  ConditionSettingByType, QualityGate, QualityGateStatus as Status,
 } from 'types/quality-gate-type';
-import { useCloseModal, useGeneralAlertMessage } from 'hooks';
+import { useBuildVersion, useCloseModal, useGeneralAlertMessage } from 'hooks';
 import { QualityGateStatus } from './quality-gate-status';
 import { QualityGateSettings } from './quality-gate-settings';
 import { updateQualityGateSettings } from './api';
@@ -46,36 +47,31 @@ const validateQualityGate = (formValues: ConditionSettingByType) => composeValid
   formValues.tests?.enabled ? positiveInteger('tests.condition.value', 'Tests to run') : () => undefined,
 )(formValues);
 
-interface Props {
-  qualityGateSettings: QualityGate;
-}
-
-const StatusIconWrapper = styled.div(({ status }: { status: Status }) => [
-  tw`flex items-center`,
-  status === 'PASSED' && tw`text-green-default`,
-  status === 'FAILED' && tw`text-red-default`,
-]);
-
-const ActionsPanel = styled.div`
-  ${tw`grid gap-4 items-center h-20 pr-6 pl-6 mt-auto bg-monochrome-light-tint`};
-  grid-template-columns: max-content max-content max-content;
-`;
-
-export const QualityGatePane = ({
-  qualityGateSettings: {
-    configured, conditionSettingByType, qualityGate, metrics,
-  },
-}: Props) => {
+export const QualityGatePane = () => {
+  const { pluginId = '', agentId = '' } = useParams<{ pluginId: string; agentId: string; }>();
   const [isEditing, setIsEditing] = useState(false);
   const { generalAlertMessage, showGeneralAlertMessage } = useGeneralAlertMessage();
-  const StatusIcon = Icons[qualityGate.status];
   const closeModal = useCloseModal('/quality-gate-pane');
-  const { agentId = '', pluginId = '' } = useParams<{ agentId?: string; pluginId?: string; }>();
 
   const handleOnToggle = () => {
     closeModal();
     setIsEditing(false);
   };
+
+  const { status = 'FAILED' } = useBuildVersion<QualityGate>('/data/quality-gate') || {};
+  const conditionSettings = useBuildVersion<ConditionSetting[]>('/data/quality-gate-settings') || [];
+
+  const conditionSettingByType = conditionSettings.reduce(
+    (conditionSetting, measureType) => ({
+      ...conditionSetting,
+      [measureType.condition.measure]: measureType,
+    }),
+    {} as ConditionSettingByType,
+  );
+
+  const StatusIcon = Icons[status];
+
+  const configured = conditionSettings.some(({ enabled }) => enabled);
 
   return (
     <Modal isOpen onToggle={handleOnToggle}>
@@ -116,7 +112,7 @@ export const QualityGatePane = ({
             <div tw="flex justify-between items-center h-16 px-6 border-b border-monochrome-medium-tint">
               <div tw="text-20 leading-32" data-test="quality-gate-pane:header-title">Quality Gate</div>
               {configured && !isEditing && (
-                <StatusIconWrapper status={qualityGate.status}>
+                <StatusIconWrapper status={status}>
                   <StatusIcon width={24} height={24} data-test="quality-gate-pane:header-status-icon" />
                 </StatusIconWrapper>
               )}
@@ -133,15 +129,7 @@ export const QualityGatePane = ({
             )}
             {configured && !isEditing
               ? (
-                <QualityGateStatus
-                  qualityGateSettings={{
-                    conditionSettingByType,
-                    qualityGate,
-                    metrics,
-                  }}
-                  agentId={agentId}
-                  pluginId={pluginId}
-                />
+                <QualityGateStatus conditionSettingByType={values} />
               )
               : (
                 <QualityGateSettings conditionSettingByType={values} />
@@ -196,3 +184,14 @@ export const QualityGatePane = ({
     </Modal>
   );
 };
+
+const StatusIconWrapper = styled.div(({ status }: { status: Status }) => [
+  tw`flex items-center`,
+  status === 'PASSED' && tw`text-green-default`,
+  status === 'FAILED' && tw`text-red-default`,
+]);
+
+const ActionsPanel = styled.div`
+  ${tw`grid gap-4 items-center h-20 pr-6 pl-6 mt-auto bg-monochrome-light-tint`};
+  grid-template-columns: max-content max-content max-content;
+`;
