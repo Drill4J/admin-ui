@@ -130,7 +130,7 @@ export const CoveragePluginHeader = () => {
             )}
           </div>
         )}
-        <ActionSection label="risks">
+        <ActionSection label="risks" previousBuild={{ previousBuildVersion, previousBuildTests }}>
           {risksCount > 0 ? (
             <Count
               to={`/full-page/${agentId}/${buildVersion}/${pluginId}/dashboard/${tab}/risks-modal`}
@@ -149,7 +149,7 @@ export const CoveragePluginHeader = () => {
             </div>
           )}
         </ActionSection>
-        <ActionSection label="tests to run">
+        <ActionSection label="tests to run" previousBuild={{ previousBuildVersion, previousBuildTests }}>
           {previousBuildTests.length > 0 ? (
             <Count
               to={`/full-page/${agentId}/${buildVersion}/${pluginId}/tests-to-run`}
