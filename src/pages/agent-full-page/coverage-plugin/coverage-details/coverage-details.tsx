@@ -162,7 +162,7 @@ export const CoverageDetails = ({
     const { rows, prepareRow } = useTable(
       {
         columns: useMemo(() => columns as any, [columns]),
-        data: useMemo(() => classes, [classes]),
+        data: useMemo(() => classes, [classes[0]?.id]),
         getSubRows: (row) => row.methods || [],
       },
       useExpanded,

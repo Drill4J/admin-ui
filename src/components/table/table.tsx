@@ -41,7 +41,7 @@ export const Table = ({
   } = useTable(
     {
       columns: useMemo(() => columns, [columns]),
-      data: useMemo(() => data, [data]),
+      data: useMemo(() => data, [data[0]?.id]),
     },
     useSortBy,
     useExpanded,
