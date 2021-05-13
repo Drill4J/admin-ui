@@ -40,9 +40,10 @@ export const Table = ({
     getTableProps, getTableBodyProps, headerGroups, rows, prepareRow,
   } = useTable(
     {
+      autoResetExpanded: false,
       columns: useMemo(() => columns, [columns]),
       data: useMemo(() => data, [data]),
-    },
+    } as any,
     useSortBy,
     useExpanded,
   );
@@ -66,7 +67,6 @@ export const Table = ({
                     onClick={isDefaulToggleSortBy
                       ? defaulToggleSortBy
                       : () => dispatch(setSort({ order: setOrder(sort?.order), field: column.id }))}
-                    key={`header-${column.Header}-${column.id}`}
                   >
                     <div tw="relative inline-flex items-center cursor-pointer">
                       {column.id !== 'expander' && (
@@ -89,13 +89,12 @@ export const Table = ({
             const rowProps = row.getRowProps();
             return (
               <React.Fragment key={row.original.id}>
-                <TR {...rowProps} isExpanded={row.isExpanded} key={row.original.id}>
+                <TR {...rowProps} isExpanded={row.isExpanded}>
                   {row.cells.map((cell: any) => (
                     <td
                       {...cell.getCellProps()}
                       tw="text-ellipsis first:px-4 last:px-4"
                       style={{ textAlign: cell.column.textAlign || 'right' }}
-                      key={`${cell.column.Header}-${cell.value}`}
                     >
                       {cell.render('Cell')}
                     </td>
