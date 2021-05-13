@@ -41,7 +41,7 @@ export const Table = ({
   } = useTable(
     {
       columns: useMemo(() => columns, [columns]),
-      data: useMemo(() => data, [data[0]?.id]),
+      data: useMemo(() => data, [data]),
     },
     useSortBy,
     useExpanded,
@@ -72,7 +72,7 @@ export const Table = ({
                     <div tw="relative inline-flex items-center cursor-pointer">
                       {column.id !== 'expander' && (
                         <SortArrow active={column.isSorted || active}>
-                          <Icons.SortingArrow rotate={column.isSortedDesc || sort?.order === 'DESC' ? 0 : 180} />
+                          <Icons.SortingArrow rotate={column.isSortedDesc || (active && sort?.order === 'DESC') ? 0 : 180} />
                         </SortArrow>
                       )}
                       {column.render('Header')}
