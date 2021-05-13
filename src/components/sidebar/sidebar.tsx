@@ -42,7 +42,7 @@ export const Sidebar = ({ links, matchParams }: Props) => {
   return (
     <div tw="w-20 h-full bg-monochrome-light-tint">
       <Link
-        tw="flex justify-center items-center w-full h-20 cursor-pointer"
+        tw="flex justify-center items-center w-full h-20 cursor-pointer border-b border-monochrome-medium-tint"
         to="/"
       >
         <LogoSvg />
@@ -51,7 +51,7 @@ export const Sidebar = ({ links, matchParams }: Props) => {
           && links.map(({ icon: Icon, link, computedLink }) => (
             <SidebarLink
               key={link}
-              type={link === activeLink ? 'active' : ''}
+              isActive={link === activeLink}
               to={`/${computedLink || link}`}
             >
               <Icon />
@@ -63,6 +63,8 @@ export const Sidebar = ({ links, matchParams }: Props) => {
 
 export const SidebarLink = styled(Link)`
   ${tw`flex justify-center items-center w-full h-20`}
-  ${tw`border-b border-t border-monochrome-medium-tint text-monochrome-default cursor-pointer`}
-  ${({ type }: {type: string}) => type === 'active' && tw`text-monochrome-white bg-blue-default`}
+  ${tw`border-b border-monochrome-medium-tint text-monochrome-default cursor-pointer`}
+  ${tw`hover:border-blue-default hover:text-blue-default`}
+  
+  ${({ isActive }: { isActive: boolean }) => isActive && tw`text-blue-default bg-monochrome-white`}
 `;

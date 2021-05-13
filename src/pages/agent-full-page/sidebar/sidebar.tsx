@@ -14,10 +14,12 @@
  * limitations under the License.
  */
 import {
-  useParams, useLocation, matchPath, Link,
+  useParams, useLocation, matchPath,
 } from 'react-router-dom';
 import { Icons, Tooltip } from '@drill4j/ui-kit';
-import tw, { styled } from 'twin.macro';
+import 'twin.macro';
+
+import { SidebarLink } from 'components';
 
 interface Props {
   active?: 'active';
@@ -29,14 +31,6 @@ interface Props {
   }>;
   matchParams: { path: string };
 }
-
-export const SidebarLink = styled(Link)`
-  ${tw`flex justify-center items-center w-full h-20`}
-  ${tw`border-b border-monochrome-medium-tint text-monochrome-default cursor-pointer`}
-  ${tw`hover:border-blue-default hover:text-blue-default active:bg-blue-default active:text-monochrome-white`}
-  
-  ${({ isActive }: { isActive: boolean }) => isActive && tw`text-blue-default bg-monochrome-white`}
-`;
 
 export const Sidebar = ({ links, matchParams }: Props) => {
   const { agentId } = useParams<{ agentId: string }>();
