@@ -19,7 +19,6 @@ import 'twin.macro';
 import { Table, TR } from 'components';
 import { AGENT_STATUS } from 'common/constants';
 import { Agent } from 'types/agent';
-import { nanoid } from 'nanoid';
 import { NameColumn } from './name-column';
 import { ActionsColumn } from './actions-column';
 import { AgentStatusToggle } from '../agent-status-toggle';
@@ -110,8 +109,8 @@ export const AgentsTable = ({ agents }: Props) => {
             {row.original.agents.map((x: any, i: any) => (
               <TR
                 {...rowProps}
-                key={nanoid()}
                 tw="border-l border-r border-monochrome-medium-tint"
+                key={x.id}
               >
                 {row.cells.map((cell: any) => (
                   <td {...cell.getCellProps()} tw="first:px-4 last:px-4">
