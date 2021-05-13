@@ -65,9 +65,9 @@ export const CoverageDetails = ({
 
   const getModalLink = (id: string, treeLevel: number) => (scopeId
     ? `/full-page/${agentId}/${buildVersion}/${pluginId}/scope/${scopeId}/${tab}/associated-test-modal/
-    ?testId=${window.btoa(id)}&treeLevel=${treeLevel}`
+    ?testId=${window.encodeURIComponent(id)}&treeLevel=${treeLevel}`
     : `/full-page/${agentId}/${buildVersion}/${pluginId}/dashboard/${tab}/associated-test-modal/
-    ?testId=${window.btoa(id)}&treeLevel=${treeLevel}`);
+    ?testId=${window.encodeURIComponent(id)}&treeLevel=${treeLevel}`);
 
   return (
     <div tw="flex flex-col">
