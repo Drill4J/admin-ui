@@ -114,10 +114,10 @@ export const TestDetails = ({
                 disabled={!value}
               >
                 <Link to={scopeId
-                  ? `/full-page/${agentId}/${buildVersion}/${
-                    pluginId}/scope/${scopeId}/${tab}/covered-methods-modal?coveredMethods=${covered}&testId=${window.btoa(id)}`
+                  ? `/full-page/${agentId}/${buildVersion}/${pluginId}/scope/${
+                    scopeId}/${tab}/covered-methods-modal?coveredMethods=${covered}&testId=${window.encodeURIComponent(id)}`
                   : `/full-page/${agentId}/${buildVersion}/${
-                    pluginId}/dashboard/${tab}/covered-methods-modal?coveredMethods=${covered}&testId=${window.btoa(id)}`}
+                    pluginId}/dashboard/${tab}/covered-methods-modal?coveredMethods=${covered}&testId=${window.encodeURIComponent(id)}`}
                 >
                   {value}
                 </Link>
