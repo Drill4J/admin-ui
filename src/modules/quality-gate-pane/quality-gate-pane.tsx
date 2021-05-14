@@ -137,7 +137,7 @@ export const QualityGatePane = () => {
             <ActionsPanel>
               {configured && !isEditing ? (
                 <Button
-                  type="primary"
+                  primary
                   size="large"
                   onClick={() => setIsEditing(true)}
                   data-test="quality-gate-pane:edit-button"
@@ -148,7 +148,7 @@ export const QualityGatePane = () => {
                 : (
                   <Button
                     className="flex justify-center items-center gap-x-1 w-16"
-                    type="primary"
+                    primary
                     size="large"
                     disabled={invalid || pristine || submitting}
                     onClick={handleSubmit}
@@ -160,7 +160,7 @@ export const QualityGatePane = () => {
               {configured && isEditing && (
                 <Button
                   className="flex gap-x-2"
-                  type="secondary"
+                  secondary
                   size="large"
                   onClick={() => setIsEditing(false)}
                   data-test="quality-gate-pane:back-button"
@@ -170,7 +170,7 @@ export const QualityGatePane = () => {
                 </Button>
               )}
               <Button
-                type="secondary"
+                secondary
                 size="large"
                 onClick={handleOnToggle}
                 data-test="quality-gate-pane:cancel-button"

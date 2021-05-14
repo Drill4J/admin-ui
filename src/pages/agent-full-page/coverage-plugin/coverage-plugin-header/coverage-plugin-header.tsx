@@ -111,7 +111,7 @@ export const CoveragePluginHeader = () => {
                 data-test="coverage-plugin-header:configure-button"
               >
                 <Button
-                  type="primary"
+                  primary
                   size="small"
                 >
                   Configure

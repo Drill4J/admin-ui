@@ -43,7 +43,7 @@ export const ActionsPanel = ({
       { isNewSession ? (
         <Button
           tw="flex justify-center items-center gap-x-1 w-31"
-          type="primary"
+          primary
           size="large"
           disabled={startSessionDisabled || submitting}
           onClick={handleSubmit}
@@ -53,7 +53,7 @@ export const ActionsPanel = ({
         </Button>
       ) : (
         <Button
-          type="primary"
+          primary
           size="large"
           onClick={(e: any) => {
             e.preventDefault();
@@ -68,7 +68,7 @@ export const ActionsPanel = ({
       { activeSessions.length > 0 && isNewSession && (
         <Button
           tw="flex gap-x-2"
-          type="secondary"
+          secondary
           size="large"
           onClick={() => dispatch(setIsNewSession(false))}
           data-test="sessions-management-pane:back-button"
@@ -78,7 +78,7 @@ export const ActionsPanel = ({
         </Button>
       )}
       <Button
-        type="secondary"
+        secondary
         size="large"
         onClick={() => onToggle(false)}
         data-test="sessions-management-pane:cancel-button"

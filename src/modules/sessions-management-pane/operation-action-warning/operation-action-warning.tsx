@@ -35,7 +35,7 @@ export const OperationActionWarning = ({
       <span>{children}</span>
       <div tw="flex justify-between ml-4 min-w-104px">
         <Button
-          type="secondary"
+          secondary
           size="small"
           onClick={handleDecline}
           data-test="operation-action-warning:no-button"
@@ -43,7 +43,7 @@ export const OperationActionWarning = ({
           No
         </Button>
         <ConfirmButton
-          type="primary"
+          primary
           size="small"
           onClick={handleConfirm}
           data-test="operation-action-warning:yes-button"

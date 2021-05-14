@@ -16,7 +16,7 @@
 import { useRef, useState } from 'react';
 import VirtualList from 'react-tiny-virtual-list';
 import {
-  Icons, Modal, OverflowText, Inputs,
+  Icons, Modal, Inputs,
 } from '@drill4j/ui-kit';
 import tw, { styled } from 'twin.macro';
 
@@ -97,13 +97,13 @@ export const RisksModal = () => {
                       <Icons.Function />
                     </div>
                     <div tw="flex flex-col w-70">
-                      <OverflowText title={getRisks()[index]?.name}>{getRisks()[index]?.name}</OverflowText>
-                      <OverflowText
-                        tw="w-80 text-monochrome-default"
+                      <div tw="text-ellipsis" title={getRisks()[index]?.name}>{getRisks()[index]?.name}</div>
+                      <div
+                        tw="w-80 text-monochrome-default text-ellipsis"
                         title={getRisks()[index]?.ownerClass}
                       >
                         {getRisks()[index]?.ownerClass}
-                      </OverflowText>
+                      </div>
                     </div>
                   </div>
                 )}

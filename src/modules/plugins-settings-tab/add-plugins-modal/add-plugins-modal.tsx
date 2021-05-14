@@ -81,7 +81,7 @@ export const AddPluginsModal = ({
         <div tw="flex items-center h-20 w-full gap-x-4 pl-6 bg-monochrome-light-tint">
           <Button
             className="flex justify-center items-center gap-x-1 w-27"
-            type="primary"
+            primary
             size="large"
             onClick={async () => {
               setLoading(true);
@@ -92,7 +92,7 @@ export const AddPluginsModal = ({
           >
             {loading ? <Spinner disabled /> : 'Add plugin'}
           </Button>
-          <Button type="secondary" size="large" onClick={closeModal}>
+          <Button secondary size="large" onClick={closeModal}>
             Cancel
           </Button>
         </div>
