@@ -68,7 +68,12 @@ export const ServiceGroupRegistrationPage = () => {
         onSubmit={async (data: Agent) => {
           await registerServiceGroup(data);
           if (isMounted.current) {
-            push(`/service-group-full-page/${serviceGroupId}/service-group-dashboard`);
+            if (data.plugins?.length === 1) {
+              const [plugin] = data.plugins;
+              push(`/service-group-full-page/${serviceGroupId}/${plugin}`);
+            } else {
+              push(`/service-group-full-page/${serviceGroupId}/service-group-dashboard`);
+            }
           }
         }}
         onSuccessMessage="Multiple agents registration has been finished."
