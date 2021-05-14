@@ -20,6 +20,7 @@ import {
 import {
   Route, useParams, Link,
 } from 'react-router-dom';
+import queryString from 'query-string';
 import 'twin.macro';
 
 import { capitalize } from 'utils';
@@ -115,9 +116,9 @@ export const TestDetails = ({
               >
                 <Link to={scopeId
                   ? `/full-page/${agentId}/${buildVersion}/${pluginId}/scope/${
-                    scopeId}/${tab}/covered-methods-modal?coveredMethods=${covered}&testId=${window.encodeURIComponent(id)}`
+                    scopeId}/${tab}/covered-methods-modal?${queryString.stringify({ coveredMethods: covered, testId: id })}`
                   : `/full-page/${agentId}/${buildVersion}/${
-                    pluginId}/dashboard/${tab}/covered-methods-modal?coveredMethods=${covered}&testId=${window.encodeURIComponent(id)}`}
+                    pluginId}/dashboard/${tab}/covered-methods-modal?${queryString.stringify({ coveredMethods: covered, testId: id })}`}
                 >
                   {value}
                 </Link>
