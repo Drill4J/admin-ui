@@ -92,7 +92,7 @@ export const BaselineBuildModal = () => {
                 }
                 closeModal();
               }}
-              disabled={!isConfirmed}
+              disabled={!isConfirmed && !isBaseline}
             >
               {isBaseline ? 'Unset' : 'Set'} as Baseline
             </Button>
