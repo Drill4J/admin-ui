@@ -40,7 +40,7 @@ export const Table = ({
     getTableProps, getTableBodyProps, headerGroups, rows, prepareRow,
   } = useTable(
     {
-      columns: useMemo(() => columns, [columns]),
+      columns: useMemo(() => columns, []),
       data: useMemo(() => data, [data]),
     },
     useSortBy,

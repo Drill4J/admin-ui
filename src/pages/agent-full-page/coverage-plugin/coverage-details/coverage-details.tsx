@@ -161,8 +161,8 @@ export const CoverageDetails = ({
     const { classes = [] } = useBuildVersion<Package>(`/${classesTopicPrefix}/coverage/packages/${parentRow.values.name}`) || {};
     const { rows, prepareRow } = useTable(
       {
-        columns: useMemo(() => columns as any, [columns]),
-        data: useMemo(() => classes, [classes[0]?.id]),
+        columns: useMemo(() => columns as any, []),
+        data: useMemo(() => classes, [JSON.stringify(classes)]),
         getSubRows: (row) => row.methods || [],
       },
       useExpanded,
