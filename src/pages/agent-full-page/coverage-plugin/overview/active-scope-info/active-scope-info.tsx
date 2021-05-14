@@ -48,7 +48,7 @@ export const ActiveScopeInfo = ({ scope }: Props) => {
       </div>
       <Button
         tw="flex justify-center gap-x-2 w-68"
-        type="primary"
+        primary
         size="large"
         onClick={() => dispatch(openModal('FinishScopeModal', scope))}
         data-test="active-scope-info:finish-scope-button"

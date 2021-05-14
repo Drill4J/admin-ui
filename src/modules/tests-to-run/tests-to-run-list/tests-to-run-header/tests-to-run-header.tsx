@@ -105,7 +105,7 @@ export const TestsToRunHeader = ({
           <div tw="flex items-center gap-6 mr-10">
             {activeBuildVersion === buildVersion && (
               <Button
-                type="secondary"
+                secondary
                 size="large"
                 onClick={() => setModalIsOpen(true)}
                 data-test="tests-to-run-header:get-suggested-tests-button"

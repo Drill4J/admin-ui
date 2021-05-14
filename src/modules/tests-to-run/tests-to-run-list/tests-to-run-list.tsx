@@ -14,9 +14,7 @@
  * limitations under the License.
  */
 import { useRef, useState } from 'react';
-import {
-  Table, Column, Icons, Legend,
-} from '@drill4j/ui-kit';
+import { Icons, Legend } from '@drill4j/ui-kit';
 import {
   Route, useParams, Link,
 } from 'react-router-dom';
@@ -24,7 +22,9 @@ import queryString from 'query-string';
 import 'twin.macro';
 
 import { ParentBuild } from 'types/parent-build';
-import { Cells, SearchPanel, Stub } from 'components';
+import {
+  Cells, SearchPanel, Stub, Table,
+} from 'components';
 import { TestCoverageInfo } from 'types/test-coverage-info';
 import { FilterList } from 'types/filter-list';
 import { Search } from 'types/search';
@@ -113,49 +113,54 @@ export const TestsToRunList = ({ agentType = 'Agent' }: Props) => {
             Displaying {filteredCount} of {totalCount} tests
           </SearchPanel>
           <Table
+            isDefaulToggleSortBy
             data={testsToRun.slice(0, visibleElementsCount)}
-            idKey="name"
-            gridTemplateColumns="calc(100% - 664px) 130px 76px 152px 186px 120px"
-          >
-            <Column
-              name="name"
-              label="Name"
-              Cell={({ value }) => (
+            columns={[{
+              Header: 'Name',
+              accessor: 'name',
+              Cell: ({ value }: any) => (
                 <Cells.Compound cellName={value} cellAdditionalInfo="&ndash;" icon={<Icons.Test height={16} width={16} />} />
-              )}
-              align="start"
-            />
-            <Column
-              name="type"
-              label="Test type"
-              Cell={({ value }) => (
+              ),
+              textAlign: 'left',
+              width: '50%',
+            },
+            {
+              Header: 'Test type',
+              accessor: 'type',
+              Cell: ({ value }: any) => (
                 <>
                   {capitalize(value)}
                 </>
-              )}
-              align="start"
-            />
-            <Column
-              name="stats.result"
-              label="State"
-              Cell={({ item: { toRun } }) => (
+              ),
+              textAlign: 'left',
+              width: '10%',
+            },
+            {
+              Header: 'State',
+              accessor: 'stats.result',
+              Cell: ({ row: { original: { toRun } } }: any) => (
                 <span tw="leading-64">
                   {toRun
                     ? 'To run'
                     : <span tw="font-bold text-green-default">Done</span>}
                 </span>
-              )}
-              align="start"
-            />
-            <Column
-              name="coverage.percentage"
-              label="Coverage, %"
-              Cell={({ value, item: { toRun } }) => (toRun ? null : <Cells.Coverage value={value} />)}
-            />
-            <Column
-              name="coverage.methodCount.covered"
-              label="Methods covered"
-              Cell={({ value, item: { id = '', toRun = false, coverage: { methodCount: { covered = 0 } = {} } = {} } = {} }) => (
+              ),
+              textAlign: 'left',
+              width: '5%',
+            },
+            {
+              Header: 'Coverage, %',
+              accessor: 'coverage.percentage',
+              Cell: ({ value, row: { original: { toRun } } }: any) => (toRun ? null : <Cells.Coverage value={value} />),
+              width: '5%',
+            },
+            {
+              Header: 'Methods covered',
+              accessor: 'coverage.methodCount.covered',
+              Cell: ({
+                value,
+                row: { original: { id = '', toRun = false, coverage: { methodCount: { covered = 0 } = {} } = {} } = {} },
+              }: any) => (
                 toRun ? null : (
                   <Cells.Clickable
                     disabled={!value}
@@ -168,14 +173,16 @@ export const TestsToRunList = ({ agentType = 'Agent' }: Props) => {
                     </Link>
                   </Cells.Clickable>
                 )
-              )}
-            />
-            <Column
-              name="stats.duration"
-              label="Duration"
-              Cell={({ value, item: { toRun } }) => (toRun ? null : <Cells.Duration value={value} />)}
-            />,
-          </Table>
+              ),
+              width: '10%',
+            },
+            {
+              Header: 'Duration',
+              accessor: 'stats.duration',
+              Cell: ({ value, row: { original: { toRun } } }: any) => (toRun ? null : <Cells.Duration value={value} />),
+              width: '10%',
+            }]}
+          />
           <div ref={ref} />
         </div>
       </div>

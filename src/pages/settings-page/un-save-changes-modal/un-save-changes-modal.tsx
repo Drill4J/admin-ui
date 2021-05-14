@@ -29,10 +29,10 @@ export const UnSaveChangeModal = ({ setNextLocation, path }: Props) => (
         There are unsaved changes. If you would like to keep changes,<br /> press the “Continue Editing” button.
       </div>
       <div tw="flex gap-x-4">
-        <Button type="primary" size="large" onClick={() => setNextLocation('')}>Continue Editing</Button>
+        <Button primary size="large" onClick={() => setNextLocation('')}>Continue Editing</Button>
         <Link to={{ pathname: path, state: { pristine: true } }} onClick={() => setNextLocation('')}>
           <Button
-            type="secondary"
+            secondary
             size="large"
           >
             Leave Without Saving

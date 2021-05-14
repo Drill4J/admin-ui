@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 import {
-  Button, LinkButton, OverflowText, Icons,
+  Button, LinkButton, Icons,
 } from '@drill4j/ui-kit';
 import { useParams } from 'react-router-dom';
 import tw, { styled } from 'twin.macro';
@@ -39,8 +39,8 @@ const AdditionalSessionInfo = styled.div`
   ${({ disabled }: { disabled: boolean }) => disabled && tw`opacity-20`}
 `;
 
-const SessionId = styled(OverflowText)`
-  ${tw`font-bold text-14 leading-20`}
+const SessionId = styled.div`
+  ${tw`font-bold text-14 leading-20 text-ellipsis`}
   ${({ disabled }: { disabled: boolean }) => disabled && tw`opacity-20`}
 `;
 
@@ -76,7 +76,7 @@ export const SessionInfo = ({
                 Abort
               </LinkButton>
               <Button
-                type="secondary"
+                secondary
                 size="small"
                 onClick={() => dispatch(setSingleOperation('finish', sessionId + agentId))}
                 disabled={disabled}

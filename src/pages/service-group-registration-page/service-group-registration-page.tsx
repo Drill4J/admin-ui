@@ -57,7 +57,7 @@ export const ServiceGroupRegistrationPage = () => {
         )}
         actions={(
           <div className="flex justify-end items-center w-full">
-            <Button type="secondary" size="large" onClick={() => setIsCancelModalOpened(true)}>
+            <Button secondary size="large" onClick={() => setIsCancelModalOpened(true)}>
               Abort Registration
             </Button>
           </div>

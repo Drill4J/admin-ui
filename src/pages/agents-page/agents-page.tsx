@@ -49,7 +49,7 @@ export const AgentsPage = () => {
           <Link to="/preregister/offline-agent">
             <Button
               className="flex gap-x-2"
-              type="secondary"
+              secondary
               size="large"
             >
               <Icons.Register />

@@ -127,7 +127,7 @@ export const ScopeInfo = () => {
               {active && status === AGENT_STATUS.ONLINE && (
                 <Button
                   className="flex gap-x-2 mr-4"
-                  type="primary"
+                  primary
                   size="large"
                   onClick={() => dispatch(openModal('FinishScopeModal', scope))}
                   data-test="scope-info:finish-scope-button"

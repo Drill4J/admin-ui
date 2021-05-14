@@ -13,9 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { ExpandableTable, Column } from '@drill4j/ui-kit';
+import { Icons } from '@drill4j/ui-kit';
 import 'twin.macro';
 
+import { Table, TR } from 'components';
 import { AGENT_STATUS } from 'common/constants';
 import { Agent } from 'types/agent';
 import { NameColumn } from './name-column';
@@ -26,91 +27,104 @@ interface Props {
   agents: Agent[];
 }
 
-export const AgentsTable = ({ agents }: Props) => (
-  <div tw="w-full h-full">
-    <ExpandableTable
-      data={agents}
-      idKey="id"
-      expandedColumns={[
-        <Column name="expander" Cell={() => null} />,
-        <Column
-          name="name"
-          label="Name"
-          Cell={({ item }) => <NameColumn agent={item} withMargin />}
-          align="start"
-        />,
-        <Column
-          name="description"
-          label="Description"
-          Cell={({ value }) => <div className="text-ellipsis" title={value}>{value}</div>}
-          align="start"
-        />,
-        <Column name="agentType" label="Type" align="start" />,
-        <Column
-          name="environment"
-          label="Environment"
-          Cell={({ value, item }) => (
-            <div className="text-ellipsis" title={value}>{item.status === AGENT_STATUS.NOT_REGISTERED || !value ? 'n/a' : value}</div>
-          )}
-          align="start"
-        />,
-        <Column
-          name="status"
-          label="Status"
-          Cell={({ item }) => <AgentStatusToggle agent={item} />}
-          align="start"
-        />,
-        <Column
-          name="actions"
-          Cell={({ item }: { item: Agent }) => <ActionsColumn agent={item} />}
-        />,
-      ]}
-      expandedContentKey="agents"
-      gridTemplateColumns="32px minmax(calc(100% - 862px), 300px) 250px 150px 120px 120px 190px"
-      gridExpandedTemplateColumns="32px minmax(calc(100% - 862px), 300px) 250px 150px 120px 120px 190px"
-    >
-      <Column name="name" label="Name" Cell={({ item }) => <NameColumn agent={item} />} align="start" />
-      <Column
-        name="description"
-        label="Description"
-        Cell={({ value }) => <div className="text-ellipsis" title={value}>{value}</div>}
-        align="start"
+export const AgentsTable = ({ agents }: Props) => {
+  const columns = [
+    {
+      Header: () => null,
+      id: 'expander',
+      Cell: ({ row }: any) =>
+        (row.original.agents ? (
+          <span
+            {...row.getToggleRowExpandedProps?.()}
+            tw="grid place-items-center w-4 h-4 text-blue-default"
+          >
+            {row.isExpanded ? <Icons.Expander rotate={90} /> : <Icons.Expander />}
+          </span>
+        ) : null),
+      width: '48px',
+    },
+    {
+      Header: 'Name',
+      accessor: 'name',
+      Cell: ({ row }: any) => <NameColumn agent={row.original} />,
+      SubCell: ({ row }: any) => <NameColumn agent={row.original} withMargin />,
+      textAlign: 'left',
+      width: '40%',
+    },
+    {
+      Header: 'Description',
+      accessor: 'description',
+      Cell: ({ value = '' }: any) => (
+        <div className="text-ellipsis" title={value}>
+          {value}
+        </div>
+      ),
+      textAlign: 'left',
+      width: '30%',
+    },
+    {
+      Header: 'Type',
+      accessor: 'agentType',
+      textAlign: 'left',
+      width: '15%',
+    },
+    {
+      Header: 'Environment',
+      accessor: 'environment',
+      Cell: ({ value, row }: any) => (
+        <div className="text-ellipsis" title={value}>
+          {row.original.status === AGENT_STATUS.NOT_REGISTERED || !value ? 'n/a' : value}
+        </div>
+      ),
+      textAlign: 'left',
+      width: '15%',
+    },
+    {
+      Header: 'Status',
+      accessor: 'status',
+      Cell: ({ row }: any) => {
+        const isOfflineAgent = row.original.agentType === 'Java' && !row.original.agentVersion;
+        return row.original.agentType !== 'ServiceGroup' && !isOfflineAgent ? (
+          <AgentStatusToggle agent={row.original} />
+        ) : null;
+      },
+      textAlign: 'left',
+      width: '15%',
+    },
+    {
+      Header: () => null,
+      accessor: 'actions',
+      Cell: ({ row }: any) => <ActionsColumn agent={row.original} />,
+      width: '20%',
+    },
+  ];
+  return (
+    <div tw="w-full h-full">
+      <Table
+        isDefaulToggleSortBy
+        columns={columns}
+        data={agents}
+        renderRowSubComponent={({ row, rowProps }: any) => (
+          <>
+            {row.original.agents.map((x: any, i: any) => (
+              <TR
+                {...rowProps}
+                tw="border-l border-r border-monochrome-medium-tint"
+                key={x.id}
+              >
+                {row.cells.map((cell: any) => (
+                  <td {...cell.getCellProps()} tw="first:px-4 last:px-4">
+                    {cell.render(cell.column.SubCell ? 'SubCell' : 'Cell', {
+                      value: cell.column.accessor && cell.column.accessor(x, i),
+                      row: { ...row, original: x },
+                    })}
+                  </td>
+                ))}
+              </TR>
+            ))}
+          </>
+        )}
       />
-      <Column name="agentType" label="Type" align="start" />
-      <Column
-        name="environment"
-        label="Environment"
-        Cell={({ value, item }) => {
-          if (item.agentType === 'ServiceGroup') {
-            return (
-              <div className="text-ellipsis" title={value}>
-                {item.agents.some((agent: Agent) => agent.status === AGENT_STATUS.NOT_REGISTERED) || !value ? 'n/a' : value}
-              </div>
-            );
-          }
-          return (
-            <div className="text-ellipsis" title={value}>
-              {item.status === AGENT_STATUS.NOT_REGISTERED || !value ? 'n/a' : value}
-            </div>
-          );
-        }}
-        align="start"
-      />
-      <Column
-        name="status"
-        label="Status"
-        Cell={({ item }) => {
-          const isOfflineAgent = item.agentType === 'Java' && !item.agentVersion;
-          return (item.agentType !== 'ServiceGroup' && !isOfflineAgent ? (
-            <AgentStatusToggle agent={item} />
-          ) : null);
-        }}
-        align="start"
-      />
-      <Column
-        name="actions"
-        Cell={({ item }: { item: Agent }) => <ActionsColumn agent={item} />}
-      />
-    </ExpandableTable>
-  </div>
-);
+    </div>
+  );
+};

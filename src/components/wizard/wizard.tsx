@@ -99,7 +99,7 @@ export const Wizard = ({
                 {currentStepIndex > 0 && (
                   <Button
                     tw="flex gap-x-2 mr-4"
-                    type="secondary"
+                    secondary
                     size="large"
                     onClick={() => dispatch(previousStep())}
                     data-test="wizard:previous-button"
@@ -112,7 +112,7 @@ export const Wizard = ({
                   <Button
                     className="flex gap-x-2"
                     tw="w-28"
-                    type="primary"
+                    primary
                     size="large"
                     onClick={() => dispatch(nextStep())}
                     disabled={submitting || invalid}
@@ -125,7 +125,7 @@ export const Wizard = ({
                   <Button
                     tw="w-28"
                     className="flex gap-x-2"
-                    type="primary"
+                    primary
                     size="large"
                     onClick={handleSubmit}
                     data-test="wizard:finishng-button"

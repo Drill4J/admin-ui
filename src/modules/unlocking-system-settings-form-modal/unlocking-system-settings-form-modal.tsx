@@ -46,7 +46,7 @@ export const UnlockingSystemSettingsFormModal = ({ isOpen, onToggle, setUnlocked
         >
           Unlock and Proceed
         </NegativeActionButton>
-        <Button type="secondary" size="large" onClick={() => onToggle(false)}>
+        <Button secondary size="large" onClick={() => onToggle(false)}>
           Cancel
         </Button>
       </div>
