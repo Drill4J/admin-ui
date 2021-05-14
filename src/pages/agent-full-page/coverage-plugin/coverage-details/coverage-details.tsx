@@ -16,6 +16,7 @@
 import { useRef } from 'react';
 import { Icons } from '@drill4j/ui-kit';
 import { Route, useParams, Link } from 'react-router-dom';
+import queryString from 'query-string';
 import 'twin.macro';
 
 import { ClassCoverage } from 'types/class-coverage';
@@ -65,9 +66,9 @@ export const CoverageDetails = ({
 
   const getModalLink = (id: string, treeLevel: number) => (scopeId
     ? `/full-page/${agentId}/${buildVersion}/${pluginId}/scope/${scopeId}/${tab}/associated-test-modal/
-    ?testId=${window.encodeURIComponent(id)}&treeLevel=${treeLevel}`
+    ?${queryString.stringify({ testId: id, treeLevel })}`
     : `/full-page/${agentId}/${buildVersion}/${pluginId}/dashboard/${tab}/associated-test-modal/
-    ?testId=${window.encodeURIComponent(id)}&treeLevel=${treeLevel}`);
+    ?${queryString.stringify({ testId: id, treeLevel })}`);
 
   return (
     <div tw="flex flex-col">

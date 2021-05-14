@@ -20,6 +20,7 @@ import {
 import {
   Route, useParams, Link,
 } from 'react-router-dom';
+import queryString from 'query-string';
 import 'twin.macro';
 
 import { ParentBuild } from 'types/parent-build';
@@ -161,7 +162,7 @@ export const TestsToRunList = ({ agentType = 'Agent' }: Props) => {
                   >
                     <Link to={`/full-page/${
                       agentId}/${buildVersion}/${pluginId}/tests-to-run/covered-methods-modal/
-                      ?coveredMethods=${covered}&testId=${window.encodeURIComponent((id))}`}
+                      ?${queryString.stringify({ coveredMethods: covered, testId: id })}`}
                     >
                       {value}
                     </Link>

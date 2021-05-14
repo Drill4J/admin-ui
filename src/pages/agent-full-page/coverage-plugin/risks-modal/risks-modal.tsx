@@ -35,7 +35,7 @@ const Header = styled.div`
 
 export const RisksModal = () => {
   const risks = useBuildVersion<Risks[]>('/build/risks') || [];
-  const filter = useQuery().get('filter') || 'all';
+  const filter = useQuery<{filter?: string}>()?.filter || 'all';
   const [selectedSection, setSelectedSection] = useState<string>(filter);
   const node = useRef<HTMLDivElement>(null);
   const { height: methodsListHeight } = useElementSize(node);

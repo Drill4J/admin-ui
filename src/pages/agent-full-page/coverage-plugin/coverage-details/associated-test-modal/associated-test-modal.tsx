@@ -26,9 +26,9 @@ interface Props {
 }
 
 export const AssociatedTestModal = ({ associatedTestsTopic }: Props) => {
-  const params = useQuery();
+  const params = useQuery<{testId?: string; treeLevel?: number}>();
   const associatedTests = useBuildVersion<AssociatedTests>(`${associatedTestsTopic}/tests/associatedWith/${
-    window.decodeURIComponent(params.get('testId') || '')}`) || {};
+    params?.testId}`) || {};
   const {
     tests = [], packageName = '', className: testClassName = '', methodName = '',
   } = associatedTests;
@@ -48,7 +48,7 @@ export const AssociatedTestModal = ({ associatedTestsTopic }: Props) => {
           packageName={packageName}
           testClassName={testClassName}
           methodName={methodName}
-          treeLevel={Number(params.get('treeLevel'))}
+          treeLevel={Number(params?.treeLevel)}
         />
         <TestsList associatedTests={{ testsMap, assocTestsCount: tests.length }} />
       </div>
