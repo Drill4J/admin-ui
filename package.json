@@ -5,7 +5,6 @@
   "private": true,
   "dependencies": {
     "@drill4j/ui-kit": "0.1.74",
-    "@redneckz/react-devirt": "0.0.6",
     "@types/jest": "26.0.14",
     "@types/node": "14.11.2",
     "@types/react-dom": "17.0.0",
@@ -25,7 +24,6 @@
     "react-scripts": "^4.0.1",
     "react-table": "^7.7.0",
     "react-tiny-virtual-list": "2.2.0",
-    "react-visibility-sensor": "5.1.1",
     "rxjs": "^6.6.3",
     "styled-components": "^5.2.1",
     "tailwindcss": "^2.0.2",
