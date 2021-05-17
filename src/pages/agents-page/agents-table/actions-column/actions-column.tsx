@@ -61,6 +61,7 @@ export const ActionsColumn = ({ agent }: Props) => {
           >
             <Button
               data-test="action-column:icons-register"
+              primary
               size="small"
               {...agentType === 'ServiceGroup' || !group ? 'primary' : 'secondary'}
               disabled={agentType === 'ServiceGroup' && !isJavaAgentsServiceGroup}
