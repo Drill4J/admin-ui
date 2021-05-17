@@ -32,6 +32,34 @@ import { BaselineBuildModal } from './baseline-build-modal';
 import { BaselineTooltip } from './baseline-tooltip';
 import { usePreviousBuildCoverage } from '../use-previous-build-coverage';
 
+const Content = styled.div`
+  ${tw`grid grid-rows-2 lg:grid-rows-1 grid-cols-4 items-center gap-2 py-4 w-full border-b border-monochrome-medium-tint`}
+  @media screen and (min-width: 1024px) {
+    grid-template-columns: max-content auto max-content max-content max-content !important;
+  }
+`;
+const BaselinePanel = styled.div`
+  ${tw`grid gap-x-2 lg:pl-6`}
+  ${tw`lg:border-l border-monochrome-medium-tint font-bold text-12 leading-24 text-monochrome-default`}
+  grid-template-columns: max-content minmax(64px, 60%);
+  grid-template-rows: repeat(2, 1fr);
+`;
+const StatusWrapper = styled(Link)(({ status }: { status?: QualityGateStatus }) => [
+  tw`flex items-center h-8 text-14`,
+  status === 'PASSED' && tw`text-green-default cursor-pointer`,
+  status === 'FAILED' && tw`text-red-default cursor-pointer`,
+]);
+const StatusTitle = styled.div`
+  ${tw`ml-2 font-bold lowercase`}
+  &::first-letter {
+    ${tw`uppercase`}
+  }
+`;
+const Count = styled(Link)`
+  ${tw`flex items-center w-full text-20 leading-32 cursor-pointer`}
+  ${tw`text-monochrome-black hover:text-blue-medium-tint active:text-blue-shade`}
+`;
+
 export const CoveragePluginHeader = () => {
   const {
     pluginId = '', agentId = '', buildVersion = '', tab = '',
@@ -57,15 +85,10 @@ export const CoveragePluginHeader = () => {
 
   return (
     <Content>
-      <div
-        tw="mr-6 font-light text-24 leading-32"
-        data-test="coverage-plugin-header:plugin-name"
-      >
-        Test2Code
-      </div>
+      <div tw="col-span-4 lg:col-span-1 mr-6 font-light text-24 leading-32" data-test="coverage-plugin-header:plugin-name">Test2Code</div>
       {agentStatus === AGENT_STATUS.ONLINE && (
         <BaselinePanel>
-          <div>Current build: </div>
+          <div>Current build:</div>
           <div className="flex items-center w-full">
             <div className="text-ellipsis text-monochrome-black" title={buildVersion}>{buildVersion}</div>
             <BaselineTooltip />
@@ -85,83 +108,93 @@ export const CoveragePluginHeader = () => {
             ) : <span>&ndash;</span>}
         </BaselinePanel>
       )}
-      <div className="flex justify-end items-center">
-        {activeBuildVersion === buildVersion && agentStatus === AGENT_STATUS.ONLINE && (
-          <div tw="pl-4 pr-10 border-l border-monochrome-medium-tint text-monochrome-default">
-            <div className="flex items-center w-full">
-              <div tw="mr-2 text-12 leading-16 font-bold" data-test="coverage-plugin-header:quality-gate-label">
-                QUALITY GATE
-              </div>
-              {!configured && (
-                <Tooltip
-                  message={(
-                    <>
-                      <div tw="text-center">Configure quality gate conditions to</div>
-                      <div>define whether your build passes or not.</div>
-                    </>
-                  )}
-                >
-                  <Icons.Info tw="flex text-monochrome-default" />
-                </Tooltip>
-              )}
+      {activeBuildVersion === buildVersion && agentStatus === AGENT_STATUS.ONLINE && (
+        <div tw="pl-4 pr-4 lg:mr-10 border-l border-monochrome-medium-tint text-monochrome-default">
+          <div className="flex items-center w-full">
+            <div tw="mr-2 text-12 leading-16 font-bold" data-test="coverage-plugin-header:quality-gate-label">
+              QUALITY GATE
             </div>
-            {!configured ? (
-              <StatusWrapper
-                to={`/full-page/${agentId}/${buildVersion}/${pluginId}/dashboard/${tab}/quality-gate-pane`}
-                data-test="coverage-plugin-header:configure-button"
+            {!configured && (
+              <Tooltip
+                message={(
+                  <>
+                    <div tw="text-center">Configure quality gate conditions to</div>
+                    <div>define whether your build passes or not.</div>
+                  </>
+                )}
               >
-                <Button
-                  primary
-                  size="small"
-                >
-                  Configure
-                </Button>
-              </StatusWrapper>
-            ) : (
-              <StatusWrapper
-                to={`/full-page/${agentId}/${buildVersion}/${pluginId}/dashboard/${tab}/quality-gate-pane`}
-                status={status}
-              >
-                <StatusIcon />
-                <StatusTitle data-test="coverage-plugin-header:quality-gate-status">
-                  {status}
-                </StatusTitle>
-              </StatusWrapper>
+                <Icons.Info tw="flex text-monochrome-default" />
+              </Tooltip>
             )}
           </div>
-        )}
-        <ActionSection label="risks" previousBuild={{ previousBuildVersion, previousBuildTests }}>
-          {risksCount > 0 ? (
-            <Count
-              to={`/full-page/${agentId}/${buildVersion}/${pluginId}/dashboard/${tab}/risks-modal`}
-              className="flex items-center w-full"
-              data-test="action-section:count:risks"
+          {!configured ? (
+            <StatusWrapper
+              to={`/full-page/${agentId}/${buildVersion}/${pluginId}/dashboard/${tab}/quality-gate-pane`}
+              data-test="coverage-plugin-header:configure-button"
             >
-              {risksCount}
-              <Icons.Expander tw="ml-1 text-blue-default" width={8} height={8} />
-            </Count>
+              <Button
+                primary
+                size="small"
+              >
+                Configure
+              </Button>
+            </StatusWrapper>
           ) : (
-            <div
-              tw="flex items-center w-full text-20 leading-32 text-monochrome-black"
-              data-test="action-section:no-risks-count"
+            <StatusWrapper
+              to={`/full-page/${agentId}/${buildVersion}/${pluginId}/dashboard/${tab}/quality-gate-pane`}
+              status={status}
             >
-              {risksCount}
-            </div>
+              <StatusIcon />
+              <StatusTitle data-test="coverage-plugin-header:quality-gate-status">
+                {status}
+              </StatusTitle>
+            </StatusWrapper>
           )}
-        </ActionSection>
-        <ActionSection label="tests to run" previousBuild={{ previousBuildVersion, previousBuildTests }}>
-          {previousBuildTests.length > 0 ? (
-            <Count
-              to={`/full-page/${agentId}/${buildVersion}/${pluginId}/tests-to-run`}
-              className="flex items-center w-full"
-              data-test="action-section:count:tests-to-run"
-            >
-              {testToRunCount}
-              <Icons.Expander tw="ml-1 text-blue-default" width={8} height={8} />
-            </Count>
-          ) : <div tw="text-20 leading-32 text-monochrome-black" data-test="action-section:no-value:tests-to-run">&ndash;</div>}
-        </ActionSection>
-      </div>
+        </div>
+      )}
+      <ActionSection
+        label="risks"
+        previousBuild={{ previousBuildVersion, previousBuildTests }}
+      >
+        {risksCount > 0 ? (
+          <Count
+            to={`/full-page/${agentId}/${buildVersion}/${pluginId}/dashboard/${tab}/risks-modal`}
+            className="flex items-center w-full"
+            data-test="action-section:count:risks"
+          >
+            {risksCount}
+            <Icons.Expander tw="ml-1 text-blue-default" width={8} height={8} />
+          </Count>
+        ) : (
+          <div
+            tw="flex items-center w-full text-20 leading-32 text-monochrome-black"
+            data-test="action-section:no-risks-count"
+          >
+            {risksCount}
+          </div>
+        )}
+      </ActionSection>
+      <ActionSection
+        label="tests to run"
+        previousBuild={{ previousBuildVersion, previousBuildTests }}
+      >
+        {previousBuildTests.length > 0 ? (
+          <Count
+            to={`/full-page/${agentId}/${buildVersion}/${pluginId}/tests-to-run`}
+            className="flex items-center w-full"
+            data-test="action-section:count:tests-to-run"
+          >
+            {testToRunCount}
+            <Icons.Expander tw="ml-1 text-blue-default" width={8} height={8} />
+          </Count>
+        ) : (
+          <div
+            tw="text-20 leading-32 text-monochrome-black"
+            data-test="action-section:no-value:tests-to-run"
+          >&ndash;
+          </div>
+        )}
+      </ActionSection>
       <Route
         path="/full-page/:agentId/:buildVersion/:pluginId/dashboard/:tab/baseline-build-modal"
         render={() => <BaselineBuildModal />}
@@ -173,33 +206,3 @@ export const CoveragePluginHeader = () => {
     </Content>
   );
 };
-
-const Content = styled.div`
-  ${tw`grid items-center w-full h-20 border-b border-monochrome-medium-tint`}
-  grid-template-columns: max-content auto max-content;
-`;
-
-const BaselinePanel = styled.div`
-  ${tw`grid gap-x-2 pl-6`}
-  ${tw`border-l border-monochrome-medium-tint font-bold text-12 leading-24 text-monochrome-default`}
-  grid-template-columns: max-content minmax(64px, 60%);
-  grid-template-rows: repeat(2, 1fr);
-`;
-
-const StatusWrapper = styled(Link)(({ status }: { status?: QualityGateStatus }) => [
-  tw`flex items-center h-8 text-14`,
-  status === 'PASSED' && tw`text-green-default cursor-pointer`,
-  status === 'FAILED' && tw`text-red-default cursor-pointer`,
-]);
-
-const StatusTitle = styled.div`
-  ${tw`ml-2 font-bold lowercase`}
-  &::first-letter {
-    ${tw`uppercase`}
-  }
-`;
-
-const Count = styled(Link)`
-  ${tw`flex items-center w-full text-20 leading-32 cursor-pointer`}
-  ${tw`text-monochrome-black hover:text-blue-medium-tint active:text-blue-shade`}
-`;
