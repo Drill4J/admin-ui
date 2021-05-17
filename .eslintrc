@@ -17,7 +17,7 @@
     "drill4j/license-header": ["error"],
     "react/jsx-filename-extension": [2, { "extensions": [".js", ".jsx", ".ts", ".tsx"] }],
     "import/prefer-default-export": 0,
-    "import/no-extraneous-dependencies": [2, { "devDependencies": ["**/spec.tsx", "**/spec.ts"] }],
+    "import/no-extraneous-dependencies": [1, { "devDependencies": ["**/spec.tsx", "**/spec.ts"] }],
     "import/extensions": 0,
     "@typescript-eslint/indent": [2, 2],
     "eofline": 0,
