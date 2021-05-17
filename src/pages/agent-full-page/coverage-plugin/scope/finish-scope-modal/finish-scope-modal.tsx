@@ -128,6 +128,7 @@ export const FinishScopeModal = ({ isOpen, onToggle, scope }: Props) => {
                   secondary
                   size="large"
                   onClick={() => onToggle(false)}
+                  disabled={loading}
                   data-test="finish-scope-modal:cancel-modal-button"
                 >
                   Cancel
