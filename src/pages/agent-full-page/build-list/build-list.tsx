@@ -106,6 +106,7 @@ export const BuildList = () => {
             },
           ]}
           data={buildVersions}
+          columnsDependency={[baseline]}
         />
       </div>
     </div>
