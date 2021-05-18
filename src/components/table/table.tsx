@@ -31,16 +31,17 @@ interface Props {
   renderRowSubComponent?: ({ row, rowProps }: any) => JSX.Element;
   stub?: React.ReactNode;
   isDefaulToggleSortBy?: boolean;
+  columnsDependency?: Array<string | number | boolean | null | undefined>;
 }
 
 export const Table = ({
-  columns, data, renderRowSubComponent, stub = null, isDefaulToggleSortBy,
+  columns, data, renderRowSubComponent, stub = null, isDefaulToggleSortBy, columnsDependency = [],
 }: Props) => {
   const {
     getTableProps, getTableBodyProps, headerGroups, rows, prepareRow,
   } = useTable(
     {
-      columns: useMemo(() => columns, []),
+      columns: useMemo(() => columns, [...columnsDependency]),
       data: useMemo(() => data, [data]),
     },
     useSortBy,
@@ -95,7 +96,7 @@ export const Table = ({
                   {row.cells.map((cell: any) => (
                     <td
                       {...cell.getCellProps()}
-                      tw="text-ellipsis first:px-4 last:px-4"
+                      tw="first:px-4 last:px-4"
                       style={{ textAlign: cell.column.textAlign || 'right' }}
                     >
                       <div onClick={() => cell.column.id === 'expander' &&
