@@ -33,3 +33,4 @@ export { getDuration } from './get-duration';
 export { dotsAndSlashesToSlash } from './dots-and-slashes-to-slash';
 export { convertToSingleSpaces } from './convert-to-single-spaces';
 export { snakeToSpaces } from './snake-to-spaces';
+export { formatBytes } from './format-bytes';

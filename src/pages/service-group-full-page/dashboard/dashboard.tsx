@@ -46,16 +46,18 @@ export const Dashboard = ({ serviceGroupId, plugins }: Props) => (
         } = usePluginData<ServiceGroupSummary>('/group/summary', serviceGroupId, pluginId) || {};
 
         return (
-          <PluginCard
-            label={name}
-            pluginLink={`/service-group-full-page/${serviceGroupId}/${pluginId}`}
-            key={pluginId}
-          >
-            <CoverageSection totalCoverage={coverage} methodCount={methodCount} />
-            <TestsSection testsType={tests} scopeCount={scopeCount} />
-            <RisksSection risks={riskCounts} />
-            <TestsToRunSection testsToRun={testsToRun} />
-          </PluginCard>
+          pluginId === 'test2code' && (
+            <PluginCard
+              label={name}
+              pluginLink={`/service-group-full-page/${serviceGroupId}/${pluginId}`}
+              key={pluginId}
+            >
+              <CoverageSection totalCoverage={coverage} methodCount={methodCount} />
+              <TestsSection testsType={tests} scopeCount={scopeCount} />
+              <RisksSection risks={riskCounts} />
+              <TestsToRunSection testsToRun={testsToRun} />
+            </PluginCard>
+          )
         );
       }) : <NoPluginsStub agentId={serviceGroupId} agentType="ServiceGroup" />}
     </div>

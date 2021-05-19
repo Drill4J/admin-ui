@@ -42,7 +42,7 @@ const PluginsIconWrapper = styled.div`
 export const PluginListEntry = ({
   input, meta, description, onClick, icon, children,
 }: Props) => {
-  const PluginIcon = Icons[icon] || Icons.Plugins;
+  const PluginIcon = Icons[icon.replace('-', '') as keyof typeof Icons] || Icons.Plugins;
   return (
     <div css={[
       tw`border-b border-monochrome-medium-tint cursor-pointer`,

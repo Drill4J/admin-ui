@@ -31,6 +31,7 @@ import { Sidebar } from '../agent-full-page/sidebar';
 import { ServiceGroupHeader } from './service-group-header';
 import { usePluginData } from './use-plugin-data';
 import { Dashboard } from './dashboard';
+import { StateWatcherPlugin } from './state-watcher-plugin';
 
 interface Link {
   id: string;
@@ -89,13 +90,17 @@ export const ServiceGroupFullPage = () => {
               )}
             />
             <Route
-              path="/service-group-full-page/:serviceGroupId/:pluginId"
+              path="/service-group-full-page/:serviceGroupId/test2code"
               render={() => (
                 <TestToCodePlugin
                   summaries={serviceGroup.summaries}
                   aggregated={serviceGroup.aggregated}
                 />
               )}
+            />
+            <Route
+              path="/service-group-full-page/:serviceGroupId/state-watcher"
+              component={StateWatcherPlugin}
             />
           </Switch>
         </div>

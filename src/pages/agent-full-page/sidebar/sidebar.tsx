@@ -43,7 +43,7 @@ export const Sidebar = ({ links, matchParams }: Props) => {
       {links.map(({
         id, name, link, computed,
       }) => {
-        const Icon = Icons[name] || Icons.Plugins;
+        const Icon = Icons[name.replace('-', '') as keyof typeof Icons] || Icons.Plugins;
         return (
           <Tooltip message={<div>{name}</div>} position="right" key={link}>
             <SidebarLink

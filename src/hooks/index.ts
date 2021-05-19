@@ -29,3 +29,4 @@ export { useRunAfterUpdate } from './use-run-after-update';
 export { usePreserveCaretPosition } from './use-preserve-caret-position';
 export { useQuery } from './use-query';
 export { useCloseModal } from './use-close-modal';
+export { useStateWatcher } from './use-state-watcher';

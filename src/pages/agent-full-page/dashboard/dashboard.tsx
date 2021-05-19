@@ -39,16 +39,18 @@ export const Dashboard = ({ agent }: Props) => {
         {installedPlugins.length > 0 ? (
           <>
             {installedPlugins.map(({ id, name }) => (
-              <PluginCard
-                key={id}
-                label={name}
-                pluginLink={`/full-page/${agentId}/${buildVersion}/${id}/dashboard/methods`}
-              >
-                <CoverageSection />
-                <TestsSection />
-                <RisksSection />
-                <TestsToRunSection />
-              </PluginCard>
+              id === 'test2code' && (
+                <PluginCard
+                  key={id}
+                  label={name}
+                  pluginLink={`/full-page/${agentId}/${buildVersion}/${id}/dashboard/methods`}
+                >
+                  <CoverageSection />
+                  <TestsSection />
+                  <RisksSection />
+                  <TestsToRunSection />
+                </PluginCard>
+              )
             ))}
           </>
         ) : <NoPluginsStub agentId={agent.id} agentType="Agent" />}

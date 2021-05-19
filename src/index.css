@@ -28292,6 +28292,26 @@ button:focus {
   }
 }
 
+@-webkit-keyframes blinker {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes blinker {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+  }
+}
+
 .animate-none {
   -webkit-animation: none;
           animation: none;
@@ -28315,6 +28335,11 @@ button:focus {
 .animate-bounce {
   -webkit-animation: bounce 1s infinite;
           animation: bounce 1s infinite;
+}
+
+.animate-blinker {
+  -webkit-animation: blinker 1.5s infinite cubic-bezier(1, 0, 0, 1);
+          animation: blinker 1.5s infinite cubic-bezier(1, 0, 0, 1);
 }
 
 .mix-blend-normal {
@@ -56653,6 +56678,11 @@ button:focus {
             animation: bounce 1s infinite;
   }
 
+  .sm\:animate-blinker {
+    -webkit-animation: blinker 1.5s infinite cubic-bezier(1, 0, 0, 1);
+            animation: blinker 1.5s infinite cubic-bezier(1, 0, 0, 1);
+  }
+
   .sm\:mix-blend-normal {
     mix-blend-mode: normal;
   }
@@ -84876,6 +84906,11 @@ button:focus {
   .md\:animate-bounce {
     -webkit-animation: bounce 1s infinite;
             animation: bounce 1s infinite;
+  }
+
+  .md\:animate-blinker {
+    -webkit-animation: blinker 1.5s infinite cubic-bezier(1, 0, 0, 1);
+            animation: blinker 1.5s infinite cubic-bezier(1, 0, 0, 1);
   }
 
   .md\:mix-blend-normal {
@@ -113103,6 +113138,11 @@ button:focus {
             animation: bounce 1s infinite;
   }
 
+  .lg\:animate-blinker {
+    -webkit-animation: blinker 1.5s infinite cubic-bezier(1, 0, 0, 1);
+            animation: blinker 1.5s infinite cubic-bezier(1, 0, 0, 1);
+  }
+
   .lg\:mix-blend-normal {
     mix-blend-mode: normal;
   }
@@ -141328,6 +141368,11 @@ button:focus {
             animation: bounce 1s infinite;
   }
 
+  .xl\:animate-blinker {
+    -webkit-animation: blinker 1.5s infinite cubic-bezier(1, 0, 0, 1);
+            animation: blinker 1.5s infinite cubic-bezier(1, 0, 0, 1);
+  }
+
   .xl\:mix-blend-normal {
     mix-blend-mode: normal;
   }
@@ -169551,6 +169596,11 @@ button:focus {
   .\32xl\:animate-bounce {
     -webkit-animation: bounce 1s infinite;
             animation: bounce 1s infinite;
+  }
+
+  .\32xl\:animate-blinker {
+    -webkit-animation: blinker 1.5s infinite cubic-bezier(1, 0, 0, 1);
+            animation: blinker 1.5s infinite cubic-bezier(1, 0, 0, 1);
   }
 
   .\32xl\:mix-blend-normal {

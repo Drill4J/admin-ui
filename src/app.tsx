@@ -48,6 +48,20 @@ const GlobalStyle = createGlobalStyle`
   b {
     ${tw`font-bold`};
   }
+  
+  svg[class="recharts-surface"] {
+    ${tw`overflow-visible`};
+
+    g[class="recharts-layer recharts-cartesian-axis recharts-xAxis xAxis"] {
+      g {
+        g {
+          line {
+            ${tw`invisible`}
+          }
+        }
+      }
+    }
+  }
 `;
 
 export const App = () => (
