@@ -172,13 +172,15 @@ export const CoverageDetails = ({
       <>
         {rows.map((row: any) => {
           prepareRow(row);
+          const rowProps = row.getRowProps();
           return (
-            <TR {...row.getRowProps()} isExpanded={row.isExpanded}>
+            <TR {...rowProps} isExpanded={row.isExpanded}>
               {row.cells.map((cell: any) => (
                 <td
                   {...cell.getCellProps()}
                   tw="relative first:px-4 last:px-4"
                   style={{ textAlign: cell.column.textAlign || 'right' }}
+                  data-test={`expanded-td-${rowProps.key}-${cell.column.id}`}
                 >
                   {cell.render(cell.column.SubCell ? 'SubCell' : 'Cell')}
                 </td>
