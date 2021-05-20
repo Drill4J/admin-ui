@@ -75,6 +75,7 @@ export const Table = withErrorBoundary(({
                     onClick={isDefaulToggleSortBy
                       ? defaulToggleSortBy
                       : () => dispatch(setSort({ order: setOrder(sort?.order), field: column.id }))}
+                    data-test={`table-th-${column.id}`}
                   >
                     <div tw="relative inline-flex items-center cursor-pointer">
                       {column.id !== 'expander' && (
@@ -104,6 +105,8 @@ export const Table = withErrorBoundary(({
                       {...cell.getCellProps()}
                       tw="first:px-4 last:px-4"
                       style={{ textAlign: cell.column.textAlign || 'right' }}
+                      data-test={`td-${rowProps.key}-${cell.column.id}`}
+
                     >
                       <div onClick={() => cell.column.id === 'expander' &&
                         setExpandedRows(row.isExpanded
