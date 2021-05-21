@@ -15,7 +15,7 @@
  */
 import { Link } from 'react-router-dom';
 import { Icons, Button, Tooltip } from '@drill4j/ui-kit';
-import 'twin.macro';
+import tw, { styled } from 'twin.macro';
 
 import { AGENT_STATUS } from 'common/constants';
 import { ServiceGroupEntity } from 'types/service-group-entity';
@@ -40,6 +40,7 @@ export const ActionsColumn = ({ agent }: Props) => {
   );
   const hasOfflineAgent = agents.some(({ status: agentStatus }) => agentStatus === AGENT_STATUS.OFFLINE);
   const isJavaAgentsServiceGroup = agents.every((serviceGroupAgent) => serviceGroupAgent.agentType === 'Java');
+  const disableRegisterButton = agentType === 'ServiceGroup' && !isJavaAgentsServiceGroup;
 
   return (
     <div className="flex items-center">
@@ -55,21 +56,23 @@ export const ActionsColumn = ({ agent }: Props) => {
             </div>
           )}
         >
-          <Link to={`/${
-            agentType === 'ServiceGroup' ? 'bulk-registration' : 'registration'
-          }/${agentId}?unregisteredAgentsCount=${unregisteredAgentsCount}`}
+          <RegisterLink
+            disabled={disableRegisterButton}
+            to={`/${
+              agentType === 'ServiceGroup' ? 'bulk-registration' : 'registration'
+            }/${agentId}?unregisteredAgentsCount=${unregisteredAgentsCount}`}
           >
             <Button
               data-test="action-column:icons-register"
               size="small"
               type={agentType === 'ServiceGroup' || !group ? 'primary' : 'secondary'}
-              disabled={agentType === 'ServiceGroup' && !isJavaAgentsServiceGroup}
+              disabled={disableRegisterButton}
               tw="flex items-center w-full gap-x-2"
             >
               <Icons.Register />
               Register {unregisteredAgentsCount ? `(${unregisteredAgentsCount})` : ''}
             </Button>
-          </Link>
+          </RegisterLink>
         </Tooltip>
       )}
       {((status === AGENT_STATUS.ONLINE && agentType !== 'ServiceGroup') ||
@@ -90,3 +93,7 @@ export const ActionsColumn = ({ agent }: Props) => {
     </div>
   );
 };
+
+const RegisterLink = styled(Link)<{disabled: boolean}>`
+  ${({ disabled }) => disabled && tw`cursor-default pointer-events-none`}
+`;
