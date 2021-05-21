@@ -58,7 +58,7 @@ export const Table = withErrorBoundary(({
 }: Props) => {
   const {
     page,
-    getTableProps, getTableBodyProps, headerGroups, rows, prepareRow,
+    getTableProps, getTableBodyProps, headerGroups, prepareRow,
     canPreviousPage,
     canNextPage,
     pageOptions,

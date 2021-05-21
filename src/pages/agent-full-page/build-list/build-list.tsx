@@ -43,6 +43,7 @@ export const BuildList = () => {
           <span tw="text-monochrome-default">{buildVersions.length}</span>
         </div>
         <Table
+          withSearchPanel={false}
           isDefaulToggleSortBy
           columns={[
             {

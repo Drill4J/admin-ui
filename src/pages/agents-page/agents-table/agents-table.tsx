@@ -101,6 +101,7 @@ export const AgentsTable = ({ agents }: Props) => {
   return (
     <div tw="w-full h-full">
       <Table
+        withSearchPanel={false}
         isDefaulToggleSortBy
         columns={columns}
         data={agents}

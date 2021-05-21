@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { useRef, useState } from 'react';
 import { Icons, Legend } from '@drill4j/ui-kit';
 import {
   Route, useParams, Link,
@@ -23,15 +22,14 @@ import 'twin.macro';
 
 import { ParentBuild } from 'types/parent-build';
 import {
-  Cells, SearchPanel, Stub, Table,
+  Cells, Stub, Table,
 } from 'components';
 import { TestCoverageInfo } from 'types/test-coverage-info';
 import { FilterList } from 'types/filter-list';
-import { Search } from 'types/search';
 import { BuildSummary } from 'types/build-summary';
 import { TestsInfo } from 'types/tests-info';
-import { useBuildVersion, useAgent, useVisibleElementsCount } from 'hooks';
-import { CoveredMethodsByTestSidebar } from 'modules';
+import { useBuildVersion, useAgent } from 'hooks';
+import { CoveredMethodsByTestSidebar, useTableActionsState } from 'modules';
 import { capitalize } from 'utils';
 import { DATA_VISUALIZATION_COLORS } from 'common/constants';
 import { TestsToRunSummary } from 'types/tests-to-run-summary';
@@ -43,13 +41,13 @@ interface Props {
 }
 
 export const TestsToRunList = ({ agentType = 'Agent' }: Props) => {
-  const [search, setSearch] = useState<Search[]>([{ field: 'name', value: '', op: 'CONTAINS' }]);
+  const { search } = useTableActionsState();
   const {
     items: testsToRun = [],
     filteredCount = 0,
     totalCount = 0,
   } = useBuildVersion<FilterList<TestCoverageInfo>>('/build/tests-to-run', search, undefined, 'LIST') || {};
-  const [searchQuery] = search;
+
   const { buildVersion = '', agentId = '', pluginId } = useParams<{ buildVersion: string; agentId: string; pluginId?: string; }>();
   const { buildVersion: activeBuildVersion = '' } = useAgent(agentId) || {};
   const { version: previousBuildVersion = '' } = useBuildVersion<ParentBuild>('/data/parent') || {};
@@ -60,9 +58,6 @@ export const TestsToRunList = ({ agentType = 'Agent' }: Props) => {
   const { AUTO } = previousBuildTests
     .reduce((test, testType) => ({ ...test, [testType.type]: testType }), {}) as TestsInfo;
   const previousBuildAutoTestsCount = AUTO?.summary?.testCount || 0;
-
-  const ref = useRef<HTMLDivElement>(null);
-  const visibleElementsCount = useVisibleElementsCount(ref, 10, 10);
 
   return (
     <div tw="flex flex-col gap-4">
@@ -104,17 +99,12 @@ export const TestsToRunList = ({ agentType = 'Agent' }: Props) => {
           all suggested tests ({totalCount})
         </span>
         <div>
-          <SearchPanel
-            onSearch={(value) => setSearch([{ ...searchQuery, value }])}
-            searchQuery={searchQuery.value}
-            searchResult={filteredCount}
-            placeholder="Search tests by name"
-          >
-            Displaying {filteredCount} of {totalCount} tests
-          </SearchPanel>
           <Table
             isDefaulToggleSortBy
-            data={testsToRun.slice(0, visibleElementsCount)}
+            filteredCount={filteredCount}
+            totalCount={totalCount}
+            placeholder="Search tests by name"
+            data={testsToRun}
             columns={[{
               Header: 'Name',
               accessor: 'name',
@@ -183,7 +173,6 @@ export const TestsToRunList = ({ agentType = 'Agent' }: Props) => {
               width: '10%',
             }]}
           />
-          <div ref={ref} />
         </div>
       </div>
       {!testsToRun.length && (

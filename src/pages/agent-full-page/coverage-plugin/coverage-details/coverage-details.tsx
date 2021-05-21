@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { useCallback, useMemo, useRef } from 'react';
+import { useCallback, useMemo } from 'react';
 import { Icons } from '@drill4j/ui-kit';
 import { Route, useParams, Link } from 'react-router-dom';
 import queryString from 'query-string';
@@ -22,13 +22,11 @@ import { useExpanded, useTable } from 'react-table';
 
 import { ClassCoverage } from 'types/class-coverage';
 import { FilterList } from 'types/filter-list';
-import { useVisibleElementsCount, useBuildVersion } from 'hooks';
+import { useBuildVersion } from 'hooks';
 import {
-  Cells, SearchPanel, Stub, Table, TR,
+  Cells, Stub, Table, TR,
 } from 'components';
-import {
-  useTableActionsState, useTableActionsDispatch, setSearch,
-} from 'modules';
+import { useTableActionsState } from 'modules';
 import { Package } from 'types/package';
 import { NameCell } from './name-cell';
 import { AssociatedTestModal } from './associated-test-modal';
@@ -44,16 +42,12 @@ interface Props {
 export const CoverageDetails = ({
   associatedTestsTopic, classesTopicPrefix, topic, showCoverageIcon,
 }: Props) => {
-  const dispatch = useTableActionsDispatch();
   const { search, sort } = useTableActionsState();
   const {
     items: coverageByPackages = [],
     totalCount = 0,
     filteredCount = 0,
   } = useBuildVersion<FilterList<ClassCoverage>>(topic, search, sort, 'LIST') || {};
-  const ref = useRef<HTMLDivElement>(null);
-  const visibleElementsCount = useVisibleElementsCount(ref, 10, 10);
-  const [searchQuery] = search;
 
   const {
     buildVersion, agentId, pluginId, scopeId, tab,
@@ -198,6 +192,7 @@ export const CoverageDetails = ({
   const columnDependency = useMemo(() => [showCoverageIcon], [showCoverageIcon]);
   return (
     <div tw="flex flex-col">
+<<<<<<< HEAD
       <>
         <div tw="mt-2">
           <SearchPanel
@@ -228,6 +223,23 @@ export const CoverageDetails = ({
           </div>
         </div>
       </>
+=======
+      <Table
+        columns={columns}
+        data={coverageByPackages}
+        totalCount={totalCount}
+        filteredCount={filteredCount}
+        placeholder="Search packages by name"
+        renderRowSubComponent={renderRowSubComponent}
+        stub={coverageByPackages.length === 0 && (
+          <Stub
+            icon={<Icons.Package height={104} width={107} />}
+            title="No results found"
+            message="Try adjusting your search or filter to find what you are looking for."
+          />
+        )}
+      />
+>>>>>>> d4d86422 (feat: update table props)
       <Route
         path={[
           '/full-page/:agentId/:buildVersion/:pluginId/dashboard/:tab/associated-test-modal',
