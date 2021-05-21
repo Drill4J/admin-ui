@@ -80,7 +80,7 @@ const Search = styled(Inputs.Search)`
     width: 400px;
   }
 
-  svg[class*='clear-icon'] {
+  svg[width='8'] {
     left: calc(100% - 10px);
   }
 `;
