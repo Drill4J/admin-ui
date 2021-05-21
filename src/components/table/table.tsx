@@ -88,122 +88,121 @@ export const Table = withErrorBoundary(({
   }
 
   return (
-    <>
-      {withSearchPanel && (
-        <div tw="mt-2">
-          <SearchPanel
-            onSearch={(searchValue) => dispatch(setSearch([{ value: searchValue, field: 'name', op: 'CONTAINS' }]))}
-            searchQuery={searchQuery?.value}
-            searchResult={filteredCount}
-            placeholder={placeholder}
-          >
-            Displaying {page.length} of {totalCount} packages
-          </SearchPanel>
-        </div>
-      )}
-      <div tw="overflow-x-auto">
-        <div style={{ minWidth: '1100px' }}>
-          <table {...getTableProps()} tw="table-fixed w-full text-14 leading-16 text-monochrome-black">
-            <TableHead>
-              {headerGroups.map((headerGroup: any) => (
-                <tr {...headerGroup.getHeaderGroupProps()} tw="h-13 px-4">
-                  {headerGroup.headers.map((column: any) => {
-                    const active = column.id === sort?.field;
-                    const defaulToggleSortBy = column.getSortByToggleProps().onClick;
-                    return (
-                      <TH
-                        {...column.getHeaderProps(column.getSortByToggleProps())}
-                        style={{ textAlign: column.textAlign || 'right', width: column.width }}
-                        onClick={isDefaulToggleSortBy
-                          ? defaulToggleSortBy
-                          : () => dispatch(setSort({ order: setOrder(sort?.order), field: column.id }))}
-                        data-test={`table-th-${column.id}`}
+    <div tw="overflow-x-auto">
+      <div style={{ minWidth: '1100px' }}>
+        {withSearchPanel && (
+          <div tw="mt-2">
+            <SearchPanel
+              onSearch={(searchValue) => dispatch(setSearch([{ value: searchValue, field: 'name', op: 'CONTAINS' }]))}
+              searchQuery={searchQuery?.value}
+              searchResult={filteredCount}
+              placeholder={placeholder}
+            >
+              Displaying {page.length} of {totalCount} packages
+            </SearchPanel>
+          </div>
+        )}
+        <table {...getTableProps()} tw="table-fixed w-full text-14 leading-16 text-monochrome-black">
+          <TableHead>
+            {headerGroups.map((headerGroup: any) => (
+              <tr {...headerGroup.getHeaderGroupProps()} tw="h-13 px-4">
+                {headerGroup.headers.map((column: any) => {
+                  const active = column.id === sort?.field;
+                  const defaulToggleSortBy = column.getSortByToggleProps().onClick;
+                  return (
+                    <TH
+                      {...column.getHeaderProps(column.getSortByToggleProps())}
+                      style={{ textAlign: column.textAlign || 'right', width: column.width }}
+                      onClick={isDefaulToggleSortBy
+                        ? defaulToggleSortBy
+                        : () => dispatch(setSort({ order: setOrder(sort?.order), field: column.id }))}
+                      data-test={`table-th-${column.id}`}
+                    >
+                      <div tw="relative inline-flex items-center cursor-pointer">
+                        {column.id !== 'expander' && (
+                          <SortArrow active={column.isSorted || active}>
+                            <Icons.SortingArrow rotate={column.isSortedDesc || (active && sort?.order === 'DESC') ? 0 : 180} />
+                          </SortArrow>
+                        )}
+                        {column.render('Header')}
+                      </div>
+                    </TH>
+
+                  );
+                })}
+              </tr>
+            ))}
+          </TableHead>
+          <tbody {...getTableBodyProps()}>
+            {page.map((rawRow: any) => {
+              const row = { ...rawRow, isExpanded: expandedRows.includes(rawRow.original.id) };
+              prepareRow(row);
+              const rowProps = row.getRowProps();
+              return (
+                <React.Fragment key={row.original.id}>
+                  <TR {...rowProps} isExpanded={row.isExpanded}>
+                    {row.cells.map((cell: any) => (
+                      <td
+                        {...cell.getCellProps()}
+                        tw="first:px-4 last:px-4"
+                        style={{ textAlign: cell.column.textAlign || 'right' }}
+                        data-test={`td-${rowProps.key}-${cell.column.id}`}
+
                       >
-                        <div tw="relative inline-flex items-center cursor-pointer">
-                          {column.id !== 'expander' && (
-                            <SortArrow active={column.isSorted || active}>
-                              <Icons.SortingArrow rotate={column.isSortedDesc || (active && sort?.order === 'DESC') ? 0 : 180} />
-                            </SortArrow>
-                          )}
-                          {column.render('Header')}
-                        </div>
-                      </TH>
-
-                    );
-                  })}
-                </tr>
-              ))}
-            </TableHead>
-            <tbody {...getTableBodyProps()}>
-              {page.map((rawRow: any) => {
-                const row = { ...rawRow, isExpanded: expandedRows.includes(rawRow.original.id) };
-                prepareRow(row);
-                const rowProps = row.getRowProps();
-                return (
-                  <React.Fragment key={row.original.id}>
-                    <TR {...rowProps} isExpanded={row.isExpanded}>
-                      {row.cells.map((cell: any) => (
-                        <td
-                          {...cell.getCellProps()}
-                          tw="first:px-4 last:px-4"
-                          style={{ textAlign: cell.column.textAlign || 'right' }}
-                          data-test={`td-${rowProps.key}-${cell.column.id}`}
-
-                        >
-                          <div onClick={() => cell.column.id === 'expander' &&
+                        <div onClick={() => cell.column.id === 'expander' &&
                         setExpandedRows(row.isExpanded
                           ? expandedRows.filter((id) => id !== row.original.id)
                           : [...expandedRows, row.original.id])}
-                          >
-                            {cell.render('Cell')}
-                          </div>
-                        </td>
-                      ))}
-                    </TR>
-                    {row.isExpanded && renderRowSubComponent?.({ row, rowProps })}
-                  </React.Fragment>
-                );
-              })}
-            </tbody>
-          </table>
-        </div>
-      </div>
-      {stub}
-      {pageOptions.length > 10 && (
-        <div tw="flex items-center gap-x-4 mt-6">
-          <Button primary size="small" onClick={() => gotoPage(0)} disabled={!canPreviousPage}>First</Button>
-          <Button secondary size="small" onClick={() => previousPage()} disabled={!canPreviousPage}>Previous</Button>
-          <Button secondary size="small" onClick={() => nextPage()} disabled={!canNextPage}>Next</Button>
-          <Button primary size="small" onClick={() => gotoPage(pageCount - 1)} disabled={!canNextPage}>Last</Button>
-          <div tw="flex gap-x-2">
-            Page
-            <strong>
-              {pageIndex + 1} of {pageOptions.length}
-            </strong>
+                        >
+                          {cell.render('Cell')}
+                        </div>
+                      </td>
+                    ))}
+                  </TR>
+                  {row.isExpanded && renderRowSubComponent?.({ row, rowProps })}
+                </React.Fragment>
+              );
+            })}
+          </tbody>
+        </table>
+
+        {stub}
+        {pageOptions.length > 10 && (
+          <div tw="flex items-center gap-x-4 mt-6">
+            <Button primary size="small" onClick={() => gotoPage(0)} disabled={!canPreviousPage}>First</Button>
+            <Button secondary size="small" onClick={() => previousPage()} disabled={!canPreviousPage}>Previous</Button>
+            <Button secondary size="small" onClick={() => nextPage()} disabled={!canNextPage}>Next</Button>
+            <Button primary size="small" onClick={() => gotoPage(pageCount - 1)} disabled={!canNextPage}>Last</Button>
+            <div tw="flex gap-x-2">
+              Page
+              <strong>
+                {pageIndex + 1} of {pageOptions.length}
+              </strong>
+            </div>
+            <NumberInput
+              type="number"
+              defaultValue={pageIndex + 1}
+              onChange={e => {
+                const page1 = e.target.value ? Number(e.target.value) - 1 : 0;
+                gotoPage(page1);
+              }}
+            />
+            <select
+              value={pageSize}
+              onChange={e => {
+                setPageSize(Number(e.target.value));
+              }}
+            >
+              {[10, 20, 30, 40, 50, 100].map(count => (
+                <option key={count} value={count}>
+                  Show {count}
+                </option>
+              ))}
+            </select>
           </div>
-          <NumberInput
-            type="number"
-            defaultValue={pageIndex + 1}
-            onChange={e => {
-              const page1 = e.target.value ? Number(e.target.value) - 1 : 0;
-              gotoPage(page1);
-            }}
-          />
-          <select
-            value={pageSize}
-            onChange={e => {
-              setPageSize(Number(e.target.value));
-            }}
-          >
-            {[10, 20, 30, 40, 50, 100].map(count => (
-              <option key={count} value={count}>
-                Show {count}
-              </option>
-            ))}
-          </select>
-        </div>
-      )}
-    </>
+        )}
+      </div>
+    </div>
   );
 }, {
   FallbackComponent: TableErrorFallback,
