@@ -13,13 +13,12 @@
 * See the License for the specific language governing permissions and
 * limitations under the License.
 */
-/* eslint-disable react/button-has-type */
 import React, { useMemo, useState } from 'react';
 import {
   useTable, useExpanded, Column, useSortBy, usePagination,
 } from 'react-table';
-import { Icons } from '@drill4j/ui-kit';
 import { withErrorBoundary } from 'react-error-boundary';
+import { Button, Icons } from '@drill4j/ui-kit';
 
 import { TableErrorFallback } from 'components';
 import {
@@ -169,51 +168,41 @@ export const Table = withErrorBoundary(({
           </table>
         </div>
       </div>
-      <div className="pagination">
-        <button onClick={() => gotoPage(0)} disabled={!canPreviousPage}>
-          {'<<'}
-        </button>{' '}
-        <button onClick={() => previousPage()} disabled={!canPreviousPage}>
-          {'<'}
-        </button>{' '}
-        <button onClick={() => nextPage()} disabled={!canNextPage}>
-          {'>'}
-        </button>{' '}
-        <button onClick={() => gotoPage(pageCount - 1)} disabled={!canNextPage}>
-          {'>>'}
-        </button>{' '}
-        <span>
-          Page{' '}
-          <strong>
-            {pageIndex + 1} of {pageOptions.length}
-          </strong>{' '}
-        </span>
-        <span>
-          | Go to page:{' '}
-          <input
+      {stub}
+      {pageOptions.length > 10 && (
+        <div tw="flex items-center gap-x-4 mt-6">
+          <Button primary size="small" onClick={() => gotoPage(0)} disabled={!canPreviousPage}>First</Button>
+          <Button secondary size="small" onClick={() => previousPage()} disabled={!canPreviousPage}>Previous</Button>
+          <Button secondary size="small" onClick={() => nextPage()} disabled={!canNextPage}>Next</Button>
+          <Button primary size="small" onClick={() => gotoPage(pageCount - 1)} disabled={!canNextPage}>Last</Button>
+          <div tw="flex gap-x-2">
+            Page
+            <strong>
+              {pageIndex + 1} of {pageOptions.length}
+            </strong>
+          </div>
+          <NumberInput
             type="number"
             defaultValue={pageIndex + 1}
             onChange={e => {
               const page1 = e.target.value ? Number(e.target.value) - 1 : 0;
               gotoPage(page1);
             }}
-            style={{ width: '100px' }}
           />
-        </span>{' '}
-        <select
-          value={pageSize}
-          onChange={e => {
-            setPageSize(Number(e.target.value));
-          }}
-        >
-          {[10, 20, 30, 40, 50].map(() => (
-            <option key={pageSize} value={pageSize}>
-              Show {pageSize}
-            </option>
-          ))}
-        </select>
-      </div>
-      {stub}
+          <select
+            value={pageSize}
+            onChange={e => {
+              setPageSize(Number(e.target.value));
+            }}
+          >
+            {[10, 20, 30, 40, 50, 100].map(count => (
+              <option key={count} value={count}>
+                Show {count}
+              </option>
+            ))}
+          </select>
+        </div>
+      )}
     </>
   );
 }, {
@@ -241,6 +230,24 @@ const TH = styled.th`
 export const TR = styled.tr`
   ${tw`h-10 border-b border-monochrome-medium-tint`}
   ${({ isExpanded }: { isExpanded: boolean }) => isExpanded && tw`bg-monochrome-light-tint`}
+`;
+
+const NumberInput = styled.input`
+  width: 60px;
+  height: 32px;
+  ${tw`py-0 px-2 text-right text-14 leading-22 text-monochrome-black`};
+  ${tw`rounded border border-monochrome-medium-tint bg-monochrome-white outline-none`};
+  
+  :focus {
+    ${tw`border border-monochrome-black`};
+  }
+
+  ::placeholder {
+    ${tw`text-monochrome-default`};
+  }
+  ${({ disabled }) =>
+    disabled &&
+    tw`border border-monochrome-medium-tint bg-monochrome-light-tint text-monochrome-default`}
 `;
 
 function setOrder(order: Order) {

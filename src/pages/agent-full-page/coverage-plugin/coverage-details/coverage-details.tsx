@@ -192,38 +192,6 @@ export const CoverageDetails = ({
   const columnDependency = useMemo(() => [showCoverageIcon], [showCoverageIcon]);
   return (
     <div tw="flex flex-col">
-<<<<<<< HEAD
-      <>
-        <div tw="mt-2">
-          <SearchPanel
-            onSearch={(searchValue) => dispatch(setSearch([{ value: searchValue, field: 'name', op: 'CONTAINS' }]))}
-            searchQuery={searchQuery?.value}
-            searchResult={filteredCount}
-            placeholder="Search package by name"
-          >
-            Displaying {coverageByPackages.slice(0, visibleElementsCount).length} of {totalCount} packages
-          </SearchPanel>
-        </div>
-        <div tw="overflow-x-auto">
-          <div style={{ minWidth: '1100px' }}>
-            <Table
-              columns={columns}
-              data={coverageByPackages.slice(0, visibleElementsCount)}
-              renderRowSubComponent={renderRowSubComponent}
-              columnsDependency={columnDependency}
-              stub={coverageByPackages.length === 0 && (
-                <Stub
-                  icon={<Icons.Package height={104} width={107} />}
-                  title="No results found"
-                  message="Try adjusting your search or filter to find what you are looking for."
-                />
-              )}
-            />
-            <div ref={ref} />
-          </div>
-        </div>
-      </>
-=======
       <Table
         columns={columns}
         data={coverageByPackages}
@@ -239,7 +207,6 @@ export const CoverageDetails = ({
           />
         )}
       />
->>>>>>> d4d86422 (feat: update table props)
       <Route
         path={[
           '/full-page/:agentId/:buildVersion/:pluginId/dashboard/:tab/associated-test-modal',
