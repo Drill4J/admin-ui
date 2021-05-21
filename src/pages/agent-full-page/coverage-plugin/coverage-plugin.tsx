@@ -16,7 +16,7 @@
 import { Switch, Route } from 'react-router-dom';
 import 'twin.macro';
 
-import { SessionsManagementPaneProvider, TestsToRunList } from 'modules';
+import { SessionsManagementPaneProvider, TableActionsProvider, TestsToRunList } from 'modules';
 import { Overview } from './overview';
 import { ScopesList, ScopeInfo } from './scope';
 import { CoveragePluginModals } from './covarage-plugin-modals';
@@ -46,7 +46,11 @@ export const CoveragePlugin = () => (
               />
               <Route
                 path="/full-page/:agentId/:buildVersion/:pluginId/tests-to-run"
-                component={TestsToRunList}
+                render={() => (
+                  <TableActionsProvider>
+                    <TestsToRunList />
+                  </TableActionsProvider>
+                )}
               />
             </Switch>
           </div>
