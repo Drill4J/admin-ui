@@ -13,12 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+import { useBuildVersion } from 'hooks';
+import { ActiveScope } from 'types/active-scope';
 import { useCoveragePluginState, useCoveragePluginDispatch, openModal } from './store';
 import { RenameScopeModal } from './scope/rename-scope-modal';
 import { FinishScopeModal } from './scope/finish-scope-modal';
 import { DeleteScopeModal } from './scope/delete-scope-modal';
-import { useBuildVersion } from '../../../hooks';
-import { ActiveScope } from '../../../types/active-scope';
 
 const modals = {
   RenameScopeModal,
@@ -29,7 +29,7 @@ const modals = {
 export const CoveragePluginModals = () => {
   const { openedModalName, scopeId } = useCoveragePluginState();
   const dispatch = useCoveragePluginDispatch();
-  const selectedScope = useBuildVersion<ActiveScope>(`/build/scopes/${scopeId}`);
+  const scope = useBuildVersion<ActiveScope>(`/build/scopes/${scopeId}`);
 
   const Modal = openedModalName && modals[openedModalName];
   return (
@@ -38,7 +38,7 @@ export const CoveragePluginModals = () => {
         <Modal
           isOpen={Boolean(openedModalName)}
           onToggle={() => dispatch(openModal(undefined, undefined))}
-          scope={selectedScope}
+          scope={scope}
         />
       )}
     </>
