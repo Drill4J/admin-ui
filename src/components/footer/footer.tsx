@@ -48,7 +48,8 @@ const FooterLink = ({ name, link }: FooterLinkProps) => (
 );
 
 export const Footer = () => {
-  const { admin: backendVersion } = useWsConnection<DrillVersion>(defaultAdminSocket, '/version') || {};
+  const { admin: backendVersion } =
+    useWsConnection<DrillVersion>(defaultAdminSocket, '/version') || {};
   const socialLinks = [
     {
       name: 'Fork us on GitHub',
@@ -77,17 +78,9 @@ export const Footer = () => {
       <div tw="px-6">
         <div tw="flex justify-between items-center w-full border-t border-monochrome-medium-tint">
           <AdminInfo>
-            <span>
-              {`© Drill4J ${new Date().getFullYear()}`}
-            </span>
-            <span>
-              {`Admin UI: ${process.env.REACT_APP_VERSION || packageJson.version}`}
-            </span>
-            {backendVersion && (
-              <span>
-                {`Admin: ${backendVersion}`}
-              </span>
-            )}
+            <span>{`© Drill4J ${new Date().getFullYear()}`}</span>
+            <span>{`Admin UI: ${process.env.REACT_APP_VERSION || packageJson.version}`}</span>
+            {backendVersion && <span>{`Admin: ${backendVersion}`}</span>}
             <span>All rights reserved.</span>
           </AdminInfo>
           <span>

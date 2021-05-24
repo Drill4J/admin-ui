@@ -16,10 +16,7 @@
 import { ActiveScope } from 'types/active-scope';
 import { ActiveSessions } from 'types/active-sessions';
 
-export type ModalName =
-  | 'RenameScopeModal'
-  | 'DeleteScopeModal'
-  | 'FinishScopeModal';
+export type ModalName = 'RenameScopeModal' | 'DeleteScopeModal' | 'FinishScopeModal';
 
 export interface PluginState {
   openedModalName?: ModalName;

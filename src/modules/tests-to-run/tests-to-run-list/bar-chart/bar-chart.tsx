@@ -89,39 +89,39 @@ const XAxisLegend = styled.div`
 `;
 
 const Range = styled.input`
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  width: 100%;
+  margin: 0px;
+  transform: rotateY(180deg);
+
+  @-moz-document url-prefix() {
+    height: 8px;
+  }
+
+  &:focus {
+    outline: none;
+  }
+
+  &::-webkit-slider-runnable-track {
+    ${tw`w-full h-2 bg-monochrome-medium-tint`};
+  }
+
+  &::-moz-range-track {
+    ${tw`w-full h-full bg-monochrome-medium-tint`};
+  }
+
+  &::-webkit-slider-thumb {
+    ${tw`h-2 bg-data-visualization-scrollbar-thumb`};
     -webkit-appearance: none;
+  }
+
+  &::-moz-range-thumb {
+    border: none;
+    border-radius: 0;
+    ${tw`h-full bg-data-visualization-scrollbar-thumb`};
     -moz-appearance: none;
-    width: 100%;
-    margin: 0px;
-    transform: rotateY(180deg);
-
-    @-moz-document url-prefix() {
-      height: 8px;
-    }
-
-    &:focus {
-      outline: none;
-    }
-
-    &::-webkit-slider-runnable-track {
-      ${tw`w-full h-2 bg-monochrome-medium-tint`};
-    }
-
-    &::-moz-range-track {
-      ${tw`w-full h-full bg-monochrome-medium-tint`};
-    }
-
-    &::-webkit-slider-thumb {
-      ${tw`h-2 bg-data-visualization-scrollbar-thumb`};
-      -webkit-appearance: none;
-    }
-
-    &::-moz-range-thumb {
-      border: none;
-      border-radius: 0;
-      ${tw`h-full bg-data-visualization-scrollbar-thumb`};
-      -moz-appearance: none;
-    }
+  }
 `;
 
 export const BarChart = ({ activeBuildVersion, totalDuration, summaryTestsToRun }: Props) => {

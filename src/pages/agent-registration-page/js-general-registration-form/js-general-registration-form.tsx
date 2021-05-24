@@ -19,13 +19,13 @@ import { styled } from 'twin.macro';
 
 import { Fields } from 'forms';
 
-const Content = styled.div`height: calc(100vh - 270px);`;
+const Content = styled.div`
+  height: calc(100vh - 270px);
+`;
 
 export const JsGeneralRegistrationForm = () => (
   <>
-    <GeneralAlerts type="INFO">
-      Set up basic agent settings.
-    </GeneralAlerts>
+    <GeneralAlerts type="INFO">Set up basic agent settings.</GeneralAlerts>
     <Content tw="flex flex-col items-center gap-y-6 pt-10 overflow-auto">
       <FormGroup tw="w-97" label="Agent ID">
         <Field name="id" component={Fields.Input} placeholder="Enter agent's ID" disabled />
@@ -48,11 +48,7 @@ export const JsGeneralRegistrationForm = () => (
         />
       </FormGroup>
       <FormGroup tw="w-97" label="Environment" optional>
-        <Field
-          name="environment"
-          component={Fields.Input}
-          placeholder="Specify an environment"
-        />
+        <Field name="environment" component={Fields.Input} placeholder="Specify an environment" />
       </FormGroup>
     </Content>
   </>

@@ -26,10 +26,12 @@ interface Props {
   testContext?: string;
 }
 
-export const ListRow = ({
-  item, columns, style, testContext,
-}: Props) => (
-  <div tw="grid items-center h-20 border-b border-monochrome-medium-tint" style={style} data-test={`${testContext}:list-row`}>
+export const ListRow = ({ item, columns, style, testContext }: Props) => (
+  <div
+    tw="grid items-center h-20 border-b border-monochrome-medium-tint"
+    style={style}
+    data-test={`${testContext}:list-row`}
+  >
     {columns.map((column) => {
       const DefaultCell = ({ value }: { value: unknown; item: { [key: string]: unknown } }) => (
         <div>{String(value)}</div>

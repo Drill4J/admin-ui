@@ -27,11 +27,18 @@ interface Props {
 }
 
 export const OperationActionWarning = ({
-  handleConfirm, handleDecline, children, operationType, loading,
-} : Props) => {
+  handleConfirm,
+  handleDecline,
+  children,
+  operationType,
+  loading,
+}: Props) => {
   const ConfirmButton: any = operationType === 'abort' ? NegativeActionButton : Button;
   return (
-    <div className="flex items-center w-full h-full font-regular text-12 leading-20" data-test="operation-action-warning">
+    <div
+      className="flex items-center w-full h-full font-regular text-12 leading-20"
+      data-test="operation-action-warning"
+    >
       <span>{children}</span>
       <div tw="flex justify-between ml-4 min-w-104px">
         <Button

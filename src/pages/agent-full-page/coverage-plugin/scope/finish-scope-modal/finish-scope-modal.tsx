@@ -15,9 +15,7 @@
  */
 import { useContext, useState } from 'react';
 import { useParams, useHistory, Link } from 'react-router-dom';
-import {
-  Button, Inputs, Popup, GeneralAlerts, Spinner,
-} from '@drill4j/ui-kit';
+import { Button, Inputs, Popup, GeneralAlerts, Spinner } from '@drill4j/ui-kit';
 import 'twin.macro';
 
 import { NotificationManagerContext } from 'notification-manager';
@@ -44,34 +42,39 @@ export const FinishScopeModal = ({ isOpen, onToggle, scope }: Props) => {
   const [ignoreScope, setIgnoreScope] = useState(false);
   const [loading, setLoading] = useState(false);
   const testsCount = scope
-    ? (scope.coverage.byTestType || []).reduce((acc, { summary: { testCount = 0 } }) => acc + testCount, 0)
+    ? (scope.coverage.byTestType || []).reduce(
+        (acc, { summary: { testCount = 0 } }) => acc + testCount,
+        0,
+      )
     : 0;
   const { pluginId = '' } = useParams<{ pluginId: string }>();
-  const { push, location: { pathname = '' } } = useHistory();
+  const {
+    push,
+    location: { pathname = '' },
+  } = useHistory();
   const isScopeInfoPage = scope?.id && pathname.includes(scope.id);
 
   return (
     <Popup
       isOpen={isOpen}
       onToggle={onToggle}
-      header={(
+      header={
         <div tw="w-98">
-          <div tw="text-ellipsis" data-test="finish-scope-modal:header">{`Finish Scope ${scope && scope.name}`}</div>
+          <div tw="text-ellipsis" data-test="finish-scope-modal:header">{`Finish Scope ${
+            scope && scope.name
+          }`}</div>
         </div>
-      )}
+      }
       type="info"
       closeOnFadeClick
     >
       <div tw="w-108">
-        {errorMessage && (
-          <GeneralAlerts type="ERROR">
-            {errorMessage}
-          </GeneralAlerts>
-        )}
+        {errorMessage && <GeneralAlerts type="ERROR">{errorMessage}</GeneralAlerts>}
         {testTypes.length > 0 && (
           <GeneralAlerts type="WARNING">
             <div>
-              At least one active session has been detected.<br />
+              At least one active session has been detected.
+              <br />
               First, you need to finish it in&nbsp;
               <Link
                 tw="link font-bold text-14"
@@ -101,7 +104,9 @@ export const FinishScopeModal = ({ isOpen, onToggle, scope }: Props) => {
             {!testTypes.length ? (
               <>
                 <Button
-                  className={`flex justify-center items-center gap-x-1 ${testsCount ? 'w-30' : 'w-40'}`}
+                  className={`flex justify-center items-center gap-x-1 ${
+                    testsCount ? 'w-30' : 'w-40'
+                  }`}
                   primary
                   size="large"
                   disabled={testTypes.length > 0 || loading}
@@ -114,15 +119,16 @@ export const FinishScopeModal = ({ isOpen, onToggle, scope }: Props) => {
                       },
                       onError: setErrorMessage,
                     })({ prevScopeEnabled: !ignoreScope, savePrevScope: true });
-                    isScopeInfoPage && !scope?.sessionsFinished &&
-                        push(`/full-page/${agentId}/${buildVersion}/${pluginId}/dashboard/methods`);
+                    isScopeInfoPage &&
+                      !scope?.sessionsFinished &&
+                      push(`/full-page/${agentId}/${buildVersion}/${pluginId}/dashboard/methods`);
                     setLoading(false);
                   }}
                   data-test="finish-scope-modal:finish-scope-button"
                 >
                   {loading && <Spinner disabled />}
-                  {!loading && Boolean(testsCount) && 'Finish Scope' }
-                  {!loading && !testsCount && 'Finish and Delete' }
+                  {!loading && Boolean(testsCount) && 'Finish Scope'}
+                  {!loading && !testsCount && 'Finish and Delete'}
                 </Button>
                 <Button
                   secondary

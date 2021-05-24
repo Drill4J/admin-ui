@@ -37,17 +37,24 @@ export const NoPluginsStub = ({ agentId = '', agentType }: Props) => (
     <Stub
       icon={<Icons.Plugins tw="text-monochrome-default" height={160} width={160} />}
       title={<span tw="text-24">No data available</span>}
-      message={(
+      message={
         <>
           <div>
-            <div>There are no enabled plugins on this {camelToSpaces(agentType)} to collect the data from.</div>
+            <div>
+              There are no enabled plugins on this {camelToSpaces(agentType)} to collect the data
+              from.
+            </div>
             <div>To install a plugin go to</div>
           </div>
-          <AgentInfoLink to={`/agents/${agentType === 'Agent' ? 'agent' : 'service-group'}/${agentId}/settings/general`}>
+          <AgentInfoLink
+            to={`/agents/${
+              agentType === 'Agent' ? 'agent' : 'service-group'
+            }/${agentId}/settings/general`}
+          >
             {camelToSpaces(agentType)} settings page
           </AgentInfoLink>
         </>
-      )}
+      }
     />
   </div>
 );

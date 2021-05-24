@@ -15,7 +15,11 @@
  */
 import { useRef } from 'react';
 import {
-  MainProgressBar, AdditionalProgressBar, StripedProgressBar, Tooltip, useElementSize,
+  MainProgressBar,
+  AdditionalProgressBar,
+  StripedProgressBar,
+  Tooltip,
+  useElementSize,
 } from '@drill4j/ui-kit';
 import tw, { styled } from 'twin.macro';
 
@@ -33,7 +37,10 @@ const Message = styled.div`
 `;
 
 export const MultiProgressBar = ({
-  buildCodeCoverage = 0, uniqueCodeCoverage = 0, overlappingCode = 0, active,
+  buildCodeCoverage = 0,
+  uniqueCodeCoverage = 0,
+  overlappingCode = 0,
+  active,
 }: Props) => {
   const node = useRef<HTMLDivElement>(null);
   const { width } = useElementSize(node);
@@ -41,52 +48,64 @@ export const MultiProgressBar = ({
   return (
     <div tw="relative w-full h-8 rounded bg-monochrome-light-tint" ref={node}>
       <Tooltip
-        message={(
+        message={
           <Message>
-            <span tw="font-bold">{percentFormatter(buildCodeCoverage)}%</span> of current build has <br />
+            <span tw="font-bold">{percentFormatter(buildCodeCoverage)}%</span> of current build has{' '}
+            <br />
             already been covered by tests
           </Message>
-        )}
+        }
       >
-        <MainProgressBar value={`${buildCodeCoverage * (width / 100)}px`} testContext="build-coverage" />
+        <MainProgressBar
+          value={`${buildCodeCoverage * (width / 100)}px`}
+          testContext="build-coverage"
+        />
       </Tooltip>
-      <div tw="flex absolute bottom-1/2 transform translate-y-1/2" style={{ left: `${buildCodeCoverage - overlappingCode}%` }}>
+      <div
+        tw="flex absolute bottom-1/2 transform translate-y-1/2"
+        style={{ left: `${buildCodeCoverage - overlappingCode}%` }}
+      >
         <Tooltip
-          message={(
+          message={
             <Message>
-              <span tw="font-bold">
-                {percentFormatter(overlappingCode)}%
-              </span> of current build coverage <br /> has been overlapped in active scope
+              <span tw="font-bold">{percentFormatter(overlappingCode)}%</span> of current build
+              coverage <br /> has been overlapped in active scope
             </Message>
-          )}
+          }
         >
           <div
             tw="flex"
             data-test="multi-progress-bar:overlapping-code-progress-bar"
             style={{ width: `${overlappingCode * (width / 100)}px`, transform: 'scale(-1)' }}
           >
-            {active
-              ? <StripedProgressBar type="secondary" value={`${overlappingCode * (width / 100)}px`} />
-              : <AdditionalProgressBar type="secondary" value={`${overlappingCode * (width / 100)}px`} />}
+            {active ? (
+              <StripedProgressBar type="secondary" value={`${overlappingCode * (width / 100)}px`} />
+            ) : (
+              <AdditionalProgressBar
+                type="secondary"
+                value={`${overlappingCode * (width / 100)}px`}
+              />
+            )}
           </div>
         </Tooltip>
         <Tooltip
-          message={(
+          message={
             <Message>
-              Active scope additionally covered <span tw="font-bold">+{percentFormatter(uniqueCodeCoverage)}%</span>. <br />
+              Active scope additionally covered{' '}
+              <span tw="font-bold">+{percentFormatter(uniqueCodeCoverage)}%</span>. <br />
               Finish your scope to add it to your total build coverage.
             </Message>
-          )}
+          }
         >
-          {active
-            ? <StripedProgressBar type="primary" value={`${uniqueCodeCoverage * (width / 100)}px`} />
-            : (
-              <AdditionalProgressBar
-                type="primary"
-                value={`${uniqueCodeCoverage * (width / 100)}px`}
-                testContext="unique-code-progress-bar"
-              />
-            )}
+          {active ? (
+            <StripedProgressBar type="primary" value={`${uniqueCodeCoverage * (width / 100)}px`} />
+          ) : (
+            <AdditionalProgressBar
+              type="primary"
+              value={`${uniqueCodeCoverage * (width / 100)}px`}
+              testContext="unique-code-progress-bar"
+            />
+          )}
         </Tooltip>
       </div>
     </div>

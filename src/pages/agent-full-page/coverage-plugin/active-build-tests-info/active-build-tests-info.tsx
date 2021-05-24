@@ -59,15 +59,23 @@ export const ActiveBuildTestsInfo = ({ testsInfo }: Props) => {
   return (
     <div tw="text-12 leading-16 text-monochrome-default" ref={ref}>
       <div className="flex justify-between items-center w-full">
-        <div tw="font-bold" data-test="active-build-tests-info:title">TESTS EXECUTION</div>
-        <Legend legendItems={[
-          { label: 'Auto', color: DATA_VISUALIZATION_COLORS.AUTO },
-          { label: 'Manual', color: DATA_VISUALIZATION_COLORS.MANUAL },
-        ]}
+        <div tw="font-bold" data-test="active-build-tests-info:title">
+          TESTS EXECUTION
+        </div>
+        <Legend
+          legendItems={[
+            { label: 'Auto', color: DATA_VISUALIZATION_COLORS.AUTO },
+            { label: 'Manual', color: DATA_VISUALIZATION_COLORS.MANUAL },
+          ]}
         />
       </div>
       <div tw="flex gap-1 items-baseline mt-6 mb-3">
-        <div tw="text-32 leading-40 text-monochrome-black" data-test="active-build-tests-info:executed-tests">{testsExecuted}</div>
+        <div
+          tw="text-32 leading-40 text-monochrome-black"
+          data-test="active-build-tests-info:executed-tests"
+        >
+          {testsExecuted}
+        </div>
         &nbsp;tests executed in {scopeId ? 'scope' : 'build'}
       </div>
       <div
@@ -77,34 +85,38 @@ export const ActiveBuildTestsInfo = ({ testsInfo }: Props) => {
         <div style={{ position: 'absolute' }}>
           {Boolean(autoTestsCount) && (
             <Tooltip
-              message={
-                `${autoTestsCount} Auto tests covered ${
-                  percentFormatter(autoTestsPercentage)}% of application in the current ${scopeId ? 'scope' : 'build'}`
-              }
+              message={`${autoTestsCount} Auto tests covered ${percentFormatter(
+                autoTestsPercentage,
+              )}% of application in the current ${scopeId ? 'scope' : 'build'}`}
             >
               <TestsBar
                 type="auto"
                 style={{
-                  width: `${Math.max(autoTestsBarWidth > minBarWidth
-                    ? autoTestsBarWidth
-                    : autoTestsBarWidth - (minBarWidth - manualTestsBarWidth), minBarWidth)}px`,
+                  width: `${Math.max(
+                    autoTestsBarWidth > minBarWidth
+                      ? autoTestsBarWidth
+                      : autoTestsBarWidth - (minBarWidth - manualTestsBarWidth),
+                    minBarWidth,
+                  )}px`,
                 }}
               />
             </Tooltip>
           )}
           {Boolean(manualTestsCount) && (
             <Tooltip
-              message={
-                `${manualTestsCount} Manual tests covered ${
-                  percentFormatter(manualTestsPercentage)}% of application in the current ${scopeId ? 'scope' : 'build'}`
-              }
+              message={`${manualTestsCount} Manual tests covered ${percentFormatter(
+                manualTestsPercentage,
+              )}% of application in the current ${scopeId ? 'scope' : 'build'}`}
             >
               <TestsBar
                 type="manual"
                 style={{
-                  width: `${Math.max(manualTestsBarWidth > minBarWidth
-                    ? manualTestsBarWidth
-                    : manualTestsBarWidth - (minBarWidth - autoTestsBarWidth), minBarWidth)}px`,
+                  width: `${Math.max(
+                    manualTestsBarWidth > minBarWidth
+                      ? manualTestsBarWidth
+                      : manualTestsBarWidth - (minBarWidth - autoTestsBarWidth),
+                    minBarWidth,
+                  )}px`,
                 }}
               />
             </Tooltip>

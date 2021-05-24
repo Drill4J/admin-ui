@@ -22,7 +22,7 @@ import { capitalize, snakeToSpaces } from 'utils';
 import { AgentStatus } from 'types/agent-status';
 import { useAgent } from 'hooks';
 import { usePluginState } from '../store';
-import { ReactComponent as LogoSvg } from './logo.svg';
+import LogoSvg from './logo.svg';
 
 interface Props {
   agentName?: string;
@@ -32,7 +32,7 @@ interface Props {
 const LogoWrapper = styled.div`
   ${tw`relative w-20 h-20 border-2 border-monochrome-black rounded-full`}
   &:before {
-    ${({ recording }: { recording?: boolean }) => recording && 'content: \'\';'}
+    ${({ recording }: { recording?: boolean }) => recording && "content: '';"}
     ${tw`absolute w-19 h-19 rounded-full`}
     background: conic-gradient(
             red,
@@ -82,10 +82,13 @@ const AgentStatusWrapper = styled.div(({ status }: { status?: AgentStatus }) => 
 
 export const PluginHeader = ({ agentName, agentStatus }: Props) => {
   const { loading } = usePluginState();
-  const { location: { pathname } } = useHistory();
-  const { params: { buildVersion = '', agentId = '' } = {} } = matchPath<{ buildVersion: string; agentId: string }>(pathname, {
-    path: '/:page/:agentId/:buildVersion',
-  }) || {};
+  const {
+    location: { pathname },
+  } = useHistory();
+  const { params: { buildVersion = '', agentId = '' } = {} } =
+    matchPath<{ buildVersion: string; agentId: string }>(pathname, {
+      path: '/:page/:agentId/:buildVersion',
+    }) || {};
   const { buildVersion: activeBuildVersion = '' } = useAgent(agentId) || {};
 
   return (
@@ -96,12 +99,14 @@ export const PluginHeader = ({ agentName, agentStatus }: Props) => {
             <LogoSvg tw="absolute bottom-0 left-0" />
           </LogoWrapper>
           <AgentInfo>
-            <div className="text-ellipsis text-32 leading-40" title={agentName}>{agentName}</div>
+            <div className="text-ellipsis text-32 leading-40" title={agentName}>
+              {agentName}
+            </div>
             <div className="flex items-center w-full">
-              <AgentStatusWrapper status={agentStatus}>{capitalize(snakeToSpaces(agentStatus))}</AgentStatusWrapper>
-              <div
-                className="flex items-center ml-2"
-              >
+              <AgentStatusWrapper status={agentStatus}>
+                {capitalize(snakeToSpaces(agentStatus))}
+              </AgentStatusWrapper>
+              <div className="flex items-center ml-2">
                 {agentStatus === AGENT_STATUS.BUSY && <Spinner />}
               </div>
             </div>

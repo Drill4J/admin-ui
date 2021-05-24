@@ -32,12 +32,12 @@ const Content = styled.div`
   }
 `;
 
-const ActiveBuildTestsBar = styled.div<{isShowActiveScopeInfo?: boolean}>`
+const ActiveBuildTestsBar = styled.div<{ isShowActiveScopeInfo?: boolean }>`
   ${tw`col-start-1 col-span-2 lg:col-span-1`}
   ${({ isShowActiveScopeInfo }) => !isShowActiveScopeInfo && tw`col-span-2 lg:col-span-2`}
 `;
 
-const Cards = styled.div<{isShowActiveScopeInfo?: boolean}>`
+const Cards = styled.div<{ isShowActiveScopeInfo?: boolean }>`
   ${tw`grid gap-2 gap-y-8 col-start-1 lg:grid-cols-2`}
   ${({ isShowActiveScopeInfo }) => !isShowActiveScopeInfo && tw`col-span-2 grid-cols-2`}
 
@@ -52,7 +52,10 @@ interface Props {
 
 export const BuildProjectTests = ({ status }: Props) => {
   const testsByType = useBuildVersion<TestTypeSummary[]>('/build/summary/tests/by-type') || [];
-  const testsInfo: TestsInfo = testsByType.reduce((test, testType) => ({ ...test, [testType.type]: testType }), {});
+  const testsInfo: TestsInfo = testsByType.reduce(
+    (test, testType) => ({ ...test, [testType.type]: testType }),
+    {},
+  );
   const scope = useActiveScope();
   const isShowActiveScopeInfo = scope?.active && status === AGENT_STATUS.ONLINE;
 

@@ -41,7 +41,7 @@ export const TestsToRunSection = ({ testsToRun: { count = 0, byType = {} } = {} 
     <DashboardSection
       label="Tests to run"
       info={count}
-      graph={(
+      graph={
         <Tooltip message={<SectionTooltip data={tooltipData} hideValue />}>
           <div className="flex items-center w-full">
             {Object.keys(TESTS_TO_RUN_TYPES_COLOR).map((testType) => (
@@ -56,7 +56,7 @@ export const TestsToRunSection = ({ testsToRun: { count = 0, byType = {} } = {} 
             ))}
           </div>
         </Tooltip>
-      )}
+      }
     />
   );
 };

@@ -16,7 +16,11 @@
 import { DrillSocket } from 'common/connection/drill-socket';
 import { useEffect, useState } from 'react';
 
-export function useWsConnection<Data>(socket: DrillSocket, topic: string, message?: Record<string, unknown>) {
+export function useWsConnection<Data>(
+  socket: DrillSocket,
+  topic: string,
+  message?: Record<string, unknown>,
+) {
   const [data, setData] = useState<Data | null>(null);
 
   useEffect(() => {

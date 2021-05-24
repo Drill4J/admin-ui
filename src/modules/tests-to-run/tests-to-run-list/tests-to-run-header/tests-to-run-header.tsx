@@ -58,9 +58,7 @@ export const TestsToRunHeader = ({
     } = {},
   } = summaryTestsToRun;
   const [modalIsOpen, setModalIsOpen] = useState(false);
-  const {
-    buildVersion, previousBuildVersion, activeBuildVersion, agentType,
-  } = agentInfo;
+  const { buildVersion, previousBuildVersion, activeBuildVersion, agentType } = agentInfo;
   const totalDuration = getDuration(previousBuildTestsDuration);
   const estimatedTimeSaved = getDuration(previousBuildTestsDuration - parentDuration);
   const totalTimeSaved = getDuration(
@@ -127,11 +125,11 @@ export const TestsToRunHeader = ({
               percentage={
                 totalAutoTestsToRun
                   ? percentFormatter(
-                    convertToPercentage(
-                      previousBuildTestsDuration - parentDuration,
-                      previousBuildTestsDuration,
-                    ),
-                  )
+                      convertToPercentage(
+                        previousBuildTestsDuration - parentDuration,
+                        previousBuildTestsDuration,
+                      ),
+                    )
                   : undefined
               }
               message={
@@ -150,11 +148,11 @@ export const TestsToRunHeader = ({
               percentage={
                 totalAutoTestsToRun && totalAutoTestsToRun === completedAutoTestsToRun
                   ? percentFormatter(
-                    convertToPercentage(
-                      previousBuildTestsDuration - currentDuration,
-                      previousBuildTestsDuration,
-                    ),
-                  )
+                      convertToPercentage(
+                        previousBuildTestsDuration - currentDuration,
+                        previousBuildTestsDuration,
+                      ),
+                    )
                   : undefined
               }
               message={getTotalSavedTimeTooltipMessage(

@@ -39,8 +39,9 @@ export const SystemSettingsStep = () => (
           />
         </FormGroup>
         <div tw="w-97 text-12 leading-16 text-monochrome-default">
-          Make sure you add application packages only, otherwise agent&apos;s performance will be affected.
-          Use new line as a separator, &quot;!&quot; before package/class for excluding and use &quot;/&quot; in a package path.
+          Make sure you add application packages only, otherwise agent&apos;s performance will be
+          affected. Use new line as a separator, &quot;!&quot; before package/class for excluding
+          and use &quot;/&quot; in a package path.
         </div>
       </div>
       <FormGroup tw="w-97" label="Header Mapping" optional>

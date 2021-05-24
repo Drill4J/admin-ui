@@ -34,28 +34,37 @@ const TooltipMessage = styled.div`
   ${tw`text-center`}
 `;
 
-export const ActionSection =
-  ({
-    label = '', previousBuild: { previousBuildVersion = '', previousBuildTests = [] } = {}, children,
-  }: Props) => (
-    <div tw="border-l border-monochrome-medium-tint text-monochrome-default">
-      <div tw="ml-4 mr-10 text-20 leading-32 text-monochrome-black" data-test={`action-section:action:${label}`}>
-        <Tooltip
-          position={label === 'risks' ? 'top-center' : 'top-left'}
-          message={getTooltipMessage(label, previousBuildVersion, previousBuildTests.length)}
-        >
-          <div tw="font-bold text-12 leading-16 uppercase">{label}</div>
-          {previousBuildVersion ? children : <span data-test={`action-section:no-value:${spacesToDashes(label)}`}>&ndash;</span> }
-        </Tooltip>
-      </div>
+export const ActionSection = ({
+  label = '',
+  previousBuild: { previousBuildVersion = '', previousBuildTests = [] } = {},
+  children,
+}: Props) => (
+  <div tw="border-l border-monochrome-medium-tint text-monochrome-default">
+    <div
+      tw="ml-4 mr-10 text-20 leading-32 text-monochrome-black"
+      data-test={`action-section:action:${label}`}
+    >
+      <Tooltip
+        position={label === 'risks' ? 'top-center' : 'top-left'}
+        message={getTooltipMessage(label, previousBuildVersion, previousBuildTests.length)}
+      >
+        <div tw="font-bold text-12 leading-16 uppercase">{label}</div>
+        {previousBuildVersion ? (
+          children
+        ) : (
+          <span data-test={`action-section:no-value:${spacesToDashes(label)}`}>&ndash;</span>
+        )}
+      </Tooltip>
     </div>
-  );
+  </div>
+);
 
 function getTooltipMessage(label: string, buildVersion: string, testsCount: number) {
   if (!buildVersion) {
     return (
       <TooltipMessage>
-        There are no data about {label} on the initial build.<br />
+        There are no data about {label} on the initial build.
+        <br />
         It will be calculated when at least 1 parent build appears.
       </TooltipMessage>
     );
@@ -63,7 +72,8 @@ function getTooltipMessage(label: string, buildVersion: string, testsCount: numb
   if (buildVersion && testsCount === 0 && label === 'tests to run') {
     return (
       <TooltipMessage>
-        There are no tests in the parent build<br />
+        There are no tests in the parent build
+        <br />
         to create a list of suggested tests to run
       </TooltipMessage>
     );

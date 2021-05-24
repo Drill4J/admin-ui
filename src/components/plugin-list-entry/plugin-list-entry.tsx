@@ -30,25 +30,26 @@ interface Props {
 
 const PluginElements = styled.div`
   ${tw`flex items-center pr-4 pl-4`};
-  ${({ selected }: { selected?: boolean }) => selected && tw`bg-blue-light-tint text-monochrome-white`};
+  ${({ selected }: { selected?: boolean }) =>
+    selected && tw`bg-blue-light-tint text-monochrome-white`};
 `;
 
 const PluginsIconWrapper = styled.div`
   min-width: 80px;
   ${tw`flex items-center justify-center mt-4 mr-6 mb-4 ml-4 h-20 rounded-2xl bg-monochrome-light-tint text-monochrome-default`};
-  ${({ selected }: { selected?: boolean }) => selected && tw`bg-blue-default text-monochrome-white`};
+  ${({ selected }: { selected?: boolean }) =>
+    selected && tw`bg-blue-default text-monochrome-white`};
 `;
 
-export const PluginListEntry = ({
-  input, meta, description, onClick, icon, children,
-}: Props) => {
+export const PluginListEntry = ({ input, meta, description, onClick, icon, children }: Props) => {
   const PluginIcon = Icons[icon] || Icons.Plugins;
   return (
-    <div css={[
-      tw`border-b border-monochrome-medium-tint cursor-pointer`,
-      tw`first:border-t border-monochrome-medium-tint`,
-      tw`hover:bg-monochrome-light-tint`,
-    ]}
+    <div
+      css={[
+        tw`border-b border-monochrome-medium-tint cursor-pointer`,
+        tw`first:border-t border-monochrome-medium-tint`,
+        tw`hover:bg-monochrome-light-tint`,
+      ]}
     >
       <PluginElements onClick={onClick} selected={input && input.checked}>
         {input && meta && <Fields.Checkbox input={input} meta={meta} />}

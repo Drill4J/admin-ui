@@ -30,7 +30,7 @@ interface Props {
 }
 
 export const GetSuggestedTestsModal = ({ isOpen, onToggle, agentType }: Props) => {
-  const { agentId = '', pluginId = '' } = useParams<{ agentId: string; pluginId: string; }>();
+  const { agentId = '', pluginId = '' } = useParams<{ agentId: string; pluginId: string }>();
   const [copied, setCopied] = useState(false);
   useEffect(() => {
     const timeout = setTimeout(() => setCopied(false), 5000);
@@ -39,16 +39,15 @@ export const GetSuggestedTestsModal = ({ isOpen, onToggle, agentType }: Props) =
   }, [copied]);
 
   return (
-    <Popup
-      isOpen={isOpen}
-      onToggle={onToggle}
-      header="Get Suggested Tests"
-      closeOnFadeClick
-    >
+    <Popup isOpen={isOpen} onToggle={onToggle} header="Get Suggested Tests" closeOnFadeClick>
       <div tw="flex flex-col pt-4 w-108 px-6 pb-6 gap-y-7">
-        <div tw="flex flex-col gap-y-4 text-14 leading-20 break-words text-monochrome-black" data-test="get-suggested-tests-modal:message">
+        <div
+          tw="flex flex-col gap-y-4 text-14 leading-20 break-words text-monochrome-black"
+          data-test="get-suggested-tests-modal:message"
+        >
           <span>
-            These are recommendations for this build updates only.<br />
+            These are recommendations for this build updates only.
+            <br />
             Use this Curl in your command line to get JSON:
           </span>
           <TestsToRunUrl agentId={agentId} pluginId={pluginId} agentType={agentType} />
@@ -64,14 +63,14 @@ export const GetSuggestedTestsModal = ({ isOpen, onToggle, agentType }: Props) =
             }}
             data-test="get-suggested-tests-modal:copy-to-clipboard-button"
           >
-            {copied
-              ? (
-                <div tw="flex justify-center items-center gap-x-2 w-full">
-                  <Icons.Check height={10} width={14} viewBox="0 0 14 10" />
-                  Copied
-                </div>
-              )
-              : 'Copy to Clipboard'}
+            {copied ? (
+              <div tw="flex justify-center items-center gap-x-2 w-full">
+                <Icons.Check height={10} width={14} viewBox="0 0 14 10" />
+                Copied
+              </div>
+            ) : (
+              'Copy to Clipboard'
+            )}
           </Button>
           <Button
             secondary

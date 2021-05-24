@@ -35,17 +35,13 @@ const BuildInfo = styled.div`
 
 export const CoverageSection = () => {
   const { version: previousBuildVersion = '' } = useBuildVersion<ParentBuild>('/data/parent') || {};
-  const { percentage: previousBuildCodeCoverage = 0 } = usePreviousBuildCoverage(previousBuildVersion) || {};
-  const { coverage: buildCodeCoverage = 0, scopeCount = 0 } = useBuildVersion<BuildSummary>('/build/summary') || {};
+  const { percentage: previousBuildCodeCoverage = 0 } =
+    usePreviousBuildCoverage(previousBuildVersion) || {};
+  const { coverage: buildCodeCoverage = 0, scopeCount = 0 } =
+    useBuildVersion<BuildSummary>('/build/summary') || {};
   const {
-    all: {
-      total: allMethodsTotalCount = 0,
-      covered: allMethodsCoveredCount = 0,
-    } = {},
-    new: {
-      total: newMethodsTotalCount = 0,
-      covered: newMethodsCoveredCount = 0,
-    } = {},
+    all: { total: allMethodsTotalCount = 0, covered: allMethodsCoveredCount = 0 } = {},
+    new: { total: newMethodsTotalCount = 0, covered: newMethodsCoveredCount = 0 } = {},
     modified: {
       total: modifiedMethodsTotalCount = 0,
       covered: modifiedMethodsCoveredCount = 0,
@@ -66,7 +62,8 @@ export const CoverageSection = () => {
       covered: modifiedMethodsCoveredCount,
     },
   };
-  const buildDiff = percentFormatter(buildCodeCoverage) - percentFormatter(previousBuildCodeCoverage);
+  const buildDiff =
+    percentFormatter(buildCodeCoverage) - percentFormatter(previousBuildCodeCoverage);
   const isFirstBuild = !previousBuildVersion;
 
   return (
@@ -74,7 +71,7 @@ export const CoverageSection = () => {
       <DashboardSection
         label="Build Coverage"
         info={`${percentFormatter(buildCodeCoverage)}%`}
-        graph={(
+        graph={
           <Tooltip tw="relative" message={<CoverageSectionTooltip data={tooltipData} />}>
             <SingleBar
               width={108}
@@ -89,9 +86,11 @@ export const CoverageSection = () => {
               />
             )}
           </Tooltip>
-        )}
-        additionalInfo={(
-          Boolean(buildDiff) && !isFirstBuild && scopeCount > 0 && (
+        }
+        additionalInfo={
+          Boolean(buildDiff) &&
+          !isFirstBuild &&
+          scopeCount > 0 && (
             <BuildInfo>
               {`${buildDiff > 0 ? '+' : '-'} ${percentFormatter(Math.abs(buildDiff))}% vs`}
               <div className="text-ellipsis">
@@ -104,7 +103,8 @@ export const CoverageSection = () => {
                 </NavLink>
               </div>
             </BuildInfo>
-          ))}
+          )
+        }
       />
     </div>
   );

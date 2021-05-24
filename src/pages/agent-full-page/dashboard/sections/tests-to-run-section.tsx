@@ -23,7 +23,8 @@ import { TestTypes } from 'types/test-types';
 import { useBuildVersion } from 'hooks';
 
 export const TestsToRunSection = () => {
-  const { testsToRun: { count = 0, byType: testsToRunByType = {} } = {} } = useBuildVersion<BuildSummary>('/build/summary') || {};
+  const { testsToRun: { count = 0, byType: testsToRunByType = {} } = {} } =
+    useBuildVersion<BuildSummary>('/build/summary') || {};
   const tooltipData = {
     auto: {
       count: testsToRunByType?.AUTO,
@@ -39,7 +40,7 @@ export const TestsToRunSection = () => {
     <DashboardSection
       label="Tests to run"
       info={count}
-      graph={(
+      graph={
         <Tooltip message={<SectionTooltip data={tooltipData} hideValue />}>
           <div className="flex items-center w-full">
             {Object.keys(TESTS_TO_RUN_TYPES_COLOR).map((testType) => (
@@ -54,7 +55,7 @@ export const TestsToRunSection = () => {
             ))}
           </div>
         </Tooltip>
-      )}
+      }
     />
   );
 };

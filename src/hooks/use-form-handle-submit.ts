@@ -17,13 +17,22 @@ import { useEffect, useRef } from 'react';
 import { FormRenderProps } from 'react-final-form';
 
 export function useFormHandleSubmit({
-  handleSubmit, invalid, pristine, submitting,
+  handleSubmit,
+  invalid,
+  pristine,
+  submitting,
 }: FormRenderProps) {
   const node = useRef<HTMLFormElement>(null);
 
   useEffect(() => {
     const listener = (event: KeyboardEvent) => {
-      if ((event.ctrlKey || event.metaKey) && event.keyCode === 13 && !submitting && !pristine && !submitting) {
+      if (
+        (event.ctrlKey || event.metaKey) &&
+        event.keyCode === 13 &&
+        !submitting &&
+        !pristine &&
+        !submitting
+      ) {
         handleSubmit();
       }
     };

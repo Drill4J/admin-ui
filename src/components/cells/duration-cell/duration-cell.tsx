@@ -21,9 +21,7 @@ interface Props {
 }
 
 export const DurationCell = ({ value = 0 }: Props) => {
-  const {
-    hours, seconds, minutes, isLessThenOneSecond,
-  } = getDuration(value);
+  const { hours, seconds, minutes, isLessThenOneSecond } = getDuration(value);
 
   return (
     <div tw="leading-16 text-monochrome-black">

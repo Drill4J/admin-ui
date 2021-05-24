@@ -39,9 +39,7 @@ const Content = styled.div(({ withMargin }: { withMargin?: boolean }) => withMar
 
 export const NameColumn = ({
   withMargin,
-  agent: {
-    id, name, buildVersion, agentType, status, agentVersion, ...agent
-  } = {},
+  agent: { id, name, buildVersion, agentType, status, agentVersion, ...agent } = {},
 }: Props) => {
   const { agents = [] } = agent as ServiceGroupAgents;
   const unregisteredAgentsCount = agents.reduce(
@@ -51,29 +49,37 @@ export const NameColumn = ({
   const isServiceGroup = agentType === 'ServiceGroup';
   const isOfflineAgent = agentType === 'Java' && !agentVersion;
   const AgentIcon = Icons[isOfflineAgent ? 'OfflineAgent' : 'Agent'];
-  const agentIsDisabled = status === AGENT_STATUS.NOT_REGISTERED || isOfflineAgent
-    || (unregisteredAgentsCount !== 0 && unregisteredAgentsCount === agents.length);
+  const agentIsDisabled =
+    status === AGENT_STATUS.NOT_REGISTERED ||
+    isOfflineAgent ||
+    (unregisteredAgentsCount !== 0 && unregisteredAgentsCount === agents.length);
 
   return (
     <Content tw="font-bold text-14 leading-48" withMargin={withMargin}>
       <div className="flex items-center gap-x-2 text-ellipsis">
         <AgentTypeIcon disabled={agentIsDisabled}>
-          {isServiceGroup
-            ? <Icons.ServiceGroup />
-            : (
-              <Tooltip message={isOfflineAgent && 'Offline Agent'}>
-                <AgentIcon />
-              </Tooltip>
-            )}
+          {isServiceGroup ? (
+            <Icons.ServiceGroup />
+          ) : (
+            <Tooltip message={isOfflineAgent && 'Offline Agent'}>
+              <AgentIcon />
+            </Tooltip>
+          )}
         </AgentTypeIcon>
-        {(status === AGENT_STATUS.NOT_REGISTERED) && <Badge tw="max-h-20px" color="green">New</Badge>}
+        {status === AGENT_STATUS.NOT_REGISTERED && (
+          <Badge tw="max-h-20px" color="green">
+            New
+          </Badge>
+        )}
         {unregisteredAgentsCount > 0 && (
           <Badge tw="max-h-20px" color="green">{`+${unregisteredAgentsCount}`}</Badge>
         )}
         <AgentName
-          to={isServiceGroup
-            ? `/service-group-full-page/${id}/service-group-dashboard`
-            : `/full-page/${id}/${buildVersion}/dashboard`}
+          to={
+            isServiceGroup
+              ? `/service-group-full-page/${id}/service-group-dashboard`
+              : `/full-page/${id}/${buildVersion}/dashboard`
+          }
           disabled={agentIsDisabled}
           data-test="name-column"
           title={isServiceGroup ? `${name || id} (${agents.length})` : name || id}

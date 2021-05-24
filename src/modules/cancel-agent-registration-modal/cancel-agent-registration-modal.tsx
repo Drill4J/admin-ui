@@ -24,22 +24,13 @@ interface Props {
   message: React.ReactNode;
 }
 
-export const CancelAgentRegistrationModal = ({
-  isOpen, onToggle, header, message,
-}: Props) => {
+export const CancelAgentRegistrationModal = ({ isOpen, onToggle, header, message }: Props) => {
   const { push } = useHistory();
   return (
-    <Popup
-      isOpen={isOpen}
-      onToggle={onToggle}
-      header={header}
-      closeOnFadeClick
-    >
+    <Popup isOpen={isOpen} onToggle={onToggle} header={header} closeOnFadeClick>
       <div tw="w-108">
         <div tw="m-6">
-          <span tw="text-14">
-            {message}
-          </span>
+          <span tw="text-14">{message}</span>
           <div tw="flex mt-6 gap-4">
             <Button primary size="large" onClick={() => push('/agents')}>
               Abort

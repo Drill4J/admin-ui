@@ -20,13 +20,10 @@ export function useIntersection<N extends HTMLElement>(threshold = 1.0) {
   const ref = useRef<N>(null);
 
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => setVisible(entry.isIntersecting),
-      {
-        root: null,
-        threshold,
-      },
-    );
+    const observer = new IntersectionObserver(([entry]) => setVisible(entry.isIntersecting), {
+      root: null,
+      threshold,
+    });
     ref && ref.current && observer.observe(ref.current);
 
     return () => {

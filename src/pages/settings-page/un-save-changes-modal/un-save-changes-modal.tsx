@@ -26,15 +26,18 @@ export const UnSaveChangeModal = ({ setNextLocation, path }: Props) => (
   <Popup isOpen={Boolean(path)} onToggle={() => setNextLocation('')} header="Unsaved Changes">
     <div tw="pt-5 px-6 pb-6 w-108">
       <div tw="mb-6 text-14 leading-20 text-monochrome-black">
-        There are unsaved changes. If you would like to keep changes,<br /> press the “Continue Editing” button.
+        There are unsaved changes. If you would like to keep changes,
+        <br /> press the “Continue Editing” button.
       </div>
       <div tw="flex gap-x-4">
-        <Button primary size="large" onClick={() => setNextLocation('')}>Continue Editing</Button>
-        <Link to={{ pathname: path, state: { pristine: true } }} onClick={() => setNextLocation('')}>
-          <Button
-            secondary
-            size="large"
-          >
+        <Button primary size="large" onClick={() => setNextLocation('')}>
+          Continue Editing
+        </Button>
+        <Link
+          to={{ pathname: path, state: { pristine: true } }}
+          onClick={() => setNextLocation('')}
+        >
+          <Button secondary size="large">
             Leave Without Saving
           </Button>
         </Link>

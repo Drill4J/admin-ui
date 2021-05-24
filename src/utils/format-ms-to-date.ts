@@ -16,7 +16,10 @@
 export function formatMsToDate(duration: number) {
   if (Number.isNaN(duration) || !Number.isFinite(duration)) {
     return {
-      days: 0, hours: 0, minutes: 0, seconds: 0,
+      days: 0,
+      hours: 0,
+      minutes: 0,
+      seconds: 0,
     };
   }
   const days = Math.floor(duration / 86400000);
@@ -27,6 +30,9 @@ export function formatMsToDate(duration: number) {
   );
 
   return {
-    days, hours, minutes, seconds,
+    days,
+    hours,
+    minutes,
+    seconds,
   };
 }

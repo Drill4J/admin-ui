@@ -34,11 +34,7 @@ const Name = styled(Link)`
 export const TestToCodeNameCell = ({ name, additionalInformation, link }: Props) => (
   <Content>
     <div tw="text-ellipsis text-blue-default">
-      <Name
-        to={link}
-        data-test="test-to-code-name-cell:name-cell"
-        title={name}
-      >
+      <Name to={link} data-test="test-to-code-name-cell:name-cell" title={name}>
         {name}
       </Name>
     </div>

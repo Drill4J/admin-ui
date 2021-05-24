@@ -22,7 +22,7 @@ interface Props {
   type: Statuses;
 }
 
-const Cell = styled.div(({ type }: {type: Statuses}) => [
+const Cell = styled.div(({ type }: { type: Statuses }) => [
   tw`font-bold`,
   type === 'PASSED' && tw`text-green-default`,
   type === 'FAILED' && tw`text-red-default`,

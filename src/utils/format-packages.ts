@@ -13,7 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-export const formatPackages = (value: string[] = []): string => value.reduce(
-  (acc: string, item: string, index: number) => (index !== value.length - 1 && item !== '' ? `${acc + item}\n` : acc + item),
-  '',
-);
+export const formatPackages = (value: string[] = []): string =>
+  value.reduce(
+    (acc: string, item: string, index: number) =>
+      index !== value.length - 1 && item !== '' ? `${acc + item}\n` : acc + item,
+    '',
+  );

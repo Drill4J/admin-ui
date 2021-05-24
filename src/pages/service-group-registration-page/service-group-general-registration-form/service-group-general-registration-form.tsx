@@ -21,13 +21,13 @@ import { Fields } from 'forms';
 
 const HEADERS_HEIGHT = 275;
 
-const Content = styled.div`height: calc(100vh - ${HEADERS_HEIGHT}px);`;
+const Content = styled.div`
+  height: calc(100vh - ${HEADERS_HEIGHT}px);
+`;
 
 export const ServiceGroupGeneralRegistrationForm = () => (
   <>
-    <GeneralAlerts type="INFO">
-      Set up basic Service Group settings.
-    </GeneralAlerts>
+    <GeneralAlerts type="INFO">Set up basic Service Group settings.</GeneralAlerts>
     <Content tw="flex flex-col items-center gap-y-6 pt-10 overflow-auto">
       <FormGroup tw="w-97" label="Service Group ID">
         <Field name="id" component={Fields.Input} placeholder="Enter agent's ID" disabled />
@@ -44,11 +44,7 @@ export const ServiceGroupGeneralRegistrationForm = () => (
         />
       </FormGroup>
       <FormGroup tw="w-97" label="Environment" optional>
-        <Field
-          name="environment"
-          component={Fields.Input}
-          placeholder="Specify an environment"
-        />
+        <Field name="environment" component={Fields.Input} placeholder="Specify an environment" />
       </FormGroup>
     </Content>
   </>

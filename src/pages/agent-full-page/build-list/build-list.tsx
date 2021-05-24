@@ -20,16 +20,15 @@ import tw, { styled } from 'twin.macro';
 
 import { Table } from 'components';
 import { defaultAdminSocket } from 'common/connection';
-import {
-  useWsConnection, useAgent, useBaselineVersion,
-} from 'hooks';
+import { useWsConnection, useAgent, useBaselineVersion } from 'hooks';
 import { dateTimeFormatter } from 'utils';
 import { BuildVersion } from 'types/build-version';
 import { setBuildVersion, usePluginDispatch } from '../store';
 
 export const BuildList = () => {
   const { agentId = '' } = useParams<{ agentId: string }>();
-  const buildVersions = useWsConnection<BuildVersion[]>(defaultAdminSocket, `/agents/${agentId}/builds`) || [];
+  const buildVersions =
+    useWsConnection<BuildVersion[]>(defaultAdminSocket, `/agents/${agentId}/builds`) || [];
   const { buildVersion: activeBuildVersion } = useAgent(agentId) || {};
   const { version: baseline } = useBaselineVersion(agentId, activeBuildVersion) || {};
   const dispatch = usePluginDispatch();
@@ -53,15 +52,21 @@ export const BuildList = () => {
                   onClick={() => dispatch(setBuildVersion(buildVersion))}
                   title={buildVersion}
                 >
-                  <Link tw="link text-ellipsis" to={`/full-page/${agentId}/${buildVersion}/dashboard`}>{buildVersion}</Link>
+                  <Link
+                    tw="link text-ellipsis"
+                    to={`/full-page/${agentId}/${buildVersion}/dashboard`}
+                  >
+                    {buildVersion}
+                  </Link>
                   {baseline === buildVersion && (
                     <Tooltip
-                      message={(
+                      message={
                         <span>
-                          This build is set as baseline.<br />
+                          This build is set as baseline.
+                          <br />
                           All subsequent builds are compared with it.
                         </span>
-                      )}
+                      }
                       position="top-right"
                     >
                       <Icons.Flag tw="flex items-center text-monochrome-default" />

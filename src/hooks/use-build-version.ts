@@ -36,16 +36,17 @@ export function useBuildVersion<Data>(
       setData(newData);
     }
 
-    const unsubscribe = agentId && buildVersion
-      ? defaultTest2CodePluginSocket.subscribe(topic, handleDataChange, {
-        agentId,
-        buildVersion: activeBuildVersion || buildVersion,
-        type: 'AGENT',
-        filters,
-        orderBy,
-        output,
-      })
-      : null;
+    const unsubscribe =
+      agentId && buildVersion
+        ? defaultTest2CodePluginSocket.subscribe(topic, handleDataChange, {
+            agentId,
+            buildVersion: activeBuildVersion || buildVersion,
+            type: 'AGENT',
+            filters,
+            orderBy,
+            output,
+          })
+        : null;
 
     return () => {
       unsubscribe && unsubscribe();

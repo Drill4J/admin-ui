@@ -25,13 +25,14 @@ interface Props {
 
 export const InitialConfigController = ({ children }: Props) => {
   const { pathname } = useLocation();
-  const { params: { agentId = '', buildVersion = '', pluginId = '' } = {} } = matchPath<{
-    agentId: string;
-    pluginId: string;
-    buildVersion: string;
-  }>(pathname, {
-    path: '/full-page/:agentId/:buildVersion/:pluginId',
-  }) || {};
+  const { params: { agentId = '', buildVersion = '', pluginId = '' } = {} } =
+    matchPath<{
+      agentId: string;
+      pluginId: string;
+      buildVersion: string;
+    }>(pathname, {
+      path: '/full-page/:agentId/:buildVersion/:pluginId',
+    }) || {};
   const agent = useAgent(agentId) || {};
 
   const dispatch = usePluginDispatch();

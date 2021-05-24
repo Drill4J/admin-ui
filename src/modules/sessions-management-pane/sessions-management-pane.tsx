@@ -16,24 +16,15 @@
 import { useEffect } from 'react';
 import { Form } from 'react-final-form';
 import { useParams } from 'react-router-dom';
-import {
-  Modal, GeneralAlerts, Icons,
-} from '@drill4j/ui-kit';
+import { Modal, GeneralAlerts, Icons } from '@drill4j/ui-kit';
 import 'twin.macro';
 
-import {
-  composeValidators,
-  sizeLimit,
-  required,
-  handleFieldErrors,
-} from 'forms';
+import { composeValidators, sizeLimit, required, handleFieldErrors } from 'forms';
 import { useCloseModal, useGeneralAlertMessage } from 'hooks';
 import { Stub } from 'components';
 import { ManagementNewSession } from './management-new-session';
 import { useActiveSessions } from './use-active-sessions';
-import {
-  startServiceGroupSessions, startAgentSession,
-} from './sessions-management-pane-api';
+import { startServiceGroupSessions, startAgentSession } from './sessions-management-pane-api';
 import { ManagementActiveSessions } from './management-active-sessions';
 import { ActiveSessionsList } from './active-sessions-list';
 import { BulkOperationWarning } from './bulk-operation-warning';
@@ -43,7 +34,10 @@ import { setIsNewSession, useSessionsPaneDispatch, useSessionsPaneState } from '
 const validateManageSessionsPane = composeValidators(
   required('sessionId', 'Session ID'),
   sizeLimit({
-    name: 'sessionId', alias: 'Session ID', min: 1, max: 256,
+    name: 'sessionId',
+    alias: 'Session ID',
+    min: 1,
+    max: 256,
   }),
 );
 
@@ -52,8 +46,16 @@ export const SessionsManagementPane = () => {
   const { bulkOperation, isNewSession } = useSessionsPaneState();
   const { generalAlertMessage, showGeneralAlertMessage } = useGeneralAlertMessage();
   const {
-    agentId = '', serviceGroupId = '', pluginId = '', buildVersion = '',
-  } = useParams<{ agentId: string; serviceGroupId: string; pluginId: string; buildVersion: string}>();
+    agentId = '',
+    serviceGroupId = '',
+    pluginId = '',
+    buildVersion = '',
+  } = useParams<{
+    agentId: string;
+    serviceGroupId: string;
+    pluginId: string;
+    buildVersion: string;
+  }>();
   const agentType = serviceGroupId ? 'ServiceGroup' : 'Agent';
   const id = agentId || serviceGroupId;
   const activeSessions = useActiveSessions(agentType, id, buildVersion) || [];
@@ -64,7 +66,10 @@ export const SessionsManagementPane = () => {
   return (
     <Modal isOpen onToggle={closeModal}>
       <Form
-        onSubmit={async (values: { sessionId: string; isRealtime: boolean; isGlobal: boolean }, form): Promise<unknown> => {
+        onSubmit={async (
+          values: { sessionId: string; isRealtime: boolean; isGlobal: boolean },
+          form,
+        ): Promise<unknown> => {
           try {
             const response = await (agentId
               ? startAgentSession(agentId, pluginId)(values)
@@ -73,25 +78,38 @@ export const SessionsManagementPane = () => {
             form.change('sessionId', '');
             form.change('isGlobal', false);
             form.change('isRealtime', false);
-            showGeneralAlertMessage({ type: 'SUCCESS', text: 'New session has been started successfully.' });
+            showGeneralAlertMessage({
+              type: 'SUCCESS',
+              text: 'New session has been started successfully.',
+            });
             return response;
           } catch (error) {
             if (error?.response?.data?.code === 409) {
-              const { data: { fieldErrors = [] } = {}, message: errorMessage = '' } = error?.response?.data || {};
-              errorMessage && showGeneralAlertMessage({
-                type: 'ERROR',
-                text: errorMessage || 'There is some issue with your action. Please try again later.',
-              });
+              const { data: { fieldErrors = [] } = {}, message: errorMessage = '' } =
+                error?.response?.data || {};
+              errorMessage &&
+                showGeneralAlertMessage({
+                  type: 'ERROR',
+                  text:
+                    errorMessage || 'There is some issue with your action. Please try again later.',
+                });
 
               return handleFieldErrors(fieldErrors);
             }
-            showGeneralAlertMessage({ type: 'ERROR', text: 'There is some issue with your action. Please try again  later.' });
+            showGeneralAlertMessage({
+              type: 'ERROR',
+              text: 'There is some issue with your action. Please try again  later.',
+            });
             return error;
           }
         }}
         validate={validateManageSessionsPane}
         render={({
-          invalid, handleSubmit, dirtySinceLastSubmit, submitting, hasValidationErrors,
+          invalid,
+          handleSubmit,
+          dirtySinceLastSubmit,
+          submitting,
+          hasValidationErrors,
         }) => (
           <form onSubmit={handleSubmit} tw="flex flex-col h-full">
             <div
@@ -105,8 +123,13 @@ export const SessionsManagementPane = () => {
                 {generalAlertMessage.text}
               </GeneralAlerts>
             )}
-            {isNewSession &&
-            <ManagementNewSession agentId={agentId} serviceGroupId={serviceGroupId} hasGlobalSession={hasGlobalSession} />}
+            {isNewSession && (
+              <ManagementNewSession
+                agentId={agentId}
+                serviceGroupId={serviceGroupId}
+                hasGlobalSession={hasGlobalSession}
+              />
+            )}
             {!isNewSession && activeSessions.length > 0 && (
               <>
                 <ManagementActiveSessions activeSessions={activeSessions} />
@@ -119,7 +142,14 @@ export const SessionsManagementPane = () => {
             )}
             {!isNewSession && activeSessions.length === 0 && (
               <Stub
-                icon={<Icons.Test width={120} height={134} viewBox="0 0 18 20" data-test="empty-active-sessions-stub:test-icon" />}
+                icon={
+                  <Icons.Test
+                    width={120}
+                    height={134}
+                    viewBox="0 0 18 20"
+                    data-test="empty-active-sessions-stub:test-icon"
+                  />
+                }
                 title="There are no active sessions"
                 message="You can use this menu to start a new one."
               />
@@ -135,7 +165,9 @@ export const SessionsManagementPane = () => {
               ) : (
                 <ActionsPanel
                   activeSessions={activeSessions}
-                  startSessionDisabled={(invalid && !dirtySinceLastSubmit) || hasValidationErrors || submitting}
+                  startSessionDisabled={
+                    (invalid && !dirtySinceLastSubmit) || hasValidationErrors || submitting
+                  }
                   onToggle={closeModal}
                   handleSubmit={handleSubmit}
                   submitting={submitting}

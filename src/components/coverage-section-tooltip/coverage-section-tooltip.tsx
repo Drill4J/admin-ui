@@ -17,22 +17,31 @@ import { camelToTitle, percentFormatter } from 'utils';
 import 'twin.macro';
 
 interface Props {
-  data: Record<string, { total: number, covered: number }>;
+  data: Record<string, { total: number; covered: number }>;
 }
 
-export const CoverageSectionTooltip = ({ data: { totalCovered: { covered, total }, ...testTypes } }: Props) => (
+export const CoverageSectionTooltip = ({
+  data: {
+    totalCovered: { covered, total },
+    ...testTypes
+  },
+}: Props) => (
   <div tw="flex flex-col font-bold text-12">
     <div className="flex justify-between items-center w-full">
       <div className="flex items-center w-full">
         <span tw="uppercase">total covered: {`${covered}/${total}`}</span>
-        <span tw="ml-6 leading-20 text-right opacity-50">{`${percentFormatter((covered / total) * 100)}%`}</span>
+        <span tw="ml-6 leading-20 text-right opacity-50">{`${percentFormatter(
+          (covered / total) * 100,
+        )}%`}</span>
       </div>
     </div>
     {Object.keys(testTypes).map((testType) => (
       <div className="flex justify-between items-center w-full font-regular" key={testType}>
         <span tw="leading-20">
-          {`${camelToTitle(testType)} (${testTypes[testType]
-            .covered || 0}/${testTypes[testType].total || 0}`})
+          {`${camelToTitle(testType)} (${testTypes[testType].covered || 0}/${
+            testTypes[testType].total || 0
+          }`}
+          )
         </span>
         <span tw="ml-6 leading-20 text-right opacity-50">
           {`${percentFormatter((testTypes[testType].covered / testTypes[testType].total) * 100)}%`}

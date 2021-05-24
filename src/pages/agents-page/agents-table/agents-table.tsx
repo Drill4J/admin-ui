@@ -33,14 +33,14 @@ export const AgentsTable = ({ agents }: Props) => {
       Header: () => null,
       id: 'expander',
       Cell: ({ row }: any) =>
-        (row.original.agents ? (
+        row.original.agents ? (
           <span
             {...row.getToggleRowExpandedProps?.()}
             tw="grid place-items-center w-4 h-4 text-blue-default"
           >
             {row.isExpanded ? <Icons.Expander rotate={90} /> : <Icons.Expander />}
           </span>
-        ) : null),
+        ) : null,
       width: '48px',
     },
     {
@@ -107,11 +107,7 @@ export const AgentsTable = ({ agents }: Props) => {
         renderRowSubComponent={({ row, rowProps }: any) => (
           <>
             {row.original.agents.map((x: any, i: any) => (
-              <TR
-                {...rowProps}
-                tw="border-l border-r border-monochrome-medium-tint"
-                key={x.id}
-              >
+              <TR {...rowProps} tw="border-l border-r border-monochrome-medium-tint" key={x.id}>
                 {row.cells.map((cell: any) => (
                   <td {...cell.getCellProps()} tw="first:px-4 last:px-4">
                     {cell.render(cell.column.SubCell ? 'SubCell' : 'Cell', {

@@ -28,10 +28,15 @@ interface Props {
 }
 
 export const SingleOperationWarning = ({
-  agentId, sessionId, pluginId, showGeneralAlertMessage,
+  agentId,
+  sessionId,
+  pluginId,
+  showGeneralAlertMessage,
 }: Props) => {
   const dispatch = useSessionsPaneDispatch();
-  const { singleOperation: { operationType } } = useSessionsPaneState();
+  const {
+    singleOperation: { operationType },
+  } = useSessionsPaneState();
   const [loading, setLoading] = useState(false);
 
   return (

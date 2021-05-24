@@ -15,14 +15,10 @@
  */
 import { useRef, useState } from 'react';
 import VirtualList from 'react-tiny-virtual-list';
-import {
-  Icons, Modal, Inputs,
-} from '@drill4j/ui-kit';
+import { Icons, Modal, Inputs } from '@drill4j/ui-kit';
 import tw, { styled } from 'twin.macro';
 
-import {
-  useElementSize, useBuildVersion, useQuery, useCloseModal,
-} from 'hooks';
+import { useElementSize, useBuildVersion, useQuery, useCloseModal } from 'hooks';
 import { Risks } from 'types/risks';
 
 const Header = styled.div`
@@ -35,7 +31,7 @@ const Header = styled.div`
 
 export const RisksModal = () => {
   const risks = useBuildVersion<Risks[]>('/build/risks') || [];
-  const filter = useQuery<{filter?: string}>()?.filter || 'all';
+  const filter = useQuery<{ filter?: string }>()?.filter || 'all';
   const [selectedSection, setSelectedSection] = useState<string>(filter);
   const node = useRef<HTMLDivElement>(null);
   const { height: methodsListHeight } = useElementSize(node);
@@ -97,7 +93,9 @@ export const RisksModal = () => {
                       <Icons.Function />
                     </div>
                     <div tw="flex flex-col w-70">
-                      <div tw="text-ellipsis" title={getRisks()[index]?.name}>{getRisks()[index]?.name}</div>
+                      <div tw="text-ellipsis" title={getRisks()[index]?.name}>
+                        {getRisks()[index]?.name}
+                      </div>
                       <div
                         tw="w-80 text-monochrome-default text-ellipsis"
                         title={getRisks()[index]?.ownerClass}

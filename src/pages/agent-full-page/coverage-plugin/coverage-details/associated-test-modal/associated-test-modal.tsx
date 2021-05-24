@@ -26,14 +26,24 @@ interface Props {
 }
 
 export const AssociatedTestModal = ({ associatedTestsTopic }: Props) => {
-  const params = useQuery<{testId?: string; treeLevel?: number}>();
-  const associatedTests = useBuildVersion<AssociatedTests>(`${associatedTestsTopic}/tests/associatedWith/${
-    params?.testId}`) || {};
+  const params = useQuery<{ testId?: string; treeLevel?: number }>();
+  const associatedTests =
+    useBuildVersion<AssociatedTests>(
+      `${associatedTestsTopic}/tests/associatedWith/${params?.testId}`,
+    ) || {};
   const {
-    tests = [], packageName = '', className: testClassName = '', methodName = '',
+    tests = [],
+    packageName = '',
+    className: testClassName = '',
+    methodName = '',
   } = associatedTests;
-  const testsMap = tests.reduce((acc, { type = '', name = '' }) =>
-    ({ ...acc, [type]: acc[type] ? [...acc[type], name] : [name] }), {} as { [testType: string]: string[] });
+  const testsMap = tests.reduce(
+    (acc, { type = '', name = '' }) => ({
+      ...acc,
+      [type]: acc[type] ? [...acc[type], name] : [name],
+    }),
+    {} as { [testType: string]: string[] },
+  );
   const closeModal = useCloseModal('/associated-test-modal');
 
   return (
@@ -41,8 +51,13 @@ export const AssociatedTestModal = ({ associatedTestsTopic }: Props) => {
       <div tw="flex flex-col h-full">
         <div tw="flex items-center min-h-64px pl-6 text-18 leading-24">
           <span tw="text-monochrome-black">Associated tests</span>
-          {tests.length ? <div tw="ml-2 font-light text-monochrome-default">{tests.length}</div>
-            : <div tw="ml-2"><div tw="h-4 bg-monochrome-medium-tint rounded" /></div>}
+          {tests.length ? (
+            <div tw="ml-2 font-light text-monochrome-default">{tests.length}</div>
+          ) : (
+            <div tw="ml-2">
+              <div tw="h-4 bg-monochrome-medium-tint rounded" />
+            </div>
+          )}
         </div>
         <ItemInfo
           packageName={packageName}

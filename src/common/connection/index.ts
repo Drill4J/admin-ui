@@ -14,4 +14,8 @@
  * limitations under the License.
  */
 export { configureAxios } from './configure-axios';
-export { defaultAdminSocket, defaultTest2CodePluginSocket, getSocketUrl } from './default-ws-connection';
+export {
+  defaultAdminSocket,
+  defaultTest2CodePluginSocket,
+  getSocketUrl,
+} from './default-ws-connection';

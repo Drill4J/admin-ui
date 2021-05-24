@@ -25,7 +25,9 @@ interface Props {
 export const MethodsTooltip = ({ coveredMethods: { covered = 0, total = 0 } }: Props) => (
   <div tw="font-bold text-12 uppercase">
     <div className="flex items-center w-full">
-      <div>covered methods: {covered}/{total}</div>
+      <div>
+        covered methods: {covered}/{total}
+      </div>
       <div tw="ml-8 text-monochrome-default">{percentFormatter((covered / total) * 100)}%</div>
     </div>
   </div>

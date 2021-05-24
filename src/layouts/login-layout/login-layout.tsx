@@ -15,7 +15,7 @@
  */
 import tw, { styled } from 'twin.macro';
 
-import { ReactComponent as LoginLogo } from './logo.svg';
+import LoginLogo from './logo.svg';
 
 interface Props {
   children?: React.ReactNode;

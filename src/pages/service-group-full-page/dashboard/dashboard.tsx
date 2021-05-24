@@ -20,9 +20,7 @@ import { Plugin } from 'types/plugin';
 import { ServiceGroupSummary } from 'types/service-group-summary';
 import { usePluginData } from '../use-plugin-data';
 import { PluginCard } from './plugin-card';
-import {
-  CoverageSection, RisksSection, TestsToRunSection, TestsSection,
-} from './sections';
+import { CoverageSection, RisksSection, TestsToRunSection, TestsSection } from './sections';
 
 interface Props {
   serviceGroupId: string;
@@ -33,31 +31,35 @@ export const Dashboard = ({ serviceGroupId, plugins }: Props) => (
   <div tw="flex flex-col w-full h-full">
     <div tw="my-6 font-light text-24 leading-32">Dashboard</div>
     <div tw="flex flex-grow">
-      {plugins.length > 0 ? plugins.map(({ id: pluginId = '', name }) => {
-        const {
-          aggregated: {
-            scopeCount = 0,
-            coverage = 0,
-            methodCount = {},
-            tests = [],
-            testsToRun = {},
-            riskCounts = {},
-          } = {},
-        } = usePluginData<ServiceGroupSummary>('/group/summary', serviceGroupId, pluginId) || {};
+      {plugins.length > 0 ? (
+        plugins.map(({ id: pluginId = '', name }) => {
+          const {
+            aggregated: {
+              scopeCount = 0,
+              coverage = 0,
+              methodCount = {},
+              tests = [],
+              testsToRun = {},
+              riskCounts = {},
+            } = {},
+          } = usePluginData<ServiceGroupSummary>('/group/summary', serviceGroupId, pluginId) || {};
 
-        return (
-          <PluginCard
-            label={name}
-            pluginLink={`/service-group-full-page/${serviceGroupId}/${pluginId}`}
-            key={pluginId}
-          >
-            <CoverageSection totalCoverage={coverage} methodCount={methodCount} />
-            <TestsSection testsType={tests} scopeCount={scopeCount} />
-            <RisksSection risks={riskCounts} />
-            <TestsToRunSection testsToRun={testsToRun} />
-          </PluginCard>
-        );
-      }) : <NoPluginsStub agentId={serviceGroupId} agentType="ServiceGroup" />}
+          return (
+            <PluginCard
+              label={name}
+              pluginLink={`/service-group-full-page/${serviceGroupId}/${pluginId}`}
+              key={pluginId}
+            >
+              <CoverageSection totalCoverage={coverage} methodCount={methodCount} />
+              <TestsSection testsType={tests} scopeCount={scopeCount} />
+              <RisksSection risks={riskCounts} />
+              <TestsToRunSection testsToRun={testsToRun} />
+            </PluginCard>
+          );
+        })
+      ) : (
+        <NoPluginsStub agentId={serviceGroupId} agentType="ServiceGroup" />
+      )}
     </div>
   </div>
 );

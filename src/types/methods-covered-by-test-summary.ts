@@ -24,5 +24,5 @@ export interface MethodsCoveredByTestSummary {
   id?: string;
   testName?: string;
   testType?: string;
-  methodCounts?: MethodCounts
+  methodCounts?: MethodCounts;
 }

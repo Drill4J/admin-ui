@@ -13,9 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import {
-  MainProgressBar, ProgressBarLegends,
-} from '@drill4j/ui-kit';
+import { MainProgressBar, ProgressBarLegends } from '@drill4j/ui-kit';
 import 'twin.macro';
 
 import { percentFormatter } from 'utils';
@@ -27,25 +25,36 @@ interface Props {
 
 export const ScopeCoverageInfo = ({ scope }: Props) => {
   const {
-    coverage: { percentage: coveragePercentage = 0, overlap: { percentage: overlapCoverage = 0 } = {} } = {},
+    coverage: {
+      percentage: coveragePercentage = 0,
+      overlap: { percentage: overlapCoverage = 0 } = {},
+    } = {},
   } = scope || {};
-  const uniqueCodeCoverage = percentFormatter(coveragePercentage) - percentFormatter(overlapCoverage);
+  const uniqueCodeCoverage =
+    percentFormatter(coveragePercentage) - percentFormatter(overlapCoverage);
   return (
     <div>
-      <div tw="font-bold text-12 leading-16 text-monochrome-default" data-test="active-scope-info:title">SCOPE COVERAGE</div>
+      <div
+        tw="font-bold text-12 leading-16 text-monochrome-default"
+        data-test="active-scope-info:title"
+      >
+        SCOPE COVERAGE
+      </div>
       <div tw="flex items-baseline mt-6 text-12 text-monochrome-default">
         <div
           tw="mr-3 mb-3 text-32 leading-40 text-monochrome-black"
           data-test="active-scope-info:scope-coverage"
         >
-          {`${percentFormatter((coveragePercentage))}%`}
+          {`${percentFormatter(coveragePercentage)}%`}
         </div>
         <span tw="font-bold" data-test="active-scope-info:overlap-coverage">
           {`${percentFormatter(overlapCoverage)}%`}
-        </span>&nbsp;overlapped with build.&nbsp;
+        </span>
+        &nbsp;overlapped with build.&nbsp;
         <span tw="font-bold" data-test="active-scope-info:unique-coverage">
           {`${percentFormatter(uniqueCodeCoverage)}%`}
-        </span>&nbsp;of new coverage
+        </span>
+        &nbsp;of new coverage
       </div>
       <MainProgressBar type="primary" value={`${coveragePercentage}%`} />
       <ProgressBarLegends />

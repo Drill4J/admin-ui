@@ -14,9 +14,7 @@
  * limitations under the License.
  */
 import { useContext, useState } from 'react';
-import {
-  Button, Popup, Checkbox,
-} from '@drill4j/ui-kit';
+import { Button, Popup, Checkbox } from '@drill4j/ui-kit';
 import { useParams } from 'react-router-dom';
 import tw, { styled } from 'twin.macro';
 
@@ -30,9 +28,20 @@ const Message = styled.div`
 `;
 
 export const BaselineBuildModal = () => {
-  const { pluginId = '', agentId = '', buildVersion = '' } = useParams<{ pluginId: string; agentId: string; buildVersion: string; }>();
+  const {
+    pluginId = '',
+    agentId = '',
+    buildVersion = '',
+  } = useParams<{ pluginId: string; agentId: string; buildVersion: string }>();
   const { buildVersion: activeBuildVersion = '' } = useAgent(agentId) || {};
-  const { version: baseline } = useBuildVersion<Baseline>('/data/baseline', undefined, undefined, undefined, activeBuildVersion) || {};
+  const { version: baseline } =
+    useBuildVersion<Baseline>(
+      '/data/baseline',
+      undefined,
+      undefined,
+      undefined,
+      activeBuildVersion,
+    ) || {};
   const isBaseline = baseline === buildVersion;
   const [isConfirmed, setIsConfirmed] = useState(isBaseline);
   const closeModal = useCloseModal('/baseline-build-modal');
@@ -48,19 +57,18 @@ export const BaselineBuildModal = () => {
       <div tw="w-108">
         <div className="flex flex-col gap-6 pt-4 px-6 pb-6">
           <Message className="flex items-center w-full">
-            {isBaseline
-              ? (
-                <>
-                  By confirming this action, you will unset this build as baseline. All<br />
-                  subsequent builds won’t be compared to it.
-                </>
-              )
-              : (
-                <>
-                  By confirming this action, you will set the current build as <br />
-                  baseline. All subsequent builds will be compared to it.
-                </>
-              )}
+            {isBaseline ? (
+              <>
+                By confirming this action, you will unset this build as baseline. All
+                <br />
+                subsequent builds won’t be compared to it.
+              </>
+            ) : (
+              <>
+                By confirming this action, you will set the current build as <br />
+                baseline. All subsequent builds will be compared to it.
+              </>
+            )}
           </Message>
           {!isBaseline && (
             <Message className="flex items-start gap-2 w-full">
@@ -80,14 +88,17 @@ export const BaselineBuildModal = () => {
                   await toggleBaseline(agentId, pluginId);
                   showMessage({
                     type: 'SUCCESS',
-                    text: `Current build has been ${isBaseline
-                      ? 'unset as baseline successfully. All subsequent builds won\'t be compared to it.'
-                      : 'set as baseline successfully. All subsequent builds will be compared to it.'}`,
+                    text: `Current build has been ${
+                      isBaseline
+                        ? "unset as baseline successfully. All subsequent builds won't be compared to it."
+                        : 'set as baseline successfully. All subsequent builds will be compared to it.'
+                    }`,
                   });
                 } catch ({ response: { data: { message } = {} } = {} }) {
                   showMessage({
                     type: 'ERROR',
-                    text: message || 'There is some issue with your action. Please try again later.',
+                    text:
+                      message || 'There is some issue with your action. Please try again later.',
                   });
                 }
                 closeModal();

@@ -25,9 +25,11 @@ export type Action = ReturnType<
   typeof setBuildVersion | typeof setInitialConfig | typeof setLoading | typeof setAgent
 >;
 
-export const setBuildVersion = (buildVersion: string) => ({ type: SET_BUILD_VERSION, payload: buildVersion } as const);
+export const setBuildVersion = (buildVersion: string) =>
+  ({ type: SET_BUILD_VERSION, payload: buildVersion } as const);
 
-export const setLoading = (isLoading: boolean) => ({ type: SET_LOADING, payload: isLoading } as const);
+export const setLoading = (isLoading: boolean) =>
+  ({ type: SET_LOADING, payload: isLoading } as const);
 
 export const setInitialConfig = (config: {
   agentId: string;

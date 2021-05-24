@@ -31,13 +31,14 @@ export function useActiveScope(): ActiveScope | null {
       setData(newData);
     }
 
-    const unsubscribe = agentId && buildVersion && isActiveBuildVersion
-      ? defaultTest2CodePluginSocket.subscribe('/active-scope', handleDataChange, {
-        agentId,
-        buildVersion,
-        type: 'AGENT',
-      })
-      : setData(null);
+    const unsubscribe =
+      agentId && buildVersion && isActiveBuildVersion
+        ? defaultTest2CodePluginSocket.subscribe('/active-scope', handleDataChange, {
+            agentId,
+            buildVersion,
+            type: 'AGENT',
+          })
+        : setData(null);
 
     return () => {
       unsubscribe && unsubscribe();

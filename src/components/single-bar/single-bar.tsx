@@ -45,14 +45,15 @@ const Path = styled.path`
   }
 `;
 
-export const SingleBar = ({
-  width, height, color, percent, icon,
-}: Props) => {
+export const SingleBar = ({ width, height, color, percent, icon }: Props) => {
   const y = !isNumber(percent) ? height : height - (height * percent) / 100;
 
   return (
     <div>
-      <div tw="relative mr-1 bg-monochrome-light-tint" style={{ width: `${width}px`, height: `${height}px` }}>
+      <div
+        tw="relative mr-1 bg-monochrome-light-tint"
+        style={{ width: `${width}px`, height: `${height}px` }}
+      >
         <div tw="absolute top-2 left-2/4 transform -translate-x-1/2 text-12 leading-20 text-monochrome-default">
           {icon}
         </div>

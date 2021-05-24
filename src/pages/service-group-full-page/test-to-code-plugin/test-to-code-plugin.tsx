@@ -13,9 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import {
-  Route, useParams, Link,
-} from 'react-router-dom';
+import { Route, useParams, Link } from 'react-router-dom';
 import { Menu } from '@drill4j/ui-kit';
 import 'twin.macro';
 
@@ -46,10 +44,11 @@ interface Props {
 }
 
 export const TestToCodePlugin = ({ summaries = [], aggregated }: Props) => {
-  const { pluginId = '', serviceGroupId = '' } = useParams<{
-    pluginId: string;
-    serviceGroupId: string;
-  }>();
+  const { pluginId = '', serviceGroupId = '' } =
+    useParams<{
+      pluginId: string;
+      serviceGroupId: string;
+    }>();
   const serviceGroupSummaries = summaries.map((agentSummary) => ({
     ...agentSummary,
     ...agentSummary.summary,
@@ -123,16 +122,16 @@ export const TestToCodePlugin = ({ summaries = [], aggregated }: Props) => {
                   label: 'Builds list',
                   icon: 'BuildList',
                   onClick: () => null,
-                  Content: ({ children }: { children: JSX.Element }) => <Link to={`/full-page/${agentId}/build-list`}>{children}</Link>,
+                  Content: ({ children }: { children: JSX.Element }) => (
+                    <Link to={`/full-page/${agentId}/build-list`}>{children}</Link>
+                  ),
                 },
                 {
                   label: 'Settings',
                   icon: 'Settings',
                   onClick: () => null,
                   Content: ({ children }: { children: JSX.Element }) => (
-                    <Link to={`/agents/agent/${agentId}/settings/general`}>
-                      {children}
-                    </Link>
+                    <Link to={`/agents/agent/${agentId}/settings/general`}>{children}</Link>
                   ),
                 },
               ]}

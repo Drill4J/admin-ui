@@ -33,14 +33,18 @@ interface Props {
 }
 
 export const ActionsPanel = ({
-  activeSessions, onToggle, startSessionDisabled, handleSubmit, submitting,
+  activeSessions,
+  onToggle,
+  startSessionDisabled,
+  handleSubmit,
+  submitting,
 }: Props) => {
   const dispatch = useSessionsPaneDispatch();
   const { singleOperation, isNewSession } = useSessionsPaneState();
 
   return (
     <Content>
-      { isNewSession ? (
+      {isNewSession ? (
         <Button
           tw="flex justify-center items-center gap-x-1 w-31"
           primary
@@ -65,7 +69,7 @@ export const ActionsPanel = ({
           Start New Session
         </Button>
       )}
-      { activeSessions.length > 0 && isNewSession && (
+      {activeSessions.length > 0 && isNewSession && (
         <Button
           tw="flex gap-x-2"
           secondary

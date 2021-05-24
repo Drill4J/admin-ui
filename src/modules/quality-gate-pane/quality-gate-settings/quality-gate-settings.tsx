@@ -47,9 +47,15 @@ export const QualityGateSettings = ({ conditionSettingByType }: Props) => (
         disabled={!conditionSettingByType?.coverage?.enabled}
         parse={parseCoverage}
       >
-        <div tw="text-14 leading-16 text-monochrome-black" data-test="quality-gate-settings:condtion:coverage">
+        <div
+          tw="text-14 leading-16 text-monochrome-black"
+          data-test="quality-gate-settings:condtion:coverage"
+        >
           Build coverage
-          <div tw="text-10 leading-16 text-monochrome-default" data-test="quality-gate-settings:condtion-status:coverage">
+          <div
+            tw="text-10 leading-16 text-monochrome-default"
+            data-test="quality-gate-settings:condtion-status:coverage"
+          >
             Minimum percentage of build covered by tests
           </div>
         </div>
@@ -70,20 +76,31 @@ export const QualityGateSettings = ({ conditionSettingByType }: Props) => (
         parse={(value: string) => inputLengthRestriction(value, 7)}
       >
         <div tw="text-14 leading-16 text-monochrome-black">
-          <div className="flex items-center gap-x-2 w-full" data-test="quality-gate-settings:condtion:risks">
+          <div
+            className="flex items-center gap-x-2 w-full"
+            data-test="quality-gate-settings:condtion:risks"
+          >
             Risks
             <Tooltip
-              message={(
+              message={
                 <div className="flex flex-col items-center w-full">
                   <span>Try to cover all of your risks in current build.</span>
                   <span>Uncovered risks won’t be counted in your next build.</span>
                 </div>
-              )}
+              }
             >
-              <Icons.Info tw="text-monochrome-default" width={12} height={12} data-test="quality-gate-settings:info-icon" />
+              <Icons.Info
+                tw="text-monochrome-default"
+                width={12}
+                height={12}
+                data-test="quality-gate-settings:info-icon"
+              />
             </Tooltip>
           </div>
-          <div tw="text-10 leading-16 text-monochrome-default" data-test="quality-gate-settings:condtion-status:risks">
+          <div
+            tw="text-10 leading-16 text-monochrome-default"
+            data-test="quality-gate-settings:condtion-status:risks"
+          >
             Maximum number of risks in the build
           </div>
         </div>
@@ -102,9 +119,15 @@ export const QualityGateSettings = ({ conditionSettingByType }: Props) => (
         disabled={!conditionSettingByType?.tests?.enabled}
         parse={(value: string) => inputLengthRestriction(value, 7)}
       >
-        <div tw="text-14 leading-16 text-monochrome-black" data-test="quality-gate-settings:condtion:tests">
+        <div
+          tw="text-14 leading-16 text-monochrome-black"
+          data-test="quality-gate-settings:condtion:tests"
+        >
           Suggested “Tests to run” executed
-          <div tw="text-10 leading-16 text-monochrome-default" data-test="quality-gate-settings:condtion-status:tests">
+          <div
+            tw="text-10 leading-16 text-monochrome-default"
+            data-test="quality-gate-settings:condtion-status:tests"
+          >
             Maximum number of tests to run in the build
           </div>
         </div>

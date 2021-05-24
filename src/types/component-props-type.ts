@@ -13,4 +13,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-export type ComponentPropsType<F extends (props: any) => JSX.Element> = F extends (arg: infer A) => any ? A : never;
+export type ComponentPropsType<F extends (props: any) => JSX.Element> = F extends (
+  arg: infer A,
+) => any
+  ? A
+  : never;

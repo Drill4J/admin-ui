@@ -14,4 +14,4 @@
  * limitations under the License.
  */
 export const inputLengthRestriction = (str: string, maxCharacters: number): string =>
-  (typeof str === 'string' ? str.substring(0, maxCharacters) : '');
+  typeof str === 'string' ? str.substring(0, maxCharacters) : '';

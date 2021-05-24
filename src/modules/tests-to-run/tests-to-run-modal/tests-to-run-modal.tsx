@@ -16,9 +16,7 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { nanoid } from 'nanoid';
-import {
-  Icons, Inputs, Modal,
-} from '@drill4j/ui-kit';
+import { Icons, Inputs, Modal } from '@drill4j/ui-kit';
 import tw from 'twin.macro';
 
 import { copyToClipboard } from 'utils';
@@ -40,8 +38,10 @@ export const TestsToRunModal = () => {
     return () => clearTimeout(timeout);
   }, [copied]);
 
-  const { serviceGroupId = '', pluginId = '' } = useParams<{ serviceGroupId: string, pluginId: string }>();
-  const { byType: testsToRun = {} } = usePluginData<GroupedTestToRun>('/group/data/tests-to-run', serviceGroupId, pluginId) || {};
+  const { serviceGroupId = '', pluginId = '' } =
+    useParams<{ serviceGroupId: string; pluginId: string }>();
+  const { byType: testsToRun = {} } =
+    usePluginData<GroupedTestToRun>('/group/data/tests-to-run', serviceGroupId, pluginId) || {};
   const allTests = Object.values(testsToRun).reduce((acc, tests) => [...acc, ...tests], []);
   const [selectedFilter, setSelectedFilter] = useState('all');
   const getSelectedTests = () => {
@@ -71,24 +71,25 @@ export const TestsToRunModal = () => {
           ]}
         >
           <span>
-            These are recommendations for this build updates only.
-            Use this Curl in your command line to get JSON:
+            These are recommendations for this build updates only. Use this Curl in your command
+            line to get JSON:
           </span>
           <TestsToRunUrl agentId={serviceGroupId} pluginId={pluginId} agentType="ServiceGroup" />
           <div tw="absolute top-16 right-6 text-blue-default cursor-pointer active:text-blue-shade">
-            {copied
-              ? (
-                <div className="flex items-center gap-x-1 text-10 leading-16 primary-blue-default">
-                  <span className="monochrome-black">Copied to clipboard.</span>
-                  <Icons.Check height={10} width={14} viewBox="0 0 14 10" />
-                </div>
-              )
-              : (
-                <Icons.Copy
-                  data-test="quality-gate-status:copy-icon"
-                  onClick={() => { copyToClipboard(getTestsToRunURL(serviceGroupId, pluginId, 'ServiceGroup')); setCopied(true); }}
-                />
-              )}
+            {copied ? (
+              <div className="flex items-center gap-x-1 text-10 leading-16 primary-blue-default">
+                <span className="monochrome-black">Copied to clipboard.</span>
+                <Icons.Check height={10} width={14} viewBox="0 0 14 10" />
+              </div>
+            ) : (
+              <Icons.Copy
+                data-test="quality-gate-status:copy-icon"
+                onClick={() => {
+                  copyToClipboard(getTestsToRunURL(serviceGroupId, pluginId, 'ServiceGroup'));
+                  setCopied(true);
+                }}
+              />
+            )}
           </div>
         </div>
         <div tw="h-full w-full overflow-y-auto overflow-x-hidden">

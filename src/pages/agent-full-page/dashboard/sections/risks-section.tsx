@@ -40,7 +40,7 @@ export const RisksSection = () => {
     <DashboardSection
       label="Risks"
       info={total}
-      graph={(
+      graph={
         <Tooltip message={<SectionTooltip data={tooltipData} hideValue />}>
           <div className="flex items-center w-full">
             <SingleBar
@@ -59,7 +59,7 @@ export const RisksSection = () => {
             />
           </div>
         </Tooltip>
-      )}
+      }
     />
   );
 };

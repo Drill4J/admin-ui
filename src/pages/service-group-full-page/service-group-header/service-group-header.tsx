@@ -18,7 +18,7 @@ import { Icons } from '@drill4j/ui-kit';
 import 'twin.macro';
 
 import { ServiceGroupSummary } from 'types/service-group-summary';
-import { ReactComponent as LogoSvg } from './service-group-logo.svg';
+import LogoSvg from './service-group-logo.svg';
 
 interface Props {
   serviceGroup?: ServiceGroupSummary;
@@ -38,11 +38,7 @@ export const ServiceGroupHeader = ({ serviceGroup: { name, summaries = [] } = {}
           </div>
         </div>
         <Link tw="link" to={`/agents/service-group/${id}/settings/general`}>
-          <Icons.Settings
-            width={32}
-            height={32}
-            data-test="service-group-header:settings-button"
-          />
+          <Icons.Settings width={32} height={32} data-test="service-group-header:settings-button" />
         </Link>
       </div>
     </div>

@@ -25,19 +25,21 @@ interface Props {
   finished: number;
 }
 
-export const ScopeStatus = ({
-  active, enabled, started, finished,
-}: Props) => (
+export const ScopeStatus = ({ active, enabled, started, finished }: Props) => (
   <div tw="flex flex-col font-bold text-12 leading-16 text-monochrome-default">
-    {active
-      ? <div tw="text-green-default" data-test="scope-status:active">Active</div>
-      : (
-        <>
-          {enabled
-            ? <span data-test="scope-status:finished">Finished</span>
-            : <span data-test="scope-status:ignored">Ignored</span>}
-        </>
-      )}
+    {active ? (
+      <div tw="text-green-default" data-test="scope-status:active">
+        Active
+      </div>
+    ) : (
+      <>
+        {enabled ? (
+          <span data-test="scope-status:finished">Finished</span>
+        ) : (
+          <span data-test="scope-status:ignored">Ignored</span>
+        )}
+      </>
+    )}
     <ScopeTimer started={started} finished={finished} active={active} size="small" />
   </div>
 );

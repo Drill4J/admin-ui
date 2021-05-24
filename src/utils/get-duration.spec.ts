@@ -48,7 +48,7 @@ describe('getDuration', () => {
       seconds: '01',
       minutes: '01',
       hours: '01',
-      isLessThenOneSecond: false
+      isLessThenOneSecond: false,
     });
   });
 
@@ -57,7 +57,7 @@ describe('getDuration', () => {
       seconds: '00',
       minutes: '00',
       hours: '25',
-      isLessThenOneSecond: false
+      isLessThenOneSecond: false,
     });
   });
 

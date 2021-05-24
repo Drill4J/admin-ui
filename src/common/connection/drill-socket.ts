@@ -13,9 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import {
-  Observable, Subject, Subscription, timer,
-} from 'rxjs';
+import { Observable, Subject, Subscription, timer } from 'rxjs';
 import { webSocket, WebSocketSubject } from 'rxjs/webSocket';
 import { mergeMap, pairwise, retryWhen } from 'rxjs/operators';
 
@@ -86,7 +84,11 @@ export class DrillSocket {
     });
   }
 
-  public subscribe(topic: string, callback: (arg: any) => void, message?: SubscriptionMessage | Record<string, unknown>) {
+  public subscribe(
+    topic: string,
+    callback: (arg: any) => void,
+    message?: SubscriptionMessage | Record<string, unknown>,
+  ) {
     const key = createSubscriberKey(topic, message);
     let subscription = this.createSubscription(key, topic, callback, message);
 
@@ -125,7 +127,11 @@ export class DrillSocket {
     }
   }
 
-  public send(destination: string, type: string, message?: SubscriptionMessage | Record<string, unknown>) {
+  public send(
+    destination: string,
+    type: string,
+    message?: SubscriptionMessage | Record<string, unknown>,
+  ) {
     this.ws$.next({
       destination,
       type,
@@ -151,40 +157,41 @@ export class DrillSocket {
   }
 }
 
-const nextMessageHandler = (topic: string, callback: (arg: any) => void,
-  subscribers: SubscribersCollection,
-  message?: SubscriptionMessage | Record<string, unknown>) => ({
-  destination,
-  message: responseMessage, to,
-}: DrillResponse) => {
-  if (destination !== topic) {
-    return;
-  }
+const nextMessageHandler =
+  (
+    topic: string,
+    callback: (arg: any) => void,
+    subscribers: SubscribersCollection,
+    message?: SubscriptionMessage | Record<string, unknown>,
+  ) =>
+  ({ destination, message: responseMessage, to }: DrillResponse) => {
+    if (destination !== topic) {
+      return;
+    }
 
-  const key = createSubscriberKey(topic, message);
-  if (!to && !message) {
-    callback(responseMessage || null);
-    subscribers.setSubscriberValue(key, responseMessage);
-    return;
-  }
+    const key = createSubscriberKey(topic, message);
+    if (!to && !message) {
+      callback(responseMessage || null);
+      subscribers.setSubscriberValue(key, responseMessage);
+      return;
+    }
 
-  const {
-    agentId: subscriptionAgentId,
-    buildVersion: subscriptionBuildVersion,
-  } = message as SubscriptionMessage;
-  const {
-    agentId: messageAgentId,
-    buildVersion: messageBuildVersion,
-  } = to as SubscriptionMessage;
-  if (
-    subscriptionAgentId === messageAgentId &&
-    subscriptionBuildVersion === messageBuildVersion
-  ) {
-    callback(responseMessage || null);
-    subscribers.setSubscriberValue(key, responseMessage);
-  }
-};
+    const { agentId: subscriptionAgentId, buildVersion: subscriptionBuildVersion } =
+      message as SubscriptionMessage;
+    const { agentId: messageAgentId, buildVersion: messageBuildVersion } =
+      to as SubscriptionMessage;
+    if (
+      subscriptionAgentId === messageAgentId &&
+      subscriptionBuildVersion === messageBuildVersion
+    ) {
+      callback(responseMessage || null);
+      subscribers.setSubscriberValue(key, responseMessage);
+    }
+  };
 
-function createSubscriberKey(topic: string, message?: SubscriptionMessage | Record<string, unknown>) {
+function createSubscriberKey(
+  topic: string,
+  message?: SubscriptionMessage | Record<string, unknown>,
+) {
   return topic + JSON.stringify(message);
 }

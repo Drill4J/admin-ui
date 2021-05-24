@@ -44,7 +44,9 @@ export function useSessionsPaneState(): SessionsPaneState {
 export function useSessionsPaneDispatch(): Dispatch<Action> {
   const context = useContext(SessionsManagementPaneDispatchContext);
   if (!context) {
-    throw new Error('useSessionsPaneDispatch must be used within a SessionsManagementPaneDispatchContext');
+    throw new Error(
+      'useSessionsPaneDispatch must be used within a SessionsManagementPaneDispatchContext',
+    );
   }
   return context;
 }

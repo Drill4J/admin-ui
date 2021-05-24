@@ -17,17 +17,10 @@ import { useContext, useState } from 'react';
 import { Form, Field } from 'react-final-form';
 
 import { useParams } from 'react-router-dom';
-import {
-  Button, FormGroup, Popup, GeneralAlerts, Spinner,
-} from '@drill4j/ui-kit';
+import { Button, FormGroup, Popup, GeneralAlerts, Spinner } from '@drill4j/ui-kit';
 import 'twin.macro';
 
-import {
-  Fields,
-  composeValidators,
-  sizeLimit,
-  required,
-} from 'forms';
+import { Fields, composeValidators, sizeLimit, required } from 'forms';
 import { NotificationManagerContext } from 'notification-manager';
 import { ScopeSummary } from 'types/scope-summary';
 import { ActiveScope } from 'types/active-scope';
@@ -43,7 +36,10 @@ interface Props {
 const validateScope = composeValidators(
   required('name', 'Scope Name'),
   sizeLimit({
-    name: 'name', min: 1, max: 64, alias: 'Scope name',
+    name: 'name',
+    min: 1,
+    max: 64,
+    alias: 'Scope name',
   }),
 );
 
@@ -62,19 +58,17 @@ export const RenameScopeModal = ({ isOpen, onToggle, scope }: Props) => {
       closeOnFadeClick
     >
       <div tw="w-108">
-        {errorMessage && (
-          <GeneralAlerts type="ERROR">
-            {errorMessage}
-          </GeneralAlerts>
-        )}
+        {errorMessage && <GeneralAlerts type="ERROR">{errorMessage}</GeneralAlerts>}
         <Form
-          onSubmit={(values) => renameScope(agentId, pluginId, {
-            onSuccess: () => {
-              showMessage({ type: 'SUCCESS', text: 'Scope name has been changed' });
-              onToggle(false);
-            },
-            onError: setErrorMessage,
-          })(values as ScopeSummary)}
+          onSubmit={(values) =>
+            renameScope(agentId, pluginId, {
+              onSuccess: () => {
+                showMessage({ type: 'SUCCESS', text: 'Scope name has been changed' });
+                onToggle(false);
+              },
+              onError: setErrorMessage,
+            })(values as ScopeSummary)
+          }
           validate={validateScope}
           initialValues={scope || {}}
           render={({ handleSubmit, submitting, pristine }) => (

@@ -31,13 +31,16 @@ interface Props {
 const NotificationCount = styled.div`
   ${tw`flex justify-center min-w-20px h-5 mr-4 ml-1 px-1 rounded-full`}
   ${tw`font-bold text-monochrome-default bg-monochrome-medium-tint`}
-  ${({ unread }:{ unread:boolean }) => unread && tw`text-12 text-monochrome-white bg-red-default`}
+  ${({ unread }: { unread: boolean }) => unread && tw`text-12 text-monochrome-white bg-red-default`}
 `;
 
 export const Toolbar = ({ breadcrumbs }: Props) => {
   const notifications = useWsConnection<Notification[]>(defaultAdminSocket, '/notifications') || [];
-  const unreadNotifications = notifications.filter(notification => !notification.read);
-  const { push, location: { pathname, state } } = useHistory();
+  const unreadNotifications = notifications.filter((notification) => !notification.read);
+  const {
+    push,
+    location: { pathname, state },
+  } = useHistory();
 
   return (
     <div tw="flex items-center w-full h-full">
@@ -45,11 +48,12 @@ export const Toolbar = ({ breadcrumbs }: Props) => {
         <div tw="text-monochrome-default">{breadcrumbs}</div>
         <div tw="flex items-center text-12 leading-20 text-monochrome-default">
           <Link to={{ pathname: `${pathname}/notification-sidebar`, state }} className="link">
-            <Icons.Notification
-              data-test="tolbar:icon-notification"
-            />
+            <Icons.Notification data-test="tolbar:icon-notification" />
           </Link>
-          <NotificationCount unread={unreadNotifications.length > 0} data-test="tolbar:notification-count">
+          <NotificationCount
+            unread={unreadNotifications.length > 0}
+            data-test="tolbar:notification-count"
+          >
             {unreadNotifications.length}
           </NotificationCount>
           <span tw="w-1px h-5 mr-4 bg-monochrome-medium-tint" />

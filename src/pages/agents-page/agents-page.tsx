@@ -23,13 +23,10 @@ import { defaultAdminSocket } from 'common/connection';
 import { Agent } from 'types/agent';
 import { ServiceGroup } from 'types/service-group';
 import { AgentsTable } from './agents-table';
-import { ReactComponent as NoAgentsSvg } from './no-agents.svg';
+import NoAgentsSvg from './no-agents.svg';
 
 export const AgentsPage = () => {
-  const agentsList = useWsConnection<Agent[]>(
-    defaultAdminSocket,
-    '/api/agents',
-  ) || [];
+  const agentsList = useWsConnection<Agent[]>(defaultAdminSocket, '/api/agents') || [];
   const serviceGroups = useWsConnection<ServiceGroup[]>(defaultAdminSocket, '/api/groups') || [];
   const agents = [
     ...serviceGroups.map((serviceGroup) => ({
@@ -45,38 +42,37 @@ export const AgentsPage = () => {
       <PageHeader
         title="Agents"
         itemsCount={agentsList.length}
-        actions={(
+        actions={
           <Link to="/preregister/offline-agent">
-            <Button
-              className="flex gap-x-2"
-              secondary
-              size="large"
-            >
+            <Button className="flex gap-x-2" secondary size="large">
               <Icons.Register />
               <span>Preregister Offline Agent</span>
             </Button>
           </Link>
-        )}
+        }
       />
-      <div tw="flex flex-row flex-grow flex-wrap m-6">{agentsList.length > 0 ? <AgentsTable agents={agents} /> : (
-        <Stub
-          icon={<NoAgentsSvg />}
-          title="No agents online at the moment"
-          message={(
-            <>
-              Run your application with Drill4J Agent using&nbsp;
-              <a
-                tw="text-blue-default"
-                href="https://drill4j.github.io/how-to-start/"
-                rel="noopener noreferrer"
-                target="_blank"
-              >
-                this guide.
-              </a>
-            </>
-          )}
-        />
-      )}
+      <div tw="flex flex-row flex-grow flex-wrap m-6">
+        {agentsList.length > 0 ? (
+          <AgentsTable agents={agents} />
+        ) : (
+          <Stub
+            icon={<NoAgentsSvg />}
+            title="No agents online at the moment"
+            message={
+              <>
+                Run your application with Drill4J Agent using&nbsp;
+                <a
+                  tw="text-blue-default"
+                  href="https://drill4j.github.io/how-to-start/"
+                  rel="noopener noreferrer"
+                  target="_blank"
+                >
+                  this guide.
+                </a>
+              </>
+            }
+          />
+        )}
       </div>
     </div>
   );

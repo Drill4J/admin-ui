@@ -25,18 +25,24 @@ interface Props {
 export const TestToCodeCoverageCell = ({ value = 0 }: Props) => (
   <div>
     <div tw="pl-4">
-      <div tw="flex items-center w-full text-20 text-monochrome-black" data-test="dashboard-coverage-cell:value">
+      <div
+        tw="flex items-center w-full text-20 text-monochrome-black"
+        data-test="dashboard-coverage-cell:value"
+      >
         {value === undefined ? (
-          <Tooltip message={(
-            <div className="flex flex-col items-center w-full">
-              <div>Test2Code plugin</div>
-              <div>is not installed</div>
-            </div>
-          )}
+          <Tooltip
+            message={
+              <div className="flex flex-col items-center w-full">
+                <div>Test2Code plugin</div>
+                <div>is not installed</div>
+              </div>
+            }
           >
             n/a
           </Tooltip>
-        ) : `${percentFormatter(value)}%`}
+        ) : (
+          `${percentFormatter(value)}%`
+        )}
       </div>
     </div>
   </div>

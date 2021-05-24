@@ -30,23 +30,24 @@ const Value = styled(Link)(({ name }: { name: string }) => [
     : tw`pointer-events-none`,
 ]);
 
-export const TestToCodeCell = ({
-  value, link, name,
-}: Props) => (
+export const TestToCodeCell = ({ value, link, name }: Props) => (
   <div>
     <div tw="pl-4">
       <Value to={link} name={name} data-test={`dashboard-cell:value:${name}`}>
         {value === undefined ? (
-          <Tooltip message={(
-            <div className="flex flex-col items-center w-full">
-              <div>Test2Code plugin</div>
-              <div>is not installed</div>
-            </div>
-          )}
+          <Tooltip
+            message={
+              <div className="flex flex-col items-center w-full">
+                <div>Test2Code plugin</div>
+                <div>is not installed</div>
+              </div>
+            }
           >
             n/a
           </Tooltip>
-        ) : value}
+        ) : (
+          value
+        )}
         {name === 'tests-to-run' && <Icons.Expander tw="ml-1 text-blue-default" height={8} />}
       </Value>
     </div>

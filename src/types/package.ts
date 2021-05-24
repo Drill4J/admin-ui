@@ -22,7 +22,7 @@ export interface PackageClass {
   id?: string;
   name?: string;
   path?: string;
-  methods?: MethodCoverage[]
+  methods?: MethodCoverage[];
 }
 
 export interface Package {

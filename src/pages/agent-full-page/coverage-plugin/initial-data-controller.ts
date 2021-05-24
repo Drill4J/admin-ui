@@ -27,7 +27,8 @@ interface Props {
 }
 
 export const InitialDataController = ({ children }: Props) => {
-  const activeSessions = useBuildVersion<ActiveSessions>('/active-scope/summary/active-sessions') || {};
+  const activeSessions =
+    useBuildVersion<ActiveSessions>('/active-scope/summary/active-sessions') || {};
   const { agentId } = useParams<{ agentId: string }>();
   const { status } = useAgent(agentId) || {};
   const dispatch = useCoveragePluginDispatch();

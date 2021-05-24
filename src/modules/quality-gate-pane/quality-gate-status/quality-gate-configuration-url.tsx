@@ -33,7 +33,7 @@ const UrlContainer = styled.div`
   }
 `;
 
-const CurlFlag = styled.span(({ isRed, invisible }: { isRed?: boolean; invisible?: boolean}) => [
+const CurlFlag = styled.span(({ isRed, invisible }: { isRed?: boolean; invisible?: boolean }) => [
   'min-width: 18px;',
   tw`font-bold text-monochrome-black`,
   isRed && tw`text-red-default`,
@@ -66,8 +66,7 @@ export const QualityGateConfigurationUrl = ({ agentId, pluginId }: Props) => (
       <CurlFlag>
         &nbsp;
         <CurlFlag isRed>
-          -
-          <CurlFlag>X</CurlFlag>
+          -<CurlFlag>X</CurlFlag>
         </CurlFlag>
         <CurlFlag invisible>\</CurlFlag>
       </CurlFlag>

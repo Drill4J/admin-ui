@@ -18,13 +18,13 @@ import { convertToSingleSpaces } from './convert-to-single-spaces';
 describe('convertToSingleSpaces', () => {
   it('should trim left the string', () => {
     expect(convertToSingleSpaces('   foobarbuzz')).toBe('foobarbuzz');
-  })
+  });
 
   it('should leave only one space between words', () => {
     expect(convertToSingleSpaces('foo    bar')).toBe('foo bar');
-  })
+  });
 
   it('should leave only one space after words', () => {
     expect(convertToSingleSpaces('foo    ')).toBe('foo ');
-  })
+  });
 });

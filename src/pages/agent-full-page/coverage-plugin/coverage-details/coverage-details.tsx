@@ -23,12 +23,8 @@ import { useExpanded, useTable } from 'react-table';
 import { ClassCoverage } from 'types/class-coverage';
 import { FilterList } from 'types/filter-list';
 import { useVisibleElementsCount, useBuildVersion } from 'hooks';
-import {
-  Cells, SearchPanel, Stub, Table, TR,
-} from 'components';
-import {
-  useTableActionsState, useTableActionsDispatch, setSearch,
-} from 'modules';
+import { Cells, SearchPanel, Stub, Table, TR } from 'components';
+import { useTableActionsState, useTableActionsDispatch, setSearch } from 'modules';
 import { Package } from 'types/package';
 import { NameCell } from './name-cell';
 import { AssociatedTestModal } from './associated-test-modal';
@@ -42,7 +38,10 @@ interface Props {
 }
 
 export const CoverageDetails = ({
-  associatedTestsTopic, classesTopicPrefix, topic, showCoverageIcon,
+  associatedTestsTopic,
+  classesTopicPrefix,
+  topic,
+  showCoverageIcon,
 }: Props) => {
   const dispatch = useTableActionsDispatch();
   const { search, sort } = useTableActionsState();
@@ -55,81 +54,80 @@ export const CoverageDetails = ({
   const visibleElementsCount = useVisibleElementsCount(ref, 10, 10);
   const [searchQuery] = search;
 
-  const {
-    buildVersion, agentId, pluginId, scopeId, tab,
-  } = useParams<{ agentId?: string; pluginId?: string; buildVersion?: string; scopeId?: string; tab: string; }>();
+  const { buildVersion, agentId, pluginId, scopeId, tab } =
+    useParams<{
+      agentId?: string;
+      pluginId?: string;
+      buildVersion?: string;
+      scopeId?: string;
+      tab: string;
+    }>();
 
-  const getModalLink = (id: string, treeLevel: number) => (scopeId
-    ? `/full-page/${agentId}/${buildVersion}/${pluginId}/scope/${scopeId}/${tab}/associated-test-modal/
+  const getModalLink = (id: string, treeLevel: number) =>
+    scopeId
+      ? `/full-page/${agentId}/${buildVersion}/${pluginId}/scope/${scopeId}/${tab}/associated-test-modal/
     ?${queryString.stringify({ testId: id, treeLevel })}`
-    : `/full-page/${agentId}/${buildVersion}/${pluginId}/dashboard/${tab}/associated-test-modal/
-    ?${queryString.stringify({ testId: id, treeLevel })}`);
+      : `/full-page/${agentId}/${buildVersion}/${pluginId}/dashboard/${tab}/associated-test-modal/
+    ?${queryString.stringify({ testId: id, treeLevel })}`;
 
   const columns = [
     {
       Header: () => null,
       id: 'expander',
       Cell: ({ row }: any) => (
-        <span {...row.getToggleRowExpandedProps?.()} tw="grid place-items-center w-4 h-4 text-blue-default">
+        <span
+          {...row.getToggleRowExpandedProps?.()}
+          tw="grid place-items-center w-4 h-4 text-blue-default"
+        >
           {row.isExpanded ? <Icons.Expander rotate={90} /> : <Icons.Expander />}
         </span>
       ),
-      SubCell: ({ row }: any) => (
-        row.canExpand
-          ? (
-            <span
-              {...row.getToggleRowExpandedProps?.()}
-              tw="absolute top-2.5 left-11 z-50 grid place-items-center w-4 h-4 text-blue-default"
-            >
-              {row.isExpanded ? <Icons.Expander rotate={90} /> : <Icons.Expander />}
-            </span>
-          ) : null
-      ),
+      SubCell: ({ row }: any) =>
+        row.canExpand ? (
+          <span
+            {...row.getToggleRowExpandedProps?.()}
+            tw="absolute top-2.5 left-11 z-50 grid place-items-center w-4 h-4 text-blue-default"
+          >
+            {row.isExpanded ? <Icons.Expander rotate={90} /> : <Icons.Expander />}
+          </span>
+        ) : null,
       width: '16px',
     },
     {
       Header: 'Name',
       accessor: 'name',
       Cell: ({ value = '' }: any) => (
-        <NameCell
-          icon={<Icons.Package />}
-          value={value}
-          testContext="package"
-        />
+        <NameCell icon={<Icons.Package />} value={value} testContext="package" />
       ),
-      SubCell: ({ value = '', row }: any) => (
-        row.canExpand
-          ? (
-            <div tw="pl-8">
-              <NameCell
-                icon={<Icons.Class />}
-                value={value}
-                testContext="package"
-              />
-            </div>
-          )
-          : (
-            <div tw="pl-13">
-              <Cells.Compound
-                key={value}
-                cellName={value}
-                cellAdditionalInfo={row.original.decl}
-                icon={<Icons.Function />}
-              />
-            </div>
-          )
-      ),
+      SubCell: ({ value = '', row }: any) =>
+        row.canExpand ? (
+          <div tw="pl-8">
+            <NameCell icon={<Icons.Class />} value={value} testContext="package" />
+          </div>
+        ) : (
+          <div tw="pl-13">
+            <Cells.Compound
+              key={value}
+              cellName={value}
+              cellAdditionalInfo={row.original.decl}
+              icon={<Icons.Function />}
+            />
+          </div>
+        ),
       textAlign: 'left',
       width: '30%',
     },
     {
       Header: () => (
         <div className="flex justify-end items-center w-full">
-          Coverage, %<Icons.Checkbox tw="ml-4 min-w-16px text-monochrome-default" width={16} height={16} />
+          Coverage, %
+          <Icons.Checkbox tw="ml-4 min-w-16px text-monochrome-default" width={16} height={16} />
         </div>
       ),
       accessor: 'coverage',
-      Cell: ({ value = 0 }: { value: number}) => <CoverageCell value={value} showCoverageIcon={showCoverageIcon} />,
+      Cell: ({ value = 0 }: { value: number }) => (
+        <CoverageCell value={value} showCoverageIcon={showCoverageIcon} />
+      ),
       width: '10%',
     },
     {
@@ -146,10 +144,7 @@ export const CoverageDetails = ({
       Header: 'Associated tests',
       accessor: 'assocTestsCount',
       Cell: ({ value = '', row }: any) => (
-        <Cells.Clickable
-          data-test="coverage-details:associated-tests-count"
-          disabled={!value}
-        >
+        <Cells.Clickable data-test="coverage-details:associated-tests-count" disabled={!value}>
           {value ? <Link to={getModalLink(row.original.id, 1)}>{value}</Link> : 'n/a'}
         </Cells.Clickable>
       ),
@@ -158,7 +153,10 @@ export const CoverageDetails = ({
   ];
 
   const ExpandedClasses = ({ parentRow }: any) => {
-    const { classes = [] } = useBuildVersion<Package>(`/${classesTopicPrefix}/coverage/packages/${parentRow.values.name}`) || {};
+    const { classes = [] } =
+      useBuildVersion<Package>(
+        `/${classesTopicPrefix}/coverage/packages/${parentRow.values.name}`,
+      ) || {};
     const { rows, prepareRow } = useTable(
       {
         columns: useMemo(() => columns as any, []),
@@ -190,20 +188,21 @@ export const CoverageDetails = ({
     );
   };
 
-  const renderRowSubComponent = useCallback(
-    ({ row }) => <ExpandedClasses parentRow={row} />, [],
-  );
+  const renderRowSubComponent = useCallback(({ row }) => <ExpandedClasses parentRow={row} />, []);
   return (
     <div tw="flex flex-col">
       <>
         <div tw="mt-2">
           <SearchPanel
-            onSearch={(searchValue) => dispatch(setSearch([{ value: searchValue, field: 'name', op: 'CONTAINS' }]))}
+            onSearch={(searchValue) =>
+              dispatch(setSearch([{ value: searchValue, field: 'name', op: 'CONTAINS' }]))
+            }
             searchQuery={searchQuery?.value}
             searchResult={filteredCount}
             placeholder="Search package by name"
           >
-            Displaying {coverageByPackages.slice(0, visibleElementsCount).length} of {totalCount} packages
+            Displaying {coverageByPackages.slice(0, visibleElementsCount).length} of {totalCount}{' '}
+            packages
           </SearchPanel>
         </div>
         <div tw="overflow-x-auto">
@@ -212,13 +211,15 @@ export const CoverageDetails = ({
               columns={columns}
               data={coverageByPackages.slice(0, visibleElementsCount)}
               renderRowSubComponent={renderRowSubComponent}
-              stub={coverageByPackages.length === 0 && (
-                <Stub
-                  icon={<Icons.Package height={104} width={107} />}
-                  title="No results found"
-                  message="Try adjusting your search or filter to find what you are looking for."
-                />
-              )}
+              stub={
+                coverageByPackages.length === 0 && (
+                  <Stub
+                    icon={<Icons.Package height={104} width={107} />}
+                    title="No results found"
+                    message="Try adjusting your search or filter to find what you are looking for."
+                  />
+                )
+              }
             />
             <div ref={ref} />
           </div>
@@ -229,11 +230,7 @@ export const CoverageDetails = ({
           '/full-page/:agentId/:buildVersion/:pluginId/dashboard/:tab/associated-test-modal',
           '/full-page/:agentId/:buildVersion/:pluginId/scope/:scopeId/:tab/associated-test-modal',
         ]}
-        render={() => (
-          <AssociatedTestModal
-            associatedTestsTopic={associatedTestsTopic}
-          />
-        )}
+        render={() => <AssociatedTestModal associatedTestsTopic={associatedTestsTopic} />}
       />
     </div>
   );

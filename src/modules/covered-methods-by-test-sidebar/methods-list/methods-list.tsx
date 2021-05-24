@@ -15,9 +15,7 @@
  */
 import { useRef, useState } from 'react';
 import VirtualList from 'react-tiny-virtual-list';
-import {
-  Inputs, Icons,
-} from '@drill4j/ui-kit';
+import { Inputs, Icons } from '@drill4j/ui-kit';
 
 import { MethodsDetails } from 'types/methods-details';
 import { MethodCounts, MethodsCoveredByTestSummary } from 'types/methods-covered-by-test-summary';
@@ -32,14 +30,14 @@ interface Props {
 
 export const MethodsList = ({ topicCoveredMethodsByTest, summary }: Props) => {
   const [selectedSection, setSelectedSection] = useState<keyof MethodCounts>('all');
-  const methods = useBuildVersion<MethodsDetails[]>(
-    `${topicCoveredMethodsByTest}/${selectedSection}`,
-  ) || [];
+  const methods =
+    useBuildVersion<MethodsDetails[]>(`${topicCoveredMethodsByTest}/${selectedSection}`) || [];
   const node = useRef<HTMLDivElement>(null);
   const { height: methodsListHeight } = useElementSize(node);
   const selectedMethodsCount = getMethodsCount(summary?.methodCounts, selectedSection) || 0;
   const methodsCount = methods.length || selectedMethodsCount;
-  const isShowSceleton = !Object.keys(summary).length || (Number(selectedMethodsCount) > 0 && methods.length === 0);
+  const isShowSceleton =
+    !Object.keys(summary).length || (Number(selectedMethodsCount) > 0 && methods.length === 0);
 
   return (
     <div tw="flex-col h-full overflow-hidden">
@@ -67,49 +65,50 @@ export const MethodsList = ({ topicCoveredMethodsByTest, summary }: Props) => {
               itemSize={56}
               height={Math.ceil(methodsListHeight)}
               itemCount={methodsCount}
-              renderItem={({ index, style }) => (!isShowSceleton ? (
-                <div
-                  tw="flex flex-col justify-center pl-6 pr-6 text-12"
-                  key={`${methods[index]?.name}${index}`}
-                  style={style as Record<symbol, string>}
-                >
-                  <div className="flex items-center w-full h-20px">
-                    <div className="flex items-center w-full gap-4">
-                      <Icons.Function tw="h-4" />
-                      <div
-                        tw="max-w-280px text-monochrome-black text-14 text-ellipsis"
-                        title={methods[index]?.name as string}
-                      >
-                        {methods[index]?.name}
-                      </div>
-                    </div>
-                    <CoverageRateIcon tw="h-4" coverageRate={methods[index]?.coverageRate} />
-                  </div>
+              renderItem={({ index, style }) =>
+                !isShowSceleton ? (
                   <div
-                    tw="max-w-280px ml-8 text-monochrome-default text-12 text-ellipsis"
-                    title={methods[index]?.ownerClass}
+                    tw="flex flex-col justify-center pl-6 pr-6 text-12"
+                    key={`${methods[index]?.name}${index}`}
+                    style={style as Record<symbol, string>}
                   >
-                    {methods[index]?.ownerClass}
+                    <div className="flex items-center w-full h-20px">
+                      <div className="flex items-center w-full gap-4">
+                        <Icons.Function tw="h-4" />
+                        <div
+                          tw="max-w-280px text-monochrome-black text-14 text-ellipsis"
+                          title={methods[index]?.name as string}
+                        >
+                          {methods[index]?.name}
+                        </div>
+                      </div>
+                      <CoverageRateIcon tw="h-4" coverageRate={methods[index]?.coverageRate} />
+                    </div>
+                    <div
+                      tw="max-w-280px ml-8 text-monochrome-default text-12 text-ellipsis"
+                      title={methods[index]?.ownerClass}
+                    >
+                      {methods[index]?.ownerClass}
+                    </div>
                   </div>
-                </div>
-              ) : (
-                <div
-                  tw="flex flex-col justify-center pl-6 pr-6 text-12"
-                  key={index}
-                  style={style as Record<symbol, string>}
-                >
-                  <div tw="flex space-x-2 animate-pulse">
-                    <div tw="rounded-full bg-monochrome-medium-tint h-6 w-6" />
-                    <div tw="flex-1 space-y-4 py-1">
-                      <div tw="space-y-2">
-                        <div tw="h-4 bg-monochrome-medium-tint rounded" />
-                        <div tw="h-3 bg-monochrome-medium-tint rounded" />
+                ) : (
+                  <div
+                    tw="flex flex-col justify-center pl-6 pr-6 text-12"
+                    key={index}
+                    style={style as Record<symbol, string>}
+                  >
+                    <div tw="flex space-x-2 animate-pulse">
+                      <div tw="rounded-full bg-monochrome-medium-tint h-6 w-6" />
+                      <div tw="flex-1 space-y-4 py-1">
+                        <div tw="space-y-2">
+                          <div tw="h-4 bg-monochrome-medium-tint rounded" />
+                          <div tw="h-3 bg-monochrome-medium-tint rounded" />
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
-              )
-              )}
+                )
+              }
             />
           </div>
         </div>

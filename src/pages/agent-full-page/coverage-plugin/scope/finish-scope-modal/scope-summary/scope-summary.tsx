@@ -44,11 +44,15 @@ export const ScopeSummary = ({ scope, testsCount }: Props) => {
       </Element>
       <Element>
         Tests
-        <ElementValue data-test="finish-scope-modal:scope-summary:tests-count">{testsCount}</ElementValue>
+        <ElementValue data-test="finish-scope-modal:scope-summary:tests-count">
+          {testsCount}
+        </ElementValue>
       </Element>
       <Element>
         Duration
-        <ElementValue data-test="finish-scope-modal:scope-summary:duration">{getTimeString(started)}</ElementValue>
+        <ElementValue data-test="finish-scope-modal:scope-summary:duration">
+          {getTimeString(started)}
+        </ElementValue>
       </Element>
     </div>
   );

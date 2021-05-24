@@ -24,7 +24,9 @@ interface Props {
   risks?: RisksSummary;
 }
 
-export const RisksSection = ({ risks: { modified: modifiedMethodsCount = 0, new: newMethodsCount = 0, total = 0 } = {} }: Props) => {
+export const RisksSection = ({
+  risks: { modified: modifiedMethodsCount = 0, new: newMethodsCount = 0, total = 0 } = {},
+}: Props) => {
   const tooltipData = {
     new: {
       count: newMethodsCount,
@@ -40,7 +42,7 @@ export const RisksSection = ({ risks: { modified: modifiedMethodsCount = 0, new:
     <DashboardSection
       label="Risks"
       info={total}
-      graph={(
+      graph={
         <Tooltip message={<SectionTooltip data={tooltipData} hideValue />}>
           <div className="flex items-center w-full">
             <SingleBar
@@ -59,7 +61,7 @@ export const RisksSection = ({ risks: { modified: modifiedMethodsCount = 0, new:
             />
           </div>
         </Tooltip>
-      )}
+      }
     />
   );
 };

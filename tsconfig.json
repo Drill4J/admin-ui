@@ -1,12 +1,10 @@
 {
+  "extends": "ts-config-single-spa",
   "compilerOptions": {
+    "jsx": "react",
     "baseUrl": "src",
     "target": "es5",
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
-    ],
+    "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "skipLibCheck": true,
     "esModuleInterop": true,
@@ -18,11 +16,8 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
-    "jsx": "react-jsx",
     "noFallthroughCasesInSwitch": true
   },
-  "include": [
-    "src",
-    "twin.d.ts"
-  ]
+  "include": ["src/**/*", "node_modules/@types", "twin.d.ts", "src/declarations.d.ts"],
+  "exclude": ["src/**/*.test*"]
 }

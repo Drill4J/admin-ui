@@ -14,21 +14,23 @@
  * limitations under the License.
  */
 import {
-  Children, ComponentType, ReactElement, useReducer, useState, Component, useContext,
+  Children,
+  ComponentType,
+  ReactElement,
+  useReducer,
+  useState,
+  Component,
+  useContext,
 } from 'react';
 import { Form } from 'react-final-form';
-import {
-  Icons, Button, Spinner,
-} from '@drill4j/ui-kit';
+import { Icons, Button, Spinner } from '@drill4j/ui-kit';
 
 import { Agent } from 'types/agent';
 
 import { useWsConnection } from 'hooks';
 import { defaultAdminSocket } from 'common/connection';
 import { NotificationManagerContext } from 'notification-manager';
-import {
-  wizardReducer, previousStep, nextStep, state,
-} from './wizard-reducer';
+import { wizardReducer, previousStep, nextStep, state } from './wizard-reducer';
 import { FormValidator } from '../../forms/form-validators';
 import 'twin.macro';
 
@@ -48,13 +50,15 @@ interface Props {
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export const Step = (props: StepProps) => null;
 
-export const Wizard = ({
-  children, initialValues, onSubmit, onSuccessMessage,
-}: Props) => {
+export const Wizard = ({ children, initialValues, onSubmit, onSuccessMessage }: Props) => {
   const [{ currentStepIndex }, dispatch] = useReducer(wizardReducer, state);
   const [error, setError] = useState(false);
   const steps = Children.toArray(children);
-  const { name, validate, component: StepComponent } = (steps[currentStepIndex] as Component<StepProps>).props;
+  const {
+    name,
+    validate,
+    component: StepComponent,
+  } = (steps[currentStepIndex] as Component<StepProps>).props;
   const availablePlugins = useWsConnection<Plugin[]>(defaultAdminSocket, '/plugins') || [];
   const { showMessage } = useContext(NotificationManagerContext);
 
@@ -62,10 +66,14 @@ export const Wizard = ({
     <div>
       <Form
         initialValues={{
-          ...initialValues, availablePlugins, plugins: ['test2code'],
+          ...initialValues,
+          availablePlugins,
+          plugins: ['test2code'],
         }}
         keepDirtyOnReinitialize
-        initialValuesEqual={(prevValues, nextValues) => JSON.stringify(prevValues) === JSON.stringify(nextValues)}
+        initialValuesEqual={(prevValues, nextValues) =>
+          JSON.stringify(prevValues) === JSON.stringify(nextValues)
+        }
         onSubmit={async (values) => {
           try {
             await onSubmit(values);
@@ -74,7 +82,9 @@ export const Wizard = ({
             setError(true);
             showMessage({
               type: 'ERROR',
-              text: message || 'On-submit error. Server problem or operation could not be processed in real-time.',
+              text:
+                message ||
+                'On-submit error. Server problem or operation could not be processed in real-time.',
             });
           }
         }}
@@ -131,7 +141,11 @@ export const Wizard = ({
                     data-test="wizard:finishng-button"
                     disabled={submitting || error}
                   >
-                    {submitting ? <Spinner disabled /> : <Icons.Check height={10} width={14} viewBox="0 0 14 10" />}
+                    {submitting ? (
+                      <Spinner disabled />
+                    ) : (
+                      <Icons.Check height={10} width={14} viewBox="0 0 14 10" />
+                    )}
                     <span>Finish</span>
                   </Button>
                 )}

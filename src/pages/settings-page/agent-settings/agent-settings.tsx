@@ -15,9 +15,7 @@
  */
 import { useState } from 'react';
 import { Icons } from '@drill4j/ui-kit';
-import {
-  useParams, Prompt, Switch, Route,
-} from 'react-router-dom';
+import { useParams, Prompt, Switch, Route } from 'react-router-dom';
 import 'twin.macro';
 
 import { TabsPanel, Tab, PageHeader } from 'components';
@@ -31,32 +29,40 @@ import { UnSaveChangeModal } from '../un-save-changes-modal';
 export const AgentSettings = () => {
   const [pristineSettings, setPristineSettings] = useState(true);
   const [nextLocation, setNextLocation] = useState('');
-  const { id = '' } = useParams<{ id: string; }>();
+  const { id = '' } = useParams<{ id: string }>();
   const agent = useAgent(id) || {};
   const SystemSettings = agent.agentType === 'Node.js' ? JsSystemSettingsForm : SystemSettingsForm;
 
   return (
     <div tw="flex flex-col w-full">
       <PageHeader
-        title={(
+        title={
           <div tw="flex gap-x-4 items-center pt-5 pb-7">
             <Icons.Settings tw="text-monochrome-default" height={20} width={20} />
             {agent.agentType} Agent Settings
             <AgentStatusToggle tw="mt-2 leading-20" agent={agent} />
           </div>
-        )}
+        }
       />
       <div tw="px-6">
         <TabsPanel>
-          <Tab name="general" to={`/agents/agent/${id}/settings/general`}>General</Tab>
-          <Tab name="system" to={`/agents/agent/${id}/settings/system`}>System</Tab>
-          <Tab name="plugins" to={`/agents/agent/${id}/settings/plugins`}>Plugins</Tab>
+          <Tab name="general" to={`/agents/agent/${id}/settings/general`}>
+            General
+          </Tab>
+          <Tab name="system" to={`/agents/agent/${id}/settings/system`}>
+            System
+          </Tab>
+          <Tab name="plugins" to={`/agents/agent/${id}/settings/plugins`}>
+            Plugins
+          </Tab>
         </TabsPanel>
       </div>
       <Switch>
         <Route
           path="/agents/agent/:id/settings/general"
-          render={() => <GeneralSettingsForm agent={agent} setPristineSettings={setPristineSettings} />}
+          render={() => (
+            <GeneralSettingsForm agent={agent} setPristineSettings={setPristineSettings} />
+          )}
         />
         <Route
           path="/agents/agent/:id/settings/system"
@@ -71,7 +77,7 @@ export const AgentSettings = () => {
       <Prompt
         when
         message={({ pathname, state }) => {
-          const { pristine } = state as { pristine: boolean } || {};
+          const { pristine } = (state as { pristine: boolean }) || {};
 
           if (pristineSettings || pristine) {
             return true;

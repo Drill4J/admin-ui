@@ -60,12 +60,7 @@ export const ManagementActiveSessions = ({ activeSessions }: Props) => {
             </LinkButton>
           </div>
         </div>
-        <Field
-          name="id"
-          component={Fields.Search}
-          placeholder="Search session by ID"
-          disabled
-        />
+        <Field name="id" component={Fields.Search} placeholder="Search session by ID" disabled />
       </div>
     </div>
   );

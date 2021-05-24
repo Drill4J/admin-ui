@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { capitalize } from "./capitalize";
+import { capitalize } from './capitalize';
 
 describe('capitalize', () => {
   it('should transform provided uppercase string to capitalize', () => {
@@ -27,4 +27,4 @@ describe('capitalize', () => {
   it('should return empty string if provide value is empty string', () => {
     expect(capitalize('')).toBe('');
   });
-})
+});

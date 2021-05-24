@@ -25,9 +25,16 @@ import { TestsInfo } from 'types/tests-info';
 import { useBuildVersion } from 'hooks';
 
 export const TestsSection = () => {
-  const { byTestType = [], finishedScopesCount = 0 } = useBuildVersion<BuildCoverage>('/build/coverage') || {};
-  const totalCoveredMethodCount = byTestType.reduce((acc, { summary: { testCount = 0 } }) => acc + testCount, 0);
-  const testsInfo: TestsInfo = byTestType.reduce((test, testType) => ({ ...test, [testType.type]: testType }), {});
+  const { byTestType = [], finishedScopesCount = 0 } =
+    useBuildVersion<BuildCoverage>('/build/coverage') || {};
+  const totalCoveredMethodCount = byTestType.reduce(
+    (acc, { summary: { testCount = 0 } }) => acc + testCount,
+    0,
+  );
+  const testsInfo: TestsInfo = byTestType.reduce(
+    (test, testType) => ({ ...test, [testType.type]: testType }),
+    {},
+  );
   const tooltipData = {
     auto: {
       value: testsInfo?.AUTO?.summary.coverage?.percentage,
@@ -46,7 +53,7 @@ export const TestsSection = () => {
       label="Tests"
       info={totalCoveredMethodCount}
       additionalInfo={`${finishedScopesCount} scopes`}
-      graph={(
+      graph={
         <Tooltip message={<SectionTooltip data={tooltipData} />}>
           <div tw="flex items-center w-full">
             {Object.keys(TESTS_TYPES_COLOR).map((testType) => (
@@ -55,13 +62,16 @@ export const TestsSection = () => {
                 width={64}
                 height={128}
                 color={TESTS_TYPES_COLOR[testType as TestTypes]}
-                percent={convertToPercentage((testsInfo[testType] && testsInfo[testType].summary.testCount) || 0, totalCoveredMethodCount)}
+                percent={convertToPercentage(
+                  (testsInfo[testType] && testsInfo[testType].summary.testCount) || 0,
+                  totalCoveredMethodCount,
+                )}
                 icon={capitalize(testType)}
               />
             ))}
           </div>
         </Tooltip>
-      )}
+      }
     />
   );
 };

@@ -39,7 +39,9 @@ export const PluginCard = ({ label, children, pluginLink }: Props) => (
   <div tw="w-full border h-fit border-monochrome-medium-tint">
     <Header>
       <span>{label}</span>
-      <Link className="font-regular link no-underline" to={pluginLink}>View more &gt;</Link>
+      <Link className="font-regular link no-underline" to={pluginLink}>
+        View more &gt;
+      </Link>
     </Header>
     <Content>
       {Children.map(children, (child) => (

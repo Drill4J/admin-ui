@@ -26,10 +26,7 @@ export function useServiceGroup(id: string) {
       setData(newData);
     }
 
-    const unsubscribe = defaultAdminSocket.subscribe(
-      `/api/groups/${id}`,
-      handleDataChange,
-    );
+    const unsubscribe = defaultAdminSocket.subscribe(`/api/groups/${id}`, handleDataChange);
 
     return () => {
       unsubscribe();

@@ -33,9 +33,7 @@ interface State {
 }
 
 export const ScopeTimer = ({ started, finished, active }: Props) => {
-  const [{
-    days, hours, minutes, seconds,
-  }, setDuration] = useState<State>(
+  const [{ days, hours, minutes, seconds }, setDuration] = useState<State>(
     getTimeDifference(started, finished),
   );
 

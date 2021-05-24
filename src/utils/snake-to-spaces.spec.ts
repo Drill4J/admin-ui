@@ -18,22 +18,22 @@ import { snakeToSpaces } from './snake-to-spaces';
 describe('snakeToSpaces', () => {
   it('should transform provided snakeCase to spaces', () => {
     expect(snakeToSpaces('foo_bar')).toBe('foo bar');
-  })
+  });
 
   it('should return a same and trim string if the value is not a snakeCase', () => {
     expect(snakeToSpaces('foo')).toBe('foo');
     expect(snakeToSpaces(' foo')).toBe('foo');
     expect(snakeToSpaces('foo ')).toBe('foo');
-  })
+  });
 
   it('should return trimmed string after transformation', () => {
     expect(snakeToSpaces('foo ')).toBe('foo');
     expect(snakeToSpaces(' foo')).toBe('foo');
     expect(snakeToSpaces('foo_bar ')).toBe('foo bar');
     expect(snakeToSpaces(' foo_bar')).toBe('foo bar');
-  })
+  });
 
   it('should return empty string if value is empty string', () => {
     expect(snakeToSpaces('')).toBe('');
-  })
-})
+  });
+});

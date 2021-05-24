@@ -27,13 +27,9 @@ import {
   ServiceGroupFullPage,
   ServiceGroupRegistrationPage,
 } from 'pages';
-import {
-  PrivateRoute, Sidebar, Footer,
-} from 'components';
+import { PrivateRoute, Sidebar, Footer } from 'components';
 
-const sidebarLinks = [
-  { link: 'agents', icon: Icons.Agents },
-];
+const sidebarLinks = [{ link: 'agents', icon: Icons.Agents }];
 
 export const PageSwitcher = () => (
   <Switch>
@@ -46,10 +42,21 @@ export const PageSwitcher = () => (
       footer={<Footer />}
     >
       <Switch>
-        <PrivateRoute exact path={['/agents', '/agents/notification-sidebar']} component={AgentsPage} />
-        <PrivateRoute exact path={['/agents/:type/:id/settings/:tab', '/agents/:type/:id/settings/:tab/:panel']} component={SettingsPage} />
+        <PrivateRoute
+          exact
+          path={['/agents', '/agents/notification-sidebar']}
+          component={AgentsPage}
+        />
+        <PrivateRoute
+          exact
+          path={['/agents/:type/:id/settings/:tab', '/agents/:type/:id/settings/:tab/:panel']}
+          component={SettingsPage}
+        />
         <PrivateRoute exact path="/registration/:agentId" component={AgentRegistrationPage} />
-        <PrivateRoute path="/bulk-registration/:serviceGroupId" component={ServiceGroupRegistrationPage} />
+        <PrivateRoute
+          path="/bulk-registration/:serviceGroupId"
+          component={ServiceGroupRegistrationPage}
+        />
         <PrivateRoute path="/preregister/offline-agent" component={AgentRegistrationPage} />
         <PrivateRoute component={NotFoundPage} />
       </Switch>

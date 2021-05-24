@@ -24,7 +24,13 @@ import { TestDetails } from '../test-details';
 export const ScopeTests = () => {
   const { search } = useTableActionsState();
   const { scopeId = '' } = useParams<{ scopeId: string }>();
-  const tests = useBuildVersion<FilterList<TestCoverageInfo>>(`/build/scopes/${scopeId}/tests`, search, undefined, 'LIST') || {};
+  const tests =
+    useBuildVersion<FilterList<TestCoverageInfo>>(
+      `/build/scopes/${scopeId}/tests`,
+      search,
+      undefined,
+      'LIST',
+    ) || {};
 
   return (
     <TestDetails

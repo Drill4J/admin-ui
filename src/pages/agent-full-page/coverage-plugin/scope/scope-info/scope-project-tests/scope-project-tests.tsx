@@ -26,8 +26,12 @@ interface Props {
 }
 
 export const ScopeProjectTests = ({ scopeId }: Props) => {
-  const { byTestType = [] } = useBuildVersion<BuildCoverage>(`/build/scopes/${scopeId}/coverage`) || {};
-  const testsInfo: TestsInfo = byTestType.reduce((test, testType) => ({ ...test, [testType.type]: testType }), {});
+  const { byTestType = [] } =
+    useBuildVersion<BuildCoverage>(`/build/scopes/${scopeId}/coverage`) || {};
+  const testsInfo: TestsInfo = byTestType.reduce(
+    (test, testType) => ({ ...test, [testType.type]: testType }),
+    {},
+  );
 
   return (
     <div tw="flex flex-col gap-10">

@@ -21,7 +21,8 @@ import { TestDetails } from '../test-details';
 
 export const BuildTests = () => {
   const { search } = useTableActionsState();
-  const tests = useBuildVersion<FilterList<TestCoverageInfo>>('/build/tests', search, undefined, 'LIST') || {};
+  const tests =
+    useBuildVersion<FilterList<TestCoverageInfo>>('/build/tests', search, undefined, 'LIST') || {};
 
   return (
     <TestDetails

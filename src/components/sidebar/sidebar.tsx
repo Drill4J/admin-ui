@@ -13,12 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import {
-  useLocation, matchPath, Link,
-} from 'react-router-dom';
+import { useLocation, matchPath, Link } from 'react-router-dom';
 import tw, { styled } from 'twin.macro';
 
-import { ReactComponent as LogoSvg } from './logo.svg';
+import LogoSvg from './logo.svg';
 
 interface IconProps {
   width?: number;
@@ -37,7 +35,8 @@ interface Props {
 
 export const Sidebar = ({ links, matchParams }: Props) => {
   const { pathname } = useLocation();
-  const { params: { activeLink = '' } = {} } = matchPath<{ activeLink: string }>(pathname, matchParams) || {};
+  const { params: { activeLink = '' } = {} } =
+    matchPath<{ activeLink: string }>(pathname, matchParams) || {};
 
   return (
     <div tw="w-20 h-full bg-monochrome-light-tint">
@@ -47,16 +46,12 @@ export const Sidebar = ({ links, matchParams }: Props) => {
       >
         <LogoSvg />
       </Link>
-      {links.length > 0
-          && links.map(({ icon: Icon, link, computedLink }) => (
-            <SidebarLink
-              key={link}
-              isActive={link === activeLink}
-              to={`/${computedLink || link}`}
-            >
-              <Icon />
-            </SidebarLink>
-          ))}
+      {links.length > 0 &&
+        links.map(({ icon: Icon, link, computedLink }) => (
+          <SidebarLink key={link} isActive={link === activeLink} to={`/${computedLink || link}`}>
+            <Icon />
+          </SidebarLink>
+        ))}
     </div>
   );
 };

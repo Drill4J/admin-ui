@@ -25,7 +25,8 @@ export type Action = ReturnType<typeof openModal | typeof setActiveSessions>;
 export const openModal = (modalName: ModalName | undefined, scope: ActiveScope | null) =>
   ({ type: OPEN_MODAL, payload: { openedModalName: modalName, scope } } as const);
 
-export const setActiveSessions = (activeSessions: ActiveSessions) => ({ type: SET_ACTIVE_SESSIONS, payload: activeSessions } as const);
+export const setActiveSessions = (activeSessions: ActiveSessions) =>
+  ({ type: SET_ACTIVE_SESSIONS, payload: activeSessions } as const);
 
 export const pluginReducer = (state: PluginState, action: Action): PluginState => {
   switch (action.type) {

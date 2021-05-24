@@ -15,9 +15,10 @@
  */
 import axios from 'axios';
 
-export async function readAllNotifications(
-  { onSuccess, onError }: { onSuccess?: () => void; onError?: (message: string) => void } = {},
-) {
+export async function readAllNotifications({
+  onSuccess,
+  onError,
+}: { onSuccess?: () => void; onError?: (message: string) => void } = {}) {
   try {
     await axios.patch('/notifications/read');
     onSuccess && onSuccess();

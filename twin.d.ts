@@ -23,18 +23,18 @@ declare module 'twin.macro' {
 
 declare module 'react' {
   interface HTMLAttributes<T> extends DOMAttributes<T> {
-    css?: CSSProp
+    css?: CSSProp;
   }
 
   interface SVGProps<T> extends SVGProps<SVGSVGElement> {
-    css?: CSSProp
+    css?: CSSProp;
   }
 }
 
 declare global {
   namespace JSX {
     interface IntrinsicAttributes<T> extends DOMAttributes<T> {
-      as?: string
+      as?: string;
     }
   }
 }

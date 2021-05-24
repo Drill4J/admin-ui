@@ -30,7 +30,8 @@ export function useAgent(agentId: string, callback?: () => void) {
       setData(newData);
     }
 
-    const unsubscribe = agentId && defaultAdminSocket.subscribe(`/api/agents/${agentId}`, handleDataChange);
+    const unsubscribe =
+      agentId && defaultAdminSocket.subscribe(`/api/agents/${agentId}`, handleDataChange);
 
     return () => {
       unsubscribe && unsubscribe();

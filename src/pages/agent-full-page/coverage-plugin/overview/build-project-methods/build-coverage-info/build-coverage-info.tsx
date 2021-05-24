@@ -26,14 +26,19 @@ interface Props {
 }
 
 export const BuildCoverageInfo = ({
-  buildCodeCoverage, previousBuildInfo: { previousBuildVersion = '', previousBuildCodeCoverage = 0 } = {},
+  buildCodeCoverage,
+  previousBuildInfo: { previousBuildVersion = '', previousBuildCodeCoverage = 0 } = {},
 }: Props) => {
-  const { agentId, buildVersion, pluginId } = useParams<{agentId: string, buildVersion: string, pluginId: string }>();
-  const buildDiff = percentFormatter(buildCodeCoverage) - percentFormatter(previousBuildCodeCoverage);
+  const { agentId, buildVersion, pluginId } =
+    useParams<{ agentId: string; buildVersion: string; pluginId: string }>();
+  const buildDiff =
+    percentFormatter(buildCodeCoverage) - percentFormatter(previousBuildCodeCoverage);
   return (
     <div tw="w-full h-full text-12 leading-16 text-monochrome-default">
       <div className="flex justify-between items-center w-full">
-        <div tw="font-bold" data-test="build-coverage-info:title">BUILD COVERAGE</div>
+        <div tw="font-bold" data-test="build-coverage-info:title">
+          BUILD COVERAGE
+        </div>
         <NavLink
           className="link font-bold leading-16 no-underline"
           to={`/full-page/${agentId}/${buildVersion}/${pluginId}/scopes/`}
@@ -42,16 +47,21 @@ export const BuildCoverageInfo = ({
           All scopes
         </NavLink>
       </div>
-      <div tw="flex items-baseline mt-6 mb-3 text-12" data-test="build-coverage-info:detailed-code-coverage-info">
-        <div tw="mr-2 text-32 leading-40 text-monochrome-black" data-test="build-coverage-info:build-coverage-percentage">
+      <div
+        tw="flex items-baseline mt-6 mb-3 text-12"
+        data-test="build-coverage-info:detailed-code-coverage-info"
+      >
+        <div
+          tw="mr-2 text-32 leading-40 text-monochrome-black"
+          data-test="build-coverage-info:build-coverage-percentage"
+        >
           {percentFormatter(buildCodeCoverage)}%
         </div>
         {previousBuildVersion && buildCodeCoverage > 0 && (
           <span data-test="build-coverage-info:comparing">
             <span tw="font-bold">
               {buildDiff >= 0 ? '+ ' : '- '}
-              {percentFormatter(Math.abs(buildDiff))}%
-              &nbsp;
+              {percentFormatter(Math.abs(buildDiff))}% &nbsp;
             </span>
             сompared to the parent build
           </span>

@@ -22,7 +22,10 @@ import { ParentBuild } from 'types/parent-build';
 
 export const BaselineTooltip = () => {
   const {
-    pluginId = '', agentId = '', buildVersion = '', tab = '',
+    pluginId = '',
+    agentId = '',
+    buildVersion = '',
+    tab = '',
   } = useParams<{
     pluginId: string;
     agentId: string;
@@ -31,7 +34,14 @@ export const BaselineTooltip = () => {
   }>();
 
   const { buildVersion: activeBuildVersion = '' } = useAgent(agentId) || {};
-  const { version: baseline } = useBuildVersion<Baseline>('/data/baseline', undefined, undefined, undefined, activeBuildVersion) || {};
+  const { version: baseline } =
+    useBuildVersion<Baseline>(
+      '/data/baseline',
+      undefined,
+      undefined,
+      undefined,
+      activeBuildVersion,
+    ) || {};
   const isBaseline = baseline === buildVersion;
   const isActiveBuild = activeBuildVersion === buildVersion;
   const { version: previousBuildVersion = '' } = useBuildVersion<ParentBuild>('/data/parent') || {};
@@ -40,7 +50,9 @@ export const BaselineTooltip = () => {
   return (
     <Tooltip message={<div tw="text-center">{info}</div>} position="top-center">
       <FlagWrapper
-        to={`/full-page/${agentId}/${buildVersion}/${pluginId}/dashboard/${tab}${!disabled ? '/baseline-build-modal' : ''}`}
+        to={`/full-page/${agentId}/${buildVersion}/${pluginId}/dashboard/${tab}${
+          !disabled ? '/baseline-build-modal' : ''
+        }`}
         active={Boolean(isActiveBuild && previousBuildVersion)}
       >
         <Flag />
@@ -56,7 +68,7 @@ const FlagWrapper = styled(Link)(({ active }: { active?: boolean }) => [
 
 function showBaseline(isBaseline: boolean, isActiveBuild: boolean, previousBuildVersion: string) {
   if (!previousBuildVersion && isBaseline) {
-    return ({
+    return {
       disabled: true,
       info: (
         <>
@@ -65,24 +77,24 @@ function showBaseline(isBaseline: boolean, isActiveBuild: boolean, previousBuild
         </>
       ),
       Flag: Icons.Flag,
-    });
+    };
   }
   if (isActiveBuild && !isBaseline) {
-    return ({
+    return {
       disabled: false,
       info: 'Set as Baseline',
       Flag: Icons.Flag,
-    });
+    };
   }
   if (isActiveBuild && isBaseline) {
-    return ({
+    return {
       disabled: false,
       info: 'Unset as Baseline',
       Flag: Icons.FilledFlag,
-    });
+    };
   }
   if (!isActiveBuild && isBaseline) {
-    return ({
+    return {
       disabled: true,
       info: (
         <>
@@ -91,7 +103,7 @@ function showBaseline(isBaseline: boolean, isActiveBuild: boolean, previousBuild
         </>
       ),
       Flag: Icons.Flag,
-    });
+    };
   }
 
   return {

@@ -28,13 +28,14 @@ export function usePreviousBuildCoverage(previousBuildVersion: string): BuildCov
       setData(newData);
     }
 
-    const unsubscribe = agentId && previousBuildVersion
-      ? defaultTest2CodePluginSocket.subscribe('/build/coverage', handleDataChange, {
-        agentId,
-        buildVersion: previousBuildVersion,
-        type: 'AGENT',
-      })
-      : null;
+    const unsubscribe =
+      agentId && previousBuildVersion
+        ? defaultTest2CodePluginSocket.subscribe('/build/coverage', handleDataChange, {
+            agentId,
+            buildVersion: previousBuildVersion,
+            type: 'AGENT',
+          })
+        : null;
 
     return () => {
       unsubscribe && unsubscribe();

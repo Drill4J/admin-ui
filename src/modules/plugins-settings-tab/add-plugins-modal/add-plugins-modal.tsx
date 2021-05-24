@@ -39,26 +39,27 @@ const PluginsList = styled.div`
   ${tw`bg-monochrome-white`};
 `;
 
-export const AddPluginsModal = ({
-  plugins, setSelectedPlugins, selectedPlugins,
-}: Props) => {
+export const AddPluginsModal = ({ plugins, setSelectedPlugins, selectedPlugins }: Props) => {
   const { showMessage } = useContext(NotificationManagerContext);
   const { pathname } = useLocation();
-  const { params: { type = '', id: agentId = '' } = {} } = matchPath<{ type: 'service-group' | 'agent'; id: string }>(pathname, {
-    path: '/agents/:type/:id/settings/:tab',
-  }) || {};
+  const { params: { type = '', id: agentId = '' } = {} } =
+    matchPath<{ type: 'service-group' | 'agent'; id: string }>(pathname, {
+      path: '/agents/:type/:id/settings/:tab',
+    }) || {};
   const [loading, setLoading] = useState(false);
   const closeModal = useCloseModal('/add-plugin-modal');
   const handleLoadPlugins = loadPlugins(
-    `/${type === 'agent' ? 'agents' : 'groups'}/${agentId}/plugins`, {
+    `/${type === 'agent' ? 'agents' : 'groups'}/${agentId}/plugins`,
+    {
       onSuccess: () => {
         closeModal();
         showMessage({ type: 'SUCCESS', text: 'Plugin has been added' });
       },
-      onError: () => showMessage({
-        type: 'ERROR',
-        text: 'On-submit error. Server problem or operation could not be processed in real-time',
-      }),
+      onError: () =>
+        showMessage({
+          type: 'ERROR',
+          text: 'On-submit error. Server problem or operation could not be processed in real-time',
+        }),
     },
   );
 
@@ -69,7 +70,9 @@ export const AddPluginsModal = ({
           Add new plugin
         </div>
         <div tw="h-full flex-grow pr-6 pl-6">
-          <div tw="mt-4 font-bold text-14 leading-40 text-monochrome-black">Choose one or more plugins:</div>
+          <div tw="mt-4 font-bold text-14 leading-40 text-monochrome-black">
+            Choose one or more plugins:
+          </div>
           <PluginsList>
             <SelectableList
               plugins={plugins}

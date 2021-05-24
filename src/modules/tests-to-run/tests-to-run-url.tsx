@@ -31,7 +31,7 @@ const UrlContainer = styled.div`
   }
 `;
 
-const CurlFlag = styled.span(({ isRed, invisible }: { isRed?: boolean; invisible?: boolean}) => [
+const CurlFlag = styled.span(({ isRed, invisible }: { isRed?: boolean; invisible?: boolean }) => [
   'min-width: 18px;',
   tw`font-bold text-monochrome-black`,
   isRed && tw`text-red-default`,
@@ -44,18 +44,28 @@ export const TestsToRunUrl = ({ agentId, pluginId, agentType }: Props) => (
     style={{ width: agentType === 'ServiceGroup' ? '300px' : undefined }}
   >
     <div>
-      <CurlFlag>curl <CurlFlag isRed>-</CurlFlag>i <CurlFlag isRed>-</CurlFlag>H </CurlFlag>
+      <CurlFlag>
+        curl <CurlFlag isRed>-</CurlFlag>i <CurlFlag isRed>-</CurlFlag>H{' '}
+      </CurlFlag>
       &quot;accept: application/json&quot;<CurlFlag> \</CurlFlag>
     </div>
     <div>
-      <CurlFlag> <CurlFlag isRed>-</CurlFlag>H </CurlFlag>
+      <CurlFlag>
+        {' '}
+        <CurlFlag isRed>-</CurlFlag>H{' '}
+      </CurlFlag>
       &quot;content-type: application/json&quot;<CurlFlag> \</CurlFlag>
     </div>
     <div className="flex items-start">
-      <CurlFlag> <CurlFlag isRed>-</CurlFlag>X <CurlFlag invisible>\</CurlFlag></CurlFlag>
+      <CurlFlag>
+        {' '}
+        <CurlFlag isRed>-</CurlFlag>X <CurlFlag invisible>\</CurlFlag>
+      </CurlFlag>
       <span>
-        <CurlFlag> GET </CurlFlag>{`${adminUrl}api/${agentType === 'ServiceGroup'
-          ? 'groups' : 'agents'}/${agentId}/plugins/${pluginId}/data/tests-to-run`}
+        <CurlFlag> GET </CurlFlag>
+        {`${adminUrl}api/${
+          agentType === 'ServiceGroup' ? 'groups' : 'agents'
+        }/${agentId}/plugins/${pluginId}/data/tests-to-run`}
       </span>
     </div>
   </UrlContainer>

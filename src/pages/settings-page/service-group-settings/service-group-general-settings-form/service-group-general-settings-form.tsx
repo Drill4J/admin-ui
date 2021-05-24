@@ -18,14 +18,10 @@ import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import { Form, Field } from 'react-final-form';
 
-import {
-  Button, FormGroup, GeneralAlerts, Spinner,
-} from '@drill4j/ui-kit';
+import { Button, FormGroup, GeneralAlerts, Spinner } from '@drill4j/ui-kit';
 import 'twin.macro';
 
-import {
-  composeValidators, Fields, required, sizeLimit,
-} from 'forms';
+import { composeValidators, Fields, required, sizeLimit } from 'forms';
 import { ServiceGroupEntity } from 'types/service-group-entity';
 import { NotificationManagerContext } from 'notification-manager';
 import { useFormHandleSubmit } from 'hooks';
@@ -53,17 +49,17 @@ export const ServiceGroupGeneralSettingsForm = ({ serviceGroup, setPristineSetti
         }
       }}
       initialValues={serviceGroup}
-      validate={composeValidators(
-        required('name', 'Service Group Name'),
-        sizeLimit({ name: 'name', alias: 'Service Group Name' }),
-        sizeLimit({ name: 'environment' }),
-        sizeLimit({ name: 'description', min: 3, max: 256 }),
-      ) as any}
+      validate={
+        composeValidators(
+          required('name', 'Service Group Name'),
+          sizeLimit({ name: 'name', alias: 'Service Group Name' }),
+          sizeLimit({ name: 'environment' }),
+          sizeLimit({ name: 'description', min: 3, max: 256 }),
+        ) as any
+      }
       render={(props) => {
         const ref = useFormHandleSubmit(props);
-        const {
-          handleSubmit, submitting, pristine, invalid,
-        } = props || {};
+        const { handleSubmit, submitting, pristine, invalid } = props || {};
 
         useEffect(() => {
           setPristineSettings(pristine);
@@ -71,9 +67,7 @@ export const ServiceGroupGeneralSettingsForm = ({ serviceGroup, setPristineSetti
 
         return (
           <form ref={ref} tw="space-y-10">
-            <GeneralAlerts type="INFO">
-              Basic service group settings.
-            </GeneralAlerts>
+            <GeneralAlerts type="INFO">Basic service group settings.</GeneralAlerts>
             <div tw="flex flex-col items-center gap-y-6">
               <FormGroup tw="w-97" label="Service Group ID">
                 <Field name="id" component={Fields.Input} disabled />

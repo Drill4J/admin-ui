@@ -13,15 +13,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-export { SessionsManagementPane, SessionsManagementPaneProvider, useActiveSessions } from './sessions-management-pane';
+export {
+  SessionsManagementPane,
+  SessionsManagementPaneProvider,
+  useActiveSessions,
+} from './sessions-management-pane';
 export { CancelAgentRegistrationModal } from './cancel-agent-registration-modal';
 export { Breadcrumbs } from './breadcrumbs';
 export { UnlockingSystemSettingsFormModal } from './unlocking-system-settings-form-modal';
 export { InstallPluginsStep } from './install-plugins-step';
 export { SystemSettingsStep } from './system-setting-step';
 export {
-  TableActionsProvider, useTableActionsState, useTableActionsDispatch,
-  setSearch, setSort,
+  TableActionsProvider,
+  useTableActionsState,
+  useTableActionsDispatch,
+  setSearch,
+  setSort,
 } from './table-actions';
 export { TestsToRunList, TestsToRunModal } from './tests-to-run';
 export { CoveredMethodsByTestSidebar } from './covered-methods-by-test-sidebar';

@@ -21,7 +21,7 @@ import tw, { styled } from 'twin.macro';
 import { useElementSize } from 'hooks';
 
 interface Props {
-  associatedTests: { testsMap: Record<string, string[]>; assocTestsCount: number; };
+  associatedTests: { testsMap: Record<string, string[]>; assocTestsCount: number };
 }
 
 const TestItem = styled.div`
@@ -71,9 +71,16 @@ export const TestsList = ({ associatedTests }: Props) => {
                   <>
                     <div tw="flex flex-row items-center h-5">
                       <Icons.Test tw="flex self-center min-w-12px min-h-16px" />
-                      <div tw="text-ellipsis ml-4 text-14 leading-20 text-monochrome-black" title={tests[index]}>{tests[index]}</div>
+                      <div
+                        tw="text-ellipsis ml-4 text-14 leading-20 text-monochrome-black"
+                        title={tests[index]}
+                      >
+                        {tests[index]}
+                      </div>
                     </div>
-                    <div tw="text-ellipsis pl-7 text-12 text-monochrome-default" title="&ndash;">&ndash;</div>
+                    <div tw="text-ellipsis pl-7 text-12 text-monochrome-default" title="&ndash;">
+                      &ndash;
+                    </div>
                   </>
                 )}
                 {Object.keys(associatedTests.testsMap).length === 0 && (

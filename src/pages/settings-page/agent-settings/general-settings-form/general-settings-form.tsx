@@ -18,14 +18,10 @@ import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import { Form, Field } from 'react-final-form';
 
-import {
-  Button, FormGroup, GeneralAlerts, Spinner,
-} from '@drill4j/ui-kit';
+import { Button, FormGroup, GeneralAlerts, Spinner } from '@drill4j/ui-kit';
 import 'twin.macro';
 
-import {
-  composeValidators, Fields, required, sizeLimit,
-} from 'forms';
+import { composeValidators, Fields, required, sizeLimit } from 'forms';
 import { Agent } from 'types/agent';
 import { NotificationManagerContext } from 'notification-manager';
 import { useFormHandleSubmit } from 'hooks';
@@ -53,17 +49,17 @@ export const GeneralSettingsForm = ({ agent, setPristineSettings }: Props) => {
         }
       }}
       initialValues={agent}
-      validate={composeValidators(
-        required('name'),
-        sizeLimit({ name: 'name' }),
-        sizeLimit({ name: 'environment' }),
-        sizeLimit({ name: 'description', min: 3, max: 256 }),
-      ) as any}
+      validate={
+        composeValidators(
+          required('name'),
+          sizeLimit({ name: 'name' }),
+          sizeLimit({ name: 'environment' }),
+          sizeLimit({ name: 'description', min: 3, max: 256 }),
+        ) as any
+      }
       render={(props) => {
         const ref = useFormHandleSubmit(props);
-        const {
-          handleSubmit, submitting, pristine, invalid,
-        } = props || {};
+        const { handleSubmit, submitting, pristine, invalid } = props || {};
 
         useEffect(() => {
           setPristineSettings(pristine);
@@ -71,9 +67,7 @@ export const GeneralSettingsForm = ({ agent, setPristineSettings }: Props) => {
 
         return (
           <form ref={ref} tw="space-y-10">
-            <GeneralAlerts type="INFO">
-              Basic agent settings.
-            </GeneralAlerts>
+            <GeneralAlerts type="INFO">Basic agent settings.</GeneralAlerts>
             <div tw="flex flex-col items-center gap-y-6">
               <FormGroup tw="w-97" label="Agent ID">
                 <Field name="id" component={Fields.Input} disabled />

@@ -13,12 +13,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import {
-  NavLink, useParams, Link, Route,
-} from 'react-router-dom';
-import {
-  Button, Icons, Tooltip,
-} from '@drill4j/ui-kit';
+import { NavLink, useParams, Link, Route } from 'react-router-dom';
+import { Button, Icons, Tooltip } from '@drill4j/ui-kit';
 import tw, { styled } from 'twin.macro';
 
 import { QualityGatePane } from 'modules';
@@ -62,7 +58,10 @@ const Count = styled(Link)`
 
 export const CoveragePluginHeader = () => {
   const {
-    pluginId = '', agentId = '', buildVersion = '', tab = '',
+    pluginId = '',
+    agentId = '',
+    buildVersion = '',
+    tab = '',
   } = useParams<{
     pluginId: string;
     agentId: string;
@@ -72,12 +71,15 @@ export const CoveragePluginHeader = () => {
 
   const { buildVersion: activeBuildVersion = '', status: agentStatus } = useAgent(agentId) || {};
 
-  const { risks: risksCount = 0, tests: testToRunCount = 0 } = useBuildVersion<Metrics>('/data/stats') || {};
+  const { risks: risksCount = 0, tests: testToRunCount = 0 } =
+    useBuildVersion<Metrics>('/data/stats') || {};
   const { version: previousBuildVersion = '' } = useBuildVersion<ParentBuild>('/data/parent') || {};
-  const conditionSettings = useBuildVersion<ConditionSetting[]>('/data/quality-gate-settings') || [];
+  const conditionSettings =
+    useBuildVersion<ConditionSetting[]>('/data/quality-gate-settings') || [];
   const { status = 'FAILED' } = useBuildVersion<QualityGate>('/data/quality-gate') || {};
 
-  const { byTestType: previousBuildTests = [] } = usePreviousBuildCoverage(previousBuildVersion) || {};
+  const { byTestType: previousBuildTests = [] } =
+    usePreviousBuildCoverage(previousBuildVersion) || {};
 
   const configured = conditionSettings.some(({ enabled }) => enabled);
 
@@ -85,43 +87,54 @@ export const CoveragePluginHeader = () => {
 
   return (
     <Content>
-      <div tw="col-span-4 lg:col-span-1 mr-6 font-light text-24 leading-32" data-test="coverage-plugin-header:plugin-name">Test2Code</div>
+      <div
+        tw="col-span-4 lg:col-span-1 mr-6 font-light text-24 leading-32"
+        data-test="coverage-plugin-header:plugin-name"
+      >
+        Test2Code
+      </div>
       {agentStatus === AGENT_STATUS.ONLINE && (
         <BaselinePanel>
           <div>Current build:</div>
           <div className="flex items-center w-full">
-            <div className="text-ellipsis text-monochrome-black" title={buildVersion}>{buildVersion}</div>
+            <div className="text-ellipsis text-monochrome-black" title={buildVersion}>
+              {buildVersion}
+            </div>
             <BaselineTooltip />
           </div>
           <div>Parent build:</div>
-          {previousBuildVersion
-            ? (
-              <div className="text-ellipsis mr-6">
-                <NavLink
-                  className="inline link"
-                  to={`/full-page/${agentId}/${previousBuildVersion}/dashboard`}
-                  title={previousBuildVersion}
-                >
-                  {previousBuildVersion}
-                </NavLink>
-              </div>
-            ) : <span>&ndash;</span>}
+          {previousBuildVersion ? (
+            <div className="text-ellipsis mr-6">
+              <NavLink
+                className="inline link"
+                to={`/full-page/${agentId}/${previousBuildVersion}/dashboard`}
+                title={previousBuildVersion}
+              >
+                {previousBuildVersion}
+              </NavLink>
+            </div>
+          ) : (
+            <span>&ndash;</span>
+          )}
         </BaselinePanel>
       )}
       {activeBuildVersion === buildVersion && agentStatus === AGENT_STATUS.ONLINE && (
         <div tw="pl-4 pr-4 lg:mr-10 border-l border-monochrome-medium-tint text-monochrome-default">
           <div className="flex items-center w-full">
-            <div tw="mr-2 text-12 leading-16 font-bold" data-test="coverage-plugin-header:quality-gate-label">
+            <div
+              tw="mr-2 text-12 leading-16 font-bold"
+              data-test="coverage-plugin-header:quality-gate-label"
+            >
               QUALITY GATE
             </div>
             {!configured && (
               <Tooltip
-                message={(
+                message={
                   <>
                     <div tw="text-center">Configure quality gate conditions to</div>
                     <div>define whether your build passes or not.</div>
                   </>
-                )}
+                }
               >
                 <Icons.Info tw="flex text-monochrome-default" />
               </Tooltip>
@@ -132,10 +145,7 @@ export const CoveragePluginHeader = () => {
               to={`/full-page/${agentId}/${buildVersion}/${pluginId}/dashboard/${tab}/quality-gate-pane`}
               data-test="coverage-plugin-header:configure-button"
             >
-              <Button
-                primary
-                size="small"
-              >
+              <Button primary size="small">
                 Configure
               </Button>
             </StatusWrapper>
@@ -152,10 +162,7 @@ export const CoveragePluginHeader = () => {
           )}
         </div>
       )}
-      <ActionSection
-        label="risks"
-        previousBuild={{ previousBuildVersion, previousBuildTests }}
-      >
+      <ActionSection label="risks" previousBuild={{ previousBuildVersion, previousBuildTests }}>
         {risksCount > 0 ? (
           <Count
             to={`/full-page/${agentId}/${buildVersion}/${pluginId}/dashboard/${tab}/risks-modal`}
@@ -191,7 +198,8 @@ export const CoveragePluginHeader = () => {
           <div
             tw="text-20 leading-32 text-monochrome-black"
             data-test="action-section:no-value:tests-to-run"
-          >&ndash;
+          >
+            &ndash;
           </div>
         )}
       </ActionSection>

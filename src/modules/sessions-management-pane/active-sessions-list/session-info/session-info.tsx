@@ -13,9 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import {
-  Button, LinkButton, Icons,
-} from '@drill4j/ui-kit';
+import { Button, LinkButton, Icons } from '@drill4j/ui-kit';
 import { useParams } from 'react-router-dom';
 import tw, { styled } from 'twin.macro';
 
@@ -45,11 +43,19 @@ const SessionId = styled.div`
 `;
 
 export const SessionInfo = ({
-  testType, isGlobal, isRealtime, sessionId, agentId, showGeneralAlertMessage,
+  testType,
+  isGlobal,
+  isRealtime,
+  sessionId,
+  agentId,
+  showGeneralAlertMessage,
 }: Props) => {
   const { pluginId = '' } = useParams<{ pluginId: string }>();
   const dispatch = useSessionsPaneDispatch();
-  const { bulkOperation, singleOperation: { id } } = useSessionsPaneState();
+  const {
+    bulkOperation,
+    singleOperation: { id },
+  } = useSessionsPaneState();
   const operationIsProcessing = Boolean(id === sessionId + agentId);
   const disabled = Boolean(id) || bulkOperation.isProcessing;
 
@@ -65,7 +71,9 @@ export const SessionInfo = ({
       ) : (
         <>
           <div className="flex justify-between items-center w-full">
-            <SessionId disabled={disabled} data-test="session-info:session-id" title={sessionId}>{sessionId}</SessionId>
+            <SessionId disabled={disabled} data-test="session-info:session-id" title={sessionId}>
+              {sessionId}
+            </SessionId>
             <div tw="flex gap-4">
               <LinkButton
                 size="small"
@@ -87,10 +95,25 @@ export const SessionInfo = ({
             </div>
           </div>
           <AdditionalSessionInfo disabled={disabled}>
-            {isGlobal
-              ? <div tw="flex"><Icons.Global />&nbsp;Global</div>
-              : <span tw="text-12 leading-16 text-monochrome-default" data-test="session-info:test-type">{capitalize(testType)}</span>}
-            {isRealtime && <div tw="flex"><Icons.RealTime />&nbsp;Real-time</div>}
+            {isGlobal ? (
+              <div tw="flex">
+                <Icons.Global />
+                &nbsp;Global
+              </div>
+            ) : (
+              <span
+                tw="text-12 leading-16 text-monochrome-default"
+                data-test="session-info:test-type"
+              >
+                {capitalize(testType)}
+              </span>
+            )}
+            {isRealtime && (
+              <div tw="flex">
+                <Icons.RealTime />
+                &nbsp;Real-time
+              </div>
+            )}
           </AdditionalSessionInfo>
         </>
       )}

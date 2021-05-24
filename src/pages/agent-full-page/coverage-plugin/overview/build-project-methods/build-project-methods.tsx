@@ -44,12 +44,12 @@ const Content = styled.div`
   }
 `;
 
-const Cards = styled.div<{isShowActiveScopeInfo?: boolean}>`
+const Cards = styled.div<{ isShowActiveScopeInfo?: boolean }>`
   ${tw`grid gap-2 col-start-1 grid-flow-row lg:grid-cols-3`}
   ${({ isShowActiveScopeInfo }) => !isShowActiveScopeInfo && tw`col-span-2 grid-cols-3`}
 `;
 
-const ActiveBuildTestsBar = styled.div<{isShowActiveScopeInfo?: boolean}>`
+const ActiveBuildTestsBar = styled.div<{ isShowActiveScopeInfo?: boolean }>`
   ${tw`col-start-1 col-span-2 lg:col-span-1`}
   ${({ isShowActiveScopeInfo }) => !isShowActiveScopeInfo && tw`col-span-2 lg:col-span-2`}
 `;
@@ -62,11 +62,18 @@ export const BuildProjectMethods = ({
   buildCoverage,
 }: Props) => {
   const {
-    all, new: newMethods, modified, deleted, risks,
+    all,
+    new: newMethods,
+    modified,
+    deleted,
+    risks,
   } = useBuildVersion<Methods>('/build/methods') || {};
   const { percentage: buildCodeCoverage = 0 } = buildCoverage;
   const {
-    pluginId = '', agentId = '', buildVersion = '', tab = '',
+    pluginId = '',
+    agentId = '',
+    buildVersion = '',
+    tab = '',
   } = useParams<{
     pluginId: string;
     agentId: string;
@@ -78,7 +85,7 @@ export const BuildProjectMethods = ({
   return (
     <Content>
       <ActiveBuildTestsBar isShowActiveScopeInfo={isShowActiveScopeInfo}>
-        {(scope?.active && status === AGENT_STATUS.ONLINE) ? (
+        {scope?.active && status === AGENT_STATUS.ONLINE ? (
           <ActiveBuildCoverageInfo
             buildCoverage={buildCoverage}
             previousBuildInfo={previousBuildInfo}
@@ -102,11 +109,7 @@ export const BuildProjectMethods = ({
         >
           {deleted?.total} <span tw="font-regular">deleted</span>
         </BuildMethodsCard>
-        <BuildMethodsCard
-          totalCount={newMethods?.total}
-          covered={newMethods?.covered}
-          label="NEW"
-        >
+        <BuildMethodsCard totalCount={newMethods?.total} covered={newMethods?.covered} label="NEW">
           {Boolean(risks?.new) && (
             <Link
               tw="link"
@@ -117,11 +120,7 @@ export const BuildProjectMethods = ({
             </Link>
           )}
         </BuildMethodsCard>
-        <BuildMethodsCard
-          totalCount={modified?.total}
-          covered={modified?.covered}
-          label="MODIFIED"
-        >
+        <BuildMethodsCard totalCount={modified?.total} covered={modified?.covered} label="MODIFIED">
           {Boolean(risks?.modified) && (
             <Link
               tw="link"

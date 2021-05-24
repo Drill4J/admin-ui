@@ -32,7 +32,9 @@ const ServiceGroupAgentPanel = styled.div`
 `;
 
 export const ServiceGroupSessions = ({ activeSessions, showGeneralAlertMessage }: Props) => {
-  const serviceGroupAgentsIds = Array.from(new Set(activeSessions.map(session => session.agentId)));
+  const serviceGroupAgentsIds = Array.from(
+    new Set(activeSessions.map((session) => session.agentId)),
+  );
   const { bulkOperation, singleOperation } = useSessionsPaneState();
 
   return (
@@ -45,18 +47,14 @@ export const ServiceGroupSessions = ({ activeSessions, showGeneralAlertMessage }
             disabled={Boolean(singleOperation.id) || bulkOperation.isProcessing}
           >
             <Icons.Agent data-test="service-group-sessions:agent-icon" />
-            <span
-              tw="mx-2 text-monochrome-default"
-              data-test="service-group-sessions:agent-title"
-            >
+            <span tw="mx-2 text-monochrome-default" data-test="service-group-sessions:agent-title">
               Agent:
             </span>
             {agentId}
           </ServiceGroupAgentPanel>
-          {activeSessions.filter(({ agentId: sessionAgentId }) => sessionAgentId === agentId)
-            .map(({
-              id: sessionId, testType, isGlobal, isRealtime,
-            }) => (
+          {activeSessions
+            .filter(({ agentId: sessionAgentId }) => sessionAgentId === agentId)
+            .map(({ id: sessionId, testType, isGlobal, isRealtime }) => (
               <SessionInfo
                 key={sessionId}
                 sessionId={sessionId}

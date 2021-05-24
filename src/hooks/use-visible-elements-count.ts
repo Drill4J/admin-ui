@@ -15,7 +15,11 @@
  */
 import { useEffect, useState } from 'react';
 
-export function useVisibleElementsCount<E extends HTMLElement>(ref: React.RefObject<E>, initialVisivleElementsCount: number, step: number) {
+export function useVisibleElementsCount<E extends HTMLElement>(
+  ref: React.RefObject<E>,
+  initialVisivleElementsCount: number,
+  step: number,
+) {
   const [visibleElementsCount, setVisibleElementsCount] = useState(initialVisivleElementsCount);
 
   useEffect(() => {

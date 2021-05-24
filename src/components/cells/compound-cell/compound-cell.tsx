@@ -21,13 +21,17 @@ interface Props {
   icon?: React.ReactNode;
 }
 
-export const CompoundCell = ({
-  icon, cellName, cellAdditionalInfo,
-}: Props) => (
+export const CompoundCell = ({ icon, cellName, cellAdditionalInfo }: Props) => (
   <div tw="flex gap-2 py-2 text-monochrome-black">
     <div tw="h-5 flex items-center">{icon}</div>
     <div className="text-ellipsis">
-      <div className="text-ellipsis font-bold h-5 leading-20" data-test="compound-cell:name" title={cellName}>{cellName}</div>
+      <div
+        className="text-ellipsis font-bold h-5 leading-20"
+        data-test="compound-cell:name"
+        title={cellName}
+      >
+        {cellName}
+      </div>
       <div
         className="text-ellipsis mt-1 h-5 leading-20 text-12 font-regular text-monochrome-default"
         data-test="compound-cell:additional-info"

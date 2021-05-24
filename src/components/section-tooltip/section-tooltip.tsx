@@ -37,7 +37,9 @@ export const SectionTooltip = ({ data, hideValue }: Props) => (
           {`${camelToTitle(label)} (${data[label].count || 0})`}
         </div>
         {!hideValue && (
-          <span tw="ml-8 font-regular leading-20 text-right text-monochrome-default">{`${percentFormatter(data[label].value || 0)}%`}</span>
+          <span tw="ml-8 font-regular leading-20 text-right text-monochrome-default">{`${percentFormatter(
+            data[label].value || 0,
+          )}%`}</span>
         )}
       </div>
     ))}

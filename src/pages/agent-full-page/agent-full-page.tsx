@@ -13,9 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import {
-  Switch, useLocation, useParams, Route, matchPath,
-} from 'react-router-dom';
+import { Switch, useLocation, useParams, Route, matchPath } from 'react-router-dom';
 import { Icons } from '@drill4j/ui-kit';
 import 'twin.macro';
 
@@ -69,7 +67,8 @@ export const AgentFullPage = () => {
     }) || {};
 
   const notifications = useWsConnection<Notification[]>(defaultAdminSocket, '/notifications') || [];
-  const newBuildNotification = notifications.find((notification) => notification.agentId === agentId) || {};
+  const newBuildNotification =
+    notifications.find((notification) => notification.agentId === agentId) || {};
 
   useEffect(() => {
     if (

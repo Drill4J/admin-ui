@@ -15,40 +15,41 @@
  */
 import { useState } from 'react';
 import { useParams } from 'react-router-dom';
-import {
-  Button, Modal, Icons, GeneralAlerts, Spinner,
-} from '@drill4j/ui-kit';
+import { Button, Modal, Icons, GeneralAlerts, Spinner } from '@drill4j/ui-kit';
 import { Form } from 'react-final-form';
 import tw, { styled } from 'twin.macro';
 
-import {
-  composeValidators,
-  numericLimits,
-  positiveInteger,
-} from 'forms';
+import { composeValidators, numericLimits, positiveInteger } from 'forms';
 import {
   ConditionSetting,
-  ConditionSettingByType, QualityGate, QualityGateStatus as Status,
+  ConditionSettingByType,
+  QualityGate,
+  QualityGateStatus as Status,
 } from 'types/quality-gate-type';
 import { useBuildVersion, useCloseModal, useGeneralAlertMessage } from 'hooks';
 import { QualityGateStatus } from './quality-gate-status';
 import { QualityGateSettings } from './quality-gate-settings';
 import { updateQualityGateSettings } from './api';
 
-const validateQualityGate = (formValues: ConditionSettingByType) => composeValidators(
-  formValues.coverage?.enabled ? numericLimits({
-    fieldName: 'coverage.condition.value',
-    fieldAlias: 'Build coverage',
-    unit: 'percentages',
-    min: 0.1,
-    max: 100,
-  }) : () => undefined,
-  formValues.risks?.enabled ? positiveInteger('risks.condition.value', 'Risks') : () => undefined,
-  formValues.tests?.enabled ? positiveInteger('tests.condition.value', 'Tests to run') : () => undefined,
-)(formValues);
+const validateQualityGate = (formValues: ConditionSettingByType) =>
+  composeValidators(
+    formValues.coverage?.enabled
+      ? numericLimits({
+          fieldName: 'coverage.condition.value',
+          fieldAlias: 'Build coverage',
+          unit: 'percentages',
+          min: 0.1,
+          max: 100,
+        })
+      : () => undefined,
+    formValues.risks?.enabled ? positiveInteger('risks.condition.value', 'Risks') : () => undefined,
+    formValues.tests?.enabled
+      ? positiveInteger('tests.condition.value', 'Tests to run')
+      : () => undefined,
+  )(formValues);
 
 export const QualityGatePane = () => {
-  const { pluginId = '', agentId = '' } = useParams<{ pluginId: string; agentId: string; }>();
+  const { pluginId = '', agentId = '' } = useParams<{ pluginId: string; agentId: string }>();
   const [isEditing, setIsEditing] = useState(false);
   const { generalAlertMessage, showGeneralAlertMessage } = useGeneralAlertMessage();
   const closeModal = useCloseModal('/quality-gate-pane');
@@ -59,7 +60,8 @@ export const QualityGatePane = () => {
   };
 
   const { status = 'FAILED' } = useBuildVersion<QualityGate>('/data/quality-gate') || {};
-  const conditionSettings = useBuildVersion<ConditionSetting[]>('/data/quality-gate-settings') || [];
+  const conditionSettings =
+    useBuildVersion<ConditionSetting[]>('/data/quality-gate-settings') || [];
 
   const conditionSettingByType = conditionSettings.reduce(
     (conditionSetting, measureType) => ({
@@ -85,35 +87,47 @@ export const QualityGatePane = () => {
             enabled: conditionSettingByType.coverage?.enabled,
             condition: {
               ...conditionSettingByType.coverage?.condition,
-              value: conditionSettingByType.coverage?.enabled ? String(conditionSettingByType.coverage.condition.value) : undefined,
+              value: conditionSettingByType.coverage?.enabled
+                ? String(conditionSettingByType.coverage.condition.value)
+                : undefined,
             },
           },
           risks: {
             enabled: conditionSettingByType.risks?.enabled,
             condition: {
               ...conditionSettingByType.risks?.condition,
-              value: conditionSettingByType.risks?.enabled ? String(conditionSettingByType.risks.condition.value) : undefined,
+              value: conditionSettingByType.risks?.enabled
+                ? String(conditionSettingByType.risks.condition.value)
+                : undefined,
             },
           },
           tests: {
             enabled: conditionSettingByType.tests?.enabled,
             condition: {
               ...conditionSettingByType.tests?.condition,
-              value: conditionSettingByType.tests?.enabled ? String(conditionSettingByType.tests.condition.value) : undefined,
+              value: conditionSettingByType.tests?.enabled
+                ? String(conditionSettingByType.tests.condition.value)
+                : undefined,
             },
           },
         }}
-        initialValuesEqual={(prevValues, nextValues) => JSON.stringify(prevValues) === JSON.stringify(nextValues)}
+        initialValuesEqual={(prevValues, nextValues) =>
+          JSON.stringify(prevValues) === JSON.stringify(nextValues)
+        }
         validate={validateQualityGate}
-        render={({
-          values, handleSubmit, invalid, pristine, submitting,
-        }) => (
+        render={({ values, handleSubmit, invalid, pristine, submitting }) => (
           <form onSubmit={handleSubmit} tw="flex flex-col h-full font-regular">
             <div tw="flex justify-between items-center h-16 px-6 border-b border-monochrome-medium-tint">
-              <div tw="text-20 leading-32" data-test="quality-gate-pane:header-title">Quality Gate</div>
+              <div tw="text-20 leading-32" data-test="quality-gate-pane:header-title">
+                Quality Gate
+              </div>
               {configured && !isEditing && (
                 <StatusIconWrapper status={status}>
-                  <StatusIcon width={24} height={24} data-test="quality-gate-pane:header-status-icon" />
+                  <StatusIcon
+                    width={24}
+                    height={24}
+                    data-test="quality-gate-pane:header-status-icon"
+                  />
                 </StatusIconWrapper>
               )}
             </div>
@@ -127,13 +141,11 @@ export const QualityGatePane = () => {
                 {generalAlertMessage.text}
               </GeneralAlerts>
             )}
-            {configured && !isEditing
-              ? (
-                <QualityGateStatus conditionSettingByType={values} />
-              )
-              : (
-                <QualityGateSettings conditionSettingByType={values} />
-              )}
+            {configured && !isEditing ? (
+              <QualityGateStatus conditionSettingByType={values} />
+            ) : (
+              <QualityGateSettings conditionSettingByType={values} />
+            )}
             <ActionsPanel>
               {configured && !isEditing ? (
                 <Button
@@ -144,19 +156,18 @@ export const QualityGatePane = () => {
                 >
                   Edit
                 </Button>
-              )
-                : (
-                  <Button
-                    className="flex justify-center items-center gap-x-1 w-16"
-                    primary
-                    size="large"
-                    disabled={invalid || pristine || submitting}
-                    onClick={handleSubmit}
-                    data-test="quality-gate-pane:save-button"
-                  >
-                    {submitting ? <Spinner disabled /> : 'Save'}
-                  </Button>
-                )}
+              ) : (
+                <Button
+                  className="flex justify-center items-center gap-x-1 w-16"
+                  primary
+                  size="large"
+                  disabled={invalid || pristine || submitting}
+                  onClick={handleSubmit}
+                  data-test="quality-gate-pane:save-button"
+                >
+                  {submitting ? <Spinner disabled /> : 'Save'}
+                </Button>
+              )}
               {configured && isEditing && (
                 <Button
                   className="flex gap-x-2"

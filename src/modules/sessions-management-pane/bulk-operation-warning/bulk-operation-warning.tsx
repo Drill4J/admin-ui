@@ -28,10 +28,15 @@ interface Props {
 }
 
 export const BulkOperationWarning = ({
-  agentId, agentType, pluginId, showGeneralAlertMessage,
+  agentId,
+  agentType,
+  pluginId,
+  showGeneralAlertMessage,
 }: Props) => {
   const dispatch = useSessionsPaneDispatch();
-  const { bulkOperation: { operationType } } = useSessionsPaneState();
+  const {
+    bulkOperation: { operationType },
+  } = useSessionsPaneState();
   const [loading, setLoading] = useState(false);
 
   return (

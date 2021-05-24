@@ -15,9 +15,10 @@
  */
 import axios from 'axios';
 
-export async function deleteAllNotifications(
-  { onSuccess, onError }: { onSuccess?: () => void; onError?: (message: string) => void } = {},
-) {
+export async function deleteAllNotifications({
+  onSuccess,
+  onError,
+}: { onSuccess?: () => void; onError?: (message: string) => void } = {}) {
   try {
     await axios.delete('/notifications');
     onSuccess && onSuccess();

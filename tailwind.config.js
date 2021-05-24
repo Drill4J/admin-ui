@@ -178,7 +178,7 @@ module.exports = {
       64: '64px',
       86: '86px',
     },
-    borderColor: theme => ({
+    borderColor: (theme) => ({
       ...theme('colors'),
       'current-color': 'currentColor',
     }),

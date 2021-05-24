@@ -25,7 +25,8 @@ interface Props {
 }
 
 export const BuildTestsCard = ({ label, testTypeSummary }: Props) => {
-  const { summary: { testCount = 0, coverage: { percentage = 0 } = {} } = {} } = testTypeSummary || {};
+  const { summary: { testCount = 0, coverage: { percentage = 0 } = {} } = {} } =
+    testTypeSummary || {};
   return (
     <Card>
       <div className="flex justify-between items-center w-full">

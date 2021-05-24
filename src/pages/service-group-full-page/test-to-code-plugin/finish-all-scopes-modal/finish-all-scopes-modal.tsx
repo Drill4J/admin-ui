@@ -14,9 +14,7 @@
  * limitations under the License.
  */
 import { useContext, useState } from 'react';
-import {
-  Button, Popup, GeneralAlerts, Spinner,
-} from '@drill4j/ui-kit';
+import { Button, Popup, GeneralAlerts, Spinner } from '@drill4j/ui-kit';
 import { useParams, Link } from 'react-router-dom';
 import tw, { styled } from 'twin.macro';
 
@@ -40,7 +38,8 @@ const Instructions = styled.div`
 export const FinishAllScopesModal = ({ agentsCount }: Props) => {
   const { showMessage } = useContext(NotificationManagerContext);
   const [errorMessage, setErrorMessage] = useState('');
-  const { serviceGroupId = '', pluginId = '' } = useParams<{ serviceGroupId?: string; pluginId?:string; }>();
+  const { serviceGroupId = '', pluginId = '' } =
+    useParams<{ serviceGroupId?: string; pluginId?: string }>();
   const activeSessions = useActiveSessions('ServiceGroup', serviceGroupId) || [];
   const [loading, setLoading] = useState(false);
   const closeModal = useCloseModal('/finish-all-scopes-modal');
@@ -54,15 +53,12 @@ export const FinishAllScopesModal = ({ agentsCount }: Props) => {
       closeOnFadeClick
     >
       <div tw="w-108">
-        {errorMessage && (
-          <GeneralAlerts type="ERROR">
-            {errorMessage}
-          </GeneralAlerts>
-        )}
+        {errorMessage && <GeneralAlerts type="ERROR">{errorMessage}</GeneralAlerts>}
         {activeSessions.length > 0 && (
           <GeneralAlerts type="WARNING">
             <div>
-              At least one active session has been detected.<br />
+              At least one active session has been detected.
+              <br />
               First, you need to finish it in&nbsp;
               <Link
                 to={`/service-group-full-page/${serviceGroupId}/${pluginId}/session-management-pane`}

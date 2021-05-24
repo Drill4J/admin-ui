@@ -27,7 +27,11 @@ interface Props {
 }
 
 export const BuildMethodsCard = ({
-  children, covered = 0, totalCount = 0, label, testContext,
+  children,
+  covered = 0,
+  totalCount = 0,
+  label,
+  testContext,
 }: Props) => (
   <Card>
     <div className="flex justify-between items-center w-full">
@@ -36,7 +40,12 @@ export const BuildMethodsCard = ({
     </div>
     <div tw="w-full text-12 leading-16 text-monochrome-default">
       <div className="flex justify-between items-center w-full">
-        <div tw="font-bold text-16 leading-18" data-test={`build-methods-card:covered-count:${label}`}>{covered}</div>
+        <div
+          tw="font-bold text-16 leading-18"
+          data-test={`build-methods-card:covered-count:${label}`}
+        >
+          {covered}
+        </div>
         <span data-test={`build-methods-card:${testContext}`}>{children}</span>
       </div>
       <div tw="h-2 mt-1 rounded-sm bg-monochrome-light-tint">

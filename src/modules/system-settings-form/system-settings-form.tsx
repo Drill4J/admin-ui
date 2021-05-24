@@ -14,20 +14,14 @@
  * limitations under the License.
  */
 
-import {
-  useContext, useEffect, useState,
-} from 'react';
+import { useContext, useEffect, useState } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
-import {
-  Icons, Tooltip, GeneralAlerts, FormGroup, Spinner, Button,
-} from '@drill4j/ui-kit';
+import { Icons, Tooltip, GeneralAlerts, FormGroup, Spinner, Button } from '@drill4j/ui-kit';
 import { Form, Field } from 'react-final-form';
 import 'twin.macro';
 
-import {
-  composeValidators, Fields, requiredArray, sizeLimit,
-} from 'forms';
+import { composeValidators, Fields, requiredArray, sizeLimit } from 'forms';
 import { UnlockingSystemSettingsFormModal } from 'modules';
 import { parsePackages, formatPackages, dotsAndSlashesToSlash } from 'utils';
 import { Agent } from 'types/agent';
@@ -40,9 +34,7 @@ interface Props {
   setPristineSettings: (pristine: boolean) => void;
 }
 
-export const SystemSettingsForm = ({
-  isServiceGroup, agent, setPristineSettings,
-}: Props) => {
+export const SystemSettingsForm = ({ isServiceGroup, agent, setPristineSettings }: Props) => {
   const [unlockedPackages, setUnlockedPackages] = useState(false);
   const [isUnlockingModalOpened, setIsUnlockingModalOpened] = useState(false);
   const { showMessage } = useContext(NotificationManagerContext);
@@ -50,14 +42,19 @@ export const SystemSettingsForm = ({
 
   return (
     <Form
-      onSubmit={async ({ systemSettings: { sessionIdHeaderName, packages = [], targetHost } = {} }: Agent) => {
+      onSubmit={async ({
+        systemSettings: { sessionIdHeaderName, packages = [], targetHost } = {},
+      }: Agent) => {
         try {
           const systemSettings = {
             packages: packages.filter(Boolean),
             sessionIdHeaderName,
             targetHost,
           };
-          await axios.put(`/${isServiceGroup ? 'groups' : 'agents'}/${id}/system-settings`, systemSettings);
+          await axios.put(
+            `/${isServiceGroup ? 'groups' : 'agents'}/${id}/system-settings`,
+            systemSettings,
+          );
           showMessage({ type: 'SUCCESS', text: 'New settings have been saved' });
           setUnlockedPackages(false);
         } catch ({ response: { data: { message } = {} } = {} }) {
@@ -68,20 +65,20 @@ export const SystemSettingsForm = ({
         }
       }}
       initialValues={agent}
-      validate={composeValidators(
-        requiredArray('systemSettings.packages', 'Path prefix is required.'),
-        sizeLimit({
-          name: 'systemSettings.sessionIdHeaderName',
-          alias: 'Session header name',
-          min: 1,
-          max: 256,
-        }),
-      ) as any}
+      validate={
+        composeValidators(
+          requiredArray('systemSettings.packages', 'Path prefix is required.'),
+          sizeLimit({
+            name: 'systemSettings.sessionIdHeaderName',
+            alias: 'Session header name',
+            min: 1,
+            max: 256,
+          }),
+        ) as any
+      }
       render={(props) => {
         const ref = useFormHandleSubmit(props);
-        const {
-          handleSubmit, submitting, pristine, invalid,
-        } = props || {};
+        const { handleSubmit, submitting, pristine, invalid } = props || {};
 
         useEffect(() => {
           setPristineSettings(pristine);
@@ -97,23 +94,29 @@ export const SystemSettingsForm = ({
             <div tw="flex flex-col items-center gap-y-6">
               <div>
                 <div tw="flex items-center gap-x-2 mb-2">
-                  <span tw="font-bold text-14 leading-20 text-monochrome-black">Project Package(s)</span>
+                  <span tw="font-bold text-14 leading-20 text-monochrome-black">
+                    Project Package(s)
+                  </span>
                   <div
-                    className={`flex items-center ${unlockedPackages ? 'text-red-default' : 'text-monochrome-default'}`}
+                    className={`flex items-center ${
+                      unlockedPackages ? 'text-red-default' : 'text-monochrome-default'
+                    }`}
                     onClick={() => {
-                      unlockedPackages ? !invalid && setUnlockedPackages(false) : setIsUnlockingModalOpened(true);
+                      unlockedPackages
+                        ? !invalid && setUnlockedPackages(false)
+                        : setIsUnlockingModalOpened(true);
                     }}
                   >
                     {unlockedPackages ? (
                       <Icons.Unlocked />
                     ) : (
                       <Tooltip
-                        message={(
+                        message={
                           <div tw="flex flex-col items-center w-full font-regular text-12 leading-16">
                             <span>Secured from editing.</span>
                             <span> Click to unlock.</span>
                           </div>
-                        )}
+                        }
                       >
                         <Icons.Locked />
                       </Tooltip>
@@ -132,9 +135,9 @@ export const SystemSettingsForm = ({
                 />
                 {unlockedPackages && (
                   <div tw="w-97 text-12 leading-16 text-monochrome-default">
-                    Make sure you add application packages only, otherwise agent&apos;s performance will be affected.
-                    Use new line as a separator, &quot;!&quot; before package/class for excluding and
-                    use &quot;/&quot; in a package path.
+                    Make sure you add application packages only, otherwise agent&apos;s performance
+                    will be affected. Use new line as a separator, &quot;!&quot; before
+                    package/class for excluding and use &quot;/&quot; in a package path.
                   </div>
                 )}
               </div>

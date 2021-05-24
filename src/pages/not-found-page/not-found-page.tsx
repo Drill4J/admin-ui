@@ -15,13 +15,15 @@
  */
 import 'twin.macro';
 
-import { ReactComponent as NotFoundSvg } from './not-found.svg';
+import NotFoundSvg from './not-found.svg';
 
 export const NotFoundPage = () => (
   <div tw="flex flex-row flex-grow">
     <div tw="flex-1 mt-22 ml-27">
       <div tw="mb-6 text-monochrome-black text-64 leading-86">Oops!</div>
-      <div tw="text-monochrome-default text-16 leading-28">Sorry, we cannot find the page you’re looking for.</div>
+      <div tw="text-monochrome-default text-16 leading-28">
+        Sorry, we cannot find the page you’re looking for.
+      </div>
       <div tw="text-monochrome-black text-14 leading-40 font-bold">Error code: 404</div>
     </div>
     <div tw="flex justify-end items-end flex-1 mr-25 mb-25">

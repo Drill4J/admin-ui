@@ -18,9 +18,7 @@ import tw, { styled } from 'twin.macro';
 import { useParams } from 'react-router-dom';
 
 import { TabsPanel, Tab } from 'components';
-import {
-  useActiveScope, useAgent, useBuildVersion,
-} from 'hooks';
+import { useActiveScope, useAgent, useBuildVersion } from 'hooks';
 import { TableActionsProvider } from 'modules';
 import { ParentBuild } from 'types/parent-build';
 import { BuildCoverage } from 'types/build-coverage';
@@ -40,25 +38,34 @@ export const Overview = () => {
   const { agentId, loading } = usePluginState();
   const { status } = useAgent(agentId) || {};
   const { version: previousBuildVersion = '' } = useBuildVersion<ParentBuild>('/data/parent') || {};
-  const {
-    percentage: previousBuildCodeCoverage = 0,
-  } = usePreviousBuildCoverage(previousBuildVersion) || {};
+  const { percentage: previousBuildCodeCoverage = 0 } =
+    usePreviousBuildCoverage(previousBuildVersion) || {};
   const scope = useActiveScope();
   const buildCoverage = useBuildVersion<BuildCoverage>('/build/coverage') || {};
-  const { pluginId = '', buildVersion = '', tab } = useParams<{ pluginId: string; buildVersion: string; tab: string}>();
+  const {
+    pluginId = '',
+    buildVersion = '',
+    tab,
+  } = useParams<{ pluginId: string; buildVersion: string; tab: string }>();
 
   return (
     <div>
       <CoveragePluginHeader />
       <div tw="w-full">
         <TabsPanel>
-          <Tab name="methods" to={`/full-page/${agentId}/${buildVersion}/${pluginId}/dashboard/methods`}>
+          <Tab
+            name="methods"
+            to={`/full-page/${agentId}/${buildVersion}/${pluginId}/dashboard/methods`}
+          >
             <TabIconWrapper>
               <Icons.Function />
             </TabIconWrapper>
             Build methods
           </Tab>
-          <Tab name="tests" to={`/full-page/${agentId}/${buildVersion}/${pluginId}/dashboard/tests`}>
+          <Tab
+            name="tests"
+            to={`/full-page/${agentId}/${buildVersion}/${pluginId}/dashboard/tests`}
+          >
             <TabIconWrapper>
               <Icons.Test width={16} />
             </TabIconWrapper>
@@ -67,17 +74,17 @@ export const Overview = () => {
         </TabsPanel>
       </div>
       <div tw="flex flex-col items-stretch gap-7 pt-4 w-full border-t border-monochrome-medium-tint">
-        {tab === 'methods'
-          ? (
-            <BuildProjectMethods
-              scope={scope}
-              previousBuildInfo={{ previousBuildVersion, previousBuildCodeCoverage }}
-              loading={loading}
-              status={status}
-              buildCoverage={buildCoverage}
-            />
-          )
-          : <BuildProjectTests status={status} />}
+        {tab === 'methods' ? (
+          <BuildProjectMethods
+            scope={scope}
+            previousBuildInfo={{ previousBuildVersion, previousBuildCodeCoverage }}
+            loading={loading}
+            status={status}
+            buildCoverage={buildCoverage}
+          />
+        ) : (
+          <BuildProjectTests status={status} />
+        )}
       </div>
       <div tw="mt-2">
         <TableActionsProvider key={tab}>
@@ -88,7 +95,9 @@ export const Overview = () => {
               classesTopicPrefix="build"
               showCoverageIcon={Boolean(buildCoverage?.finishedScopesCount)}
             />
-          ) : <BuildTests />}
+          ) : (
+            <BuildTests />
+          )}
         </TableActionsProvider>
       </div>
     </div>

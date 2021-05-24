@@ -14,9 +14,7 @@
  * limitations under the License.
  */
 import 'twin.macro';
-import {
-  Switch, useParams, useLocation, Route, matchPath,
-} from 'react-router-dom';
+import { Switch, useParams, useLocation, Route, matchPath } from 'react-router-dom';
 import { Icons } from '@drill4j/ui-kit';
 
 import { Toolbar, Footer } from 'components';
@@ -53,26 +51,20 @@ const getPluginsList = (serviceGroupId: string, plugins: Plugin[]): Link[] => [
 ];
 
 export const ServiceGroupFullPage = () => {
-  const { id = '', pluginId = '' } = useParams<{ id: string, pluginId: string }>();
+  const { id = '', pluginId = '' } = useParams<{ id: string; pluginId: string }>();
   const { pathname } = useLocation();
-  const plugins = useWsConnection<Plugin[]>(
-    defaultAdminSocket,
-    `/groups/${id}/plugins`,
-  ) || [];
+  const plugins = useWsConnection<Plugin[]>(defaultAdminSocket, `/groups/${id}/plugins`) || [];
   const serviceGroup = usePluginData<ServiceGroupSummary>('/group/summary', id, pluginId) || {};
   const path = '/:page/:serviceGroupId/:activeLink';
-  const { params: { activeLink = '' } = {} } = matchPath<{ activeLink: string }>(pathname, {
-    path,
-  }) || {};
+  const { params: { activeLink = '' } = {} } =
+    matchPath<{ activeLink: string }>(pathname, {
+      path,
+    }) || {};
 
   return (
     <PluginsLayout
       sidebar={activeLink && <Sidebar links={getPluginsList(id, plugins)} matchParams={{ path }} />}
-      toolbar={(
-        <Toolbar
-          breadcrumbs={<Breadcrumbs />}
-        />
-      )}
+      toolbar={<Toolbar breadcrumbs={<Breadcrumbs />} />}
       header={<ServiceGroupHeader serviceGroup={serviceGroup} />}
       footer={<Footer />}
     >
@@ -84,7 +76,7 @@ export const ServiceGroupFullPage = () => {
               render={() => (
                 <Dashboard
                   serviceGroupId={id}
-                  plugins={plugins.filter(plugin => !plugin.available)}
+                  plugins={plugins.filter((plugin) => !plugin.available)}
                 />
               )}
             />

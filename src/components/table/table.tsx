@@ -1,29 +1,27 @@
 /*
-* Copyright 2020 EPAM Systems
-*
-* Licensed under the Apache License, Version 2.0 (the "License");
-* you may not use this file except in compliance with the License.
-* You may obtain a copy of the License at
-*
-* http://www.apache.org/licenses/LICENSE-2.0
-*
-* Unless required by applicable law or agreed to in writing, software
-* distributed under the License is distributed on an "AS IS" BASIS,
-* WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-* See the License for the specific language governing permissions and
-* limitations under the License.
-*/
+ * Copyright 2020 EPAM Systems
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 import React, { useMemo, useState } from 'react';
-import {
-  useTable, useExpanded, Column, useSortBy,
-} from 'react-table';
+import { useTable, useExpanded, Column, useSortBy } from 'react-table';
 import { Icons } from '@drill4j/ui-kit';
 
 import { setSort, useTableActionsDispatch, useTableActionsState } from 'modules';
 import { Order } from 'types/sort';
 import tw, { styled } from 'twin.macro';
 
-type CustomColumn = Column & { textAlign?: string; width?: string; }
+type CustomColumn = Column & { textAlign?: string; width?: string };
 
 interface Props {
   columns: Array<CustomColumn>;
@@ -35,11 +33,14 @@ interface Props {
 }
 
 export const Table = ({
-  columns, data, renderRowSubComponent, stub = null, isDefaulToggleSortBy, columnsDependency = [],
+  columns,
+  data,
+  renderRowSubComponent,
+  stub = null,
+  isDefaulToggleSortBy,
+  columnsDependency = [],
 }: Props) => {
-  const {
-    getTableProps, getTableBodyProps, headerGroups, rows, prepareRow,
-  } = useTable(
+  const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } = useTable(
     {
       columns: useMemo(() => columns, [...columnsDependency]),
       data: useMemo(() => data, [data]),
@@ -49,7 +50,9 @@ export const Table = ({
   );
 
   const dispatch = useTableActionsDispatch();
-  const { sort: [sort] } = useTableActionsState();
+  const {
+    sort: [sort],
+  } = useTableActionsState();
 
   const [expandedRows, setExpandedRows] = useState<string[]>([]);
 
@@ -66,20 +69,26 @@ export const Table = ({
                   <TH
                     {...column.getHeaderProps(column.getSortByToggleProps())}
                     style={{ textAlign: column.textAlign || 'right', width: column.width }}
-                    onClick={isDefaulToggleSortBy
-                      ? defaulToggleSortBy
-                      : () => dispatch(setSort({ order: setOrder(sort?.order), field: column.id }))}
+                    onClick={
+                      isDefaulToggleSortBy
+                        ? defaulToggleSortBy
+                        : () =>
+                            dispatch(setSort({ order: setOrder(sort?.order), field: column.id }))
+                    }
                   >
                     <div tw="relative inline-flex items-center cursor-pointer">
                       {column.id !== 'expander' && (
                         <SortArrow active={column.isSorted || active}>
-                          <Icons.SortingArrow rotate={column.isSortedDesc || (active && sort?.order === 'DESC') ? 0 : 180} />
+                          <Icons.SortingArrow
+                            rotate={
+                              column.isSortedDesc || (active && sort?.order === 'DESC') ? 0 : 180
+                            }
+                          />
                         </SortArrow>
                       )}
                       {column.render('Header')}
                     </div>
                   </TH>
-
                 );
               })}
             </tr>
@@ -99,10 +108,15 @@ export const Table = ({
                       tw="first:px-4 last:px-4"
                       style={{ textAlign: cell.column.textAlign || 'right' }}
                     >
-                      <div onClick={() => cell.column.id === 'expander' &&
-                        setExpandedRows(row.isExpanded
-                          ? expandedRows.filter((id) => id !== row.original.id)
-                          : [...expandedRows, row.original.id])}
+                      <div
+                        onClick={() =>
+                          cell.column.id === 'expander' &&
+                          setExpandedRows(
+                            row.isExpanded
+                              ? expandedRows.filter((id) => id !== row.original.id)
+                              : [...expandedRows, row.original.id],
+                          )
+                        }
                       >
                         {cell.render('Cell')}
                       </div>

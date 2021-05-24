@@ -68,7 +68,9 @@ export const SearchPanel = ({
               {searchResult} result{searchResult > 1 ? 's' : ''}
             </span>
           )}
-          <span data-test="search-panel:displaying-results-count" tw="text-monochrome-default">{children}</span>
+          <span data-test="search-panel:displaying-results-count" tw="text-monochrome-default">
+            {children}
+          </span>
         </div>
       </div>
     </div>

@@ -23,19 +23,17 @@ import { ListHeader } from './list__header';
 interface Props {
   data?: Array<{ [key: string]: unknown }>;
   children: Array<
-  ReactElement<{
-    name: string;
-    label: string;
-    HeaderCell?: ComponentType<unknown>;
-  }>
+    ReactElement<{
+      name: string;
+      label: string;
+      HeaderCell?: ComponentType<unknown>;
+    }>
   >;
   gridTemplateColumns?: string;
   testContext?: string;
 }
 
-export const List = ({
-  data = [], children, gridTemplateColumns, testContext,
-}: Props) => {
+export const List = ({ data = [], children, gridTemplateColumns, testContext }: Props) => {
   const columns = Children.map(children, (column) => column && column.props);
   return (
     <div

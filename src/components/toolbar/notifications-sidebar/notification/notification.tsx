@@ -31,20 +31,22 @@ const Content = styled.div`
   ${tw`hover:bg-monochrome-default hover:bg-opacity-5`}
 `;
 
-const BuildVersion = styled.div(({ unread }: { unread?: boolean}) => [
+const BuildVersion = styled.div(({ unread }: { unread?: boolean }) => [
   tw`grid gap-4 h-5 text-14 text-monochrome-black`,
   'grid-template-columns: 288px 48px;',
   unread && tw`font-bold`,
 ]);
 
-const NotificationStatusIndicator = styled.div(({ unread }: { unread?: boolean}) => [
+const NotificationStatusIndicator = styled.div(({ unread }: { unread?: boolean }) => [
   tw`min-w-8px h-2 rounded bg-monochrome-medium-tint`,
   unread && tw`bg-monochrome-default`,
 ]);
 
 const SinceNotificationArrived = styled.div`
   ${tw`h-6`}
-  ${({ isHover }: { isHover: boolean }) => isHover && `
+  ${({ isHover }: { isHover: boolean }) =>
+    isHover &&
+    `
       overflow: hidden;
       white-space: nowrap;
       position: relative;
@@ -65,9 +67,7 @@ const DeleteNotificationButton = styled.div`
 `;
 
 export const Notification = ({
-  notification: {
-    agentId, createdAt, read, id = '', message: { currentId: buildVersion } = {},
-  },
+  notification: { agentId, createdAt, read, id = '', message: { currentId: buildVersion } = {} },
   onError,
 }: Props) => {
   const { ref, isVisible } = useHover();
@@ -76,18 +76,19 @@ export const Notification = ({
       <Content>
         <div className="flex justify-between items-center w-full">
           <span>{agentId}</span>
-          <SinceNotificationArrived isHover={isVisible}>{format(createdAt || Date.now())}</SinceNotificationArrived>
+          <SinceNotificationArrived isHover={isVisible}>
+            {format(createdAt || Date.now())}
+          </SinceNotificationArrived>
         </div>
         <BuildVersion unread={!read}>
           <div className="flex items-center">
             <NotificationStatusIndicator className="mr-2" unread={!read} />
-            <div className="text-ellipsis mr-1" title={`Build ${buildVersion}`}>Build {buildVersion}</div>arrived
+            <div className="text-ellipsis mr-1" title={`Build ${buildVersion}`}>
+              Build {buildVersion}
+            </div>
+            arrived
           </div>
-          <div css={[
-            tw`hidden justify-end gap-x-4 items-center`,
-            isVisible && tw`flex`,
-          ]}
-          >
+          <div css={[tw`hidden justify-end gap-x-4 items-center`, isVisible && tw`flex`]}>
             <MarkAsReadButton
               className="link"
               onClick={() => readNotification(id, { onError })}

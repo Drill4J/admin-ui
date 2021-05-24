@@ -19,13 +19,7 @@ import { ServiceGroupSettings } from './service-group-settings';
 
 export const SettingsPage = () => (
   <Switch>
-    <Route
-      component={AgentSettings}
-      path="/agents/agent/:id/settings/:tab"
-    />
-    <Route
-      component={ServiceGroupSettings}
-      path="/agents/service-group/:id/settings/:tab"
-    />
+    <Route component={AgentSettings} path="/agents/agent/:id/settings/:tab" />
+    <Route component={ServiceGroupSettings} path="/agents/service-group/:id/settings/:tab" />
   </Switch>
 );

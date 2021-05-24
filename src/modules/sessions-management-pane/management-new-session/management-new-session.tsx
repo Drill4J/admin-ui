@@ -15,12 +15,7 @@
  */
 import { Field } from 'react-final-form';
 import { NavLink } from 'react-router-dom';
-import {
-  FormGroup,
-  GeneralAlerts,
-  Icons,
-  Tooltip,
-} from '@drill4j/ui-kit';
+import { FormGroup, GeneralAlerts, Icons, Tooltip } from '@drill4j/ui-kit';
 import tw, { styled } from 'twin.macro';
 
 import { Fields } from 'forms';
@@ -35,41 +30,33 @@ const SettingsLink = styled(NavLink)`
   ${tw`font-bold`}
 `;
 
-export const ManagementNewSession = ({
-  agentId, serviceGroupId, hasGlobalSession,
-}: Props) => (
+export const ManagementNewSession = ({ agentId, serviceGroupId, hasGlobalSession }: Props) => (
   <div>
     <GeneralAlerts type="INFO">
       <span data-test="management-new-session:info-general-alert">
         Pay attention that you have to specify Header Mapping in&nbsp;
-        {agentId
-          ? (
-            <SettingsLink
-              className="link"
-              to={`/agents/agent/${agentId}/settings/general`}
-              data-test="management-new-session:settings-link:agent"
-            >
-              Agent Settings
-            </SettingsLink>
-          )
-          : (
-            <SettingsLink
-              className="link"
-              to={`/agents/service-group/${serviceGroupId}/settings/general`}
-              data-test="management-new-session:settings-link:service-group"
-            >
-              Service Group Settings
-            </SettingsLink>
-          )}
+        {agentId ? (
+          <SettingsLink
+            className="link"
+            to={`/agents/agent/${agentId}/settings/general`}
+            data-test="management-new-session:settings-link:agent"
+          >
+            Agent Settings
+          </SettingsLink>
+        ) : (
+          <SettingsLink
+            className="link"
+            to={`/agents/service-group/${serviceGroupId}/settings/general`}
+            data-test="management-new-session:settings-link:service-group"
+          >
+            Service Group Settings
+          </SettingsLink>
+        )}
       </span>
     </GeneralAlerts>
     <div tw="grid gap-4 py-4 px-6">
       <FormGroup label="Session ID">
-        <Field
-          name="sessionId"
-          placeholder="Enter session ID"
-          component={Fields.Input}
-        />
+        <Field name="sessionId" placeholder="Enter session ID" component={Fields.Input} />
       </FormGroup>
       <Field
         name="isGlobal"
@@ -83,24 +70,22 @@ export const ManagementNewSession = ({
               label="Set as global session"
             />
             <Tooltip
-              message={(
+              message={
                 <div className="text-center">
-                  {hasGlobalSession
-                    ? (
-                      <>
-                        Only one active global session is allowed.
-                        <br />
-                        Please finish the active one in order to start new.
-                      </>
-                    )
-                    : (
-                      <>
-                        Session that tracks all of the executions on your <br />
-                        target application (e.g. background tasks)
-                      </>
-                    )}
+                  {hasGlobalSession ? (
+                    <>
+                      Only one active global session is allowed.
+                      <br />
+                      Please finish the active one in order to start new.
+                    </>
+                  ) : (
+                    <>
+                      Session that tracks all of the executions on your <br />
+                      target application (e.g. background tasks)
+                    </>
+                  )}
                 </div>
-              )}
+              }
             >
               <Icons.Info tw="text-monochrome-default" />
             </Tooltip>
@@ -112,18 +97,14 @@ export const ManagementNewSession = ({
         type="checkbox"
         render={({ input, meta }) => (
           <div className="flex items-center gap-2">
-            <Fields.Checkbox
-              input={input}
-              meta={meta}
-              label="Real-time coverage collection"
-            />
+            <Fields.Checkbox input={input} meta={meta} label="Real-time coverage collection" />
             <Tooltip
-              message={(
+              message={
                 <div className="text-center">
                   Active scope coverage is updated once <br />
                   in 2 seconds. It will affect performance
                 </div>
-              )}
+              }
             >
               <Icons.Info tw="text-monochrome-default" />
             </Tooltip>

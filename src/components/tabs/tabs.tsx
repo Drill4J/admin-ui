@@ -30,7 +30,8 @@ export const TabsPanel = (props: Props) => {
       {Children.map(children, (child: ReactElement, index: number) =>
         cloneElement(child, {
           active: (child.props.name || index) === tab,
-        }))}
+        }),
+      )}
     </div>
   );
 };
@@ -38,7 +39,7 @@ export const TabsPanel = (props: Props) => {
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 interface TabProps {
   name: string;
-  active?: boolean
+  active?: boolean;
 }
 
 export const Tab = styled(Link)<TabProps>`

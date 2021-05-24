@@ -33,32 +33,37 @@ const Value = styled.div`
   ${tw`ml-4 text-14 leading-32 text-monochrome-default`}
 `;
 
-export const ItemInfo = ({
-  packageName, testClassName, methodName, treeLevel,
-}: Props) => (
+export const ItemInfo = ({ packageName, testClassName, methodName, treeLevel }: Props) => (
   <div tw="bg-monochrome-light-tint border-t border-b border-monochrome-medium-tint">
     <div tw="flex flex-col justify-center min-h-64px py-2 px-6">
       {packageName ? (
         <div tw="flex flex-row items-center h-8">
           <Label>Package</Label>
-          <Value className="text-ellipsis" title={packageName}>{packageName}</Value>
+          <Value className="text-ellipsis" title={packageName}>
+            {packageName}
+          </Value>
         </div>
       ) : (
         <div tw="space-y-4 pt-2 pb-2 animate-pulse">
           {Array.from(Array(treeLevel).keys()).map((level) => (
-            <div key={level} tw="h-4 bg-monochrome-medium-tint rounded" />))}
+            <div key={level} tw="h-4 bg-monochrome-medium-tint rounded" />
+          ))}
         </div>
       )}
       {testClassName && (
         <ItemWrapper>
           <Label>Class</Label>
-          <Value className="text-ellipsis" title={testClassName}>{testClassName}</Value>
+          <Value className="text-ellipsis" title={testClassName}>
+            {testClassName}
+          </Value>
         </ItemWrapper>
       )}
       {methodName && (
         <ItemWrapper>
           <Label>Method</Label>
-          <Value className="text-ellipsis" title={methodName}>{methodName}</Value>
+          <Value className="text-ellipsis" title={methodName}>
+            {methodName}
+          </Value>
         </ItemWrapper>
       )}
     </div>

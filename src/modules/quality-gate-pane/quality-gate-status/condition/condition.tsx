@@ -25,9 +25,7 @@ interface Props {
   thresholdValue: string;
 }
 
-export const Condition = ({
-  passed, type, children, thresholdValue,
-}: Props) => {
+export const Condition = ({ passed, type, children, thresholdValue }: Props) => {
   const title = {
     coverage: 'Build coverage',
     risks: 'Risks',
@@ -35,15 +33,17 @@ export const Condition = ({
   };
   return (
     <div tw="flex items-center">
-      {passed
-        ? <Icons.Checkbox width={16} height={16} tw="text-green-default" />
-        : <Icons.Warning width={16} height={16} tw="text-red-default" />}
+      {passed ? (
+        <Icons.Checkbox width={16} height={16} tw="text-green-default" />
+      ) : (
+        <Icons.Warning width={16} height={16} tw="text-red-default" />
+      )}
       <div tw="flex flex-col flex-1 mr-4 ml-4 text-14 leading-16">
         {title[type]}
         {children}
       </div>
       <span tw="font-bold" data-test={`quality-gate-status:condition:${type}`}>
-        {type === 'coverage' ? `${percentFormatter(Number(thresholdValue))}%` : thresholdValue }
+        {type === 'coverage' ? `${percentFormatter(Number(thresholdValue))}%` : thresholdValue}
       </span>
     </div>
   );

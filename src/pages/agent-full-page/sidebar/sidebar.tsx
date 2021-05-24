@@ -13,9 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import {
-  useParams, useLocation, matchPath,
-} from 'react-router-dom';
+import { useParams, useLocation, matchPath } from 'react-router-dom';
 import { Icons, Tooltip } from '@drill4j/ui-kit';
 import 'twin.macro';
 
@@ -36,13 +34,11 @@ export const Sidebar = ({ links, matchParams }: Props) => {
   const { agentId } = useParams<{ agentId: string }>();
   const { pathname } = useLocation();
   const { params: { buildVersion = '', activeLink = '' } = {} } =
-      matchPath<{ buildVersion: string; activeLink: string }>(pathname, matchParams) || {};
+    matchPath<{ buildVersion: string; activeLink: string }>(pathname, matchParams) || {};
 
   return (
     <div tw="flex flex-col w-20 h-full bg-monochrome-light-tint">
-      {links.map(({
-        id, name, link, computed,
-      }) => {
+      {links.map(({ id, name, link, computed }) => {
         const Icon = Icons[name] || Icons.Plugins;
         return (
           <Tooltip message={<div>{name}</div>} position="right" key={link}>

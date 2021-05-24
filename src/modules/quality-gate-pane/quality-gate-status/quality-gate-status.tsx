@@ -38,9 +38,14 @@ export const QualityGateStatus = ({ conditionSettingByType }: Props) => {
     return () => clearTimeout(timeout);
   }, [copied]);
 
-  const { pluginId = '', agentId = '' } = useParams<{ pluginId: string; agentId: string; }>();
-  const { results = { coverage: false, risks: false, tests: false } } = useBuildVersion<QualityGate>('/data/quality-gate') || {};
-  const { coverage = 0, risks: risksCount = 0, tests: testToRunCount = 0 } = useBuildVersion<Metrics>('/data/stats') || {};
+  const { pluginId = '', agentId = '' } = useParams<{ pluginId: string; agentId: string }>();
+  const { results = { coverage: false, risks: false, tests: false } } =
+    useBuildVersion<QualityGate>('/data/quality-gate') || {};
+  const {
+    coverage = 0,
+    risks: risksCount = 0,
+    tests: testToRunCount = 0,
+  } = useBuildVersion<Metrics>('/data/stats') || {};
   return (
     <>
       <div tw="p-6 space-y-6">
@@ -50,7 +55,10 @@ export const QualityGateStatus = ({ conditionSettingByType }: Props) => {
             type="coverage"
             thresholdValue={conditionSettingByType.coverage.condition.value}
           >
-            <div tw="block text-monochrome-default text-10 leading-16" data-test="quality-gate-status:condition-status:coverage">
+            <div
+              tw="block text-monochrome-default text-10 leading-16"
+              data-test="quality-gate-status:condition-status:coverage"
+            >
               {results.coverage ? 'Passed' : 'Failed'}. Your coverage is&nbsp;
               <span tw="font-bold" data-test="quality-gate-status:condition-status:coverage">
                 {percentFormatter(coverage || 0)}
@@ -65,9 +73,14 @@ export const QualityGateStatus = ({ conditionSettingByType }: Props) => {
             type="risks"
             thresholdValue={conditionSettingByType.risks.condition.value}
           >
-            <div tw="block text-monochrome-default text-10 leading-16" data-test="quality-gate-status:condition-status:risks">
+            <div
+              tw="block text-monochrome-default text-10 leading-16"
+              data-test="quality-gate-status:condition-status:risks"
+            >
               {results.risks ? 'Passed' : 'Failed'}. You have&nbsp;
-              <span tw="font-bold" data-test="quality-gate-status:condition-status:risks">{risksCount}</span>
+              <span tw="font-bold" data-test="quality-gate-status:condition-status:risks">
+                {risksCount}
+              </span>
               &nbsp;risks
             </div>
           </Condition>
@@ -78,9 +91,14 @@ export const QualityGateStatus = ({ conditionSettingByType }: Props) => {
             type="testsToRun"
             thresholdValue={conditionSettingByType.tests.condition.value}
           >
-            <div tw="block text-monochrome-default text-10 leading-16" data-test="quality-gate-status:condition-status:tests">
+            <div
+              tw="block text-monochrome-default text-10 leading-16"
+              data-test="quality-gate-status:condition-status:tests"
+            >
               {results.tests ? 'Passed' : 'Failed'}. You have&nbsp;
-              <span tw="font-bold" data-test="quality-gate-status:condition-status:tests">{testToRunCount}</span>
+              <span tw="font-bold" data-test="quality-gate-status:condition-status:tests">
+                {testToRunCount}
+              </span>
               {results.tests ? ' Tests to run' : ' not executed tests to run'}
             </div>
           </Condition>
@@ -94,24 +112,25 @@ export const QualityGateStatus = ({ conditionSettingByType }: Props) => {
         data-test="quality-gate-status:info-panel"
       >
         <span>
-          This is quality gate configuration for this build.
-          Use this Curl in your command line to get JSON:
+          This is quality gate configuration for this build. Use this Curl in your command line to
+          get JSON:
         </span>
         <QualityGateConfigurationUrl agentId={agentId} pluginId={pluginId} />
         <div tw="absolute top-16 right-6 text-blue-default cursor-pointer active:text-blue-shade">
-          {copied
-            ? (
-              <div className="flex items-center gap-x-1 text-10 leading-16 primary-blue-default">
-                <span className="monochrome-black">Copied to clipboard.</span>
-                <Icons.Check height={10} width={14} viewBox="0 0 14 10" />
-              </div>
-            )
-            : (
-              <Icons.Copy
-                data-test="quality-gate-status:copy-icon"
-                onClick={() => { copyToClipboard(getQualityGateConfigurationUrl(agentId, pluginId)); setCopied(true); }}
-              />
-            )}
+          {copied ? (
+            <div className="flex items-center gap-x-1 text-10 leading-16 primary-blue-default">
+              <span className="monochrome-black">Copied to clipboard.</span>
+              <Icons.Check height={10} width={14} viewBox="0 0 14 10" />
+            </div>
+          ) : (
+            <Icons.Copy
+              data-test="quality-gate-status:copy-icon"
+              onClick={() => {
+                copyToClipboard(getQualityGateConfigurationUrl(agentId, pluginId));
+                setCopied(true);
+              }}
+            />
+          )}
         </div>
       </div>
     </>

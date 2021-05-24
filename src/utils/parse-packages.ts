@@ -13,4 +13,5 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-export const parsePackages = (value: string): string[] => value.replace(/(?:(?!\n)\s)/g, '').split(/\n/);
+export const parsePackages = (value: string): string[] =>
+  value.replace(/(?:(?!\n)\s)/g, '').split(/\n/);

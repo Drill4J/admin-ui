@@ -28,12 +28,17 @@ export function abortSession(
         type: 'CANCEL',
         payload: { sessionId },
       });
-      showGeneralAlertMessage && showGeneralAlertMessage({ type: 'SUCCESS', text: 'Session has been aborted successfully.' });
+      showGeneralAlertMessage &&
+        showGeneralAlertMessage({
+          type: 'SUCCESS',
+          text: 'Session has been aborted successfully.',
+        });
     } catch ({ response: { data: { message } = {} } = {} }) {
-      showGeneralAlertMessage && showGeneralAlertMessage({
-        type: 'ERROR',
-        text: message || 'There is some issue with your action. Please try again later.',
-      });
+      showGeneralAlertMessage &&
+        showGeneralAlertMessage({
+          type: 'ERROR',
+          text: message || 'There is some issue with your action. Please try again later.',
+        });
     }
   };
 }

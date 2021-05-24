@@ -32,15 +32,17 @@ interface Props {
   yScale: { stepSizeMs: number; unit: string; stepsCount: number };
 }
 
-const GroupedBars = styled.div(({ bordered, hasUncompletedTests }: { bordered?: boolean; hasUncompletedTests?: boolean; }) => [
-  'display: grid;',
-  'gap: 1px;',
-  'align-items: end;',
-  'grid-template-rows: auto max-content;',
-  'width: max-content;',
-  bordered && tw`gap-0 border border-b-0 border-data-visualization-saved-time border-opacity-50`,
-  hasUncompletedTests && tw`hover:border border-b-0 border-data-visualization-saved-time`,
-]);
+const GroupedBars = styled.div(
+  ({ bordered, hasUncompletedTests }: { bordered?: boolean; hasUncompletedTests?: boolean }) => [
+    'display: grid;',
+    'gap: 1px;',
+    'align-items: end;',
+    'grid-template-rows: auto max-content;',
+    'width: max-content;',
+    bordered && tw`gap-0 border border-b-0 border-data-visualization-saved-time border-opacity-50`,
+    hasUncompletedTests && tw`hover:border border-b-0 border-data-visualization-saved-time`,
+  ],
+);
 
 const Bar = styled.div(({ type }: { type?: string }) => [
   tw`grid w-16`,
@@ -111,7 +113,8 @@ export const Chart = ({
         >
           <Tooltip
             message={
-              !isVisibleFirstChart || (hasUncompletedTests && buildVersion !== activeBuildVersion) ? null : (
+              !isVisibleFirstChart ||
+              (hasUncompletedTests && buildVersion !== activeBuildVersion) ? null : (
                 <>
                   {!total && 'No Auto Tests suggested to run in this build'}
                   {isAllAutoTestsDone && (

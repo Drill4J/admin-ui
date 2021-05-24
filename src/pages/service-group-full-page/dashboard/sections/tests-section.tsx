@@ -27,7 +27,7 @@ interface Props {
 }
 
 export const TestsSection = ({ scopeCount = 0, testsType = [] }: Props) => {
-  const testsByType: Record<string, { count: number; percentage: number; }> = testsType.reduce(
+  const testsByType: Record<string, { count: number; percentage: number }> = testsType.reduce(
     (acc, { summary: { coverage: { percentage = 0 } = {}, testCount = 0 }, type }) => ({
       ...acc,
       [type]: {
@@ -37,7 +37,10 @@ export const TestsSection = ({ scopeCount = 0, testsType = [] }: Props) => {
     }),
     {},
   );
-  const totalTestsCount = Object.keys(testsByType).reduce((acc, testType) => acc + testsByType[testType].count, 0);
+  const totalTestsCount = Object.keys(testsByType).reduce(
+    (acc, testType) => acc + testsByType[testType].count,
+    0,
+  );
   const tooltipData = {
     auto: {
       value: testsByType?.AUTO?.percentage,
@@ -56,7 +59,7 @@ export const TestsSection = ({ scopeCount = 0, testsType = [] }: Props) => {
       label="Tests"
       info={totalTestsCount}
       additionalInfo={`${scopeCount} scopes`}
-      graph={(
+      graph={
         <Tooltip message={<SectionTooltip data={tooltipData} />}>
           <div className="flex items-center w-full">
             {Object.keys(TESTS_TYPES_COLOR).map((testType) => (
@@ -65,13 +68,16 @@ export const TestsSection = ({ scopeCount = 0, testsType = [] }: Props) => {
                 width={64}
                 height={128}
                 color={TESTS_TYPES_COLOR[testType as TestTypes]}
-                percent={convertToPercentage(testsByType[testType] && (testsByType[testType].count || 0), totalTestsCount)}
+                percent={convertToPercentage(
+                  testsByType[testType] && (testsByType[testType].count || 0),
+                  totalTestsCount,
+                )}
                 icon={capitalize(testType)}
               />
             ))}
           </div>
         </Tooltip>
-      )}
+      }
     />
   );
 };

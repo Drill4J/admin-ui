@@ -16,9 +16,7 @@
 import { useLayoutEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import axios from 'axios';
-import {
-  Inputs, Button, GeneralAlerts,
-} from '@drill4j/ui-kit';
+import { Inputs, Button, GeneralAlerts } from '@drill4j/ui-kit';
 import tw, { styled } from 'twin.macro';
 
 import { LoginLayout } from 'layouts';
@@ -62,7 +60,7 @@ export const LoginPage = () => {
           <div tw="mt-2 px-16 text-16 leading-24 text-monochrome-default text-center">
             Click &quot;Continue as a guest&quot; to entry Admin Panel with admin privilege
           </div>
-          {error && (<GeneralAlerts tw="w-full mt-4" type="ERROR">{`${error}`}</GeneralAlerts>)}
+          {error && <GeneralAlerts tw="w-full mt-4" type="ERROR">{`${error}`}</GeneralAlerts>}
           <SignInForm>
             <Inputs.Text placeholder="User ID" disabled />
             <Inputs.Text placeholder="Password" disabled />
@@ -70,7 +68,9 @@ export const LoginPage = () => {
           <Button tw="flex justify-center w-88 mt-6" primary size="large" disabled>
             Sign in
           </Button>
-          <div tw="mt-6 font-bold text-14 leading-20 text-blue-default opacity-25">Forgot your password?</div>
+          <div tw="mt-6 font-bold text-14 leading-20 text-blue-default opacity-25">
+            Forgot your password?
+          </div>
           <Button tw="flex justify-center w-88 mt-10 " secondary size="large" onClick={handleLogin}>
             Continue as a guest (with admin rights)
           </Button>

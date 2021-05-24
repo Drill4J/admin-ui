@@ -25,6 +25,12 @@ interface Props {
 export const NameCell = ({ icon, value, testContext }: Props) => (
   <span tw="flex items-center">
     {icon && <div tw="flex items-center mr-2">{icon}</div>}
-    <div className="text-ellipsis text-14 text-monochrome-black" data-test={`name-cell:content:${testContext}`} title={value}>{value}</div>
+    <div
+      className="text-ellipsis text-14 text-monochrome-black"
+      data-test={`name-cell:content:${testContext}`}
+      title={value}
+    >
+      {value}
+    </div>
   </span>
 );

@@ -13,9 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import {
-  ReactNode, useState, createContext, useMemo,
-} from 'react';
+import { ReactNode, useState, createContext, useMemo } from 'react';
 import { MessagePanel } from '@drill4j/ui-kit';
 
 import { Message } from 'types/message';
@@ -32,7 +30,10 @@ type ContextType = {
   closeMessage: () => void;
 };
 
-export const NotificationManagerContext = createContext<ContextType>({ showMessage: () => {}, closeMessage: () => {} });
+export const NotificationManagerContext = createContext<ContextType>({
+  showMessage: () => {},
+  closeMessage: () => {},
+});
 
 export const NotificationManager = ({ children }: Props) => {
   const [message, setMessage] = useState<Message | null>();
@@ -50,16 +51,23 @@ export const NotificationManager = ({ children }: Props) => {
   }
 
   defaultAdminSocket.onCloseEvent = () => {
-    setMessage(
-      { type: 'ERROR', text: 'Backend connection has been lost. Trying to reconnect...' },
-    );
+    setMessage({ type: 'ERROR', text: 'Backend connection has been lost. Trying to reconnect...' });
   };
-  defaultAdminSocket.onOpenEvent = () => handleShowMessage({ type: 'SUCCESS', text: 'Backend connection has been successfully restored.' });
+  defaultAdminSocket.onOpenEvent = () =>
+    handleShowMessage({
+      type: 'SUCCESS',
+      text: 'Backend connection has been successfully restored.',
+    });
 
-  const contextValue = useMemo(() => ({ showMessage: handleShowMessage, closeMessage: () => setMessage(null) }), []);
+  const contextValue = useMemo(
+    () => ({ showMessage: handleShowMessage, closeMessage: () => setMessage(null) }),
+    [],
+  );
   return (
     <NotificationManagerContext.Provider value={contextValue}>
-      {message && pathname !== '/login' && <MessagePanel message={message} onClose={() => setMessage(null)} />}
+      {message && pathname !== '/login' && (
+        <MessagePanel message={message} onClose={() => setMessage(null)} />
+      )}
       {children}
     </NotificationManagerContext.Provider>
   );

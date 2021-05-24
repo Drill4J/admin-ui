@@ -24,9 +24,7 @@ interface Props {
   additionalInfo?: React.ReactNode;
 }
 
-export const DashboardSection = ({
-  graph, info, label = '', additionalInfo,
-}: Props) => (
+export const DashboardSection = ({ graph, info, label = '', additionalInfo }: Props) => (
   <div tw="flex gap-x-4 w-full">
     <div tw="w-1/2">
       <div tw="mb-4 font-regular text-14 leading-20 text-monochrome-default">{label}</div>

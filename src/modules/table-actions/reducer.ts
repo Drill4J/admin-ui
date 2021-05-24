@@ -22,7 +22,8 @@ const SET_SORT = 'SET_SORT';
 
 export type Action = ReturnType<typeof setSearch | typeof setSort>;
 
-export const setSearch = (searchQuery: Search[]) => ({ type: SET_SEARCH, payload: searchQuery } as const);
+export const setSearch = (searchQuery: Search[]) =>
+  ({ type: SET_SEARCH, payload: searchQuery } as const);
 
 export const setSort = (sort: Sort) => ({ type: SET_SORT, payload: sort } as const);
 
@@ -34,10 +35,12 @@ export const actionsReducer = (state: TableActionsState, action: Action): TableA
     case SET_SORT:
       return {
         ...state,
-        sort: [{
-          field: action.payload.field,
-          order: action.payload.field === sort?.field ? action.payload.order : 'ASC',
-        }].filter(({ order }) => Boolean(order)),
+        sort: [
+          {
+            field: action.payload.field,
+            order: action.payload.field === sort?.field ? action.payload.order : 'ASC',
+          },
+        ].filter(({ order }) => Boolean(order)),
       };
     default:
       return state;

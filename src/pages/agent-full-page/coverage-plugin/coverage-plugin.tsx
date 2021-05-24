@@ -40,8 +40,10 @@ export const CoveragePlugin = () => (
                 component={ScopesList}
               />
               <Route
-                path={['/full-page/:agentId/:buildVersion/:pluginId/scope/:scopeId/:tab',
-                  '/full-page/:agentId/:buildVersion/:pluginId/scope/:scopeId/:tab/:modal']}
+                path={[
+                  '/full-page/:agentId/:buildVersion/:pluginId/scope/:scopeId/:tab',
+                  '/full-page/:agentId/:buildVersion/:pluginId/scope/:scopeId/:tab/:modal',
+                ]}
                 component={ScopeInfo}
               />
               <Route

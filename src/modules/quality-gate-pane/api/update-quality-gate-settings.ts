@@ -33,9 +33,10 @@ export function updateQualityGateSettings(
             enabled: formValues.coverage.enabled,
             condition: {
               ...formValues.coverage.condition,
-              value: formValues.coverage.enabled && formValues.coverage.condition.value
-                ? formValues.coverage.condition.value
-                : 0.1,
+              value:
+                formValues.coverage.enabled && formValues.coverage.condition.value
+                  ? formValues.coverage.condition.value
+                  : 0.1,
             },
           },
           {
@@ -43,9 +44,10 @@ export function updateQualityGateSettings(
             enabled: formValues.risks.enabled,
             condition: {
               ...formValues.risks.condition,
-              value: formValues.risks.enabled && formValues.risks.condition.value
-                ? formValues.risks.condition.value
-                : 0,
+              value:
+                formValues.risks.enabled && formValues.risks.condition.value
+                  ? formValues.risks.condition.value
+                  : 0,
             },
           },
           {
@@ -53,9 +55,10 @@ export function updateQualityGateSettings(
             enabled: formValues.tests.enabled,
             condition: {
               ...formValues.tests.condition,
-              value: formValues.tests.enabled && formValues.tests.condition.value
-                ? formValues.tests.condition.value
-                : 0,
+              value:
+                formValues.tests.enabled && formValues.tests.condition.value
+                  ? formValues.tests.condition.value
+                  : 0,
             },
           },
         ],
@@ -64,7 +67,9 @@ export function updateQualityGateSettings(
     } catch ({ response: { data: { message } = {} } = {} }) {
       showGeneralAlertMessage({
         type: 'ERROR',
-        text: message || 'On-submit error. Server problem or operation could not be processed in real-time',
+        text:
+          message ||
+          'On-submit error. Server problem or operation could not be processed in real-time',
       });
     }
   };

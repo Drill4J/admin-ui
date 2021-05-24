@@ -31,15 +31,18 @@ interface Props {
 }
 
 export const ActionsColumn = ({ agent }: Props) => {
-  const {
-    id: agentId = '', status, agentType = '', group = '',
-  } = agent;
+  const { id: agentId = '', status, agentType = '', group = '' } = agent;
   const { agents = [] } = agent as ServiceGroup;
   const unregisteredAgentsCount = agents.reduce(
-    (acc, { status: agentStatus }) => (agentStatus === AGENT_STATUS.NOT_REGISTERED ? acc + 1 : acc), 0,
+    (acc, { status: agentStatus }) => (agentStatus === AGENT_STATUS.NOT_REGISTERED ? acc + 1 : acc),
+    0,
   );
-  const hasOfflineAgent = agents.some(({ status: agentStatus }) => agentStatus === AGENT_STATUS.OFFLINE);
-  const isJavaAgentsServiceGroup = agents.every((serviceGroupAgent) => serviceGroupAgent.agentType === 'Java');
+  const hasOfflineAgent = agents.some(
+    ({ status: agentStatus }) => agentStatus === AGENT_STATUS.OFFLINE,
+  );
+  const isJavaAgentsServiceGroup = agents.every(
+    (serviceGroupAgent) => serviceGroupAgent.agentType === 'Java',
+  );
 
   return (
     <div className="flex items-center justify-end">
@@ -47,23 +50,27 @@ export const ActionsColumn = ({ agent }: Props) => {
         <Tooltip
           tw="mr-8"
           position="top-left"
-          message={agentType === 'ServiceGroup' && !isJavaAgentsServiceGroup && (
-            <div className="text-center">
-              Bulk registration is disabled for multi-type agents.
-              <br />
-              Please register your agents separately.
-            </div>
-          )}
+          message={
+            agentType === 'ServiceGroup' &&
+            !isJavaAgentsServiceGroup && (
+              <div className="text-center">
+                Bulk registration is disabled for multi-type agents.
+                <br />
+                Please register your agents separately.
+              </div>
+            )
+          }
         >
-          <Link to={`/${
-            agentType === 'ServiceGroup' ? 'bulk-registration' : 'registration'
-          }/${agentId}?unregisteredAgentsCount=${unregisteredAgentsCount}`}
+          <Link
+            to={`/${
+              agentType === 'ServiceGroup' ? 'bulk-registration' : 'registration'
+            }/${agentId}?unregisteredAgentsCount=${unregisteredAgentsCount}`}
           >
             <Button
               data-test="action-column:icons-register"
               primary
               size="small"
-              {...agentType === 'ServiceGroup' || !group ? 'primary' : 'secondary'}
+              {...(agentType === 'ServiceGroup' || !group ? 'primary' : 'secondary')}
               disabled={agentType === 'ServiceGroup' && !isJavaAgentsServiceGroup}
               tw="flex items-center w-full gap-x-2"
             >
@@ -81,11 +88,7 @@ export const ActionsColumn = ({ agent }: Props) => {
           }/${agentId}/settings/general`}
           tw="link"
         >
-          <Icons.Settings
-            height={16}
-            width={16}
-            data-test="action-column:icons-settings"
-          />
+          <Icons.Settings height={16} width={16} data-test="action-column:icons-settings" />
         </Link>
       )}
     </div>

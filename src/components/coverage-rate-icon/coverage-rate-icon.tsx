@@ -16,7 +16,7 @@
 import { Icons } from '@drill4j/ui-kit';
 import tw, { styled } from 'twin.macro';
 
-type CoverageRate = 'MISSED' | 'PARTLY' | 'FULL'
+type CoverageRate = 'MISSED' | 'PARTLY' | 'FULL';
 
 interface Props {
   coverageRate?: CoverageRate;

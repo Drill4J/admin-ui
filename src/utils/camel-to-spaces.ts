@@ -13,4 +13,5 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-export const camelToSpaces = (srt: string) => srt.replace(/([A-Z])/g, (match) => ` ${match.toLowerCase()}`).trim();
+export const camelToSpaces = (srt: string) =>
+  srt.replace(/([A-Z])/g, (match) => ` ${match.toLowerCase()}`).trim();

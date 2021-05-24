@@ -22,9 +22,7 @@ interface Props {
   itemsActions?: React.ReactNode;
 }
 
-export const PageHeader = ({
-  title, itemsCount, itemsActions, actions,
-}: Props) => (
+export const PageHeader = ({ title, itemsCount, itemsActions, actions }: Props) => (
   <div tw="flex items-center w-full h-19.5 border-b border-monochrome-medium-tint">
     <div tw="flex flex-grow items-center mx-6">
       <span tw="text-24 leading-32 font-light">{title}</span>

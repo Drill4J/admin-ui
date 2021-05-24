@@ -28,7 +28,8 @@ export function finishScope(
       });
       onSuccess && onSuccess();
     } catch ({ response: { data: { message } = {} } = {} }) {
-      onError && onError(message || 'There is some issue with your action. Please try again later.');
+      onError &&
+        onError(message || 'There is some issue with your action. Please try again later.');
     }
   };
 }

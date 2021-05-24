@@ -31,13 +31,9 @@ const Content = styled.div`
 `;
 
 export const ActiveScopeInfo = ({ scope }: Props) => {
-  const {
-    id: scopeId,
-    coverage: { percentage = 0 } = {},
-  } = scope || {};
-  const {
-    agentId, buildVersion, pluginId, tab,
-  } = useParams<{agentId: string, buildVersion: string, pluginId: string; tab: string }>();
+  const { id: scopeId, coverage: { percentage = 0 } = {} } = scope || {};
+  const { agentId, buildVersion, pluginId, tab } =
+    useParams<{ agentId: string; buildVersion: string; pluginId: string; tab: string }>();
   const dispatch = useCoveragePluginDispatch();
   const { loading } = usePluginState();
 
@@ -46,7 +42,10 @@ export const ActiveScopeInfo = ({ scope }: Props) => {
       <div>
         <div tw="font-bold text-12">ACTIVE SCOPE COVERAGE</div>
         <div className="flex items-center gap-x-2 w-full h-10 mt-6 mb-3 ">
-          <div tw="text-32 leading-40 text-monochrome-black" data-test="active-scope-info:scope-coverage">
+          <div
+            tw="text-32 leading-40 text-monochrome-black"
+            data-test="active-scope-info:scope-coverage"
+          >
             {`${percentFormatter(percentage)}%`}
           </div>
           <SessionIndicator active={loading} />

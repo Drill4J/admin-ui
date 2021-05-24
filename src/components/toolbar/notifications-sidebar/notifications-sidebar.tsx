@@ -41,11 +41,11 @@ const ActionsPanel = styled.div`
   }
 `;
 
-export const NotificationsSidebar = ({
-  notifications,
-}: Props) => {
+export const NotificationsSidebar = ({ notifications }: Props) => {
   const [errorMessage, setErrorMessage] = useState('');
-  const { location: { state } } = useHistory();
+  const {
+    location: { state },
+  } = useHistory();
   const onToggle = useCloseModal('/notification-sidebar', state);
 
   return (
@@ -71,21 +71,26 @@ export const NotificationsSidebar = ({
                 Clear all
               </span>
             </ActionsPanel>
-            {errorMessage && (
-              <GeneralAlerts type="ERROR">
-                {errorMessage}
-              </GeneralAlerts>
-            )}
+            {errorMessage && <GeneralAlerts type="ERROR">{errorMessage}</GeneralAlerts>}
             <div tw="overflow-hidden overflow-y-auto">
-              {notifications.map((notification) =>
-                <Notification notification={notification} key={nanoid()} onError={setErrorMessage} />)}
+              {notifications.map((notification) => (
+                <Notification
+                  notification={notification}
+                  key={nanoid()}
+                  onError={setErrorMessage}
+                />
+              ))}
             </div>
           </div>
         ) : (
           <div tw="flex flex-grow flex-col justify-center items-center text-monochrome-medium-tint">
             <Icons.Notification width={120} height={130} />
-            <div tw="mt-10 mb-2 text-24 leading-32 text-monochrome-medium-tint text-center">There are no notifications</div>
-            <div tw="text-14 leading-24 text-monochrome-default text-center">No worries, we’ll keep you posted!</div>
+            <div tw="mt-10 mb-2 text-24 leading-32 text-monochrome-medium-tint text-center">
+              There are no notifications
+            </div>
+            <div tw="text-14 leading-24 text-monochrome-default text-center">
+              No worries, we’ll keep you posted!
+            </div>
           </div>
         )}
       </div>

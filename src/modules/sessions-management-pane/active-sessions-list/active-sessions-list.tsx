@@ -27,13 +27,13 @@ interface Props {
 }
 
 export const ActiveSessionsList = ({
-  agentType, activeSessions, showGeneralAlertMessage,
+  agentType,
+  activeSessions,
+  showGeneralAlertMessage,
 }: Props) => (
   <div tw="overflow-y-auto">
     {agentType === 'Agent' ? (
-      activeSessions.map(({
-        id: sessionId, testType, agentId, isRealtime, isGlobal,
-      }) => (
+      activeSessions.map(({ id: sessionId, testType, agentId, isRealtime, isGlobal }) => (
         <SessionInfo
           key={sessionId}
           sessionId={sessionId}
@@ -45,7 +45,10 @@ export const ActiveSessionsList = ({
         />
       ))
     ) : (
-      <ServiceGroupSessions activeSessions={activeSessions} showGeneralAlertMessage={showGeneralAlertMessage} />
+      <ServiceGroupSessions
+        activeSessions={activeSessions}
+        showGeneralAlertMessage={showGeneralAlertMessage}
+      />
     )}
   </div>
 );

@@ -19,9 +19,7 @@ import { NoPluginsStub } from 'modules';
 import { Agent } from 'types/agent';
 import { usePluginState } from '../store';
 import { PluginCard } from './plugin-card';
-import {
-  CoverageSection, TestsSection, RisksSection, TestsToRunSection,
-} from './sections';
+import { CoverageSection, TestsSection, RisksSection, TestsToRunSection } from './sections';
 
 interface Props {
   agent: Agent;
@@ -30,7 +28,7 @@ interface Props {
 export const Dashboard = ({ agent }: Props) => {
   const { id: agentId, plugins = [] } = agent;
   const { buildVersion } = usePluginState();
-  const installedPlugins = plugins.filter(plugin => !plugin.available);
+  const installedPlugins = plugins.filter((plugin) => !plugin.available);
 
   return (
     <div tw="flex flex-col h-full w-full">
@@ -51,7 +49,9 @@ export const Dashboard = ({ agent }: Props) => {
               </PluginCard>
             ))}
           </>
-        ) : <NoPluginsStub agentId={agent.id} agentType="Agent" />}
+        ) : (
+          <NoPluginsStub agentId={agent.id} agentType="Agent" />
+        )}
       </div>
     </div>
   );

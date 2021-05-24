@@ -38,12 +38,24 @@ export const AgentStatusToggle = ({ className, agent }: Props) => {
           onChange={async () => {
             try {
               await axios.post(`/agents/${agent.id}/toggle`);
-              showMessage({ type: 'SUCCESS', text: `Agent has been ${agent.status === AGENT_STATUS.ONLINE ? 'disabled' : 'enabled'}.` });
+              showMessage({
+                type: 'SUCCESS',
+                text: `Agent has been ${
+                  agent.status === AGENT_STATUS.ONLINE ? 'disabled' : 'enabled'
+                }.`,
+              });
             } catch ({ response: { data: { message = '' } = {} } = {} }) {
-              showMessage({ type: 'ERROR', text: message || 'There is some issue with your action. Please try again later.' });
+              showMessage({
+                type: 'ERROR',
+                text: message || 'There is some issue with your action. Please try again later.',
+              });
             }
           }}
-          disabled={agent.status === AGENT_STATUS.NOT_REGISTERED || agent.status === AGENT_STATUS.BUSY || !agent.instanceIds?.length}
+          disabled={
+            agent.status === AGENT_STATUS.NOT_REGISTERED ||
+            agent.status === AGENT_STATUS.BUSY ||
+            !agent.instanceIds?.length
+          }
         />
       </div>
     </div>

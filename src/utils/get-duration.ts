@@ -13,10 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-export const getDuration = (value: number): { hours: string, minutes: string, seconds: string, isLessThenOneSecond: boolean } => {
+export const getDuration = (
+  value: number,
+): { hours: string; minutes: string; seconds: string; isLessThenOneSecond: boolean } => {
   if (Number.isNaN(value) || !Number.isFinite(value)) {
     return {
-      hours: '00', minutes: '00', seconds: '00', isLessThenOneSecond: false,
+      hours: '00',
+      minutes: '00',
+      seconds: '00',
+      isLessThenOneSecond: false,
     };
   }
 

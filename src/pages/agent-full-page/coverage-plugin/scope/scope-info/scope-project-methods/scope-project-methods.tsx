@@ -33,31 +33,29 @@ interface Props {
 
 export const ScopeProjectMethods = ({ scope }: Props) => {
   const {
-    all, new: newMethods, modified, risks,
+    all,
+    new: newMethods,
+    modified,
+    risks,
   } = useBuildVersion<Methods>(`/build/scopes/${scope?.id}/methods`) || {};
   const {
-    pluginId = '', agentId = '', buildVersion = '', scopeId = '',
+    pluginId = '',
+    agentId = '',
+    buildVersion = '',
+    scopeId = '',
   } = useParams<{
     pluginId: string;
     agentId: string;
     buildVersion: string;
-    scopeId: string
+    scopeId: string;
   }>();
 
   return (
     <div tw="flex flex-col gap-10">
       <ScopeCoverageInfo scope={scope} />
       <div tw="flex gap-2">
-        <BuildMethodsCard
-          totalCount={all?.total}
-          covered={all?.covered}
-          label="TOTAL METHODS"
-        />
-        <BuildMethodsCard
-          totalCount={newMethods?.total}
-          covered={newMethods?.covered}
-          label="NEW"
-        >
+        <BuildMethodsCard totalCount={all?.total} covered={all?.covered} label="TOTAL METHODS" />
+        <BuildMethodsCard totalCount={newMethods?.total} covered={newMethods?.covered} label="NEW">
           {Boolean(risks?.new) && (
             <Link
               tw="link"
@@ -68,11 +66,7 @@ export const ScopeProjectMethods = ({ scope }: Props) => {
             </Link>
           )}
         </BuildMethodsCard>
-        <BuildMethodsCard
-          totalCount={modified?.total}
-          covered={modified?.covered}
-          label="MODIFIED"
-        >
+        <BuildMethodsCard totalCount={modified?.total} covered={modified?.covered} label="MODIFIED">
           {Boolean(risks?.modified) && (
             <Link
               tw="link"
