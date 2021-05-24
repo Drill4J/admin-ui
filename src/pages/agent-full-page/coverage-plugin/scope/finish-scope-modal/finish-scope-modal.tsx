@@ -76,7 +76,7 @@ export const FinishScopeModal = ({ isOpen, onToggle, scope }: Props) => {
               <Link
                 tw="link font-bold text-14"
                 to={`${pathname}/session-management-pane`}
-                onClick={() => dispatch(openModal(undefined, undefined))}
+                onClick={() => dispatch(openModal())}
               >
                 Sessions Management
               </Link>

@@ -21,7 +21,7 @@ const SET_ACTIVE_SESSIONS = 'SET_ACTIVE_SESSIONS';
 
 export type Action = ReturnType<typeof openModal | typeof setActiveSessions>;
 
-export const openModal = (modalName: ModalName | undefined, scopeId?: string) =>
+export const openModal = (modalName?: ModalName, scopeId?: string) =>
   ({ type: OPEN_MODAL, payload: { openedModalName: modalName, scopeId } } as const);
 
 export const setActiveSessions = (activeSessions: ActiveSessions) => ({ type: SET_ACTIVE_SESSIONS, payload: activeSessions } as const);

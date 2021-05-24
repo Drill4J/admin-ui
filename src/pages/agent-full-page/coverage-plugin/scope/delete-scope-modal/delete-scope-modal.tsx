@@ -71,7 +71,7 @@ export const DeleteScopeModal = ({ isOpen, onToggle, scope }: Props) => {
                 <Link
                   to={`${pathname}/session-management-pane`}
                   tw="link font-bold text-14"
-                  onClick={() => dispatch(openModal(undefined, undefined))}
+                  onClick={() => dispatch(openModal())}
                 >
                   Sessions Management
                 </Link>

@@ -37,7 +37,7 @@ export const CoveragePluginModals = () => {
       {openedModalName && Modal && (
         <Modal
           isOpen={Boolean(openedModalName)}
-          onToggle={() => dispatch(openModal(undefined, undefined))}
+          onToggle={() => dispatch(openModal())}
           scope={scope}
         />
       )}
