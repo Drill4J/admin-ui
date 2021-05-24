@@ -19,7 +19,7 @@ import { PluginState } from './store-types';
 import { Action } from './reducer';
 
 export const defaultState = {
-  scopeId: undefined,
+  scopeId: '',
   openedModalName: undefined,
   activeSessions: {},
 };
