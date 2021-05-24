@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { ActiveScope } from 'types/active-scope';
 import { ActiveSessions } from 'types/active-sessions';
 
 export type ModalName =
@@ -23,6 +22,6 @@ export type ModalName =
 
 export interface PluginState {
   openedModalName?: ModalName;
-  scope: ActiveScope | null;
+  scopeId?: string;
   activeSessions: ActiveSessions;
 }

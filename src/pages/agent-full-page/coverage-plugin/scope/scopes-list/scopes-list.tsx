@@ -155,7 +155,7 @@ export const ScopesList = () => {
                     active && {
                       label: 'Finish Scope',
                       icon: 'Check',
-                      onClick: () => dispatch(openModal('FinishScopeModal', item)),
+                      onClick: () => dispatch(openModal('FinishScopeModal', id)),
                     },
                     active && {
                       label: 'Sessions Management',
@@ -187,12 +187,12 @@ export const ScopesList = () => {
                     {
                       label: 'Rename',
                       icon: 'Edit',
-                      onClick: () => dispatch(openModal('RenameScopeModal', item)),
+                      onClick: () => dispatch(openModal('RenameScopeModal', id)),
                     },
                     {
                       label: 'Delete',
                       icon: 'Delete',
-                      onClick: () => dispatch(openModal('DeleteScopeModal', item)),
+                      onClick: () => dispatch(openModal('DeleteScopeModal', id)),
                     },
                   ].filter(Boolean);
                   return (
