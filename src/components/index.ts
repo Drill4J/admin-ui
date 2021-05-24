@@ -32,3 +32,4 @@ export { SectionTooltip } from './section-tooltip';
 export { BuildTestsCard, BuildMethodsCard } from './cards';
 export { Stub } from './stub';
 export { Table, TR } from './table';
+export { ErrorFallback, PageNotFoundErrorFallback, TableErrorFallback } from './error-fallback';

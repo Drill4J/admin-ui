@@ -18,8 +18,10 @@ import {
   useTable, useExpanded, Column, useSortBy,
 } from 'react-table';
 import { Icons } from '@drill4j/ui-kit';
+import { withErrorBoundary } from 'react-error-boundary';
 
 import { setSort, useTableActionsDispatch, useTableActionsState } from 'modules';
+import { TableErrorFallback } from 'components';
 import { Order } from 'types/sort';
 import tw, { styled } from 'twin.macro';
 
@@ -34,7 +36,7 @@ interface Props {
   columnsDependency?: Array<string | number | boolean | null | undefined>;
 }
 
-export const Table = ({
+export const Table = withErrorBoundary(({
   columns, data, renderRowSubComponent, stub = null, isDefaulToggleSortBy, columnsDependency = [],
 }: Props) => {
   const {
@@ -52,6 +54,10 @@ export const Table = ({
   const { sort: [sort] } = useTableActionsState();
 
   const [expandedRows, setExpandedRows] = useState<string[]>([]);
+
+  if (typeof data !== 'object') {
+    throw new Error('Table was received incorrect data');
+  }
 
   return (
     <>
@@ -118,7 +124,9 @@ export const Table = ({
       {stub}
     </>
   );
-};
+}, {
+  FallbackComponent: TableErrorFallback,
+});
 
 const TableHead = styled.thead`
   ${tw`sticky -top-1 z-40 bg-monochrome-white 
