@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 import {
-  ReactNode, useState, createContext, useMemo,
+  ReactNode, useState, createContext,
 } from 'react';
 import { MessagePanel } from '@drill4j/ui-kit';
 
@@ -61,11 +61,11 @@ export const NotificationManager = ({ children }: Props) => {
   };
   defaultAdminSocket.onOpenEvent = () => handleShowMessage({ type: 'SUCCESS', text: 'Backend connection has been successfully restored.' });
 
-  const contextValue = useMemo(() => ({
+  const contextValue = {
     showMessage: handleShowMessage,
     closeMessage: () => setMessage(null),
     currentMessage: message,
-  }), [message?.type]);
+  };
   return (
     <NotificationManagerContext.Provider value={contextValue}>
       {message && pathname !== '/login' && <MessagePanel message={message} onClose={() => setMessage(null)} />}
