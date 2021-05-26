@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 import {
-  Children, ComponentType, ReactElement, useReducer, useState, Component, useContext,
+  Children, ComponentType, ReactElement, useReducer, Component, useContext,
 } from 'react';
 import { Form } from 'react-final-form';
 import {
@@ -52,11 +52,10 @@ export const Wizard = ({
   children, initialValues, onSubmit, onSuccessMessage,
 }: Props) => {
   const [{ currentStepIndex }, dispatch] = useReducer(wizardReducer, state);
-  const [error, setError] = useState(false);
   const steps = Children.toArray(children);
   const { name, validate, component: StepComponent } = (steps[currentStepIndex] as Component<StepProps>).props;
   const availablePlugins = useWsConnection<Plugin[]>(defaultAdminSocket, '/plugins') || [];
-  const { showMessage } = useContext(NotificationManagerContext);
+  const { showMessage, currentMessage } = useContext(NotificationManagerContext);
 
   return (
     <div>
@@ -71,7 +70,6 @@ export const Wizard = ({
             await onSubmit(values);
             showMessage({ type: 'SUCCESS', text: onSuccessMessage });
           } catch ({ response: { data: { message } = {} } = {} }) {
-            setError(true);
             showMessage({
               type: 'ERROR',
               text: message || 'On-submit error. Server problem or operation could not be processed in real-time.',
@@ -129,7 +127,7 @@ export const Wizard = ({
                     size="large"
                     onClick={handleSubmit}
                     data-test="wizard:finishng-button"
-                    disabled={submitting || error}
+                    disabled={submitting || currentMessage?.type === 'ERROR'}
                   >
                     {submitting ? <Spinner disabled /> : <Icons.Check height={10} width={14} viewBox="0 0 14 10" />}
                     <span>Finish</span>
