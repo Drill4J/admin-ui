@@ -25,45 +25,6 @@ interface Props {
   onError?: (message: string) => void;
 }
 
-const Content = styled.div`
-  ${tw`flex flex-col justify-center gap-y-2 px-6 h-20`}
-  ${tw`text-12 text-monochrome-default border-b border-monochrome-medium-tint`}
-  ${tw`hover:bg-monochrome-default hover:bg-opacity-5`}
-`;
-
-const BuildVersion = styled.div(({ unread }: { unread?: boolean}) => [
-  tw`grid gap-4 h-5 text-14 text-monochrome-black`,
-  'grid-template-columns: 288px 48px;',
-  unread && tw`font-bold`,
-]);
-
-const NotificationStatusIndicator = styled.div(({ unread }: { unread?: boolean}) => [
-  tw`min-w-8px h-2 rounded bg-monochrome-medium-tint`,
-  unread && tw`bg-monochrome-default`,
-]);
-
-const SinceNotificationArrived = styled.div`
-  ${tw`h-6`}
-  ${({ isHover }: { isHover: boolean }) => isHover && `
-      overflow: hidden;
-      white-space: nowrap;
-      position: relative;
-      background: linear-gradient(90deg,currentColor 40%,transparent 80%);
-      -webkit-background-clip: text;
-      background-clip: text;
-      -webkit-text-fill-color: transparent;
-  `}
-`;
-
-const MarkAsReadButton = styled.div(({ read }: { read?: boolean }) => [
-  tw`h-4 cursor-pointer`,
-  read && tw`hidden`,
-]);
-
-const DeleteNotificationButton = styled.div`
-  ${tw`h-4 cursor-pointer text-red-default hover:text-red-medium-tint active:text-red-shade`}
-`;
-
 export const Notification = ({
   notification: {
     agentId, createdAt, read, id = '', message: { currentId: buildVersion } = {},
@@ -74,11 +35,11 @@ export const Notification = ({
   return (
     <div ref={ref}>
       <Content>
-        <div className="flex justify-between items-center w-full">
+        <div tw="flex justify-between items-center w-full leading-16">
           <span>{agentId}</span>
           <SinceNotificationArrived isHover={isVisible}>{format(createdAt || Date.now())}</SinceNotificationArrived>
         </div>
-        <BuildVersion unread={!read}>
+        <BuildVersion unread={!read} style={{ fontSize: '13px' }}>
           <div className="flex items-center">
             <NotificationStatusIndicator className="mr-2" unread={!read} />
             <div className="text-ellipsis mr-1" title={`Build ${buildVersion}`}>Build {buildVersion}</div>arrived
@@ -104,7 +65,7 @@ export const Notification = ({
             </DeleteNotificationButton>
           </div>
         </BuildVersion>
-        <div className="flex gap-x-4 font-bold">
+        <div className="flex gap-x-4 font-bold h-4">
           <a
             className="link"
             href={`/full-page/${agentId}/${buildVersion}/dashboard`}
@@ -125,3 +86,42 @@ export const Notification = ({
     </div>
   );
 };
+
+const Content = styled.div`
+  ${tw`flex flex-col justify-center gap-y-1 px-6 h-20`}
+  ${tw`text-12 text-monochrome-default border-b border-monochrome-medium-tint`}
+  ${tw`hover:bg-monochrome-default hover:bg-opacity-5`}
+`;
+
+const BuildVersion = styled.div(({ unread }: { unread?: boolean}) => [
+  tw`grid gap-4 leading-20 text-monochrome-black`,
+  'grid-template-columns: 288px 48px;',
+  unread && tw`font-bold`,
+]);
+
+const NotificationStatusIndicator = styled.div(({ unread }: { unread?: boolean}) => [
+  tw`min-w-8px h-2 rounded bg-monochrome-medium-tint`,
+  unread && tw`bg-monochrome-default`,
+]);
+
+const SinceNotificationArrived = styled.div`
+  ${tw`h-4`}
+  ${({ isHover }: { isHover: boolean }) => isHover && `
+      overflow: hidden;
+      white-space: nowrap;
+      position: relative;
+      background: linear-gradient(90deg,currentColor 40%,transparent 80%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+  `}
+`;
+
+const MarkAsReadButton = styled.div(({ read }: { read?: boolean }) => [
+  tw`h-4 cursor-pointer`,
+  read && tw`hidden`,
+]);
+
+const DeleteNotificationButton = styled.div`
+  ${tw`h-4 cursor-pointer text-red-default hover:text-red-medium-tint active:text-red-shade`}
+`;
