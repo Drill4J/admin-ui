@@ -121,9 +121,7 @@ export const Table = ({
 };
 
 const TableHead = styled.thead`
-  ${tw`sticky -top-1 z-40 bg-monochrome-white 
-    text-14 leading-20 font-bold 
-    border-b border-t-2 border-monochrome-black`};
+  ${tw`bg-monochrome-white text-14 leading-20 font-bold border-b border-t border-monochrome-black`};
 `;
 
 const SortArrow = styled.div`
