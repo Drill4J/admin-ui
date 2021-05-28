@@ -98,17 +98,8 @@ export function numericLimits({
 export function positiveInteger(fieldName: string, fieldAlias?: string): FormValidator {
   return (valitationItem) => {
     const value = get(valitationItem, fieldName);
-    return !Number.isInteger(Number(value)) || Number(value) < 0
+    return !Number.isInteger(Number(value)) || Number(value) < 0 || Number.isNaN(parseFloat(String(value)))
       ? toError(fieldName, `${fieldAlias || camelToSpaces(fieldName)} number should be positive integer or 0.`)
-      : undefined;
-  };
-}
-
-export function correctPattern(fieldName: string, pattern: RegExp, errorMessage: string): FormValidator {
-  return (valitationItem) => {
-    const value = get<string>(valitationItem, fieldName) || '';
-    return value.replace(pattern, '')
-      ? toError(fieldName, errorMessage)
       : undefined;
   };
 }
