@@ -85,7 +85,7 @@ export const CoverageDetails = ({
             </span>
           ) : null
       ),
-      width: '16px',
+      width: '44px',
     },
     {
       Header: 'Name',
@@ -120,7 +120,7 @@ export const CoverageDetails = ({
           )
       ),
       textAlign: 'left',
-      width: '30%',
+      width: '60%',
     },
     {
       Header: () => (
