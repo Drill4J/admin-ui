@@ -67,7 +67,7 @@ export const AgentsPage = () => {
               Run your application with Drill4J Agent using&nbsp;
               <a
                 tw="text-blue-default"
-                href="https://drill4j.github.io/how-to-start/"
+                href="https://drill4j.github.io/docs/installation/java-agent/"
                 rel="noopener noreferrer"
                 target="_blank"
               >
