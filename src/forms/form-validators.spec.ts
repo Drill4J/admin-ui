@@ -21,7 +21,6 @@ import {
   handleFieldErrors,
   numericLimits,
   positiveInteger,
-  correctPattern,
 } from './form-validators';
 
 describe('toError', () => {
@@ -157,15 +156,5 @@ describe('positiveInteger', () => {
     expect(validator({ risks: ',' })).toEqual(error);
     expect(validator({ risks: '.' })).toEqual(error);
     expect(validator({ risks: undefined })).toEqual(error);
-  });
-});
-
-describe('correctPattern', () => {
-  const telValidator = correctPattern('tel', /\+7\(\d{3}\)\d{3}-\d{2}-\d{2}/, 'error');
-  it('should return undefined if the string is a phone number', () => {
-    expect(telValidator({ tel: '+7(999)999-99-99' })).toBeUndefined();
-  });
-  it('should return error if the string is not a phone number', () => {
-    expect(telValidator({ tel: '+7(foo)999-99-99' })).toEqual({ tel: 'error' });
   });
 });
