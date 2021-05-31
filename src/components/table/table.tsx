@@ -56,7 +56,7 @@ export const Table = withErrorBoundary(({
   const [expandedRows, setExpandedRows] = useState<string[]>([]);
 
   if (typeof data !== 'object') {
-    throw new Error('Table was received incorrect data');
+    throw new Error('Table received incorrect data');
   }
 
   return (
