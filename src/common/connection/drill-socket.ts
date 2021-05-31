@@ -87,7 +87,7 @@ export class DrillSocket {
   }
 
   public subscribe(topic: string, callback: (arg: any) => void, message?: SubscriptionMessage | Record<string, unknown>) {
-    const encodedTopic = encodeURI(topic);
+    const encodedTopic = encodeURIComponent(topic);
     const key = createSubscriberKey(encodedTopic, message);
     let subscription = this.createSubscription(key, encodedTopic, callback, message);
 
@@ -161,7 +161,6 @@ const nextMessageHandler = (topic: string, callback: (arg: any) => void,
   if (destination !== topic) {
     return;
   }
-
   const key = createSubscriberKey(topic, message);
   if (!to && !message) {
     callback(responseMessage || null);
