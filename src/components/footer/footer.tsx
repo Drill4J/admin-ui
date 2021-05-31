@@ -68,7 +68,7 @@ export const Footer = () => {
     },
     {
       name: 'Documentation',
-      link: 'https://drill4j.github.io/faq/',
+      link: 'https://drill4j.github.io/docs/faq/',
     },
   ];
 
