@@ -87,7 +87,7 @@ export class DrillSocket {
   }
 
   public subscribe(topic: string, callback: (arg: any) => void, message?: SubscriptionMessage | Record<string, unknown>) {
-    const encodedTopic = encodeURIComponent(topic);
+    const encodedTopic = encodeURIComponent(topic).replace(/%2F/g, '/');
     const key = createSubscriberKey(encodedTopic, message);
     let subscription = this.createSubscription(key, encodedTopic, callback, message);
 
