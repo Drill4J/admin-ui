@@ -69,6 +69,17 @@ export const SessionsManagementPane = () => {
             const response = await (agentId
               ? startAgentSession(agentId, pluginId)(values)
               : startServiceGroupSessions(serviceGroupId, pluginId)(values));
+            const serviceWithError = serviceGroupId && response?.data.find((service: any) => service?.code === 409);
+            if (serviceWithError && serviceWithError?.data?.fieldErrors) {
+              return handleFieldErrors(serviceWithError?.data?.fieldErrors);
+            }
+            if (serviceWithError) {
+              showGeneralAlertMessage({
+                type: 'ERROR',
+                text: serviceWithError?.data?.message || 'There is some issue with your action. Please try again  later.',
+              });
+              return response;
+            }
             dispatch(setIsNewSession(false));
             form.change('sessionId', '');
             form.change('isGlobal', false);
@@ -85,7 +96,11 @@ export const SessionsManagementPane = () => {
 
               return handleFieldErrors(fieldErrors);
             }
-            showGeneralAlertMessage({ type: 'ERROR', text: 'There is some issue with your action. Please try again  later.' });
+            showGeneralAlertMessage({
+              type: 'ERROR',
+              text: error?.response?.data?.message
+                || 'There is some issue with your action. Please try again  later.',
+            });
             return error;
           }
         }}
