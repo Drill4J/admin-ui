@@ -13,6 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+import { useEffect } from 'react';
 import {
   Switch, useLocation, useParams, Route, matchPath,
 } from 'react-router-dom';
@@ -26,7 +27,7 @@ import { useAgent, useWsConnection } from 'hooks';
 import { Plugin } from 'types/plugin';
 import { Notification } from 'types/notificaiton';
 import { defaultAdminSocket } from 'common/connection';
-import { useEffect } from 'react';
+import { Agent } from 'types/agent';
 import { CoveragePlugin } from './coverage-plugin';
 import { PluginProvider } from './store';
 import { PluginHeader } from './plugin-header';
@@ -70,7 +71,6 @@ export const AgentFullPage = () => {
 
   const notifications = useWsConnection<Notification[]>(defaultAdminSocket, '/notifications') || [];
   const newBuildNotification = notifications.find((notification) => notification.agentId === agentId) || {};
-
   useEffect(() => {
     if (
       !newBuildNotification?.read &&
@@ -81,7 +81,14 @@ export const AgentFullPage = () => {
       readNotification(newBuildNotification.id);
     }
   }, [buildVersion, newBuildNotification?.id]);
+  const agentsList = useWsConnection<Agent[]>(
+    defaultAdminSocket,
+    '/api/agents',
+  );
 
+  if (agentsList && !agentsList.some(({ id }) => id === agentId)) {
+    throw new Error('page not found');
+  }
   return (
     <PluginProvider>
       <InitialConfigController>
