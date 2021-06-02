@@ -73,7 +73,7 @@ export const SessionsManagementPane = () => {
             form.change('sessionId', '');
             form.change('isGlobal', false);
             form.change('isRealtime', false);
-            showGeneralAlertMessage({ type: 'SUCCESS', text: 'New session has been started successfully.' });
+            showGeneralAlertMessage({ type: 'SUCCESS', text: `New ${agentId ? 'session' : 'sessions'} has been started successfully.` });
             return response;
           } catch (error) {
             if (error?.response?.data?.code === 409) {
