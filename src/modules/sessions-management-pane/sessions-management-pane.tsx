@@ -91,7 +91,7 @@ export const SessionsManagementPane = () => {
         }}
         validate={validateManageSessionsPane}
         render={({
-          invalid, handleSubmit, dirtySinceLastSubmit, submitting, hasValidationErrors,
+          handleSubmit, submitting, hasValidationErrors,
         }) => (
           <form onSubmit={handleSubmit} tw="flex flex-col h-full">
             <div
@@ -105,8 +105,13 @@ export const SessionsManagementPane = () => {
                 {generalAlertMessage.text}
               </GeneralAlerts>
             )}
-            {isNewSession &&
-            <ManagementNewSession agentId={agentId} serviceGroupId={serviceGroupId} hasGlobalSession={hasGlobalSession} />}
+            {isNewSession && (
+              <ManagementNewSession
+                agentId={agentId}
+                serviceGroupId={serviceGroupId}
+                hasGlobalSession={hasGlobalSession}
+              />
+            )}
             {!isNewSession && activeSessions.length > 0 && (
               <>
                 <ManagementActiveSessions activeSessions={activeSessions} />
@@ -119,7 +124,14 @@ export const SessionsManagementPane = () => {
             )}
             {!isNewSession && activeSessions.length === 0 && (
               <Stub
-                icon={<Icons.Test width={120} height={134} viewBox="0 0 18 20" data-test="empty-active-sessions-stub:test-icon" />}
+                icon={(
+                  <Icons.Test
+                    width={120}
+                    height={134}
+                    viewBox="0 0 18 20"
+                    data-test="empty-active-sessions-stub:test-icon"
+                  />
+                )}
                 title="There are no active sessions"
                 message="You can use this menu to start a new one."
               />
@@ -135,7 +147,7 @@ export const SessionsManagementPane = () => {
               ) : (
                 <ActionsPanel
                   activeSessions={activeSessions}
-                  startSessionDisabled={(invalid && !dirtySinceLastSubmit) || hasValidationErrors || submitting}
+                  startSessionDisabled={hasValidationErrors || submitting}
                   onToggle={closeModal}
                   handleSubmit={handleSubmit}
                   submitting={submitting}
