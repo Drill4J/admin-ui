@@ -90,9 +90,7 @@ export const SessionsManagementPane = () => {
           }
         }}
         validate={validateManageSessionsPane}
-        render={({
-          handleSubmit, submitting, hasValidationErrors,
-        }) => (
+        render={({ handleSubmit, submitting, hasValidationErrors }) => (
           <form onSubmit={handleSubmit} tw="flex flex-col h-full">
             <div
               tw="h-16 px-6 py-4 text-20 leading-32 text-monochrome-black border-b border-monochrome-medium-tint"
