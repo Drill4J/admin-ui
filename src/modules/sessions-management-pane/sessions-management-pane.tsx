@@ -39,6 +39,13 @@ import { ActiveSessionsList } from './active-sessions-list';
 import { BulkOperationWarning } from './bulk-operation-warning';
 import { ActionsPanel } from './actions-panel';
 import { setIsNewSession, useSessionsPaneDispatch, useSessionsPaneState } from './store';
+import { Message } from '../../types/message';
+
+interface FormValues {
+  sessionId: string;
+  isRealtime: boolean;
+  isGlobal: boolean
+}
 
 const validateManageSessionsPane = composeValidators(
   required('sessionId', 'Session ID'),
@@ -64,45 +71,16 @@ export const SessionsManagementPane = () => {
   return (
     <Modal isOpen onToggle={closeModal}>
       <Form
-        onSubmit={async (values: { sessionId: string; isRealtime: boolean; isGlobal: boolean }, form): Promise<unknown> => {
-          try {
-            const response = await (agentId
-              ? startAgentSession(agentId, pluginId)(values)
-              : startServiceGroupSessions(serviceGroupId, pluginId)(values));
-            const serviceWithError = serviceGroupId && response?.data.find((service: any) => service?.code === 409);
-            if (serviceWithError && serviceWithError?.data?.fieldErrors) {
-              return handleFieldErrors(serviceWithError?.data?.fieldErrors);
-            }
-            if (serviceWithError) {
-              showGeneralAlertMessage({
-                type: 'ERROR',
-                text: serviceWithError?.data?.message || 'There is some issue with your action. Please try again  later.',
-              });
-              return response;
-            }
+        onSubmit={async (values: {sessionId: string; isRealtime: boolean; isGlobal: boolean}, form): Promise<Record<string, string>> => {
+          function resetForm() {
             dispatch(setIsNewSession(false));
             form.change('sessionId', '');
             form.change('isGlobal', false);
             form.change('isRealtime', false);
-            showGeneralAlertMessage({ type: 'SUCCESS', text: `New ${agentId ? 'session' : 'sessions'} has been started successfully.` });
-            return response;
-          } catch (error) {
-            if (error?.response?.data?.code === 409) {
-              const { data: { fieldErrors = [] } = {}, message: errorMessage = '' } = error?.response?.data || {};
-              errorMessage && showGeneralAlertMessage({
-                type: 'ERROR',
-                text: errorMessage || 'There is some issue with your action. Please try again later.',
-              });
-
-              return handleFieldErrors(fieldErrors);
-            }
-            showGeneralAlertMessage({
-              type: 'ERROR',
-              text: error?.response?.data?.message
-                || 'There is some issue with your action. Please try again  later.',
-            });
-            return error;
           }
+          return agentId
+            ? handleStartAgentSession({ id: agentId, pluginId }, values, resetForm, showGeneralAlertMessage)
+            : handleStartServiceGroupSession({ id: serviceGroupId, pluginId }, values, resetForm, showGeneralAlertMessage);
         }}
         validate={validateManageSessionsPane}
         render={({ handleSubmit, submitting, hasValidationErrors }) => (
@@ -173,3 +151,53 @@ export const SessionsManagementPane = () => {
     </Modal>
   );
 };
+
+type ShowGeneralAlertMessage = (incomingMessage: Message | null) => void;
+
+interface Identifiers {
+  id: string;
+  pluginId: string
+}
+
+async function handleStartServiceGroupSession({ id, pluginId }: Identifiers,
+  values: FormValues, resetForm: () => void, showGeneralAlertMessage: ShowGeneralAlertMessage) {
+  try {
+    const response = await startServiceGroupSessions(id, pluginId)(values);
+    const serviceWithError = response?.data.find((service: any) => service?.code === 409);
+    if (serviceWithError && serviceWithError?.data?.fieldErrors) {
+      return handleFieldErrors(serviceWithError?.data?.fieldErrors);
+    }
+    if (serviceWithError) {
+      showGeneralAlertMessage({
+        type: 'ERROR',
+        text: serviceWithError?.data?.message || 'There is some issue with your action. Please try again later.',
+      });
+      return handleFieldErrors([]);
+    }
+    resetForm();
+    showGeneralAlertMessage({ type: 'SUCCESS', text: 'New sessions has been started successfully.' });
+  } catch (error) {
+    showGeneralAlertMessage({
+      type: 'ERROR',
+      text: error?.response?.data?.message || 'There is some issue with your action. Please try again  later.',
+    });
+  }
+  return handleFieldErrors([]);
+}
+
+async function handleStartAgentSession({ id, pluginId }: Identifiers,
+  values: FormValues, resetForm: () => void, showGeneralAlertMessage: ShowGeneralAlertMessage) {
+  try {
+    await startAgentSession(id, pluginId)(values);
+    resetForm();
+    showGeneralAlertMessage({ type: 'SUCCESS', text: 'New session has been started successfully.' });
+  } catch (error) {
+    const { data: { fieldErrors = [] } = {}, message: errorMessage = '' } = error?.response?.data || {};
+    showGeneralAlertMessage({
+      type: 'ERROR',
+      text: errorMessage || 'There is some issue with your action. Please try again later.',
+    });
+    return handleFieldErrors(fieldErrors);
+  }
+  return handleFieldErrors([]);
+}
