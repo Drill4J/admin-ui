@@ -15,7 +15,7 @@
  */
 import { useContext, useState } from 'react';
 import {
-  Button, Popup, Checkbox,
+  Button, Popup, Checkbox, Spinner,
 } from '@drill4j/ui-kit';
 import { useParams } from 'react-router-dom';
 import tw, { styled } from 'twin.macro';
@@ -29,7 +29,14 @@ const Message = styled.div`
   ${tw`text-14 leading-20`}
 `;
 
+const ActionButton = styled(Button)(({ isBaseline }: {isBaseline: boolean}) => [
+  tw`place-content-center`,
+  isBaseline && tw`w-40`,
+  !isBaseline && tw`w-34`,
+]);
+
 export const BaselineBuildModal = () => {
+  const [isLoading, setIsLoading] = useState(false);
   const { pluginId = '', agentId = '', buildVersion = '' } = useParams<{ pluginId: string; agentId: string; buildVersion: string; }>();
   const { buildVersion: activeBuildVersion = '' } = useAgent(agentId) || {};
   const { version: baseline } = useBuildVersion<Baseline>('/data/baseline', undefined, undefined, undefined, activeBuildVersion) || {};
@@ -72,12 +79,15 @@ export const BaselineBuildModal = () => {
             </Message>
           )}
           <div className="flex gap-x-4">
-            <Button
+            <ActionButton
               type="primary"
               size="large"
+              isBaseline={isBaseline}
               onClick={async () => {
                 try {
+                  setIsLoading(true);
                   await toggleBaseline(agentId, pluginId);
+                  setIsLoading(false);
                   showMessage({
                     type: 'SUCCESS',
                     text: `Current build has been ${isBaseline
@@ -92,10 +102,12 @@ export const BaselineBuildModal = () => {
                 }
                 closeModal();
               }}
-              disabled={!isConfirmed && !isBaseline}
+              disabled={(!isConfirmed && !isBaseline) || isLoading}
             >
-              {isBaseline ? 'Unset' : 'Set'} as Baseline
-            </Button>
+              {isLoading && <Spinner disabled />}
+              {!isLoading && isBaseline && 'Unset as Baseline'}
+              {!isLoading && !isBaseline && 'Set as Baseline'}
+            </ActionButton>
             <Button type="secondary" size="large" onClick={closeModal}>
               Cancel
             </Button>
