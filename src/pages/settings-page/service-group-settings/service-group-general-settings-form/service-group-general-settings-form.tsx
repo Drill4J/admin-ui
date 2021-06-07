@@ -29,6 +29,7 @@ import {
 import { ServiceGroupEntity } from 'types/service-group-entity';
 import { NotificationManagerContext } from 'notification-manager';
 import { useFormHandleSubmit } from 'hooks';
+import { isPristine } from 'utils';
 
 interface Props {
   serviceGroup: ServiceGroupEntity;
@@ -62,8 +63,9 @@ export const ServiceGroupGeneralSettingsForm = ({ serviceGroup, setPristineSetti
       render={(props) => {
         const ref = useFormHandleSubmit(props);
         const {
-          handleSubmit, submitting, pristine, invalid,
+          handleSubmit, submitting, invalid, values,
         } = props || {};
+        const pristine = isPristine(serviceGroup, values);
 
         useEffect(() => {
           setPristineSettings(pristine);
