@@ -13,4 +13,5 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-export const isPristine = (initial: any, current: any) => !Object.entries(current).find(([key, value]) => initial[key] !== value);
+export const isPristine = (initial: Record<string, any>, current: Record<string, any>) =>
+  !Object.entries(current).find(([key, value]) => initial[key] !== value);
