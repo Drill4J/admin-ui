@@ -3,12 +3,17 @@ import { isPristine } from './is-pristine';
 describe('isPristine', () => {
   const initial = {
     foo: 'foo',
-    bar: 'bar'
+    bar: 'bar',
+    baz: {
+      foo: 'foo'
+    }
   };
   const changed = {
     foo: 'foofoo',
     bar: 'bar',
-    baz: 'baz'
+    baz: {
+      foo: 'foo'
+    }
   }
 
   it('should return true when both args is equal', () => {
