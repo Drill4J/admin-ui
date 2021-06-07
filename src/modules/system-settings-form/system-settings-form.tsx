@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 import {
   useContext, useEffect, useState,
 } from 'react';
@@ -29,7 +28,9 @@ import {
   composeValidators, Fields, requiredArray, sizeLimit,
 } from 'forms';
 import { UnlockingSystemSettingsFormModal } from 'modules';
-import { parsePackages, formatPackages, dotsAndSlashesToSlash } from 'utils';
+import {
+  parsePackages, formatPackages, dotsAndSlashesToSlash, isPristine,
+} from 'utils';
 import { Agent } from 'types/agent';
 import { useFormHandleSubmit } from 'hooks';
 import { NotificationManagerContext } from 'notification-manager';
@@ -80,8 +81,9 @@ export const SystemSettingsForm = ({
       render={(props) => {
         const ref = useFormHandleSubmit(props);
         const {
-          handleSubmit, submitting, pristine, invalid,
+          handleSubmit, submitting, invalid, values,
         } = props || {};
+        const pristine = isPristine(agent, values);
 
         useEffect(() => {
           setPristineSettings(pristine);
