@@ -21,7 +21,7 @@ export function startServiceGroupSessions(
   serviceGroupId: string,
   pluginId: string,
 ) {
-  return async ({ sessionId, isGlobal, isRealtime }: StartSessionPayloadTypes): Promise<AxiosResponse> => axios.post(`/groups/${
+  return ({ sessionId, isGlobal, isRealtime }: StartSessionPayloadTypes): Promise<AxiosResponse> => axios.post(`/groups/${
     serviceGroupId}/plugins/${pluginId}/dispatch-action`, {
     type: 'START',
     payload: { sessionId: sessionId.trim(), isGlobal, isRealtime },

@@ -72,12 +72,12 @@ export const SessionsManagementPane = () => {
     <Modal isOpen onToggle={closeModal}>
       <Form
         onSubmit={async (values: {sessionId: string; isRealtime: boolean; isGlobal: boolean}, form): Promise<Record<string, string>> => {
-          function resetForm() {
+          const resetForm = () => {
             dispatch(setIsNewSession(false));
             form.change('sessionId', '');
             form.change('isGlobal', false);
             form.change('isRealtime', false);
-          }
+          };
           return agentId
             ? handleStartAgentSession({ id: agentId, pluginId }, values, resetForm, showGeneralAlertMessage)
             : handleStartServiceGroupSession({ id: serviceGroupId, pluginId }, values, resetForm, showGeneralAlertMessage);
