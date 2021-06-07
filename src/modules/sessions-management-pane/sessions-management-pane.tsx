@@ -83,7 +83,9 @@ export const SessionsManagementPane = () => {
             : handleStartServiceGroupSession({ id: serviceGroupId, pluginId }, values, resetForm, showGeneralAlertMessage);
         }}
         validate={validateManageSessionsPane}
-        render={({ handleSubmit, submitting, hasValidationErrors }) => (
+        render={({
+          handleSubmit, submitting, hasValidationErrors, submitErrors, dirtySinceLastSubmit,
+        }) => (
           <form onSubmit={handleSubmit} tw="flex flex-col h-full">
             <div
               tw="h-16 px-6 py-4 text-20 leading-32 text-monochrome-black border-b border-monochrome-medium-tint"
@@ -138,7 +140,7 @@ export const SessionsManagementPane = () => {
               ) : (
                 <ActionsPanel
                   activeSessions={activeSessions}
-                  startSessionDisabled={hasValidationErrors || submitting}
+                  startSessionDisabled={(submitErrors?.sessionId && !dirtySinceLastSubmit) || hasValidationErrors || submitting}
                   onToggle={closeModal}
                   handleSubmit={handleSubmit}
                   submitting={submitting}
@@ -193,6 +195,9 @@ async function handleStartAgentSession({ id, pluginId }: Identifiers,
     showGeneralAlertMessage({ type: 'SUCCESS', text: 'New session has been started successfully.' });
   } catch (error) {
     const { data: { fieldErrors = [] } = {}, message: errorMessage = '' } = error?.response?.data || {};
+    if (error?.response?.data?.code === 409) {
+      return handleFieldErrors(fieldErrors);
+    }
     showGeneralAlertMessage({
       type: 'ERROR',
       text: errorMessage || 'There is some issue with your action. Please try again later.',
