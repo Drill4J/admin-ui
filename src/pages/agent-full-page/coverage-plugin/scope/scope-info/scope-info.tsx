@@ -107,7 +107,7 @@ export const ScopeInfo = () => {
   const hasNewActiveScope = activeScope && activeScope?.id !== scopeId;
 
   return (
-    (scope && !scope?.coverage.percentage && newBuildHasAppeared) || (hasNewActiveScope && !scope?.coverage?.percentage)
+    (scope && !scope?.coverage.percentage && newBuildHasAppeared) || (hasNewActiveScope && scope && !scope?.coverage?.percentage)
       ? <Redirect to={{ pathname: `/full-page/${agentId}/${activeBuildVersion}/${pluginId}/dashboard/methods` }} />
       : (
         <div>
