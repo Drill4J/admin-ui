@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 import {
-  useContext, useEffect, useMemo, useState,
+  useContext, useMemo, useState,
 } from 'react';
 import { Form, Field } from 'react-final-form';
 
@@ -50,16 +50,11 @@ const validateScope = composeValidators(
 );
 
 export const RenameScopeModal = ({ isOpen, onToggle, scope }: Props) => {
-  const [name, setName] = useState(scope?.name);
   const { agentId } = usePluginState();
   const { pluginId = '' } = useParams<{ pluginId: string }>();
   const { showMessage } = useContext(NotificationManagerContext);
   const [errorMessage, setErrorMessage] = useState('');
-  const initialValues = useMemo(() => ({ name }), [name]);
-
-  useEffect(() => {
-    !name && scope?.name && setName(scope?.name);
-  }, [scope?.name]);
+  const initialValues = useMemo(() => scope, [scope?.name]);
 
   return (
     <Popup
