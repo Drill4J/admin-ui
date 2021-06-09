@@ -86,7 +86,7 @@ export const RenameScopeModal = ({ isOpen, onToggle, scope }: Props) => {
           validate={validateScope}
           initialValues={initialValues}
           render={({
-            handleSubmit, submitting, pristine,
+            handleSubmit, submitting, pristine, hasValidationErrors,
           }) => (
             <form onSubmit={handleSubmit} className="m-6">
               <FormGroup label="Scope Name">
@@ -98,7 +98,7 @@ export const RenameScopeModal = ({ isOpen, onToggle, scope }: Props) => {
                   type="primary"
                   size="large"
                   onClick={handleSubmit}
-                  disabled={submitting || pristine}
+                  disabled={submitting || pristine || hasValidationErrors}
                 >
                   {submitting ? <Spinner disabled /> : 'Save'}
                 </Button>
