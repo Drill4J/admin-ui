@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 import {
-  useContext, useMemo, useState,
+  useContext, useState,
 } from 'react';
 import { Form, Field } from 'react-final-form';
 
@@ -54,7 +54,6 @@ export const RenameScopeModal = ({ isOpen, onToggle, scope }: Props) => {
   const { pluginId = '' } = useParams<{ pluginId: string }>();
   const { showMessage } = useContext(NotificationManagerContext);
   const [errorMessage, setErrorMessage] = useState('');
-  const initialValues = useMemo(() => scope, [scope?.name]);
 
   return (
     <Popup
@@ -79,7 +78,8 @@ export const RenameScopeModal = ({ isOpen, onToggle, scope }: Props) => {
             onError: setErrorMessage,
           })(values as ScopeSummary)}
           validate={validateScope}
-          initialValues={initialValues}
+          initialValues={scope}
+          keepDirtyOnReinitialize
           render={({
             handleSubmit, submitting, pristine, hasValidationErrors,
           }) => (
