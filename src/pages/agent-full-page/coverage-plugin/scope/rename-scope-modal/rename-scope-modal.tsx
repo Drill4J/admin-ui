@@ -13,7 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { useContext, useState } from 'react';
+import {
+  useContext, useState,
+} from 'react';
 import { Form, Field } from 'react-final-form';
 
 import { useParams } from 'react-router-dom';
@@ -76,8 +78,11 @@ export const RenameScopeModal = ({ isOpen, onToggle, scope }: Props) => {
             onError: setErrorMessage,
           })(values as ScopeSummary)}
           validate={validateScope}
-          initialValues={scope || {}}
-          render={({ handleSubmit, submitting, pristine }) => (
+          initialValues={scope}
+          keepDirtyOnReinitialize
+          render={({
+            handleSubmit, submitting, pristine, hasValidationErrors,
+          }) => (
             <form onSubmit={handleSubmit} className="m-6">
               <FormGroup label="Scope Name">
                 <Field name="name" component={Fields.Input} placeholder="Enter scope name" />
@@ -88,7 +93,7 @@ export const RenameScopeModal = ({ isOpen, onToggle, scope }: Props) => {
                   type="primary"
                   size="large"
                   onClick={handleSubmit}
-                  disabled={submitting || pristine}
+                  disabled={submitting || pristine || hasValidationErrors}
                 >
                   {submitting ? <Spinner disabled /> : 'Save'}
                 </Button>
