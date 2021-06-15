@@ -193,6 +193,7 @@ export const CoverageDetails = ({
   const renderRowSubComponent = useCallback(
     ({ row }) => <ExpandedClasses parentRow={row} />, [],
   );
+  const columnDependency = useMemo(() => [showCoverageIcon], [showCoverageIcon]);
   return (
     <div tw="flex flex-col">
       <>
@@ -212,7 +213,7 @@ export const CoverageDetails = ({
               columns={columns}
               data={coverageByPackages.slice(0, visibleElementsCount)}
               renderRowSubComponent={renderRowSubComponent}
-              columnsDependency={[showCoverageIcon]}
+              columnsDependency={columnDependency}
               stub={coverageByPackages.length === 0 && (
                 <Stub
                   icon={<Icons.Package height={104} width={107} />}
