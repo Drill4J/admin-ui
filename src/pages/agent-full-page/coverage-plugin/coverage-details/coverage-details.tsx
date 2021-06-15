@@ -212,6 +212,7 @@ export const CoverageDetails = ({
               columns={columns}
               data={coverageByPackages.slice(0, visibleElementsCount)}
               renderRowSubComponent={renderRowSubComponent}
+              columnsDependency={[showCoverageIcon]}
               stub={coverageByPackages.length === 0 && (
                 <Stub
                   icon={<Icons.Package height={104} width={107} />}
