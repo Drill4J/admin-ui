@@ -18,7 +18,7 @@ import axios from 'axios';
 
 import { defaultStateWatcherPluginSocket } from 'common/connection/default-ws-connection';
 import { NotificationManagerContext } from 'notification-manager';
-import { StateWatcherData, InstancesInfoById, Series } from 'types/state-watcher';
+import { StateWatcherData } from 'types/state-watcher';
 
 export function useStateWatcher(agentId: string, buildVersion: string) {
   const [isLoading, setIsLoading] = useState(false);
@@ -29,31 +29,16 @@ export function useStateWatcher(agentId: string, buildVersion: string) {
     brakes: [],
     series: [],
   });
-  console.log(data);
-
-  const [observableInstances, setObservableInstances] = useState<InstancesInfoById | null>(null);
-
-  const toggleInstanceActiveStatus = (instanceId: string) =>
-    setObservableInstances((prevState) =>
-      (prevState
-        ? {
-          ...prevState,
-          [instanceId]: {
-            ...prevState[instanceId],
-            isActive: !prevState[instanceId].isActive,
-          },
-        }
-        : null));
 
   const { showMessage } = useContext(NotificationManagerContext);
 
   useEffect(() => {
     function handleDataChange(newData: StateWatcherData) {
-      newData &&
-        setData((prevState) => ({
-          ...prevState,
-          ...newData,
-          series: prevState.series.map(({ instanceId, data: prevSeriesData }) => ({
+      newData && setData((prevState) => ({
+        ...prevState,
+        ...newData,
+        series: prevState.series.length > 0
+          ? prevState.series.map(({ instanceId, data: prevSeriesData }) => ({
             instanceId,
             data: [
               ...prevSeriesData,
@@ -61,8 +46,9 @@ export function useStateWatcher(agentId: string, buildVersion: string) {
                 ({ instanceId: newDataInstanceId }) => newDataInstanceId === instanceId,
               )?.data || []),
             ].slice(-10),
-          })),
-        }));
+          }))
+          : newData.series,
+      }));
     }
 
     (async () => {
@@ -75,10 +61,8 @@ export function useStateWatcher(agentId: string, buildVersion: string) {
           },
         );
         const responseData: StateWatcherData = response.data.data;
-        console.log(responseData.series[0].data.length);
-        setData({ ...responseData, series: responseData.series.map((x) => ({ ...x, data: x.data.slice(-10) })) });
 
-        responseData?.series && setObservableInstances(transformSeries(responseData.series));
+        setData(responseData);
 
         setIsLoading(false);
       } catch ({ response: { data: { message } = {} } = {} }) {
@@ -107,20 +91,5 @@ export function useStateWatcher(agentId: string, buildVersion: string) {
     setData,
     isLoading,
     setIsLoading,
-    observableInstances,
-    toggleInstanceActiveStatus,
   };
-}
-
-function transformSeries(series: Series): InstancesInfoById {
-  return series.reduce((acc, { instanceId }, i) => {
-    const colors = ['#F9AE7D', '#76A5E3', '#D599FF', '#EE7785', '#67D5B5'];
-    return {
-      ...acc,
-      [instanceId]: {
-        isActive: true,
-        color: colors[i],
-      },
-    };
-  }, {});
 }

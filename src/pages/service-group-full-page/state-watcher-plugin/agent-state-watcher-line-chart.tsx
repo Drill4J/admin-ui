@@ -24,9 +24,10 @@ import { useAgent, useStateWatcher } from 'hooks';
 interface Props {
   id: string;
   buildVersion: string;
+  instanceIds: string[];
 }
 
-export const AgentStateWatcherLineChart = ({ id, buildVersion }: Props) => {
+export const AgentStateWatcherLineChart = ({ id, buildVersion, instanceIds }: Props) => {
   const [isMonitored, setIsMonitored] = useState(false);
   const props = useStateWatcher(id, buildVersion);
 
@@ -61,6 +62,7 @@ export const AgentStateWatcherLineChart = ({ id, buildVersion }: Props) => {
       {isMonitored && (
         <div tw="px-8 py-6 border-b border-l border-r border-monochrome-medium-tint">
           <StateWatcher
+            instanceIds={instanceIds}
             isActiveBuildVersion={isActiveBuildVersion}
             height={180}
             {...props}

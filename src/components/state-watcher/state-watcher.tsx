@@ -22,20 +22,21 @@ import tw, { styled } from 'twin.macro';
 
 import { Stub } from 'components';
 import { formatBytes } from 'utils';
-import { StateWatcherData, InstancesInfoById } from 'types/state-watcher';
+import { StateWatcherData } from 'types/state-watcher';
+import { useInstanceIds } from 'hooks';
 import { MonitotingDuration } from './monitoring-duration';
 
 interface Props {
   data: StateWatcherData;
-  observableInstances: InstancesInfoById | null;
-  toggleInstanceActiveStatus: (instanceId: string) => void;
+  instanceIds: string[];
   isActiveBuildVersion: boolean;
   height: number;
 }
 
 export const StateWatcher = ({
-  data, observableInstances, toggleInstanceActiveStatus, isActiveBuildVersion, height,
+  data, instanceIds, isActiveBuildVersion, height,
 }: Props) => {
+  const { observableInstances, toggleInstanceActiveStatus } = useInstanceIds(instanceIds);
   const [totalHeapLineIsVisible, setTotalHeapLineIsVisible] = useState(true);
 
   const CustomTooltip = ({ payload = [] }: any) => {
@@ -131,14 +132,14 @@ export const StateWatcher = ({
             )}
             <Tooltip content={CustomTooltip} />
             {data.series.map((instance) => (
-              observableInstances && observableInstances[instance.instanceId]?.isActive && (
+              observableInstances.find(({ instanceId }) => instance.instanceId === instanceId)?.isActive && (
                 <Line
                   data={instance.data}
                   key={instance.instanceId}
                   type="linear"
                   dataKey="memory.heap"
-                  stroke={observableInstances[instance.instanceId]?.color}
-                  // dot={false}
+                  stroke={observableInstances.find(({ instanceId }) => instance.instanceId === instanceId)?.color}
+                  dot={false}
                   isAnimationActive={false}
                   strokeWidth={2}
                   name={instance.instanceId}
@@ -155,20 +156,18 @@ export const StateWatcher = ({
             label={<Label>Total {formatBytes(data.maxHeap)}</Label>}
           />
           <span tw="text-10 leading-24 text-monochrome-default">Instances:</span>
-          {observableInstances && (
-            <ScrollContainer>
-              {data.series.map(({ instanceId }) => (
-                <div tw="flex gap-x-2">
-                  <Checkbox
-                    color={observableInstances[instanceId]?.color}
-                    checked={observableInstances[instanceId]?.isActive}
-                    onChange={() => toggleInstanceActiveStatus(instanceId)}
-                  />
-                  <Label title={instanceId}>{instanceId}</Label>
-                </div>
-              ))}
-            </ScrollContainer>
-          )}
+          <ScrollContainer>
+            {observableInstances.map(({ instanceId, color, isActive }) => (
+              <div tw="flex gap-x-2">
+                <Checkbox
+                  color={color}
+                  checked={isActive}
+                  onChange={() => toggleInstanceActiveStatus(instanceId)}
+                />
+                <Label title={instanceId}>{instanceId}</Label>
+              </div>
+            ))}
+          </ScrollContainer>
         </div>
       </div>
     </>

@@ -13,7 +13,7 @@
 * See the License for the specific language governing permissions and
 * limitations under the License.
 */
-export type InstancesInfoById = Record<string, { isActive: boolean; color: string }>;
+export type InstancesInfo = Array<{ instanceId: string; isActive: boolean; color: string }>;
 
 export type Series = Array<{
   instanceId: string;

@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 import { useParams } from 'react-router-dom';
+import { TextField } from '@material-ui/core';
 import 'twin.macro';
 
 import { StateWatcher, MonitoringButton } from 'components';
@@ -22,10 +23,11 @@ import { StateWatcherPluginHeader } from './state-watcher-plugin-header';
 
 export const StateWatcherPlugin = () => {
   const { agentId = '', buildVersion = '' } = useParams<{ agentId: string; buildVersion: string; }>();
+  const { buildVersion: activeBuildVersion = '', instanceIds = [] } = useAgent(agentId) || {};
   const props = useStateWatcher(agentId, buildVersion);
 
-  const { buildVersion: activeBuildVersion = '' } = useAgent(agentId) || {};
   const isActiveBuildVersion = buildVersion === activeBuildVersion;
+
   return (
     <div tw="w-full h-full px-6">
       <StateWatcherPluginHeader
@@ -54,6 +56,7 @@ export const StateWatcherPlugin = () => {
         )}
       />
       <StateWatcher
+        instanceIds={instanceIds}
         isActiveBuildVersion={isActiveBuildVersion}
         height={400}
         {...props}
