@@ -16,12 +16,12 @@
 import 'twin.macro';
 
 interface Props {
-  button: React.ReactNode;
+  items: React.ReactNode;
 }
 
-export const StateWatcherPluginHeader = ({ button }: Props) => (
+export const StateWatcherPluginHeader = ({ items }: Props) => (
   <div tw="flex justify-between items-center h-20 border-b border-monochrome-medium-tint">
     <span tw="text-24 leading-32 font-light text-monochrome-black">State Watcher</span>
-    {button}
+    {items}
   </div>
 );

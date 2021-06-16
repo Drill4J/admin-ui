@@ -29,7 +29,29 @@ export const StateWatcherPlugin = () => {
   return (
     <div tw="w-full h-full px-6">
       <StateWatcherPluginHeader
-        button={<MonitoringButton agentId={agentId} size="large" {...props} />}
+        items={(
+          <div tw="flex gap-x-4 items-center">
+            <TextField
+              id="datetime-local"
+              label="Start"
+              type="datetime-local"
+              defaultValue="2017-05-24T10:30"
+              InputLabelProps={{
+                shrink: true,
+              }}
+            />
+            <TextField
+              id="datetime-local"
+              label="End"
+              type="datetime-local"
+              defaultValue="2017-05-24T10:30"
+              InputLabelProps={{
+                shrink: true,
+              }}
+            />
+            <MonitoringButton agentId={agentId} size="large" {...props} />
+          </div>
+        )}
       />
       <StateWatcher
         isActiveBuildVersion={isActiveBuildVersion}
