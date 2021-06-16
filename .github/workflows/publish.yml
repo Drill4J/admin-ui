@@ -26,6 +26,7 @@ jobs:
         with:
           username: ${{ secrets.GH_PACKAGE_USERNAME }}
           password: ${{ secrets.GH_PACKAGE_TOKEN }}
-          repository: ghcr.io/drill4j/admin-ui
+          registry: ghcr.io
+          repository: drill4j/admin-ui
           tags: latest,${{ steps.get_version.outputs.VERSION }}
           build_args: ENV=development,VERSION=${{ steps.get_version.outputs.VERSION }}
