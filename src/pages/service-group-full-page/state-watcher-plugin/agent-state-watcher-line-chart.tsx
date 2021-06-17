@@ -34,18 +34,20 @@ export const AgentStateWatcherLineChart = ({ id, buildVersion, instanceIds }: Pr
 
   const { observableInstances, toggleInstanceActiveStatus } = useInstanceIds(instanceIds);
 
-  const [payload, setPayload] = useState({
-    instanceIds: observableInstances
-      .filter(({ isActive }) => isActive).map(({ instanceId }) => instanceId),
+  const [range, setRange] = useState({
     from: Date.now() - 60000,
     to: Date.now(),
   });
-  const startDate = new Date(payload.from);
-  const endDate = new Date(payload.to);
+  const startDate = new Date(range.from);
+  const endDate = new Date(range.to);
 
   const {
     data, setData, isLoading, setIsLoading,
-  } = useStateWatcher(id, buildVersion, payload);
+  } = useStateWatcher(id, buildVersion, {
+    ...range,
+    instanceIds: observableInstances
+      .filter(({ isActive }) => isActive).map(({ instanceId }) => instanceId),
+  });
 
   const { buildVersion: activeBuildVersion = '' } = useAgent(id) || {};
 
@@ -76,7 +78,7 @@ export const AgentStateWatcherLineChart = ({ id, buildVersion, instanceIds }: Pr
             type="datetime-local"
             defaultValue={transformDateToLocalDatetime(startDate)}
             onBlur={({ target }) => {
-              setPayload({ ...payload, from: new Date(target.value).getTime() });
+              setRange({ ...range, from: new Date(target.value).getTime() });
             }}
             InputLabelProps={{
               shrink: true,
@@ -88,7 +90,7 @@ export const AgentStateWatcherLineChart = ({ id, buildVersion, instanceIds }: Pr
             type="datetime-local"
             defaultValue={transformDateToLocalDatetime(endDate)}
             onBlur={({ target }) => {
-              setPayload({ ...payload, to: new Date(target.value).getTime() });
+              setRange({ ...range, to: new Date(target.value).getTime() });
             }}
             InputLabelProps={{
               shrink: true,
