@@ -63,16 +63,13 @@ export const MonitoringButton = ({
       {isLoading && <Spinner />}
       {!isLoading && data.isMonitoring && (
         <>
-          <div tw="flex gap-x-0.5">
-            <div tw="w-1 h-3 border border-monochrome-white" />
-            <div tw="w-1 h-3 border border-monochrome-white" />
-          </div>
+          <Icons.Pause />
           Pause
         </>
       )}
       {!isLoading && !data.isMonitoring && (
         <>
-          <Icons.Start width={14} height={14} />
+          <Icons.Play />
           Start
         </>
       )}

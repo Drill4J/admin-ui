@@ -167,7 +167,7 @@ export const StateWatcher = ({
     </>
   ) : (
     <Stub
-      icon={<Icons.Data />}
+      icon={<Icons.Data width={120} height={120} />}
       title="No data available"
       message="Memory usage information can only be displayed for the last build"
     />
