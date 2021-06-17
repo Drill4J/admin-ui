@@ -13,16 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import {
-  Button, LinkButton, Icons,
-} from '@drill4j/ui-kit';
+import { Icons, Menu } from '@drill4j/ui-kit';
 import { useParams } from 'react-router-dom';
 import tw, { styled } from 'twin.macro';
 
 import { capitalize } from 'utils';
 import { Message } from 'types/message';
-import { useSessionsPaneDispatch, useSessionsPaneState, setSingleOperation } from '../../store';
-import { SingleOperationWarning } from './single-operation-warning';
+import { useSessionsPaneState } from '../../store';
+import { abortSession, finishSession } from '../../sessions-management-pane-api';
 
 interface Props {
   testType: string;
@@ -36,64 +34,48 @@ interface Props {
 const AdditionalSessionInfo = styled.div`
   ${tw`flex mt-1 gap-2 `}
   ${tw`text-monochrome-default`}
-  ${({ disabled }: { disabled: boolean }) => disabled && tw`opacity-20`}
 `;
 
 const SessionId = styled.div`
-  ${tw`font-bold text-14 leading-20 text-ellipsis`}
-  ${({ disabled }: { disabled: boolean }) => disabled && tw`opacity-20`}
+  ${tw`text-14 leading-24 text-ellipsis`}
+`;
+
+const Content = styled.div<{disabled?: boolean}>`
+  ${tw`h-14 pt-1 pb-2 px-6 text-12 leading-16 text-monochrome-black`}
+  ${({ disabled }) => disabled && tw`opacity-20`}
+`;
+
+const Actions = styled.div<{disabled?: boolean}>`
+  ${tw`mr-1`}
+  ${({ disabled }) => disabled && tw`pointer-events-none`}
 `;
 
 export const SessionInfo = ({
   testType, isGlobal, isRealtime, sessionId, agentId, showGeneralAlertMessage,
 }: Props) => {
   const { pluginId = '' } = useParams<{ pluginId: string }>();
-  const dispatch = useSessionsPaneDispatch();
-  const { bulkOperation, singleOperation: { id } } = useSessionsPaneState();
-  const operationIsProcessing = Boolean(id === sessionId + agentId);
-  const disabled = Boolean(id) || bulkOperation.isProcessing;
+  const { bulkOperation } = useSessionsPaneState();
+  const disabled = bulkOperation.isProcessing;
 
   return (
-    <div tw="h-16 py-3 px-6 border-b border-monochrome-medium-tint text-12 leading-16 text-monochrome-black">
-      {operationIsProcessing ? (
-        <SingleOperationWarning
-          pluginId={pluginId}
-          sessionId={sessionId}
-          agentId={agentId}
-          showGeneralAlertMessage={showGeneralAlertMessage}
-        />
-      ) : (
-        <>
-          <div className="flex justify-between items-center w-full">
-            <SessionId disabled={disabled} data-test="session-info:session-id" title={sessionId}>{sessionId}</SessionId>
-            <div tw="flex gap-4">
-              <LinkButton
-                size="small"
-                onClick={() => dispatch(setSingleOperation('abort', sessionId + agentId))}
-                disabled={disabled}
-                data-test="session-info:abort-button"
-              >
-                Abort
-              </LinkButton>
-              <Button
-                secondary
-                size="small"
-                onClick={() => dispatch(setSingleOperation('finish', sessionId + agentId))}
-                disabled={disabled}
-                data-test="session-info:finish-button"
-              >
-                Finish
-              </Button>
-            </div>
-          </div>
-          <AdditionalSessionInfo disabled={disabled}>
-            {isGlobal
-              ? <div tw="flex"><Icons.Global />&nbsp;Global</div>
-              : <span tw="text-12 leading-16 text-monochrome-default" data-test="session-info:test-type">{capitalize(testType)}</span>}
-            {isRealtime && <div tw="flex"><Icons.RealTime />&nbsp;Real-time</div>}
-          </AdditionalSessionInfo>
-        </>
-      )}
-    </div>
+    <Content disabled={disabled}>
+      <div className="flex justify-between items-center gap-x-2 w-full">
+        <SessionId data-test="session-info:session-id" title={sessionId}>{sessionId}</SessionId>
+        <Actions disabled={disabled}>
+          <Menu
+            items={[
+              { label: 'Finish', icon: 'Success', onClick: () => finishSession(agentId, pluginId, showGeneralAlertMessage)(sessionId) },
+              { label: 'Abort', icon: 'Cancel', onClick: () => abortSession(agentId, pluginId, showGeneralAlertMessage)(sessionId) },
+            ]}
+          />
+        </Actions>
+      </div>
+      <AdditionalSessionInfo>
+        {isGlobal
+          ? <div tw="flex"><Icons.Global />&nbsp;Global</div>
+          : <span tw="text-12 leading-16 text-monochrome-default" data-test="session-info:test-type">{capitalize(testType)}</span>}
+        {isRealtime && <div tw="flex"><Icons.RealTime />&nbsp;Real-time</div>}
+      </AdditionalSessionInfo>
+    </Content>
   );
 };

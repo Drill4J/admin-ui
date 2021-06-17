@@ -26,32 +26,30 @@ interface Props {
 }
 
 const ServiceGroupAgentPanel = styled.div`
-  ${tw`h-9`}
+  ${tw`flex items-center pt-5 pr-6 pb-1 ml-6`}
   ${tw`text-12 leading-24 text-monochrome-black border-b border-monochrome-medium-tint`}
   ${({ disabled }: { disabled: boolean }) => disabled && tw`opacity-20`}
 `;
 
 export const ServiceGroupSessions = ({ activeSessions, showGeneralAlertMessage }: Props) => {
   const serviceGroupAgentsIds = Array.from(new Set(activeSessions.map(session => session.agentId)));
-  const { bulkOperation, singleOperation } = useSessionsPaneState();
+  const { bulkOperation } = useSessionsPaneState();
 
   return (
     <div>
       {serviceGroupAgentsIds.map((agentId) => (
         <div key={agentId}>
           <ServiceGroupAgentPanel
-            className="flex items-center w-full px-6 py-1"
             data-test="service-group-sessions:service-group-agent-panel"
-            disabled={Boolean(singleOperation.id) || bulkOperation.isProcessing}
+            disabled={bulkOperation.isProcessing}
           >
             <Icons.Agent data-test="service-group-sessions:agent-icon" />
             <span
-              tw="mx-2 text-monochrome-default"
-              data-test="service-group-sessions:agent-title"
+              tw="mx-2 text-12 leading-24 font-bold text-monochrome-black align-middle"
+              data-test="service-group-sessions:agent-name"
             >
-              Agent:
+              {agentId}
             </span>
-            {agentId}
           </ServiceGroupAgentPanel>
           {activeSessions.filter(({ agentId: sessionAgentId }) => sessionAgentId === agentId)
             .map(({

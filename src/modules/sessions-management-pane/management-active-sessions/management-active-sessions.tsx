@@ -15,7 +15,7 @@
  */
 import { LinkButton } from '@drill4j/ui-kit';
 import { Field } from 'react-final-form';
-import 'twin.macro';
+import tw, { styled } from 'twin.macro';
 
 import { Fields } from 'forms';
 import { ActiveSession } from 'types/active-session';
@@ -25,14 +25,18 @@ interface Props {
   activeSessions: ActiveSession[];
 }
 
+const Content = styled.div`
+  min-height: 88px;
+  ${tw`border-b border-monochrome-medium-tint text-16 leading-20 text-monochrome-black`}
+`;
+
 export const ManagementActiveSessions = ({ activeSessions }: Props) => {
   const dispatch = useSessionsPaneDispatch();
-  const { bulkOperation, singleOperation } = useSessionsPaneState();
-  const disabled = bulkOperation.isProcessing || Boolean(singleOperation.id);
+  const { bulkOperation } = useSessionsPaneState();
+  const disabled = bulkOperation.isProcessing;
 
   return (
-    <div
-      tw="h-22 border-b border-monochrome-medium-tint text-16 leading-20 text-monochrome-black"
+    <Content
       data-test="management-active-sessions:search-panel"
     >
       <div tw="flex flex-col justify-between pt-4 px-6 pb-3 h-full">
@@ -67,6 +71,6 @@ export const ManagementActiveSessions = ({ activeSessions }: Props) => {
           disabled
         />
       </div>
-    </div>
+    </Content>
   );
 };

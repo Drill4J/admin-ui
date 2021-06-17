@@ -36,7 +36,7 @@ export const ActionsPanel = ({
   activeSessions, onToggle, startSessionDisabled, handleSubmit, submitting,
 }: Props) => {
   const dispatch = useSessionsPaneDispatch();
-  const { singleOperation, isNewSession } = useSessionsPaneState();
+  const { isNewSession } = useSessionsPaneState();
 
   return (
     <Content>
@@ -60,7 +60,6 @@ export const ActionsPanel = ({
             dispatch(setIsNewSession(true));
           }}
           data-test="sessions-management-pane:start-new-session-button"
-          disabled={Boolean(singleOperation.id)}
         >
           Start New Session
         </Button>
