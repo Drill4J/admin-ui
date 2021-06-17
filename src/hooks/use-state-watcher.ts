@@ -51,7 +51,14 @@ export function useStateWatcher(agentId: string, buildVersion: string, payload: 
               ...(newData.series.find(
                 ({ instanceId: newDataInstanceId }) => newDataInstanceId === instanceId,
               )?.data || []),
-            ],
+            ].map((x, i, arr) => {
+              if (i === arr.length - 1) return x;
+              const is = x?.timeStamp + 5500 > arr[i + 1]?.timeStamp;
+              return is
+                ? x
+                : Array.from({ length: (arr[i + 1]?.timeStamp - x?.timeStamp) / 5000 },
+                  (_, k) => ({ timeStamp: x?.timeStamp + 5000 * k, memory: { heap: 0 } }));
+            }).flat(),
           }))
           : newData.series,
       }));
