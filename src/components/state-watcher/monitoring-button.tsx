@@ -55,7 +55,7 @@ export const MonitoringButton = ({
           onClick && onClick();
           setIsLoading(false);
         } catch ({ response: { data: { message } = {} } = {} }) {
-          showMessage(message || 'There is some issue with your action. Please try again.');
+          showMessage({ type: 'ERROR', text: message || 'There is some issue with your action. Please try again.' });
           setIsLoading(false);
         }
       }}
