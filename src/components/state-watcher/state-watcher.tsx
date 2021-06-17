@@ -22,21 +22,20 @@ import tw, { styled } from 'twin.macro';
 
 import { Stub } from 'components';
 import { formatBytes } from 'utils';
-import { StateWatcherData } from 'types/state-watcher';
-import { useInstanceIds } from 'hooks';
+import { StateWatcherData, InstancesInfo } from 'types/state-watcher';
 import { MonitotingDuration } from './monitoring-duration';
 
 interface Props {
   data: StateWatcherData;
-  instanceIds: string[];
+  observableInstances: InstancesInfo;
+  toggleInstanceActiveStatus: (instanceId: string) => void;
   isActiveBuildVersion: boolean;
   height: number;
 }
 
 export const StateWatcher = ({
-  data, instanceIds, isActiveBuildVersion, height,
+  data, observableInstances, toggleInstanceActiveStatus, isActiveBuildVersion, height,
 }: Props) => {
-  const { observableInstances, toggleInstanceActiveStatus } = useInstanceIds(instanceIds);
   const [totalHeapLineIsVisible, setTotalHeapLineIsVisible] = useState(true);
 
   const CustomTooltip = ({ payload = [] }: any) => {
@@ -74,7 +73,7 @@ export const StateWatcher = ({
     <>
       <div tw="flex justify-between py-6">
         <span tw="text-12 leading-16 text-monochrome-default font-bold uppercase">Memory usage</span>
-        <MonitotingDuration started={data.start} active={data.isMonitoring} />
+        {/* <MonitotingDuration started={data.start} finished={data.brakes[data.brakes.length - 1]} active={data.isMonitoring} /> */}
       </div>
       <div tw="flex justify-between gap-x-6 pl-4">
         <ResponsiveContainer height={height}>
@@ -88,12 +87,8 @@ export const StateWatcher = ({
               stroke="#1B191B"
               shapeRendering="crispEdges"
               domain={['dataMin', 'dataMax']}
-              interval={0}
-              // ticks={Array.from(new Set(data.series.map(({ data: x }) => x.map(({ timeStamp }) => timeStamp)).flat()))}
-              tick={({
-                x, y, payload, ...rest
-              }) => {
-                // console.log(payload, rest);
+              interval={defineInterval(data?.series[0]?.data?.length || 0)}
+              tick={({ x, y, payload }) => {
                 const date = new Date(payload.value);
                 const lessThanTen = (value: number) => (value < 10 ? `0${value}` : value);
                 const tick = `${lessThanTen(date.getHours())}:${lessThanTen(date.getMinutes())}:${lessThanTen(date.getSeconds())}`;
@@ -101,7 +96,6 @@ export const StateWatcher = ({
                   <Tick x={x} y={y} dy={16} dx={-25}>{tick}</Tick>
                 );
               }}
-
             />
             {data.brakes.map((timeStamp) => <ReferenceLine x={timeStamp} stroke="#687481" strokeDasharray="7 4" label={PauseIcon} />)}
             <YAxis
@@ -244,3 +238,8 @@ const Label = styled.span`
 const StyledLegend = styled(Legend)`
   ${tw`flex flex-col gap-y-1 text-monochrome-white`}
 `;
+
+function defineInterval(dataLength: number) {
+  if (dataLength < 24) return 0;
+  return Math.round(dataLength / 24);
+}

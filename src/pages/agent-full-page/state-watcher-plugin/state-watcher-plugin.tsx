@@ -13,20 +13,35 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+import { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { TextField } from '@material-ui/core';
 import 'twin.macro';
 
 import { StateWatcher, MonitoringButton } from 'components';
-import { useAgent, useStateWatcher } from 'hooks';
+import { useAgent, useStateWatcher, useInstanceIds } from 'hooks';
+import { transformDateToLocalDatetime } from 'utils';
 import { StateWatcherPluginHeader } from './state-watcher-plugin-header';
 
 export const StateWatcherPlugin = () => {
   const { agentId = '', buildVersion = '' } = useParams<{ agentId: string; buildVersion: string; }>();
   const { buildVersion: activeBuildVersion = '', instanceIds = [] } = useAgent(agentId) || {};
-  const props = useStateWatcher(agentId, buildVersion);
+
+  const { observableInstances, toggleInstanceActiveStatus } = useInstanceIds(instanceIds);
+  const [payload, setPayload] = useState({
+    instanceIds: observableInstances
+      .filter(({ isActive }) => isActive).map(({ instanceId }) => instanceId),
+    from: Date.now() - 60000,
+    to: Date.now(),
+  });
+
+  const {
+    data, setData, isLoading, setIsLoading,
+  } = useStateWatcher(agentId, buildVersion, payload);
 
   const isActiveBuildVersion = buildVersion === activeBuildVersion;
+  const startDate = new Date(payload.from);
+  const endDate = new Date(payload.to);
 
   return (
     <div tw="w-full h-full px-6">
@@ -37,7 +52,10 @@ export const StateWatcherPlugin = () => {
               id="datetime-local"
               label="Start"
               type="datetime-local"
-              defaultValue="2017-05-24T10:30"
+              defaultValue={transformDateToLocalDatetime(startDate)}
+              onBlur={({ target }) => {
+                setPayload({ ...payload, from: new Date(target.value).getTime() });
+              }}
               InputLabelProps={{
                 shrink: true,
               }}
@@ -46,20 +64,31 @@ export const StateWatcherPlugin = () => {
               id="datetime-local"
               label="End"
               type="datetime-local"
-              defaultValue="2017-05-24T10:30"
+              defaultValue={transformDateToLocalDatetime(endDate)}
+              onBlur={({ target }) => {
+                setPayload({ ...payload, to: new Date(target.value).getTime() });
+              }}
               InputLabelProps={{
                 shrink: true,
               }}
             />
-            <MonitoringButton agentId={agentId} size="large" {...props} />
+            <MonitoringButton
+              agentId={agentId}
+              size="large"
+              data={data}
+              setData={setData}
+              isLoading={isLoading}
+              setIsLoading={setIsLoading}
+            />
           </div>
         )}
       />
       <StateWatcher
-        instanceIds={instanceIds}
+        data={data}
+        observableInstances={observableInstances}
+        toggleInstanceActiveStatus={toggleInstanceActiveStatus}
         isActiveBuildVersion={isActiveBuildVersion}
         height={400}
-        {...props}
       />
     </div>
   );

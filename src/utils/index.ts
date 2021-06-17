@@ -34,3 +34,5 @@ export { dotsAndSlashesToSlash } from './dots-and-slashes-to-slash';
 export { convertToSingleSpaces } from './convert-to-single-spaces';
 export { snakeToSpaces } from './snake-to-spaces';
 export { formatBytes } from './format-bytes';
+export { lessThanTen } from './less-than-ten';
+export { transformDateToLocalDatetime } from './transform-date-to-local-datetime';

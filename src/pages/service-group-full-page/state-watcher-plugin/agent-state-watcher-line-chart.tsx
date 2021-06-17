@@ -15,11 +15,13 @@
  */
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { TextField } from '@material-ui/core';
 import { Icons } from '@drill4j/ui-kit';
 import 'twin.macro';
 
 import { StateWatcher, MonitoringButton } from 'components';
-import { useAgent, useStateWatcher } from 'hooks';
+import { useAgent, useStateWatcher, useInstanceIds } from 'hooks';
+import { transformDateToLocalDatetime } from 'utils';
 
 interface Props {
   id: string;
@@ -29,9 +31,24 @@ interface Props {
 
 export const AgentStateWatcherLineChart = ({ id, buildVersion, instanceIds }: Props) => {
   const [isMonitored, setIsMonitored] = useState(false);
-  const props = useStateWatcher(id, buildVersion);
+
+  const { observableInstances, toggleInstanceActiveStatus } = useInstanceIds(instanceIds);
+
+  const [payload, setPayload] = useState({
+    instanceIds: observableInstances
+      .filter(({ isActive }) => isActive).map(({ instanceId }) => instanceId),
+    from: Date.now() - 60000,
+    to: Date.now(),
+  });
+  const startDate = new Date(payload.from);
+  const endDate = new Date(payload.to);
+
+  const {
+    data, setData, isLoading, setIsLoading,
+  } = useStateWatcher(id, buildVersion, payload);
 
   const { buildVersion: activeBuildVersion = '' } = useAgent(id) || {};
+
   const isActiveBuildVersion = buildVersion === activeBuildVersion;
   return (
     <>
@@ -52,20 +69,50 @@ export const AgentStateWatcherLineChart = ({ id, buildVersion, instanceIds }: Pr
             <div tw="text-12 leading-16 text-monochrome-black">{buildVersion}</div>
           </div>
         </div>
-        <MonitoringButton
-          size="small"
-          agentId={id}
-          onClick={() => setIsMonitored(!isMonitored)}
-          {...props}
-        />
+        <div tw="flex gap-x-4 items-center">
+          <TextField
+            id="datetime-local"
+            label="Start"
+            type="datetime-local"
+            defaultValue={transformDateToLocalDatetime(startDate)}
+            onBlur={({ target }) => {
+              setPayload({ ...payload, from: new Date(target.value).getTime() });
+            }}
+            InputLabelProps={{
+              shrink: true,
+            }}
+          />
+          <TextField
+            id="datetime-local"
+            label="End"
+            type="datetime-local"
+            defaultValue={transformDateToLocalDatetime(endDate)}
+            onBlur={({ target }) => {
+              setPayload({ ...payload, to: new Date(target.value).getTime() });
+            }}
+            InputLabelProps={{
+              shrink: true,
+            }}
+          />
+          <MonitoringButton
+            agentId={id}
+            size="large"
+            data={data}
+            setData={setData}
+            isLoading={isLoading}
+            setIsLoading={setIsLoading}
+            onClick={() => setIsMonitored(true)}
+          />
+        </div>
       </div>
       {isMonitored && (
         <div tw="px-8 py-6 border-b border-l border-r border-monochrome-medium-tint">
           <StateWatcher
-            instanceIds={instanceIds}
+            data={data}
+            observableInstances={observableInstances}
+            toggleInstanceActiveStatus={toggleInstanceActiveStatus}
             isActiveBuildVersion={isActiveBuildVersion}
             height={180}
-            {...props}
           />
         </div>
       )}

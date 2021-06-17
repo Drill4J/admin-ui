@@ -20,7 +20,13 @@ import { defaultStateWatcherPluginSocket } from 'common/connection/default-ws-co
 import { NotificationManagerContext } from 'notification-manager';
 import { StateWatcherData } from 'types/state-watcher';
 
-export function useStateWatcher(agentId: string, buildVersion: string) {
+interface Payload {
+  instanceIds: string[];
+  from: number;
+  to: number;
+}
+
+export function useStateWatcher(agentId: string, buildVersion: string, payload: Payload) {
   const [isLoading, setIsLoading] = useState(false);
   const [data, setData] = useState<StateWatcherData>({
     isMonitoring: false,
@@ -45,31 +51,11 @@ export function useStateWatcher(agentId: string, buildVersion: string) {
               ...(newData.series.find(
                 ({ instanceId: newDataInstanceId }) => newDataInstanceId === instanceId,
               )?.data || []),
-            ].slice(-10),
+            ],
           }))
           : newData.series,
       }));
     }
-
-    (async () => {
-      try {
-        setIsLoading(true);
-        const response = await axios.post(
-          `/agents/${agentId}/plugins/state-watcher/dispatch-action`,
-          {
-            type: 'RECORD_DATA',
-          },
-        );
-        const responseData: StateWatcherData = response.data.data;
-
-        setData(responseData);
-
-        setIsLoading(false);
-      } catch ({ response: { data: { message } = {} } = {} }) {
-        showMessage({ type: 'ERROR', text: message || 'There is some issue with your action. Please try again.' });
-        setIsLoading(false);
-      }
-    })();
 
     const unsubscribe = defaultStateWatcherPluginSocket.subscribe(
       '/metrics/heap/update',
@@ -85,6 +71,29 @@ export function useStateWatcher(agentId: string, buildVersion: string) {
       unsubscribe();
     };
   }, []);
+
+  useEffect(() => {
+    (async () => {
+      try {
+        setIsLoading(true);
+        const response = await axios.post(
+          `/agents/${agentId}/plugins/state-watcher/dispatch-action`,
+          {
+            type: 'RECORD_DATA',
+            payload,
+          },
+        );
+        const responseData: StateWatcherData = response.data.data;
+
+        setData(responseData);
+
+        setIsLoading(false);
+      } catch ({ response: { data: { message } = {} } = {} }) {
+        showMessage({ type: 'ERROR', text: message || 'There is some issue with your action. Please try again.' });
+        setIsLoading(false);
+      }
+    })();
+  }, [payload?.from, payload?.to, payload?.instanceIds.length]);
 
   return {
     data,
