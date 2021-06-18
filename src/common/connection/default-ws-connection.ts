@@ -27,3 +27,5 @@ export const getSocketUrl = (socket: string) => {
 export const defaultAdminSocket = new DrillSocket(getSocketUrl('drill-admin-socket'));
 
 export const defaultTest2CodePluginSocket = new DrillSocket(getSocketUrl('plugins/test2code'));
+
+export const defaultStateWatcherPluginSocket = new DrillSocket(getSocketUrl('plugins/state-watcher'));

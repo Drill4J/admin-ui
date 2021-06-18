@@ -61,7 +61,9 @@ export const Wizard = ({
     <div>
       <Form
         initialValues={{
-          ...initialValues, availablePlugins, plugins: ['test2code'],
+          ...initialValues,
+          availablePlugins,
+          plugins: ['test2code'],
         }}
         keepDirtyOnReinitialize
         initialValuesEqual={(prevValues, nextValues) => JSON.stringify(prevValues) === JSON.stringify(nextValues)}

@@ -21,6 +21,15 @@ module.exports = {
   darkMode: false,
   theme: {
     extend: {
+      animation: {
+        blinker: 'blinker 1.5s infinite cubic-bezier(1, 0, 0, 1)',
+      },
+      keyframes: {
+        blinker: {
+          from: { opacity: '1' },
+          to: { opacity: '0' },
+        },
+      },
       spacing: {
         '1px': '1px',
         13: '3.25rem',

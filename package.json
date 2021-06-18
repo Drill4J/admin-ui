@@ -4,7 +4,7 @@
   "license": "Apache-2.0",
   "private": true,
   "dependencies": {
-    "@drill4j/ui-kit": "0.1.76",
+    "@drill4j/ui-kit": "^0.1.82",
     "@types/jest": "26.0.14",
     "@types/lodash.debounce": "^4.0.6",
     "@types/nanoid": "2.1.0",
@@ -30,6 +30,7 @@
     "react-scripts": "^4.0.1",
     "react-table": "^7.7.0",
     "react-tiny-virtual-list": "2.2.0",
+    "recharts": "^2.0.9",
     "rxjs": "^6.6.3",
     "styled-components": "^5.2.1",
     "tailwindcss": "^2.0.2",

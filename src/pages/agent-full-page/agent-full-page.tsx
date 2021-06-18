@@ -36,6 +36,7 @@ import { BuildList } from './build-list';
 import { Sidebar } from './sidebar';
 import { InitialConfigController } from './initial-config-controller';
 import { readNotification } from './api';
+import { StateWatcherPlugin } from './state-watcher-plugin';
 
 interface Link {
   id: string;
@@ -115,8 +116,12 @@ export const AgentFullPage = () => {
               />
               <Route path="/full-page/:agentId/build-list" component={BuildList} />
               <Route
-                path="/full-page/:agentId/:buildVersion/:pluginId/:tab"
+                path="/full-page/:agentId/:buildVersion/test2code/:tab"
                 component={CoveragePlugin}
+              />
+              <Route
+                path="/full-page/:agentId/:buildVersion/state-watcher"
+                component={StateWatcherPlugin}
               />
             </Switch>
           </div>
