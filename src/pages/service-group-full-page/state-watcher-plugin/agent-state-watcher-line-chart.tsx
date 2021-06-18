@@ -15,13 +15,13 @@
  */
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { TextField } from '@material-ui/core';
 import { Icons } from '@drill4j/ui-kit';
 import 'twin.macro';
 
-import { StateWatcher, MonitoringButton } from 'components';
-import { useAgent, useStateWatcher, useInstanceIds } from 'hooks';
-import { transformDateToLocalDatetime } from 'utils';
+import {
+  StateWatcher, MonitoringButton, MonitoringIndicator, MonitoringTimeDropdown,
+} from 'components';
+import { useAgent, useStateWatcher } from 'hooks';
 
 interface Props {
   id: string;
@@ -32,22 +32,11 @@ interface Props {
 export const AgentStateWatcherLineChart = ({ id, buildVersion, instanceIds }: Props) => {
   const [isMonitored, setIsMonitored] = useState(false);
 
-  const { observableInstances, toggleInstanceActiveStatus } = useInstanceIds(instanceIds);
-
-  const [range, setRange] = useState({
-    from: Date.now() - 60000,
-    to: Date.now(),
-  });
-  const startDate = new Date(range.from);
-  const endDate = new Date(range.to);
+  const [timeStamp, setTimeStamp] = useState(60000);
 
   const {
     data, setData, isLoading, setIsLoading,
-  } = useStateWatcher(id, buildVersion, {
-    ...range,
-    instanceIds: observableInstances
-      .filter(({ isActive }) => isActive).map(({ instanceId }) => instanceId),
-  });
+  } = useStateWatcher(id, buildVersion, timeStamp);
 
   const { buildVersion: activeBuildVersion = '' } = useAgent(id) || {};
 
@@ -71,31 +60,12 @@ export const AgentStateWatcherLineChart = ({ id, buildVersion, instanceIds }: Pr
             <div tw="text-12 leading-16 text-monochrome-black">{buildVersion}</div>
           </div>
         </div>
-        <div tw="flex gap-x-4 items-center">
-          <TextField
-            id="datetime-local"
-            label="Start"
-            type="datetime-local"
-            defaultValue={transformDateToLocalDatetime(startDate)}
-            onBlur={({ target }) => {
-              setRange({ ...range, from: new Date(target.value).getTime() });
-            }}
-            InputLabelProps={{
-              shrink: true,
-            }}
-          />
-          <TextField
-            id="datetime-local"
-            label="End"
-            type="datetime-local"
-            defaultValue={transformDateToLocalDatetime(endDate)}
-            onBlur={({ target }) => {
-              setRange({ ...range, to: new Date(target.value).getTime() });
-            }}
-            InputLabelProps={{
-              shrink: true,
-            }}
-          />
+        <div tw="flex gap-x-6 items-center">
+          <div tw="flex gap-x-4 items-center">
+            <MonitoringTimeDropdown timeStamp={timeStamp} setTimeStamp={setTimeStamp} />
+            <div tw="h-12 border-r border-monochrome-medium-tint" />
+            <MonitoringIndicator active={data.isMonitoring} />
+          </div>
           <MonitoringButton
             agentId={id}
             size="large"
@@ -111,8 +81,7 @@ export const AgentStateWatcherLineChart = ({ id, buildVersion, instanceIds }: Pr
         <div tw="px-8 py-6 border-b border-l border-r border-monochrome-medium-tint">
           <StateWatcher
             data={data}
-            observableInstances={observableInstances}
-            toggleInstanceActiveStatus={toggleInstanceActiveStatus}
+            instanceIds={instanceIds}
             isActiveBuildVersion={isActiveBuildVersion}
             height={180}
           />

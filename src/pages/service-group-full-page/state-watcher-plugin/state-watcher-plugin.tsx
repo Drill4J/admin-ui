@@ -30,12 +30,16 @@ export const StateWatcherPlugin = () => {
   return (
     <div tw="w-full h-full">
       <StateWatcherPluginHeader />
-      {agentsList.map(({ id = '', buildVersion = '', instanceIds = [] }) => (
-        <AgentStateWatcherLineChart
-          id={id}
-          buildVersion={buildVersion}
-          instanceIds={instanceIds}
-        />
+      {agentsList.map(({
+        id = '', buildVersion = '', instanceIds = [], group = '',
+      }) => (
+        group && (
+          <AgentStateWatcherLineChart
+            id={id}
+            buildVersion={buildVersion}
+            instanceIds={instanceIds}
+          />
+        )
       ))}
     </div>
   );
