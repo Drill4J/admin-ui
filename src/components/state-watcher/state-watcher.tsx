@@ -21,48 +21,57 @@ import {
 import tw, { styled } from 'twin.macro';
 
 import { Stub } from 'components';
-import { formatBytes } from 'utils';
-import { StateWatcherData, InstancesInfo } from 'types/state-watcher';
-import { MonitotingDuration } from './monitoring-duration';
+import { formatBytes, lessThanTen } from 'utils';
+import { StateWatcherData } from 'types/state-watcher';
+import { useInstanceIds } from 'hooks';
 
 interface Props {
   data: StateWatcherData;
-  observableInstances: InstancesInfo;
-  toggleInstanceActiveStatus: (instanceId: string) => void;
+  instanceIds: string[];
   isActiveBuildVersion: boolean;
   height: number;
 }
 
 export const StateWatcher = ({
-  data, observableInstances, toggleInstanceActiveStatus, isActiveBuildVersion, height,
+  data, instanceIds, isActiveBuildVersion, height,
 }: Props) => {
   const [totalHeapLineIsVisible, setTotalHeapLineIsVisible] = useState(true);
+  const { observableInstances, toggleInstanceActiveStatus } = useInstanceIds(instanceIds);
 
-  const CustomTooltip = ({ payload = [] }: any) => {
+  const CustomTooltip = ({ payload = [], label }: any) => {
     const Label = ({ name, value = 0 }: { name: string, value?: number}) => (
-      <div tw="flex justify-between w-48">
-        <span tw="max-w-1/2 text-ellipsis" title="name">{name}</span>
+      <div tw="flex gap-x-2 justify-between w-48">
+        <span style={{ maxWidth: '120px' }} tw="text-ellipsis">{name}</span>
         <span tw="font-bold">{formatBytes(value)}</span>
       </div>
     );
-
+    const date = new Date(label);
     return (
       Array.isArray(payload) ? (
         <div tw="relative mx-2">
-          <div tw="flex flex-col gap-y-1 bg-monochrome-black text-monochrome-white rounded py-2 px-4">
-            <StyledLegend legendItems={[
-              {
-                label: <Label name="Total memory" value={data?.maxHeap} />,
-                color: '#F7D77C',
-              },
-            ]}
-            />
-            <span tw="text-10 leading-24 text-monochrome-medium-tint">Instances:</span>
-            <StyledLegend legendItems={payload.map(({ name, value, color }: any) => ({
-              label: <Label name={name} value={value} />,
-              color,
-            }))}
-            />
+          <div tw="space-y-3 bg-monochrome-black text-monochrome-white rounded p-4">
+            <div tw="flex flex-col gap-y-1">
+              <StyledLegend legendItems={[
+                {
+                  label: <Label name="Total memory" value={data?.maxHeap} />,
+                  color: '#F7D77C',
+                },
+              ]}
+              />
+              <span tw="text-10 leading-24 text-monochrome-medium-tint">Instances:</span>
+              <StyledLegend legendItems={payload.map(({ name, value, color }: any) => ({
+                label: <Label name={name} value={value} />,
+                color,
+              }))}
+              />
+            </div>
+            <div tw="flex items-center gap-x-2 text-12 leading-16 text-monochrome-dark-tint">
+              <Icons.Clock />
+              {`${date.toLocaleString('en-US', {
+                month: 'short',
+                day: 'numeric',
+              })} ${lessThanTen(date.getHours())}:${lessThanTen(date.getMinutes())}:${lessThanTen(date.getSeconds())}`}
+            </div>
           </div>
         </div>
       ) : null
@@ -73,7 +82,6 @@ export const StateWatcher = ({
     <>
       <div tw="flex justify-between py-6">
         <span tw="text-12 leading-16 text-monochrome-default font-bold uppercase">Memory usage</span>
-        {/* <MonitotingDuration started={data.start} finished={data.brakes[data.brakes.length - 1]} active={data.isMonitoring} /> */}
       </div>
       <div tw="flex justify-between gap-x-6 pl-4">
         <ResponsiveContainer height={height}>
@@ -90,7 +98,7 @@ export const StateWatcher = ({
               interval={defineInterval(data?.series[0]?.data?.length || 0)}
               tick={({ x, y, payload }) => {
                 const date = new Date(payload.value);
-                const lessThanTen = (value: number) => (value < 10 ? `0${value}` : value);
+
                 const tick = `${lessThanTen(date.getHours())}:${lessThanTen(date.getMinutes())}:${lessThanTen(date.getSeconds())}`;
                 return (
                   <Tick x={x} y={y} dy={16} dx={-25}>{tick}</Tick>
@@ -241,5 +249,5 @@ const StyledLegend = styled(Legend)`
 
 function defineInterval(dataLength: number) {
   if (dataLength < 24) return 0;
-  return Math.round(dataLength / 24);
+  return Math.ceil(dataLength / 24);
 }
