@@ -17,7 +17,7 @@ export type InstancesInfo = Array<{ instanceId: string; isActive: boolean; color
 
 export type Series = Array<{
   instanceId: string;
-  data: Array<{ timeStamp: number; memory: { heap: number } }>;
+  data: Array<{ timeStamp: number; memory: { heap: number | null } }>;
 }>;
 
 export interface StateWatcherData {
