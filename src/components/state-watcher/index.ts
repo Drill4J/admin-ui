@@ -15,3 +15,5 @@
  */
 export { StateWatcher } from './state-watcher';
 export { MonitoringButton } from './monitoring-button';
+export { MonitoringIndicator } from './monitoring-indicator';
+export { MonitoringTimeDropdown } from './monitoring-time-dropdown';

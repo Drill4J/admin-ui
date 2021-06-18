@@ -33,4 +33,6 @@ export { BuildTestsCard, BuildMethodsCard } from './cards';
 export { Stub } from './stub';
 export { Table, TR } from './table';
 export { ErrorFallback, PageNotFoundErrorFallback, TableErrorFallback } from './error-fallback';
-export { StateWatcher, MonitoringButton } from './state-watcher';
+export {
+  StateWatcher, MonitoringButton, MonitoringIndicator, MonitoringTimeDropdown,
+} from './state-watcher';

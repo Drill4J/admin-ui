@@ -38,6 +38,7 @@ export const MonitoringButton = ({
 
   return (
     <Button
+      style={{ minWidth: '178px' }}
       primary
       size={size}
       onClick={async () => {
