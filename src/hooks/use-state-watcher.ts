@@ -20,13 +20,7 @@ import { defaultStateWatcherPluginSocket } from 'common/connection/default-ws-co
 import { NotificationManagerContext } from 'notification-manager';
 import { StateWatcherData } from 'types/state-watcher';
 
-interface Payload {
-  instanceIds: string[];
-  from: number;
-  to: number;
-}
-
-export function useStateWatcher(agentId: string, buildVersion: string, payload: Payload) {
+export function useStateWatcher(agentId: string, buildVersion: string, timeStamp: number) {
   const [isLoading, setIsLoading] = useState(false);
   const [data, setData] = useState<StateWatcherData>({
     isMonitoring: false,
@@ -37,6 +31,8 @@ export function useStateWatcher(agentId: string, buildVersion: string, payload: 
   });
 
   const { showMessage } = useContext(NotificationManagerContext);
+
+  const currentDate = Date.now();
 
   useEffect(() => {
     function handleDataChange(newData: StateWatcherData) {
@@ -51,13 +47,15 @@ export function useStateWatcher(agentId: string, buildVersion: string, payload: 
               ...(newData.series.find(
                 ({ instanceId: newDataInstanceId }) => newDataInstanceId === instanceId,
               )?.data || []),
-            ].map((x, i, arr) => {
-              if (i === arr.length - 1) return x;
-              const is = x?.timeStamp + 5500 > arr[i + 1]?.timeStamp;
-              return is
-                ? x
-                : Array.from({ length: (arr[i + 1]?.timeStamp - x?.timeStamp) / 5000 },
-                  (_, k) => ({ timeStamp: x?.timeStamp + 5000 * k, memory: { heap: 0 } }));
+            ].map((pointInfo, i, points) => {
+              if (i === points.length - 1) return pointInfo;
+              const refreshRate = 5000;
+              const correctionValue = 500;
+              const hasPointsGapMoreThanRefreshRate = pointInfo?.timeStamp + refreshRate + correctionValue > points[i + 1]?.timeStamp;
+              return hasPointsGapMoreThanRefreshRate
+                ? pointInfo
+                : Array.from({ length: (points[i + 1]?.timeStamp - pointInfo?.timeStamp) / refreshRate },
+                  (_, k) => ({ timeStamp: pointInfo?.timeStamp + refreshRate * k, memory: { heap: null } }));
             }).flat(),
           }))
           : newData.series,
@@ -87,7 +85,7 @@ export function useStateWatcher(agentId: string, buildVersion: string, payload: 
           `/agents/${agentId}/plugins/state-watcher/dispatch-action`,
           {
             type: 'RECORD_DATA',
-            payload,
+            payload: { from: currentDate - timeStamp, to: currentDate },
           },
         );
         const responseData: StateWatcherData = response.data.data;
@@ -100,7 +98,7 @@ export function useStateWatcher(agentId: string, buildVersion: string, payload: 
         setIsLoading(false);
       }
     })();
-  }, [payload?.from, payload?.to, payload?.instanceIds.length]);
+  }, [timeStamp]);
 
   return {
     data,
