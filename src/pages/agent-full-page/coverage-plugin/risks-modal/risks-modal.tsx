@@ -78,7 +78,7 @@ export const RisksModal = () => {
                 label: `Not covered modified methods (${modifiedRisks.length})`,
               },
             ]}
-            onChange={({ value }) => setSelectedSection(value)}
+            onChange={({ value }) => setSelectedSection(`${value}`)}
             value={selectedSection}
           />
           <div tw="flex flex-col h-full mt-4 text-14">

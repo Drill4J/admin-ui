@@ -56,7 +56,7 @@ export const TestsList = ({ associatedTests }: Props) => {
           { value: 'auto', label: `Auto (${autoTests.length})` },
           { value: 'manual', label: `Manual (${manualTests.length})` },
         ]}
-        onChange={({ value }) => setSelectedSection(value)}
+        onChange={({ value }) => setSelectedSection(`${value}`)}
         value={selectedSection}
       />
       <div tw="flex flex-col flex-grow pt-2 overflow-y-auto border-t border-monochrome-medium-tint">
