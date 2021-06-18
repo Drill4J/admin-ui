@@ -14,7 +14,7 @@
 * limitations under the License.
 */
 import { useState } from 'react';
-import { Checkbox, Icons, Legend } from '@drill4j/ui-kit';
+import { Checkbox, Icons } from '@drill4j/ui-kit';
 import {
   CartesianGrid, ResponsiveContainer, Tooltip, XAxis, YAxis, Line, LineChart, ReferenceLine,
 } from 'recharts';
@@ -24,6 +24,7 @@ import { Stub } from 'components';
 import { formatBytes, lessThanTen } from 'utils';
 import { StateWatcherData } from 'types/state-watcher';
 import { useInstanceIds } from 'hooks';
+import { StateWatcherTooltip } from './state-watcher-tooltip';
 
 interface Props {
   data: StateWatcherData;
@@ -37,46 +38,6 @@ export const StateWatcher = ({
 }: Props) => {
   const [totalHeapLineIsVisible, setTotalHeapLineIsVisible] = useState(true);
   const { observableInstances, toggleInstanceActiveStatus } = useInstanceIds(instanceIds);
-
-  const CustomTooltip = ({ payload = [], label }: any) => {
-    const Label = ({ name, value = 0 }: { name: string, value?: number}) => (
-      <div tw="flex gap-x-2 justify-between w-48">
-        <span style={{ maxWidth: '120px' }} tw="text-ellipsis">{name}</span>
-        <span tw="font-bold">{formatBytes(value)}</span>
-      </div>
-    );
-    const date = new Date(label);
-    return (
-      Array.isArray(payload) ? (
-        <div tw="relative mx-2">
-          <div tw="space-y-3 bg-monochrome-black text-monochrome-white rounded p-4">
-            <div tw="flex flex-col gap-y-1">
-              <StyledLegend legendItems={[
-                {
-                  label: <Label name="Total memory" value={data?.maxHeap} />,
-                  color: '#F7D77C',
-                },
-              ]}
-              />
-              <span tw="text-10 leading-24 text-monochrome-medium-tint">Instances:</span>
-              <StyledLegend legendItems={payload.map(({ name, value, color }: any) => ({
-                label: <Label name={name} value={value} />,
-                color,
-              }))}
-              />
-            </div>
-            <div tw="flex items-center gap-x-2 text-12 leading-16 text-monochrome-dark-tint">
-              <Icons.Clock />
-              {`${date.toLocaleString('en-US', {
-                month: 'short',
-                day: 'numeric',
-              })} ${lessThanTen(date.getHours())}:${lessThanTen(date.getMinutes())}:${lessThanTen(date.getSeconds())}`}
-            </div>
-          </div>
-        </div>
-      ) : null
-    );
-  };
 
   return isActiveBuildVersion ? (
     <>
@@ -132,7 +93,7 @@ export const StateWatcher = ({
                 strokeWidth={6}
               />
             )}
-            <Tooltip content={CustomTooltip} />
+            <Tooltip content={({ payload, label }) => <StateWatcherTooltip payload={payload} label={label} maxHeap={data?.maxHeap} />} />
             {data.series.map((instance) => (
               observableInstances.find(({ instanceId }) => instance.instanceId === instanceId)?.isActive && (
                 <Line
@@ -241,10 +202,6 @@ const PauseIcon = ({ viewBox }: any) => (
 
 const Label = styled.span`
   ${tw`text-12 leading-16 text-monochrome-default text-ellipsis`}
-`;
-
-const StyledLegend = styled(Legend)`
-  ${tw`flex flex-col gap-y-1 text-monochrome-white`}
 `;
 
 function defineInterval(dataLength: number) {
