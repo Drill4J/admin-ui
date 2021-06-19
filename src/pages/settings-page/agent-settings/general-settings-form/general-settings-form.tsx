@@ -29,6 +29,7 @@ import {
 import { Agent } from 'types/agent';
 import { NotificationManagerContext } from 'notification-manager';
 import { useFormHandleSubmit } from 'hooks';
+import { isPristine } from 'utils';
 
 interface Props {
   agent: Agent;
@@ -62,9 +63,9 @@ export const GeneralSettingsForm = ({ agent, setPristineSettings }: Props) => {
       render={(props) => {
         const ref = useFormHandleSubmit(props);
         const {
-          handleSubmit, submitting, pristine, invalid,
+          handleSubmit, submitting, invalid, values,
         } = props || {};
-
+        const pristine = isPristine(agent, values);
         useEffect(() => {
           setPristineSettings(pristine);
         }, [pristine]);

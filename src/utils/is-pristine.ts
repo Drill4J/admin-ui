@@ -13,17 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import axios, { AxiosResponse } from 'axios';
+export const isPristine = (initial: Record<string, any>,
+  current: Record<string, any>): boolean => !Object.entries(current).find(([key, value]) => {
+  if (typeof initial[key] === 'object') {
+    return !isPristine(initial[key], value);
+  }
 
-import { StartSessionPayloadTypes } from './start-session-payload-types';
-
-export function startAgentSession(
-  agentId: string,
-  pluginId: string,
-) {
-  return ({ sessionId, isGlobal, isRealtime }: StartSessionPayloadTypes): Promise<AxiosResponse> => axios.post(`/agents/${
-    agentId}/plugins/${pluginId}/dispatch-action`, {
-    type: 'START',
-    payload: { sessionId: sessionId.trim(), isGlobal, isRealtime },
-  });
-}
+  return initial[key] !== value;
+});

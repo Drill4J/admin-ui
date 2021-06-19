@@ -94,12 +94,12 @@ export const ScopeInfo = () => {
     {
       label: 'Rename',
       icon: 'Edit',
-      onClick: () => dispatch(openModal('RenameScopeModal', scope)),
+      onClick: () => dispatch(openModal('RenameScopeModal', scope?.id)),
     },
     {
       label: 'Delete',
       icon: 'Delete',
-      onClick: () => dispatch(openModal('DeleteScopeModal', scope)),
+      onClick: () => dispatch(openModal('DeleteScopeModal', scope?.id)),
     },
   ].filter(Boolean);
   const newBuildHasAppeared = activeBuildVersion && buildVersion && activeBuildVersion !== buildVersion;
@@ -131,7 +131,7 @@ export const ScopeInfo = () => {
                   className="flex gap-x-2 mr-4"
                   primary
                   size="large"
-                  onClick={() => dispatch(openModal('FinishScopeModal', scope))}
+                  onClick={() => dispatch(openModal('FinishScopeModal', scope?.id))}
                   data-test="scope-info:finish-scope-button"
                 >
                   <Icons.Complete />

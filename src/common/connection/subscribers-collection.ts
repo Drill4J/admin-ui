@@ -45,10 +45,8 @@ export class SubscribersCollection {
   }
 
   removeSubscriber(name: string) {
-    if (this.subscribers[name]) {
+    if (this.has(name)) {
       this.subscribers[name].quantity -= 1;
-    } else {
-      this.subscribers[name].quantity = 0;
     }
     return this.subscribers[name];
   }
