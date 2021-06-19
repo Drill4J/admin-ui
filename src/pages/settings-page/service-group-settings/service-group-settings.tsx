@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
   useParams, Switch, Route, Prompt,
 } from 'react-router-dom';
@@ -29,8 +29,12 @@ import { UnSaveChangeModal } from '../un-save-changes-modal';
 export const ServiceGroupSettings = () => {
   const [pristineSettings, setPristineSettings] = useState(true);
   const [nextLocation, setNextLocation] = useState('');
-  const { id = '' } = useParams<{ id: string; }>();
+  const { id = '', tab = '' } = useParams<{ id: string; tab: string; }>();
   const serviceGroup = useServiceGroup(id) || {};
+
+  useEffect(() => {
+    setPristineSettings(true);
+  }, [tab]);
 
   return (
     <div tw="flex flex-col w-full">

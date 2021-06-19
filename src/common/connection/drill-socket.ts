@@ -87,8 +87,9 @@ export class DrillSocket {
   }
 
   public subscribe(topic: string, callback: (arg: any) => void, message?: SubscriptionMessage | Record<string, unknown>) {
-    const key = createSubscriberKey(topic, message);
-    let subscription = this.createSubscription(key, topic, callback, message);
+    const encodedTopic = encodeURIComponent(topic).replace(/%2F/g, '/');
+    const key = createSubscriberKey(encodedTopic, message);
+    let subscription = this.createSubscription(key, encodedTopic, callback, message);
 
     const autoSubscription = this.reconnection$.subscribe((type) => {
       if (type === 'CLOSE') {
@@ -96,8 +97,8 @@ export class DrillSocket {
         this.subscribers.removeSubscriber(key);
       }
       if (type === 'OPEN' && subscription.closed) {
-        this.send(topic, 'SUBSCRIBE', message);
-        subscription = this.createSubscription(key, topic, callback, message);
+        this.send(encodedTopic, 'SUBSCRIBE', message);
+        subscription = this.createSubscription(key, encodedTopic, callback, message);
       }
     });
 
@@ -108,7 +109,7 @@ export class DrillSocket {
         this.subscribers.setDelay(key, true);
         setTimeout(() => {
           if (this.subscribers.get(key).quantity === 0) {
-            this.send(topic, 'UNSUBSCRIBE', message);
+            this.send(encodedTopic, 'UNSUBSCRIBE', message);
           }
           this.subscribers.setDelay(key, false);
         }, 1000);
@@ -160,7 +161,6 @@ const nextMessageHandler = (topic: string, callback: (arg: any) => void,
   if (destination !== topic) {
     return;
   }
-
   const key = createSubscriberKey(topic, message);
   if (!to && !message) {
     callback(responseMessage || null);

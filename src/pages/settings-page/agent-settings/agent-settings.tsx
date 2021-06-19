@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Icons } from '@drill4j/ui-kit';
 import {
   useParams, Prompt, Switch, Route,
@@ -31,9 +31,13 @@ import { UnSaveChangeModal } from '../un-save-changes-modal';
 export const AgentSettings = () => {
   const [pristineSettings, setPristineSettings] = useState(true);
   const [nextLocation, setNextLocation] = useState('');
-  const { id = '' } = useParams<{ id: string; }>();
+  const { id = '', tab = '' } = useParams<{ id: string; tab: string; }>();
   const agent = useAgent(id) || {};
   const SystemSettings = agent.agentType === 'Node.js' ? JsSystemSettingsForm : SystemSettingsForm;
+
+  useEffect(() => {
+    setPristineSettings(true);
+  }, [tab]);
 
   return (
     <div tw="flex flex-col w-full">
