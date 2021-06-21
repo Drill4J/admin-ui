@@ -62,6 +62,16 @@ export const ActiveScopeInfo = ({ scope }: Props) => {
           <span>Finish Scope</span>
         </Button>
       </div>
+      <Button
+        tw="flex justify-center gap-x-2 w-68"
+        type="primary"
+        size="large"
+        onClick={() => dispatch(openModal('FinishScopeModal', scope?.id))}
+        data-test="active-scope-info:finish-scope-button"
+      >
+        <Icons.Complete />
+        <span>Finish Scope</span>
+      </Button>
       <div className="flex flex-col items-start justify-between w-full gap-y-3 mt-6 font-bold leading-20">
         <Link
           className="link"
