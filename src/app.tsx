@@ -48,6 +48,10 @@ const GlobalStyle = createGlobalStyle`
   b {
     ${tw`font-bold`};
   }
+  
+  button:focus {
+    outline: none !important;
+  }
 `;
 
 export const App = () => (
