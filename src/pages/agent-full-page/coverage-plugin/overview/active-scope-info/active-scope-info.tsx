@@ -51,16 +51,6 @@ export const ActiveScopeInfo = ({ scope }: Props) => {
           </div>
           <SessionIndicator active={loading} />
         </div>
-        <Button
-          tw="flex justify-center gap-x-2 w-68"
-          primary
-          size="large"
-          onClick={() => dispatch(openModal('FinishScopeModal', scope?.id))}
-          data-test="active-scope-info:finish-scope-button"
-        >
-          <Icons.Complete />
-          <span>Finish Scope</span>
-        </Button>
       </div>
       <Button
         tw="flex justify-center gap-x-2 w-68"
