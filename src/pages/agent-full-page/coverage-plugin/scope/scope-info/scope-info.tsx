@@ -38,6 +38,7 @@ import { useCoveragePluginDispatch, openModal } from '../../store';
 import { ScopeStatus } from './scope-status';
 import { ScopeProjectTests } from './scope-project-tests';
 import { ScopeTests } from '../../scope-tests';
+import { ScopeSummary } from '../../../../../types/scope-summary';
 
 interface MenuItemType {
   label: string;
@@ -104,83 +105,87 @@ export const ScopeInfo = () => {
   ].filter(Boolean);
   const newBuildHasAppeared = activeBuildVersion && buildVersion && activeBuildVersion !== buildVersion;
   const activeScope = useActiveScope();
-  const hasNewActiveScope = activeScope && activeScope?.id !== scopeId;
+  const finishedScopes = useBuildVersion<ScopeSummary[]>('/build/scopes/finished');
 
-  return (
+  const hasNewActiveScope = activeScope && activeScope?.id !== scopeId;
+  const isDeleted = activeScope && finishedScopes && finishedScopes.every(({ id }) => id !== scopeId) && activeScope?.id !== scopeId;
+  console.log('isDeletedScope', activeScope && finishedScopes
+    && finishedScopes.every(({ id }) => id !== scopeId) && activeScope?.id !== scopeId);
+  return (isDeleted ||
     (scope && !scope?.coverage.percentage && newBuildHasAppeared) || (hasNewActiveScope && scope && !scope?.coverage?.percentage)
-      ? <Redirect to={{ pathname: `/full-page/${agentId}/${activeBuildVersion}/${pluginId}/dashboard/methods` }} />
-      : (
-        <div>
-          <Header>
-            <div
-              className="text-ellipsis font-light text-24 leading-32 text-monochrome-black"
-              data-test="scope-info:scope-name"
-              title={name}
-            >
-              {name}
+    ? <Redirect to={{ pathname: `/full-page/${agentId}/${activeBuildVersion}/${pluginId}/dashboard/methods` }} />
+    : (
+      <div>
+        <Header>
+          <div
+            className="text-ellipsis font-light text-24 leading-32 text-monochrome-black"
+            data-test="scope-info:scope-name"
+            title={name}
+          >
+            {name}
+          </div>
+          {status === AGENT_STATUS.ONLINE && (
+            <div className="flex items-center w-full">
+              {active && <SessionIndicator tw="mr-2" active={loading} />}
+              <ScopeStatus active={active} loading={loading} enabled={enabled} started={started} finished={finished} />
             </div>
-            {status === AGENT_STATUS.ONLINE && (
-              <div className="flex items-center w-full">
-                {active && <SessionIndicator tw="mr-2" active={loading} />}
-                <ScopeStatus active={active} loading={loading} enabled={enabled} started={started} finished={finished} />
-              </div>
+          )}
+          <div className="flex justify-end items-center w-full">
+            {active && status === AGENT_STATUS.ONLINE && (
+              <Button
+                className="flex gap-x-2 mr-4"
+                primary
+                size="large"
+                onClick={() => dispatch(openModal('FinishScopeModal', scope?.id))}
+                data-test="scope-info:finish-scope-button"
+              >
+                <Icons.Complete />
+                <span>Finish Scope</span>
+              </Button>
             )}
-            <div className="flex justify-end items-center w-full">
-              {active && status === AGENT_STATUS.ONLINE && (
-                <Button
-                  className="flex gap-x-2 mr-4"
-                  primary
-                  size="large"
-                  onClick={() => dispatch(openModal('FinishScopeModal', scope?.id))}
-                  data-test="scope-info:finish-scope-button"
-                >
-                  <Icons.Complete />
-                  <span>Finish Scope</span>
-                </Button>
-              )}
-              {activeBuildVersion === buildVersion && status === AGENT_STATUS.ONLINE
+            {activeBuildVersion === buildVersion && status === AGENT_STATUS.ONLINE
                   && <Menu items={menuActions as MenuItemType[]} />}
-            </div>
-          </Header>
-          <div tw="flex items-center w-full border-b border-monochrome-medium-tint">
-            <TabsPanel>
-              <Tab name="methods" to={`/full-page/${agentId}/${buildVersion}/${pluginId}/scope/${scopeId}/methods`}>
-                <div tw="flex items-center mr-2 text-monochrome-black">
-                  <Icons.Function />
-                </div>
-                Scope methods
-              </Tab>
-              <Tab name="tests" to={`/full-page/${agentId}/${buildVersion}/${pluginId}/scope/${scopeId}/tests`}>
-                <div tw="flex items-center mr-2 text-monochrome-black">
-                  <Icons.Test width={16} />
-                </div>
-                Scope tests
-              </Tab>
-            </TabsPanel>
           </div>
-          <div tw="mt-4">
-            <TableActionsProvider key={tab}>
-              {tab === 'methods' ? (
-                <>
-                  <ScopeProjectMethods scope={scope} />
-                  <CoverageDetails
-                    topic={`/build/scopes/${scopeId}/coverage/packages`}
-                    associatedTestsTopic={`/build/scopes/${scopeId}`}
-                    classesTopicPrefix={`build/scopes/${scopeId}`}
-                    showCoverageIcon={loading || Boolean(sessionsFinished)}
-                  />
-                </>
-              ) : (
-                <>
-                  <ScopeProjectTests scopeId={scopeId} />
-                  <div tw="mt-2">
-                    <ScopeTests />
-                  </div>
-                </>
-              )}
-            </TableActionsProvider>
-          </div>
+        </Header>
+        <div tw="flex items-center w-full border-b border-monochrome-medium-tint">
+          <TabsPanel>
+            <Tab name="methods" to={`/full-page/${agentId}/${buildVersion}/${pluginId}/scope/${scopeId}/methods`}>
+              <div tw="flex items-center mr-2 text-monochrome-black">
+                <Icons.Function />
+              </div>
+              Scope methods
+            </Tab>
+            <Tab name="tests" to={`/full-page/${agentId}/${buildVersion}/${pluginId}/scope/${scopeId}/tests`}>
+              <div tw="flex items-center mr-2 text-monochrome-black">
+                <Icons.Test width={16} />
+              </div>
+              Scope tests
+            </Tab>
+          </TabsPanel>
         </div>
-      )
+        <div tw="mt-4">
+          <TableActionsProvider key={tab}>
+            {tab === 'methods' ? (
+              <>
+                <ScopeProjectMethods scope={scope} />
+                <CoverageDetails
+                  topic={`/build/scopes/${scopeId}/coverage/packages`}
+                  associatedTestsTopic={`/build/scopes/${scopeId}`}
+                  classesTopicPrefix={`build/scopes/${scopeId}`}
+                  showCoverageIcon={loading || Boolean(sessionsFinished)}
+                />
+              </>
+            ) : (
+              <>
+                <ScopeProjectTests scopeId={scopeId} />
+                <div tw="mt-2">
+                  <ScopeTests />
+                </div>
+              </>
+            )}
+          </TableActionsProvider>
+        </div>
+      </div>
+    )
   );
 };
