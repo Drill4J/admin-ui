@@ -57,7 +57,7 @@ export const PluginsSettingsTab = ({ agent: { buildVersion = '' } }: Props) => {
         >
           <Button
             tw="flex items-center justify-center gap-x-2 h-full pl-2 pr-2 text-14"
-            type="secondary"
+            secondary
           >
             <Icons.Add />
             Add plugin

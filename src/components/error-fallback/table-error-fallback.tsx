@@ -13,8 +13,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { CellProps } from './table-types';
+import { FallbackProps } from 'react-error-boundary';
+import { Icons } from '@drill4j/ui-kit';
+import 'twin.macro';
+import { Stub } from '../stub';
 
-export const DefaultCell = ({ value, testContext }: CellProps<string, unknown>) => (
-  <span data-test={`default-cell:${testContext}`}>{value ? String(value) : null}</span>
+export const TableErrorFallback = ({ error }: FallbackProps) => (
+  <div role="alert" tw="p-4">
+    <Stub
+      icon={<Icons.FAILED height={80} width={80} />}
+      title="Table load failed"
+      message={error.message}
+    />
+  </div>
 );

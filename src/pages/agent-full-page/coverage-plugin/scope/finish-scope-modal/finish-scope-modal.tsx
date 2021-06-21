@@ -16,7 +16,7 @@
 import { useContext, useState } from 'react';
 import { useParams, useHistory, Link } from 'react-router-dom';
 import {
-  Button, Inputs, Popup, OverflowText, GeneralAlerts, Spinner,
+  Button, Inputs, Popup, GeneralAlerts, Spinner,
 } from '@drill4j/ui-kit';
 import 'twin.macro';
 
@@ -56,7 +56,7 @@ export const FinishScopeModal = ({ isOpen, onToggle, scope }: Props) => {
       onToggle={onToggle}
       header={(
         <div tw="w-98">
-          <OverflowText data-test="finish-scope-modal:header">{`Finish Scope ${scope && scope.name}`}</OverflowText>
+          <div tw="text-ellipsis" data-test="finish-scope-modal:header">{`Finish Scope ${scope && scope.name}`}</div>
         </div>
       )}
       type="info"
@@ -102,7 +102,7 @@ export const FinishScopeModal = ({ isOpen, onToggle, scope }: Props) => {
               <>
                 <Button
                   className={`flex justify-center items-center gap-x-1 ${testsCount ? 'w-30' : 'w-40'}`}
-                  type="primary"
+                  primary
                   size="large"
                   disabled={testTypes.length > 0 || loading}
                   onClick={async () => {
@@ -125,9 +125,10 @@ export const FinishScopeModal = ({ isOpen, onToggle, scope }: Props) => {
                   {!loading && !testsCount && 'Finish and Delete' }
                 </Button>
                 <Button
-                  type="secondary"
+                  secondary
                   size="large"
                   onClick={() => onToggle(false)}
+                  disabled={loading}
                   data-test="finish-scope-modal:cancel-modal-button"
                 >
                   Cancel
@@ -135,7 +136,7 @@ export const FinishScopeModal = ({ isOpen, onToggle, scope }: Props) => {
               </>
             ) : (
               <Button
-                type="secondary"
+                secondary
                 size="large"
                 onClick={() => onToggle(false)}
                 data-test="finish-scope-modal:cancel-modal-button"

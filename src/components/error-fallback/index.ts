@@ -13,24 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { Icons } from '@drill4j/ui-kit';
-import tw, { styled } from 'twin.macro';
-
-interface Props {
-  expanded?: boolean;
-  onClick: () => void;
-}
-
-const IconWrapper = styled.div`
-  ${tw`grid place-items-center w-4 h-4 text-blue-default`}
-  ${tw`text-blue-default`}
-  ${({ expanded }: { expanded: boolean }) => expanded && tw`transform rotate-90`}
-`;
-
-export const RowExpander = ({ expanded, onClick }: Props) => (
-  <div tw="cursor-pointer" onClick={onClick}>
-    <IconWrapper expanded={Boolean(expanded)} data-test="row-expander">
-      <Icons.Expander />
-    </IconWrapper>
-  </div>
-);
+export { ErrorFallback } from './error-fallback';
+export { PageNotFoundErrorFallback } from './page-not-found-error-fallback';
+export { TableErrorFallback } from './table-error-fallback';

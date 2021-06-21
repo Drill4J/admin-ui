@@ -85,14 +85,14 @@ export const RenameScopeModal = ({ isOpen, onToggle, scope }: Props) => {
               <div className="flex items-center gap-4 w-full mt-6">
                 <Button
                   className="flex justify-center items-center gap-x-1 w-16"
-                  type="primary"
+                  primary
                   size="large"
                   onClick={handleSubmit}
                   disabled={submitting || pristine}
                 >
                   {submitting ? <Spinner disabled /> : 'Save'}
                 </Button>
-                <Button type="secondary" size="large" onClick={() => onToggle(false)}>
+                <Button secondary size="large" onClick={() => onToggle(false)}>
                   Cancel
                 </Button>
               </div>

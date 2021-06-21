@@ -15,7 +15,7 @@
  */
 import { Link, useParams } from 'react-router-dom';
 import { Button, Icons, SessionIndicator } from '@drill4j/ui-kit';
-import 'twin.macro';
+import tw, { styled } from 'twin.macro';
 
 import { percentFormatter } from 'utils';
 import { ActiveScope } from 'types/active-scope';
@@ -25,6 +25,10 @@ import { usePluginState } from '../../../store';
 interface Props {
   scope: ActiveScope | null;
 }
+
+const Content = styled.div`
+  ${tw`block justify-between pt-4 px-6 pb-6 w-80 h-full text-14 leading-16 bg-monochrome-light-tint text-monochrome-default`}
+`;
 
 export const ActiveScopeInfo = ({ scope }: Props) => {
   const {
@@ -38,13 +42,25 @@ export const ActiveScopeInfo = ({ scope }: Props) => {
   const { loading } = usePluginState();
 
   return (
-    <div tw="pt-4 px-6 pb-6 text-14 leading-16 bg-monochrome-light-tint text-monochrome-default">
-      <div tw="font-bold text-12">ACTIVE SCOPE COVERAGE</div>
-      <div className="flex items-center gap-x-2 w-full h-10 mt-6 mb-3 ">
-        <div tw="text-32 leading-40 text-monochrome-black" data-test="active-scope-info:scope-coverage">
-          {`${percentFormatter(percentage)}%`}
+    <Content>
+      <div>
+        <div tw="font-bold text-12">ACTIVE SCOPE COVERAGE</div>
+        <div className="flex items-center gap-x-2 w-full h-10 mt-6 mb-3 ">
+          <div tw="text-32 leading-40 text-monochrome-black" data-test="active-scope-info:scope-coverage">
+            {`${percentFormatter(percentage)}%`}
+          </div>
+          <SessionIndicator active={loading} />
         </div>
-        <SessionIndicator active={loading} />
+        <Button
+          tw="flex justify-center gap-x-2 w-68"
+          primary
+          size="large"
+          onClick={() => dispatch(openModal('FinishScopeModal', scope))}
+          data-test="active-scope-info:finish-scope-button"
+        >
+          <Icons.Complete />
+          <span>Finish Scope</span>
+        </Button>
       </div>
       <Button
         tw="flex justify-center gap-x-2 w-68"
@@ -56,7 +72,7 @@ export const ActiveScopeInfo = ({ scope }: Props) => {
         <Icons.Complete />
         <span>Finish Scope</span>
       </Button>
-      <div className="flex flex-col items-start gap-y-3 w-full mt-6 font-bold leading-20">
+      <div className="flex flex-col items-start justify-between w-full gap-y-3 mt-6 font-bold leading-20">
         <Link
           className="link"
           to={`/full-page/${agentId}/${buildVersion}/${pluginId}/scope/${scopeId}/methods`}
@@ -79,6 +95,6 @@ export const ActiveScopeInfo = ({ scope }: Props) => {
           Sessions Management
         </Link>
       </div>
-    </div>
+    </Content>
   );
 };

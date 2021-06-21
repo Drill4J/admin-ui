@@ -56,7 +56,7 @@ export const GetSuggestedTestsModal = ({ isOpen, onToggle, agentType }: Props) =
         <div className="flex justify-end gap-x-4">
           <Button
             tw="min-w-154px"
-            type="primary"
+            primary
             size="large"
             onClick={() => {
               copyToClipboard(getTestsToRunURL(agentId, pluginId, agentType));
@@ -74,7 +74,7 @@ export const GetSuggestedTestsModal = ({ isOpen, onToggle, agentType }: Props) =
               : 'Copy to Clipboard'}
           </Button>
           <Button
-            type="secondary"
+            secondary
             size="large"
             onClick={() => onToggle(false)}
             data-test="get-suggested-tests-modal:close-button"

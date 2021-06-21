@@ -41,10 +41,10 @@ export const CancelAgentRegistrationModal = ({
             {message}
           </span>
           <div tw="flex mt-6 gap-4">
-            <Button type="primary" size="large" onClick={() => push('/agents')}>
+            <Button primary size="large" onClick={() => push('/agents')}>
               Abort
             </Button>
-            <Button type="secondary" size="large" onClick={() => onToggle(false)}>
+            <Button secondary size="large" onClick={() => onToggle(false)}>
               Cancel
             </Button>
           </div>

@@ -13,8 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { Switch, Route, Redirect } from 'react-router-dom';
+import {
+  Switch, Route, Redirect, useHistory,
+} from 'react-router-dom';
 import { Icons } from '@drill4j/ui-kit';
+import { ErrorBoundary } from 'react-error-boundary';
 
 import { AppLayout } from 'layouts';
 import {
@@ -28,31 +31,42 @@ import {
   ServiceGroupRegistrationPage,
 } from 'pages';
 import {
-  PrivateRoute, Sidebar, Footer,
+  PrivateRoute, Sidebar, Footer, ErrorFallback, PageNotFoundErrorFallback,
 } from 'components';
 
 const sidebarLinks = [
   { link: 'agents', icon: Icons.Agents },
 ];
 
-export const PageSwitcher = () => (
-  <Switch>
-    <Route exact path="/login" component={LoginPage} />
-    <Route exact path="/" render={() => <Redirect to="/agents" />} />
-    <Route path="/full-page/:agentId" component={AgentFullPage} />
-    <Route path="/service-group-full-page/:id/:pluginId" component={ServiceGroupFullPage} />
-    <AppLayout
-      sidebar={<Sidebar links={sidebarLinks} matchParams={{ path: '/:activeLink' }} />}
-      footer={<Footer />}
-    >
-      <Switch>
-        <PrivateRoute exact path={['/agents', '/agents/notification-sidebar']} component={AgentsPage} />
-        <PrivateRoute exact path={['/agents/:type/:id/settings/:tab', '/agents/:type/:id/settings/:tab/:panel']} component={SettingsPage} />
-        <PrivateRoute exact path="/registration/:agentId" component={AgentRegistrationPage} />
-        <PrivateRoute path="/bulk-registration/:serviceGroupId" component={ServiceGroupRegistrationPage} />
-        <PrivateRoute path="/preregister/offline-agent" component={AgentRegistrationPage} />
-        <PrivateRoute component={NotFoundPage} />
-      </Switch>
-    </AppLayout>
-  </Switch>
-);
+export const PageSwitcher = () => {
+  const { push } = useHistory();
+  return (
+    <ErrorBoundary FallbackComponent={ErrorFallback} onReset={() => push('/agents')}>
+      <ErrorBoundary FallbackComponent={PageNotFoundErrorFallback} onReset={() => push('/agents')}>
+        <Switch>
+          <Route exact path="/login" component={LoginPage} />
+          <Route exact path="/" render={() => <Redirect to="/agents" />} />
+          <Route path="/full-page/:agentId" component={AgentFullPage} />
+          <Route path="/service-group-full-page/:id/:pluginId" component={ServiceGroupFullPage} />
+          <AppLayout
+            sidebar={<Sidebar links={sidebarLinks} matchParams={{ path: '/:activeLink' }} />}
+            footer={<Footer />}
+          >
+            <Switch>
+              <PrivateRoute exact path={['/agents', '/agents/notification-sidebar']} component={AgentsPage} />
+              <PrivateRoute
+                exact
+                path={['/agents/:type/:id/settings/:tab', '/agents/:type/:id/settings/:tab/:panel']}
+                component={SettingsPage}
+              />
+              <PrivateRoute exact path="/registration/:agentId" component={AgentRegistrationPage} />
+              <PrivateRoute path="/bulk-registration/:serviceGroupId" component={ServiceGroupRegistrationPage} />
+              <PrivateRoute path="/preregister/offline-agent" component={AgentRegistrationPage} />
+              <PrivateRoute component={NotFoundPage} />
+            </Switch>
+          </AppLayout>
+        </Switch>
+      </ErrorBoundary>
+    </ErrorBoundary>
+  );
+};

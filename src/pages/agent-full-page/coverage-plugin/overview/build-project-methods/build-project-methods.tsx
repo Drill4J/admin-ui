@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 import { Link, useParams } from 'react-router-dom';
-import 'twin.macro';
+import tw, { styled } from 'twin.macro';
 
 import { BuildMethodsCard } from 'components';
 import { Methods } from 'types/methods';
@@ -26,14 +26,33 @@ import { AGENT_STATUS } from 'common/constants';
 import { PreviousBuildInfo } from './previous-build-info-types';
 import { BuildCoverageInfo } from './build-coverage-info';
 import { ActiveBuildCoverageInfo } from './active-build-coverage-info';
+import { ActiveScopeInfo } from '../active-scope-info';
 
 interface Props {
-  scope?: ActiveScope | null;
+  scope: ActiveScope | null;
   previousBuildInfo?: PreviousBuildInfo;
   loading?: boolean;
   status?: AgentStatus;
   buildCoverage: BuildCoverage;
 }
+
+const Content = styled.div`
+  ${tw`grid gap-8`}
+  grid-template-columns: 1fr 320px;
+  @media screen and (min-width: 1024px) {
+    grid-template-columns: auto max-content;
+  }
+`;
+
+const Cards = styled.div<{isShowActiveScopeInfo?: boolean}>`
+  ${tw`grid gap-2 col-start-1 grid-flow-row lg:grid-cols-3`}
+  ${({ isShowActiveScopeInfo }) => !isShowActiveScopeInfo && tw`col-span-2 grid-cols-3`}
+`;
+
+const ActiveBuildTestsBar = styled.div<{isShowActiveScopeInfo?: boolean}>`
+  ${tw`col-start-1 col-span-2 lg:col-span-1`}
+  ${({ isShowActiveScopeInfo }) => !isShowActiveScopeInfo && tw`col-span-2 lg:col-span-2`}
+`;
 
 export const BuildProjectMethods = ({
   scope,
@@ -54,24 +73,27 @@ export const BuildProjectMethods = ({
     buildVersion: string;
     tab: string;
   }>();
+  const isShowActiveScopeInfo = scope?.active && status === AGENT_STATUS.ONLINE;
 
   return (
-    <div tw="flex flex-col gap-8">
-      {(scope?.active && status === AGENT_STATUS.ONLINE) ? (
-        <ActiveBuildCoverageInfo
-          buildCoverage={buildCoverage}
-          previousBuildInfo={previousBuildInfo}
-          scope={scope}
-          status={status}
-          loading={loading}
-        />
-      ) : (
-        <BuildCoverageInfo
-          buildCodeCoverage={buildCodeCoverage}
-          previousBuildInfo={previousBuildInfo}
-        />
-      )}
-      <div tw="flex gap-2">
+    <Content>
+      <ActiveBuildTestsBar isShowActiveScopeInfo={isShowActiveScopeInfo}>
+        {(scope?.active && status === AGENT_STATUS.ONLINE) ? (
+          <ActiveBuildCoverageInfo
+            buildCoverage={buildCoverage}
+            previousBuildInfo={previousBuildInfo}
+            scope={scope}
+            status={status}
+            loading={loading}
+          />
+        ) : (
+          <BuildCoverageInfo
+            buildCodeCoverage={buildCodeCoverage}
+            previousBuildInfo={previousBuildInfo}
+          />
+        )}
+      </ActiveBuildTestsBar>
+      <Cards isShowActiveScopeInfo={isShowActiveScopeInfo}>
         <BuildMethodsCard
           totalCount={all?.total}
           covered={all?.covered}
@@ -110,7 +132,12 @@ export const BuildProjectMethods = ({
             </Link>
           )}
         </BuildMethodsCard>
-      </div>
-    </div>
+      </Cards>
+      {isShowActiveScopeInfo && (
+        <div tw="lg:col-start-2 lg:row-start-1 lg:row-end-3">
+          <ActiveScopeInfo scope={scope} />
+        </div>
+      )}
+    </Content>
   );
 };

@@ -28,7 +28,7 @@ import {
 import { NotificationManagerContext } from 'notification-manager';
 import { ActiveScope } from 'types/active-scope';
 import { TableActionsProvider } from 'modules';
-import { useAgent, useBuildVersion } from 'hooks';
+import { useActiveScope, useAgent, useBuildVersion } from 'hooks';
 import { AGENT_STATUS } from 'common/constants';
 import { ScopeProjectMethods } from './scope-project-methods';
 import { CoverageDetails } from '../../coverage-details';
@@ -103,9 +103,11 @@ export const ScopeInfo = () => {
     },
   ].filter(Boolean);
   const newBuildHasAppeared = activeBuildVersion && buildVersion && activeBuildVersion !== buildVersion;
+  const activeScope = useActiveScope();
+  const hasNewActiveScope = activeScope && activeScope?.id !== scopeId;
 
   return (
-    scope && !scope?.coverage.percentage && newBuildHasAppeared
+    (scope && !scope?.coverage.percentage && newBuildHasAppeared) || (hasNewActiveScope && scope && !scope?.coverage?.percentage)
       ? <Redirect to={{ pathname: `/full-page/${agentId}/${activeBuildVersion}/${pluginId}/dashboard/methods` }} />
       : (
         <div>
@@ -127,7 +129,7 @@ export const ScopeInfo = () => {
               {active && status === AGENT_STATUS.ONLINE && (
                 <Button
                   className="flex gap-x-2 mr-4"
-                  type="primary"
+                  primary
                   size="large"
                   onClick={() => dispatch(openModal('FinishScopeModal', scope?.id))}
                   data-test="scope-info:finish-scope-button"

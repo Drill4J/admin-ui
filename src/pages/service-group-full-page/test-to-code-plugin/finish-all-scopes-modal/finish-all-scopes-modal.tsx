@@ -15,7 +15,7 @@
  */
 import { useContext, useState } from 'react';
 import {
-  Button, Popup, OverflowText, GeneralAlerts, Spinner,
+  Button, Popup, GeneralAlerts, Spinner,
 } from '@drill4j/ui-kit';
 import { useParams, Link } from 'react-router-dom';
 import tw, { styled } from 'twin.macro';
@@ -49,7 +49,7 @@ export const FinishAllScopesModal = ({ agentsCount }: Props) => {
     <Popup
       isOpen
       onToggle={closeModal}
-      header={<OverflowText>Finish All Scopes</OverflowText>}
+      header={<div tw="text-ellipsis">Finish All Scopes</div>}
       type="info"
       closeOnFadeClick
     >
@@ -87,7 +87,7 @@ export const FinishAllScopesModal = ({ agentsCount }: Props) => {
           <div className="flex items-center w-full mt-6">
             <Button
               tw="flex justify-center items-center gap-x-1 w-36 h-8 mr-4 px-4 text-14 font-bold"
-              type="primary"
+              primary
               disabled={activeSessions.length > 0 || loading}
               onClick={async () => {
                 setLoading(true);
@@ -106,7 +106,7 @@ export const FinishAllScopesModal = ({ agentsCount }: Props) => {
             >
               {loading ? <Spinner disabled /> : 'Finish all scopes'}
             </Button>
-            <Button type="secondary" size="large" onClick={() => closeModal()}>
+            <Button secondary size="large" onClick={() => closeModal()}>
               Cancel
             </Button>
           </div>

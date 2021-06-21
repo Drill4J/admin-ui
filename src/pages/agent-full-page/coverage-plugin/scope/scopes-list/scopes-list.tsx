@@ -16,7 +16,7 @@
 import { useContext } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import {
-  Menu, Icons, Table, Column, Status,
+  Menu, Icons, Status,
 } from '@drill4j/ui-kit';
 import tw, { styled } from 'twin.macro';
 
@@ -28,7 +28,7 @@ import { ScopeSummary } from 'types/scope-summary';
 import { TestTypeSummary } from 'types/test-type-summary';
 import { useActiveScope, useAgent, useBuildVersion } from 'hooks';
 import { AGENT_STATUS } from 'common/constants';
-import { Stub } from 'components';
+import { Stub, Table } from 'components';
 import { toggleScope } from '../../api';
 import { usePluginState } from '../../../store';
 import { useCoveragePluginDispatch, openModal } from '../../store';
@@ -60,102 +60,112 @@ export const ScopesList = () => {
       </Title>
       {scopesData.length > 0
         ? (
-          <Table data={scopesData} idKey="name" gridTemplateColumns="40% repeat(4, 1fr) 48px">
-            <Column
-              name="name"
-              label="Name"
-              Cell={({
-                value = '', item: {
-                  id = '', started = 0, active = false, enabled = false, finished = 0,
-                } = {},
-              }) => (
-                <Link
-                  tw="font-bold text-14 leading-20 cursor-pointer"
-                  to={`/full-page/${agentId}/${buildVersion}/${pluginId}/scope/${id}/methods`}
-                  data-test="scopes-list:scope-name"
-                >
-                  <div className="link text-ellipsis" title={value}>{value}</div>
-                  <div tw="flex gap-x-2 items-center w-full text-12">
-                    <ScopeTimer started={started} finished={finished} active={active} size="small" />
-                    {active && <Status tw="text-green-default">Active</Status>}
-                    {!enabled && <Status tw="text-monochrome-default">Ignored</Status>}
-                  </div>
-                </Link>
-              )}
-              align="start"
-            />
-            <Column
-              name="started"
-              label="Started"
-              Cell={({ value = 0 }) => (
-                <>
-                  <div tw="font-bold text-12 leading-16 text-monochrome-black">
-                    {dateFormatter(value)}
-                  </div>
-                  <div tw="text-12 leading-20 text-monochrome-default">
-                    at {timeFormatter(value)}
-                  </div>
-                </>
-              )}
-              align="start"
-            />
-            <Column
-              name="coverage"
-              label="Coverage"
-              Cell={({ item = {} }) => (
-                <div tw="text-20 leading-32 my-6 text-monochrome-black" data-test="scopes-list:coverage">
-                  {`${percentFormatter(item?.coverage?.percentage)}%`}
-                </div>
-              )}
-            />
-            <Column
-              name="autoTests"
-              label="Auto Tests"
-              Cell={({ item = {} }) => {
-                const coverageByTestType = transformObjectsArrayToObject(item?.coverage?.byTestType as TestTypeSummary[], 'type');
-                return (
-                  <div tw="font-bold text-12 leading-20 text-monochrome-black">
-                    {coverageByTestType?.AUTO && (
-                      <span>
-                        {`${percentFormatter(coverageByTestType?.AUTO?.summary?.coverage?.percentage || 0)}%`}
-                      </span>
-                    )}
-                    <div tw="font-regular text-right text-monochrome-default leading-16">
-                      {coverageByTestType?.AUTO && coverageByTestType?.AUTO?.summary?.testCount}
+          <Table
+            isDefaulToggleSortBy
+            data={scopesData}
+            columns={[
+              {
+                Header: 'Name',
+                accessor: 'name',
+                Cell: ({
+                  value = '', row: {
+                    original: {
+                      id = '', started = 0, active = false, enabled = false, finished = 0,
+                    } = {},
+                  },
+                }: any) => (
+                  <Link
+                    tw="font-bold text-14 leading-20 cursor-pointer"
+                    to={`/full-page/${agentId}/${buildVersion}/${pluginId}/scope/${id}/methods`}
+                    data-test="scopes-list:scope-name"
+                  >
+                    <div className="link text-ellipsis" title={value}>{value}</div>
+                    <div tw="flex gap-x-2 items-center w-full text-12">
+                      <ScopeTimer started={started} finished={finished} active={active} size="small" />
+                      {active && <Status tw="text-green-default">Active</Status>}
+                      {!enabled && <Status tw="text-monochrome-default">Ignored</Status>}
                     </div>
-                  </div>
-                );
-              }}
-            />
-            <Column
-              name="manualTests"
-              label="Manual tests"
-              Cell={({ item = {} }) => {
-                const coverageByTestType = transformObjectsArrayToObject(item?.coverage?.byTestType as TestTypeSummary[], 'type');
-                return (
-                  <div tw="font-bold text-12 leading-20 text-monochrome-black">
-                    {coverageByTestType?.MANUAL && (
-                      <span>
-                        {`${percentFormatter(coverageByTestType?.MANUAL?.summary?.coverage?.percentage || 0)}%`}
-                      </span>
-                    )}
-                    <div tw="font-regular text-right text-monochrome-default leading-16">
-                      {coverageByTestType?.MANUAL && coverageByTestType?.MANUAL?.summary?.testCount}
+                  </Link>
+                ),
+                textAlign: 'left',
+                width: '40%',
+              },
+              {
+                Header: 'Started',
+                accessor: 'started',
+                Cell: ({ value = 0 }: any) => (
+                  <>
+                    <div tw="font-bold text-12 leading-16 text-monochrome-black">
+                      {dateFormatter(value)}
                     </div>
+                    <div tw="text-12 leading-20 text-monochrome-default">
+                      at {timeFormatter(value)}
+                    </div>
+                  </>
+                ),
+                textAlign: 'left',
+                width: '15%',
+              },
+              {
+                Header: 'Coverage',
+                accessor: 'coverage',
+                Cell: ({ row: { original = {} } = {} }: any) => (
+                  <div tw="text-20 leading-32 my-6 text-monochrome-black" data-test="scopes-list:coverage">
+                    {`${percentFormatter(original?.coverage?.percentage)}%`}
                   </div>
-                );
-              }}
-            />
-            {activeBuildVersion === buildVersion && status === AGENT_STATUS.ONLINE && (
-              <Column
-                name="actions"
-                Cell={({ item = {} }) => {
-                  const { active, enabled, id } = item;
+                ),
+                width: '15%',
+              },
+              {
+                Header: 'Auto Tests',
+                accessor: 'autoTests',
+                Cell: ({ row: { original = {} } = {} }: any) => {
+                  const coverageByTestType = transformObjectsArrayToObject(original?.coverage?.byTestType as TestTypeSummary[], 'type');
+                  return (
+                    <div tw="font-bold text-12 leading-20 text-monochrome-black">
+                      {coverageByTestType?.AUTO && (
+                        <span>
+                          {`${percentFormatter(coverageByTestType?.AUTO?.summary?.coverage?.percentage || 0)}%`}
+                        </span>
+                      )}
+                      <div tw="font-regular text-right text-monochrome-default leading-16">
+                        {coverageByTestType?.AUTO && coverageByTestType?.AUTO?.summary?.testCount}
+                      </div>
+                    </div>
+                  );
+                },
+                width: '15%',
+              },
+              {
+                Header: 'Manual tests',
+                accessor: 'manualTests',
+                Cell: ({ row: { original = {} } = {} }: any) => {
+                  const coverageByTestType = transformObjectsArrayToObject(original?.coverage?.byTestType as TestTypeSummary[], 'type');
+                  return (
+                    <div tw="font-bold text-12 leading-20 text-monochrome-black">
+                      {coverageByTestType?.MANUAL && (
+                        <span>
+                          {`${percentFormatter(coverageByTestType?.MANUAL?.summary?.coverage?.percentage || 0)}%`}
+                        </span>
+                      )}
+                      <div tw="font-regular text-right text-monochrome-default leading-16">
+                        {coverageByTestType?.MANUAL && coverageByTestType?.MANUAL?.summary?.testCount}
+                      </div>
+                    </div>
+                  );
+                },
+                width: '15%',
+              },
+              {
+                Header: () => null,
+                accessor: 'actions',
+                Cell: activeBuildVersion === buildVersion && status === AGENT_STATUS.ONLINE ? ({ row: { original = {} } = {} }: any) => {
+                  const { active, enabled, id } = original;
                   const menuActions = [
                     active && {
                       label: 'Finish Scope',
                       icon: 'Check',
-                      onClick: () => dispatch(openModal('FinishScopeModal', id)),
+                      onClick: () => dispatch(openModal('FinishScopeModal', original?.id)),
                     },
                     active && {
                       label: 'Sessions Management',
@@ -187,21 +197,24 @@ export const ScopesList = () => {
                     {
                       label: 'Rename',
                       icon: 'Edit',
-                      onClick: () => dispatch(openModal('RenameScopeModal', id)),
+                      onClick: () => dispatch(openModal('RenameScopeModal', original?.id)),
                     },
                     {
                       label: 'Delete',
                       icon: 'Delete',
-                      onClick: () => dispatch(openModal('DeleteScopeModal', id)),
+                      onClick: () => dispatch(openModal('DeleteScopeModal', original?.id)),
                     },
                   ].filter(Boolean);
                   return (
-                    <Menu items={menuActions} />
+                    <div tw="flex justify-end">
+                      <Menu items={menuActions} />
+                    </div>
                   );
-                }}
-              />
-            )}
-          </Table>
+                } : () => null,
+                width: '48px',
+              },
+            ]}
+          />
         ) : (
           <Stub
             icon={<Icons.Scope tw="text-monochrome-medium-tint" width={157} height={157} data-test="no-scope-stub:test-icon" />}

@@ -16,7 +16,7 @@
 import { useContext, useState } from 'react';
 import { useHistory, useParams, Link } from 'react-router-dom';
 import {
-  Button, Popup, OverflowText, GeneralAlerts, Spinner,
+  Button, Popup, GeneralAlerts, Spinner,
 } from '@drill4j/ui-kit';
 import 'twin.macro';
 
@@ -46,7 +46,7 @@ export const DeleteScopeModal = ({ isOpen, onToggle, scope }: Props) => {
     <Popup
       isOpen={isOpen}
       onToggle={onToggle}
-      header={<div tw="w-97"><OverflowText>{`Delete Scope ${scope?.name}`}</OverflowText></div>}
+      header={<div tw="w-97 text-ellipsis">{`Delete Scope ${scope?.name}`}</div>}
       type="info"
       closeOnFadeClick
     >
@@ -89,7 +89,7 @@ export const DeleteScopeModal = ({ isOpen, onToggle, scope }: Props) => {
               ? (
                 <Button
                   onClick={() => onToggle(false)}
-                  type="secondary"
+                  secondary
                   size="large"
                 >
                   Ok, got it
@@ -99,7 +99,7 @@ export const DeleteScopeModal = ({ isOpen, onToggle, scope }: Props) => {
                 <>
                   <Button
                     className="flex justify-center items-center gap-x-1 px-4 w-43 h-8 text-14"
-                    type="primary"
+                    primary
                     disabled={loading}
                     onClick={async () => {
                       setLoading(true);
@@ -119,7 +119,7 @@ export const DeleteScopeModal = ({ isOpen, onToggle, scope }: Props) => {
                     {loading ? <Spinner disabled /> : 'Yes, Delete Scope'}
                   </Button>
                   <Button
-                    type="secondary"
+                    secondary
                     size="large"
                     onClick={() => onToggle(false)}
                     data-test="delete-scope-modal:cancel-modal-button"

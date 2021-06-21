@@ -148,7 +148,7 @@ export const SystemSettingsForm = ({
               <div tw="w-97 mt-4">
                 <Button
                   className="flex justify-center items-center gap-x-1 w-32"
-                  type="primary"
+                  primary
                   size="large"
                   onClick={handleSubmit}
                   disabled={submitting || invalid || pristine}

@@ -67,11 +67,11 @@ export const LoginPage = () => {
             <Inputs.Text placeholder="User ID" disabled />
             <Inputs.Text placeholder="Password" disabled />
           </SignInForm>
-          <Button tw="flex justify-center w-88 mt-6" type="primary" size="large" disabled>
+          <Button tw="flex justify-center w-88 mt-6" primary size="large" disabled>
             Sign in
           </Button>
           <div tw="mt-6 font-bold text-14 leading-20 text-blue-default opacity-25">Forgot your password?</div>
-          <Button tw="flex justify-center w-88 mt-10 " type="secondary" size="large" onClick={handleLogin}>
+          <Button tw="flex justify-center w-88 mt-10 " secondary size="large" onClick={handleLogin}>
             Continue as a guest (with admin rights)
           </Button>
         </div>

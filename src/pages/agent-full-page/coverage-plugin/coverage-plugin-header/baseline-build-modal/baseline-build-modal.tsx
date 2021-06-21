@@ -80,7 +80,7 @@ export const BaselineBuildModal = () => {
           )}
           <div className="flex gap-x-4">
             <ActionButton
-              type="primary"
+              primary
               size="large"
               isBaseline={isBaseline}
               onClick={async () => {
@@ -108,7 +108,7 @@ export const BaselineBuildModal = () => {
               {!isLoading && isBaseline && 'Unset as Baseline'}
               {!isLoading && !isBaseline && 'Set as Baseline'}
             </ActionButton>
-            <Button type="secondary" size="large" onClick={closeModal}>
+            <Button secondary size="large" onClick={closeModal}>
               Cancel
             </Button>
           </div>

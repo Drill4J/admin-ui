@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 import {
-  ReactNode, useState, createContext, useMemo,
+  ReactNode, useState, createContext,
 } from 'react';
 import { MessagePanel } from '@drill4j/ui-kit';
 
@@ -30,12 +30,17 @@ interface Props {
 type ContextType = {
   showMessage: (message: Message) => void;
   closeMessage: () => void;
+  currentMessage: Message | null;
 };
 
-export const NotificationManagerContext = createContext<ContextType>({ showMessage: () => {}, closeMessage: () => {} });
+export const NotificationManagerContext = createContext<ContextType>({
+  showMessage: () => {},
+  closeMessage: () => {},
+  currentMessage: null,
+});
 
 export const NotificationManager = ({ children }: Props) => {
-  const [message, setMessage] = useState<Message | null>();
+  const [message, setMessage] = useState<Message | null>(null);
   const { pathname = '' } = useLocation();
 
   function handleShowMessage(incomingMessage: Message) {
@@ -56,7 +61,11 @@ export const NotificationManager = ({ children }: Props) => {
   };
   defaultAdminSocket.onOpenEvent = () => handleShowMessage({ type: 'SUCCESS', text: 'Backend connection has been successfully restored.' });
 
-  const contextValue = useMemo(() => ({ showMessage: handleShowMessage, closeMessage: () => setMessage(null) }), []);
+  const contextValue = {
+    showMessage: handleShowMessage,
+    closeMessage: () => setMessage(null),
+    currentMessage: message,
+  };
   return (
     <NotificationManagerContext.Provider value={contextValue}>
       {message && pathname !== '/login' && <MessagePanel message={message} onClose={() => setMessage(null)} />}

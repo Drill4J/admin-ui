@@ -15,11 +15,11 @@
  */
 import 'twin.macro';
 
-import { CellProps } from '../table/table-types';
-
-interface Props extends CellProps<string, unknown>{
+interface Props {
   icon?: React.ReactNode;
   type?: 'primary' | 'secondary';
+  value: any;
+  testContext: string;
 }
 
 export const NameCell = ({ icon, value, testContext }: Props) => (

@@ -13,25 +13,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import tw, { styled } from 'twin.macro';
 
-import { Align } from './table-types';
+import { FallbackProps } from 'react-error-boundary';
+import { LinkButton } from '@drill4j/ui-kit';
+import 'twin.macro';
 
-const Cell = styled.div(({ type }: { type: Align }) => [
-  tw`px-4`,
-  `&:first-child {
-      padding: 0 0;
-   }`,
-  type === 'start' && tw`w-full justify-self-start`,
-  type === 'end' && tw`justify-self-end`,
-  type === 'center' && tw`justify-self-center`,
-  type === 'stretch' && tw`justify-self-stretch`,
-]);
+import { NotFoundPage } from '../../pages';
 
-interface Props {
-  children: React.ReactNode;
-  type: Align;
-  style?: Record<symbol, string>;
-}
-
-export const TableRowCell = ({ children, ...rest }: Props) => <Cell {...rest}>{children}</Cell>;
+export const PageNotFoundErrorFallback = ({ error, resetErrorBoundary }: FallbackProps) => {
+  if (error.message === 'page not found') {
+    return (
+      <>
+        <NotFoundPage />
+        <LinkButton tw="ml-27" type="button" onClick={resetErrorBoundary}>Go to agents apage</LinkButton>
+      </>
+    );
+  }
+  throw error;
+};

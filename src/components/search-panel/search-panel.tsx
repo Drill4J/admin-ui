@@ -49,7 +49,7 @@ export const SearchPanel = ({
 
   return (
     <div>
-      <div className="flex items-center w-full">
+      <div className="flex items-baseline w-full">
         <div className="py-2 h-10">
           <Search
             value={searchValue}
@@ -68,7 +68,7 @@ export const SearchPanel = ({
               {searchResult} result{searchResult > 1 ? 's' : ''}
             </span>
           )}
-          <span data-test="search-panel:displaying-results-count">{children}</span>
+          <span data-test="search-panel:displaying-results-count" tw="text-monochrome-default">{children}</span>
         </div>
       </div>
     </div>

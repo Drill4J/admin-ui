@@ -43,7 +43,7 @@ export const ActionsColumn = ({ agent }: Props) => {
   const disableRegisterButton = agentType === 'ServiceGroup' && !isJavaAgentsServiceGroup;
 
   return (
-    <div className="flex items-center">
+    <div className="flex items-center justify-end">
       {(status === AGENT_STATUS.NOT_REGISTERED || unregisteredAgentsCount > 0) && (
         <Tooltip
           tw="mr-8"
@@ -64,8 +64,9 @@ export const ActionsColumn = ({ agent }: Props) => {
           >
             <Button
               data-test="action-column:icons-register"
+              primary
               size="small"
-              type={agentType === 'ServiceGroup' || !group ? 'primary' : 'secondary'}
+              {...agentType === 'ServiceGroup' || !group ? 'primary' : 'secondary'}
               disabled={disableRegisterButton}
               tw="flex items-center w-full gap-x-2"
             >

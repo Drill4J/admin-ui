@@ -28,19 +28,6 @@ interface Props {
   notifications: NotificationType[];
 }
 
-const Header = styled.div`
-  ${tw`flex items-center space-x-2 min-h-60px pl-6`}
-  ${tw`text-18 leading-24 text-monochrome-black border-b border-monochrome-medium-tint`}
-`;
-
-const ActionsPanel = styled.div`
-  ${tw`flex justify-end items-center w-full`}
-  ${tw`border-b border-monochrome-light-tint font-bold text-12 leading-38 text-blue-default`}
-  & > * {
-    ${tw`mr-4 cursor-pointer hover:text-blue-medium-tint active:text-blue-shade`}
-  }
-`;
-
 export const NotificationsSidebar = ({
   notifications,
 }: Props) => {
@@ -92,3 +79,16 @@ export const NotificationsSidebar = ({
     </Modal>
   );
 };
+
+const Header = styled.div`
+  ${tw`flex items-center space-x-2 min-h-60px pl-6`}
+  ${tw`text-18 leading-24 text-monochrome-black border-b border-monochrome-medium-tint`}
+`;
+
+const ActionsPanel = styled.div`
+  ${tw`flex justify-end items-center w-full`}
+  ${tw`border-b border-monochrome-medium-tint font-bold text-12 leading-38 text-blue-default`}
+  & > * {
+    ${tw`mr-4 cursor-pointer hover:text-blue-medium-tint active:text-blue-shade`}
+  }
+`;
