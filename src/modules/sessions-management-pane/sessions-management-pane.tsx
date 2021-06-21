@@ -177,7 +177,7 @@ async function handleStartServiceGroupSession({ id, pluginId }: Identifiers,
       return handleFieldErrors([]);
     }
     resetForm();
-    showGeneralAlertMessage({ type: 'SUCCESS', text: 'New sessions has been started successfully.' });
+    showGeneralAlertMessage({ type: 'SUCCESS', text: 'New sessions have been started successfully.' });
   } catch (error) {
     showGeneralAlertMessage({
       type: 'ERROR',
