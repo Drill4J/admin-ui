@@ -1,91 +1,57 @@
-import * as React from 'react';
-import { BEM, div } from '@redneckz/react-bem-helper';
-import { Modal, Icons } from '@drill4j/ui-kit';
+/*
+ * Copyright 2020 EPAM Systems
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+import { Modal } from '@drill4j/ui-kit';
+import 'twin.macro';
 
 import { AssociatedTests } from 'types/associated-tests';
-import { useBuildVersion } from '../../use-build-version';
+import { useBuildVersion, useCloseModal, useQuery } from 'hooks';
 import { ItemInfo } from './item-info';
-
-import styles from './associated-test-modal.module.scss';
+import { TestsList } from './tests-list';
 
 interface Props {
-  className?: string;
-  id?: string;
-  isOpen: boolean;
-  onToggle: (arg: boolean) => void;
   associatedTestsTopic: string;
 }
 
-const associatedTestModal = BEM(styles);
+export const AssociatedTestModal = ({ associatedTestsTopic }: Props) => {
+  const params = useQuery<{testId?: string; treeLevel?: number}>();
+  const associatedTests = useBuildVersion<AssociatedTests>(`${associatedTestsTopic}/tests/associatedWith/${
+    params?.testId}`) || {};
+  const {
+    tests = [], packageName = '', className: testClassName = '', methodName = '',
+  } = associatedTests;
+  const testsMap = tests.reduce((acc, { type = '', name = '' }) =>
+    ({ ...acc, [type]: acc[type] ? [...acc[type], name] : [name] }), {} as { [testType: string]: string[] });
+  const closeModal = useCloseModal('/associated-test-modal');
 
-export const AssociatedTestModal = associatedTestModal(
-  ({
-    className, isOpen, onToggle, id, associatedTestsTopic,
-  }: Props) => {
-    const associatedTests = useBuildVersion<AssociatedTests[]>(associatedTestsTopic) || [];
-    const {
-      tests = [], packageName = '', className: testClassName = '', methodName = '',
-    } = associatedTests.find((test) => test.id === id) || {};
-    const testsMap = tests.reduce((acc, { type = '', name = '' }) =>
-      ({ ...acc, [type]: acc[type] ? [...acc[type], name] : [name] }), {} as { [testType: string]: string[] });
-    const [expandedSection, setExpandedSection] = React.useState('');
-
-    return (
-      <Modal isOpen={isOpen} onToggle={onToggle}>
-        <div className={className}>
-          <Header>
-            <Icons.Test height={20} width={18} viewBox="0 0 18 20" />
-            <span>Associated tests</span>
-            <h2>{tests.length}</h2>
-          </Header>
-          <ItemInfo
-            packageName={packageName}
-            testClassName={testClassName}
-            methodName={methodName}
-          />
-          <Content>
-            {Object.keys(testsMap).map((testType) => (
-              <>
-                <TestSection
-                  expanded={expandedSection === testType}
-                  onClick={() => setExpandedSection(expandedSection === testType ? '' : testType)}
-                >
-                  <ExpanderIcon
-                    rotate={expandedSection === testType ? 90 : 0}
-                    height={13}
-                    width={13}
-                  />
-                  <TestListItemIcon>
-                    <Icons.Test />
-                  </TestListItemIcon>
-                  {testType}
-                </TestSection>
-                <TestList>
-                  {testType === expandedSection
-                    && testsMap[testType].map((test) => (
-                      <TestListItem>
-                        <TestListItemIcon>
-                          <Icons.Test />
-                        </TestListItemIcon>
-                        {test}
-                      </TestListItem>
-                    ))}
-                </TestList>
-              </>
-            ))}
-          </Content>
+  return (
+    <Modal isOpen onToggle={closeModal}>
+      <div tw="flex flex-col h-full">
+        <div tw="flex items-center min-h-64px pl-6 text-18 leading-24">
+          <span tw="text-monochrome-black">Associated tests</span>
+          {tests.length ? <div tw="ml-2 font-light text-monochrome-default">{tests.length}</div>
+            : <div tw="ml-2"><div tw="h-4 bg-monochrome-medium-tint rounded" /></div>}
         </div>
-      </Modal>
-    );
-  },
-);
-
-const Header = associatedTestModal.header('div');
-const Content = associatedTestModal.content('div');
-const TestSection = associatedTestModal.section(
-  div({ onClick: () => {} } as { expanded?: boolean; onClick: () => void }),
-);
-const TestList = associatedTestModal.testList('div');
-const ExpanderIcon = associatedTestModal.expanderIcon(Icons.Expander);
-const TestListItem = associatedTestModal.testListItem('div');
-const TestListItemIcon = associatedTestModal.testListItemIcon('div');
+        <ItemInfo
+          packageName={packageName}
+          testClassName={testClassName}
+          methodName={methodName}
+          treeLevel={Number(params?.treeLevel)}
+        />
+        <TestsList associatedTests={{ testsMap, assocTestsCount: tests.length }} />
+      </div>
+    </Modal>
+  );
+};

@@ -1,26 +1,36 @@
-import * as React from 'react';
-import { BEM, div } from '@redneckz/react-bem-helper';
+/*
+ * Copyright 2020 EPAM Systems
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 import { Icons } from '@drill4j/ui-kit';
-
-import styles from './row-expander.module.scss';
+import tw, { styled } from 'twin.macro';
 
 interface Props {
-  className?: string;
   expanded?: boolean;
   onClick: () => void;
-  withMargin?: boolean;
 }
 
-const rowExpander = BEM(styles);
+const IconWrapper = styled.div`
+  ${tw`grid place-items-center w-4 h-4 text-blue-default`}
+  ${tw`text-blue-default`}
+  ${({ expanded }: { expanded: boolean }) => expanded && tw`transform rotate-90`}
+`;
 
-export const RowExpander = rowExpander(({
-  className, expanded, onClick, withMargin,
-}: Props) => (
-  <div className={className} onClick={onClick}>
-    <IconWrapper expanded={expanded} withMargin={withMargin}>
+export const RowExpander = ({ expanded, onClick }: Props) => (
+  <div tw="cursor-pointer" onClick={onClick}>
+    <IconWrapper expanded={Boolean(expanded)} data-test="row-expander">
       <Icons.Expander />
     </IconWrapper>
   </div>
-));
-
-const IconWrapper = rowExpander.icon(div({} as { expanded?: boolean; withMargin?: boolean }));
+);

@@ -1,54 +1,89 @@
-import * as React from 'react';
-import { BEM } from '@redneckz/react-bem-helper';
+/*
+ * Copyright 2020 EPAM Systems
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+import { useState, useEffect } from 'react';
+import { Icons } from '@drill4j/ui-kit';
+import {
+  useParams, Prompt, Switch, Route,
+} from 'react-router-dom';
+import 'twin.macro';
 
-import { TabsPanel, Tab } from 'components';
-import { Agent } from 'types/agent';
-import { Message } from 'types/message';
+import { TabsPanel, Tab, PageHeader } from 'components';
+import { useAgent } from 'hooks';
+import { PluginsSettingsTab, SystemSettingsForm } from 'modules';
 import { GeneralSettingsForm } from './general-settings-form';
-import { SystemSettingsForm } from './system-setting-form';
-import { PluginsSettings } from './plugins-settings';
+import { JsSystemSettingsForm } from './js-system-settings-form';
+import { AgentStatusToggle } from '../../agents-page/agent-status-toggle';
+import { UnSaveChangeModal } from '../un-save-changes-modal';
 
-import styles from './agent-settings.module.scss';
+export const AgentSettings = () => {
+  const [pristineSettings, setPristineSettings] = useState(true);
+  const [nextLocation, setNextLocation] = useState('');
+  const { id = '', tab = '' } = useParams<{ id: string; tab: string; }>();
+  const agent = useAgent(id) || {};
+  const SystemSettings = agent.agentType === 'Node.js' ? JsSystemSettingsForm : SystemSettingsForm;
 
-interface Props {
-  className?: string;
-  showMessage: (message: Message) => void;
-  agent: Agent;
-}
+  useEffect(() => {
+    setPristineSettings(true);
+  }, [tab]);
 
-interface TabsComponent {
-  name: string;
-  component: React.ReactNode;
-}
-
-const agentSettings = BEM(styles);
-
-export const AgentSettings = agentSettings(({ className, showMessage, agent }: Props) => {
-  const [selectedTab, setSelectedTab] = React.useState('general');
-  const tabsComponents: TabsComponent[] = [
-    {
-      name: 'general',
-      component: <GeneralSettingsForm agent={agent} showMessage={showMessage} />,
-    },
-    {
-      name: 'system',
-      component: <SystemSettingsForm agent={agent} showMessage={showMessage} />,
-    },
-    {
-      name: 'plugins',
-      component: <PluginsSettings agent={agent} />,
-    },
-  ];
   return (
-    <div className={className}>
-      <Tabs activeTab={selectedTab} onSelect={setSelectedTab}>
-        <Tab name="general">General</Tab>
-        <Tab name="system">System</Tab>
-        <Tab name="plugins">Plugins</Tab>
-      </Tabs>
-      {tabsComponents.find(({ name }) => name === selectedTab)?.component}
+    <div tw="flex flex-col w-full">
+      <PageHeader
+        title={(
+          <div tw="flex gap-x-4 items-center pt-5 pb-7">
+            <Icons.Settings tw="text-monochrome-default" height={20} width={20} />
+            {agent.agentType} Agent Settings
+            <AgentStatusToggle tw="mt-2 leading-20" agent={agent} />
+          </div>
+        )}
+      />
+      <div tw="px-6">
+        <TabsPanel>
+          <Tab name="general" to={`/agents/agent/${id}/settings/general`}>General</Tab>
+          <Tab name="system" to={`/agents/agent/${id}/settings/system`}>System</Tab>
+          <Tab name="plugins" to={`/agents/agent/${id}/settings/plugins`}>Plugins</Tab>
+        </TabsPanel>
+      </div>
+      <Switch>
+        <Route
+          path="/agents/agent/:id/settings/general"
+          render={() => <GeneralSettingsForm agent={agent} setPristineSettings={setPristineSettings} />}
+        />
+        <Route
+          path="/agents/agent/:id/settings/system"
+          render={() => <SystemSettings agent={agent} setPristineSettings={setPristineSettings} />}
+        />
+        <Route
+          path="/agents/agent/:id/settings/plugins"
+          render={() => <PluginsSettingsTab agent={agent} />}
+        />
+      </Switch>
+      <UnSaveChangeModal path={nextLocation} setNextLocation={setNextLocation} />
+      <Prompt
+        when
+        message={({ pathname, state }) => {
+          const { pristine } = state as { pristine: boolean } || {};
+
+          if (pristineSettings || pristine) {
+            return true;
+          }
+          setNextLocation(pathname);
+          return false;
+        }}
+      />
     </div>
   );
-});
-
-const Tabs = agentSettings.tabsPanel(TabsPanel);
+};

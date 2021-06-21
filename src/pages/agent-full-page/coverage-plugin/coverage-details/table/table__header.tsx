@@ -1,42 +1,57 @@
-import * as React from 'react';
-import { BEM } from '@redneckz/react-bem-helper';
-import { Panel, SortArrows } from '@drill4j/ui-kit';
+/*
+ * Copyright 2020 EPAM Systems
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+import tw from 'twin.macro';
 
 import {
-  useTableActionsDispatch, toggleOrder, useTableActionsState,
+  useTableActionsDispatch, setSort, useTableActionsState,
 } from 'modules';
 import { DefaultHeaderCell } from './default-header-cell';
+import { ColumnProps } from './table-types';
 
-import styles from './table.module.scss';
-
-interface Props {
+interface Props<T> {
   className?: string;
-  columns: any[];
+  columns: ColumnProps<unknown, T>[];
+  expandedColumnsLength?: number;
 }
 
-export const TableHeader = BEM(styles).header(({ columns, className }: Props) => {
+export const TableHeader = <T, >({ columns, expandedColumnsLength }: Props<T>) => {
   const dispatch = useTableActionsDispatch();
-  const { sort: { fieldName, order } } = useTableActionsState();
+  const { sort: [sort] } = useTableActionsState();
+  const gridTemplateColumns = expandedColumnsLength
+    ? `32px 40% repeat(${columns.length - 2}, 1fr)`
+    : `2fr repeat(${columns.length - 1}, 1fr)`;
   return (
-    <thead className={className}>
-      <tr>
-        {columns.map((column) => {
-          const HeaderCell = column.HeaderCell || DefaultHeaderCell;
-          return (
-            <th key={column.name} style={{ width: column.width }}>
-              <Panel>
-                <HeaderCell column={column} />
-                {column.name !== 'selector' && (
-                  <SortArrows
-                    onClick={() => dispatch(toggleOrder(column.name))}
-                    order={column.name === fieldName ? order : null}
-                  />
-                )}
-              </Panel>
-            </th>
-          );
-        })}
-      </tr>
-    </thead>
+    <div
+      css={[
+        tw`sticky -top-1 z-40 bg-monochrome-white`,
+        tw`grid items-center h-13`,
+        tw`text-14 leading-20 font-bold border-b border-t border-monochrome-black`,
+      ]}
+      style={{ gridTemplateColumns }}
+    >
+      {columns.map((column) => {
+        const { name, HeaderCell, align = 'end' } = column;
+        return (
+          <div tw="px-4" key={name} style={{ justifySelf: align }}>
+            {HeaderCell
+              ? HeaderCell({ column })
+              : <DefaultHeaderCell column={column} sort={sort} onSort={(cellSort) => dispatch(setSort(cellSort))} />}
+          </div>
+        );
+      })}
+    </div>
   );
-});
+};

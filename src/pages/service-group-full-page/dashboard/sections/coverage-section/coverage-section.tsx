@@ -1,44 +1,46 @@
-import * as React from 'react';
-import { BEM } from '@redneckz/react-bem-helper';
-import { Icons } from '@drill4j/ui-kit';
+/*
+ * Copyright 2020 EPAM Systems
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+import { Tooltip } from '@drill4j/ui-kit';
 
 import { percentFormatter } from 'utils';
-import { Section } from '../section';
-
-import styles from './coverage-section.module.scss';
+import { Count } from 'types/count';
+import { COVERAGE_TYPES_COLOR } from 'common/constants';
+import { SingleBar, DashboardSection } from 'components';
+import { MethodsTooltip } from './methods-tooltip';
 
 interface Props {
-  className?: string;
-  coverage?: number;
-  arrow?: 'INCREASE' | 'DECREASE';
+  totalCoverage?: number;
+  methodCount?: Count;
 }
 
-const coverageSection = BEM(styles);
-
-export const CoverageSection = coverageSection(({ className, coverage = 0, arrow }: Props) => (
-  <div className={className}>
-    <Section
+export const CoverageSection = ({ totalCoverage = 0, methodCount: { total = 0, covered = 0 } = {} }: Props) => (
+  <div>
+    <DashboardSection
       label="Build Coverage"
-      info={(
-        <>
-          {`${percentFormatter(coverage)}%`}
-          {arrow && (
-            <CoverageArrow
-              rotate={arrow === 'INCREASE' ? 180 : 0}
-              type={arrow}
-              height={34}
-              width={24}
-            />
-          )}
-        </>
+      info={`${percentFormatter(totalCoverage)}%`}
+      graph={(
+        <Tooltip message={<MethodsTooltip coveredMethods={{ total, covered }} />}>
+          <SingleBar
+            width={108}
+            height={128}
+            color={COVERAGE_TYPES_COLOR.TOTAL}
+            percent={percentFormatter(totalCoverage)}
+          />
+        </Tooltip>
       )}
     />
   </div>
-));
-
-const CoverageArrow: React.FC<{
-  rotate: number;
-  type: 'INCREASE' | 'DECREASE';
-  height: number;
-  width: number;
-}> = coverageSection.coverageArrow(Icons.CoverageArrow);
+);

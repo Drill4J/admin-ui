@@ -1,4 +1,18 @@
-import * as React from 'react';
+/*
+ * Copyright 2020 EPAM Systems
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 import { Switch, Route, Redirect } from 'react-router-dom';
 import { Icons } from '@drill4j/ui-kit';
 
@@ -6,9 +20,6 @@ import { AppLayout } from 'layouts';
 import {
   LoginPage,
   AgentsPage,
-  PluginsPage,
-  LogsPage,
-  ApplicationSettingsPage,
   NotFoundPage,
   AgentFullPage,
   SettingsPage,
@@ -17,9 +28,8 @@ import {
   ServiceGroupRegistrationPage,
 } from 'pages';
 import {
-  PrivateRoute, Sidebar, Toolbar, Footer,
+  PrivateRoute, Sidebar, Footer,
 } from 'components';
-import { Breadcrumbs } from 'modules';
 
 const sidebarLinks = [
   { link: 'agents', icon: Icons.Agents },
@@ -33,17 +43,14 @@ export const PageSwitcher = () => (
     <Route path="/service-group-full-page/:id/:pluginId" component={ServiceGroupFullPage} />
     <AppLayout
       sidebar={<Sidebar links={sidebarLinks} matchParams={{ path: '/:activeLink' }} />}
-      toolbar={<Toolbar breadcrumbs={<Breadcrumbs />} />}
       footer={<Footer />}
     >
       <Switch>
-        <PrivateRoute exact path="/agents" component={AgentsPage} />
-        <PrivateRoute exact path="/agents/:type/:id/settings" component={SettingsPage} />
-        <PrivateRoute exact path="/plugins" component={PluginsPage} />
-        <PrivateRoute exact path="/logs" component={LogsPage} />
-        <PrivateRoute exact path="/settings" component={ApplicationSettingsPage} />
+        <PrivateRoute exact path={['/agents', '/agents/notification-sidebar']} component={AgentsPage} />
+        <PrivateRoute exact path={['/agents/:type/:id/settings/:tab', '/agents/:type/:id/settings/:tab/:panel']} component={SettingsPage} />
         <PrivateRoute exact path="/registration/:agentId" component={AgentRegistrationPage} />
         <PrivateRoute path="/bulk-registration/:serviceGroupId" component={ServiceGroupRegistrationPage} />
+        <PrivateRoute path="/preregister/offline-agent" component={AgentRegistrationPage} />
         <PrivateRoute component={NotFoundPage} />
       </Switch>
     </AppLayout>

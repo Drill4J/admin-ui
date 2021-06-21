@@ -1,4 +1,19 @@
-import * as React from 'react';
+/*
+ * Copyright 2020 EPAM Systems
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+import { ReactNode, useReducer } from 'react';
 
 import {
   TableActionsStateContext,
@@ -8,11 +23,11 @@ import {
 import { actionsReducer } from './reducer';
 
 interface Props {
-  children: React.ReactNode;
+  children: ReactNode;
 }
 
 export const TableActionsProvider = ({ children }: Props) => {
-  const [state, dispatch] = React.useReducer(actionsReducer, defaultState);
+  const [state, dispatch] = useReducer(actionsReducer, defaultState);
 
   return (
     <TableActionsStateContext.Provider value={state}>

@@ -1,51 +1,65 @@
-import * as React from 'react';
-import { Panel, Tooltip } from '@drill4j/ui-kit';
+/*
+ * Copyright 2020 EPAM Systems
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+import { Tooltip } from '@drill4j/ui-kit';
+import 'twin.macro';
 
+import { SingleBar, DashboardSection, SectionTooltip } from 'components';
 import { TESTS_TYPES_COLOR } from 'common/constants';
 import { BuildCoverage } from 'types/build-coverage';
 import { TestTypes } from 'types/test-types';
-import { capitalize } from 'utils';
+import { capitalize, convertToPercentage } from 'utils';
 import { TestsInfo } from 'types/tests-info';
-import { useBuildVersion } from '../../coverage-plugin/use-build-version';
-import { SingleBar } from '../single-bar';
-import { Section } from './section';
-import { SectionTooltip } from './section-tooltip';
+import { useBuildVersion } from 'hooks';
 
 export const TestsSection = () => {
   const { byTestType = [], finishedScopesCount = 0 } = useBuildVersion<BuildCoverage>('/build/coverage') || {};
   const totalCoveredMethodCount = byTestType.reduce((acc, { summary: { testCount = 0 } }) => acc + testCount, 0);
   const testsInfo: TestsInfo = byTestType.reduce((test, testType) => ({ ...test, [testType.type]: testType }), {});
-  const tooltipData = Object.keys(testsInfo).reduce(
-    (acc, testType) => ({
-      ...acc,
-      [testType.toLowerCase()]: {
-        value: testsInfo[testType].summary.coverage?.percentage,
-        count: testsInfo[testType].summary.testCount,
-        color: TESTS_TYPES_COLOR[testType as TestTypes],
-      },
-    }),
-    {},
-  );
+  const tooltipData = {
+    auto: {
+      value: testsInfo?.AUTO?.summary.coverage?.percentage,
+      count: testsInfo?.AUTO?.summary.testCount,
+      color: TESTS_TYPES_COLOR.AUTO,
+    },
+    manual: {
+      value: testsInfo?.MANUAL?.summary.coverage?.percentage,
+      count: testsInfo?.MANUAL?.summary.testCount,
+      color: TESTS_TYPES_COLOR.MANUAL,
+    },
+  };
 
   return (
-    <Section
+    <DashboardSection
       label="Tests"
       info={totalCoveredMethodCount}
       additionalInfo={`${finishedScopesCount} scopes`}
       graph={(
-        <Tooltip message={totalCoveredMethodCount > 0 && <SectionTooltip data={tooltipData} />}>
-          <Panel>
+        <Tooltip message={<SectionTooltip data={tooltipData} />}>
+          <div tw="flex items-center w-full">
             {Object.keys(TESTS_TYPES_COLOR).map((testType) => (
               <SingleBar
                 key={testType}
-                width={48}
+                width={64}
                 height={128}
                 color={TESTS_TYPES_COLOR[testType as TestTypes]}
-                percent={(testsInfo[testType] && (testsInfo[testType].summary.testCount || 0) / totalCoveredMethodCount) * 100}
-                icon={testType === 'PERFORMANCE' ? 'Perf' : capitalize(testType)}
+                percent={convertToPercentage((testsInfo[testType] && testsInfo[testType].summary.testCount) || 0, totalCoveredMethodCount)}
+                icon={capitalize(testType)}
               />
             ))}
-          </Panel>
+          </div>
         </Tooltip>
       )}
     />

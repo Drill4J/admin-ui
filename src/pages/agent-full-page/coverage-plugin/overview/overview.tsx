@@ -1,91 +1,101 @@
-import * as React from 'react';
-import { BEM } from '@redneckz/react-bem-helper';
-import { Panel, Icons } from '@drill4j/ui-kit';
+/*
+ * Copyright 2020 EPAM Systems
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+import { Icons } from '@drill4j/ui-kit';
+import tw, { styled } from 'twin.macro';
+import { useParams } from 'react-router-dom';
 
 import { TabsPanel, Tab } from 'components';
-import { BuildCoverage } from 'types/build-coverage';
-import { ActiveScope } from 'types/active-scope';
-import { Methods } from 'types/methods';
-import { useAgent } from 'hooks';
+import {
+  useActiveScope, useAgent, useBuildVersion,
+} from 'hooks';
 import { TableActionsProvider } from 'modules';
+import { ParentBuild } from 'types/parent-build';
+import { AGENT_STATUS } from 'common/constants';
+import { BuildCoverage } from 'types/build-coverage';
 import { CoveragePluginHeader } from '../coverage-plugin-header';
-import { useBuildVersion } from '../use-build-version';
 import { CoverageDetails } from '../coverage-details';
-import { ProjectMethodsCards } from '../project-methods-cards';
+import { BuildProjectMethods } from './build-project-methods';
 import { usePluginState } from '../../store';
-import { Tests } from '../tests';
-import { ActiveBuildCoverageInfo } from './active-build-coverage-info';
-import { BuildCoverageInfo } from './build-coverage-info';
+import { BuildTests } from '../build-tests';
 import { ActiveScopeInfo } from './active-scope-info';
+import { usePreviousBuildCoverage } from '../use-previous-build-coverage';
+import { BuildProjectTests } from './build-project-tests';
 
-import styles from './overview.module.scss';
+const TabIconWrapper = styled.div`
+  ${tw`flex items-center mr-2 text-monochrome-black`}
+`;
 
-interface Props {
-  className?: string;
-}
-
-const overview = BEM(styles);
-
-export const Overview = overview(({ className }: Props) => {
-  const [selectedTab, setSelectedTab] = React.useState('methods');
+export const Overview = () => {
   const { agentId, loading } = usePluginState();
   const { status } = useAgent(agentId) || {};
+  const { version: previousBuildVersion = '' } = useBuildVersion<ParentBuild>('/data/parent') || {};
+  const {
+    percentage: previousBuildCodeCoverage = 0,
+  } = usePreviousBuildCoverage(previousBuildVersion) || {};
+  const scope = useActiveScope();
   const buildCoverage = useBuildVersion<BuildCoverage>('/build/coverage') || {};
-  const scope = useBuildVersion<ActiveScope>('/active-scope');
-  const buildMethods = useBuildVersion<Methods>('/build/methods') || {};
+  const { pluginId = '', buildVersion = '', tab } = useParams<{ pluginId: string; buildVersion: string; tab: string}>();
 
   return (
-    <div className={className}>
+    <div>
       <CoveragePluginHeader />
-      <SummaryPanel align="space-between">
-        {scope?.active ? (
-          <>
-            <ActiveBuildCoverageInfo buildCoverage={buildCoverage} scope={scope} status={status} loading={loading} />
-            <ActiveScopeInfo scope={scope} />
-          </>
-        )
-          : (
-            <BuildCoverageInfo buildCoverage={buildCoverage} />
-          )}
-      </SummaryPanel>
-      <RoutingTabsPanel>
-        <TabsPanel activeTab={selectedTab} onSelect={setSelectedTab}>
-          <Tab name="methods">
+      <div tw="w-full">
+        <TabsPanel>
+          <Tab name="methods" to={`/full-page/${agentId}/${buildVersion}/${pluginId}/dashboard/methods`}>
             <TabIconWrapper>
               <Icons.Function />
             </TabIconWrapper>
             Build methods
           </Tab>
-          <Tab name="tests">
+          <Tab name="tests" to={`/full-page/${agentId}/${buildVersion}/${pluginId}/dashboard/tests`}>
             <TabIconWrapper>
               <Icons.Test width={16} />
             </TabIconWrapper>
             Build tests
           </Tab>
         </TabsPanel>
-      </RoutingTabsPanel>
-      <TabContent>
-        {selectedTab === 'methods' ? (
-          <>
-            <ProjectMethodsCards methods={buildMethods} />
-            <TableActionsProvider>
-              <CoverageDetails
-                topic="/build/coverage/packages"
-                associatedTestsTopic="/build/associated-tests"
-                classesTopicPrefix="build"
-                packageCount={buildCoverage.packageCount?.total}
+      </div>
+      <div tw="flex gap-6">
+        <div tw="flex flex-col items-stretch gap-7 pt-4 w-full border-t border-monochrome-medium-tint">
+          {tab === 'methods'
+            ? (
+              <BuildProjectMethods
+                scope={scope}
+                previousBuildInfo={{ previousBuildVersion, previousBuildCodeCoverage }}
+                loading={loading}
+                status={status}
+                buildCoverage={buildCoverage}
               />
-            </TableActionsProvider>
-          </>
-        ) : (
-          <Tests />
-        )}
-      </TabContent>
+            )
+            : <BuildProjectTests />}
+        </div>
+        {scope?.active && status === AGENT_STATUS.ONLINE && <ActiveScopeInfo scope={scope} />}
+      </div>
+      <div tw="mt-2">
+        <TableActionsProvider key={tab}>
+          {tab === 'methods' ? (
+            <CoverageDetails
+              topic="/build/coverage/packages"
+              associatedTestsTopic="/build"
+              classesTopicPrefix="build"
+              showCoverageIcon={Boolean(buildCoverage?.finishedScopesCount)}
+            />
+          ) : <BuildTests />}
+        </TableActionsProvider>
+      </div>
     </div>
   );
-});
-
-const SummaryPanel = overview.summaryPanel(Panel);
-const RoutingTabsPanel = overview.routingTabsPanel('div');
-const TabContent = overview.tabContent('div');
-const TabIconWrapper = overview.tabIconWrapper('div');
+};

@@ -1,35 +1,47 @@
-import * as React from 'react';
-import { BEM } from '@redneckz/react-bem-helper';
-import { useParams } from 'react-router-dom';
-import { Panel, Icons, Tooltip } from '@drill4j/ui-kit';
+/*
+ * Copyright 2020 EPAM Systems
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+import { NavLink, useParams } from 'react-router-dom';
+import { Tooltip } from '@drill4j/ui-kit';
+import tw, { styled } from 'twin.macro';
 
 import { percentFormatter } from 'utils';
-import { BuildCoverage } from 'types/build-coverage';
+import { BuildSummary } from 'types/build-summary';
 import { Methods } from 'types/methods';
-import { isActiveBuild } from 'pages/agent-full-page/is-active-build';
 import { COVERAGE_TYPES_COLOR } from 'common/constants';
-import { useBuildVersion } from '../../../coverage-plugin/use-build-version';
-import { SingleBar } from '../../single-bar';
-import { Section } from '../section';
-import { SectionTooltip } from '../section-tooltip';
+import { ParentBuild } from 'types/parent-build';
+import { SingleBar, CoverageSectionTooltip, DashboardSection } from 'components';
+import { useBuildVersion } from 'hooks';
+import { usePreviousBuildCoverage } from '../../../coverage-plugin/use-previous-build-coverage';
 
-import styles from './coverage-section.module.scss';
+const BuildInfo = styled.div`
+  ${tw`grid items-center`}
+  & {
+    grid-template-columns: max-content 1fr;
+  }
+`;
 
-interface Props {
-  className?: string;
-  activeBuildVersion?: string;
-}
-
-const coverageSection = BEM(styles);
-
-export const CoverageSection = coverageSection(({ className, activeBuildVersion }: Props) => {
+export const CoverageSection = () => {
+  const { version: previousBuildVersion = '' } = useBuildVersion<ParentBuild>('/data/parent') || {};
+  const { percentage: previousBuildCodeCoverage = 0 } = usePreviousBuildCoverage(previousBuildVersion) || {};
+  const { coverage: buildCodeCoverage = 0, scopeCount = 0 } = useBuildVersion<BuildSummary>('/build/summary') || {};
   const {
-    percentage = 0,
-    diff = 0,
-    prevBuildVersion = '',
-    arrow = '',
-  } = useBuildVersion<BuildCoverage>('/build/coverage') || {};
-  const {
+    all: {
+      total: allMethodsTotalCount = 0,
+      covered: allMethodsCoveredCount = 0,
+    } = {},
     new: {
       total: newMethodsTotalCount = 0,
       covered: newMethodsCoveredCount = 0,
@@ -38,96 +50,62 @@ export const CoverageSection = coverageSection(({ className, activeBuildVersion 
       total: modifiedMethodsTotalCount = 0,
       covered: modifiedMethodsCoveredCount = 0,
     } = {},
-    unaffected: {
-      total: unaffectedTotalCount = 0,
-      covered: unaffectedCoveredCount = 0,
-    } = {},
   } = useBuildVersion<Methods>('/build/methods') || {};
-  const { buildVersion = '' } = useParams<{ buildVersion: string }>();
+  const { agentId = '' } = useParams<{ agentId: string }>();
+  const tooltipData = {
+    totalCovered: {
+      total: allMethodsTotalCount,
+      covered: allMethodsCoveredCount,
+    },
+    new: {
+      total: newMethodsTotalCount,
+      covered: newMethodsCoveredCount,
+    },
+    modified: {
+      total: modifiedMethodsTotalCount,
+      covered: modifiedMethodsCoveredCount,
+    },
+  };
+  const buildDiff = percentFormatter(buildCodeCoverage) - percentFormatter(previousBuildCodeCoverage);
+  const isFirstBuild = !previousBuildVersion;
 
   return (
-    <div className={className}>
-      <Section
+    <div>
+      <DashboardSection
         label="Build Coverage"
-        info={(
-          <>
-            {`${percentFormatter(percentage)}%`}
-            {arrow && (
-              <CoverageArrow
-                rotate={arrow === 'INCREASE' ? 180 : 0}
-                type={arrow}
-                height={34}
-                width={24}
-              />
-            )}
-          </>
-        )}
+        info={`${percentFormatter(buildCodeCoverage)}%`}
         graph={(
-          <Tooltip
-            message={(
-              <SectionTooltip
-                data={{
-                  new: {
-                    count: newMethodsTotalCount,
-                    value: (newMethodsCoveredCount / newMethodsTotalCount) * 100,
-                    color: COVERAGE_TYPES_COLOR.NEW,
-                  },
-                  modified: {
-                    count: modifiedMethodsTotalCount,
-                    value: (modifiedMethodsCoveredCount / modifiedMethodsTotalCount) * 100,
-                    color: COVERAGE_TYPES_COLOR.MODIFIED,
-                  },
-                  unaffected: {
-                    count: unaffectedTotalCount,
-                    value: (unaffectedCoveredCount / unaffectedTotalCount) * 100,
-                    color: COVERAGE_TYPES_COLOR.UNAFFECTED,
-                  },
-                }}
+          <Tooltip tw="relative" message={<CoverageSectionTooltip data={tooltipData} />}>
+            <SingleBar
+              width={108}
+              height={128}
+              color={COVERAGE_TYPES_COLOR.TOTAL}
+              percent={percentFormatter(buildCodeCoverage)}
+            />
+            {!isFirstBuild && (
+              <div
+                tw="absolute w-27 border-t border-dashed border-monochrome-shade"
+                style={{ bottom: `${previousBuildCodeCoverage}%` }}
               />
             )}
-          >
-            <Panel>
-              <SingleBar
-                width={32}
-                height={128}
-                color={COVERAGE_TYPES_COLOR.NEW}
-                percent={(newMethodsCoveredCount / newMethodsTotalCount) * 100}
-                icon={<Icons.Add />}
-              />
-              <SingleBar
-                width={32}
-                height={128}
-                color={COVERAGE_TYPES_COLOR.MODIFIED}
-                percent={(modifiedMethodsCoveredCount / modifiedMethodsTotalCount) * 100}
-                icon={<Icons.Edit height={16} width={16} viewBox="0 0 16 15" />}
-              />
-              <SingleBar
-                width={32}
-                height={128}
-                color={COVERAGE_TYPES_COLOR.UNAFFECTED}
-                percent={(unaffectedCoveredCount / unaffectedTotalCount) * 100}
-                icon={<Icons.Check />}
-              />
-            </Panel>
           </Tooltip>
         )}
         additionalInfo={(
-          <Panel>
-            {Boolean(diff)
-              && prevBuildVersion
-              && `${diff > 0 ? '+' : '-'}${percentFormatter(Math.abs(diff))}% vs Build: ${prevBuildVersion}`}
-            {!percentage && !prevBuildVersion && isActiveBuild(activeBuildVersion, buildVersion)
-              && 'Will change when at least 1 scope is done.'}
-          </Panel>
-        )}
+          Boolean(buildDiff) && !isFirstBuild && scopeCount > 0 && (
+            <BuildInfo>
+              {`${buildDiff > 0 ? '+' : '-'} ${percentFormatter(Math.abs(buildDiff))}% vs`}
+              <div className="text-ellipsis">
+                <NavLink
+                  className="font-bold link leading-16 no-underline"
+                  to={`/full-page/${agentId}/${previousBuildVersion}/dashboard`}
+                  title={`Build ${previousBuildVersion}`}
+                >
+                  &nbsp;Build {previousBuildVersion}
+                </NavLink>
+              </div>
+            </BuildInfo>
+          ))}
       />
     </div>
   );
-});
-
-const CoverageArrow: React.FC<{
-  rotate: number;
-  type: 'INCREASE' | 'DECREASE';
-  height: number;
-  width: number;
-}> = coverageSection.coverageArrow(Icons.CoverageArrow);
+};

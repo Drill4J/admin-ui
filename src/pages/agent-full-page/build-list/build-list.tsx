@@ -1,122 +1,109 @@
-import * as React from 'react';
-import { BEM } from '@redneckz/react-bem-helper';
-import { useHistory, useParams } from 'react-router-dom';
-import { Panel, Table, Column } from '@drill4j/ui-kit';
+/*
+ * Copyright 2020 EPAM Systems
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+import { useRef } from 'react';
+import { useParams, Link } from 'react-router-dom';
+import {
+  Table, Column, Icons, Tooltip,
+} from '@drill4j/ui-kit';
+import tw, { styled } from 'twin.macro';
 
 import { defaultAdminSocket } from 'common/connection';
-import { useWsConnection, useElementSize } from 'hooks';
+import {
+  useWsConnection, useAgent, useBaselineVersion,
+} from 'hooks';
 import { dateTimeFormatter } from 'utils';
 import { BuildVersion } from 'types/build-version';
 import { setBuildVersion, usePluginDispatch } from '../store';
 
-import styles from './build-list.module.scss';
+const NameCell = styled.div`
+  ${tw`grid gap-x-2 h-12 items-center`}
+  grid-template-columns: minmax(auto, max-content) max-content;
+  ${tw`font-bold text-14`}
+`;
 
-interface Props {
-  className?: string;
-}
+export const BuildList = () => {
+  const { agentId = '' } = useParams<{ agentId: string }>();
+  const buildVersions = useWsConnection<BuildVersion[]>(defaultAdminSocket, `/agents/${agentId}/builds`) || [];
+  const { buildVersion: activeBuildVersion } = useAgent(agentId) || {};
+  const { version: baseline } = useBaselineVersion(agentId, activeBuildVersion) || {};
+  const dispatch = usePluginDispatch();
+  const node = useRef<HTMLDivElement>(null);
 
-const buildList = BEM(styles);
-
-export const BuildList =
-  buildList(
-    ({
-      className,
-    }: Props) => {
-      const { agentId = '' } = useParams<{ agentId: string }>();
-      const { push } = useHistory();
-      const buildVersions = useWsConnection<BuildVersion[]>(defaultAdminSocket, `/agents/${agentId}/builds`) || [];
-      const dispatch = usePluginDispatch();
-      const node = React.useRef<HTMLDivElement>(null);
-      const { width: contentWidth } = useElementSize(node);
-      const columnWidth = `${(contentWidth - 48) / 10}px`;
-
-      return (
-        <div className={className}>
-          <Content>
-            <div ref={node}>
-              <Title>
-                <span>All builds </span>
-                <BuildCount>{buildVersions.length}</BuildCount>
-              </Title>
-              <Table data={buildVersions}>
-                <Column
-                  name="buildVersion"
-                  label="Name"
-                  Cell={({ value: buildVersion }) => (
-                    <NameCell
-                      onClick={() => {
-                        dispatch(setBuildVersion(buildVersion));
-                        push(`/full-page/${agentId}/${buildVersion}/dashboard`);
-                      }}
-                    >
-                      {buildVersion}
-                    </NameCell>
-                  )}
-                  width={columnWidth}
-                />
-                <Column
-                  name="detectedAt"
-                  label="Added"
-                  Cell={({ value }) => <span>{dateTimeFormatter(value)}</span>}
-                  width={columnWidth}
-                />
-                <Column
-                  name="summary.total"
-                  HeaderCell={() => (
-                    <HeaderCell>
-                      <HeaderLabel>Total</HeaderLabel>
-                      <div>Methods</div>
-                    </HeaderCell>
-                  )}
-                  width={columnWidth}
-                />
-                <Column
-                  name="summary.new"
-                  HeaderCell={() => (
-                    <HeaderCell>
-                      <HeaderLabel>New</HeaderLabel>
-                    </HeaderCell>
-                  )}
-                  width={columnWidth}
-                />
-                <Column
-                  name="summary.modified"
-                  HeaderCell={() => (
-                    <HeaderCell>
-                      <HeaderLabel>Modified</HeaderLabel>
-                    </HeaderCell>
-                  )}
-                  width={columnWidth}
-                />
-                <Column
-                  name="summary.unaffected"
-                  HeaderCell={() => (
-                    <HeaderCell>
-                      <HeaderLabel>Unaffected</HeaderLabel>
-                    </HeaderCell>
-                  )}
-                  width={columnWidth}
-                />
-                <Column
-                  name="summary.deleted"
-                  HeaderCell={() => (
-                    <HeaderCell>
-                      <HeaderLabel>Deleted</HeaderLabel>
-                    </HeaderCell>
-                  )}
-                  width={columnWidth}
-                />
-              </Table>
-            </div>
-          </Content>
+  return (
+    <div tw="mx-6">
+      <div ref={node}>
+        <div tw="flex items-center gap-x-2 w-full my-6 font-light text-24 leading-32 text-monochrome-black">
+          <span>All builds </span>
+          <span tw="text-monochrome-default">{buildVersions.length}</span>
         </div>
-      );
-    },
+        <Table data={buildVersions} gridTemplateColumns="30% 20% repeat(5, 1fr)">
+          <Column
+            name="buildVersion"
+            label="Name"
+            Cell={({ value: buildVersion }) => (
+              <NameCell
+                onClick={() => dispatch(setBuildVersion(buildVersion))}
+                title={buildVersion}
+              >
+                <Link tw="link text-ellipsis" to={`/full-page/${agentId}/${buildVersion}/dashboard`}>{buildVersion}</Link>
+                {baseline === buildVersion && (
+                  <Tooltip
+                    message={(
+                      <span>
+                        This build is set as baseline.<br />
+                        All subsequent builds are compared with it.
+                      </span>
+                    )}
+                    position="top-right"
+                  >
+                    <Icons.Flag tw="flex items-center text-monochrome-default" />
+                  </Tooltip>
+                )}
+              </NameCell>
+            )}
+            align="start"
+          />
+          <Column
+            name="detectedAt"
+            label="Added"
+            Cell={({ value }) => <span>{dateTimeFormatter(value)}</span>}
+            align="start"
+          />
+          <Column
+            name="summary.total"
+            label="Total methods"
+          />
+          <Column
+            name="summary.new"
+            label="New"
+          />
+          <Column
+            name="summary.modified"
+            label="Modified"
+          />
+          <Column
+            name="summary.unaffected"
+            label="Unaffected"
+          />
+          <Column
+            name="summary.deleted"
+            label="Deleted"
+          />
+        </Table>
+      </div>
+    </div>
   );
-
-const Content = buildList.content('div');
-const Title = buildList.title(Panel);
-const BuildCount = buildList.itemsCount('span');
-const NameCell = buildList.nameCell('div');
-const HeaderCell = buildList.headerCell('div');
-const HeaderLabel = buildList.headerLabel('div');
+};

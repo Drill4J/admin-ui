@@ -1,152 +1,205 @@
-import * as React from 'react';
-import { BEM } from '@redneckz/react-bem-helper';
-import { useParams } from 'react-router-dom';
+/*
+ * Copyright 2020 EPAM Systems
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 import {
-  Button, Icons, Tooltip, Panel,
+  NavLink, useParams, Link, Route,
+} from 'react-router-dom';
+import {
+  Button, Icons, Tooltip,
 } from '@drill4j/ui-kit';
+import tw, { styled } from 'twin.macro';
 
-import { TestsToRunModal } from 'modules';
-import { QualityGatePane } from 'components';
-import {
-  ConditionSetting, ConditionSettingByType, QualityGate, QualityGateSettings,
-} from 'types/quality-gate-type';
+import { QualityGatePane } from 'modules';
+import { ConditionSetting, QualityGate, QualityGateStatus } from 'types/quality-gate-type';
+import { AGENT_STATUS } from 'common/constants';
+import { useAgent, useBuildVersion } from 'hooks';
+import { ParentBuild } from 'types/parent-build';
 import { Metrics } from 'types/metrics';
-import { useAgent } from 'hooks';
-import { TestsToRun } from 'types/tests-to-run';
-import { isActiveBuild } from '../../is-active-build';
-import { usePluginState } from '../../store';
-import { useBuildVersion } from '../use-build-version';
 import { ActionSection } from './action-section';
-import { RisksModal } from '../risks-modal';
+import { BaselineBuildModal } from './baseline-build-modal';
+import { BaselineTooltip } from './baseline-tooltip';
+import { usePreviousBuildCoverage } from '../use-previous-build-coverage';
 
-import styles from './coverage-plugin-header.module.scss';
-
-interface Props {
-  className?: string;
-}
-
-const coveragePluginHeader = BEM(styles);
-
-export const CoveragePluginHeader = coveragePluginHeader(({ className }: Props) => {
-  const [isRisksModalOpen, setIsRisksModalOpen] = React.useState(false);
-  const [isTestsToRunModalOpen, setIsTestToRunModalOpen] = React.useState(false);
-  const [isOpenQualityGatesPane, setIsOpenQualityGatesPane] = React.useState(false);
-
-  const { pluginId = '' } = useParams<{ pluginId: string }>();
-  const { agentId, buildVersion } = usePluginState();
-  const { buildVersion: activeBuildVersion } = useAgent(agentId) || {};
-
-  const { testTypeToNames = {} } = useBuildVersion<TestsToRun>('/build/tests-to-run') || {};
-  const conditionSettings = useBuildVersion<ConditionSetting[]>('/data/quality-gate-settings') || [];
+export const CoveragePluginHeader = () => {
   const {
-    status = 'FAILED',
-    results = { coverage: false, risks: false, tests: false },
-  } = useBuildVersion<QualityGate>('/data/quality-gate') || {};
-  const { coverage = 0, risks: risksCount = 0, tests: testToRunCount = 0 } = useBuildVersion<Metrics>('/data/stats') || {};
+    pluginId = '', agentId = '', buildVersion = '', tab = '',
+  } = useParams<{
+    pluginId: string;
+    agentId: string;
+    buildVersion: string;
+    tab: string;
+  }>();
 
-  const conditionSettingByType = conditionSettings
-    .reduce((conditionSetting, measureType) =>
-      ({ ...conditionSetting, [measureType.condition.measure]: measureType }),
-    {} as ConditionSettingByType);
-  const configured = conditionSettings.some(({ enabled }) => enabled === true);
-  const qualityGateSettings: QualityGateSettings = {
-    configured,
-    conditionSettingByType,
-    qualityGate: { status, results },
-    metrics: { coverage, risks: risksCount, tests: testToRunCount },
-  };
+  const { buildVersion: activeBuildVersion = '', status: agentStatus } = useAgent(agentId) || {};
+
+  const { risks: risksCount = 0, tests: testToRunCount = 0 } = useBuildVersion<Metrics>('/data/stats') || {};
+  const { version: previousBuildVersion = '' } = useBuildVersion<ParentBuild>('/data/parent') || {};
+  const conditionSettings = useBuildVersion<ConditionSetting[]>('/data/quality-gate-settings') || [];
+  const { status = 'FAILED' } = useBuildVersion<QualityGate>('/data/quality-gate') || {};
+
+  const { byTestType: previousBuildTests = [] } = usePreviousBuildCoverage(previousBuildVersion) || {};
+
+  const configured = conditionSettings.some(({ enabled }) => enabled);
+
   const StatusIcon = Icons[status];
 
   return (
-    <div className={className}>
-      <div>
-        <PluginName data-test="coverage-plugin-header:plugin-name">Test2Code</PluginName>
-        <CurrentBuild>
-          Build:
-          <Version data-test="coverage-plugin-header:build-version">{buildVersion}</Version>
-        </CurrentBuild>
+    <Content>
+      <div
+        tw="mr-6 font-light text-24 leading-32"
+        data-test="coverage-plugin-header:plugin-name"
+      >
+        Test2Code
       </div>
-      <Actions>
-        {isActiveBuild(activeBuildVersion, buildVersion) && (
-          <QualityGateSection>
-            <Panel>
-              <QualityGateLabel data-test="coverage-plugin-header:quality-gate-label">QUALITY GATE</QualityGateLabel>
-              <Tooltip
-                position="top"
-                customStyle={{ bottom: '24px', left: '16px' }}
-                message={(
-                  <>
-                    <div>Configure quality gate conditions to</div>
-                    <div>define whether your build passes or not.</div>
-                  </>
-                )}
-              >
-                <InfoIcon />
-              </Tooltip>
-            </Panel>
+      {agentStatus === AGENT_STATUS.ONLINE && (
+        <BaselinePanel>
+          <div>Current build: </div>
+          <div className="flex items-center w-full">
+            <div className="text-ellipsis text-monochrome-black" title={buildVersion}>{buildVersion}</div>
+            <BaselineTooltip />
+          </div>
+          <div>Parent build:</div>
+          {previousBuildVersion
+            ? (
+              <div className="text-ellipsis mr-6">
+                <NavLink
+                  className="inline link"
+                  to={`/full-page/${agentId}/${previousBuildVersion}/dashboard`}
+                  title={previousBuildVersion}
+                >
+                  {previousBuildVersion}
+                </NavLink>
+              </div>
+            ) : <span>&ndash;</span>}
+        </BaselinePanel>
+      )}
+      <div className="flex justify-end items-center">
+        {activeBuildVersion === buildVersion && agentStatus === AGENT_STATUS.ONLINE && (
+          <div tw="pl-4 pr-10 border-l border-monochrome-medium-tint text-monochrome-default">
+            <div className="flex items-center w-full">
+              <div tw="mr-2 text-12 leading-16 font-bold" data-test="coverage-plugin-header:quality-gate-label">
+                QUALITY GATE
+              </div>
+              {!configured && (
+                <Tooltip
+                  message={(
+                    <>
+                      <div tw="text-center">Configure quality gate conditions to</div>
+                      <div>define whether your build passes or not.</div>
+                    </>
+                  )}
+                >
+                  <Icons.Info tw="flex text-monochrome-default" />
+                </Tooltip>
+              )}
+            </div>
             {!configured ? (
-              <StatusWrapper>
+              <StatusWrapper
+                to={`/full-page/${agentId}/${buildVersion}/${pluginId}/dashboard/${tab}/quality-gate-pane`}
+                data-test="coverage-plugin-header:configure-button"
+              >
                 <Button
-                  data-test="coverage-plugin-header:configure-button"
                   type="primary"
                   size="small"
-                  onClick={() => setIsOpenQualityGatesPane(true)}
                 >
                   Configure
                 </Button>
               </StatusWrapper>
-            )
-              : (
-                <StatusWrapper type={status} onClick={() => setIsOpenQualityGatesPane(true)}>
-                  <StatusIcon />
-                  <StatusTitle data-test="coverage-plugin-header:quality-gate-status">{status}</StatusTitle>
-                </StatusWrapper>
-              )}
-          </QualityGateSection>
+            ) : (
+              <StatusWrapper
+                to={`/full-page/${agentId}/${buildVersion}/${pluginId}/dashboard/${tab}/quality-gate-pane`}
+                status={status}
+              >
+                <StatusIcon />
+                <StatusTitle data-test="coverage-plugin-header:quality-gate-status">
+                  {status}
+                </StatusTitle>
+              </StatusWrapper>
+            )}
+          </div>
         )}
-        <ActionSection
-          label="Risks"
-          count={risksCount}
-          onClick={() => setIsRisksModalOpen(true)}
-        />
-        <ActionSection
-          label="Tests to run"
-          count={testToRunCount}
-          onClick={() => setIsTestToRunModalOpen(true)}
-        />
-      </Actions>
-      {isRisksModalOpen && (
-        <RisksModal
-          isOpen={isRisksModalOpen}
-          onToggle={setIsRisksModalOpen}
-        />
-      )}
-      {isTestsToRunModalOpen && (
-        <TestsToRunModal
-          testsToRun={testTypeToNames}
-          isOpen={isTestsToRunModalOpen}
-          onToggle={setIsTestToRunModalOpen}
-          agentId={agentId}
-          pluginId={pluginId}
-        />
-      )}
-      <QualityGatePane
-        isOpen={isOpenQualityGatesPane}
-        onToggle={() => setIsOpenQualityGatesPane(false)}
-        qualityGateSettings={qualityGateSettings}
-        agentId={agentId}
-        pluginId={pluginId}
+        <ActionSection label="risks" previousBuild={{ previousBuildVersion, previousBuildTests }}>
+          {risksCount > 0 ? (
+            <Count
+              to={`/full-page/${agentId}/${buildVersion}/${pluginId}/dashboard/${tab}/risks-modal`}
+              className="flex items-center w-full"
+              data-test="action-section:count:risks"
+            >
+              {risksCount}
+              <Icons.Expander tw="ml-1 text-blue-default" width={8} height={8} />
+            </Count>
+          ) : (
+            <div
+              tw="flex items-center w-full text-20 leading-32 text-monochrome-black"
+              data-test="action-section:no-risks-count"
+            >
+              {risksCount}
+            </div>
+          )}
+        </ActionSection>
+        <ActionSection label="tests to run" previousBuild={{ previousBuildVersion, previousBuildTests }}>
+          {previousBuildTests.length > 0 ? (
+            <Count
+              to={`/full-page/${agentId}/${buildVersion}/${pluginId}/tests-to-run`}
+              className="flex items-center w-full"
+              data-test="action-section:count:tests-to-run"
+            >
+              {testToRunCount}
+              <Icons.Expander tw="ml-1 text-blue-default" width={8} height={8} />
+            </Count>
+          ) : <div tw="text-20 leading-32 text-monochrome-black" data-test="action-section:no-value:tests-to-run">&ndash;</div>}
+        </ActionSection>
+      </div>
+      <Route
+        path="/full-page/:agentId/:buildVersion/:pluginId/dashboard/:tab/baseline-build-modal"
+        render={() => <BaselineBuildModal />}
       />
-    </div>
+      <Route
+        path="/full-page/:agentId/:buildVersion/:pluginId/dashboard/:tab/quality-gate-pane"
+        render={() => <QualityGatePane />}
+      />
+    </Content>
   );
-});
+};
 
-const PluginName = coveragePluginHeader.pluginName('span');
-const CurrentBuild = coveragePluginHeader.currentBuild('div');
-const Version = coveragePluginHeader.version('div');
-const QualityGateLabel = coveragePluginHeader.qualityGateLabel('div');
-const InfoIcon = coveragePluginHeader.infoIcon(Icons.Info);
-const Actions = coveragePluginHeader.actions('div');
-const QualityGateSection = coveragePluginHeader.qualityGateSection('div');
-const StatusWrapper = coveragePluginHeader.statusWrapper('div');
-const StatusTitle = coveragePluginHeader.statusTitle('div');
+const Content = styled.div`
+  ${tw`grid items-center w-full h-20 border-b border-monochrome-medium-tint`}
+  grid-template-columns: max-content auto max-content;
+`;
+
+const BaselinePanel = styled.div`
+  ${tw`grid gap-x-2 pl-6`}
+  ${tw`border-l border-monochrome-medium-tint font-bold text-12 leading-24 text-monochrome-default`}
+  grid-template-columns: max-content minmax(64px, 60%);
+  grid-template-rows: repeat(2, 1fr);
+`;
+
+const StatusWrapper = styled(Link)(({ status }: { status?: QualityGateStatus }) => [
+  tw`flex items-center h-8 text-14`,
+  status === 'PASSED' && tw`text-green-default cursor-pointer`,
+  status === 'FAILED' && tw`text-red-default cursor-pointer`,
+]);
+
+const StatusTitle = styled.div`
+  ${tw`ml-2 font-bold lowercase`}
+  &::first-letter {
+    ${tw`uppercase`}
+  }
+`;
+
+const Count = styled(Link)`
+  ${tw`flex items-center w-full text-20 leading-32 cursor-pointer`}
+  ${tw`text-monochrome-black hover:text-blue-medium-tint active:text-blue-shade`}
+`;

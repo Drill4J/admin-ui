@@ -1,150 +1,201 @@
-import * as React from 'react';
-import { BEM } from '@redneckz/react-bem-helper';
-import { Icons, Panel } from '@drill4j/ui-kit';
-import { Form, Field } from 'react-final-form';
-
-import { Fields } from 'forms';
+/*
+ * Copyright 2020 EPAM Systems
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+import { useRef } from 'react';
+import { Icons } from '@drill4j/ui-kit';
+import { Route, useParams, Link } from 'react-router-dom';
+import queryString from 'query-string';
+import 'twin.macro';
 
 import { ClassCoverage } from 'types/class-coverage';
-import { useVisibleElementsCount } from 'hooks';
-import { useTableActionsState, useTableActionsDispatch, setSearch } from 'modules';
-import { CompoundCell } from './compound-cell';
-import { CoverageCell } from './coverage-cell';
+import { FilterList } from 'types/filter-list';
+import { useVisibleElementsCount, useBuildVersion } from 'hooks';
+import { Cells, SearchPanel, Stub } from 'components';
+import {
+  useTableActionsState, useTableActionsDispatch, setSearch,
+} from 'modules';
 import { NameCell } from './name-cell';
 import { AssociatedTestModal } from './associated-test-modal';
-import { AssociatedTestColumn } from './associated-test-column';
 import { ExpandableTable, Column } from './table';
-import { useBuildVersion } from '../use-build-version';
-
-import styles from './coverage-details.module.scss';
+import { CoverageCell } from './coverage-cell';
+import { CellProps } from './table/table-types';
 
 interface Props {
-  className?: string;
   topic: string;
   associatedTestsTopic: string;
   classesTopicPrefix: string;
-  packageCount?: number;
+  showCoverageIcon: boolean;
 }
 
-const coverageDetails = BEM(styles);
+export const CoverageDetails = ({
+  associatedTestsTopic, classesTopicPrefix, topic, showCoverageIcon,
+}: Props) => {
+  const dispatch = useTableActionsDispatch();
+  const { search, sort } = useTableActionsState();
+  const {
+    items: coverageByPackages = [],
+    totalCount = 0,
+    filteredCount = 0,
+  } = useBuildVersion<FilterList<ClassCoverage>>(topic, search, sort, 'LIST') || {};
+  const ref = useRef<HTMLDivElement>(null);
+  const visibleElementsCount = useVisibleElementsCount(ref, 10, 10);
+  const [searchQuery] = search;
+  const expandedColumns = [
+    <Column
+      name="coverage"
+      Cell={({ value = 0 }) => <CoverageCell value={value as number} showCoverageIcon={showCoverageIcon} />}
+    />,
+    <Column name="totalMethodsCount" testContext="total-methods-count" />,
+    <Column name="coveredMethodsCount" testContext="covered-methods-count" />,
+  ];
+  const {
+    buildVersion, agentId, pluginId, scopeId, tab,
+  } = useParams<{ agentId?: string; pluginId?: string; buildVersion?: string; scopeId?: string; tab: string; }>();
 
-export const CoverageDetails = coverageDetails(
-  ({
-    className, associatedTestsTopic, classesTopicPrefix, topic, packageCount,
-  }: Props) => {
-    const [selectedId, setSelectedId] = React.useState('');
-    const dispatch = useTableActionsDispatch();
-    const { search, sort } = useTableActionsState();
-    const coverageByPackages = useBuildVersion<ClassCoverage[]>(topic, search, sort) || [];
-    const ref = React.useRef<HTMLDivElement>(null);
-    const visibleElementsCount = useVisibleElementsCount(ref, 10, 10);
+  const getModalLink = (id: string, treeLevel: number) => (scopeId
+    ? `/full-page/${agentId}/${buildVersion}/${pluginId}/scope/${scopeId}/${tab}/associated-test-modal/
+    ?${queryString.stringify({ testId: id, treeLevel })}`
+    : `/full-page/${agentId}/${buildVersion}/${pluginId}/dashboard/${tab}/associated-test-modal/
+    ?${queryString.stringify({ testId: id, treeLevel })}`);
 
-    return (
-      <div className={className}>
-        <>
-          <Panel>
-            <Form
-              onSubmit={(values) => dispatch(setSearch(values?.search || ''))}
-              render={({ handleSubmit, form }) => (
-                <form onSubmit={handleSubmit}>
-                  <Field
-                    name="search"
-                    component={SearchField}
-                    placeholder="Search by packages"
-                    reset={() => { form.reset(); handleSubmit(); }}
-                  />
-                </form>
-              )}
-            />
-            <SearchResult align={search.value ? 'space-between' : 'end'}>
-              {search.value && <span data-test="coverage-details:search-result">{coverageByPackages.length} result</span>}
-              <span data-test="coverage-details:displaying-packages-count">
-                Displaying {coverageByPackages.slice(0, visibleElementsCount).length} of {packageCount} packages
-              </span>
-            </SearchResult>
-          </Panel>
-          <ExpandableTable
-            data={coverageByPackages.slice(0, visibleElementsCount)}
-            idKey="name"
-            columnsSize="medium"
-            classesTopicPrefix={classesTopicPrefix}
-            tableContentStub={coverageByPackages.length === 0 && (
-              <NotFound>
-                <Icons.Package height={104} width={107} />
-                <Title>No results found</Title>
-                <Message>Try adjusting your search or filter to find what you are  looking for.</Message>
-              </NotFound>
-            )}
-            expandedColumns={[
-              <Column
-                name="name"
-                Cell={(props) => (
-                  <CompoundCell type="primary" pathKey="path" icon={<Icons.Class />} {...props} />
-                )}
-              />,
-              <Column name="coverage" Cell={CoverageCell} />,
-              <Column name="totalMethodsCount" />,
-              <Column name="coveredMethodsCount" />,
-              <Column
-                name="assocTestsCount"
-                label="Associated tests"
-                Cell={(props) => <AssociatedTestColumn onClick={setSelectedId} {...props} />}
-              />,
-            ]}
-            secondLevelExpand={[
-              <Column
-                name="name"
-                Cell={(props) => (
-                  <CompoundCell
-                    type="secondary"
-                    pathKey="decl"
-                    icon={<Icons.Function />}
-                    {...props}
-                  />
-                )}
-                colSpan={2}
-              />,
-              <Column name="coverage" Cell={CoverageCell} colSpan={3} />,
-              <Column
-                name="assocTestsCount"
-                label="Associated tests"
-                Cell={(props) => <AssociatedTestColumn onClick={setSelectedId} {...props} />}
-              />,
-            ]}
-            expandedContentKey="name"
-            hasSecondLevelExpand
+  return (
+    <div tw="flex flex-col">
+      <>
+        <div tw="mt-2">
+          <SearchPanel
+            onSearch={(searchValue) => dispatch(setSearch([{ value: searchValue, field: 'name', op: 'CONTAINS' }]))}
+            searchQuery={searchQuery?.value}
+            searchResult={filteredCount}
+            placeholder="Search package by name"
           >
+            Displaying {coverageByPackages.slice(0, visibleElementsCount).length} of {totalCount} packages
+          </SearchPanel>
+        </div>
+        <ExpandableTable
+          data={coverageByPackages.slice(0, visibleElementsCount)}
+          idKey="name"
+          classesTopicPrefix={classesTopicPrefix}
+          tableContentStub={coverageByPackages.length === 0 && (
+            <Stub
+              icon={<Icons.Package height={104} width={107} />}
+              title="No results found"
+              message="Try adjusting your search or filter to find what you are looking for."
+            />
+          )}
+          expandedColumns={[
             <Column
               name="name"
-              label="Name"
-              Cell={({ value }) => <NameCell icon={<Icons.Package />} value={value} />}
-            />
-            <Column name="coverage" label="Coverage" Cell={CoverageCell} />
-            <Column name="totalMethodsCount" label="Methods total" />
-            <Column name="coveredMethodsCount" label="Methods covered" />
+              Cell={(({ item: { name = '' } = {} }: CellProps<unknown, { name?: string }>) => (
+                <NameCell type="primary" icon={<Icons.Class width={16} height={16} />} value={name} testContext="class" />
+              ))}
+              align="start"
+            />,
+            ...expandedColumns,
             <Column
               name="assocTestsCount"
               label="Associated tests"
-              Cell={(props) => <AssociatedTestColumn onClick={setSelectedId} {...props} />}
-            />
-          </ExpandableTable>
-          <div ref={ref} />
-        </>
-        {selectedId && (
+              Cell={({
+                value = '',
+                item: { id = '' } = {},
+              }: CellProps<string, { id?: string; assocTestsCount?: number }>) => (
+                <Cells.Clickable
+                  data-test="coverage-details:associated-tests-count"
+                  disabled={!value}
+                >
+                  {value ? <Link to={getModalLink(id, 2)}>{value}</Link> : 'n/a'}
+                </Cells.Clickable>
+              )}
+            />,
+          ]}
+          secondLevelExpand={[
+            <Column
+              name="name"
+              Cell={({ item: { name = '', decl = '' } = {} }: CellProps<unknown, { name?: string, decl?: string }>) => (
+                <div tw="pr-4"><Cells.Compound key={name} cellName={name} cellAdditionalInfo={decl} icon={<Icons.Function />} /></div>
+              )}
+              align="start"
+            />,
+            ...expandedColumns,
+            <Column
+              name="assocTestsCount"
+              label="Associated tests"
+              Cell={({
+                value = '',
+                item: { id = '' } = {},
+              }: CellProps<string, { id?: string; assocTestsCount?: number }>) => (
+                <Cells.Clickable
+                  data-test="coverage-details:associated-tests-count"
+                  disabled={!value}
+                >
+                  {value ? <Link to={getModalLink(id, 3)}>{value}</Link> : 'n/a'}
+                </Cells.Clickable>
+              )}
+            />,
+          ]}
+          expandedContentKey="name"
+          hasSecondLevelExpand
+        >
+          <Column
+            name="name"
+            label="Name"
+            Cell={({ value = '' }: CellProps<string, unknown>) => (
+              <NameCell
+                icon={<Icons.Package />}
+                value={value}
+                testContext="package"
+              />
+            )}
+            align="start"
+          />
+          <Column
+            name="coverage"
+            label={(
+              <div className="flex justify-end items-center w-full">
+                Coverage, %<Icons.Checkbox tw="ml-4 min-w-16px text-monochrome-default" width={16} height={16} />
+              </div>
+            )}
+            Cell={({ value = 0 }) => <CoverageCell value={value as number} showCoverageIcon={showCoverageIcon} />}
+          />
+          <Column name="totalMethodsCount" label="Methods total" testContext="total-methods-count" />
+          <Column name="coveredMethodsCount" label="Methods covered" testContext="covered-methods-count" />
+          <Column
+            name="assocTestsCount"
+            label="Associated tests"
+            Cell={({ value = '', item: { id = '' } = {} }: CellProps<string, { id?: string; assocTestsCount?: number }>) => (
+              <Cells.Clickable
+                data-test="coverage-details:associated-tests-count"
+                disabled={!value}
+              >
+                {value ? <Link to={getModalLink(id, 1)}>{value}</Link> : 'n/a'}
+              </Cells.Clickable>
+            )}
+          />
+        </ExpandableTable>
+        <div ref={ref} />
+      </>
+      <Route
+        path={[
+          '/full-page/:agentId/:buildVersion/:pluginId/dashboard/:tab/associated-test-modal',
+          '/full-page/:agentId/:buildVersion/:pluginId/scope/:scopeId/:tab/associated-test-modal',
+        ]}
+        render={() => (
           <AssociatedTestModal
-            id={selectedId}
-            isOpen={Boolean(selectedId)}
-            onToggle={() => setSelectedId('')}
             associatedTestsTopic={associatedTestsTopic}
           />
         )}
-      </div>
-    );
-  },
-);
-
-const NotFound = coverageDetails.notFound('div');
-const Title = coverageDetails.title('div');
-const Message = coverageDetails.message('div');
-const SearchField = coverageDetails.searchField(Fields.Search);
-const SearchResult = coverageDetails.searchResult(Panel);
+      />
+    </div>
+  );
+};

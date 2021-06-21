@@ -1,38 +1,51 @@
-import * as React from 'react';
-import { BEM, div } from '@redneckz/react-bem-helper';
+/*
+ * Copyright 2020 EPAM Systems
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+import { Icons } from '@drill4j/ui-kit';
+import { Link } from 'react-router-dom';
+import tw, { styled } from 'twin.macro';
 
 import { spacesToDashes } from 'utils';
 
-import styles from './test-to-code-header-cell.module.scss';
-
 interface Props {
-  className?: string;
   label: string;
   value?: string | number;
-  onClick?: () => void;
+  path?: string;
 }
 
-const testToCodeHeaderCell = BEM(styles);
+const Value = styled.span(({ clickable }: {clickable: boolean}) => [
+  tw`ml-4 text-20 text-monochrome-black`,
+  clickable && tw`cursor-pointer hover:text-blue-default active:text-blue-shade`,
+]);
 
-export const TestToCodeHeaderCell = testToCodeHeaderCell(({
-  className, label, value, onClick,
+export const TestToCodeHeaderCell = ({
+  label, value, path,
 }: Props) => (
-  <div className={className}>
-    <Content>
-      <Label>{label}</Label>
+  <div>
+    <div tw="border-l border-monochrome-medium-tint">
+      <div tw="ml-4 font-bold text-12 text-monochrome-default uppercase">{label}</div>
       <Value
-        onClick={onClick}
-        clickable={Boolean(value && onClick)}
+        clickable={Boolean(path)}
         data-test={`dashboard-header-cell:${spacesToDashes(label)}:value`}
       >
-        {value}
+        {path ? (
+          <Link tw="inline-flex items-center" to={path}>
+            {value}<Icons.Expander tw="ml-1 text-blue-default" height={8} />
+          </Link>
+        ) : value}
       </Value>
-    </Content>
+    </div>
   </div>
-));
-
-const Content = testToCodeHeaderCell.content('div');
-const Label = testToCodeHeaderCell.label('div');
-const Value = testToCodeHeaderCell.value(
-  div({ onClick: () => {}, 'data-test': '' } as { onClick?: () => void; clickable?: boolean;'data-test'?: string }),
 );

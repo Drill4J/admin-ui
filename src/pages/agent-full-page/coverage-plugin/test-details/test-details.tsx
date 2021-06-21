@@ -1,149 +1,161 @@
-import * as React from 'react';
-import { BEM, span, div } from '@redneckz/react-bem-helper';
+/*
+ * Copyright 2020 EPAM Systems
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+import { useRef } from 'react';
 import {
-  Icons, OverflowText, Panel, Column, ExpandableTable,
+  Icons, Column, Table,
 } from '@drill4j/ui-kit';
+import {
+  Route, useParams, Link,
+} from 'react-router-dom';
+import queryString from 'query-string';
+import 'twin.macro';
 
-import { percentFormatter } from 'utils';
-import { AssociatedTests } from 'types/associated-tests';
-import { MethodCoveredByTest } from 'types/method-covered-by-test';
-import { NoTestsStub } from './no-tests-stub';
-import { CoveredMethodsByTestSidebar } from './covered-methods-by-test-sidebar';
-import { CoveredMethodsByTestTypeSidebar } from './covered-methods-by-test-type-sidebar';
-
-import styles from './test-details.module.scss';
+import { capitalize } from 'utils';
+import { TestCoverageInfo } from 'types/test-coverage-info';
+import { FilterList } from 'types/filter-list';
+import { Cells, SearchPanel, Stub } from 'components';
+import {
+  CoveredMethodsByTestSidebar, setSearch, useTableActionsDispatch, useTableActionsState,
+} from 'modules';
+import { useVisibleElementsCount } from 'hooks';
+import { AGENT_STATUS } from 'common/constants';
+import { usePluginState } from '../../store';
 
 interface Props {
-  className?: string;
-  testsUsages: AssociatedTests[];
-  coveredMethodsByTest: MethodCoveredByTest[];
-  coveredMethodsByTestType: MethodCoveredByTest[];
+  tests: FilterList<TestCoverageInfo>;
+  topicCoveredMethodsByTest: string;
 }
 
-const testDetails = BEM(styles);
+export const TestDetails = ({
+  topicCoveredMethodsByTest, tests: { items: tests = [], totalCount = 0, filteredCount = 0 },
+}: Props) => {
+  const { agent: { status = '' } = {} } = usePluginState();
+  const ref = useRef<HTMLDivElement>(null);
+  const visibleElementsCount = useVisibleElementsCount(ref, 10, 10);
+  const dispatch = useTableActionsDispatch();
+  const { search } = useTableActionsState();
+  const [searchQuery] = search;
 
-export const TestDetails = testDetails(
-  ({
-    className, testsUsages, coveredMethodsByTest, coveredMethodsByTestType,
-  }: Props) => {
-    const [selectedTest, setSelectedTest] = React.useState('');
-    const [selectedTestType, setSelectedTestType] = React.useState('');
+  const {
+    pluginId, buildVersion, agentId, scopeId, tab,
+  } = useParams<{buildVersion?: string; pluginId?: string; agentId?: string; scopeId?: string; tab?: string; }>();
 
-    return (
-      <div className={className}>
-        {testsUsages.length > 0 ? (
-          <>
-            <Title>
-              Tests
-            </Title>
-            <ExpandableTable
-              data={testsUsages}
-              idKey="testType"
-              columnsSize="medium"
-              expandedColumns={[
-                <Column name="expander" Cell={() => null} />,
-                <Column
-                  name="testName"
-                  Cell={({ value }) => (
-                    <TableCell type="secondary">
-                      <Icons.Test />
-                      <TableCellContent>{value}</TableCellContent>
-                    </TableCell>
-                  )}
-                />,
-                <Column
-                  name="coverage"
-                  Cell={({ value }) => (
-                    <CoverageCell>
-                      {`${percentFormatter(value)}%`}
-                    </CoverageCell>
-                  )}
-                />,
-                <Column
-                  name="methodCalls"
-                  Cell={({ value, item: { id = '' } = {} }) => (
-                    <MethodCallsCell
-                      onClick={() => {
-                        setSelectedTest(id);
-                      }}
-                      data-test="test-actions:view-curl:id"
-                      clickable={Boolean(value)}
-                    >
-                      {value}
-                    </MethodCallsCell>
-                  )}
-                />,
-              ]}
-              expandedContentKey="tests"
-            >
-              <Column
-                name="testType"
-                label="Name"
-                Cell={({ value, item: { tests = [] } = {} }) => (
-                  <TableCell type="primary">
-                    <Icons.Test height={16} width={16} />
-                    <TableCellContent>
-                      {`${value.toLowerCase()} (${
-                        tests.length
-                      })`}
-                    </TableCellContent>
-                  </TableCell>
-                )}
-              />
-              <Column
-                name="coverage"
-                label="Coverage"
-                Cell={({ value }) => (
-                  <CoverageCell>
-                    {`${percentFormatter(value)}%`}
-                  </CoverageCell>
-                )}
-              />
-              <Column
-                name="methodsCount"
-                label="Methods covered"
-                Cell={({ value, item: { testType = '' } = {} }) => (
-                  <MethodCallsCell
-                    onClick={() => {
-                      setSelectedTestType(testType);
-                    }}
-                    data-test="test-actions:view-curl:id"
-                    clickable={Boolean(value)}
-                  >
-                    {value}
-                  </MethodCallsCell>
-                )}
-              />
-            </ExpandableTable>
-          </>
-        ) : (
-          <NoTestsStub />
-        )}
-        {Boolean(selectedTest) && (
-          <CoveredMethodsByTestSidebar
-            isOpen={Boolean(selectedTest)}
-            onToggle={() => setSelectedTest('')}
-            testId={selectedTest}
-            coveredMethods={coveredMethodsByTest}
+  return (
+    <div tw="flex flex-col">
+      <>
+        <div tw="mt-2">
+          <SearchPanel
+            onSearch={(searchValue) => dispatch(setSearch([{ value: searchValue, field: 'name', op: 'CONTAINS' }]))}
+            searchQuery={searchQuery?.value}
+            searchResult={filteredCount}
+            placeholder="Search tests by name"
+          >
+            Displaying {tests.slice(0, visibleElementsCount).length} of {totalCount} tests
+          </SearchPanel>
+        </div>
+        <Table
+          data={tests.slice(0, visibleElementsCount)}
+          idKey="name"
+          gridTemplateColumns="calc(100% - 664px) 130px 76px 152px 186px 120px"
+        >
+          <Column
+            name="testName"
+            label="Name"
+            Cell={({ item: { name } }) => (
+              <Cells.Compound cellName={name} cellAdditionalInfo="&ndash;" icon={<Icons.Test height={16} width={16} />} />
+            )}
+            align="start"
           />
-        )}
-        {Boolean(selectedTestType) && (
-          <CoveredMethodsByTestTypeSidebar
-            isOpen={Boolean(selectedTestType)}
-            onToggle={() => setSelectedTestType('')}
-            testType={selectedTestType}
-            coveredMethods={coveredMethodsByTestType}
+          <Column
+            name="type"
+            label="Test type"
+            Cell={({ value }) => (
+              <>
+                {capitalize(value)}
+              </>
+            )}
+            align="start"
           />
-        )}
-      </div>
-    );
-  },
-);
-
-const Title = testDetails.title(Panel);
-const TableCell = testDetails.tableCell(span({} as { type?: 'primary' | 'secondary' }));
-const TableCellContent = testDetails.tableCellContent(OverflowText);
-const CoverageCell = testDetails.coverageCell('span');
-const MethodCallsCell = testDetails.methodCallsCell(
-  div({ onClick: () => {} } as { clickable?: boolean }),
-);
+          <Column
+            name="stats.result"
+            label="Status"
+            Cell={({ value }) => (
+              <Cells.TestStatus
+                type={value}
+              >
+                {capitalize(value)}
+              </Cells.TestStatus>
+            )}
+            align="start"
+          />
+          <Column
+            name="coverage.percentage"
+            label="Coverage, %"
+            Cell={Cells.Coverage}
+          />
+          <Column
+            name="coverage.methodCount.covered"
+            label="Methods covered"
+            Cell={({ value, item: { id = '', coverage: { methodCount: { covered = 0 } = {} } = {} } = {} }) => (
+              <Cells.Clickable
+                data-test="test-actions:view-curl:id"
+                disabled={!value}
+              >
+                <Link to={scopeId
+                  ? `/full-page/${agentId}/${buildVersion}/${pluginId}/scope/${
+                    scopeId}/${tab}/covered-methods-modal?${queryString.stringify({ coveredMethods: covered, testId: id })}`
+                  : `/full-page/${agentId}/${buildVersion}/${
+                    pluginId}/dashboard/${tab}/covered-methods-modal?${queryString.stringify({ coveredMethods: covered, testId: id })}`}
+                >
+                  {value}
+                </Link>
+              </Cells.Clickable>
+            )}
+          />
+          <Column
+            name="stats.duration"
+            label="Duration"
+            Cell={Cells.Duration}
+          />,
+        </Table>
+      </>
+      {!tests.length && !searchQuery?.value && (
+        <Stub
+          icon={<Icons.Test height={104} width={107} />}
+          title={status === AGENT_STATUS.BUSY ? 'Build tests are loading' : 'No tests available yet'}
+          message={status === AGENT_STATUS.BUSY
+            ? 'It may take a few seconds.'
+            : 'Information about project tests will appear after the first launch of tests.'}
+        />
+      )}
+      {!filteredCount && searchQuery?.value && (
+        <Stub
+          icon={<Icons.Test height={104} width={107} />}
+          title="No results found"
+          message="Try adjusting your search or filter to find what you are looking for."
+        />
+      )}
+      <Route
+        path={[
+          '/full-page/:agentId/:buildVersion/:pluginId/dashboard/:tab/covered-methods-modal',
+          '/full-page/:agentId/:buildVersion/:pluginId/scope/:scopeId/:tab/covered-methods-modal',
+        ]}
+        render={() => <CoveredMethodsByTestSidebar topicCoveredMethodsByTest={topicCoveredMethodsByTest} />}
+      />
+      <div ref={ref} />
+    </div>
+  );
+};

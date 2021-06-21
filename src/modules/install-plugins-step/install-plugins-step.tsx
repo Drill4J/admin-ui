@@ -1,73 +1,69 @@
-import * as React from 'react';
-import { BEM } from '@redneckz/react-bem-helper';
-import { Field } from 'react-final-form';
-import { Panel, Icons } from '@drill4j/ui-kit';
+/*
+ * Copyright 2020 EPAM Systems
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+*/
+import { Icons } from '@drill4j/ui-kit';
+import 'twin.macro';
 
 import { PluginListEntry } from 'components';
-import { useWsConnection } from 'hooks';
-import { defaultAdminSocket } from 'common/connection';
 import { Plugin } from 'types/plugin';
-
-import styles from './install-plugins-step.module.scss';
+import { Field as Checkbox } from 'react-final-form';
 
 interface Props {
-  className?: string;
-  formValues?: { plugins?: string[] };
+  formValues?: { plugins?: string[], availablePlugins?: Plugin[] };
   infoPanel?: React.ReactNode;
 }
 
-const installPluginsStep = BEM(styles);
-
-export const InstallPluginsStep = installPluginsStep(
-  ({ className, infoPanel, formValues: { plugins: pluginsFormValue = [] } = {} }: Props) => {
-    const plugins = useWsConnection<Plugin[]>(defaultAdminSocket, '/plugins') || [];
-    return (
-      <div className={className}>
-        {infoPanel}
-        <SelectedPluginsInfo>
-          {pluginsFormValue.length}
-          &nbsp;of&nbsp;
-          {plugins.length}
-          &nbsp;selected
-        </SelectedPluginsInfo>
-        <PluginsList>
-          {plugins.map(({
-            id = '', name, description, version,
-          }) => (
-            <Field
-              name="plugins"
-              type="checkbox"
-              value={id}
-              key={id}
-              render={({ input, meta }) => (
-                <PluginListEntry
-                  description={description}
-                  input={input}
-                  meta={meta}
-                  icon={name as keyof typeof Icons}
-                  onClick={() => input.onChange({
-                    target: {
-                      type: 'checkbox',
-                      checked: !input.checked,
-                    },
-                  })}
-                >
-                  <PluginInfo>
-                    <PluginName>{name}&nbsp;</PluginName>
-                    {version && <PluginVersion>({version})</PluginVersion>}
-                  </PluginInfo>
-                </PluginListEntry>
-              )}
-            />
-          ))}
-        </PluginsList>
-      </div>
-    );
-  },
+export const InstallPluginsStep = ({ infoPanel, formValues: { plugins = [], availablePlugins = [] } = {} }: Props) => (
+  <div tw="min-w-850px">
+    {infoPanel}
+    <div tw="pt-4 pb-4 mr-10 ml-10 text-20 leading-32 text-monochrome-default">
+      {plugins.length}
+      &nbsp;of&nbsp;
+      {availablePlugins.length}
+      &nbsp;selected
+    </div>
+    <div tw="mr-6 ml-6">
+      {availablePlugins.map(({
+        id = '', name, description, version,
+      }) => (
+        <Checkbox
+          name="plugins"
+          type="checkbox"
+          value={id}
+          key={id}
+          render={({ input, meta }) => (
+            <PluginListEntry
+              description={description}
+              input={input}
+              meta={meta}
+              icon={name as keyof typeof Icons}
+              onClick={() => input.onChange({
+                target: {
+                  type: 'checkbox',
+                  checked: !input.checked,
+                },
+              })}
+            >
+              <div tw="flex items-center w-full mb-3 text-14 leading-20">
+                <div tw="font-bold text-monochrome-black">{name}&nbsp;</div>
+                {version && <div tw="text-monochrome-default">({version})</div>}
+              </div>
+            </PluginListEntry>
+          )}
+        />
+      ))}
+    </div>
+  </div>
 );
-
-const SelectedPluginsInfo = installPluginsStep.selectedPluginsInfo('div');
-const PluginsList = installPluginsStep.pluginsList('div');
-const PluginInfo = installPluginsStep.pluginInfo(Panel);
-const PluginName = installPluginsStep.pluginName('div');
-const PluginVersion = installPluginsStep.pluginVersion('div');

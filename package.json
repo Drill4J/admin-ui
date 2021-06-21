@@ -4,37 +4,42 @@
   "license": "Apache-2.0",
   "private": true,
   "dependencies": {
-    "@drill4j/socket": "0.1.8",
-    "@drill4j/ui-kit": "0.1.26",
-    "@redneckz/react-bem-helper": "2.0.4",
+    "@drill4j/ui-kit": "0.1.72-bar-hotfix",
     "@redneckz/react-devirt": "0.0.6",
-    "@types/jest": "26.0.13",
-    "@types/node": "14.6.4",
-    "@types/react": "16.9.23",
-    "@types/react-dom": "16.9.5",
-    "@types/react-router-dom": "5.1.3",
-    "axios": "0.20.0",
-    "final-form": "4.18.7",
+    "@types/jest": "26.0.14",
+    "@types/node": "14.11.2",
+    "@types/react-dom": "17.0.0",
+    "@types/react-router-dom": "5.1.5",
+    "autoprefixer": "^10.2.4",
+    "axios": "^0.21.1",
+    "final-form": "4.20.1",
     "lodash.assignwith": "4.2.0",
+    "lodash.debounce": "^4.0.8",
     "nanoid": "3.1.12",
-    "query-string": "6.13.1",
-    "react": "16.13.1",
-    "react-dom": "16.13.1",
-    "react-final-form": "6.3.5",
-    "react-router-dom": "5.1.2",
-    "react-scripts": "^3.4.3",
+    "postcss": "^8.2.4",
+    "query-string": "^6.13.2",
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1",
+    "react-final-form": "6.5.1",
+    "react-router-dom": "5.2.0",
+    "react-scripts": "^4.0.1",
     "react-tiny-virtual-list": "2.2.0",
     "react-visibility-sensor": "5.1.1",
+    "rxjs": "^6.6.3",
+    "styled-components": "^5.2.1",
+    "tailwindcss": "^2.0.2",
     "timeago.js": "4.0.2",
-    "typescript": "4.0.2"
+    "twin.macro": "^2.2.0",
+    "typescript": "4.1.3"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
+    "start": "npm run tailwind:css && react-scripts start",
+    "build": "NODE_ENV=production npm run tailwind:css && react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "typecheck": "tsc --project tsconfig.json --noEmit --skipLibCheck",
-    "lint": "eslint . --ext .ts,.tsx"
+    "lint": "eslint . --ext .ts,.tsx",
+    "tailwind:css": "tailwind build src/tailwind.css -c tailwind.config.js -o src/index.css"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -47,23 +52,27 @@
   ],
   "devDependencies": {
     "@types/lodash.assignwith": "4.2.6",
+    "@types/lodash.debounce": "^4.0.6",
     "@types/nanoid": "2.1.0",
+    "@types/react": "^17.0.0",
     "@types/resize-observer-browser": "^0.1.3",
+    "@types/styled-components": "^5.1.7",
     "@typescript-eslint/eslint-plugin": "4.0.1",
     "@typescript-eslint/parser": "4.0.1",
-    "eslint": "6.6.0",
+    "eslint": "7.11.0",
     "eslint-config-airbnb": "18.1.0",
     "eslint-config-prettier": "6.10.0",
     "eslint-import-resolver-typescript": "2.0.0",
-    "eslint-plugin-import": "2.20.1",
+    "eslint-plugin-drill4j": "0.0.2",
+    "eslint-plugin-import": "2.22.1",
     "eslint-plugin-json": "2.1.1",
     "eslint-plugin-jsx-a11y": "6.2.3",
     "eslint-plugin-prettier": "3.1.2",
-    "eslint-plugin-react": "7.19.0",
+    "eslint-plugin-react": "7.22.0",
     "husky": "4.2.3",
     "lint-staged": "10.0.8",
     "node-sass": "4.14.1",
-    "prettier": "2.1.1"
+    "prettier": "2.1.2"
   },
   "husky": {
     "hooks": {
@@ -72,12 +81,10 @@
   },
   "lint-staged": {
     "*.{ts,tsx}": [
-      "eslint --fix",
-      "git add"
+      "eslint --fix"
     ],
     "*.{scss,md}": [
-      "prettier --write",
-      "git add"
+      "prettier --write"
     ]
   },
   "eslintIgnore": [
