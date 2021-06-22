@@ -50,6 +50,11 @@ const Bar = styled.div(({ type }: { type?: string }) => [
   type === 'isDuration' && tw`bg-data-visualization-coverage opacity-50`,
 ]);
 
+const NoTestsToRunBar = styled(Bar)`
+  ${tw`flex items-center p-4`}
+  ${tw`bg-data-visualization-scrollbar-thumb bg-opacity-50 hover:bg-opacity-100 text-center text-12 leading-16 text-monochrome-default`}
+`;
+
 const SavedTimePercent = styled.div`
   &::after {
     position: absolute;
@@ -105,42 +110,50 @@ export const Chart = ({
     >
       <div ref={firstChartRef}>
         <GroupedBars
-          bordered={!isAllAutoTestsDone}
+          bordered={Boolean(total) && !isAllAutoTestsDone}
           hasUncompletedTests={hasUncompletedTests}
           key={nanoid()}
         >
-          <Tooltip
-            message={
-              !isVisibleFirstChart || (hasUncompletedTests && buildVersion !== activeBuildVersion) ? null : (
-                <>
-                  {!total && 'No Auto Tests suggested to run in this build'}
-                  {isAllAutoTestsDone && (
-                    <SavedTimePercent>
-                      Total time saved: {savedTimeDuration.hours}:{savedTimeDuration.minutes}:
-                      {savedTimeDuration.seconds}
-                      <span>{percentFormatter((1 - duration / totalDuration) * 100)}%</span>
-                    </SavedTimePercent>
-                  )}
-                  {Boolean(total) && !isAllAutoTestsDone && (
-                    <div className="flex flex-col items-center w-full">
-                      <span>{`${completed ? 'Not all' : 'None'} of the suggested Auto Tests`}</span>
-                      <span>were run in this build</span>
-                    </div>
-                  )}
-                </>
-              )
-            }
-          >
-            <Bar
-              type={buildVersion !== activeBuildVersion ? 'saved' : undefined}
-              style={{
-                height: `${savedTimeHeight}px`,
-                backgroundColor: isAllAutoTestsDone
-                  ? DATA_VISUALIZATION_COLORS.SAVED_TIME
-                  : 'transparent',
-              }}
-            />
-          </Tooltip>
+          {Boolean(total) && (
+            <Tooltip
+              message={
+                !isVisibleFirstChart || (hasUncompletedTests && buildVersion !== activeBuildVersion) ? null : (
+                  <>
+                    {isAllAutoTestsDone && (
+                      <SavedTimePercent>
+                        Total time saved: {savedTimeDuration.hours}:{savedTimeDuration.minutes}:
+                        {savedTimeDuration.seconds}
+                        <span>{percentFormatter((1 - duration / totalDuration) * 100)}%</span>
+                      </SavedTimePercent>
+                    )}
+                    {!isAllAutoTestsDone && (
+                      <div className="flex flex-col items-center w-full">
+                        <span>{`${completed ? 'Not all' : 'None'} of the suggested Auto Tests`}</span>
+                        <span>were run in this build</span>
+                      </div>
+                    )}
+                  </>
+                )
+              }
+            >
+              <Bar
+                type={buildVersion !== activeBuildVersion ? 'saved' : undefined}
+                style={{
+                  height: `${savedTimeHeight}px`,
+                  backgroundColor: isAllAutoTestsDone
+                    ? DATA_VISUALIZATION_COLORS.SAVED_TIME
+                    : 'transparent',
+                }}
+              />
+            </Tooltip>
+          )}
+          {Boolean(!total) && (
+            <Tooltip message={isVisibleFirstChart && 'No Auto Tests suggested to run in this build'}>
+              <NoTestsToRunBar style={{ height: `${savedTimeHeight}px` }}>No Auto
+                tests
+              </NoTestsToRunBar>
+            </Tooltip>
+          )}
           <Tooltip
             message={
               isVisibleSecondChart &&
