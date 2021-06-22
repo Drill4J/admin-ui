@@ -24,7 +24,6 @@ interface Props {
   onSearch: (search: string) => void;
   searchQuery: string;
   searchResult: number;
-  children: React.ReactNode;
   placeholder: string;
 }
 
@@ -32,7 +31,6 @@ export const SearchPanel = ({
   onSearch,
   searchQuery,
   searchResult,
-  children,
   placeholder,
 }: Props) => {
   const [searchValue, setValue] = useState('');
@@ -68,7 +66,6 @@ export const SearchPanel = ({
               {searchResult} result{searchResult > 1 ? 's' : ''}
             </span>
           )}
-          <span data-test="search-panel:displaying-results-count" tw="text-monochrome-default">{children}</span>
         </div>
       </div>
     </div>
