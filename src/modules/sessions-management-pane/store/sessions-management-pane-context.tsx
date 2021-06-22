@@ -19,10 +19,6 @@ import { Action, SessionsPaneState } from './reducer';
 
 export const defaultState: SessionsPaneState = {
   isNewSession: false,
-  singleOperation: {
-    id: '',
-    operationType: 'abort',
-  },
   bulkOperation: {
     isProcessing: false,
     operationType: 'abort',

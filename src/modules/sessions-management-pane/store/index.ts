@@ -14,6 +14,6 @@
  * limitations under the License.
  */
 export {
-  sessionPaneReducer, setBulkOperation, setIsNewSession, setSingleOperation,
+  sessionPaneReducer, setBulkOperation, setIsNewSession,
 } from './reducer';
 export { useSessionsPaneState, useSessionsPaneDispatch } from './sessions-management-pane-context';

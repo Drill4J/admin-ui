@@ -29,21 +29,23 @@ interface Props {
 export const ActiveSessionsList = ({
   agentType, activeSessions, showGeneralAlertMessage,
 }: Props) => (
-  <div tw="overflow-y-auto">
+  <div tw="overflow-y-auto flex-grow">
     {agentType === 'Agent' ? (
-      activeSessions.map(({
-        id: sessionId, testType, agentId, isRealtime, isGlobal,
-      }) => (
-        <SessionInfo
-          key={sessionId}
-          sessionId={sessionId}
-          agentId={agentId}
-          testType={testType}
-          isGlobal={isGlobal}
-          isRealtime={isRealtime}
-          showGeneralAlertMessage={showGeneralAlertMessage}
-        />
-      ))
+      <div tw="pt-3">
+        {activeSessions.map(({
+          id: sessionId, testType, agentId, isRealtime, isGlobal,
+        }) => (
+          <SessionInfo
+            key={sessionId}
+            sessionId={sessionId}
+            agentId={agentId}
+            testType={testType}
+            isGlobal={isGlobal}
+            isRealtime={isRealtime}
+            showGeneralAlertMessage={showGeneralAlertMessage}
+          />
+        ))}
+      </div>
     ) : (
       <ServiceGroupSessions activeSessions={activeSessions} showGeneralAlertMessage={showGeneralAlertMessage} />
     )}

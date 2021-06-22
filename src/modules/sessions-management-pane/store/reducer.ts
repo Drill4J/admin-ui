@@ -19,28 +19,17 @@ export const SET_BULK_OPERATION = 'SET_BULK_OPERATION';
 
 export type OperationType = 'abort' | 'finish';
 
-type SingleOperation = {
-  id: string;
-  operationType: OperationType;
-}
-
 type BulkOperation = {
   isProcessing: boolean;
   operationType: OperationType;
 }
 
 export interface SessionsPaneState {
-  singleOperation: SingleOperation;
   bulkOperation: BulkOperation;
   isNewSession: boolean;
 }
 
-export type Action = ReturnType<typeof setSingleOperation | typeof setIsNewSession | typeof setBulkOperation>;
-
-export const setSingleOperation = (operationType: OperationType, id: string) => ({
-  type: SET_SINGLE_OPERATION,
-  payload: { id, operationType },
-} as const);
+export type Action = ReturnType<typeof setIsNewSession | typeof setBulkOperation>;
 
 export const setBulkOperation = (operationType: OperationType, isProcessing: boolean) => ({
   type: SET_BULK_OPERATION,
@@ -58,11 +47,6 @@ export const sessionPaneReducer = (state: SessionsPaneState, action: Action): Se
       return {
         ...state,
         bulkOperation: action.payload,
-      };
-    case SET_SINGLE_OPERATION:
-      return {
-        ...state,
-        singleOperation: action.payload,
       };
     case SET_IS_NEW_SESSION:
       return {
