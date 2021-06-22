@@ -14,4 +14,4 @@
  * limitations under the License.
  */
 export { Table } from './table';
-export { TR } from './table-elements';
+export { TableElements } from './table-elements';

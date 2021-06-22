@@ -16,7 +16,7 @@
 import { Icons } from '@drill4j/ui-kit';
 import 'twin.macro';
 
-import { Table, TR } from 'components';
+import { Table, TableElements } from 'components';
 import { AGENT_STATUS } from 'common/constants';
 import { Agent } from 'types/agent';
 import { NameColumn } from './name-column';
@@ -108,7 +108,7 @@ export const AgentsTable = ({ agents }: Props) => {
         renderRowSubComponent={({ row, rowProps }: any) => (
           <>
             {row.original.agents.map((x: any, i: any) => (
-              <TR
+              <TableElements.TR
                 {...rowProps}
                 tw="border-l border-r border-monochrome-medium-tint"
                 key={x.id}
@@ -121,7 +121,7 @@ export const AgentsTable = ({ agents }: Props) => {
                     })}
                   </td>
                 ))}
-              </TR>
+              </TableElements.TR>
             ))}
           </>
         )}

@@ -24,7 +24,7 @@ import { ClassCoverage } from 'types/class-coverage';
 import { FilterList } from 'types/filter-list';
 import { useBuildVersion } from 'hooks';
 import {
-  Cells, Stub, Table, TR,
+  Cells, Stub, Table, TableElements,
 } from 'components';
 import { useTableActionsState } from 'modules';
 import { Package } from 'types/package';
@@ -168,7 +168,7 @@ export const CoverageDetails = ({
           prepareRow(row);
           const rowProps = row.getRowProps();
           return (
-            <TR {...rowProps} isExpanded={row.isExpanded}>
+            <TableElements.TR {...rowProps} isExpanded={row.isExpanded}>
               {row.cells.map((cell: any) => (
                 <td
                   {...cell.getCellProps()}
@@ -179,7 +179,7 @@ export const CoverageDetails = ({
                   {cell.render(cell.column.SubCell ? 'SubCell' : 'Cell')}
                 </td>
               ))}
-            </TR>
+            </TableElements.TR>
           );
         })}
       </>

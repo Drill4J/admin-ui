@@ -18,7 +18,7 @@ import {
   useTable, useExpanded, Column, useSortBy, usePagination,
 } from 'react-table';
 import { withErrorBoundary } from 'react-error-boundary';
-import { Icons, Inputs } from '@drill4j/ui-kit';
+import { Icons } from '@drill4j/ui-kit';
 import 'twin.macro';
 
 import { TableErrorFallback } from 'components';
@@ -27,10 +27,8 @@ import {
 } from 'modules';
 import { Order } from 'types/sort';
 import { SearchPanel } from 'components/search-panel';
-import {
-  TableHead, SortArrow, TH, TR,
-} from './table-elements';
-import { TablePagination } from './table-pagination';
+import { TableElements } from './table-elements';
+import { Pagination } from './pagination';
 
 type CustomColumn = Column & { textAlign?: string; width?: string; }
 
@@ -93,7 +91,7 @@ export const Table = withErrorBoundary(({
   }
 
   return (
-    <div tw="overflow-x-auto">
+    <div tw="overflow-x-auto overflow-y-hidden">
       <div style={{ minWidth: '1100px' }}>
         {withSearchPanel && (
           <div tw="mt-2">
@@ -106,14 +104,14 @@ export const Table = withErrorBoundary(({
           </div>
         )}
         <table {...getTableProps()} tw="table-fixed w-full text-14 leading-16 text-monochrome-black">
-          <TableHead>
+          <TableElements.TableHead>
             {headerGroups.map((headerGroup: any) => (
               <tr {...headerGroup.getHeaderGroupProps()} tw="h-13 px-4">
                 {headerGroup.headers.map((column: any) => {
                   const active = column.id === sort?.field;
                   const defaulToggleSortBy = column.getSortByToggleProps().onClick;
                   return (
-                    <TH
+                    <TableElements.TH
                       {...column.getHeaderProps(column.getSortByToggleProps())}
                       style={{ textAlign: column.textAlign || 'right', width: column.width }}
                       onClick={isDefaulToggleSortBy
@@ -123,19 +121,19 @@ export const Table = withErrorBoundary(({
                     >
                       <div tw="relative inline-flex items-center cursor-pointer">
                         {column.id !== 'expander' && (
-                          <SortArrow active={column.isSorted || active}>
+                          <TableElements.SortArrow active={column.isSorted || active}>
                             <Icons.SortingArrow rotate={column.isSortedDesc || (active && sort?.order === 'DESC') ? 0 : 180} />
-                          </SortArrow>
+                          </TableElements.SortArrow>
                         )}
                         {column.render('Header')}
                       </div>
-                    </TH>
+                    </TableElements.TH>
 
                   );
                 })}
               </tr>
             ))}
-          </TableHead>
+          </TableElements.TableHead>
           <tbody {...getTableBodyProps()}>
             {page.map((rawRow: any) => {
               const row = { ...rawRow, isExpanded: expandedRows.includes(rawRow.original.id) };
@@ -143,7 +141,7 @@ export const Table = withErrorBoundary(({
               const rowProps = row.getRowProps();
               return (
                 <React.Fragment key={row.original.id}>
-                  <TR {...rowProps} isExpanded={row.isExpanded}>
+                  <TableElements.TR {...rowProps} isExpanded={row.isExpanded}>
                     {row.cells.map((cell: any) => (
                       <td
                         {...cell.getCellProps()}
@@ -161,7 +159,7 @@ export const Table = withErrorBoundary(({
                         </div>
                       </td>
                     ))}
-                  </TR>
+                  </TableElements.TR>
                   {row.isExpanded && renderRowSubComponent?.({ row, rowProps })}
                 </React.Fragment>
               );
@@ -170,39 +168,18 @@ export const Table = withErrorBoundary(({
         </table>
         {stub}
         {pageOptions.length > 1 && (
-          <div tw="flex justify-between pr-1 pt-4">
-            <span data-test="table:displaying-results-count" tw="flex items-center gap-x-1 text-14 leading-32 text-monochrome-default">
-              Displaying
-              <Inputs.Dropdown
-                items={[
-                  {
-                    label: '25 per page', value: 25,
-                  },
-                  {
-                    label: '50 per page', value: 50,
-                  },
-                  {
-                    label: '100 per page', value: 100,
-                  },
-                ]}
-                onChange={({ value }) => setPageSize(Number(value))}
-                value={pageSize}
-              />
-              &nbsp;
-              of
-              <span tw="font-bold" data-test="table:rows:total">{totalCount}</span>
-              rows
-            </span>
-            <TablePagination
-              pagesLength={pageOptions.length}
-              gotoPage={gotoPage}
-              pageIndex={pageIndex}
-              previousPage={previousPage}
-              nextPage={nextPage}
-              canPreviousPage={canPreviousPage}
-              canNextPage={canNextPage}
-            />
-          </div>
+          <Pagination
+            pagesLength={pageOptions.length}
+            gotoPage={gotoPage}
+            pageIndex={pageIndex}
+            previousPage={previousPage}
+            nextPage={nextPage}
+            canPreviousPage={canPreviousPage}
+            canNextPage={canNextPage}
+            pageSize={pageSize}
+            setPageSize={setPageSize}
+            totalCount={totalCount}
+          />
         )}
       </div>
     </div>
