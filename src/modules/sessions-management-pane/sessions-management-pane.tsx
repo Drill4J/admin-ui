@@ -84,9 +84,10 @@ export const SessionsManagementPane = () => {
         }}
         validate={validateManageSessionsPane}
         render={({
-          handleSubmit, submitting, hasValidationErrors, submitErrors, dirtySinceLastSubmit,
+          handleSubmit, submitting, hasValidationErrors, submitErrors, dirtySinceLastSubmit, form,
         }) => (
           <form onSubmit={handleSubmit} tw="flex flex-col h-full">
+            <div onClick={() => form && form.resetFieldState && form.resetFieldState('sessionId')}>asd</div>
             <div
               tw="h-16 px-6 py-4 text-20 leading-32 text-monochrome-black border-b border-monochrome-medium-tint"
               data-test="sessions-management-pane:header"
@@ -144,6 +145,7 @@ export const SessionsManagementPane = () => {
                   onToggle={closeModal}
                   handleSubmit={handleSubmit}
                   submitting={submitting}
+                  resetInputValidation={() => form && form.resetFieldState && form.resetFieldState('sessionId')}
                 />
               )}
             </div>

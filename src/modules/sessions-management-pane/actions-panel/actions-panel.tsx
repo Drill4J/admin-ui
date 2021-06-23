@@ -30,10 +30,11 @@ interface Props {
   onToggle: (value: boolean) => void;
   handleSubmit: () => void;
   submitting: boolean;
+  resetInputValidation: () => void;
 }
 
 export const ActionsPanel = ({
-  activeSessions, onToggle, startSessionDisabled, handleSubmit, submitting,
+  activeSessions, onToggle, startSessionDisabled, handleSubmit, submitting, resetInputValidation,
 }: Props) => {
   const dispatch = useSessionsPaneDispatch();
   const { isNewSession } = useSessionsPaneState();
@@ -58,6 +59,7 @@ export const ActionsPanel = ({
           onClick={(e: any) => {
             e.preventDefault();
             dispatch(setIsNewSession(true));
+            resetInputValidation();
           }}
           data-test="sessions-management-pane:start-new-session-button"
         >
