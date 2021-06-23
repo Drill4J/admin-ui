@@ -46,24 +46,27 @@ export const Pagination = ({
   const createArray = (start: number, end: number) => Array.from({ length: end - start + 1 }, (_, i) => start + i);
 
   const currentPage = pageIndex + 1;
-  const MAX_PAGES_RENDERED = 7;
+  const MAX_PAGES_WITH_ELLIPSIS_COUNT = 7;
   const FIRST_OR_LAST_NUMBER_WITH_ELIPSIS = 2;
-  const MAX_LEFT_OR_RIGHT_PAGES_COUNT = MAX_PAGES_RENDERED - FIRST_OR_LAST_NUMBER_WITH_ELIPSIS;
+  const MAX_LEFT_OR_RIGHT_PAGES_COUNT = MAX_PAGES_WITH_ELLIPSIS_COUNT - FIRST_OR_LAST_NUMBER_WITH_ELIPSIS;
 
   const createPages = (): Array<number | 'ellipsis'> => {
-    if (currentPage < MAX_PAGES_RENDERED - FIRST_OR_LAST_NUMBER_WITH_ELIPSIS) {
-      const pageNumbersBeforeElispis = createArray(1, MAX_LEFT_OR_RIGHT_PAGES_COUNT);
-      return [...pageNumbersBeforeElispis, 'ellipsis', pagesLength];
+    if (currentPage >= MAX_PAGES_WITH_ELLIPSIS_COUNT) {
+      if (currentPage < MAX_PAGES_WITH_ELLIPSIS_COUNT - FIRST_OR_LAST_NUMBER_WITH_ELIPSIS) {
+        const pageNumbersBeforeEllipsis = createArray(1, MAX_LEFT_OR_RIGHT_PAGES_COUNT);
+        return [...pageNumbersBeforeEllipsis, 'ellipsis', pagesLength];
+      }
+
+      if (currentPage >= MAX_PAGES_WITH_ELLIPSIS_COUNT - FIRST_OR_LAST_NUMBER_WITH_ELIPSIS) {
+        if (currentPage > pagesLength + 1 - MAX_LEFT_OR_RIGHT_PAGES_COUNT) {
+          const pageNumbersAfterEllipsis = createArray(pagesLength + 1 - MAX_LEFT_OR_RIGHT_PAGES_COUNT, pagesLength);
+          return [1, 'ellipsis', ...pageNumbersAfterEllipsis];
+        }
+        const pageNumbersBetweenEllipsis = [currentPage - 1, currentPage, currentPage + 1];
+        return [1, 'ellipsis', ...pageNumbersBetweenEllipsis, 'ellipsis', pagesLength];
+      }
     }
 
-    if (currentPage >= MAX_PAGES_RENDERED - FIRST_OR_LAST_NUMBER_WITH_ELIPSIS) {
-      if (currentPage > pagesLength + 1 - MAX_LEFT_OR_RIGHT_PAGES_COUNT) {
-        const pageNumbersAfterElispis = createArray(pagesLength + 1 - MAX_LEFT_OR_RIGHT_PAGES_COUNT, pagesLength);
-        return [1, 'ellipsis', ...pageNumbersAfterElispis];
-      }
-      const pageNumbersBetweenElispis = [currentPage - 1, currentPage, currentPage + 1];
-      return [1, 'ellipsis', ...pageNumbersBetweenElispis, 'ellipsis', pagesLength];
-    }
     return createArray(1, pagesLength);
   };
 

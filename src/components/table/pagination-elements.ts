@@ -23,7 +23,8 @@ const PaginationArrow = styled.div`
 `;
 
 const PageNumber = styled.div`
-  ${tw`flex items-center justify-center h-8 px-3 cursor-pointer font-bold text-14 leading-24 hover:text-blue-medium-tint`};
+  height: ${({ active }: { active?: boolean}) => (active ? '34px' : '32px')};
+  ${tw`flex items-center justify-center px-3 cursor-pointer font-bold text-14 leading-24 hover:text-blue-medium-tint`};
 
   ${({ active }: { active?: boolean}) => active && tw`text-blue-default border-b-2 border-blue-default cursor-default`}
 `;
