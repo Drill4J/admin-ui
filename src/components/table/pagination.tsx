@@ -51,7 +51,7 @@ export const Pagination = ({
   const MAX_LEFT_OR_RIGHT_PAGES_COUNT = MAX_PAGES_WITH_ELLIPSIS_COUNT - FIRST_OR_LAST_NUMBER_WITH_ELIPSIS;
 
   const createPages = (): Array<number | 'ellipsis'> => {
-    if (currentPage >= MAX_PAGES_WITH_ELLIPSIS_COUNT) {
+    if (pagesLength >= MAX_PAGES_WITH_ELLIPSIS_COUNT) {
       if (currentPage < MAX_PAGES_WITH_ELLIPSIS_COUNT - FIRST_OR_LAST_NUMBER_WITH_ELIPSIS) {
         const pageNumbersBeforeEllipsis = createArray(1, MAX_LEFT_OR_RIGHT_PAGES_COUNT);
         return [...pageNumbersBeforeEllipsis, 'ellipsis', pagesLength];
