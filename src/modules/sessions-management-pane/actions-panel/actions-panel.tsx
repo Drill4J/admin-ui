@@ -36,8 +36,7 @@ export const ActionsPanel = ({
   activeSessions, onToggle, startSessionDisabled, handleSubmit, submitting,
 }: Props) => {
   const dispatch = useSessionsPaneDispatch();
-  const { isNewSession } = useSessionsPaneState();
-
+  const { isNewSession, singleOperationIsProcessing } = useSessionsPaneState();
   return (
     <Content>
       { isNewSession ? (
@@ -81,6 +80,7 @@ export const ActionsPanel = ({
         size="large"
         onClick={() => onToggle(false)}
         data-test="sessions-management-pane:cancel-button"
+        disabled={submitting || singleOperationIsProcessing}
       >
         Cancel
       </Button>

@@ -50,6 +50,7 @@ const validateQualityGate = (formValues: ConditionSettingByType) => composeValid
 export const QualityGatePane = () => {
   const { pluginId = '', agentId = '' } = useParams<{ pluginId: string; agentId: string; }>();
   const [isEditing, setIsEditing] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const { generalAlertMessage, showGeneralAlertMessage } = useGeneralAlertMessage();
   const closeModal = useCloseModal('/quality-gate-pane');
 
@@ -77,8 +78,10 @@ export const QualityGatePane = () => {
     <Modal isOpen onToggle={handleOnToggle}>
       <Form
         onSubmit={async (values) => {
+          setIsLoading(true);
           await updateQualityGateSettings(agentId, pluginId, showGeneralAlertMessage)(values);
           setIsEditing(false);
+          setIsLoading(false);
         }}
         initialValues={{
           coverage: {
@@ -174,6 +177,7 @@ export const QualityGatePane = () => {
                 size="large"
                 onClick={handleOnToggle}
                 data-test="quality-gate-pane:cancel-button"
+                disabled={isLoading}
               >
                 Cancel
               </Button>

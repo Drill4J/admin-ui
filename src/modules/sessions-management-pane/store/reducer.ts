@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 export const SET_IS_NEW_SESSION = 'SET_IS_NEW_SESSION';
-export const SET_SINGLE_OPERATION = 'SET_SINGLE_OPERATION';
+export const SET_SINGLE_OPERATION_IS_PROCESSING = 'SET_SINGLE_OPERATION_IS_PROCESSING';
 export const SET_BULK_OPERATION = 'SET_BULK_OPERATION';
 
 export type OperationType = 'abort' | 'finish';
@@ -26,14 +26,20 @@ type BulkOperation = {
 
 export interface SessionsPaneState {
   bulkOperation: BulkOperation;
+  singleOperationIsProcessing: boolean;
   isNewSession: boolean;
 }
 
-export type Action = ReturnType<typeof setIsNewSession | typeof setBulkOperation>;
+export type Action = ReturnType<typeof setIsNewSession | typeof setBulkOperation | typeof setSingleOperationIsProcessing>;
 
 export const setBulkOperation = (operationType: OperationType, isProcessing: boolean) => ({
   type: SET_BULK_OPERATION,
   payload: { isProcessing, operationType },
+} as const);
+
+export const setSingleOperationIsProcessing = (isProcessing: boolean) => ({
+  type: SET_SINGLE_OPERATION_IS_PROCESSING,
+  payload: isProcessing,
 } as const);
 
 export const setIsNewSession = (isNewSession: boolean) => ({
@@ -52,6 +58,11 @@ export const sessionPaneReducer = (state: SessionsPaneState, action: Action): Se
       return {
         ...state,
         isNewSession: action.payload,
+      };
+    case SET_SINGLE_OPERATION_IS_PROCESSING:
+      return {
+        ...state,
+        singleOperationIsProcessing: action.payload,
       };
     default:
       return state;
