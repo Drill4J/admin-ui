@@ -64,8 +64,7 @@ export const BaselineBuildModal = () => {
               )
               : (
                 <>
-                  By confirming this action, you will set the current build as <br />
-                  baseline. All subsequent builds will be compared to it.
+                  You will set the current build as baseline. All subsequent builds will be compared to it.
                 </>
               )}
           </Message>
@@ -73,8 +72,7 @@ export const BaselineBuildModal = () => {
             <Message className="flex items-start gap-2 w-full">
               <Checkbox checked={isConfirmed} onChange={() => setIsConfirmed(!isConfirmed)} />
               <span>
-                I understand that it is necessary to run full regression to be <br />
-                able to determine the amount of saved time
+                I understand that it’s necessary to run all tests <br /> to determine the number of suggested tests.
               </span>
             </Message>
           )}
