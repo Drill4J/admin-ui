@@ -35,7 +35,7 @@ interface Props {
 }
 
 interface SelectRowsCountDropdownProps {
-  items: Array<{ label: React.ReactNode; value: number }>;
+  values: number[];
   action: (value: number) => void;
   initialValue: number
 }
@@ -43,34 +43,59 @@ interface SelectRowsCountDropdownProps {
 export const Pagination = ({
   pagesLength, gotoPage, pageIndex, previousPage, nextPage, canPreviousPage, canNextPage, pageSize, setPageSize, totalCount,
 }: Props) => {
-  const createArray = (start: number, end: number) => Array.from({ length: end - start + 1 }, (_, i) => start + i);
+  const createArray = (from: number, to: number) => Array.from({ length: to - from + 1 }, (_, i) => from + i);
 
   const currentPage = pageIndex + 1;
   const MAX_PAGES_WITH_ELLIPSIS_COUNT = 7;
   const FIRST_OR_LAST_NUMBER_WITH_ELIPSIS = 2;
   const MAX_LEFT_OR_RIGHT_PAGES_COUNT = MAX_PAGES_WITH_ELLIPSIS_COUNT - FIRST_OR_LAST_NUMBER_WITH_ELIPSIS;
 
-  const createPages = (): Array<number | 'ellipsis'> => {
-    if (pagesLength >= MAX_PAGES_WITH_ELLIPSIS_COUNT) {
-      if (currentPage < MAX_PAGES_WITH_ELLIPSIS_COUNT - FIRST_OR_LAST_NUMBER_WITH_ELIPSIS) {
-        const pageNumbersBeforeEllipsis = createArray(1, MAX_LEFT_OR_RIGHT_PAGES_COUNT);
-        return [...pageNumbersBeforeEllipsis, 'ellipsis', pagesLength];
-      }
+  const renderPage = (page: number) => (
+    <PaginationElements.PageNumber active={page === currentPage} onClick={() => gotoPageByPageNumber(page)}>
+      {page}
+    </PaginationElements.PageNumber>
+  );
 
-      if (currentPage >= MAX_PAGES_WITH_ELLIPSIS_COUNT - FIRST_OR_LAST_NUMBER_WITH_ELIPSIS) {
-        if (currentPage > pagesLength + 1 - MAX_LEFT_OR_RIGHT_PAGES_COUNT) {
-          const pageNumbersAfterEllipsis = createArray(pagesLength + 1 - MAX_LEFT_OR_RIGHT_PAGES_COUNT, pagesLength);
-          return [1, 'ellipsis', ...pageNumbersAfterEllipsis];
-        }
-        const pageNumbersBetweenEllipsis = [currentPage - 1, currentPage, currentPage + 1];
-        return [1, 'ellipsis', ...pageNumbersBetweenEllipsis, 'ellipsis', pagesLength];
-      }
+  const renderPages = (from: number, to: number) => (
+    <>
+      {createArray(from, to).map(renderPage)}
+    </>
+  );
+
+  const renderPagesWithEllipsis = () => {
+    if (currentPage < MAX_LEFT_OR_RIGHT_PAGES_COUNT) {
+      return (
+        <>
+          {renderPages(1, MAX_LEFT_OR_RIGHT_PAGES_COUNT)}
+          <Ellipsis />
+          {renderPage(pagesLength)}
+        </>
+      );
+    } if (currentPage > pagesLength + 1 - MAX_LEFT_OR_RIGHT_PAGES_COUNT) {
+      const descriptiveName = pagesLength + 1 - MAX_LEFT_OR_RIGHT_PAGES_COUNT; // duplication, but at least it's easier to grok?
+      return (
+        <>
+          {renderPage(1)}
+          <Ellipsis />
+          {renderPages(descriptiveName, pagesLength)}
+        </>
+      );
     }
-
-    return createArray(1, pagesLength);
+    return (
+      <>
+        {renderPage(1)}
+        <Ellipsis />
+        {renderPages(currentPage - 1, currentPage + 1)}
+        <Ellipsis />
+        {renderPage(pagesLength)}
+      </>
+    );
   };
 
-  // need index
+  const Pages = () => (pagesLength < MAX_PAGES_WITH_ELLIPSIS_COUNT
+    ? renderPages(1, pagesLength)
+    : renderPagesWithEllipsis());
+
   const gotoPageByPageNumber = (pageNumber: number) => gotoPage(pageNumber - 1);
 
   const Tooltip = () => (
@@ -100,7 +125,7 @@ export const Pagination = ({
     </div>
   );
 
-  const GoToPage = () => {
+  const Ellipsis = () => {
     const [goToPageModalIsOpen, setGoToPageModalIsOpen] = useState(false);
     return (
       <div tw="relative flex items-end h-8 px-3 text-monochrome-default" data-test="table-pagination:dots">
@@ -120,20 +145,7 @@ export const Pagination = ({
     );
   };
 
-  const Pages = () => (
-    <>
-      {createPages().map((page) => (
-        page === 'ellipsis'
-          ? <GoToPage />
-          : (
-            <PaginationElements.PageNumber active={page === currentPage} onClick={() => gotoPageByPageNumber(page)}>
-              {page}
-            </PaginationElements.PageNumber>
-          )))}
-    </>
-  );
-
-  const SelectRowsCountDropdown = ({ items, action, initialValue }: SelectRowsCountDropdownProps) => {
+  const SelectRowsCountDropdown = ({ values, action, initialValue }: SelectRowsCountDropdownProps) => {
     const [isOpen, setIsOpen] = useState(false);
     const node = useClickOutside(() => setIsOpen(false));
     return (
@@ -144,10 +156,10 @@ export const Pagination = ({
         <Icons.Expander width={8} height={8} rotate={isOpen ? 90 : -90} />
         {isOpen && (
           <div tw="absolute -top-24 shadow bg-monochrome-white">
-            {items.map(({ label, value }) => (
+            {values.map((value) => (
               <div tw="flex items-center px-2 w-36 hover:bg-monochrome-light-tint" onClick={(() => action(value))}>
                 {initialValue === value && <Icons.Check width={14} height={10} viewBox="0 0 14 10" tw="absolute text-blue-default" />}
-                <span tw="ml-6">{label}</span>
+                <span tw="ml-6">{`${value} per page`}</span>
               </div>
             ))}
           </div>
@@ -161,17 +173,7 @@ export const Pagination = ({
       <span data-test="table:displaying-results-count" tw="flex items-center gap-x-1 text-14 leading-32 text-monochrome-default">
         Displaying
         <SelectRowsCountDropdown
-          items={[
-            {
-              label: '25 per page', value: 25,
-            },
-            {
-              label: '50 per page', value: 50,
-            },
-            {
-              label: '100 per page', value: 100,
-            },
-          ]}
+          values={[25, 50, 100]}
           action={(value) => setPageSize(Number(value))}
           initialValue={pageSize}
         />
