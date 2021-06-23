@@ -114,7 +114,6 @@ export const Table = withErrorBoundary(({
               {column.render('Header')}
             </div>
           </TableElements.TH>
-
         );
       })}
     </tr>
