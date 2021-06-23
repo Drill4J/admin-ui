@@ -43,11 +43,32 @@ interface SelectRowsCountDropdownProps {
 export const Pagination = ({
   pagesLength, gotoPage, pageIndex, previousPage, nextPage, canPreviousPage, canNextPage, pageSize, setPageSize, totalCount,
 }: Props) => {
-  const pages = Array.from({ length: pagesLength }, (_, k) => k + 1);
+  const createArray = (start: number, end: number) => Array.from({ length: end - start + 1 }, (_, i) => start + i);
 
-  const firstFivePages = pages.slice(0, 5);
-  const lastFivePages = pages.slice(-5);
-  const lastPage = pages[pages.length - 1];
+  const currentPage = pageIndex + 1;
+  const MAX_PAGES_RENDERED = 7;
+  const FIRST_OR_LAST_NUMBER_WITH_ELIPSIS = 2;
+  const MAX_LEFT_OR_RIGHT_PAGES_COUNT = MAX_PAGES_RENDERED - FIRST_OR_LAST_NUMBER_WITH_ELIPSIS;
+
+  const createPages = (): Array<number | 'elepsis'> => {
+    if (currentPage < MAX_PAGES_RENDERED - FIRST_OR_LAST_NUMBER_WITH_ELIPSIS) {
+      const pageNumbersBeforeElispis = createArray(1, MAX_LEFT_OR_RIGHT_PAGES_COUNT);
+      return [...pageNumbersBeforeElispis, 'elepsis', pagesLength];
+    }
+
+    if (currentPage >= MAX_PAGES_RENDERED - FIRST_OR_LAST_NUMBER_WITH_ELIPSIS) {
+      if (currentPage > pagesLength + 1 - MAX_LEFT_OR_RIGHT_PAGES_COUNT) {
+        const pageNumbersAfterElispis = createArray(pagesLength + 1 - MAX_LEFT_OR_RIGHT_PAGES_COUNT, pagesLength);
+        return [1, 'elepsis', ...pageNumbersAfterElispis];
+      }
+      const pageNumbersBetweenElispis = [currentPage - 1, currentPage, currentPage + 1];
+      return [1, 'elepsis', ...pageNumbersBetweenElispis, 'elepsis', pagesLength];
+    }
+    return createArray(1, pagesLength);
+  };
+
+  // need index
+  const gotoPageByPageNumber = (pageNumber: number) => gotoPage(pageNumber - 1);
 
   const Tooltip = () => (
     <div tw="relative w-34 p-4 rounded-lg bg-monochrome-white shadow text-14 leading-32">
@@ -96,75 +117,18 @@ export const Pagination = ({
     );
   };
 
-  const Pages = () => {
-    if (pages.length >= 9 && pageIndex + 1 > 4 && pageIndex < pages.length - 4) {
-      return (
-        <>
-          <PaginationElements.PageNumber active={pageIndex + 1 === 1} onClick={() => gotoPage(0)}>
-            1
-          </PaginationElements.PageNumber>
-          <GoToPage />
-          <>
-            <PaginationElements.PageNumber onClick={() => previousPage()}>
-              {pageIndex}
+  const Pages = () => (
+    <>
+      {createPages().map((page) => (
+        page === 'elepsis'
+          ? <GoToPage />
+          : (
+            <PaginationElements.PageNumber active={page === currentPage} onClick={() => gotoPageByPageNumber(page)}>
+              {page}
             </PaginationElements.PageNumber>
-            <PaginationElements.PageNumber active>
-              {pageIndex + 1}
-            </PaginationElements.PageNumber>
-            <PaginationElements.PageNumber onClick={() => nextPage()}>
-              {pageIndex + 2}
-            </PaginationElements.PageNumber>
-          </>
-          <GoToPage />
-          <PaginationElements.PageNumber active={lastPage === pageIndex + 1} onClick={() => gotoPage(lastPage - 1)}>
-            {lastPage}
-          </PaginationElements.PageNumber>
-        </>
-      );
-    }
-
-    if (pages.length > 6 && lastFivePages.includes(pageIndex + 1)) {
-      return (
-        <>
-          <PaginationElements.PageNumber active={pageIndex + 1 === 1} onClick={() => gotoPage(0)}>
-            1
-          </PaginationElements.PageNumber>
-          <GoToPage />
-          {lastFivePages.map((pageNumber) => (
-            <PaginationElements.PageNumber active={pageNumber === pageIndex + 1} onClick={() => gotoPage(pageNumber - 1)}>
-              {pageNumber}
-            </PaginationElements.PageNumber>
-          ))}
-        </>
-      );
-    }
-
-    if (pages.length > 6) {
-      return (
-        <>
-          {firstFivePages.map((pageNumber) => (
-            <PaginationElements.PageNumber active={pageNumber === pageIndex + 1} onClick={() => gotoPage(pageNumber - 1)}>
-              {pageNumber}
-            </PaginationElements.PageNumber>
-          ))}
-          <GoToPage />
-          <PaginationElements.PageNumber active={lastPage === pageIndex + 1} onClick={() => gotoPage(lastPage - 1)}>
-            {lastPage}
-          </PaginationElements.PageNumber>
-        </>
-      );
-    }
-
-    return (
-      <>
-        {pages.map((pageNumber) => (
-          <PaginationElements.PageNumber active={pageNumber === pageIndex + 1} onClick={() => gotoPage(pageNumber - 1)}>
-            {pageNumber}
-          </PaginationElements.PageNumber>
-        ))}
-      </>
-    );
-  };
+          )))}
+    </>
+  );
 
   const SelectRowsCountDropdown = ({ items, action, initialValue }: SelectRowsCountDropdownProps) => {
     const [isOpen, setIsOpen] = useState(false);
@@ -172,7 +136,7 @@ export const Pagination = ({
     return (
       <div ref={node} tw="relative flex items-center gap-x-1 text-monochrome-black cursor-pointer" onClick={() => setIsOpen(!isOpen)}>
         <span tw="font-bold" data-test="table-pagination:page-rows">
-          {`${initialValue * (pageIndex + 1) - initialValue}-${initialValue * (pageIndex + 1)}`}
+          {`${initialValue * (currentPage) - initialValue}-${initialValue * (currentPage)}`}
         </span>
         <Icons.Expander width={8} height={8} rotate={isOpen ? 90 : -90} />
         {isOpen && (
