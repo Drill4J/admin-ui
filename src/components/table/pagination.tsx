@@ -71,16 +71,19 @@ export const Pagination = ({
           {renderPage(pagesLength)}
         </>
       );
-    } if (currentPage > pagesLength + 1 - MAX_LEFT_OR_RIGHT_PAGES_COUNT) {
-      const descriptiveName = pagesLength + 1 - MAX_LEFT_OR_RIGHT_PAGES_COUNT; // duplication, but at least it's easier to grok?
+    }
+
+    const lastPagesStart = pagesLength + 1 - MAX_LEFT_OR_RIGHT_PAGES_COUNT;
+    if (currentPage > lastPagesStart) {
       return (
         <>
           {renderPage(1)}
           <Ellipsis />
-          {renderPages(descriptiveName, pagesLength)}
+          {renderPages(lastPagesStart, pagesLength)}
         </>
       );
     }
+
     return (
       <>
         {renderPage(1)}
