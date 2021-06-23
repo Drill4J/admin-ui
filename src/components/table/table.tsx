@@ -91,6 +91,57 @@ export const Table = withErrorBoundary(({
     throw new Error('Table received incorrect data');
   }
 
+  const TableHeaderRow = ({ headerGroup }: any) => (
+    <tr {...headerGroup.getHeaderGroupProps()} tw="h-13 px-4">
+      {headerGroup.headers.map((column: any) => {
+        const active = column.id === sort?.field;
+        const defaulToggleSortBy = column.getSortByToggleProps().onClick;
+        return (
+          <TableElements.TH
+            {...column.getHeaderProps(column.getSortByToggleProps())}
+            style={{ textAlign: column.textAlign || 'right', width: column.width }}
+            onClick={isDefaulToggleSortBy
+              ? defaulToggleSortBy
+              : () => dispatch(setSort({ order: setOrder(sort?.order), field: column.id }))}
+            data-test={`table-th-${column.id}`}
+          >
+            <div tw="relative inline-flex items-center cursor-pointer">
+              {column.id !== 'expander' && (
+                <TableElements.SortArrow active={column.isSorted || active}>
+                  <Icons.SortingArrow rotate={column.isSortedDesc || (active && sort?.order === 'DESC') ? 0 : 180} />
+                </TableElements.SortArrow>
+              )}
+              {column.render('Header')}
+            </div>
+          </TableElements.TH>
+
+        );
+      })}
+    </tr>
+  );
+
+  const TableRow = ({ rowProps, row }: any) => (
+    <TableElements.TR {...rowProps} isExpanded={row.isExpanded}>
+      {row.cells.map((cell: any) => (
+        <td
+          {...cell.getCellProps()}
+          tw="first:px-4 last:px-4"
+          style={{ textAlign: cell.column.textAlign || 'right' }}
+          data-test={`td-${rowProps.key}-${cell.column.id}`}
+
+        >
+          <div onClick={() => cell.column.id === 'expander' &&
+      setExpandedRows(row.isExpanded
+        ? expandedRows.filter((id) => id !== row.original.id)
+        : [...expandedRows, row.original.id])}
+          >
+            {cell.render('Cell')}
+          </div>
+        </td>
+      ))}
+    </TableElements.TR>
+  );
+
   return (
     <div tw="overflow-x-auto overflow-y-hidden">
       <div style={{ minWidth: '1100px' }}>
@@ -107,32 +158,7 @@ export const Table = withErrorBoundary(({
         <table {...getTableProps()} tw="table-fixed w-full text-14 leading-16 text-monochrome-black">
           <TableElements.TableHead>
             {headerGroups.map((headerGroup: any) => (
-              <tr {...headerGroup.getHeaderGroupProps()} tw="h-13 px-4">
-                {headerGroup.headers.map((column: any) => {
-                  const active = column.id === sort?.field;
-                  const defaulToggleSortBy = column.getSortByToggleProps().onClick;
-                  return (
-                    <TableElements.TH
-                      {...column.getHeaderProps(column.getSortByToggleProps())}
-                      style={{ textAlign: column.textAlign || 'right', width: column.width }}
-                      onClick={isDefaulToggleSortBy
-                        ? defaulToggleSortBy
-                        : () => dispatch(setSort({ order: setOrder(sort?.order), field: column.id }))}
-                      data-test={`table-th-${column.id}`}
-                    >
-                      <div tw="relative inline-flex items-center cursor-pointer">
-                        {column.id !== 'expander' && (
-                          <TableElements.SortArrow active={column.isSorted || active}>
-                            <Icons.SortingArrow rotate={column.isSortedDesc || (active && sort?.order === 'DESC') ? 0 : 180} />
-                          </TableElements.SortArrow>
-                        )}
-                        {column.render('Header')}
-                      </div>
-                    </TableElements.TH>
-
-                  );
-                })}
-              </tr>
+              <TableHeaderRow headerGroup={headerGroup} />
             ))}
           </TableElements.TableHead>
           <tbody {...getTableBodyProps()}>
@@ -142,25 +168,7 @@ export const Table = withErrorBoundary(({
               const rowProps = row.getRowProps();
               return (
                 <React.Fragment key={row.original.id}>
-                  <TableElements.TR {...rowProps} isExpanded={row.isExpanded}>
-                    {row.cells.map((cell: any) => (
-                      <td
-                        {...cell.getCellProps()}
-                        tw="first:px-4 last:px-4"
-                        style={{ textAlign: cell.column.textAlign || 'right' }}
-                        data-test={`td-${rowProps.key}-${cell.column.id}`}
-
-                      >
-                        <div onClick={() => cell.column.id === 'expander' &&
-                        setExpandedRows(row.isExpanded
-                          ? expandedRows.filter((id) => id !== row.original.id)
-                          : [...expandedRows, row.original.id])}
-                        >
-                          {cell.render('Cell')}
-                        </div>
-                      </td>
-                    ))}
-                  </TableElements.TR>
+                  <TableRow row={row} rowProps={rowProps} />
                   {row.isExpanded && renderRowSubComponent?.({ row, rowProps })}
                 </React.Fragment>
               );
