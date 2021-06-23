@@ -61,6 +61,7 @@ export const ScopesList = () => {
       {scopesData.length > 0
         ? (
           <Table
+            withSearchPanel={false}
             isDefaulToggleSortBy
             data={scopesData}
             columns={[

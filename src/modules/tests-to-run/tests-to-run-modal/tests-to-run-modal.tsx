@@ -102,7 +102,7 @@ export const TestsToRunModal = () => {
                 label: `Auto tests (${(testsToRun.AUTO || []).length})`,
               },
             ]}
-            onChange={({ value }) => setSelectedFilter(value)}
+            onChange={({ value }) => setSelectedFilter(String(value))}
             value={selectedFilter}
           />
           <div tw="text-14 mt-4 px-6 space-y-4">
