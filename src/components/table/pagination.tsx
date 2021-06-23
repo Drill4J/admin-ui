@@ -129,17 +129,18 @@ export const Pagination = ({
   );
 
   const Ellipsis = () => {
-    const [goToPageModalIsOpen, setGoToPageModalIsOpen] = useState(false);
+    const [popupIsOpen, setPopupIsOpen] = useState(false);
+    const node = useClickOutside(() => setPopupIsOpen(false));
     return (
-      <div tw="relative flex items-end h-8 px-3 text-monochrome-default" data-test="table-pagination:dots">
+      <div ref={node} tw="relative flex items-end h-8 px-3 text-monochrome-default" data-test="table-pagination:dots">
         <PaginationElements.Dots
           tw="cursor-pointer hover:text-blue-medium-tint"
-          active={goToPageModalIsOpen}
-          onClick={() => setGoToPageModalIsOpen(!goToPageModalIsOpen)}
+          active={popupIsOpen}
+          onClick={() => setPopupIsOpen(!popupIsOpen)}
         >
           ...
         </PaginationElements.Dots>
-        {goToPageModalIsOpen && (
+        {popupIsOpen && (
           <div tw="absolute" style={{ top: '-74px', left: '-46px' }}>
             <Tooltip />
           </div>
