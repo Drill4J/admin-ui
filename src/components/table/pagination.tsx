@@ -50,19 +50,19 @@ export const Pagination = ({
   const FIRST_OR_LAST_NUMBER_WITH_ELIPSIS = 2;
   const MAX_LEFT_OR_RIGHT_PAGES_COUNT = MAX_PAGES_RENDERED - FIRST_OR_LAST_NUMBER_WITH_ELIPSIS;
 
-  const createPages = (): Array<number | 'elepsis'> => {
+  const createPages = (): Array<number | 'ellipsis'> => {
     if (currentPage < MAX_PAGES_RENDERED - FIRST_OR_LAST_NUMBER_WITH_ELIPSIS) {
       const pageNumbersBeforeElispis = createArray(1, MAX_LEFT_OR_RIGHT_PAGES_COUNT);
-      return [...pageNumbersBeforeElispis, 'elepsis', pagesLength];
+      return [...pageNumbersBeforeElispis, 'ellipsis', pagesLength];
     }
 
     if (currentPage >= MAX_PAGES_RENDERED - FIRST_OR_LAST_NUMBER_WITH_ELIPSIS) {
       if (currentPage > pagesLength + 1 - MAX_LEFT_OR_RIGHT_PAGES_COUNT) {
         const pageNumbersAfterElispis = createArray(pagesLength + 1 - MAX_LEFT_OR_RIGHT_PAGES_COUNT, pagesLength);
-        return [1, 'elepsis', ...pageNumbersAfterElispis];
+        return [1, 'ellipsis', ...pageNumbersAfterElispis];
       }
       const pageNumbersBetweenElispis = [currentPage - 1, currentPage, currentPage + 1];
-      return [1, 'elepsis', ...pageNumbersBetweenElispis, 'elepsis', pagesLength];
+      return [1, 'ellipsis', ...pageNumbersBetweenElispis, 'ellipsis', pagesLength];
     }
     return createArray(1, pagesLength);
   };
@@ -120,7 +120,7 @@ export const Pagination = ({
   const Pages = () => (
     <>
       {createPages().map((page) => (
-        page === 'elepsis'
+        page === 'ellipsis'
           ? <GoToPage />
           : (
             <PaginationElements.PageNumber active={page === currentPage} onClick={() => gotoPageByPageNumber(page)}>
