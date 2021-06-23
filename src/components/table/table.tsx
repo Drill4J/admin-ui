@@ -78,7 +78,8 @@ export const Table = withErrorBoundary(({
     usePagination,
   );
 
-  useEffect(() => setPageSize(25), []);
+  const INITIAL_PAGE_SIZE = 25;
+  useEffect(() => setPageSize(INITIAL_PAGE_SIZE), []);
 
   const dispatch = useTableActionsDispatch();
   const { sort: [sort], search } = useTableActionsState();
