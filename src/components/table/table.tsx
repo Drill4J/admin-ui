@@ -30,7 +30,7 @@ import { SearchPanel } from 'components/search-panel';
 import { TableElements } from './table-elements';
 import { Pagination } from './pagination';
 
-type CustomColumn = Column & { textAlign?: string; width?: string; }
+type CustomColumn = Column & { textAlign?: string; width?: string; notSortable?: boolean; }
 
 interface Props {
   columns: Array<CustomColumn>;
@@ -96,6 +96,7 @@ export const Table = withErrorBoundary(({
       {headerGroup.headers.map((column: any) => {
         const active = column.id === sort?.field;
         const defaulToggleSortBy = column.getSortByToggleProps().onClick;
+
         return (
           <TableElements.TH
             {...column.getHeaderProps(column.getSortByToggleProps())}
@@ -106,7 +107,7 @@ export const Table = withErrorBoundary(({
             data-test={`table-th-${column.id}`}
           >
             <div tw="relative inline-flex items-center cursor-pointer">
-              {column.id !== 'expander' && (
+              {column.id !== 'expander' && !column.notSortable && (
                 <TableElements.SortArrow active={column.isSorted || active}>
                   <Icons.SortingArrow rotate={column.isSortedDesc || (active && sort?.order === 'DESC') ? 0 : 180} />
                 </TableElements.SortArrow>
