@@ -30,7 +30,7 @@ import { SearchPanel } from 'components/search-panel';
 import { TableElements } from './table-elements';
 import { Pagination } from './pagination';
 
-type CustomColumn = Column & { textAlign?: string; width?: string; }
+type CustomColumn = Column & { textAlign?: string; width?: string; notSortable?: boolean; }
 
 interface Props {
   columns: Array<CustomColumn>;
@@ -96,6 +96,7 @@ export const Table = withErrorBoundary(({
       {headerGroup.headers.map((column: any) => {
         const active = column.id === sort?.field;
         const defaulToggleSortBy = column.getSortByToggleProps().onClick;
+
         return (
           <TableElements.TH
             {...column.getHeaderProps(column.getSortByToggleProps())}
@@ -106,7 +107,7 @@ export const Table = withErrorBoundary(({
             data-test={`table-th-${column.id}`}
           >
             <div tw="relative inline-flex items-center cursor-pointer">
-              {column.id !== 'expander' && (
+              {column.id !== 'expander' && !column.notSortable && (
                 <TableElements.SortArrow active={column.isSorted || active}>
                   <Icons.SortingArrow rotate={column.isSortedDesc || (active && sort?.order === 'DESC') ? 0 : 180} />
                 </TableElements.SortArrow>
@@ -142,55 +143,53 @@ export const Table = withErrorBoundary(({
   );
 
   return (
-    <div tw="overflow-x-auto overflow-y-hidden">
-      <div style={{ minWidth: '1100px' }}>
-        {withSearchPanel && (
-          <div tw="mt-2">
-            <SearchPanel
-              onSearch={(searchValue) => dispatch(setSearch([{ value: searchValue, field: 'name', op: 'CONTAINS' }]))}
-              searchQuery={searchQuery?.value}
-              searchResult={filteredCount}
-              placeholder={placeholder}
-            />
-          </div>
-        )}
-        <table {...getTableProps()} tw="table-fixed w-full text-14 leading-16 text-monochrome-black">
-          <TableElements.TableHead>
-            {headerGroups.map((headerGroup: any) => (
-              <TableHeaderRow headerGroup={headerGroup} />
-            ))}
-          </TableElements.TableHead>
-          <tbody {...getTableBodyProps()}>
-            {page.map((rawRow: any) => {
-              const row = { ...rawRow, isExpanded: expandedRows.includes(rawRow.original.id) };
-              prepareRow(row);
-              const rowProps = row.getRowProps();
-              return (
-                <React.Fragment key={row.original.id}>
-                  <TableRow row={row} rowProps={rowProps} />
-                  {row.isExpanded && renderRowSubComponent?.({ row, rowProps })}
-                </React.Fragment>
-              );
-            })}
-          </tbody>
-        </table>
-        {stub}
-        {pageOptions.length > 1 && (
-          <Pagination
-            pagesLength={pageOptions.length}
-            gotoPage={gotoPage}
-            pageIndex={pageIndex}
-            previousPage={previousPage}
-            nextPage={nextPage}
-            canPreviousPage={canPreviousPage}
-            canNextPage={canNextPage}
-            pageSize={pageSize}
-            setPageSize={setPageSize}
-            totalCount={totalCount}
+    <>
+      {withSearchPanel && (
+        <div tw="mt-2">
+          <SearchPanel
+            onSearch={(searchValue) => dispatch(setSearch([{ value: searchValue, field: 'name', op: 'CONTAINS' }]))}
+            searchQuery={searchQuery?.value}
+            searchResult={filteredCount}
+            placeholder={placeholder}
           />
-        )}
-      </div>
-    </div>
+        </div>
+      )}
+      <table {...getTableProps()} tw="table-fixed w-full text-14 leading-16 text-monochrome-black">
+        <TableElements.TableHead>
+          {headerGroups.map((headerGroup: any) => (
+            <TableHeaderRow headerGroup={headerGroup} />
+          ))}
+        </TableElements.TableHead>
+        <tbody {...getTableBodyProps()}>
+          {page.map((rawRow: any) => {
+            const row = { ...rawRow, isExpanded: expandedRows.includes(rawRow.original.id) };
+            prepareRow(row);
+            const rowProps = row.getRowProps();
+            return (
+              <React.Fragment key={row.original.id}>
+                <TableRow row={row} rowProps={rowProps} />
+                {row.isExpanded && renderRowSubComponent?.({ row, rowProps })}
+              </React.Fragment>
+            );
+          })}
+        </tbody>
+      </table>
+      {stub}
+      {pageOptions.length > 1 && (
+        <Pagination
+          pagesLength={pageOptions.length}
+          gotoPage={gotoPage}
+          pageIndex={pageIndex}
+          previousPage={previousPage}
+          nextPage={nextPage}
+          canPreviousPage={canPreviousPage}
+          canNextPage={canNextPage}
+          pageSize={pageSize}
+          setPageSize={setPageSize}
+          totalCount={totalCount}
+        />
+      )}
+    </>
   );
 }, {
   FallbackComponent: TableErrorFallback,

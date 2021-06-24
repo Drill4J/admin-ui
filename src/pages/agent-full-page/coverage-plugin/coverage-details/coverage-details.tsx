@@ -191,34 +191,36 @@ export const CoverageDetails = ({
   );
   const columnsDependency = useMemo(() => [showCoverageIcon], [showCoverageIcon]);
   return (
-    <div tw="flex flex-col">
-      <Table
-        columns={columns}
-        data={coverageByPackages}
-        totalCount={totalCount}
-        filteredCount={filteredCount}
-        placeholder="Search packages by name"
-        renderRowSubComponent={renderRowSubComponent}
-        columnsDependency={columnsDependency}
-        stub={coverageByPackages.length === 0 && (
-          <Stub
-            icon={<Icons.Package height={104} width={107} />}
-            title="No results found"
-            message="Try adjusting your search or filter to find what you are looking for."
-          />
-        )}
-      />
-      <Route
-        path={[
-          '/full-page/:agentId/:buildVersion/:pluginId/dashboard/:tab/associated-test-modal',
-          '/full-page/:agentId/:buildVersion/:pluginId/scope/:scopeId/:tab/associated-test-modal',
-        ]}
-        render={() => (
-          <AssociatedTestModal
-            associatedTestsTopic={associatedTestsTopic}
-          />
-        )}
-      />
+    <div tw="flex flex-col overflow-x-auto">
+      <div style={{ minWidth: '1100px' }}>
+        <Table
+          columns={columns}
+          data={coverageByPackages}
+          totalCount={totalCount}
+          filteredCount={filteredCount}
+          placeholder="Search packages by name"
+          renderRowSubComponent={renderRowSubComponent}
+          columnsDependency={columnsDependency}
+          stub={coverageByPackages.length === 0 && (
+            <Stub
+              icon={<Icons.Package height={104} width={107} />}
+              title="No results found"
+              message="Try adjusting your search or filter to find what you are looking for."
+            />
+          )}
+        />
+        <Route
+          path={[
+            '/full-page/:agentId/:buildVersion/:pluginId/dashboard/:tab/associated-test-modal',
+            '/full-page/:agentId/:buildVersion/:pluginId/scope/:scopeId/:tab/associated-test-modal',
+          ]}
+          render={() => (
+            <AssociatedTestModal
+              associatedTestsTopic={associatedTestsTopic}
+            />
+          )}
+        />
+      </div>
     </div>
   );
 };

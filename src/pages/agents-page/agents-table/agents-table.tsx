@@ -96,8 +96,10 @@ export const AgentsTable = ({ agents }: Props) => {
       accessor: 'actions',
       Cell: ({ row }: any) => <ActionsColumn agent={row.original} />,
       width: '20%',
+      notSortable: true,
     },
   ];
+
   return (
     <div tw="w-full h-full">
       <Table

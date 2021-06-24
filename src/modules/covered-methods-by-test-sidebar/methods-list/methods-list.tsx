@@ -43,23 +43,24 @@ export const MethodsList = ({ topicCoveredMethodsByTest, summary }: Props) => {
 
   return (
     <div tw="flex-col h-full overflow-hidden">
-      <Inputs.Dropdown
-        tw="pt-2 pb-2 pr-6 pl-6 leading-32 text-monochrome-default border-b border-monochrome-medium-tint"
-        items={[
-          { value: 'all', label: 'All methods' },
-          { value: 'new', label: `New methods (${summary?.methodCounts?.new})` },
-          {
-            value: 'modified',
-            label: `Modified methods (${summary?.methodCounts?.modified})`,
-          },
-          {
-            value: 'unaffected',
-            label: `Unaffected methods (${summary?.methodCounts?.unaffected})`,
-          },
-        ]}
-        onChange={({ value }) => setSelectedSection(value as keyof MethodCounts)}
-        value={selectedSection}
-      />
+      <div tw="mx-6 py-4 leading-32 text-monochrome-default border-b border-monochrome-medium-tint">
+        <Inputs.Dropdown
+          items={[
+            { value: 'all', label: 'All methods' },
+            { value: 'new', label: `New methods (${summary?.methodCounts?.new})` },
+            {
+              value: 'modified',
+              label: `Modified methods (${summary?.methodCounts?.modified})`,
+            },
+            {
+              value: 'unaffected',
+              label: `Unaffected methods (${summary?.methodCounts?.unaffected})`,
+            },
+          ]}
+          onChange={({ value }) => setSelectedSection(value as keyof MethodCounts)}
+          value={selectedSection}
+        />
+      </div>
       <div tw="h-full pt-2 w-full mb-4 overflow-y-hidden">
         <div tw="flex flex-col h-full text-14">
           <div ref={node} style={{ height: 'calc(100% - 40px)' }}>

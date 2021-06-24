@@ -17,7 +17,7 @@ import {
   Route, useParams, Link,
 } from 'react-router-dom';
 import { Menu } from '@drill4j/ui-kit';
-import 'twin.macro';
+import tw, { styled } from 'twin.macro';
 
 import { List, ListColumn } from 'components';
 import { SessionsManagementPaneProvider as SessionsManagementPane, TestsToRunModal } from 'modules';
@@ -115,60 +115,62 @@ export const TestToCodePlugin = ({ summaries = [], aggregated }: Props) => {
         <ListColumn
           name="actions"
           Cell={({ item: { id: agentId = '' } }) => (
-            <Menu
-              tw="flex justify-center w-full"
-              testContext="test-to-code-plugin:actions:cell"
-              items={[
-                {
-                  label: 'Builds list',
-                  icon: 'BuildList',
-                  onClick: () => null,
-                  Content: ({ children }: { children: JSX.Element }) => <Link to={`/full-page/${agentId}/build-list`}>{children}</Link>,
-                },
-                {
-                  label: 'Settings',
-                  icon: 'Settings',
-                  onClick: () => null,
-                  Content: ({ children }: { children: JSX.Element }) => (
-                    <Link to={`/agents/agent/${agentId}/settings/general`}>
-                      {children}
-                    </Link>
-                  ),
-                },
-              ]}
-            />
+            <MenuWrapper>
+              <Menu
+                testContext="test-to-code-plugin:actions:cell"
+                items={[
+                  {
+                    label: 'Builds list',
+                    icon: 'BuildList',
+                    onClick: () => null,
+                    Content: ({ children }: { children: JSX.Element }) => <Link to={`/full-page/${agentId}/build-list`}>{children}</Link>,
+                  },
+                  {
+                    label: 'Settings',
+                    icon: 'Settings',
+                    onClick: () => null,
+                    Content: ({ children }: { children: JSX.Element }) => (
+                      <Link to={`/agents/agent/${agentId}/settings/general`}>
+                        {children}
+                      </Link>
+                    ),
+                  },
+                ]}
+              />
+            </MenuWrapper>
           )}
           HeaderCell={() => (
-            <Menu
-              tw="flex justify-center w-full"
-              testContext="test-to-code-plugin:header-cell:actions"
-              items={[
-                {
-                  label: 'Finish all scopes',
-                  icon: 'Check',
-                  onClick: () => null,
-                  Content: ({ children }: { children: JSX.Element }) => (
-                    <Link
-                      to={`/service-group-full-page/${serviceGroupId}/${pluginId}/finish-all-scopes-modal`}
-                    >
-                      {children}
-                    </Link>
-                  ),
-                },
-                {
-                  label: 'Sessions Management',
-                  icon: 'ManageSessions',
-                  onClick: () => null,
-                  Content: ({ children }: { children: JSX.Element }) => (
-                    <Link
-                      to={`/service-group-full-page/${serviceGroupId}/${pluginId}/session-management-pane`}
-                    >
-                      {children}
-                    </Link>
-                  ),
-                },
-              ]}
-            />
+            <MenuWrapper>
+              <Menu
+                testContext="test-to-code-plugin:header-cell:actions"
+                items={[
+                  {
+                    label: 'Finish all scopes',
+                    icon: 'Check',
+                    onClick: () => null,
+                    Content: ({ children }: { children: JSX.Element }) => (
+                      <Link
+                        to={`/service-group-full-page/${serviceGroupId}/${pluginId}/finish-all-scopes-modal`}
+                      >
+                        {children}
+                      </Link>
+                    ),
+                  },
+                  {
+                    label: 'Sessions Management',
+                    icon: 'ManageSessions',
+                    onClick: () => null,
+                    Content: ({ children }: { children: JSX.Element }) => (
+                      <Link
+                        to={`/service-group-full-page/${serviceGroupId}/${pluginId}/session-management-pane`}
+                      >
+                        {children}
+                      </Link>
+                    ),
+                  },
+                ]}
+              />
+            </MenuWrapper>
           )}
         />
       </List>
@@ -187,3 +189,7 @@ export const TestToCodePlugin = ({ summaries = [], aggregated }: Props) => {
     </div>
   );
 };
+
+const MenuWrapper = styled.div`
+  ${tw`flex justify-end mr-4`}
+`;
