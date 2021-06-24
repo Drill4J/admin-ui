@@ -68,19 +68,20 @@ export const RisksModal = () => {
           methods.
         </div>
         <div tw="flex flex-col flex-grow overflow-y-hidden">
-          <Inputs.Dropdown
-            tw="mt-4 ml-6 text-blue-default"
-            items={[
-              { value: 'all', label: 'All risks' },
-              { value: 'new', label: `Not covered new methods (${newRisks.length})` },
-              {
-                value: 'modified',
-                label: `Not covered modified methods (${modifiedRisks.length})`,
-              },
-            ]}
-            onChange={({ value }) => setSelectedSection(String(value))}
-            value={selectedSection}
-          />
+          <div tw="mt-4 ml-6">
+            <Inputs.Dropdown
+              items={[
+                { value: 'all', label: 'All risks' },
+                { value: 'new', label: `Not covered new methods (${newRisks.length})` },
+                {
+                  value: 'modified',
+                  label: `Not covered modified methods (${modifiedRisks.length})`,
+                },
+              ]}
+              onChange={({ value }) => setSelectedSection(String(value))}
+              value={selectedSection}
+            />
+          </div>
           <div tw="flex flex-col h-full mt-4 text-14">
             <div ref={node} style={{ height: '100%' }}>
               <VirtualList

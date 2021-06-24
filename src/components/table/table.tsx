@@ -142,7 +142,7 @@ export const Table = withErrorBoundary(({
   );
 
   return (
-    <div tw="overflow-x-auto overflow-y-hidden">
+    <div tw="overflow-x-auto">
       <div style={{ minWidth: '1100px' }}>
         {withSearchPanel && (
           <div tw="mt-2">

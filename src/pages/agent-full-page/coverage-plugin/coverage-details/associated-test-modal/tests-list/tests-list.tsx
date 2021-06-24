@@ -49,16 +49,18 @@ export const TestsList = ({ associatedTests }: Props) => {
 
   return (
     <div tw="flex flex-col h-full overflow-y-auto">
-      <Inputs.Dropdown
-        tw="my-4 mx-6"
-        items={[
-          { value: 'all', label: 'All tests' },
-          { value: 'auto', label: `Auto (${autoTests.length})` },
-          { value: 'manual', label: `Manual (${manualTests.length})` },
-        ]}
-        onChange={({ value }) => setSelectedSection(String(value))}
-        value={selectedSection}
-      />
+      <div tw="mx-6 my-4">
+        <Inputs.Dropdown
+          tw="my-4 mx-6"
+          items={[
+            { value: 'all', label: 'All tests' },
+            { value: 'auto', label: `Auto (${autoTests.length})` },
+            { value: 'manual', label: `Manual (${manualTests.length})` },
+          ]}
+          onChange={({ value }) => setSelectedSection(String(value))}
+          value={selectedSection}
+        />
+      </div>
       <div tw="flex flex-col flex-grow pt-2 overflow-y-auto border-t border-monochrome-medium-tint">
         <div ref={node} style={{ height: '100%' }}>
           <VirtualList
