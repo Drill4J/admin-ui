@@ -213,6 +213,7 @@ export const ScopesList = () => {
                   );
                 } : () => null,
                 width: '48px',
+                notSortable: true,
               },
             ]}
           />
