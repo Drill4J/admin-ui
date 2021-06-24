@@ -118,7 +118,7 @@ export const ScopesList = () => {
                 width: '15%',
               },
               {
-                Header: 'Auto Tests',
+                Header: 'Auto tests',
                 accessor: 'autoTests',
                 Cell: ({ row: { original = {} } = {} }: any) => {
                   const coverageByTestType = transformObjectsArrayToObject(original?.coverage?.byTestType as TestTypeSummary[], 'type');
