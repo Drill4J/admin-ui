@@ -90,13 +90,14 @@ export const FinishScopeModal = ({ isOpen, onToggle, scope }: Props) => {
         )}
         <div tw="m-6">
           <ScopeSummary scope={scope as ActiveScope} testsCount={testsCount} />
-          <Inputs.Checkbox
-            tw="mt-6 mb-9"
-            checked={ignoreScope}
-            onChange={() => setIgnoreScope(!ignoreScope)}
-            label="Ignore scope in build stats"
-            disabled={!testsCount || testTypes.length > 0}
-          />
+          <div tw="mt-6 mb-9">
+            <Inputs.Checkbox
+              checked={ignoreScope}
+              onChange={() => setIgnoreScope(!ignoreScope)}
+              label="Ignore scope in build stats"
+              disabled={!testsCount || testTypes.length > 0}
+            />
+          </div>
           <div className="flex items-center gap-x-4 w-full mt-9">
             {!testTypes.length ? (
               <>
