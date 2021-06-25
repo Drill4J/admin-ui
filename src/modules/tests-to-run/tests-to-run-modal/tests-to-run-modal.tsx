@@ -92,19 +92,21 @@ export const TestsToRunModal = () => {
           </div>
         </div>
         <div tw="h-full w-full overflow-y-auto overflow-x-hidden">
-          <Inputs.Dropdown
-            tw="mt-3 ml-6 text-blue-default"
-            items={[
-              { value: 'all', label: 'All test types' },
-              { value: 'manual', label: `Manual tests (${(testsToRun.MANUAL || []).length})` },
-              {
-                value: 'auto',
-                label: `Auto tests (${(testsToRun.AUTO || []).length})`,
-              },
-            ]}
-            onChange={({ value }) => setSelectedFilter(String(value))}
-            value={selectedFilter}
-          />
+          <div tw="mx-6 my-4">
+            <Inputs.Dropdown
+              tw="mt-3 ml-6 text-blue-default"
+              items={[
+                { value: 'all', label: 'All test types' },
+                { value: 'manual', label: `Manual tests (${(testsToRun.MANUAL || []).length})` },
+                {
+                  value: 'auto',
+                  label: `Auto tests (${(testsToRun.AUTO || []).length})`,
+                },
+              ]}
+              onChange={({ value }) => setSelectedFilter(String(value))}
+              value={selectedFilter}
+            />
+          </div>
           <div tw="text-14 mt-4 px-6 space-y-4">
             {(getSelectedTests() || []).map((test) => (
               <div tw="flex items-center gap-x-4" key={nanoid()}>
