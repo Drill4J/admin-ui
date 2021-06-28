@@ -127,13 +127,15 @@ export const Table = withErrorBoundary(({
           {...cell.getCellProps()}
           tw="first:px-4 last:px-4"
           style={{ textAlign: cell.column.textAlign || 'right' }}
-          data-test={`td-${rowProps.key}-${cell.column.id}`}
+          data-test={`td-row-${cell.column.id}`}
 
         >
-          <div onClick={() => cell.column.id === 'expander' &&
-      setExpandedRows(row.isExpanded
-        ? expandedRows.filter((id) => id !== row.original.id)
-        : [...expandedRows, row.original.id])}
+          <div
+            data-test={`td-row-cell-${cell.column.id}`}
+            onClick={() => cell.column.id === 'expander' &&
+              setExpandedRows(row.isExpanded
+                ? expandedRows.filter((id) => id !== row.original.id)
+                : [...expandedRows, row.original.id])}
           >
             {cell.render('Cell')}
           </div>
