@@ -36,7 +36,7 @@ interface Props {
 }
 
 export const TestDetails = ({
-  topicCoveredMethodsByTest, tests: { items: tests = [], totalCount = 0, filteredCount = 0 },
+  topicCoveredMethodsByTest, tests: { items: tests = [], filteredCount = 0 },
 }: Props) => {
   const { agent: { status = '' } = {} } = usePluginState();
   const { search } = useTableActionsState();
@@ -52,7 +52,6 @@ export const TestDetails = ({
         <Table
           isDefaulToggleSortBy
           filteredCount={filteredCount}
-          totalCount={totalCount}
           placeholder="Search tests by name"
           data={tests}
           columns={[{

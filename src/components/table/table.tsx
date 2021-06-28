@@ -35,7 +35,6 @@ type CustomColumn = Column & { textAlign?: string; width?: string; notSortable?:
 interface Props {
   columns: Array<CustomColumn>;
   data: Array<any>;
-  totalCount?: number;
   filteredCount?: number;
   placeholder?: string;
   renderRowSubComponent?: ({ row, rowProps }: any) => JSX.Element;
@@ -48,7 +47,6 @@ interface Props {
 export const Table = withErrorBoundary(({
   columns,
   data,
-  totalCount,
   filteredCount = 0,
   placeholder = 'Search value by name',
   renderRowSubComponent,
@@ -177,20 +175,18 @@ export const Table = withErrorBoundary(({
         </tbody>
       </table>
       {stub}
-      {pageOptions.length > 1 && (
-        <Pagination
-          pagesLength={pageOptions.length}
-          gotoPage={gotoPage}
-          pageIndex={pageIndex}
-          previousPage={previousPage}
-          nextPage={nextPage}
-          canPreviousPage={canPreviousPage}
-          canNextPage={canNextPage}
-          pageSize={pageSize}
-          setPageSize={setPageSize}
-          totalCount={totalCount}
-        />
-      )}
+      <Pagination
+        pagesLength={pageOptions.length}
+        gotoPage={gotoPage}
+        pageIndex={pageIndex}
+        previousPage={previousPage}
+        nextPage={nextPage}
+        canPreviousPage={canPreviousPage}
+        canNextPage={canNextPage}
+        pageSize={pageSize}
+        setPageSize={setPageSize}
+        rowsCount={page.length}
+      />
     </>
   );
 }, {

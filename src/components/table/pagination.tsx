@@ -31,7 +31,7 @@ interface Props {
   canNextPage: boolean;
   pageSize: number;
   setPageSize: (pageSize: number) => void;
-  totalCount?: number;
+  rowsCount: number;
 }
 
 interface SelectRowsCountDropdownProps {
@@ -41,7 +41,7 @@ interface SelectRowsCountDropdownProps {
 }
 
 export const Pagination = ({
-  pagesLength, gotoPage, pageIndex, previousPage, nextPage, canPreviousPage, canNextPage, pageSize, setPageSize, totalCount,
+  pagesLength, gotoPage, pageIndex, previousPage, nextPage, canPreviousPage, canNextPage, pageSize, setPageSize, rowsCount,
 }: Props) => {
   const createArray = (from: number, to: number) => Array.from({ length: to - from + 1 }, (_, i) => from + i);
 
@@ -174,35 +174,38 @@ export const Pagination = ({
 
   return (
     <div tw="flex justify-between pr-1 pt-4">
-      <span data-test="table:displaying-results-count" tw="flex items-center gap-x-1 text-14 leading-32 text-monochrome-default">
-        Displaying
-        <SelectRowsCountDropdown
-          values={[25, 50, 100]}
-          action={(value) => setPageSize(Number(value))}
-          initialValue={pageSize}
-        />
-        &nbsp;of
-        <span tw="text-monochrome-black font-bold" data-test="table:rows:total">{totalCount}</span>
-        rows
-      </span>
-      <div tw="flex text-monochrome-default">
-        <PaginationElements.PaginationArrow
-          disabled={!canPreviousPage}
-          onClick={() => previousPage()}
-          data-test="table-pagination:pagination-arrow-left"
-        >
-          <Icons.Expander width={6} height={8} rotate={180} />
-        </PaginationElements.PaginationArrow>
-        <Pages />
-        {canNextPage && (
+      {rowsCount >= 25 && (
+        <span data-test="table:displaying-results-count" tw="flex items-center gap-x-1 text-14 leading-32 text-monochrome-default">
+          Displaying
+          <SelectRowsCountDropdown
+            values={[25, 50, 100]}
+            action={(value) => setPageSize(Number(value))}
+            initialValue={pageSize}
+          />
+          &nbsp;of
+          <span tw="text-monochrome-black font-bold" data-test="table:rows:count">{rowsCount}</span>
+          rows
+        </span>
+      )}
+      {pagesLength > 1 && (
+        <div tw="flex text-monochrome-default">
           <PaginationElements.PaginationArrow
+            disabled={!canPreviousPage}
+            onClick={() => previousPage()}
+            data-test="table-pagination:pagination-arrow-left"
+          >
+            <Icons.Expander width={6} height={8} rotate={180} />
+          </PaginationElements.PaginationArrow>
+          <Pages />
+          <PaginationElements.PaginationArrow
+            disabled={!canNextPage}
             onClick={() => nextPage()}
             data-test="table-pagination:pagination-arrow-right"
           >
             <Icons.Expander width={6} height={8} />
           </PaginationElements.PaginationArrow>
-        )}
-      </div>
+        </div>
+      )}
     </div>
   );
 };

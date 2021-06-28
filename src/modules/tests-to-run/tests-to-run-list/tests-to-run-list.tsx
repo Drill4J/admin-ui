@@ -102,7 +102,6 @@ export const TestsToRunList = ({ agentType = 'Agent' }: Props) => {
           <Table
             isDefaulToggleSortBy
             filteredCount={filteredCount}
-            totalCount={totalCount}
             placeholder="Search tests by name"
             data={testsToRun}
             columns={[{

@@ -45,7 +45,6 @@ export const CoverageDetails = ({
   const { search, sort } = useTableActionsState();
   const {
     items: coverageByPackages = [],
-    totalCount = 0,
     filteredCount = 0,
   } = useBuildVersion<FilterList<ClassCoverage>>(topic, search, sort, 'LIST') || {};
 
@@ -196,7 +195,6 @@ export const CoverageDetails = ({
         <Table
           columns={columns}
           data={coverageByPackages}
-          totalCount={totalCount}
           filteredCount={filteredCount}
           placeholder="Search packages by name"
           renderRowSubComponent={renderRowSubComponent}
