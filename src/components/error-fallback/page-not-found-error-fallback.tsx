@@ -24,8 +24,9 @@ export const PageNotFoundErrorFallback = ({ error, resetErrorBoundary }: Fallbac
   if (error.message === 'page not found') {
     return (
       <>
-        <NotFoundPage />
-        <LinkButton tw="ml-27" type="button" onClick={resetErrorBoundary}>Go to agents apage</LinkButton>
+        <NotFoundPage>
+          <LinkButton type="button" onClick={resetErrorBoundary}>Go to agents page</LinkButton>
+        </NotFoundPage>
       </>
     );
   }
