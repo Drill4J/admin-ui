@@ -155,7 +155,7 @@ export const Pagination = ({
     return (
       <div ref={node} tw="relative flex items-center gap-x-1 text-monochrome-black cursor-pointer" onClick={() => setIsOpen(!isOpen)}>
         <span tw="font-bold" data-test="table-pagination:page-rows">
-          {`${initialValue * (currentPage) - initialValue}-${initialValue * (currentPage)}`}
+          {`${initialValue * (currentPage) - initialValue}-${pagesLength === pageIndex + 1 ? rowsCount : (initialValue * (currentPage))}`}
         </span>
         <Icons.Expander width={8} height={8} rotate={isOpen ? 90 : -90} />
         {isOpen && (
