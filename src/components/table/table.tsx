@@ -185,7 +185,7 @@ export const Table = withErrorBoundary(({
         canNextPage={canNextPage}
         pageSize={pageSize}
         setPageSize={setPageSize}
-        rowsCount={page.length}
+        rowsCount={data.length}
       />
     </>
   );
