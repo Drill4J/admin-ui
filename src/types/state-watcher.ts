@@ -23,7 +23,6 @@ export type Series = Array<{
 export interface StateWatcherData {
   isMonitoring: boolean;
   maxHeap: number;
-  start: number;
-  brakes: number[];
+  breaks: Array<{ from: number, to: number }>;
   series: Series;
 }

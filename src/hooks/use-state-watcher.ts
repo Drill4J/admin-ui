@@ -25,14 +25,15 @@ export function useStateWatcher(agentId: string, buildVersion: string, timeStamp
   const [data, setData] = useState<StateWatcherData>({
     isMonitoring: false,
     maxHeap: 0,
-    start: 0,
-    brakes: [],
+    breaks: [],
     series: [],
   });
 
   const { showMessage } = useContext(NotificationManagerContext);
 
   const currentDate = Date.now();
+  const refreshRate = 5000;
+  const correctionValue = 500;
 
   useEffect(() => {
     function handleDataChange(newData: StateWatcherData) {
@@ -49,14 +50,15 @@ export function useStateWatcher(agentId: string, buildVersion: string, timeStamp
               )?.data || []),
             ].map((pointInfo, i, points) => {
               if (i === points.length - 1) return pointInfo;
-              const refreshRate = 5000;
-              const correctionValue = 500;
-              const hasPointsGapMoreThanRefreshRate = pointInfo?.timeStamp + refreshRate + correctionValue > points[i + 1]?.timeStamp;
+              const nextPointTimeStamp = points[i + 1]?.timeStamp;
+              const currentPointTimeStamp = pointInfo?.timeStamp;
+
+              const hasPointsGapMoreThanRefreshRate = currentPointTimeStamp + refreshRate + correctionValue < nextPointTimeStamp;
               return hasPointsGapMoreThanRefreshRate
-                ? pointInfo
-                : Array.from({ length: (points[i + 1]?.timeStamp - pointInfo?.timeStamp) / refreshRate },
-                  (_, k) => ({ timeStamp: pointInfo?.timeStamp + refreshRate * k, memory: { heap: null } }));
-            }).flat(),
+                ? Array.from({ length: (points[i + 1]?.timeStamp - pointInfo?.timeStamp) / refreshRate },
+                  (_, k) => ({ timeStamp: pointInfo?.timeStamp + refreshRate * k, memory: { heap: null } }))
+                : pointInfo;
+            }).flat().slice(prevSeriesData.length > timeStamp / refreshRate ? 1 : 0),
           }))
           : newData.series,
       }));

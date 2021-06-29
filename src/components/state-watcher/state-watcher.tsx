@@ -16,7 +16,7 @@
 import { useState } from 'react';
 import { Checkbox, Icons } from '@drill4j/ui-kit';
 import {
-  CartesianGrid, ResponsiveContainer, Tooltip, XAxis, YAxis, Line, LineChart, ReferenceLine,
+  CartesianGrid, ResponsiveContainer, Tooltip, XAxis, YAxis, Line, LineChart, ReferenceLine, ReferenceArea,
 } from 'recharts';
 import tw, { styled } from 'twin.macro';
 
@@ -38,6 +38,8 @@ export const StateWatcher = ({
 }: Props) => {
   const [totalHeapLineIsVisible, setTotalHeapLineIsVisible] = useState(true);
   const { observableInstances, toggleInstanceActiveStatus } = useInstanceIds(instanceIds);
+  const maxYAxisTick = data.maxHeap + data.maxHeap * 0.15;
+  const yAxisStep = maxYAxisTick / 4;
 
   return isActiveBuildVersion ? (
     <>
@@ -56,6 +58,7 @@ export const StateWatcher = ({
               stroke="#1B191B"
               shapeRendering="crispEdges"
               domain={['dataMin', 'dataMax']}
+              ticks={data?.series[0]?.data.map(d => d?.timeStamp)}
               interval={defineInterval(data?.series[0]?.data?.length || 0)}
               tick={({ x, y, payload }) => {
                 const date = new Date(payload.value);
@@ -66,9 +69,9 @@ export const StateWatcher = ({
                 );
               }}
             />
-            {data.brakes.map((timeStamp) => <ReferenceLine x={timeStamp} stroke="#687481" strokeDasharray="7 4" label={PauseIcon} />)}
             <YAxis
               domain={[0, data.maxHeap + data.maxHeap * 0.15]}
+              ticks={[0, yAxisStep, yAxisStep * 2, yAxisStep * 3, maxYAxisTick]}
               dataKey="memory.heap"
               tick={({ x, y, payload }) => (
                 <Tick
@@ -93,7 +96,18 @@ export const StateWatcher = ({
                 strokeWidth={6}
               />
             )}
-            <Tooltip content={({ payload, label }) => <StateWatcherTooltip payload={payload} label={label} maxHeap={data?.maxHeap} />} />
+            {/* <ReferenceArea x1={1624952455179} x2={1624952481164} label={<PauseIcon />} fill="#E3E6E8" /> */}
+            {data?.breaks.map(({ from, to }) => (
+              <ReferenceArea
+                x1={from}
+                x2={to}
+                fill="#E3E6E8"
+                label={PauseIcon}
+              />
+            ))}
+            <Tooltip
+              content={({ payload, label }) => <StateWatcherTooltip payload={payload} label={label} maxHeap={data?.maxHeap} />}
+            />
             {data.series.map((instance) => (
               observableInstances.find(({ instanceId }) => instance.instanceId === instanceId)?.isActive && (
                 <Line

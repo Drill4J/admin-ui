@@ -51,7 +51,7 @@ export const MonitoringButton = ({
             {
               ...prevState,
               isMonitoring: response.data.data.payload.isMonitoring,
-              brakes: [...prevState.brakes, ...(response?.data?.data?.payload?.brakes || [])],
+              breaks: response?.data?.data?.payload?.breaks || prevState.breaks,
             }));
           onClick && onClick();
           setIsLoading(false);

@@ -26,6 +26,7 @@ import { Agent } from 'types/agent';
 import { useWsConnection } from 'hooks';
 import { defaultAdminSocket } from 'common/connection';
 import { NotificationManagerContext } from 'notification-manager';
+import { Plugin } from 'types/plugin';
 import {
   wizardReducer, previousStep, nextStep, state,
 } from './wizard-reducer';
@@ -63,7 +64,7 @@ export const Wizard = ({
         initialValues={{
           ...initialValues,
           availablePlugins,
-          plugins: ['test2code'],
+          plugins: availablePlugins.length === 1 ? [availablePlugins[0].id] : [],
         }}
         keepDirtyOnReinitialize
         initialValuesEqual={(prevValues, nextValues) => JSON.stringify(prevValues) === JSON.stringify(nextValues)}
