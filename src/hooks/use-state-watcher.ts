@@ -20,20 +20,21 @@ import { defaultStateWatcherPluginSocket } from 'common/connection/default-ws-co
 import { NotificationManagerContext } from 'notification-manager';
 import { StateWatcherData } from 'types/state-watcher';
 
-export function useStateWatcher(agentId: string, buildVersion: string, timeStamp: number) {
+export function useStateWatcher(agentId: string, buildVersion: string, windowMs: number) {
+  const currentDate = Date.now();
+  const refreshRate = 5000;
+  const correctionValue = 500;
+
   const [isLoading, setIsLoading] = useState(false);
   const [data, setData] = useState<StateWatcherData>({
     isMonitoring: false,
     maxHeap: 0,
     breaks: [],
     series: [],
+    xTicks: [],
   });
 
   const { showMessage } = useContext(NotificationManagerContext);
-
-  const currentDate = Date.now();
-  const refreshRate = 5000;
-  const correctionValue = 500;
 
   useEffect(() => {
     function handleDataChange(newData: StateWatcherData) {
@@ -58,7 +59,7 @@ export function useStateWatcher(agentId: string, buildVersion: string, timeStamp
                 ? Array.from({ length: (points[i + 1]?.timeStamp - pointInfo?.timeStamp) / refreshRate },
                   (_, k) => ({ timeStamp: pointInfo?.timeStamp + refreshRate * k, memory: { heap: null } }))
                 : pointInfo;
-            }).flat().slice(prevSeriesData.length > timeStamp / refreshRate ? 1 : 0),
+            }).flat().slice(prevSeriesData.length > windowMs / refreshRate ? 1 : 0),
           }))
           : newData.series,
       }));
@@ -87,12 +88,15 @@ export function useStateWatcher(agentId: string, buildVersion: string, timeStamp
           `/agents/${agentId}/plugins/state-watcher/dispatch-action`,
           {
             type: 'RECORD_DATA',
-            payload: { from: currentDate - timeStamp, to: currentDate },
+            payload: { from: currentDate - windowMs, to: currentDate },
           },
         );
         const responseData: StateWatcherData = response.data.data;
 
-        setData(responseData);
+        setData({
+          ...responseData,
+          xTicks: Array.from({ length: windowMs / refreshRate }, (_, k) => currentDate - windowMs + refreshRate * k),
+        });
 
         setIsLoading(false);
       } catch ({ response: { data: { message } = {} } = {} }) {
@@ -100,7 +104,19 @@ export function useStateWatcher(agentId: string, buildVersion: string, timeStamp
         setIsLoading(false);
       }
     })();
-  }, [timeStamp]);
+  }, [windowMs]);
+
+  useEffect(() => {
+    setInterval(() => setData((prevState) =>
+      ({
+        ...prevState,
+        xTicks: [...prevState.xTicks, prevState.xTicks[prevState.xTicks.length - 1] + refreshRate].slice(1),
+      })), refreshRate);
+
+    // return () => {
+    //   clearInterval(interval);
+    // };
+  }, []);
 
   return {
     data,

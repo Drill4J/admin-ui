@@ -25,4 +25,5 @@ export interface StateWatcherData {
   maxHeap: number;
   breaks: Array<{ from: number, to: number }>;
   series: Series;
+  xTicks: number[];
 }

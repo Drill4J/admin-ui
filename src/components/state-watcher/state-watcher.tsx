@@ -58,8 +58,9 @@ export const StateWatcher = ({
               stroke="#1B191B"
               shapeRendering="crispEdges"
               domain={['dataMin', 'dataMax']}
-              ticks={data?.series[0]?.data.map(d => d?.timeStamp)}
-              interval={defineInterval(data?.series[0]?.data?.length || 0)}
+              // ticks={data?.series[0]?.data.map(d => d?.timeStamp)}
+              ticks={data.xTicks}
+              interval={defineInterval(data.xTicks.length)}
               tick={({ x, y, payload }) => {
                 const date = new Date(payload.value);
 
@@ -96,7 +97,6 @@ export const StateWatcher = ({
                 strokeWidth={6}
               />
             )}
-            {/* <ReferenceArea x1={1624952455179} x2={1624952481164} label={<PauseIcon />} fill="#E3E6E8" /> */}
             {data?.breaks.map(({ from, to }) => (
               <ReferenceArea
                 x1={from}
