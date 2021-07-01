@@ -35,28 +35,8 @@ const Dots = styled.div`
   ${({ active }: { active: boolean}) => active && tw`text-blue-default`}
 `;
 
-const NumberInput = styled.input`
-  width: 60px;
-  height: 40px;
-  ${tw`py-0 px-2 text-14 leading-22 text-monochrome-black`};
-  ${tw`rounded border border-monochrome-medium-tint bg-monochrome-white outline-none`};
-
-
-  -moz-appearance: textfield;
-
-  ::-webkit-outer-spin-button,
-  ::-webkit-inner-spin-button {
-    -webkit-appearance: none;
-  }
-  
-  :focus {
-    ${tw`border border-monochrome-black`};
-  }
-`;
-
 export const PaginationElements = {
   PaginationArrow,
   PageNumber,
   Dots,
-  NumberInput,
 };

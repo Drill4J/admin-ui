@@ -14,7 +14,7 @@
 * limitations under the License.
 */
 import { useState } from 'react';
-import { Icons } from '@drill4j/ui-kit';
+import { Icons, Inputs } from '@drill4j/ui-kit';
 import { Form, Field } from 'react-final-form';
 import 'twin.macro';
 
@@ -112,7 +112,7 @@ export const Pagination = ({
               <form onSubmit={handleSubmit}>
                 <Field name="pageNumber" type="number">
                   {({ input }) => (
-                    <PaginationElements.NumberInput
+                    <Inputs.Number
                       {...input}
                       type="number"
                     />
@@ -123,7 +123,7 @@ export const Pagination = ({
         />
       </div>
       <div tw="absolute left-14 w-6 overflow-hidden inline-block" style={{ top: '72px' }}>
-        <div tw=" h-3 w-11 bg-monochrome-white -rotate-45 transform origin-top-left" />
+        <div tw=" h-3 w-11 bg-monochrome-white transform origin-top-left" style={{ transform: 'rotate(-45deg)' }} />
       </div>
     </div>
   );
