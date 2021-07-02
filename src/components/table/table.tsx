@@ -13,7 +13,7 @@
 * See the License for the specific language governing permissions and
 * limitations under the License.
 */
-import React, { useMemo, useState, useEffect } from 'react';
+import React, { useMemo, useState } from 'react';
 import {
   useTable, useExpanded, Column, useSortBy, usePagination,
 } from 'react-table';
@@ -70,15 +70,13 @@ export const Table = withErrorBoundary(({
     {
       columns: useMemo(() => columns, [...columnsDependency]),
       data: useMemo(() => data, [data]),
+      initialState: { pageSize: 25 },
       autoResetPage: false,
     } as any,
     useSortBy,
     useExpanded,
     usePagination,
   );
-
-  const INITIAL_PAGE_SIZE = 25;
-  useEffect(() => setPageSize(INITIAL_PAGE_SIZE), []);
 
   const dispatch = useTableActionsDispatch();
   const { sort: [sort], search } = useTableActionsState();
