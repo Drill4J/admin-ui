@@ -13,7 +13,7 @@
 * See the License for the specific language governing permissions and
 * limitations under the License.
 */
-import React, { useMemo, useState, useEffect } from 'react';
+import React, { useMemo, useState } from 'react';
 import {
   useTable, useExpanded, Column, useSortBy, usePagination,
 } from 'react-table';
@@ -70,14 +70,13 @@ export const Table = withErrorBoundary(({
     {
       columns: useMemo(() => columns, [...columnsDependency]),
       data: useMemo(() => data, [data]),
-    },
+      initialState: { pageSize: 25 },
+      autoResetPage: false,
+    } as any,
     useSortBy,
     useExpanded,
     usePagination,
   );
-
-  const INITIAL_PAGE_SIZE = 25;
-  useEffect(() => setPageSize(INITIAL_PAGE_SIZE), []);
 
   const dispatch = useTableActionsDispatch();
   const { sort: [sort], search } = useTableActionsState();
@@ -89,24 +88,25 @@ export const Table = withErrorBoundary(({
     throw new Error('Table received incorrect data');
   }
 
+  const toggleSort = (event: React.MouseEvent<HTMLDivElement, MouseEvent>, column: any) => {
+    gotoPage(0);
+    isDefaulToggleSortBy
+      ? column.getSortByToggleProps().onClick(event)
+      : dispatch(setSort({ order: setOrder(sort?.order), field: column.id }));
+  };
+
   const TableHeaderRow = ({ headerGroup }: any) => (
     <tr {...headerGroup.getHeaderGroupProps()} tw="h-13 px-4">
       {headerGroup.headers.map((column: any) => {
         const active = column.id === sort?.field;
-        const defaulToggleSortBy = column.getSortByToggleProps().onClick;
-
         return (
           <TableElements.TH
-            {...column.getHeaderProps(column.getSortByToggleProps())}
             style={{ textAlign: column.textAlign || 'right', width: column.width }}
-            onClick={isDefaulToggleSortBy
-              ? defaulToggleSortBy
-              : () => dispatch(setSort({ order: setOrder(sort?.order), field: column.id }))}
             data-test={`table-th-${column.id}`}
           >
-            <div tw="relative inline-flex items-center cursor-pointer">
-              {column.id !== 'expander' && !column.notSortable && (
-                <TableElements.SortArrow active={column.isSorted || active}>
+            <div tw="relative inline-flex items-center">
+              {!column.notSortable && (
+                <TableElements.SortArrow active={column.isSorted || active} onClick={(event) => toggleSort(event, column)}>
                   <Icons.SortingArrow rotate={column.isSortedDesc || (active && sort?.order === 'DESC') ? 0 : 180} />
                 </TableElements.SortArrow>
               )}
@@ -126,7 +126,6 @@ export const Table = withErrorBoundary(({
           tw="first:px-4 last:px-4"
           style={{ textAlign: cell.column.textAlign || 'right' }}
           data-test={`td-row-${cell.column.id}`}
-
         >
           <div
             data-test={`td-row-cell-${cell.column.id}`}
@@ -147,7 +146,10 @@ export const Table = withErrorBoundary(({
       {withSearchPanel && (
         <div tw="mt-2">
           <SearchPanel
-            onSearch={(searchValue) => dispatch(setSearch([{ value: searchValue, field: 'name', op: 'CONTAINS' }]))}
+            onSearch={(searchValue) => {
+              gotoPage(0);
+              dispatch(setSearch([{ value: searchValue, field: 'name', op: 'CONTAINS' }]));
+            }}
             searchQuery={searchQuery?.value}
             searchResult={filteredCount}
             placeholder={placeholder}

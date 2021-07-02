@@ -41,6 +41,7 @@ export const AgentsTable = ({ agents }: Props) => {
             {row.isExpanded ? <Icons.Expander rotate={90} /> : <Icons.Expander />}
           </span>
         ) : null),
+      notSortable: true,
       width: '48px',
     },
     {
@@ -90,6 +91,7 @@ export const AgentsTable = ({ agents }: Props) => {
       },
       textAlign: 'left',
       width: '15%',
+      notSortable: true,
     },
     {
       Header: () => null,

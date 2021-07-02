@@ -78,6 +78,7 @@ export const CoverageDetails = ({
             </span>
           ) : null
       ),
+      notSortable: true,
       width: '44px',
     },
     {
