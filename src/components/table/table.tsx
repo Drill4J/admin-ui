@@ -88,7 +88,7 @@ export const Table = withErrorBoundary(({
     throw new Error('Table received incorrect data');
   }
 
-  const toggleSort = (event: React.MouseEvent<HTMLTableHeaderCellElement, MouseEvent>, column: any) => {
+  const toggleSort = (event: React.MouseEvent<HTMLDivElement, MouseEvent>, column: any) => {
     gotoPage(0);
     isDefaulToggleSortBy
       ? column.getSortByToggleProps().onClick(event)
@@ -102,12 +102,11 @@ export const Table = withErrorBoundary(({
         return (
           <TableElements.TH
             style={{ textAlign: column.textAlign || 'right', width: column.width }}
-            onClick={(event) => toggleSort(event, column)}
             data-test={`table-th-${column.id}`}
           >
-            <div tw="relative inline-flex items-center cursor-pointer">
+            <div tw="relative inline-flex items-center">
               {!column.notSortable && (
-                <TableElements.SortArrow active={column.isSorted || active}>
+                <TableElements.SortArrow active={column.isSorted || active} onClick={(event) => toggleSort(event, column)}>
                   <Icons.SortingArrow rotate={column.isSortedDesc || (active && sort?.order === 'DESC') ? 0 : 180} />
                 </TableElements.SortArrow>
               )}
