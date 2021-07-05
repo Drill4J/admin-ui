@@ -123,6 +123,7 @@ export const DeleteScopeModal = ({ isOpen, onToggle, scope }: Props) => {
                     size="large"
                     onClick={() => onToggle(false)}
                     data-test="delete-scope-modal:cancel-modal-button"
+                    disabled={loading}
                   >
                     Cancel
                   </Button>

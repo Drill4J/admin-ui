@@ -97,7 +97,7 @@ export const RenameScopeModal = ({ isOpen, onToggle, scope }: Props) => {
                 >
                   {submitting ? <Spinner disabled /> : 'Save'}
                 </Button>
-                <Button secondary size="large" onClick={() => onToggle(false)}>
+                <Button disabled={submitting} secondary size="large" onClick={() => onToggle(false)}>
                   Cancel
                 </Button>
               </div>

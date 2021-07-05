@@ -106,7 +106,7 @@ export const BaselineBuildModal = () => {
               {!isLoading && isBaseline && 'Unset as Baseline'}
               {!isLoading && !isBaseline && 'Set as Baseline'}
             </ActionButton>
-            <Button secondary size="large" onClick={closeModal}>
+            <Button disabled={isLoading} secondary size="large" onClick={closeModal}>
               Cancel
             </Button>
           </div>

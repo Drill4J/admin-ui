@@ -92,7 +92,7 @@ export const AddPluginsModal = ({
           >
             {loading ? <Spinner disabled /> : 'Add plugin'}
           </Button>
-          <Button secondary size="large" onClick={closeModal}>
+          <Button secondary size="large" onClick={closeModal} disabled={loading}>
             Cancel
           </Button>
         </div>

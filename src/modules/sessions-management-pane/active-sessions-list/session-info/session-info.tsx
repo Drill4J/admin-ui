@@ -19,8 +19,9 @@ import tw, { styled } from 'twin.macro';
 
 import { capitalize } from 'utils';
 import { Message } from 'types/message';
-import { useSessionsPaneState } from '../../store';
+import { useSessionsPaneDispatch, useSessionsPaneState } from '../../store';
 import { abortSession, finishSession } from '../../sessions-management-pane-api';
+import { setSingleOperationIsProcessing } from '../../store/reducer';
 
 interface Props {
   testType: string;
@@ -55,6 +56,7 @@ export const SessionInfo = ({
 }: Props) => {
   const { pluginId = '' } = useParams<{ pluginId: string }>();
   const { bulkOperation } = useSessionsPaneState();
+  const dispatch = useSessionsPaneDispatch();
   const disabled = bulkOperation.isProcessing;
 
   return (
@@ -64,8 +66,24 @@ export const SessionInfo = ({
         <Actions disabled={disabled}>
           <Menu
             items={[
-              { label: 'Finish', icon: 'Success', onClick: () => finishSession(agentId, pluginId, showGeneralAlertMessage)(sessionId) },
-              { label: 'Abort', icon: 'Cancel', onClick: () => abortSession(agentId, pluginId, showGeneralAlertMessage)(sessionId) },
+              {
+                label: 'Finish',
+                icon: 'Success',
+                onClick: async () => {
+                  dispatch(setSingleOperationIsProcessing(true));
+                  await finishSession(agentId, pluginId, showGeneralAlertMessage)(sessionId);
+                  dispatch(setSingleOperationIsProcessing(false));
+                },
+              },
+              {
+                label: 'Abort',
+                icon: 'Cancel',
+                onClick: async () => {
+                  dispatch(setSingleOperationIsProcessing(true));
+                  await abortSession(agentId, pluginId, showGeneralAlertMessage)(sessionId);
+                  dispatch(setSingleOperationIsProcessing(false));
+                },
+              },
             ]}
           />
         </Actions>

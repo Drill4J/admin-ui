@@ -39,6 +39,7 @@ export const OperationActionWarning = ({
           size="small"
           onClick={handleDecline}
           data-test="operation-action-warning:no-button"
+          disabled={loading}
         >
           No
         </Button>
