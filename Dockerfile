@@ -13,7 +13,7 @@ COPY . /app
 RUN npm run build
 
 # production environment
-FROM nginx:1.17.6-alpine-perl
+FROM nginx:1.20.1-alpine-perl
 ENV UPSTREAM "drill-admin:8090"
 # support running as arbitrary user which belogs to the root group
 RUN chmod g+rwx /var/cache/nginx /var/run /var/log/nginx /usr/share/nginx/ /etc/nginx/
